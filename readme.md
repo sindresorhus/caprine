@@ -8,9 +8,17 @@
 
 ## Install
 
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest), unzip, and move `Caprine.app` to the `/Applications` directory.
-
 *Requires OS X 10.10 or newer. Linux and Windows support planned.*
+
+### [Homebrew Cask](http://caskroom.io)
+
+```
+$ brew cask install caprine
+```
+
+### Manually
+
+[**Download**](https://github.com/sindresorhus/caprine/releases/latest), unzip, and move `Caprine.app` to the `/Applications` directory.
 
 
 ## Compact mode
