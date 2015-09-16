@@ -1,0 +1,55 @@
+{
+  "name": "caprine",
+  "productName": "Caprine",
+  "version": "0.0.0",
+  "description": "Unofficial Facebook Messenger app",
+  "license": "MIT",
+  "repository": "sindresorhus/caprine",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "electronVersion": "0.32.3",
+  "scripts": {
+    "test": "xo",
+    "start": "electron .",
+    "build": "electron-packager . $npm_package_productName --overwrite --out=dist --ignore='^/dist$' --ignore='^/media$' --prune --asar --platform=darwin --arch=x64 --icon=media/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version --version=$npm_package_electronVersion && cd dist/Caprine-darwin-x64 && zip -ryXq ../Caprine-${npm_package_version}.zip Caprine.app"
+  },
+  "files": [
+    "index.js",
+    "browser.js",
+    "browser.css",
+    "menu.js",
+    "media/Icon.icns"
+  ],
+  "keywords": [
+    "electron-app",
+    "facebook",
+    "messenger",
+    "chat",
+    "instant",
+    "messaging",
+    "caprine"
+  ],
+  "dependencies": {
+    "electron-debug": "^0.2.1"
+  },
+  "devDependencies": {
+    "electron-packager": "^5.1.0",
+    "electron-prebuilt": "^0.32.3",
+    "xo": "*"
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "browser"
+    ],
+    "ignores": [
+      "dist/**"
+    ]
+  }
+}

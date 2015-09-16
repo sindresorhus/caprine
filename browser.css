@@ -1,0 +1,78 @@
+html {
+	overflow: hidden;
+}
+
+/* window wrapper */
+._4sp8 {
+	min-width: 0;
+}
+
+/* hide footer at login view */
+._210n {
+	display: none;
+}
+
+/* first time user popup */
+._s15 {
+	display: none;
+}
+
+/* right-column */
+._1q5- {
+	border-left: 1px solid rgba(0, 0, 0, .10) !important;
+}
+
+/* hide settings menu */
+.uiContextualLayerBelowLeft ._5v-0._53il {
+	display: none !important;
+}
+
+/* hide settings icon */
+._150g._30yy._2fug._p {
+	display: none;
+}
+
+/* hide title */
+._1tqi {
+	display: none;
+}
+
+/* narrower titlebar */
+._36ic,
+._5742 {
+	height: 40px !important;
+	padding: 4px !important;
+}
+._fl2 {
+	padding: 3px 8px !important;
+}
+/* adjust `To` field for narrower titlebar */
+._2y8y {
+	min-height: 40px !important;
+	padding: 8px !important;
+}
+
+/* push the textarea button more to the right */
+._5irm {
+	margin-right: 10px !important;
+}
+
+/* `New messages` popup */
+._2xhi._5vn4 ._2xhj {
+	display: none;
+}
+
+@media all and (max-width: 640px) {
+	/* make right-column flexible in compact mode */
+	._1q5- {
+		position: absolute !important;
+		right: 0 !important;
+		left: 74px !important;
+		height: 100% !important;
+	}
+
+	/* `New Conversation` icon */
+	._30yy._4kzv {
+		display: none !important;
+	}
+}
