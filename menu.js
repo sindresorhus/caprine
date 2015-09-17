@@ -1,4 +1,5 @@
 'use strict';
+const os = require('os');
 const app = require('app');
 const Menu = require('menu');
 const BrowserWindow = require('browser-window');
@@ -65,7 +66,7 @@ const tpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Quit',
+				label: `Quit ${appName}`,
 				accelerator: 'Cmd+Q',
 				click() {
 					app.quit();
@@ -125,6 +126,7 @@ const tpl = [
 	},
 	{
 		label: 'Window',
+		role: 'window',
 		submenu: [
 			{
 				label: 'Minimize',
@@ -164,7 +166,7 @@ const tpl = [
 -
 
 ${app.getName()} ${app.getVersion()}
-${process.platform} ${process.arch}`;
+${process.platform} ${process.arch} ${os.release()}`;
 
 					shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
 				}
