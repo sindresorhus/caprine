@@ -11,9 +11,9 @@
     "url": "sindresorhus.com"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4"
   },
-  "electronVersion": "0.32.3",
+  "electronVersion": "0.33.0",
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
-    "electron-prebuilt": "^0.32.3",
+    "electron-prebuilt": "^0.33.0",
     "xo": "*"
   },
   "xo": {

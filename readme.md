@@ -8,7 +8,7 @@
 
 ## Install
 
-*Requires OS X 10.10 or newer. Linux and Windows support planned.*
+*Requires OS X 10.8 or newer. Linux and Windows support planned.*
 
 ### [Homebrew Cask](http://caskroom.io)
 
