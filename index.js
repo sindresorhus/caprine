@@ -18,7 +18,7 @@ function updateBadge(title) {
 		return;
 	}
 
-	var messageCount = (/\(([0-9]+)\)/).exec(title);
+	const messageCount = (/\(([0-9]+)\)/).exec(title);
 	app.dock.setBadge(messageCount ? messageCount[1] : '');
 }
 
@@ -34,40 +34,33 @@ function createMainWindow() {
 		'web-preferences': {
 			// fails without this because of CommonJS script detection
 			'node-integration': false,
-
 			'preload': path.join(__dirname, 'browser.js'),
-
 			// required for Facebook active ping thingy
 			'web-security': false,
-
 			'plugins': true
 		}
 	});
 
 	win.loadUrl('https://www.messenger.com/login/');
-
 	win.on('closed', app.quit);
-
-	win.on('page-title-updated', function (e, title) {
-		updateBadge(title);
-	});
+	win.on('page-title-updated', (e, title) => updateBadge(title));
 
 	return win;
 }
 
-app.on('ready', function () {
+app.on('ready', () => {
 	Menu.setApplicationMenu(appMenu);
 
 	mainWindow = createMainWindow();
 
 	const page = mainWindow.webContents;
 
-	page.on('dom-ready', function () {
+	page.on('dom-ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		mainWindow.show();
 	});
 
-	page.on('new-window', function (e, url) {
+	page.on('new-window', (e, url) => {
 		e.preventDefault();
 		shell.openExternal(url);
 	});
