@@ -13,7 +13,6 @@ require('crash-reporter').start();
 let mainWindow;
 
 function updateBadge(title) {
-	// don't try to update the dock icon if the system has no dock
 	if (!app.dock) {
 		return;
 	}
