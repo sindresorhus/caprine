@@ -12,69 +12,6 @@ function sendAction(action) {
 
 const tpl = [
 	{
-		label: appName,
-		submenu: [
-			{
-				label: `About ${appName}`,
-				role: 'about'
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Preferences...',
-				accelerator: 'Cmd+,',
-				click() {
-					sendAction('show-preferences');
-				}
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Log Out',
-				click() {
-					sendAction('log-out');
-				}
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Services',
-				role: 'services',
-				submenu: []
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: `Hide ${appName}`,
-				accelerator: 'Cmd+H',
-				role: 'hide'
-			},
-			{
-				label: 'Hide Others',
-				accelerator: 'Cmd+Shift+H',
-				role: 'hideothers'
-			},
-			{
-				label: 'Show All',
-				role: 'unhide'
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: `Quit ${appName}`,
-				accelerator: 'Cmd+Q',
-				click() {
-					app.quit();
-				}
-			}
-		]
-	},
-	{
 		label: 'File',
 		submenu: [
 			{
@@ -137,13 +74,6 @@ const tpl = [
 				label: 'Close',
 				accelerator: 'CmdOrCtrl+W',
 				role: 'close'
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Bring All to Front',
-				role: 'front'
 			}
 		]
 	},
@@ -174,5 +104,85 @@ ${process.platform} ${process.arch} ${os.release()}`;
 		]
 	}
 ];
+
+const appMenu = [
+	{
+		label: `About ${appName}`,
+		role: 'about'
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Preferences...',
+		accelerator: 'CmdOrCtrl+,',
+		click() {
+			sendAction('show-preferences');
+		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Log Out',
+		click() {
+			sendAction('log-out');
+		}
+	}
+];
+
+if (process.platform === 'darwin') {
+	// add primary menu with app name
+	tpl.unshift({
+		label: appName,
+		submenu: appMenu
+	});
+
+	// add OS X-only hide options
+	tpl[0].submenu.push([{
+		type: 'separator'
+	},
+	{
+		label: `Hide ${appName}`,
+		accelerator: 'CmdOrCtrl+H',
+		role: 'hide'
+	},
+	{
+		label: 'Hide Others',
+		accelerator: 'CmdOrCtrl+Shift+H',
+		role: 'hideothers'
+	},
+	{
+		label: 'Show All',
+		role: 'unhide'
+	}]);
+
+	tpl[3].submenu.push(
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Bring All to Front',
+			role: 'front'
+		}
+	);
+} else {
+	// add main menu items to File menu
+	tpl[0].submenu = tpl[0].submenu.concat(appMenu);
+}
+
+// add quit to either app menu or File
+tpl[0].submenu.push(
+	{
+		type: 'separator'
+	},
+	{
+		label: `Quit ${appName}`,
+		accelerator: 'CmdOrCtrl+Q',
+		click() {
+			app.quit();
+		}
+	}
+);
 
 module.exports = Menu.buildFromTemplate(tpl);
