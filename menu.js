@@ -144,6 +144,16 @@ const darwinTpl = [
 			{
 				label: 'Bring All to Front',
 				role: 'front'
+			},
+			// temp workaround for:
+			// https://github.com/sindresorhus/caprine/issues/5
+			{
+				label: 'Toggle Full Screen',
+				accelerator: 'Ctrl+Cmd+F',
+				click() {
+					const win = BrowserWindow.getFocusedWindow();
+					win.setFullScreen(!win.isFullScreen());
+				}
 			}
 		]
 	},
