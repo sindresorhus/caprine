@@ -17,7 +17,9 @@
   "scripts": {
     "test": "xo",
     "start": "electron .",
-    "build": "electron-packager . $npm_package_productName --overwrite --out=dist --ignore='^/dist$' --ignore='^/media$' --prune --asar --platform=darwin --arch=x64 --icon=media/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version --version=$npm_package_electronVersion && cd dist/Caprine-darwin-x64 && zip -ryXq9 ../Caprine-${npm_package_version}.zip Caprine.app"
+    "build": "npm run build-osx && npm run build-linux",
+    "build-osx": "electron-packager . $npm_package_productName --overwrite --out=dist --ignore='^/dist$' --ignore='^/media$' --prune --platform=darwin --arch=x64 --icon=media/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version --version=$npm_package_electronVersion && cd dist/Caprine-darwin-x64 && zip -ryXq9 ../Caprine-${npm_package_version}.zip Caprine.app",
+    "build-linux": "electron-packager . $npm_package_productName --overwrite --out=dist --ignore='^/dist$' --ignore='^/media/(?!Icon.png$).*' --prune --platform=linux --arch=x64 --app-bundle-id=com.sindresorhus.caprine --app-version=$npm_package_version --version=$npm_package_electronVersion && cd dist/Caprine-linux-x64/ && zip -ryq9 ../Caprine-linux-\"$npm_package_version\".zip *"
   },
   "files": [
     "index.js",

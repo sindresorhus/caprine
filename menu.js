@@ -10,7 +10,7 @@ function sendAction(action) {
 	BrowserWindow.getFocusedWindow().webContents.send(action);
 }
 
-const tpl = [
+const darwinTpl = [
 	{
 		label: appName,
 		submenu: [
@@ -149,18 +149,94 @@ const tpl = [
 	},
 	{
 		label: 'Help',
-		role: 'help',
+		role: 'help'
+	}
+];
+
+const linuxTpl = [
+	{
+		label: 'File',
 		submenu: [
 			{
-				label: 'Website',
+				label: 'New Conversation',
+				accelerator: 'CmdOrCtrl+N',
 				click() {
-					shell.openExternal('https://github.com/sindresorhus/caprine');
+					sendAction('new-conversation');
 				}
 			},
 			{
-				label: 'Report Issue',
+				label: 'Log Out',
 				click() {
-					const body = `
+					sendAction('log-out');
+				}
+			}
+		]
+	},
+	{
+		label: 'Edit',
+		submenu: [
+			{
+				label: 'Undo',
+				accelerator: 'CmdOrCtrl+Z',
+				role: 'undo'
+			},
+			{
+				label: 'Redo',
+				accelerator: 'Shift+CmdOrCtrl+Z',
+				role: 'redo'
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Cut',
+				accelerator: 'CmdOrCtrl+X',
+				role: 'cut'
+			},
+			{
+				label: 'Copy',
+				accelerator: 'CmdOrCtrl+C',
+				role: 'copy'
+			},
+			{
+				label: 'Paste',
+				accelerator: 'CmdOrCtrl+V',
+				role: 'paste'
+			},
+			{
+				label: 'Select All',
+				accelerator: 'CmdOrCtrl+A',
+				role: 'selectall'
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Preferences',
+				accelerator: 'CmdOrCtrl+,',
+				click() {
+					sendAction('show-preferences');
+				}
+			}
+		]
+	},
+	{
+		label: 'Help',
+		role: 'help'
+	}
+];
+
+const submenu = [
+	{
+		label: 'Website',
+		click() {
+			shell.openExternal('https://github.com/sindresorhus/caprine');
+		}
+	},
+	{
+		label: 'Report Issue',
+		click() {
+			const body = `
 **Please succinctly describe your issue and steps to reproduce it.**
 
 -
@@ -168,11 +244,22 @@ const tpl = [
 ${app.getName()} ${app.getVersion()}
 ${process.platform} ${process.arch} ${os.release()}`;
 
-					shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
-				}
-			}
-		]
+			shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
+		}
+	},
+	{
+		label: 'About',
+		role: 'about'
 	}
 ];
+
+let tpl;
+if (process.platform === 'darwin') {
+	tpl = darwinTpl;
+} else if (process.platform === 'linux') {
+	tpl = linuxTpl;
+}
+
+tpl[tpl.length - 1].submenu = submenu;
 
 module.exports = Menu.buildFromTemplate(tpl);
