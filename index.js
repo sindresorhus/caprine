@@ -16,6 +16,7 @@ function updateBadge(title) {
 	if (!app.dock) {
 		return;
 	}
+
 	// ignore `Sindre messaged you` blinking
 	if (title.indexOf('Messenger') === -1) {
 		return;

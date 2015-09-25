@@ -165,6 +165,9 @@ const linuxTpl = [
 				}
 			},
 			{
+				type: 'separator'
+			},
+			{
 				label: 'Log Out',
 				click() {
 					sendAction('log-out');
@@ -175,19 +178,6 @@ const linuxTpl = [
 	{
 		label: 'Edit',
 		submenu: [
-			{
-				label: 'Undo',
-				accelerator: 'CmdOrCtrl+Z',
-				role: 'undo'
-			},
-			{
-				label: 'Redo',
-				accelerator: 'Shift+CmdOrCtrl+Z',
-				role: 'redo'
-			},
-			{
-				type: 'separator'
-			},
 			{
 				label: 'Cut',
 				accelerator: 'CmdOrCtrl+X',
@@ -202,11 +192,6 @@ const linuxTpl = [
 				label: 'Paste',
 				accelerator: 'CmdOrCtrl+V',
 				role: 'paste'
-			},
-			{
-				label: 'Select All',
-				accelerator: 'CmdOrCtrl+A',
-				role: 'selectall'
 			},
 			{
 				type: 'separator'
@@ -226,15 +211,15 @@ const linuxTpl = [
 	}
 ];
 
-const submenu = [
+const helpSubmenu = [
 	{
-		label: 'Website',
+		label: `${appName} Website...`,
 		click() {
 			shell.openExternal('https://github.com/sindresorhus/caprine');
 		}
 	},
 	{
-		label: 'Report Issue',
+		label: 'Report an Issue...',
 		click() {
 			const body = `
 **Please succinctly describe your issue and steps to reproduce it.**
@@ -246,10 +231,6 @@ ${process.platform} ${process.arch} ${os.release()}`;
 
 			shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
 		}
-	},
-	{
-		label: 'About',
-		role: 'about'
 	}
 ];
 
@@ -260,6 +241,6 @@ if (process.platform === 'darwin') {
 	tpl = linuxTpl;
 }
 
-tpl[tpl.length - 1].submenu = submenu;
+tpl[tpl.length - 1].submenu = helpSubmenu;
 
 module.exports = Menu.buildFromTemplate(tpl);
