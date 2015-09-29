@@ -7,7 +7,9 @@ const shell = require('shell');
 const appName = app.getName();
 
 function sendAction(action) {
-	BrowserWindow.getFocusedWindow().webContents.send(action);
+	const win = BrowserWindow.getAllWindows()[0];
+	win.restore();
+	win.webContents.send(action);
 }
 
 const darwinTpl = [
@@ -151,7 +153,7 @@ const darwinTpl = [
 				label: 'Toggle Full Screen',
 				accelerator: 'Ctrl+Cmd+F',
 				click() {
-					const win = BrowserWindow.getFocusedWindow();
+					const win = BrowserWindow.getAllWindows()[0];
 					win.setFullScreen(!win.isFullScreen());
 				}
 			}
