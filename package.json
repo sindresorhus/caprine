@@ -13,7 +13,7 @@
   "engines": {
     "node": ">=4"
   },
-  "electronVersion": "0.33.0",
+  "electronVersion": "0.33.3",
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
-    "electron-prebuilt": "^0.33.0",
+    "electron-prebuilt": "^0.33.3",
     "xo": "*"
   },
   "xo": {
