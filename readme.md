@@ -60,7 +60,9 @@ Built with [Electron](http://electron.atom.io).
 
 - Init: `$ npm install`
 - Run: `$ npm start`
-- Build: `$ npm run build`
+- Build OS X: `$ npm run build-osx`
+- Build Linux: `$ npm run build-linux`
+- Build all: `$ npm run build` *(OS X only)*
 
 
 ## License
