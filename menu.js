@@ -249,7 +249,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
 let tpl;
 if (process.platform === 'darwin') {
 	tpl = darwinTpl;
-} else if (process.platform === 'linux') {
+} else {
 	tpl = linuxTpl;
 }
 
