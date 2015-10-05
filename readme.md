@@ -62,7 +62,8 @@ Built with [Electron](http://electron.atom.io).
 - Run: `$ npm start`
 - Build OS X: `$ npm run build-osx`
 - Build Linux: `$ npm run build-linux`
-- Build all: `$ npm run build` *(OS X only)*
+- Build Windows: `$ npm run build-windows`
+- Build all: `$ brew install wine` and `$ npm run build` *(OS X only)*
 
 
 ## License
