@@ -5,7 +5,7 @@
 <br>
 [![](media/screenshot.png)](https://github.com/sindresorhus/caprine/releases/latest)
 
-*Requires OS X 10.8+ or Linux. Windows support planned.*
+*OS X 10.8+, Windows & Linux are supported.*
 
 ## Install
 
@@ -36,6 +36,10 @@ Type=Application
 Icon=/full/path/to/folder/Caprine/resources/app/media/Icon.png
 ```
 
+### Windows
+
+[**Download**](https://github.com/sindresorhus/caprine/releases/latest) and unzip to some location.
+
 
 ## Compact mode
 
@@ -62,7 +66,8 @@ Built with [Electron](http://electron.atom.io).
 - Run: `$ npm start`
 - Build OS X: `$ npm run build-osx`
 - Build Linux: `$ npm run build-linux`
-- Build all: `$ npm run build` *(OS X only)*
+- Build Windows: `$ npm run build-windows`
+- Build all: `$ brew install wine` and `$ npm run build` *(OS X only)*
 
 
 ## License
