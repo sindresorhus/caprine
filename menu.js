@@ -8,7 +8,11 @@ const appName = app.getName();
 
 function sendAction(action) {
 	const win = BrowserWindow.getAllWindows()[0];
-	win.restore();
+
+	if (process.platform === 'darwin') {
+		win.restore();
+	}
+
 	win.webContents.send(action);
 }
 
