@@ -72,7 +72,7 @@ html {
 	}
 
 	/* `New Conversation` icon */
-	._30yy._4kzv {
+	._30yy[href='/new'] {
 		display: none !important;
 	}
 }

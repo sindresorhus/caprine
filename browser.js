@@ -9,7 +9,7 @@ ipc.on('show-preferences', () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector('._30yy._4kzv').click();
+	document.querySelector('._30yy[href=\'/new\']').click();
 });
 
 ipc.on('log-out', () => {
