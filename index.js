@@ -32,7 +32,7 @@ function createMainWindow() {
 		'show': false,
 		'width': 800,
 		'height': 600,
-		'icon': path.join(__dirname, 'media', 'Icon.png'),
+		'icon': process.platform === 'linux' && path.join(__dirname, 'media', 'Icon.png'),
 		'min-width': 400,
 		'min-height': 200,
 		'title-bar-style': 'hidden-inset',
