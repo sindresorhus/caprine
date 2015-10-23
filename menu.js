@@ -151,6 +151,7 @@ const darwinTpl = [
 				label: 'Bring All to Front',
 				role: 'front'
 			},
+
 			// temp workaround for:
 			// https://github.com/sindresorhus/caprine/issues/5
 			{

@@ -39,9 +39,12 @@ function createMainWindow() {
 		'web-preferences': {
 			// fails without this because of CommonJS script detection
 			'node-integration': false,
+
 			'preload': path.join(__dirname, 'browser.js'),
+
 			// required for Facebook active ping thingy
 			'web-security': false,
+
 			'plugins': true
 		}
 	});
