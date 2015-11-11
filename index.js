@@ -72,4 +72,20 @@ app.on('ready', () => {
 		e.preventDefault();
 		shell.openExternal(url);
 	});
+
+	mainWindow.webContents.session.on('will-download', (event, item) => {
+		const totalBytes = item.getTotalBytes();
+
+		item.on('updated', () => {
+			mainWindow.setProgressBar((item.getReceivedBytes() * 100) / totalBytes);
+		});
+
+		item.on('done', (e, state) => {
+			if (state === 'completed') {
+				mainWindow.setProgressBar(-1);
+			} else if (state === 'interrupted') {
+				page.send('cancel-download');
+			}
+		});
+	});
 });
