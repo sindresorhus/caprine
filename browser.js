@@ -18,7 +18,3 @@ ipc.on('log-out', () => {
 
 	document.querySelector('._54nq._2i-c._150g._558b._2n_z li:last-child a').click();
 });
-
-ipc.on('cancel-download', () => {
-	alert('The download was interrupted');
-});

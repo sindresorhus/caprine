@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const app = require('app');
 const BrowserWindow = require('browser-window');
+const Dialog = require('dialog');
 const shell = require('shell');
 const Menu = require('menu');
 const appMenu = require('./menu');
@@ -77,14 +78,14 @@ app.on('ready', () => {
 		const totalBytes = item.getTotalBytes();
 
 		item.on('updated', () => {
-			mainWindow.setProgressBar((item.getReceivedBytes() * 1.0) / totalBytes);
+			mainWindow.setProgressBar((Number(item.getReceivedBytes()) * 1.0) / totalBytes);
 		});
 
 		item.on('done', (e, state) => {
-			if (state === 'completed') {
-				mainWindow.setProgressBar(-1);
-			} else if (state === 'interrupted') {
-				page.send('cancel-download');
+			mainWindow.setProgressBar(-1);
+
+			if (state === 'interrupted') {
+				Dialog.showErrorBox('Download error', 'The download was interrupted');
 			}
 		});
 	});
