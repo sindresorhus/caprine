@@ -78,7 +78,7 @@ app.on('ready', () => {
 		const totalBytes = item.getTotalBytes();
 
 		item.on('updated', () => {
-			mainWindow.setProgressBar((Number(item.getReceivedBytes()) * 1.0) / totalBytes);
+			mainWindow.setProgressBar((Number(item.getReceivedBytes()) * 1) / totalBytes);
 		});
 
 		item.on('done', (e, state) => {
