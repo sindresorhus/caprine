@@ -1,6 +1,7 @@
 {
   "name": "caprine",
   "productName": "Caprine",
+  "desktopName": "Caprine",
   "version": "0.2.1",
   "description": "Unofficial Facebook Messenger app",
   "license": "MIT",
