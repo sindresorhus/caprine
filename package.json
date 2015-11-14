@@ -41,7 +41,7 @@
     "caprine"
   ],
   "dependencies": {
-    "electron-debug": "^0.2.1"
+    "electron-debug": "^0.4.0"
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
