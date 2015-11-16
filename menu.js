@@ -1,9 +1,9 @@
 'use strict';
 const os = require('os');
-const app = require('app');
-const Menu = require('menu');
-const BrowserWindow = require('browser-window');
-const shell = require('shell');
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const shell = electron.shell;
 const appName = app.getName();
 
 function sendAction(action) {
@@ -260,4 +260,4 @@ if (process.platform === 'darwin') {
 
 tpl[tpl.length - 1].submenu = helpSubmenu;
 
-module.exports = Menu.buildFromTemplate(tpl);
+module.exports = electron.Menu.buildFromTemplate(tpl);

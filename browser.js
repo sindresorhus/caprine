@@ -1,5 +1,5 @@
 'use strict';
-const ipc = require('ipc');
+const ipc = require('electron').ipcRenderer;
 
 ipc.on('show-preferences', () => {
 	// create the menu for the below

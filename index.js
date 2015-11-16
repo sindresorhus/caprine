@@ -1,15 +1,12 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-const app = require('app');
-const BrowserWindow = require('browser-window');
-const Dialog = require('dialog');
-const shell = require('shell');
-const Menu = require('menu');
+const electron = require('electron');
+const app = electron.app;
 const appMenu = require('./menu');
 
 require('electron-debug')();
-require('crash-reporter').start();
+electron.crashReporter.start();
 
 let mainWindow;
 
@@ -28,29 +25,26 @@ function updateBadge(title) {
 }
 
 function createMainWindow() {
-	const win = new BrowserWindow({
-		'title': app.getName(),
-		'show': false,
-		'width': 800,
-		'height': 600,
-		'icon': process.platform === 'linux' && path.join(__dirname, 'media', 'Icon.png'),
-		'min-width': 400,
-		'min-height': 200,
-		'title-bar-style': 'hidden-inset',
-		'web-preferences': {
+	const win = new electron.BrowserWindow({
+		title: app.getName(),
+		show: false,
+		width: 800,
+		height: 600,
+		icon: process.platform === 'linux' && path.join(__dirname, 'media', 'Icon.png'),
+		minWidth: 400,
+		minHeight: 200,
+		titleBarStyle: 'hidden-inset',
+		webPreferences: {
 			// fails without this because of CommonJS script detection
-			'node-integration': false,
-
-			'preload': path.join(__dirname, 'browser.js'),
-
+			nodeIntegration: false,
+			preload: path.join(__dirname, 'browser.js'),
 			// required for Facebook active ping thingy
-			'web-security': false,
-
-			'plugins': true
+			webSecurity: false,
+			plugins: true
 		}
 	});
 
-	win.loadUrl('https://www.messenger.com/login/');
+	win.loadURL('https://www.messenger.com/login/');
 	win.on('closed', app.quit);
 	win.on('page-title-updated', (e, title) => updateBadge(title));
 
@@ -58,7 +52,7 @@ function createMainWindow() {
 }
 
 app.on('ready', () => {
-	Menu.setApplicationMenu(appMenu);
+	electron.Menu.setApplicationMenu(appMenu);
 
 	mainWindow = createMainWindow();
 
@@ -71,7 +65,7 @@ app.on('ready', () => {
 
 	page.on('new-window', (e, url) => {
 		e.preventDefault();
-		shell.openExternal(url);
+		electron.shell.openExternal(url);
 	});
 
 	mainWindow.webContents.session.on('will-download', (event, item) => {
@@ -85,7 +79,7 @@ app.on('ready', () => {
 			mainWindow.setProgressBar(-1);
 
 			if (state === 'interrupted') {
-				Dialog.showErrorBox('Download error', 'The download was interrupted');
+				electron.dialog.showErrorBox('Download error', 'The download was interrupted');
 			}
 		});
 	});

@@ -14,7 +14,7 @@
   "engines": {
     "node": ">=4"
   },
-  "electronVersion": "0.34.3",
+  "electronVersion": "0.35.0",
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -41,11 +41,11 @@
     "caprine"
   ],
   "dependencies": {
-    "electron-debug": "^0.4.0"
+    "electron-debug": "^0.5.0"
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
-    "electron-prebuilt": "^0.34.3",
+    "electron-prebuilt": "^0.35.0",
     "xo": "*"
   },
   "xo": {
