@@ -1,7 +1,6 @@
 {
   "name": "caprine",
   "productName": "Caprine",
-  "desktopName": "Caprine",
   "version": "0.2.1",
   "description": "Unofficial Facebook Messenger app",
   "license": "MIT",
@@ -10,9 +9,6 @@
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
-  },
-  "engines": {
-    "node": ">=4"
   },
   "electronVersion": "0.35.0",
   "scripts": {

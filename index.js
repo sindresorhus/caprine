@@ -68,7 +68,7 @@ app.on('ready', () => {
 		electron.shell.openExternal(url);
 	});
 
-	mainWindow.webContents.session.on('will-download', (event, item) => {
+	mainWindow.webContents.session.on('will-download', (e, item) => {
 		const totalBytes = item.getTotalBytes();
 
 		item.on('updated', () => {
