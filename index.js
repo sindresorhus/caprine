@@ -6,6 +6,8 @@ const app = electron.app;
 const appMenu = require('./menu');
 
 require('electron-debug')();
+require('electron-dl')();
+
 electron.crashReporter.start();
 
 let mainWindow;
@@ -66,21 +68,5 @@ app.on('ready', () => {
 	page.on('new-window', (e, url) => {
 		e.preventDefault();
 		electron.shell.openExternal(url);
-	});
-
-	mainWindow.webContents.session.on('will-download', (e, item) => {
-		const totalBytes = item.getTotalBytes();
-
-		item.on('updated', () => {
-			mainWindow.setProgressBar(item.getReceivedBytes() / totalBytes);
-		});
-
-		item.on('done', (e, state) => {
-			mainWindow.setProgressBar(-1);
-
-			if (state === 'interrupted') {
-				electron.dialog.showErrorBox('Download error', 'The download was interrupted');
-			}
-		});
 	});
 });
