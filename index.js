@@ -4,6 +4,7 @@ const fs = require('fs');
 const electron = require('electron');
 const app = electron.app;
 const appMenu = require('./menu');
+const storage = require('./storage');
 
 require('electron-debug')();
 require('electron-dl')();
@@ -27,11 +28,20 @@ function updateBadge(title) {
 }
 
 function createMainWindow() {
+	let lastWindowState = storage.get('lastWindowState');
+	if (!lastWindowState) {
+		lastWindowState = {
+			width: 800,
+			height: 600
+		};
+	}
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
 		show: false,
-		width: 800,
-		height: 600,
+		x: lastWindowState.x,
+		y: lastWindowState.y,
+		width: lastWindowState.width,
+		height: lastWindowState.height,
 		icon: process.platform === 'linux' && path.join(__dirname, 'media', 'Icon.png'),
 		minWidth: 400,
 		minHeight: 200,
@@ -47,6 +57,17 @@ function createMainWindow() {
 	});
 
 	win.loadURL('https://www.messenger.com/login/');
+	win.on('close', () => {
+		if (!win.isFullScreen()) {
+			const bounds = win.getBounds();
+			storage.set('lastWindowState', {
+				x: bounds.x,
+				y: bounds.y,
+				width: bounds.width,
+				height: bounds.height
+			});
+		}
+	});
 	win.on('closed', app.quit);
 	win.on('page-title-updated', (e, title) => updateBadge(title));
 
