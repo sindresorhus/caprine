@@ -12,6 +12,7 @@ require('electron-dl')();
 electron.crashReporter.start();
 
 let mainWindow;
+let isQuitting = false;
 
 function updateBadge(title) {
 	if (!app.dock) {
@@ -57,15 +58,20 @@ function createMainWindow() {
 	});
 
 	win.loadURL('https://www.messenger.com/login/');
-	win.on('close', () => {
-		if (!win.isFullScreen()) {
-			const bounds = win.getBounds();
-			storage.set('lastWindowState', {
-				x: bounds.x,
-				y: bounds.y,
-				width: bounds.width,
-				height: bounds.height
-			});
+	win.on('close', e => {
+		if (isQuitting) {
+			if (!win.isFullScreen()) {
+				const bounds = win.getBounds();
+				storage.set('lastWindowState', {
+					x: bounds.x,
+					y: bounds.y,
+					width: bounds.width,
+					height: bounds.height
+				});
+			}
+		} else {
+			e.preventDefault();
+			win.hide();
 		}
 	});
 	win.on('closed', app.quit);
@@ -90,4 +96,12 @@ app.on('ready', () => {
 		e.preventDefault();
 		electron.shell.openExternal(url);
 	});
+});
+
+app.on('activate', () => {
+	mainWindow.show();
+});
+
+app.on('before-quit', () => {
+	isQuitting = true;
 });
