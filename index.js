@@ -2,6 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 const electron = require('electron');
+const ipc = require('electron').ipcMain;
 const app = electron.app;
 const appMenu = require('./menu');
 const storage = require('./storage');
@@ -91,4 +92,8 @@ app.on('before-quit', () => {
 		const bounds = mainWindow.getBounds();
 		storage.set('lastWindowState', bounds);
 	}
+});
+
+ipc.on('notificationClicked', () => {
+	mainWindow.show();
 });

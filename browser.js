@@ -18,3 +18,18 @@ ipc.on('log-out', () => {
 
 	document.querySelector('._54nq._2i-c._150g._558b._2n_z li:last-child a').click();
 });
+
+// Extend and replace the native notifications.
+const NativeNotification = Notification;
+
+Notification = function (title, options) {
+	const notification = new NativeNotification(title, options);
+	notification.addEventListener('click', () => {
+		ipc.send('notificationClicked');
+	});
+
+	return notification;
+};
+Notification.prototype = NativeNotification.prototype;
+Notification.permission = NativeNotification.permission;
+Notification.requestPermission = NativeNotification.requestPermission.bind(Notification);
