@@ -29,7 +29,7 @@ html {
 
 /* hide settings icon */
 ._150g._30yy._2fug._p {
-	display: none;
+	display: none !important;
 }
 
 /* hide title */
@@ -55,6 +55,10 @@ html {
 /* `New messages` popup */
 ._2xhi._5vn4 ._2xhj {
 	display: none;
+}
+
+._30yy._2oc9{
+	margin-left: 65px !important;
 }
 
 @media all and (max-width: 640px) {
