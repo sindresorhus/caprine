@@ -5,11 +5,11 @@ const path = require('path');
 const dataFilePath = path.join(app.getPath('userData'), 'data.json');
 
 function readData() {
-	if (!fs.existsSync(dataFilePath)) {
-		return {};
-	}
-
-	return JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
+	return JSON.parse(fs.readFileSync(dataFilePath, 'utf8', function(err, data) {
+		if (err) {
+			data = {};
+		}
+	}));
 }
 
 exports.set = function (key, value) {
@@ -19,11 +19,5 @@ exports.set = function (key, value) {
 };
 
 exports.get = function (key) {
-	const data = readData();
-	let value = null;
-	if (key in data) {
-		value = data[key];
-	}
-	return value;
+	return readData()[key];
 };
-

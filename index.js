@@ -29,13 +29,7 @@ function updateBadge(title) {
 }
 
 function createMainWindow() {
-	let lastWindowState = storage.get('lastWindowState');
-	if (!lastWindowState) {
-		lastWindowState = {
-			width: 800,
-			height: 600
-		};
-	}
+	const lastWindowState = storage.get('lastWindowState') || {width: 800, height: 600};
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
 		show: false,
@@ -59,22 +53,11 @@ function createMainWindow() {
 
 	win.loadURL('https://www.messenger.com/login/');
 	win.on('close', e => {
-		if (isQuitting) {
-			if (!win.isFullScreen()) {
-				const bounds = win.getBounds();
-				storage.set('lastWindowState', {
-					x: bounds.x,
-					y: bounds.y,
-					width: bounds.width,
-					height: bounds.height
-				});
-			}
-		} else {
+		if (!isQuitting) {
 			e.preventDefault();
 			win.hide();
 		}
 	});
-	win.on('closed', app.quit);
 	win.on('page-title-updated', (e, title) => updateBadge(title));
 
 	return win;
@@ -104,4 +87,8 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
+	if (!mainWindow.isFullScreen()) {
+		const bounds = mainWindow.getBounds();
+		storage.set('lastWindowState', bounds);
+	}
 });
