@@ -29,7 +29,7 @@ html {
 
 /* hide settings icon */
 ._150g._30yy._2fug._p {
-	display: none;
+	display: none !important;
 }
 
 /* hide title */
@@ -55,6 +55,11 @@ html {
 /* `New messages` popup */
 ._2xhi._5vn4 ._2xhj {
 	display: none;
+}
+
+/* move the contextual back button so it's not obstructed by the native traffic lights */
+._30yy._2oc9 {
+	margin-left: 65px !important;
 }
 
 @media all and (max-width: 640px) {
