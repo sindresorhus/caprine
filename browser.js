@@ -1,3 +1,4 @@
+/* eslint-disable no-native-reassign no-undef */
 'use strict';
 const ipc = require('electron').ipcRenderer;
 
@@ -25,7 +26,7 @@ const NativeNotification = Notification;
 Notification = function (title, options) {
 	const notification = new NativeNotification(title, options);
 	notification.addEventListener('click', () => {
-		ipc.send('notificationClicked');
+		ipc.send('notification-click');
 	});
 
 	return notification;

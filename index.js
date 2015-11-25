@@ -89,11 +89,10 @@ app.on('activate', () => {
 app.on('before-quit', () => {
 	isQuitting = true;
 	if (!mainWindow.isFullScreen()) {
-		const bounds = mainWindow.getBounds();
-		storage.set('lastWindowState', bounds);
+		storage.set('lastWindowState', mainWindow.getBounds());
 	}
 });
 
-ipc.on('notificationClicked', () => {
+ipc.on('notification-click', () => {
 	mainWindow.show();
 });
