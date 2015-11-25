@@ -7,18 +7,16 @@ const dataFilePath = path.join(app.getPath('userData'), 'data.json');
 function readData() {
 	try {
 		return JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
-	} catch (ex) {
+	} catch (err) {
 		return {};
 	}
 }
 
-exports.set = function (key, value) {
+exports.set = (key, val) => {
 	const data = readData();
-	data[key] = value;
+	data[key] = val;
 	fs.writeFileSync(dataFilePath, JSON.stringify(data));
 };
 
-exports.get = function (key) {
-	return readData()[key];
-};
+exports.get = key => readData()[key];
 
