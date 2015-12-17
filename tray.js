@@ -1,7 +1,8 @@
 const path = require('path');
 const electron = require('electron');
 const app = electron.app;
-const iconPath = path.join(__dirname, 'media/Icon.ico');
+const iconExt = process.platform === 'linux' ? 'png' : 'ico';
+const iconPath = path.join(__dirname, `media/Icon.${iconExt}`);
 
 module.exports = win => {
 	if (process.platform === 'darwin') {
