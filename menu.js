@@ -189,6 +189,15 @@ const linuxTpl = [
 				click() {
 					sendAction('log-out');
 				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Quit',
+				click() {
+					app.quit();
+				}
 			}
 		]
 	},

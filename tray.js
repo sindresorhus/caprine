@@ -37,6 +37,7 @@ module.exports = win => {
 
 	tray.setToolTip(`${app.getName()}`);
 	tray.setContextMenu(contextMenu);
+	tray.on('clicked', () => win.show());
 
 	return tray;
 };
