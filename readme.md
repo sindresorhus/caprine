@@ -54,7 +54,6 @@ Desktop notifications can be turned on in Preferences.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
-NOTE: There is a [known bug](https://github.com/atom/electron/issues/2294) with Electron's handling of desktop notifications on systems running Gnome 3 that may cause Caprine to crash if notifications are clicked. Until this bug is resolved, do not click on notifications if they cause the app to crash on your system.
 
 ## Dev
 
