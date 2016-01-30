@@ -1,6 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
-const listSelector = 'ul[aria-label="Conversation List"] > li';
+const listSelector = 'div[aria-label="Conversations"] > ul > li';
 
 ipc.on('show-preferences', () => {
 	// create the menu for the below
@@ -22,7 +22,7 @@ ipc.on('log-out', () => {
 
 ipc.on('find', () => {
 	document.querySelector('._58al').focus();
-})
+});
 
 ipc.on('next-conversation', () => {
 	const index = getSelectedIndex() + 1;
@@ -40,7 +40,7 @@ function getSelectedIndex() {
 	const selected = document.querySelector('._5l-3._1ht1._1ht2');
 	const list = selected.parentNode;
 
-	return Array.prototype.indexOf.call(list.children, selected);
+	return Array.from(list.children).indexOf(selected);
 }
 
 /* eslint-disable no-native-reassign, no-undef */
