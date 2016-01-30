@@ -149,24 +149,14 @@ const darwinTpl = [
 			},
 			{
 				label: 'Select Next Conversation',
-				accelerator: (() => {
-					if (process.platform === 'darwin') {
-						return 'Cmd+Shift+}';
-					}
-					return 'Ctrl+Tab';
-				})(),
+				accelerator: 'Ctrl+Tab',
 				click() {
 					sendAction('next-conversation');
 				}
 			},
 			{
 				label: 'Select Previous Conversation',
-				accelerator: (() => {
-					if (process.platform === 'darwin') {
-						return 'Cmd+Shift+{';
-					}
-					return 'Ctrl+Shift+Tab';
-				})(),
+				accelerator: 'Ctrl+Shift+Tab',
 				click() {
 					sendAction('previous-conversation');
 				}
