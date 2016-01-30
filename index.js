@@ -11,8 +11,6 @@ const createTray = require('./tray');
 require('electron-debug')();
 require('electron-dl')();
 
-electron.crashReporter.start();
-
 let mainWindow;
 let isQuitting = false;
 
