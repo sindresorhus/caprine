@@ -1,6 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
-const listSelector = 'div[aria-label="Conversations"] > ul > li';
+const listSelector = 'div[role="navigation"] > ul > li';
 
 ipc.on('show-preferences', () => {
 	// create the menu for the below
@@ -25,22 +25,23 @@ ipc.on('find', () => {
 });
 
 ipc.on('next-conversation', () => {
-	const index = getSelectedIndex() + 1;
+	const index = getNextIndex(true);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 });
 
 ipc.on('previous-conversation', () => {
-	const index = getSelectedIndex() - 1;
-	if (index >= 0) {
-		document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
-	}
+	const index = getNextIndex(false);
+	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 });
 
-function getSelectedIndex() {
+// return the index for next node if next is true,
+// else returns index for the previous node
+function getNextIndex(next) {
 	const selected = document.querySelector('._5l-3._1ht1._1ht2');
-	const list = selected.parentNode;
+	const list = Array.from(selected.parentNode.children);
+	const index = list.indexOf(selected) + (next ? 1 : -1);
 
-	return Array.from(list.children).indexOf(selected);
+	return (index % list.length + list.length) % list.length;
 }
 
 /* eslint-disable no-native-reassign, no-undef */
