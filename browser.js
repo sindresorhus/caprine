@@ -1,5 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
+const listSelector = 'div[role="navigation"] > ul > li';
 
 ipc.on('show-preferences', () => {
 	// create the menu for the below
@@ -18,6 +19,30 @@ ipc.on('log-out', () => {
 
 	document.querySelector('._54nq._2i-c._558b._2n_z li:last-child a').click();
 });
+
+ipc.on('find', () => {
+	document.querySelector('._58al').focus();
+});
+
+ipc.on('next-conversation', () => {
+	const index = getNextIndex(true);
+	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+});
+
+ipc.on('previous-conversation', () => {
+	const index = getNextIndex(false);
+	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+});
+
+// return the index for next node if next is true,
+// else returns index for the previous node
+function getNextIndex(next) {
+	const selected = document.querySelector('._5l-3._1ht1._1ht2');
+	const list = Array.from(selected.parentNode.children);
+	const index = list.indexOf(selected) + (next ? 1 : -1);
+
+	return (index % list.length + list.length) % list.length;
+}
 
 /* eslint-disable no-native-reassign, no-undef */
 // Extend and replace the native notifications.

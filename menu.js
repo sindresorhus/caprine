@@ -148,6 +148,30 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Select Next Conversation',
+				accelerator: 'Ctrl+Tab',
+				click() {
+					sendAction('next-conversation');
+				}
+			},
+			{
+				label: 'Select Previous Conversation',
+				accelerator: 'Ctrl+Shift+Tab',
+				click() {
+					sendAction('previous-conversation');
+				}
+			},
+			{
+				label: 'Find Conversation',
+				accelerator: 'CmdOrCtrl+F',
+				click() {
+					sendAction('find');
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
 				label: 'Bring All to Front',
 				role: 'front'
 			},
