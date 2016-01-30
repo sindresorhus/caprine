@@ -5,7 +5,7 @@
 <br>
 [![](media/screenshot.png)](https://github.com/sindresorhus/caprine/releases/latest)
 
-*OS X 10.8+, Windows 7+ & Linux are supported.*
+*OS X 10.9+, Windows 7+ & Linux are supported.*
 
 ## Install
 
