@@ -1,6 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
-const storage = require("remote").require("./storage");
+const storage = require('remote').require('./storage');
 const listSelector = 'div[role="navigation"] > ul > li';
 
 ipc.on('show-preferences', () => {
