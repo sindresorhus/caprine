@@ -1,5 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
+const storage = require("remote").require("./storage");
 const listSelector = 'div[role="navigation"] > ul > li';
 
 ipc.on('show-preferences', () => {
@@ -35,8 +36,30 @@ ipc.on('previous-conversation', () => {
 });
 
 ipc.on('night-mode', () => {
-	document.querySelector('html').classList.toggle('nightMode');
+	toggleNightMode();
 });
+
+function inNightMode() {
+	return storage.get('nightMode') || false;
+}
+
+function toggleNightMode() {
+	if (inNightMode()) {
+		deactivateNightMode();
+	} else {
+		activateNightMode();
+	}
+}
+
+function activateNightMode() {
+	document.querySelector('html').classList.add('nightMode');
+	storage.set('nightMode', true);
+}
+
+function deactivateNightMode() {
+	document.querySelector('html').classList.remove('nightMode');
+	storage.set('nightMode', false);
+}
 
 // return the index for next node if next is true,
 // else returns index for the previous node
@@ -46,6 +69,11 @@ function getNextIndex(next) {
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
 	return (index % list.length + list.length) % list.length;
+}
+
+// activate Night Mode if it was set before quitting
+if (inNightMode()) {
+	activateNightMode();
 }
 
 /* eslint-disable no-native-reassign, no-undef */
