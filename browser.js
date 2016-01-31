@@ -35,7 +35,7 @@ ipc.on('previous-conversation', () => {
 });
 
 ipc.on('night-mode', () => {
-	document.querySelector('html').classList.toggle("nightMode");
+	document.querySelector('html').classList.toggle('nightMode');
 });
 
 // return the index for next node if next is true,
