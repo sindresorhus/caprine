@@ -170,7 +170,8 @@ html.nightMode ._1n-e {
 
 /* messages list: text header above the messages */
 html.nightMode ._17w2,
-html.nightMode ._ih3 ._3oh- {
+html.nightMode ._ih3 ._3oh-,
+html.nightMode ._3oh- {
 	color: rgba(255, 255, 255, 0.7);
 }
 
