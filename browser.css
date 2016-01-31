@@ -102,6 +102,31 @@ html.nightMode ._o46:not(._nd_) ._hh7 {
 	color: rgba(255, 255, 255, 0.7);
 }
 
+/* message list: link in message bubble */
+html.nightMode ._hh7 a:hover {
+	background: transparent !important;
+}
+
+/* message list: link in your message bubble */
+html.nightMode ._o46:not(._nd_) ._hh7 a {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* message list: link preview */
+html.nightMode ._5i_d {
+	border: solid 1px rgba(255, 255, 255, 0.05);
+}
+
+/* message list: link preview text */
+html.nightMode ._5i_d .__6k,
+html.nightMode ._5i_d .__6l {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+html.nightMode ._5i_d .__6m {
+	color: rgba(255, 255, 255, 0.4);
+}
+
 /* message list: input bar */
 html.nightMode ._4rv3 {
 	background: transparent !important;
