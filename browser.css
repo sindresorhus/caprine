@@ -77,12 +77,14 @@ html {
 	}
 }
 
+/* never show outline on clickable elements */
 a, button, *[role="button"] {
 	outline: none !important;
 }
 
 html.nightMode body {
 	color: rgba(255, 255, 255, 0.7);
+	background: #192633 !important;
 }
 
 /* main container? */
@@ -102,14 +104,19 @@ html.nightMode ._o46:not(._nd_) ._hh7 {
 	color: rgba(255, 255, 255, 0.7);
 }
 
+/* message list: link in your message bubble */
+html.nightMode ._o46:not(._nd_) ._hh7 a {
+	color: rgba(255, 255, 255, 0.7);
+}
+
 /* message list: link in message bubble */
 html.nightMode ._hh7 a:hover {
 	background: transparent !important;
 }
 
-/* message list: link in your message bubble */
-html.nightMode ._o46:not(._nd_) ._hh7 a {
-	color: rgba(255, 255, 255, 0.7);
+/* message list: link in incoming message bubble */
+html.nightMode ._o46._nd_ ._hh7 {
+	color: rgba(255, 255, 255, 0.9);
 }
 
 /* message list: link preview */
@@ -148,6 +155,26 @@ html.nightMode ._5742 {
 html.nightMode ._2y8z,
 html.nightMode ._14-7 ._58ah ._58al,
 html.nightMode ._58-3 {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+/* messages list: user info (is in contacts) */
+html.nightMode ._36zg-e {
+	color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* messages list: user info */
+html.nightMode ._1n-e {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+/* messages list: text header above the messages */
+html.nightMode ._17w2,
+html.nightMode ._ih3 ._3oh- {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+html.nightMode ._2v6o {
 	color: rgba(255, 255, 255, 0.4);
 }
 
@@ -198,16 +225,6 @@ html.nightMode ._5t4c {
 	background: transparent !important;
 }
 
-/* text header above the messages */
-html.nightMode ._17w2,
-html.nightMode ._3oh- {
-	color: rgba(255, 255, 255, 0.7);
-}
-
-html.nightMode ._2v6o {
-	color: rgba(255, 255, 255, 0.4);
-}
-
 /* right sidebar */
 html.nightMode ._4_j5 {
 	background: transparent;
@@ -244,14 +261,4 @@ html.nightMode ._5l38 {
 html.nightMode ._364g,
 html.nightMode ._4rph ._4rpj {
 	color: rgba(255, 255, 255, 0.7);
-}
-
-/* messages list: user info (is in contacts) */
-html.nightMode ._36zg-e {
-	color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* messages list: user info */
-html.nightMode ._1n-e {
-	color: rgba(255, 255, 255, 0.4);
 }
