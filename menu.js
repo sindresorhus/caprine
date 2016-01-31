@@ -28,6 +28,12 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Toggle Night Mode',
+				click() {
+					sendAction('night-mode');
+				}
+			},
+			{
 				label: 'Preferences...',
 				accelerator: 'Cmd+,',
 				click() {

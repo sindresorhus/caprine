@@ -34,6 +34,10 @@ ipc.on('previous-conversation', () => {
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 });
 
+ipc.on('night-mode', () => {
+	document.querySelector('html').classList.toggle("nightMode");
+});
+
 // return the index for next node if next is true,
 // else returns index for the previous node
 function getNextIndex(next) {
