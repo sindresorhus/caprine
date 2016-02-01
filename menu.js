@@ -29,6 +29,7 @@ const darwinTpl = [
 			},
 			{
 				label: 'Toggle Night Mode',
+				accelerator: 'CmdOrCtrl+d',
 				click() {
 					sendAction('night-mode');
 				}
@@ -251,6 +252,13 @@ const linuxTpl = [
 			},
 			{
 				type: 'separator'
+			},
+			{
+				label: 'Toggle Night Mode',
+				accelerator: 'CmdOrCtrl+d',
+				click() {
+					sendAction('night-mode');
+				}
 			},
 			{
 				label: 'Preferences',
