@@ -191,6 +191,10 @@ html.nightMode ._5iwm ._58al {
 	color: rgba(255, 255, 255, 0.5);
 }
 
+html.nightMode ._5iwm ._58al::-webkit-input-placeholder {
+	color: rgba(255, 255, 255, 0.3);
+}
+
 /* contact list: background */
 html.nightMode ._1enh {
 	background: transparent !important;
