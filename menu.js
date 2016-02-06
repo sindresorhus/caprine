@@ -28,10 +28,10 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Night Mode',
+				label: 'Toggle Dark Mode',
 				accelerator: 'CmdOrCtrl+d',
 				click() {
-					sendAction('night-mode');
+					sendAction('dark-mode');
 				}
 			},
 			{
@@ -254,10 +254,10 @@ const linuxTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Night Mode',
+				label: 'Toggle Dark Mode',
 				accelerator: 'CmdOrCtrl+d',
 				click() {
-					sendAction('night-mode');
+					sendAction('dark-mode');
 				}
 			},
 			{

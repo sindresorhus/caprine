@@ -35,30 +35,30 @@ ipc.on('previous-conversation', () => {
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 });
 
-ipc.on('night-mode', () => {
-	toggleNightMode();
+ipc.on('dark-mode', () => {
+	toggleDarkMode();
 });
 
-function inNightMode() {
-	return storage.get('nightMode') || false;
+function inDarkMode() {
+	return storage.get('darkMode') || false;
 }
 
-function toggleNightMode() {
-	if (inNightMode()) {
-		deactivateNightMode();
+function toggleDarkMode() {
+	if (inDarkMode()) {
+		deactivateDarkMode();
 	} else {
-		activateNightMode();
+		activateDarkMode();
 	}
 }
 
-function activateNightMode() {
-	document.querySelector('html').classList.add('nightMode');
-	storage.set('nightMode', true);
+function activateDarkMode() {
+	document.querySelector('html').classList.add('darkMode');
+	storage.set('darkMode', true);
 }
 
-function deactivateNightMode() {
-	document.querySelector('html').classList.remove('nightMode');
-	storage.set('nightMode', false);
+function deactivateDarkMode() {
+	document.querySelector('html').classList.remove('darkMode');
+	storage.set('darkMode', false);
 }
 
 // return the index for next node if next is true,
@@ -71,9 +71,9 @@ function getNextIndex(next) {
 	return (index % list.length + list.length) % list.length;
 }
 
-// activate Night Mode if it was set before quitting
-if (inNightMode()) {
-	activateNightMode();
+// activate Dark Mode if it was set before quitting
+if (inDarkMode()) {
+	activateDarkMode();
 }
 
 /* eslint-disable no-native-reassign, no-undef */
