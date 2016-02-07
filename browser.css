@@ -82,6 +82,11 @@ a, button, *[role="button"] {
 	outline: none !important;
 }
 
+
+/*
+DARK MODE
+*/
+
 html.darkMode body {
 	color: rgba(255, 255, 255, 0.7);
 	background: #192633 !important;
