@@ -10,7 +10,7 @@
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
   },
-  "electronVersion": "0.36.6",
+  "electronVersion": "0.36.7",
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
-    "electron-prebuilt": "^0.36.6",
+    "electron-prebuilt": "^0.36.7",
     "xo": "*"
   },
   "xo": {
