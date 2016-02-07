@@ -28,6 +28,13 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Toggle Dark Mode',
+				accelerator: 'CmdOrCtrl+d',
+				click() {
+					sendAction('dark-mode');
+				}
+			},
+			{
 				label: 'Preferences...',
 				accelerator: 'Cmd+,',
 				click() {
@@ -245,6 +252,13 @@ const linuxTpl = [
 			},
 			{
 				type: 'separator'
+			},
+			{
+				label: 'Toggle Dark Mode',
+				accelerator: 'CmdOrCtrl+d',
+				click() {
+					sendAction('dark-mode');
+				}
 			},
 			{
 				label: 'Preferences',

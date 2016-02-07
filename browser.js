@@ -1,5 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
+const storage = require('remote').require('./storage');
 const listSelector = 'div[role="navigation"] > ul > li';
 
 ipc.on('show-preferences', () => {
@@ -34,6 +35,32 @@ ipc.on('previous-conversation', () => {
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 });
 
+ipc.on('dark-mode', () => {
+	toggleDarkMode();
+});
+
+function inDarkMode() {
+	return storage.get('darkMode') || false;
+}
+
+function toggleDarkMode() {
+	if (inDarkMode()) {
+		deactivateDarkMode();
+	} else {
+		activateDarkMode();
+	}
+}
+
+function activateDarkMode() {
+	document.querySelector('html').classList.add('darkMode');
+	storage.set('darkMode', true);
+}
+
+function deactivateDarkMode() {
+	document.querySelector('html').classList.remove('darkMode');
+	storage.set('darkMode', false);
+}
+
 // return the index for next node if next is true,
 // else returns index for the previous node
 function getNextIndex(next) {
@@ -42,6 +69,11 @@ function getNextIndex(next) {
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
 	return (index % list.length + list.length) % list.length;
+}
+
+// activate Dark Mode if it was set before quitting
+if (inDarkMode()) {
+	activateDarkMode();
 }
 
 /* eslint-disable no-native-reassign, no-undef */
