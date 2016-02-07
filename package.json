@@ -10,6 +10,13 @@
     "email": "sindresorhus@gmail.com",
     "url": "sindresorhus.com"
   },
+  "maintainers": [
+    {
+      "name": "Oskar Krawczyk",
+      "email": "oskar.krawczyk@gmail.com",
+      "url": "http://krawczyk.io"
+    }
+  ],
   "electronVersion": "0.36.7",
   "scripts": {
     "test": "xo",
