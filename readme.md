@@ -41,6 +41,13 @@ Icon=/full/path/to/folder/Caprine/resources/app/media/Icon.png
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) and unzip to some location.
 
 
+## Dark mode
+
+You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd>.
+
+![](media/screenshot-dark.png)
+
+
 ## Compact mode
 
 The interface adapts when resized to a small size.
