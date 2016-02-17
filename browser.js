@@ -80,13 +80,15 @@ if (inDarkMode()) {
 
 // it's not possible to add muiltiple accelerators so need to do this
 // the oldschool way
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', (event) => {
 	if (process.platform === 'darwin') {
-		if (event.metaKey && event.shiftKey && event.keyCode === 221)
+		if (event.metaKey && event.shiftKey && event.keyCode === 221) {
 			nextConversation();
+		}
 
-		if (event.metaKey && event.shiftKey && event.keyCode === 219)
+		if (event.metaKey && event.shiftKey && event.keyCode === 219) {
 			previousConversation();
+		}
 	}
 });
 
