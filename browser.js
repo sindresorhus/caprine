@@ -25,19 +25,21 @@ ipc.on('find', () => {
 	document.querySelector('._58al').focus();
 });
 
-ipc.on('next-conversation', () => {
+ipc.on('next-conversation', nextConversation);
+
+ipc.on('previous-conversation', previousConversation);
+
+ipc.on('dark-mode', toggleDarkMode);
+
+function nextConversation() {
 	const index = getNextIndex(true);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
-});
+}
 
-ipc.on('previous-conversation', () => {
+function previousConversation() {
 	const index = getNextIndex(false);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
-});
-
-ipc.on('dark-mode', () => {
-	toggleDarkMode();
-});
+}
 
 function inDarkMode() {
 	return storage.get('darkMode') || false;
@@ -75,6 +77,20 @@ function getNextIndex(next) {
 if (inDarkMode()) {
 	activateDarkMode();
 }
+
+// it's not possible to add multiple accelerators
+// so need to do this the oldschool way
+document.addEventListener('keydown', event => {
+	if (process.platform === 'darwin' && event.metaKey && event.shiftKey) {
+		if (event.keyCode === 221/* ] */) {
+			nextConversation();
+		}
+
+		if (event.keyCode === 219/* [ */) {
+			previousConversation();
+		}
+	}
+});
 
 /* eslint-disable no-native-reassign, no-undef */
 // Extend and replace the native notifications.
