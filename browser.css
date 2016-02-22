@@ -158,9 +158,14 @@ html.darkMode ._5742 {
 }
 /* message list: header above (invitation) */
 html.darkMode ._2y8z,
-html.darkMode ._14-7 ._58ah ._58al,
+html.darkMode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
 html.darkMode ._58-3 {
 	color: rgba(255, 255, 255, 0.4);
+}
+
+/* message list: header above (invitation) (typed text) */
+html.darkMode ._14-7 ._58ah ._58al {
+	color: rgba(255, 255, 255, 0.7);
 }
 
 /* messages list: user info (is in contacts) */
@@ -266,6 +271,11 @@ html.darkMode ._3eus {
 	color: rgba(255, 255, 255, 0.4);
 }
 
+/* right sidebar: mute notification setting */
+html.darkMode ._3x6v {
+	color: rgba(255, 255, 255, 0.4);
+}
+
 /* right sidebar: people list */
 html.darkMode ._4_j5 ._5l37 {
 	color: rgba(255, 255, 255, 0.4);
@@ -279,11 +289,12 @@ html.darkMode ._4_j5 ._5l38 {
 
 /* right sidebar: people list item (name) */
 html.darkMode ._364g,
+html.darkMode ._3x6u,
 html.darkMode ._4rph ._4rpj {
 	color: rgba(255, 255, 255, 0.7);
 }
 
 /* new conversation contact list: text color */
-html.darkMode ._5f0v ._364g {
+html.darkMode ._5t4c ._364g {
 	color: #192633;
 }
