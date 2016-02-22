@@ -241,8 +241,31 @@ html.darkMode ._1ht7 {
 }
 
 /* contact list: search results */
-html.darkMode ._5t4c {
+html.darkMode ._5t4c,
+html.darkMode ._5t4c ._5l37 {
 	background: transparent !important;
+}
+
+/* contact list: search results name */
+html.darkMode ._3q34,
+html.darkMode ._364g {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* contact list: search results subname */
+html.darkMode ._3q35 {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+/* contact list: search result label type */
+html.darkMode ._3xcx,
+html.darkMode ._225b {
+	color: rgba(255, 255, 255, 0.4);
+}
+
+/* contact list: searching text */
+html.darkMode ._4g0h {
+	color: rgba(255, 255, 255, 0.4);
 }
 
 /* right sidebar */
@@ -294,7 +317,8 @@ html.darkMode ._4rph ._4rpj {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* new conversation contact list: text color */
-html.darkMode ._5t4c ._364g {
-	color: #192633;
+/* new conversation contact list: popup */
+html.darkMode ._2y8_ {
+	background: transparent;
+	border: solid 1px rgba(255, 255, 255, 0.05);
 }
