@@ -240,6 +240,11 @@ html.darkMode ._1ht7 {
 	color: rgba(255, 255, 255, 0.2);
 }
 
+/* contact list: timestamp (unread) */
+html.darkMode ._1ht3 ._1ht7 {
+  color: rgba(0, 132, 255, .7)
+}
+
 /* contact list: search results */
 html.darkMode ._5t4c,
 html.darkMode ._5t4c ._5l37 {
