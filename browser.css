@@ -240,10 +240,15 @@ html.darkMode ._1ht7 {
 	color: rgba(255, 255, 255, 0.2);
 }
 
+/* contact list: timestamp (unread) */
+html.darkMode ._1ht3 ._1ht7 {
+	color: rgba(0, 132, 255, 0.7)
+}
+
 /* contact list: search results */
 html.darkMode ._5t4c,
 html.darkMode ._5t4c ._5l37 {
-	background: transparent !important;
+	background: transparent;
 }
 
 /* contact list: search results name */
@@ -275,12 +280,12 @@ html.darkMode ._4_j5 {
 }
 
 /* right sidebar: headings */
-html.darkMode ._3tl0 {
+html.darkMode ._1lj0 {
 	color: rgba(255, 255, 255, 0.4);
 }
 
 /* right sidebar: section spacer */
-html.darkMode ._502q {
+html.darkMode ._1li- {
 	border-top: solid 1px rgba(255, 255, 255, 0.05);
 }
 
@@ -294,7 +299,12 @@ html.darkMode ._3eus {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* right sidebar: mute notification setting */
+/* right sidebar: mute notification label */
+html.darkMode ._3szq {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* right sidebar: mute notification time */
 html.darkMode ._3x6v {
 	color: rgba(255, 255, 255, 0.4);
 }
@@ -302,12 +312,12 @@ html.darkMode ._3x6v {
 /* right sidebar: people list */
 html.darkMode ._4_j5 ._5l37 {
 	color: rgba(255, 255, 255, 0.4);
-	background: transparent !important;
+	background: transparent;
 }
 
-/* right sidebar: people list item */
-html.darkMode ._4_j5 ._5l38 {
-	border-bottom: solid 1px rgba(255, 255, 255, 0.05);
+/* right sidebar: people list (add people) */
+html.darkMode ._4rph ._4rpj {
+	border-top: solid 1px rgba(255, 255, 255, 0.1);
 }
 
 /* right sidebar: people list item (name) */
@@ -321,4 +331,18 @@ html.darkMode ._4rph ._4rpj {
 html.darkMode ._2y8_ {
 	background: transparent;
 	border: solid 1px rgba(255, 255, 255, 0.05);
+}
+
+/* new conversation contact list: popup hr */
+html.darkMode ._5l38 {
+	border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* new conversation contact list: popup hover */
+html.darkMode ._1k1p ._5l38 {
+	border-top: none;
+}
+html.darkMode ._5l37:active,
+html.darkMode ._1k1p {
+	background-color: rgba(255, 255, 255, 0.05) !important;
 }
