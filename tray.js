@@ -9,19 +9,21 @@ module.exports = win => {
 		return false;
 	}
 
+	const toggleWin = () => {
+		if (win.isVisible()) {
+			win.hide();
+		} else {
+			win.show();
+		}
+	};
+
 	const tray = new electron.Tray(iconPath);
 
 	const contextMenu = electron.Menu.buildFromTemplate([
 		{
-			label: 'Show',
+			label: 'Toggle',
 			click() {
-				win.show();
-			}
-		},
-		{
-			label: 'Hide',
-			click() {
-				win.hide();
+				toggleWin();
 			}
 		},
 		{
@@ -37,7 +39,7 @@ module.exports = win => {
 
 	tray.setToolTip(`${app.getName()}`);
 	tray.setContextMenu(contextMenu);
-	tray.on('clicked', () => win.show());
+	tray.on('clicked', toggleWin);
 
 	return tray;
 };
