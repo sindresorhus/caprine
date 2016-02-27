@@ -57,7 +57,12 @@ function createMainWindow() {
 	win.on('close', e => {
 		if (!isQuitting) {
 			e.preventDefault();
-			win.hide();
+
+			if (process.platform === 'darwin') {
+				app.hide();
+			} else {
+				win.hide();
+			}
 		}
 	});
 
@@ -96,8 +101,4 @@ app.on('before-quit', () => {
 	if (!mainWindow.isFullScreen()) {
 		storage.set('lastWindowState', mainWindow.getBounds());
 	}
-});
-
-ipc.on('notification-click', () => {
-	mainWindow.show();
 });
