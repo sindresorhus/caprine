@@ -41,26 +41,13 @@ function previousConversation() {
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 }
 
-function inDarkMode() {
-	return storage.get('darkMode') || false;
+function setDarkMode() {
+	document.documentElement.classList.toggle('darkMode', storage.get('darkMode'));
 }
 
 function toggleDarkMode() {
-	if (inDarkMode()) {
-		deactivateDarkMode();
-	} else {
-		activateDarkMode();
-	}
-}
-
-function activateDarkMode() {
-	document.querySelector('html').classList.add('darkMode');
-	storage.set('darkMode', true);
-}
-
-function deactivateDarkMode() {
-	document.querySelector('html').classList.remove('darkMode');
-	storage.set('darkMode', false);
+	storage.set('darkMode', !storage.get('darkMode'));
+	setDarkMode();
 }
 
 // return the index for next node if next is true,
@@ -74,9 +61,7 @@ function getNextIndex(next) {
 }
 
 // activate Dark Mode if it was set before quitting
-if (inDarkMode()) {
-	activateDarkMode();
-}
+setDarkMode();
 
 // it's not possible to add multiple accelerators
 // so need to do this the oldschool way
