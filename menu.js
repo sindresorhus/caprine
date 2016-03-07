@@ -5,6 +5,7 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const shell = electron.shell;
 const appName = app.getName();
+const storage = require('./storage');
 
 function sendAction(action) {
 	const win = BrowserWindow.getAllWindows()[0];
@@ -32,6 +33,15 @@ const darwinTpl = [
 				accelerator: 'CmdOrCtrl+D',
 				click() {
 					sendAction('dark-mode');
+				}
+			},
+			{
+				label: 'Sync Theme with OSX Dark Mode',
+				type: 'checkbox',
+				checked: storage.get('linkedTheme'),
+				click() {
+					storage.set('linkedTheme', !storage.get('linkedTheme'));
+					sendAction('link-theme')
 				}
 			},
 			{
