@@ -32,11 +32,9 @@ ipc.on('previous-conversation', previousConversation);
 
 ipc.on('dark-mode', toggleDarkMode);
 
-ipc.on('link-theme', () => {
-	if (process.platform === 'darwin' && storage.get('linkedTheme')) {
-		storage.set('darkMode', app.isDarkMode());
-		setDarkMode();
-	}
+app.on('platform-theme-changed', () => {
+	storage.set('darkMode', app.isDarkMode());
+	setDarkMode();
 });
 
 function nextConversation() {
@@ -66,6 +64,11 @@ function getNextIndex(next) {
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
 	return (index % list.length + list.length) % list.length;
+}
+
+// Link the theme if it was changed while the app was closed
+if (process.platform === 'darwin') {
+	storage.set('darkMode', app.isDarkMode());
 }
 
 // activate Dark Mode if it was set before quitting

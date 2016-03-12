@@ -79,10 +79,6 @@ app.on('ready', () => {
 
 	page.on('dom-ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
-
-		// Fix the theme if system's Dark Mode was toggled while app was closed
-		mainWindow.webContents.send('link-theme');
-
 		mainWindow.show();
 	});
 
@@ -102,8 +98,4 @@ app.on('before-quit', () => {
 	if (!mainWindow.isFullScreen()) {
 		storage.set('lastWindowState', mainWindow.getBounds());
 	}
-});
-
-app.on('platform-theme-changed', () => {
-	mainWindow.webContents.send('link-theme');
 });
