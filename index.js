@@ -13,6 +13,19 @@ require('electron-dl')();
 let mainWindow;
 let isQuitting = false;
 
+const isAlreadyRunning = app.makeSingleInstance(() => {
+	if (mainWindow) {
+		if (mainWindow.isMinimized()) {
+			mainWindow.restore();
+		}
+		mainWindow.show();
+	}
+});
+
+if (isAlreadyRunning) {
+	app.quit();
+}
+
 function updateBadge(title) {
 	if (!app.dock) {
 		return;
