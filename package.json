@@ -17,7 +17,7 @@
       "url": "krawczyk.io"
     }
   ],
-  "electronVersion": "0.36.9",
+  "electronVersion": "0.36.11",
   "scripts": {
     "test": "xo",
     "start": "electron .",
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "electron-packager": "^5.1.0",
-    "electron-prebuilt": "^0.36.9",
+    "electron-prebuilt": "^0.36.11",
     "xo": "*"
   },
   "xo": {

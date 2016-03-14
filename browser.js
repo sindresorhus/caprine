@@ -1,5 +1,6 @@
 'use strict';
 const ipc = require('electron').ipcRenderer;
+const app = require('remote').app;
 const storage = require('remote').require('./storage');
 const listSelector = 'div[role="navigation"] > ul > li';
 
@@ -31,6 +32,11 @@ ipc.on('previous-conversation', previousConversation);
 
 ipc.on('dark-mode', toggleDarkMode);
 
+app.on('platform-theme-changed', () => {
+	storage.set('darkMode', app.isDarkMode());
+	setDarkMode();
+});
+
 function nextConversation() {
 	const index = getNextIndex(true);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
@@ -58,6 +64,11 @@ function getNextIndex(next) {
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
 	return (index % list.length + list.length) % list.length;
+}
+
+// Link the theme if it was changed while the app was closed
+if (process.platform === 'darwin') {
+	storage.set('darkMode', app.isDarkMode());
 }
 
 // activate Dark Mode if it was set before quitting
