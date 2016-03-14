@@ -1,7 +1,8 @@
 'use strict';
-const ipc = require('electron').ipcRenderer;
-const app = require('remote').app;
-const storage = require('remote').require('./storage');
+const electron = require('electron');
+const ipc = electron.ipcRenderer;
+const app = electron.remote.app;
+const storage = electron.remote.require('./storage');
 const listSelector = 'div[role="navigation"] > ul > li';
 
 ipc.on('show-preferences', () => {
@@ -66,7 +67,7 @@ function getNextIndex(next) {
 	return (index % list.length + list.length) % list.length;
 }
 
-// Link the theme if it was changed while the app was closed
+// link the theme if it was changed while the app was closed
 if (process.platform === 'darwin') {
 	storage.set('darkMode', app.isDarkMode());
 }
