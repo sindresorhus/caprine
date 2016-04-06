@@ -286,11 +286,12 @@ const helpSubmenu = [
 		label: 'Report an Issue...',
 		click() {
 			const body = `
-**Please succinctly describe your issue and steps to reproduce it.**
+<!-- Please succinctly describe your issue and steps to reproduce it. -->
 
 -
 
 ${app.getName()} ${app.getVersion()}
+Electron ${process.versions.electron}
 ${process.platform} ${process.arch} ${os.release()}`;
 
 			shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
