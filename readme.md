@@ -70,12 +70,12 @@ Built with [Electron](http://electron.atom.io).
 
 - Init: `$ npm install`
 - Run: `$ npm start`
-- Build OS X: `$ npm run build-osx`
-- Build Linux: `$ npm run build-linux`
-- Build Windows: `$ npm run build-windows`
+- Build OS X: `$ npm run build:osx`
+- Build Linux: `$ npm run build:linux`
+- Build Windows: `$ npm run build:windows`
 - Build all: `$ brew install wine` and `$ npm run build` *(OS X only)*
 
 
 ## License
 
-MIT © [Sindre Sorhus](http://sindresorhus.com)
+MIT © [Sindre Sorhus](https://sindresorhus.com)
