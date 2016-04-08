@@ -346,3 +346,43 @@ html.darkMode ._5l37:active,
 html.darkMode ._1k1p {
 	background-color: rgba(255, 255, 255, 0.05) !important;
 }
+
+/* dialogs */
+html.darkMode ._53ij,
+html.darkMode ._4eby {
+	background: #192633 !important;
+}
+
+/* dialog: title and names */
+html.darkMode ._374c,
+html.darkMode ._4ebz,
+html.darkMode ._2c9i ._19jt {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+/* gif and sticker dialog: hide white triangle */
+html.darkMode ._53io {
+	visibility: hidden;
+}
+
+/* gif and sticker dialog: style the bottom of the list */
+html.darkMode .uiScrollableArea.contentAfter:after {
+	background: linear-gradient(rgba(25, 38, 51, .05), #192633);
+}
+
+/* sticker dialog: selected header */
+html.darkMode ._5r8a._5r8b,
+html.darkMode ._eb3:before {
+	background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* sticker dialog: header borders */
+html.darkMode ._5r8e,
+html.darkMode ._5r86 {
+	border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* record dialog: time */
+html.darkMode ._3z53 {
+	color: rgba(255, 255, 255, 0.7);
+}
