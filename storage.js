@@ -1,8 +1,8 @@
 'use strict';
-const app = require('app');
 const fs = require('fs');
 const path = require('path');
-const dataFilePath = path.join(app.getPath('userData'), 'data.json');
+const electron = require('electron');
+const dataFilePath = path.join(electron.app.getPath('userData'), 'data.json');
 
 function readData() {
 	try {
