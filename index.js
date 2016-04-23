@@ -65,6 +65,10 @@ function createMainWindow() {
 		}
 	});
 
+	if (process.platform === 'darwin') {
+		win.setSheetOffset(40);
+	}
+
 	win.loadURL('https://www.messenger.com/login/');
 
 	win.on('close', e => {
