@@ -138,6 +138,32 @@ const darwinTpl = [
 		]
 	},
 	{
+		label: 'View',
+		submenu: [
+			{
+				label: 'Make Text Normal Size',
+				accelerator: 'CmdOrCtrl+0',
+				click() {
+					sendAction('zoom-reset');
+				}
+			},
+			{
+				label: 'Make Text Bigger',
+				accelerator: 'CmdOrCtrl+=',
+				click() {
+					sendAction('zoom-in');
+				}
+			},
+			{
+				label: 'Make Text Smaller',
+				accelerator: 'CmdOrCtrl+-',
+				click() {
+					sendAction('zoom-out');
+				}
+			}
+		]
+	},
+	{
 		label: 'Window',
 		role: 'window',
 		submenu: [
@@ -265,6 +291,32 @@ const linuxTpl = [
 				accelerator: 'CmdOrCtrl+,',
 				click() {
 					sendAction('show-preferences');
+				}
+			}
+		]
+	},
+	{
+		label: 'View',
+		submenu: [
+			{
+				label: 'Make Text Normal Size',
+				accelerator: 'CmdOrCtrl+0',
+				click() {
+					sendAction('zoom-reset');
+				}
+			},
+			{
+				label: 'Make Text Bigger',
+				accelerator: 'CmdOrCtrl+=',
+				click() {
+					sendAction('zoom-in');
+				}
+			},
+			{
+				label: 'Make Text Smaller',
+				accelerator: 'CmdOrCtrl+-',
+				click() {
+					sendAction('zoom-out');
 				}
 			}
 		]
