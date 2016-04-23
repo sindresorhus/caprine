@@ -45,6 +45,7 @@ ipc.on('zoom-reset', () => {
 
 ipc.on('zoom-in', () => {
 	const zoomFactor = storage.get('zoomFactor') + 0.1;
+
 	if (zoomFactor <= 1.4) {
 		setZoom(zoomFactor);
 	}
@@ -52,6 +53,7 @@ ipc.on('zoom-in', () => {
 
 ipc.on('zoom-out', () => {
 	const zoomFactor = storage.get('zoomFactor') - 0.1;
+
 	if (zoomFactor >= 0.7) {
 		setZoom(zoomFactor);
 	}
