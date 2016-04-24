@@ -138,30 +138,7 @@ const darwinTpl = [
 		]
 	},
 	{
-		label: 'View',
-		submenu: [
-			{
-				label: 'Make Text Normal Size',
-				accelerator: 'CmdOrCtrl+0',
-				click() {
-					sendAction('zoom-reset');
-				}
-			},
-			{
-				label: 'Make Text Bigger',
-				accelerator: 'CmdOrCtrl+=',
-				click() {
-					sendAction('zoom-in');
-				}
-			},
-			{
-				label: 'Make Text Smaller',
-				accelerator: 'CmdOrCtrl+-',
-				click() {
-					sendAction('zoom-out');
-				}
-			}
-		]
+		label: 'View'
 	},
 	{
 		label: 'Window',
@@ -296,34 +273,35 @@ const linuxTpl = [
 		]
 	},
 	{
-		label: 'View',
-		submenu: [
-			{
-				label: 'Make Text Normal Size',
-				accelerator: 'CmdOrCtrl+0',
-				click() {
-					sendAction('zoom-reset');
-				}
-			},
-			{
-				label: 'Make Text Bigger',
-				accelerator: 'CmdOrCtrl+=',
-				click() {
-					sendAction('zoom-in');
-				}
-			},
-			{
-				label: 'Make Text Smaller',
-				accelerator: 'CmdOrCtrl+-',
-				click() {
-					sendAction('zoom-out');
-				}
-			}
-		]
+		label: 'View'
 	},
 	{
 		label: 'Help',
 		role: 'help'
+	}
+];
+
+const viewSubmenu = [
+	{
+		label: 'Reset Text Size',
+		accelerator: 'CmdOrCtrl+0',
+		click() {
+			sendAction('zoom-reset');
+		}
+	},
+	{
+		label: 'Increase Text Size',
+		accelerator: 'CmdOrCtrl+Plus',
+		click() {
+			sendAction('zoom-in');
+		}
+	},
+	{
+		label: 'Decrease Text Size',
+		accelerator: 'CmdOrCtrl+-',
+		click() {
+			sendAction('zoom-out');
+		}
 	}
 ];
 
@@ -354,8 +332,10 @@ ${process.platform} ${process.arch} ${os.release()}`;
 let tpl;
 if (process.platform === 'darwin') {
 	tpl = darwinTpl;
+	tpl[3].submenu = viewSubmenu;
 } else {
 	tpl = linuxTpl;
+	tpl[2].submenu = viewSubmenu;
 }
 
 tpl[tpl.length - 1].submenu = helpSubmenu;

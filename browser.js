@@ -46,7 +46,7 @@ ipc.on('zoom-reset', () => {
 ipc.on('zoom-in', () => {
 	const zoomFactor = storage.get('zoomFactor') + 0.1;
 
-	if (zoomFactor <= 1.4) {
+	if (zoomFactor < 1.6) {
 		setZoom(zoomFactor);
 	}
 });
@@ -54,7 +54,7 @@ ipc.on('zoom-in', () => {
 ipc.on('zoom-out', () => {
 	const zoomFactor = storage.get('zoomFactor') - 0.1;
 
-	if (zoomFactor >= 0.7) {
+	if (zoomFactor >= 0.8) {
 		setZoom(zoomFactor);
 	}
 });
@@ -90,7 +90,7 @@ function getNextIndex(next) {
 
 function setZoom(zoomFactor) {
 	const node = document.getElementById('zoomFactor');
-	node.innerHTML = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
+	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	storage.set('zoomFactor', zoomFactor);
 }
 
@@ -107,7 +107,6 @@ setDarkMode();
 document.addEventListener('DOMContentLoaded', () => {
 	const zoomFactor = storage.get('zoomFactor') || 1.0;
 	const style = document.createElement('style');
-	style.type = 'text/css';
 	style.id = 'zoomFactor';
 
 	document.body.appendChild(style);
