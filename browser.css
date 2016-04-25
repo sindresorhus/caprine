@@ -361,8 +361,9 @@ html.darkMode ._4eby {
 /* dialog: title and names */
 html.darkMode ._374c,
 html.darkMode ._4ebz,
-html.darkMode ._2c9i ._19jt {
-	color: rgba(255, 255, 255, 0.7);
+html.darkMode ._2c9i ._19jt,
+html.darkMode .uiInputLabelLabel {
+	color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* gif and sticker dialog: hide white triangle */
@@ -390,4 +391,21 @@ html.darkMode ._5r86 {
 /* record dialog: time */
 html.darkMode ._3z53 {
 	color: rgba(255, 255, 255, 0.7);
+}
+
+/* Login tile and names */
+html.darkMode ._5hy4,
+html.darkMode ._3403 {
+	color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Login inputs */
+html.darkMode ._55r1._5f0v._43di {
+	background: rgba(255, 255, 255, 0.1) !important;
+	color: rgba(255, 255, 255, 0.75);
+}
+
+/* Login button */
+html.darkMode button {
+	background: #192633 !important;
 }

@@ -23,7 +23,8 @@ ipc.on('log-out', () => {
 	// create the menu for the below
 	document.querySelector('._30yy._2fug._p').click();
 
-	document.querySelector('._54nq._2i-c._558b._2n_z li:last-child a').click();
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+	nodes[nodes.length - 1].click();
 });
 
 ipc.on('find', () => {
