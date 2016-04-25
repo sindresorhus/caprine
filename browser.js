@@ -35,18 +35,11 @@ ipc.on('next-conversation', nextConversation);
 ipc.on('previous-conversation', previousConversation);
 
 ipc.on('delete-conversation', () => {
-	const index = getIndex();
-	if (index === null) {
-		return;
-	}
+	openConversationModal(3);
+});
 
-	// Open and close the menu for the below
-	const menu = document.querySelectorAll('.uiPopover')[index + 1].firstChild;
-	menu.click();
-	menu.click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(3) a');
-	nodes[nodes.length - 1].click();
+ipc.on('mute-conversation', () => {
+	openConversationModal(1);
 });
 
 ipc.on('dark-mode', toggleDarkMode);
@@ -126,6 +119,22 @@ function setZoom(zoomFactor) {
 	const node = document.getElementById('zoomFactor');
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	storage.set('zoomFactor', zoomFactor);
+}
+
+function openConversationModal(position) {
+	const index = getIndex();
+	if (index === null) {
+		return;
+	}
+
+	// Open and close the menu for the below
+	const menu = document.querySelectorAll('.uiPopover')[index + 1].firstChild;
+	menu.click();
+	menu.click();
+
+	const selector = `._54nq._2i-c._558b._2n_z li:nth-child(${position}) a`;
+	const nodes = document.querySelectorAll(selector);
+	nodes[nodes.length - 1].click();
 }
 
 // link the theme if it was changed while the app was closed

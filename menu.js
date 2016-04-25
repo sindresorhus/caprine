@@ -149,8 +149,15 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Mute Conversation',
+				accelerator: 'CmdOrCtrl+K',
+				click() {
+					sendAction('mute-conversation');
+				}
+			},
+			{
 				label: 'Delete Conversation',
-				accelerator: 'CmdOrCtrl+X',
+				accelerator: 'CmdOrCtrl+Shift+K',
 				click() {
 					sendAction('delete-conversation');
 				}
