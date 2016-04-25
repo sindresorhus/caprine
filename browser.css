@@ -2,13 +2,6 @@ html {
 	overflow: hidden;
 }
 
-/* Add border to focused element in delete menu */
-._3quh._30yy._5ixy:focus {
-	border: 2px solid #0084FF;
-	border-radius: 3px;
-	box-shadow: 0 0 10px #719ECE;
-}
-
 /* window wrapper */
 ._4sp8 {
 	min-width: 0;
@@ -87,6 +80,11 @@ html {
 /* never show outline on clickable elements */
 a, button, *[role="button"] {
 	outline: none !important;
+}
+
+/* Add border to focused element in mute and delete menus */
+._3quh._30yy._5ixy:focus {
+	outline: inherit !important;
 }
 
 
