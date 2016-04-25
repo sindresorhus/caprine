@@ -144,6 +144,16 @@ const darwinTpl = [
 				click() {
 					sendAction('new-conversation');
 				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Delete Conversation',
+				accelerator: 'CmdOrCtrl+X',
+				click() {
+					sendAction('delete-conversation');
+				}
 			}
 		]
 	},

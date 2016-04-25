@@ -5,6 +5,7 @@ const app = electron.remote.app;
 const storage = electron.remote.require('./storage');
 const listSelector = 'div[role="navigation"] > ul > li';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
+const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
 ipc.on('show-preferences', () => {
 	// create the menu for the below
@@ -32,6 +33,21 @@ ipc.on('find', () => {
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
+
+ipc.on('delete-conversation', () => {
+	const index = getIndex();
+	if (index === null) {
+		return;
+	}
+
+	// Open and close the menu for the below
+	const menu = document.querySelectorAll('.uiPopover')[index + 1].firstChild;
+	menu.click();
+	menu.click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(3) a');
+	nodes[nodes.length - 1].click();
+});
 
 ipc.on('dark-mode', toggleDarkMode);
 
@@ -79,10 +95,27 @@ function toggleDarkMode() {
 	setDarkMode();
 }
 
+// returns the index of the selected conversation
+// if no conversation is selected, returns null.
+function getIndex() {
+	const selected = document.querySelector(selectedConversationSelector);
+	if (!selected) {
+		return null;
+	}
+
+	const list = Array.from(selected.parentNode.children);
+
+	return list.indexOf(selected);
+}
+
 // return the index for next node if next is true,
 // else returns index for the previous node
 function getNextIndex(next) {
-	const selected = document.querySelector('._5l-3._1ht1._1ht2');
+	const selected = document.querySelector(selectedConversationSelector);
+	if (!selected) {
+		return 0;
+	}
+
 	const list = Array.from(selected.parentNode.children);
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
