@@ -16,6 +16,54 @@ function sendAction(action) {
 	win.webContents.send(action);
 }
 
+const viewSubmenu = [
+	{
+		label: 'Reset Text Size',
+		accelerator: 'CmdOrCtrl+0',
+		click() {
+			sendAction('zoom-reset');
+		}
+	},
+	{
+		label: 'Increase Text Size',
+		accelerator: 'CmdOrCtrl+Plus',
+		click() {
+			sendAction('zoom-in');
+		}
+	},
+	{
+		label: 'Decrease Text Size',
+		accelerator: 'CmdOrCtrl+-',
+		click() {
+			sendAction('zoom-out');
+		}
+	}
+];
+
+const helpSubmenu = [
+	{
+		label: `${appName} Website...`,
+		click() {
+			shell.openExternal('https://github.com/sindresorhus/caprine');
+		}
+	},
+	{
+		label: 'Report an Issue...',
+		click() {
+			const body = `
+<!-- Please succinctly describe your issue and steps to reproduce it. -->
+
+-
+
+${app.getName()} ${app.getVersion()}
+Electron ${process.versions.electron}
+${process.platform} ${process.arch} ${os.release()}`;
+
+			shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
+		}
+	}
+];
+
 const darwinTpl = [
 	{
 		label: appName,
@@ -136,6 +184,10 @@ const darwinTpl = [
 				role: 'selectall'
 			}
 		]
+	},
+	{
+		label: 'View',
+		submenu: viewSubmenu
 	},
 	{
 		label: 'Window',
@@ -270,32 +322,12 @@ const linuxTpl = [
 		]
 	},
 	{
-		label: 'Help',
-		role: 'help'
-	}
-];
-
-const helpSubmenu = [
-	{
-		label: `${appName} Website...`,
-		click() {
-			shell.openExternal('https://github.com/sindresorhus/caprine');
-		}
+		label: 'View',
+		submenu: viewSubmenu
 	},
 	{
-		label: 'Report an Issue...',
-		click() {
-			const body = `
-<!-- Please succinctly describe your issue and steps to reproduce it. -->
-
--
-
-${app.getName()} ${app.getVersion()}
-Electron ${process.versions.electron}
-${process.platform} ${process.arch} ${os.release()}`;
-
-			shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
-		}
+		label: 'Help',
+		role: 'help'
 	}
 ];
 

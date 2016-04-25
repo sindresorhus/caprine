@@ -4,6 +4,7 @@ const ipc = electron.ipcRenderer;
 const app = electron.remote.app;
 const storage = electron.remote.require('./storage');
 const listSelector = 'div[role="navigation"] > ul > li';
+const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 
 ipc.on('show-preferences', () => {
 	// create the menu for the below
@@ -38,6 +39,26 @@ app.on('platform-theme-changed', () => {
 	setDarkMode();
 });
 
+ipc.on('zoom-reset', () => {
+	setZoom(1.0);
+});
+
+ipc.on('zoom-in', () => {
+	const zoomFactor = storage.get('zoomFactor') + 0.1;
+
+	if (zoomFactor < 1.6) {
+		setZoom(zoomFactor);
+	}
+});
+
+ipc.on('zoom-out', () => {
+	const zoomFactor = storage.get('zoomFactor') - 0.1;
+
+	if (zoomFactor >= 0.8) {
+		setZoom(zoomFactor);
+	}
+});
+
 function nextConversation() {
 	const index = getNextIndex(true);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
@@ -67,6 +88,12 @@ function getNextIndex(next) {
 	return (index % list.length + list.length) % list.length;
 }
 
+function setZoom(zoomFactor) {
+	const node = document.getElementById('zoomFactor');
+	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
+	storage.set('zoomFactor', zoomFactor);
+}
+
 // link the theme if it was changed while the app was closed
 if (process.platform === 'darwin') {
 	storage.set('darkMode', app.isDarkMode());
@@ -74,6 +101,17 @@ if (process.platform === 'darwin') {
 
 // activate Dark Mode if it was set before quitting
 setDarkMode();
+
+// Inject a global style node to maintain zoom factor after conversation change.
+// Also set the zoom factor if it was set before quitting.
+document.addEventListener('DOMContentLoaded', () => {
+	const zoomFactor = storage.get('zoomFactor') || 1.0;
+	const style = document.createElement('style');
+	style.id = 'zoomFactor';
+
+	document.body.appendChild(style);
+	setZoom(zoomFactor);
+});
 
 // it's not possible to add multiple accelerators
 // so need to do this the oldschool way
