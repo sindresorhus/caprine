@@ -5,7 +5,7 @@ const electron = require('electron');
 const app = electron.app;
 const appMenu = require('./menu');
 const storage = require('./storage');
-const createTray = require('./tray');
+const tray = require('./tray');
 
 require('electron-debug')();
 require('electron-dl')();
@@ -28,17 +28,18 @@ if (isAlreadyRunning) {
 }
 
 function updateBadge(title) {
-	if (!app.dock) {
-		return;
-	}
-
 	// ignore `Sindre messaged you` blinking
 	if (title.indexOf('Messenger') === -1) {
 		return;
 	}
 
 	const messageCount = (/\(([0-9]+)\)/).exec(title);
-	app.dock.setBadge(messageCount ? messageCount[1] : '');
+
+	if (process.platform === 'darwin') {
+		app.dock.setBadge(messageCount ? messageCount[1] : '');
+	} else {
+		tray.setBadge(messageCount);
+	}
 }
 
 function createMainWindow() {
@@ -91,7 +92,7 @@ function createMainWindow() {
 app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
-	createTray(mainWindow);
+	tray.create(mainWindow);
 
 	const page = mainWindow.webContents;
 

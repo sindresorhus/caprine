@@ -22,8 +22,8 @@
     "start": "electron .",
     "build": "npm run build:osx && npm run build:linux && npm run build:windows",
     "build:osx": "electron-packager . --overwrite --asar --out=dist --ignore='^/media$' --prune --platform=darwin --arch=x64 --icon=media/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version && cd dist/Caprine-darwin-x64 && zip -ryXq9 ../Caprine-osx-${npm_package_version}.zip Caprine.app",
-    "build:linux": "electron-packager . --overwrite --asar --out=dist --ignore='^/media/(?!IconTray..*$).*' --prune --platform=linux --arch=x64 --app-bundle-id=com.sindresorhus.caprine --app-version=$npm_package_version && cd dist/Caprine-linux-x64/ && zip -ryq9 ../Caprine-linux-${npm_package_version}.zip *",
-    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^/media/(?!Icon.ico$).*' --prune --platform=win32 --arch=ia32 --icon=media/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip *"
+    "build:linux": "electron-packager . --overwrite --asar --out=dist --ignore='^/media/(?!IconTray.*png$).*' --prune --platform=linux --arch=x64 --app-bundle-id=com.sindresorhus.caprine --app-version=$npm_package_version && cd dist/Caprine-linux-x64/ && zip -ryq9 ../Caprine-linux-${npm_package_version}.zip *",
+    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^/media/(?!Icon.*ico$).*' --prune --platform=win32 --arch=ia32 --icon=media/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip *"
   },
   "files": [
     "index.js",

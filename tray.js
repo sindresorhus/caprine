@@ -1,13 +1,15 @@
 const path = require('path');
 const electron = require('electron');
 const app = electron.app;
-const icon = process.platform === 'linux' ? 'IconTray.png' : 'Icon.ico';
-const iconPath = path.join(__dirname, `media/${icon}`);
+let tray = null;
 
-module.exports = win => {
-	if (process.platform === 'darwin') {
-		return false;
+exports.create = win => {
+	if (process.platform === 'darwin' || tray) {
+		return;
 	}
+
+	const icon = process.platform === 'linux' ? 'IconTray.png' : 'Icon.ico';
+	const iconPath = path.join(__dirname, `media/${icon}`);
 
 	const toggleWin = () => {
 		if (win.isVisible()) {
@@ -16,8 +18,6 @@ module.exports = win => {
 			win.show();
 		}
 	};
-
-	const tray = new electron.Tray(iconPath);
 
 	const contextMenu = electron.Menu.buildFromTemplate([
 		{
@@ -37,9 +37,24 @@ module.exports = win => {
 		}
 	]);
 
+	tray = new electron.Tray(iconPath);
 	tray.setToolTip(`${app.getName()}`);
 	tray.setContextMenu(contextMenu);
 	tray.on('clicked', toggleWin);
+};
 
-	return tray;
+exports.setBadge = shouldDisplayUnread => {
+	if (process.platform === 'darwin' || !tray) {
+		return;
+	}
+
+	let icon;
+	if (process.platform === 'linux') {
+		icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
+	} else {
+		icon = shouldDisplayUnread ? 'IconTrayUnread.ico' : 'Icon.ico';
+	}
+
+	const iconPath = path.join(__dirname, `media/${icon}`);
+	tray.setImage(iconPath);
 };
