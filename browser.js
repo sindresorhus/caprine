@@ -35,12 +35,24 @@ ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
 
-ipc.on('delete-conversation', () => {
-	openConversationModal(3);
+ipc.on('mute-conversation', () => {
+	openMuteModal();
 });
 
-ipc.on('mute-conversation', () => {
-	openConversationModal(1);
+ipc.on('delete-conversation', () => {
+	openDeleteModal();
+});
+
+ipc.on('archive-conversation', () => {
+	// Open the modal for the below
+	openDeleteModal();
+
+	const archiveSelector = '._3quh._30yy._2u0._5ixy';
+
+	// Wait for the button to be created
+	window.setTimeout(() => {
+		document.querySelectorAll(archiveSelector)[1].click();
+	}, 10);
 });
 
 ipc.on('dark-mode', toggleDarkMode);
@@ -122,10 +134,10 @@ function setZoom(zoomFactor) {
 	storage.set('zoomFactor', zoomFactor);
 }
 
-function openConversationModal(position) {
+function openConversationMenu() {
 	const index = getIndex();
 	if (index === null) {
-		return;
+		return false;
 	}
 
 	// Open and close the menu for the below
@@ -133,9 +145,30 @@ function openConversationModal(position) {
 	menu.click();
 	menu.click();
 
-	const selector = `._54nq._2i-c._558b._2n_z li:nth-child(${position}) a`;
+	return true;
+}
+
+function openMuteModal() {
+	if (!openConversationMenu()) {
+		return;
+	}
+
+	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(1) a';
 	const nodes = document.querySelectorAll(selector);
 	nodes[nodes.length - 1].click();
+}
+
+function openDeleteModal() {
+	if (!openConversationMenu()) {
+		return;
+	}
+
+	const selector = `._54nq._2i-c._558b._2n_z ul`;
+	const nodes = document.querySelectorAll(selector);
+	const menuList = nodes[nodes.length - 1];
+	const position = menuList.childNodes.length - 3;
+
+	menuList.childNodes[position - 1].firstChild.click();
 }
 
 // link the theme if it was changed while the app was closed
