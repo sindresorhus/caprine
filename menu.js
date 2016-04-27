@@ -144,6 +144,30 @@ const darwinTpl = [
 				click() {
 					sendAction('new-conversation');
 				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Mute Conversation',
+				accelerator: 'CmdOrCtrl+1',
+				click() {
+					sendAction('mute-conversation');
+				}
+			},
+			{
+				label: 'Delete Conversation',
+				accelerator: 'CmdOrCtrl+2',
+				click() {
+					sendAction('delete-conversation');
+				}
+			},
+			{
+				label: 'Archive Conversation',
+				accelerator: 'CmdOrCtrl+3',
+				click() {
+					sendAction('archive-conversation');
+				}
 			}
 		]
 	},
@@ -262,6 +286,30 @@ const linuxTpl = [
 				accelerator: 'CmdOrCtrl+N',
 				click() {
 					sendAction('new-conversation');
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Mute Conversation',
+				accelerator: 'CmdOrCtrl+1',
+				click() {
+					sendAction('mute-conversation');
+				}
+			},
+			{
+				label: 'Delete Conversation',
+				accelerator: 'CmdOrCtrl+2',
+				click() {
+					sendAction('delete-conversation');
+				}
+			},
+			{
+				label: 'Archive Conversation',
+				accelerator: 'CmdOrCtrl+3',
+				click() {
+					sendAction('archive-conversation');
 				}
 			},
 			{
