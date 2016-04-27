@@ -156,17 +156,17 @@ const darwinTpl = [
 				}
 			},
 			{
-				label: 'Delete Conversation',
+				label: 'Archive Conversation',
 				accelerator: 'CmdOrCtrl+2',
 				click() {
-					sendAction('delete-conversation');
+					sendAction('archive-conversation');
 				}
 			},
 			{
-				label: 'Archive Conversation',
+				label: 'Delete Conversation',
 				accelerator: 'CmdOrCtrl+3',
 				click() {
-					sendAction('archive-conversation');
+					sendAction('delete-conversation');
 				}
 			}
 		]
@@ -299,17 +299,17 @@ const linuxTpl = [
 				}
 			},
 			{
-				label: 'Delete Conversation',
+				label: 'Archive Conversation',
 				accelerator: 'CmdOrCtrl+2',
 				click() {
-					sendAction('delete-conversation');
+					sendAction('archive-conversation');
 				}
 			},
 			{
-				label: 'Archive Conversation',
+				label: 'Delete Conversation',
 				accelerator: 'CmdOrCtrl+3',
 				click() {
-					sendAction('archive-conversation');
+					sendAction('delete-conversation');
 				}
 			},
 			{
