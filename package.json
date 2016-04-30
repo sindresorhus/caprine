@@ -19,7 +19,7 @@
     {
       "name": "Daniel Pham",
       "email": "pham.dany@gmail.com",
-      "url": "phamdaniel.github.io"
+      "url": "danhp.github.io"
     }
   ],
   "scripts": {
@@ -49,11 +49,12 @@
   ],
   "dependencies": {
     "electron-debug": "^0.7.0",
-    "electron-dl": "^0.2.0"
+    "electron-dl": "^0.2.0",
+    "electron-osx-appearance": "^0.1.0"
   },
   "devDependencies": {
     "electron-packager": "^7.0.0",
-    "electron-prebuilt": "^0.37.7",
+    "electron-prebuilt": "^0.37.8",
     "xo": "*"
   },
   "xo": {
