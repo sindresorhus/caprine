@@ -1,8 +1,9 @@
 'use strict';
 const electron = require('electron');
 const ipc = electron.ipcRenderer;
-const app = electron.remote.app;
 const storage = electron.remote.require('./storage');
+const osxAppearance = require('electron-osx-appearance');
+
 const listSelector = 'div[role="navigation"] > ul > li';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
@@ -57,10 +58,12 @@ ipc.on('archive-conversation', () => {
 
 ipc.on('dark-mode', toggleDarkMode);
 
-app.on('platform-theme-changed', () => {
-	storage.set('darkMode', app.isDarkMode());
-	setDarkMode();
-});
+if (process.platform === 'darwin') {
+	osxAppearance.onDarkModeChanged(() => {
+		storage.set('darkMode', osxAppearance.isDarkMode());
+		setDarkMode();
+	});
+}
 
 ipc.on('zoom-reset', () => {
 	setZoom(1.0);
@@ -173,7 +176,7 @@ function openDeleteModal() {
 
 // link the theme if it was changed while the app was closed
 if (process.platform === 'darwin') {
-	storage.set('darkMode', app.isDarkMode());
+	storage.set('darkMode', osxAppearance.isDarkMode());
 }
 
 // activate Dark Mode if it was set before quitting

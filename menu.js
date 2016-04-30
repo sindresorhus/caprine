@@ -26,7 +26,7 @@ const viewSubmenu = [
 	},
 	{
 		label: 'Increase Text Size',
-		accelerator: 'CmdOrCtrl+=',
+		accelerator: 'CmdOrCtrl+Plus',
 		click() {
 			sendAction('zoom-in');
 		}
