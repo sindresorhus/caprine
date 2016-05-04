@@ -249,7 +249,7 @@ html.darkMode ._1ht3 ._1ht7 {
 /* contact list: search results */
 html.darkMode ._5t4c,
 html.darkMode ._5t4c ._5l37 {
-	background: transparent;
+	background: #192633 !important;
 }
 
 /* contact list: search results name */
@@ -350,7 +350,8 @@ html.darkMode ._1k1p {
 
 /* dialogs */
 html.darkMode ._53ij,
-html.darkMode ._4eby {
+html.darkMode ._4eby,
+html.darkMode ._2c9g {
 	background: #192633 !important;
 }
 
