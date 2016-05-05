@@ -77,6 +77,11 @@ Built with [Electron](http://electron.atom.io).
 - Build all: `$ brew install wine` and `$ npm run build` *(OS X only)*
 
 
+## Related
+
+- [Anatine](https://github.com/sindresorhus/anatine) - Pristine Twitter app
+
+
 ## License
 
 MIT © [Sindre Sorhus](https://sindresorhus.com)
