@@ -5,16 +5,17 @@
 <br>
 [![](media/screenshot.png)](https://github.com/sindresorhus/caprine/releases/latest)
 
-*OS X 10.9+, Windows 7+ & Linux are supported.*
 
 ## Install
+
+*OS X 10.9+, Windows 7+ & Linux are supported.*
 
 ### OS X
 
 #### [Homebrew Cask](http://caskroom.io)
 
 ```
-$ brew cask install caprine
+$ brew update && brew cask install caprine
 ```
 
 #### Manually
