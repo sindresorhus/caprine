@@ -1,5 +1,6 @@
 'use strict';
 const os = require('os');
+const path = require('path');
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -63,6 +64,23 @@ ${process.platform} ${process.arch} ${os.release()}`;
 		}
 	}
 ];
+
+if (process.platform !== 'darwin') {
+	helpSubmenu.push({
+		type: 'separator'
+	}, {
+		label: `About ${appName}`,
+		click() {
+			electron.dialog.showMessageBox({
+				title: `About ${appName}`,
+				message: `${appName} ${app.getVersion()}`,
+				detail: 'Created by Sindre Sorhus',
+				icon: path.join(__dirname, 'media', process.platform === 'linux' ? 'Icon-linux-about.png' : 'Icon.png'),
+				buttons: []
+			});
+		}
+	});
+}
 
 const darwinTpl = [
 	{
