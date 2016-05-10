@@ -273,11 +273,12 @@ const darwinTpl = [
 	},
 	{
 		label: 'Help',
-		role: 'help'
+		role: 'help',
+		submenu: helpSubmenu
 	}
 ];
 
-const linuxTpl = [
+const otherTpl = [
 	{
 		label: 'File',
 		submenu: [
@@ -375,17 +376,11 @@ const linuxTpl = [
 	},
 	{
 		label: 'Help',
-		role: 'help'
+		role: 'help',
+		submenu: helpSubmenu
 	}
 ];
 
-let tpl;
-if (process.platform === 'darwin') {
-	tpl = darwinTpl;
-} else {
-	tpl = linuxTpl;
-}
-
-tpl[tpl.length - 1].submenu = helpSubmenu;
+const tpl = process.platform === 'darwin' ? darwinTpl : otherTpl;
 
 module.exports = electron.Menu.buildFromTemplate(tpl);
