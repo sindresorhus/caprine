@@ -1,4 +1,4 @@
-# <img src="media/Icon.png" width="45" align="left">Caprine
+# <img src="static/Icon.png" width="45" align="left">Caprine
 
 > Unofficial Facebook Messenger app
 
@@ -34,7 +34,7 @@ Name=Caprine
 Exec=/full/path/to/folder/Caprine
 Terminal=false
 Type=Application
-Icon=/full/path/to/folder/Caprine/resources/app/media/Icon.png
+Icon=/full/path/to/folder/Caprine/resources/app/static/Icon.png
 ```
 
 ### Windows

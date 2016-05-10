@@ -8,8 +8,7 @@ exports.create = win => {
 		return;
 	}
 
-	const icon = process.platform === 'linux' ? 'IconTray.png' : 'Icon.ico';
-	const iconPath = path.join(__dirname, `media/${icon}`);
+	const iconPath = path.join(__dirname, 'static/IconTray.png');
 
 	const toggleWin = () => {
 		if (win.isVisible()) {
@@ -48,13 +47,7 @@ exports.setBadge = shouldDisplayUnread => {
 		return;
 	}
 
-	let icon;
-	if (process.platform === 'linux') {
-		icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-	} else {
-		icon = shouldDisplayUnread ? 'IconTrayUnread.ico' : 'Icon.ico';
-	}
-
-	const iconPath = path.join(__dirname, `media/${icon}`);
+	const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
+	const iconPath = path.join(__dirname, `static/${icon}`);
 	tray.setImage(iconPath);
 };
