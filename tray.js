@@ -39,7 +39,7 @@ exports.create = win => {
 	tray = new electron.Tray(iconPath);
 	tray.setToolTip(`${app.getName()}`);
 	tray.setContextMenu(contextMenu);
-	tray.on('clicked', toggleWin);
+	tray.on('click', toggleWin);
 };
 
 exports.setBadge = shouldDisplayUnread => {
