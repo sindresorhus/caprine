@@ -84,7 +84,10 @@ function createMainWindow() {
 		}
 	});
 
-	win.on('page-title-updated', (e, title) => updateBadge(title));
+	win.on('page-title-updated', (e, title) => {
+		e.preventDefault();
+		updateBadge(title);
+	});
 
 	return win;
 }
