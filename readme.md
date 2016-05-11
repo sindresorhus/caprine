@@ -1,4 +1,4 @@
-# <img src="static/Icon.png" width="45" align="left">Caprine
+# Caprine <img src="static/Icon.png" width="60">
 
 > Unofficial Facebook Messenger app
 
