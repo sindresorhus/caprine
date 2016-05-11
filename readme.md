@@ -6,6 +6,34 @@
 [![](media/screenshot.png)](https://github.com/sindresorhus/caprine/releases/latest)
 
 
+## Features
+
+### Background behavior
+
+When closing the window, the app will continue running in the background, in the dock on OS X and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On OS X, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
+
+
+### Dark mode
+
+You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd>.
+
+![](media/screenshot-dark.png)
+
+
+### Compact mode
+
+The interface adapts when resized to a small size.
+
+<div align="center"><img src="media/screenshot-compact.png" width="512"></div>
+
+
+### Desktop notifications
+
+Desktop notifications can be turned on in Preferences.
+
+<div align="center"><img src="media/screenshot-notification.png" width="358"></div>
+
+
 ## Install
 
 *OS X 10.9+, Windows 7+ & Linux are supported.*
@@ -42,32 +70,7 @@ Icon=/full/path/to/folder/Caprine/resources/app/static/Icon.png
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) and unzip to some location.
 
 
-## Features
-
-### Background behavior
-
-When closing the window, the app will continue running in the background, in the dock on OS X and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On OS X, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
-
-
-### Dark mode
-
-You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd>.
-
-![](media/screenshot-dark.png)
-
-
-### Compact mode
-
-The interface adapts when resized to a small size.
-
-<div align="center"><img src="media/screenshot-compact.png" width="512"></div>
-
-
-### Desktop notifications
-
-Desktop notifications can be turned on in Preferences.
-
-<div align="center"><img src="media/screenshot-notification.png" width="358"></div>
+---
 
 
 ## Dev
