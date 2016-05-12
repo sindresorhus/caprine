@@ -15,7 +15,7 @@ When closing the window, the app will continue running in the background, in the
 
 ### Dark mode
 
-You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd>.
+You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> / <kbd>Ctrl</kbd> <kbd>D</kbd>.
 
 ![](media/screenshot-dark.png)
 
