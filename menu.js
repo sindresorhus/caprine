@@ -97,7 +97,7 @@ const darwinTpl = [
 				label: 'Toggle Dark Mode',
 				accelerator: 'CmdOrCtrl+D',
 				click() {
-					sendAction('dark-mode');
+					sendAction('toggle-dark-mode');
 				}
 			},
 			{
@@ -376,7 +376,7 @@ const otherTpl = [
 				label: 'Toggle Dark Mode',
 				accelerator: 'CmdOrCtrl+D',
 				click() {
-					sendAction('dark-mode');
+					sendAction('toggle-dark-mode');
 				}
 			},
 			{

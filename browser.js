@@ -1,8 +1,8 @@
 'use strict';
 const electron = require('electron');
+const osxAppearance = require('electron-osx-appearance');
 const ipc = electron.ipcRenderer;
 const storage = electron.remote.require('./storage');
-const osxAppearance = require('electron-osx-appearance');
 
 const listSelector = 'div[role="navigation"] > ul > li';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
@@ -56,7 +56,14 @@ ipc.on('archive-conversation', () => {
 	}, 10);
 });
 
-ipc.on('dark-mode', toggleDarkMode);
+function setDarkMode() {
+	document.documentElement.classList.toggle('dark-mode', storage.get('darkMode'));
+}
+
+ipc.on('toggle-dark-mode', () => {
+	storage.set('darkMode', !storage.get('darkMode'));
+	setDarkMode();
+});
 
 if (process.platform === 'darwin') {
 	osxAppearance.onDarkModeChanged(() => {
@@ -93,15 +100,6 @@ function nextConversation() {
 function previousConversation() {
 	const index = getNextIndex(false);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
-}
-
-function setDarkMode() {
-	document.documentElement.classList.toggle('darkMode', storage.get('darkMode'));
-}
-
-function toggleDarkMode() {
-	storage.set('darkMode', !storage.get('darkMode'));
-	setDarkMode();
 }
 
 // returns the index of the selected conversation
