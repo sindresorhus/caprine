@@ -95,7 +95,7 @@ const darwinTpl = [
 			},
 			{
 				label: 'Toggle Dark Mode',
-				accelerator: 'CmdOrCtrl+D',
+				accelerator: 'Cmd+D',
 				click() {
 					sendAction('toggle-dark-mode');
 				}
@@ -158,7 +158,7 @@ const darwinTpl = [
 		submenu: [
 			{
 				label: 'New Conversation',
-				accelerator: 'CmdOrCtrl+N',
+				accelerator: 'Cmd+N',
 				click() {
 					sendAction('new-conversation');
 				}
@@ -168,21 +168,21 @@ const darwinTpl = [
 			},
 			{
 				label: 'Mute Conversation',
-				accelerator: 'CmdOrCtrl+1',
+				accelerator: 'Cmd+1',
 				click() {
 					sendAction('mute-conversation');
 				}
 			},
 			{
 				label: 'Archive Conversation',
-				accelerator: 'CmdOrCtrl+2',
+				accelerator: 'Cmd+2',
 				click() {
 					sendAction('archive-conversation');
 				}
 			},
 			{
 				label: 'Delete Conversation',
-				accelerator: 'CmdOrCtrl+3',
+				accelerator: 'Cmd+3',
 				click() {
 					sendAction('delete-conversation');
 				}
@@ -194,12 +194,12 @@ const darwinTpl = [
 		submenu: [
 			{
 				label: 'Undo',
-				accelerator: 'CmdOrCtrl+Z',
+				accelerator: 'Cmd+Z',
 				role: 'undo'
 			},
 			{
 				label: 'Redo',
-				accelerator: 'Shift+CmdOrCtrl+Z',
+				accelerator: 'Shift+Cmd+Z',
 				role: 'redo'
 			},
 			{
@@ -207,22 +207,22 @@ const darwinTpl = [
 			},
 			{
 				label: 'Cut',
-				accelerator: 'CmdOrCtrl+X',
+				accelerator: 'Cmd+X',
 				role: 'cut'
 			},
 			{
 				label: 'Copy',
-				accelerator: 'CmdOrCtrl+C',
+				accelerator: 'Cmd+C',
 				role: 'copy'
 			},
 			{
 				label: 'Paste',
-				accelerator: 'CmdOrCtrl+V',
+				accelerator: 'Cmd+V',
 				role: 'paste'
 			},
 			{
 				label: 'Select All',
-				accelerator: 'CmdOrCtrl+A',
+				accelerator: 'Cmd+A',
 				role: 'selectall'
 			}
 		]
@@ -237,12 +237,12 @@ const darwinTpl = [
 		submenu: [
 			{
 				label: 'Minimize',
-				accelerator: 'CmdOrCtrl+M',
+				accelerator: 'Cmd+M',
 				role: 'minimize'
 			},
 			{
 				label: 'Close',
-				accelerator: 'CmdOrCtrl+W',
+				accelerator: 'Cmd+W',
 				role: 'close'
 			},
 			{
@@ -264,7 +264,7 @@ const darwinTpl = [
 			},
 			{
 				label: 'Find Conversation',
-				accelerator: 'CmdOrCtrl+F',
+				accelerator: 'Cmd+F',
 				click() {
 					sendAction('find');
 				}
@@ -302,7 +302,7 @@ const otherTpl = [
 		submenu: [
 			{
 				label: 'New Conversation',
-				accelerator: 'CmdOrCtrl+N',
+				accelerator: 'Ctrl+N',
 				click() {
 					sendAction('new-conversation');
 				}
@@ -312,21 +312,21 @@ const otherTpl = [
 			},
 			{
 				label: 'Mute Conversation',
-				accelerator: 'CmdOrCtrl+1',
+				accelerator: 'Ctrl+1',
 				click() {
 					sendAction('mute-conversation');
 				}
 			},
 			{
 				label: 'Archive Conversation',
-				accelerator: 'CmdOrCtrl+2',
+				accelerator: 'Ctrl+2',
 				click() {
 					sendAction('archive-conversation');
 				}
 			},
 			{
 				label: 'Delete Conversation',
-				accelerator: 'CmdOrCtrl+3',
+				accelerator: 'Ctrl+3',
 				click() {
 					sendAction('delete-conversation');
 				}
@@ -356,17 +356,17 @@ const otherTpl = [
 		submenu: [
 			{
 				label: 'Cut',
-				accelerator: 'CmdOrCtrl+X',
+				accelerator: 'Ctrl+X',
 				role: 'cut'
 			},
 			{
 				label: 'Copy',
-				accelerator: 'CmdOrCtrl+C',
+				accelerator: 'Ctrl+C',
 				role: 'copy'
 			},
 			{
 				label: 'Paste',
-				accelerator: 'CmdOrCtrl+V',
+				accelerator: 'Ctrl+V',
 				role: 'paste'
 			},
 			{
@@ -374,14 +374,14 @@ const otherTpl = [
 			},
 			{
 				label: 'Toggle Dark Mode',
-				accelerator: 'CmdOrCtrl+D',
+				accelerator: 'Ctrl+D',
 				click() {
 					sendAction('toggle-dark-mode');
 				}
 			},
 			{
 				label: 'Preferences',
-				accelerator: 'CmdOrCtrl+,',
+				accelerator: 'Ctrl+,',
 				click() {
 					sendAction('show-preferences');
 				}
