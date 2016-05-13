@@ -8,7 +8,7 @@
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
-    "url": "sindresorhus.com"
+    "url": "http://sindresorhus.com"
   },
   "maintainers": [
     {
@@ -28,7 +28,8 @@
     "build": "npm run build:osx && npm run build:linux && npm run build:windows",
     "build:osx": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=darwin --arch=x64 --icon=static/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version && cd dist/Caprine-darwin-x64 && zip -ryXq9 ../Caprine-osx-${npm_package_version}.zip Caprine.app",
     "build:linux": "electron-packager . --overwrite --out=dist --ignore='^media$' --prune --platform=linux --arch=x64 --app-bundle-id=com.sindresorhus.caprine --app-version=$npm_package_version && cd dist/Caprine-linux-x64/ && zip -ryq9 ../Caprine-linux-${npm_package_version}.zip *",
-    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=win32 --arch=ia32 --icon=static/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip *"
+    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=win32 --arch=ia32 --icon=static/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip * && npm run build:windows:installer",
+    "build:windows:installer": "electron-installer-windows --src dist/Caprine-win32-ia32 --dest dist/installers/"
   },
   "dependencies": {
     "electron-debug": "^1.0.0",
@@ -36,6 +37,7 @@
     "electron-osx-appearance": "^0.1.1"
   },
   "devDependencies": {
+    "electron-installer-windows": "^0.2.0",
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "^1.0.2",
     "xo": "*"
