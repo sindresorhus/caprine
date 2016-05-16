@@ -56,6 +56,7 @@ function createMainWindow() {
 		minWidth: 400,
 		minHeight: 200,
 		titleBarStyle: 'hidden-inset',
+		autoHideMenuBar: true,
 		webPreferences: {
 			// fails without this because of CommonJS script detection
 			nodeIntegration: false,
