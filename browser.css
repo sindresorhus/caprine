@@ -2,6 +2,12 @@ html {
 	overflow: hidden;
 }
 
+/* bind the toolbar as the window's draggable region */
+._36ic._5l-3,
+._5742 {
+	-webkit-app-region: drag;
+}
+
 /* window wrapper */
 ._4sp8 {
 	min-width: 0;
