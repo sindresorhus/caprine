@@ -44,6 +44,7 @@ function updateBadge(title) {
 
 function createMainWindow() {
 	const lastWindowState = storage.get('lastWindowState') || {width: 800, height: 600};
+	const isDarkMode = storage.get('darkMode');
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -57,6 +58,7 @@ function createMainWindow() {
 		minHeight: 200,
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
+		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			// fails without this because of CommonJS script detection
 			nodeIntegration: false,
