@@ -1,6 +1,5 @@
 'use strict';
 const electron = require('electron');
-const osxAppearance = require('electron-osx-appearance');
 const ipc = electron.ipcRenderer;
 const storage = electron.remote.require('./storage');
 
@@ -64,13 +63,6 @@ ipc.on('toggle-dark-mode', () => {
 	storage.set('darkMode', !storage.get('darkMode'));
 	setDarkMode();
 });
-
-if (process.platform === 'darwin') {
-	osxAppearance.onDarkModeChanged(() => {
-		storage.set('darkMode', osxAppearance.isDarkMode());
-		setDarkMode();
-	});
-}
 
 ipc.on('zoom-reset', () => {
 	setZoom(1.0);
@@ -170,11 +162,6 @@ function openDeleteModal() {
 	const position = menuList.childNodes.length - 3;
 
 	menuList.childNodes[position - 1].firstChild.click();
-}
-
-// link the theme if it was changed while the app was closed
-if (process.platform === 'darwin') {
-	storage.set('darkMode', osxAppearance.isDarkMode());
 }
 
 // activate Dark Mode if it was set before quitting

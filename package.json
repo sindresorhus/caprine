@@ -32,8 +32,7 @@
   },
   "dependencies": {
     "electron-debug": "^1.0.0",
-    "electron-dl": "^1.0.0",
-    "electron-osx-appearance": "^0.1.1"
+    "electron-dl": "^1.0.0"
   },
   "devDependencies": {
     "electron-packager": "^7.0.0",
