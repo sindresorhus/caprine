@@ -191,3 +191,9 @@ document.addEventListener('keydown', event => {
 		}
 	}
 });
+
+// prevent flash of white on startup when in dark mode
+// TODO: find a CSS only solution
+if (storage.get('darkMode')) {
+	document.documentElement.style.backgroundColor = '#192633';
+}

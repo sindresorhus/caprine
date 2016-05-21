@@ -59,6 +59,7 @@ function createMainWindow() {
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
+		backgroundColor: isDarkMode ? '#192633' : '#fff',
 		webPreferences: {
 			// fails without this because of CommonJS script detection
 			nodeIntegration: false,
