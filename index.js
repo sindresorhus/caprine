@@ -61,11 +61,8 @@ function createMainWindow() {
 		darkTheme: isDarkMode, // GTK+3
 		backgroundColor: isDarkMode ? '#192633' : '#fff',
 		webPreferences: {
-			// fails without this because of CommonJS script detection
-			nodeIntegration: false,
 			preload: path.join(__dirname, 'browser.js'),
-			// required for Facebook active ping thingy
-			webSecurity: false,
+			nodeIntegration: false,
 			plugins: true
 		}
 	});
