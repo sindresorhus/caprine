@@ -4,7 +4,7 @@ const fs = require('fs');
 const electron = require('electron');
 const app = electron.app;
 const appMenu = require('./menu');
-const storage = require('./storage');
+const config = require('./config');
 const tray = require('./tray');
 
 require('electron-debug')();
@@ -43,8 +43,8 @@ function updateBadge(title) {
 }
 
 function createMainWindow() {
-	const lastWindowState = storage.get('lastWindowState') || {width: 800, height: 600};
-	const isDarkMode = storage.get('darkMode');
+	const lastWindowState = config.get('lastWindowState');
+	const isDarkMode = config.get('darkMode');
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -120,6 +120,6 @@ app.on('before-quit', () => {
 	isQuitting = true;
 
 	if (!mainWindow.isFullScreen()) {
-		storage.set('lastWindowState', mainWindow.getBounds());
+		config.set('lastWindowState', mainWindow.getBounds());
 	}
 });

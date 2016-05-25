@@ -1,7 +1,7 @@
 'use strict';
 const electron = require('electron');
 const ipc = electron.ipcRenderer;
-const storage = electron.remote.require('./storage');
+const config = electron.remote.require('./config');
 
 const listSelector = 'div[role="navigation"] > ul > li';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
@@ -56,11 +56,11 @@ ipc.on('archive-conversation', () => {
 });
 
 function setDarkMode() {
-	document.documentElement.classList.toggle('dark-mode', storage.get('darkMode'));
+	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 }
 
 ipc.on('toggle-dark-mode', () => {
-	storage.set('darkMode', !storage.get('darkMode'));
+	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
 });
 
@@ -69,7 +69,7 @@ ipc.on('zoom-reset', () => {
 });
 
 ipc.on('zoom-in', () => {
-	const zoomFactor = storage.get('zoomFactor') + 0.1;
+	const zoomFactor = config.get('zoomFactor') + 0.1;
 
 	if (zoomFactor < 1.6) {
 		setZoom(zoomFactor);
@@ -77,7 +77,7 @@ ipc.on('zoom-in', () => {
 });
 
 ipc.on('zoom-out', () => {
-	const zoomFactor = storage.get('zoomFactor') - 0.1;
+	const zoomFactor = config.get('zoomFactor') - 0.1;
 
 	if (zoomFactor >= 0.8) {
 		setZoom(zoomFactor);
@@ -124,7 +124,7 @@ function getNextIndex(next) {
 function setZoom(zoomFactor) {
 	const node = document.getElementById('zoomFactor');
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
-	storage.set('zoomFactor', zoomFactor);
+	config.set('zoomFactor', zoomFactor);
 }
 
 function openConversationMenu() {
@@ -170,7 +170,7 @@ setDarkMode();
 // Inject a global style node to maintain zoom factor after conversation change.
 // Also set the zoom factor if it was set before quitting.
 document.addEventListener('DOMContentLoaded', () => {
-	const zoomFactor = storage.get('zoomFactor') || 1.0;
+	const zoomFactor = config.get('zoomFactor') || 1.0;
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 
@@ -194,6 +194,6 @@ document.addEventListener('keydown', event => {
 
 // prevent flash of white on startup when in dark mode
 // TODO: find a CSS only solution
-if (storage.get('darkMode')) {
+if (config.get('darkMode')) {
 	document.documentElement.style.backgroundColor = '#192633';
 }
