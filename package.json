@@ -31,7 +31,7 @@
     "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=win32 --arch=ia32 --icon=static/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip *"
   },
   "dependencies": {
-    "electron-config": "^0.1.0",
+    "electron-config": "^0.1.1",
     "electron-debug": "^1.0.0",
     "electron-dl": "^1.0.0"
   },

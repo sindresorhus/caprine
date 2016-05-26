@@ -1,7 +1,7 @@
 'use strict';
 const electron = require('electron');
+const config = require('./config');
 const ipc = electron.ipcRenderer;
-const config = electron.remote.require('./config');
 
 const listSelector = 'div[role="navigation"] > ul > li';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
