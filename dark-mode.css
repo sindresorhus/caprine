@@ -20,6 +20,11 @@ html.dark-mode ._o46:not(._nd_) ._hh7 {
 	color: rgba(255, 255, 255, 0.7);
 }
 
+/* fix dark mode overriding colors for code snippets */
+html.dark-mode ._wu0 {
+	color: black;
+}
+
 /* message list: link in your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 a {
 	color: rgba(255, 255, 255, 0.7);
