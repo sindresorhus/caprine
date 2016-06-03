@@ -43,7 +43,7 @@ const viewSubmenu = [
 
 const helpSubmenu = [
 	{
-		label: `${appName} Website...`,
+		label: `${appName} Website`,
 		click() {
 			shell.openExternal('https://github.com/sindresorhus/caprine');
 		}
