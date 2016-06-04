@@ -69,7 +69,7 @@ if (process.platform !== 'darwin') {
 	helpSubmenu.push({
 		type: 'separator'
 	}, {
-		label: `About ${appName}`,
+		label: process.platform === 'linux' ? 'About' : `About ${appName}`,
 		click() {
 			electron.dialog.showMessageBox({
 				title: `About ${appName}`,
@@ -220,6 +220,21 @@ const darwinTpl = [
 				accelerator: 'Cmd+V',
 				role: 'paste'
 			},
+			// TODO: https://github.com/electron/electron/issues/5866
+			{
+				label: 'Paste and Match Style',
+				accelerator: 'Shift+Cmd+V',
+				click(el, win) {
+					win.webContents.pasteAndMatchStyle();
+				}
+			},
+			// TODO: https://github.com/electron/electron/issues/5867
+			{
+				label: 'Delete',
+				click(el, win) {
+					win.webContents.delete();
+				}
+			},
 			{
 				label: 'Select All',
 				accelerator: 'Cmd+A',
@@ -282,8 +297,7 @@ const darwinTpl = [
 			{
 				label: 'Toggle Full Screen',
 				accelerator: 'Ctrl+Cmd+F',
-				click() {
-					const win = BrowserWindow.getAllWindows()[0];
+				click(el, win) {
 					win.setFullScreen(!win.isFullScreen());
 				}
 			}
@@ -335,6 +349,16 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Toggle Dark Mode',
+				accelerator: 'Ctrl+D',
+				click() {
+					sendAction('toggle-dark-mode');
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
 				label: 'Log Out',
 				click() {
 					sendAction('log-out');
@@ -344,7 +368,7 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Quit',
+				label: process.platform === 'linux' ? 'Quit' : 'Exit',
 				click() {
 					app.quit();
 				}
@@ -354,6 +378,19 @@ const otherTpl = [
 	{
 		label: 'Edit',
 		submenu: [
+			{
+				label: 'Undo',
+				accelerator: 'Ctrl+Z',
+				role: 'undo'
+			},
+			{
+				label: 'Redo',
+				accelerator: 'Shift+Ctrl+Z',
+				role: 'redo'
+			},
+			{
+				type: 'separator'
+			},
 			{
 				label: 'Cut',
 				accelerator: 'Ctrl+X',
@@ -369,15 +406,32 @@ const otherTpl = [
 				accelerator: 'Ctrl+V',
 				role: 'paste'
 			},
+			// TODO: https://github.com/electron/electron/issues/5866
+			{
+				label: 'Paste and Match Style',
+				accelerator: 'Shift+Ctrl+V',
+				click(el, win) {
+					win.webContents.pasteAndMatchStyle();
+				}
+			},
+			// TODO: https://github.com/electron/electron/issues/5867
+			{
+				label: 'Delete',
+				accelerator: 'Delete',
+				click(el, win) {
+					win.webContents.delete();
+				}
+			},
 			{
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Ctrl+D',
-				click() {
-					sendAction('toggle-dark-mode');
-				}
+				label: 'Select All',
+				accelerator: 'Ctrl+A',
+				role: 'selectall'
+			},
+			{
+				type: 'separator'
 			},
 			{
 				label: 'Preferences',
