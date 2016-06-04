@@ -9,6 +9,7 @@ const tray = require('./tray');
 
 require('electron-debug')();
 require('electron-dl')();
+require('electron-context-menu')();
 
 let mainWindow;
 let isQuitting = false;
