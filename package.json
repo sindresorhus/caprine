@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "electron-packager": "^7.0.0",
-    "electron-prebuilt": "^1.1.1",
+    "electron-prebuilt": "^1.2.2",
     "xo": "*"
   },
   "xo": {
