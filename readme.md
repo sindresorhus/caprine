@@ -10,7 +10,7 @@
 
 ### Background behavior
 
-When closing the window, the app will continue running in the background, in the dock on OS X and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On OS X, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
+When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
 
 ### Dark mode
@@ -36,9 +36,9 @@ Desktop notifications can be turned on in Preferences.
 
 ## Install
 
-*OS X 10.9+, Windows 7+ & Linux are supported.*
+*macOS 10.9+, Windows 7+ & Linux are supported.*
 
-### OS X
+### macOS
 
 #### [Homebrew Cask](http://caskroom.io)
 
@@ -81,10 +81,10 @@ Built with [Electron](http://electron.atom.io).
 
 - Init: `$ npm install`
 - Run: `$ npm start`
-- Build OS X: `$ npm run build:osx`
+- Build macOS: `$ npm run build:macos`
 - Build Linux: `$ npm run build:linux`
 - Build Windows: `$ npm run build:windows`
-- Build all: `$ brew install wine` and `$ npm run build` *(OS X only)*
+- Build all: `$ brew install wine` and `$ npm run build` *(macOS only)*
 
 
 ## Related
