@@ -2,10 +2,11 @@
 const path = require('path');
 const fs = require('fs');
 const electron = require('electron');
-const app = electron.app;
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+
+const app = electron.app;
 
 require('electron-debug')();
 require('electron-dl')();

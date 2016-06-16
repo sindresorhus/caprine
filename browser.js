@@ -1,6 +1,7 @@
 'use strict';
 const electron = require('electron');
 const config = require('./config');
+
 const ipc = electron.ipcRenderer;
 
 const listSelector = 'div[role="navigation"] > ul > li';
@@ -118,7 +119,7 @@ function getNextIndex(next) {
 	const list = Array.from(selected.parentNode.children);
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
-	return (index % list.length + list.length) % list.length;
+	return ((index % list.length) + list.length) % list.length;
 }
 
 function setZoom(zoomFactor) {
