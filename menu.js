@@ -70,7 +70,7 @@ if (process.platform !== 'darwin') {
 	helpSubmenu.push({
 		type: 'separator'
 	}, {
-		label: process.platform === 'linux' ? 'About' : `About ${appName}`,
+		role: 'about',
 		click() {
 			electron.dialog.showMessageBox({
 				title: `About ${appName}`,
@@ -88,7 +88,6 @@ const darwinTpl = [
 		label: appName,
 		submenu: [
 			{
-				label: `About ${appName}`,
 				role: 'about'
 			},
 			{
@@ -121,7 +120,6 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Services',
 				role: 'services',
 				submenu: []
 			},
@@ -129,25 +127,18 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: `Hide ${appName}`,
-				accelerator: 'Cmd+H',
 				role: 'hide'
 			},
 			{
-				label: 'Hide Others',
-				accelerator: 'Cmd+Shift+H',
 				role: 'hideothers'
 			},
 			{
-				label: 'Show All',
 				role: 'unhide'
 			},
 			{
 				type: 'separator'
 			},
 			{
-				label: `Quit ${appName}`,
-				accelerator: 'Cmd+Q',
 				role: 'quit'
 			}
 		]
@@ -192,45 +183,30 @@ const darwinTpl = [
 		label: 'Edit',
 		submenu: [
 			{
-				label: 'Undo',
-				accelerator: 'Cmd+Z',
 				role: 'undo'
 			},
 			{
-				label: 'Redo',
-				accelerator: 'Shift+Cmd+Z',
 				role: 'redo'
 			},
 			{
 				type: 'separator'
 			},
 			{
-				label: 'Cut',
-				accelerator: 'Cmd+X',
 				role: 'cut'
 			},
 			{
-				label: 'Copy',
-				accelerator: 'Cmd+C',
 				role: 'copy'
 			},
 			{
-				label: 'Paste',
-				accelerator: 'Cmd+V',
 				role: 'paste'
 			},
 			{
-				label: 'Paste and Match Style',
-				accelerator: 'Shift+Cmd+V',
 				role: 'pasteandmatchstyle'
 			},
 			{
-				label: 'Delete',
 				role: 'delete'
 			},
 			{
-				label: 'Select All',
-				accelerator: 'Cmd+A',
 				role: 'selectall'
 			}
 		]
@@ -240,17 +216,12 @@ const darwinTpl = [
 		submenu: viewSubmenu
 	},
 	{
-		label: 'Window',
 		role: 'window',
 		submenu: [
 			{
-				label: 'Minimize',
-				accelerator: 'Cmd+M',
 				role: 'minimize'
 			},
 			{
-				label: 'Close',
-				accelerator: 'Cmd+W',
 				role: 'close'
 			},
 			{
@@ -281,17 +252,14 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Bring All to Front',
 				role: 'front'
 			},
 			{
-				accelerator: 'Ctrl+Cmd+F',
 				role: 'togglefullscreen'
 			}
 		]
 	},
 	{
-		label: 'Help',
 		role: 'help',
 		submenu: helpSubmenu
 	}
@@ -355,7 +323,6 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: process.platform === 'linux' ? 'Quit' : 'Exit',
 				role: 'quit'
 			}
 		]
@@ -364,49 +331,33 @@ const otherTpl = [
 		label: 'Edit',
 		submenu: [
 			{
-				label: 'Undo',
-				accelerator: 'Ctrl+Z',
 				role: 'undo'
 			},
 			{
-				label: 'Redo',
-				accelerator: 'Shift+Ctrl+Z',
 				role: 'redo'
 			},
 			{
 				type: 'separator'
 			},
 			{
-				label: 'Cut',
-				accelerator: 'Ctrl+X',
 				role: 'cut'
 			},
 			{
-				label: 'Copy',
-				accelerator: 'Ctrl+C',
 				role: 'copy'
 			},
 			{
-				label: 'Paste',
-				accelerator: 'Ctrl+V',
 				role: 'paste'
 			},
 			{
-				label: 'Paste and Match Style',
-				accelerator: 'Shift+Ctrl+V',
 				role: 'pasteandmatchstyle'
 			},
 			{
-				label: 'Delete',
-				accelerator: 'Delete',
 				role: 'delete'
 			},
 			{
 				type: 'separator'
 			},
 			{
-				label: 'Select All',
-				accelerator: 'Ctrl+A',
 				role: 'selectall'
 			},
 			{
@@ -426,7 +377,6 @@ const otherTpl = [
 		submenu: viewSubmenu
 	},
 	{
-		label: 'Help',
 		role: 'help',
 		submenu: helpSubmenu
 	}

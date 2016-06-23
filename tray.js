@@ -31,10 +31,7 @@ exports.create = win => {
 			type: 'separator'
 		},
 		{
-			label: 'Quit',
-			click() {
-				app.quit();
-			}
+			role: 'quit'
 		}
 	]);
 
