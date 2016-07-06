@@ -35,11 +35,14 @@ function updateBadge(title) {
 		return;
 	}
 
-	const messageCount = (/\(([0-9]+)\)/).exec(title);
+	let messageCount = (/\(([0-9]+)\)/).exec(title);
+	messageCount = messageCount ? Number(messageCount[1]) : 0;
 
-	if (process.platform === 'darwin') {
-		app.dock.setBadge(messageCount ? messageCount[1] : '');
-	} else {
+	if (process.platform === 'darwin' || process.platform === 'linux') {
+		app.setBadgeCount(messageCount);
+	}
+
+	if (process.platform === 'linux' || process.platform === 'win32') {
 		tray.setBadge(messageCount);
 	}
 }
