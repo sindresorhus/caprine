@@ -2,6 +2,7 @@
 const os = require('os');
 const path = require('path');
 const electron = require('electron');
+const config = require('./config');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -38,6 +39,19 @@ const viewSubmenu = [
 		accelerator: 'CmdOrCtrl+-',
 		click() {
 			sendAction('zoom-out');
+		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		type: 'checkbox',
+		label: 'Always On Top',
+		accelerator: 'CmdOrCtrl+Shift+T',
+		checked: config.get('alwaysOnTop'),
+		click(item, focusedWindow) {
+			config.set('alwaysOnTop', item.checked);
+			focusedWindow.setAlwaysOnTop(item.checked);
 		}
 	}
 ];
