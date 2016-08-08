@@ -165,18 +165,23 @@ function openDeleteModal() {
 	menuList.childNodes[position - 1].firstChild.click();
 }
 
-// activate Dark Mode if it was set before quitting
-setDarkMode();
-
 // Inject a global style node to maintain zoom factor after conversation change.
 // Also set the zoom factor if it was set before quitting.
 document.addEventListener('DOMContentLoaded', () => {
 	const zoomFactor = config.get('zoomFactor') || 1.0;
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
-
 	document.body.appendChild(style);
 	setZoom(zoomFactor);
+
+	// activate Dark Mode if it was set before quitting
+	setDarkMode();
+
+	// prevent flash of white on startup when in dark mode
+	// TODO: find a CSS only solution
+	if (config.get('darkMode')) {
+		document.documentElement.style.backgroundColor = '#192633';
+	}
 });
 
 // it's not possible to add multiple accelerators
@@ -192,9 +197,3 @@ document.addEventListener('keydown', event => {
 		}
 	}
 });
-
-// prevent flash of white on startup when in dark mode
-// TODO: find a CSS only solution
-if (config.get('darkMode')) {
-	document.documentElement.style.backgroundColor = '#192633';
-}
