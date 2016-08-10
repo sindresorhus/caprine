@@ -47,9 +47,13 @@ function updateBadge(title) {
 	}
 }
 
+var lastWindowState = config.get('lastWindowState');
+var width, height;
+
 function createMainWindow() {
-	const lastWindowState = config.get('lastWindowState');
+	var {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
 	const isDarkMode = config.get('darkMode');
+	const isMax = config.get('isMax');
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -58,11 +62,11 @@ function createMainWindow() {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: process.platform === 'linux' && path.join(__dirname, 'static/Icon.png'),
+		icon: (process.platform === 'linux' && path.join(__dirname, 'static/Icon.png')) || path.join(__dirname, 'static/Icon.ico'),
 		minWidth: 400,
 		minHeight: 200,
 		titleBarStyle: 'hidden-inset',
-		autoHideMenuBar: true,
+		// autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
 		backgroundColor: isDarkMode ? '#192633' : '#fff',
 		webPreferences: {
@@ -71,6 +75,13 @@ function createMainWindow() {
 			plugins: true
 		}
 	});
+
+	if (isMax) {
+		if (lastWindowState.width >= 0.9*width && lastWindowState.height >= 0.9*height) {
+			config.set('lastWindowState', {width: 800, height: 650});
+		}
+		win.maximize();
+	}
 
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);
@@ -93,6 +104,23 @@ function createMainWindow() {
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
 		updateBadge(title);
+	});
+
+	win.on('unmaximize', (e) => {
+		lastWindowState = config.get('lastWindowState');
+		win.setPosition(lastWindowState.x, lastWindowState.y);
+		win.setSize(lastWindowState.width, lastWindowState.height);
+		if (!lastWindowState.x && !lastWindowState.y) {
+			win.center();
+		}
+	});
+
+	win.on('resize', e => {
+		config.set('lastWindowState', mainWindow.getBounds());
+		lastWindowState = config.get('lastWindowState');
+		if (lastWindowState.width >= 0.9*width && lastWindowState.height >= 0.9*height) {
+			config.set('lastWindowState', {width: 800, height: 650, x: 283, y: 39});
+		}
 	});
 
 	return win;
@@ -124,7 +152,11 @@ app.on('activate', () => {
 app.on('before-quit', () => {
 	isQuitting = true;
 
-	if (!mainWindow.isFullScreen()) {
+	if(mainWindow.isMaximized()) {
+		config.set('isMax', true);
+	} else {
+		config.set('isMax', false);
 		config.set('lastWindowState', mainWindow.getBounds());
 	}
+
 });
