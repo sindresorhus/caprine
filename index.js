@@ -47,11 +47,14 @@ function updateBadge(title) {
 	}
 }
 
-var lastWindowState = config.get('lastWindowState');
-var width, height;
+let lastWindowState = config.get('lastWindowState');
+let width;
+let height;
 
 function createMainWindow() {
-	var {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
+	const screenSize = electron.screen.getPrimaryDisplay().workAreaSize;
+	width = screenSize.width;
+	height = screenSize.height;
 	const isDarkMode = config.get('darkMode');
 	const isMax = config.get('isMax');
 
@@ -77,7 +80,7 @@ function createMainWindow() {
 	});
 
 	if (isMax) {
-		if (lastWindowState.width >= 0.9*width && lastWindowState.height >= 0.9*height) {
+		if (lastWindowState.width >= 0.9 * width && lastWindowState.height >= 0.9 * height) {
 			config.set('lastWindowState', {width: 800, height: 650});
 		}
 		win.maximize();
@@ -106,7 +109,7 @@ function createMainWindow() {
 		updateBadge(title);
 	});
 
-	win.on('unmaximize', (e) => {
+	win.on('unmaximize', () => {
 		lastWindowState = config.get('lastWindowState');
 		win.setPosition(lastWindowState.x, lastWindowState.y);
 		win.setSize(lastWindowState.width, lastWindowState.height);
@@ -115,10 +118,10 @@ function createMainWindow() {
 		}
 	});
 
-	win.on('resize', e => {
+	win.on('resize', () => {
 		config.set('lastWindowState', mainWindow.getBounds());
 		lastWindowState = config.get('lastWindowState');
-		if (lastWindowState.width >= 0.9*width && lastWindowState.height >= 0.9*height) {
+		if (lastWindowState.width >= 0.9 * width && lastWindowState.height >= 0.9 * height) {
 			config.set('lastWindowState', {width: 800, height: 650, x: 283, y: 39});
 		}
 	});
@@ -151,12 +154,10 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
-	if(mainWindow.isMaximized()) {
+	if (mainWindow.isMaximized()) {
 		config.set('isMax', true);
 	} else {
 		config.set('isMax', false);
 		config.set('lastWindowState', mainWindow.getBounds());
 	}
-
 });
