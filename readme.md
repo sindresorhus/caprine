@@ -43,7 +43,7 @@ Desktop notifications can be turned on in Preferences.
 #### [Homebrew Cask](http://caskroom.io)
 
 ```
-$ brew update && brew tap caskroom/cask && brew cask install caprine
+$ brew update && brew cask install caprine
 ```
 
 #### Manually
