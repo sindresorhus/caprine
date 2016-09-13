@@ -105,7 +105,7 @@ app.on('ready', () => {
 
 	const page = mainWindow.webContents;
 
-	var argv = require('minimist')(process.argv.slice(1));
+	let argv = require('minimist')(process.argv.slice(1));
 
 	page.on('dom-ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
