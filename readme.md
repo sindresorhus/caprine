@@ -12,6 +12,7 @@
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
+If you wish to start Caprine minimized simply add the --minimize flag to the app on startup.
 
 ### Dark mode
 

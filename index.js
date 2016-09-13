@@ -105,11 +105,13 @@ app.on('ready', () => {
 
 	const page = mainWindow.webContents;
 
+	var argv = require('minimist')(process.argv.slice(1));
+
 	page.on('dom-ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 
-		if (process.argv.indexOf('-m') > -1) {
+		if (argv.minimize) {
 			mainWindow.minimize();
 		} else {
 			mainWindow.show();
