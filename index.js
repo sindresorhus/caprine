@@ -109,10 +109,9 @@ app.on('ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 
-		if (process.argv.indexOf("-m") > -1){
+		if (process.argv.indexOf('-m') > -1) {
 			mainWindow.minimize();
-		}
-		else {
+		} else {
 			mainWindow.show();
 		}
 	});
