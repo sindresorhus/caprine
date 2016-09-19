@@ -105,10 +105,17 @@ app.on('ready', () => {
 
 	const page = mainWindow.webContents;
 
+	const argv = require('minimist')(process.argv.slice(1));
+
 	page.on('dom-ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
-		mainWindow.show();
+
+		if (argv.minimize) {
+			mainWindow.minimize();
+		} else {
+			mainWindow.show();
+		}
 	});
 
 	page.on('new-window', (e, url) => {
