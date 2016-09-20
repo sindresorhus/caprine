@@ -202,7 +202,7 @@ document.addEventListener('keydown', event => {
 		}
 
 		if (event.keyCode >= 49 /* 1 */ && event.keyCode <= 57 /* 9 */ ) {
-			jumpToConversation(parseInt(event.key));
+			jumpToConversation(parseInt(event.key, 10));
 		}
 	}
 });
