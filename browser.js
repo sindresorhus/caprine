@@ -96,8 +96,8 @@ function previousConversation() {
 }
 
 function jumpToConversation(index) {
-  index = (index >= 1 ? index - 1 : index);
-  document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	index = (index >= 1 ? index - 1 : index);
+	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 }
 
 // returns the index of the selected conversation
@@ -193,16 +193,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // so need to do this the oldschool way
 document.addEventListener('keydown', event => {
 	if (process.platform === 'darwin' && event.metaKey) {
-		if (event.shiftKey && event.keyCode === 221/* ] */) {
+		if (event.shiftKey && event.keyCode === 221 /* ] */ ) {
 			nextConversation();
 		}
 
-		if (event.shiftKey && event.keyCode === 219/* [ */) {
+		if (event.shiftKey && event.keyCode === 219 /* [ */ ) {
 			previousConversation();
 		}
 
-    if (event.keyCode >= 49 /* 1 */ && event.keyCode <= 57 /* 9 */) {
-      jumpToConversation(parseInt(event.key));
-    }
+		if (event.keyCode >= 49 /* 1 */ && event.keyCode <= 57 /* 9 */ ) {
+			jumpToConversation(parseInt(event.key));
+		}
 	}
 });
