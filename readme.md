@@ -40,17 +40,17 @@ Desktop notifications can be turned on in Preferences.
 
 ### Keyboard shortcuts
 
-|Keys|Command|
-|---|---|
-|Cmd + n|New conversation|
-|Cmd + f|Search conversations|
-|Cmd + d|Toggle Dark mode|
-|Cmd + 1 through Cmd + 9|Jump to conversation|
-|Cmd + shift + m|Mute conversation|
-|Cmd + shift + a|Archive conversation|
-|Cmd + shift + d|Delete conversation|
-|Cmd + shift + [|Previous conversation|
-|Cmd + shift + ]|Next conversation|
+Description           | Keys
+--------------------- | -----------------------
+New conversation      | <kbd>Cmd</kbd> + <kbd>n</kbd>
+Search conversations  | <kbd>Cmd</kbd> + <kbd>f</kbd>
+Toggle Dark mode      | <kbd>Cmd</kbd> + <kbd>d</kbd>
+Jump to conversation  | <kbd>Cmd</kbd> + <kbd>1</kbd> through <kbd>Cmd</kbd> + <kbd>9</kbd>
+Mute conversation     | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>m</kbd>
+Archive conversation  | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>a</kbd>
+Delete conversation   | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>d</kbd>
+Previous conversation | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>[</kbd>
+Next conversation     | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>]</kbd>
 
 ## Install
 
