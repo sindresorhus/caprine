@@ -20,6 +20,10 @@ You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kb
 
 ![](media/screenshot-dark.png)
 
+### Jump to conversation hotkey
+
+You can switch conversations similar to how you switch browser tabs: <kbd>Cmd</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
+
 
 ### Compact mode
 
