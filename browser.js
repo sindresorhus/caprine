@@ -96,7 +96,7 @@ function previousConversation() {
 }
 
 function jumpToConversation(key) {
-	const index = (key >= 1 ? key - 1 : key);
+	const index = key === 0 ? key : key -1;
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 }
 
