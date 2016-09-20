@@ -95,8 +95,8 @@ function previousConversation() {
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 }
 
-function jumpToConversation(index) {
-	index = (index >= 1 ? index - 1 : index);
+function jumpToConversation(key) {
+	const index = (key >= 1 ? key - 1 : key);
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 }
 
