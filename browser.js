@@ -193,6 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // so need to do this the oldschool way
 document.addEventListener('keydown', event => {
 	if (process.platform === 'darwin' && event.metaKey) {
+
+		const num = parseInt(event.key, 10);
+
 		if (event.shiftKey && event.keyCode === 221 /* ] */ ) {
 			nextConversation();
 		}
@@ -201,8 +204,8 @@ document.addEventListener('keydown', event => {
 			previousConversation();
 		}
 
-		if (event.keyCode >= 49 /* 1 */ && event.keyCode <= 57 /* 9 */ ) {
-			jumpToConversation(parseInt(event.key, 10));
+		if (num >= 1 && num <= 9) {
+			jumpToConversation(num);
 		}
 	}
 });
