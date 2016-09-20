@@ -22,7 +22,7 @@ You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kb
 
 ### Jump to conversation hotkey
 
-You can switch conversations similar to how you switch browser tabs: <kbd>Cmd</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
+You can switch conversations similar to how you switch browser tabs: <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
 
 
 ### Compact mode
@@ -42,15 +42,16 @@ Desktop notifications can be turned on in Preferences.
 
 Description           | Keys
 --------------------- | -----------------------
-New conversation      | <kbd>Cmd</kbd> <kbd>n</kbd>
-Search conversations  | <kbd>Cmd</kbd> <kbd>f</kbd>
-Toggle Dark mode      | <kbd>Cmd</kbd> <kbd>d</kbd>
-Jump to conversation  | <kbd>Cmd</kbd> <kbd>1</kbd> through <kbd>9</kbd>
-Mute conversation     | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
-Archive conversation  | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
-Delete conversation   | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
-Previous conversation | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>[</kbd>
-Next conversation     | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>]</kbd>
+New conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
+Search conversations  | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
+Toggle Dark mode      | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
+Next conversation     | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
+Previous conversation | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
+Jump to conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
+Mute conversation     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
+Archive conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
+Delete conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
+
 
 ## Install
 

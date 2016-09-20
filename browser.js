@@ -192,20 +192,23 @@ document.addEventListener('DOMContentLoaded', () => {
 // it's not possible to add multiple accelerators
 // so need to do this the oldschool way
 document.addEventListener('keydown', event => {
-	if (process.platform === 'darwin' && event.metaKey) {
+	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
 
-		const num = parseInt(event.key, 10);
+	if (!combineKey) {
+		return;
+	}
 
-		if (event.shiftKey && event.keyCode === 221 /* ] */ ) {
-			nextConversation();
-		}
+	if (event.key === ']') {
+		nextConversation();
+	}
 
-		if (event.shiftKey && event.keyCode === 219 /* [ */ ) {
-			previousConversation();
-		}
+	if (event.key === '[') {
+		previousConversation();
+	}
 
-		if (num >= 1 && num <= 9) {
-			jumpToConversation(num);
-		}
+	const num = parseInt(event.key, 10);
+
+	if (num >= 1 && num <= 9) {
+		jumpToConversation(num);
 	}
 });
