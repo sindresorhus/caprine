@@ -34,6 +34,19 @@ Desktop notifications can be turned on in Preferences.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
+### Keyboard shortcuts
+
+|Keys|Command|
+|---|---|
+|Cmd + n|New conversation|
+|Cmd + f|Search conversations|
+|Cmd + d|Toggle Dark mode|
+|Cmd + 1 through Cmd + 9|Jump to conversation|
+|Cmd + shift + m|Mute conversation|
+|Cmd + shift + a|Archive conversation|
+|Cmd + shift + d|Delete conversation|
+|Cmd + shift + [|Previous conversation|
+|Cmd + shift + ]|Next conversation|
 
 ## Install
 
