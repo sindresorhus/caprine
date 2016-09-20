@@ -164,7 +164,7 @@ html.dark-mode ._1ht3 ._1ht7 {
 /* contact list: search results */
 html.dark-mode ._5t4c,
 html.dark-mode ._5t4c ._5l37 {
-	background: #192633 !important;
+	color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /* contact list: search results name */
