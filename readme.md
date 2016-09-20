@@ -20,6 +20,10 @@ You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kb
 
 ![](media/screenshot-dark.png)
 
+### Jump to conversation hotkey
+
+You can switch conversations similar to how you switch browser tabs: <kbd>Cmd</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
+
 
 ### Compact mode
 
@@ -34,6 +38,19 @@ Desktop notifications can be turned on in Preferences.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
+### Keyboard shortcuts
+
+Description           | Keys
+--------------------- | -----------------------
+New conversation      | <kbd>Cmd</kbd> <kbd>n</kbd>
+Search conversations  | <kbd>Cmd</kbd> <kbd>f</kbd>
+Toggle Dark mode      | <kbd>Cmd</kbd> <kbd>d</kbd>
+Jump to conversation  | <kbd>Cmd</kbd> <kbd>1</kbd> through <kbd>9</kbd>
+Mute conversation     | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
+Archive conversation  | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
+Delete conversation   | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
+Previous conversation | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>[</kbd>
+Next conversation     | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>]</kbd>
 
 ## Install
 

@@ -95,6 +95,11 @@ function previousConversation() {
 	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
 }
 
+function jumpToConversation(key) {
+	const index = key - 1;
+	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+}
+
 // returns the index of the selected conversation
 // if no conversation is selected, returns null.
 function getIndex() {
@@ -187,13 +192,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // it's not possible to add multiple accelerators
 // so need to do this the oldschool way
 document.addEventListener('keydown', event => {
-	if (process.platform === 'darwin' && event.metaKey && event.shiftKey) {
-		if (event.keyCode === 221/* ] */) {
+	if (process.platform === 'darwin' && event.metaKey) {
+
+		const num = parseInt(event.key, 10);
+
+		if (event.shiftKey && event.keyCode === 221 /* ] */ ) {
 			nextConversation();
 		}
 
-		if (event.keyCode === 219/* [ */) {
+		if (event.shiftKey && event.keyCode === 219 /* [ */ ) {
 			previousConversation();
+		}
+
+		if (num >= 1 && num <= 9) {
+			jumpToConversation(num);
 		}
 	}
 });

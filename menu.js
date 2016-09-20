@@ -158,21 +158,21 @@ const darwinTpl = [
 			},
 			{
 				label: 'Mute Conversation',
-				accelerator: 'Cmd+1',
+				accelerator: 'Cmd+Shift+M',
 				click() {
 					sendAction('mute-conversation');
 				}
 			},
 			{
 				label: 'Archive Conversation',
-				accelerator: 'Cmd+2',
+				accelerator: 'Cmd+Shift+A',
 				click() {
 					sendAction('archive-conversation');
 				}
 			},
 			{
 				label: 'Delete Conversation',
-				accelerator: 'Cmd+3',
+				accelerator: 'Cmd+Shift+D',
 				click() {
 					sendAction('delete-conversation');
 				}
@@ -281,21 +281,21 @@ const otherTpl = [
 			},
 			{
 				label: 'Mute Conversation',
-				accelerator: 'Ctrl+1',
+				accelerator: 'Ctrl+Shift+M',
 				click() {
 					sendAction('mute-conversation');
 				}
 			},
 			{
 				label: 'Archive Conversation',
-				accelerator: 'Ctrl+2',
+				accelerator: 'Ctrl+Shift+A',
 				click() {
 					sendAction('archive-conversation');
 				}
 			},
 			{
 				label: 'Delete Conversation',
-				accelerator: 'Ctrl+3',
+				accelerator: 'Ctrl+Shift+D',
 				click() {
 					sendAction('delete-conversation');
 				}
