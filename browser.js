@@ -4,7 +4,7 @@ const config = require('./config');
 
 const ipc = electron.ipcRenderer;
 
-const listSelector = 'div[role="navigation"] > ul > li';
+const listSelector = 'div[role="navigation"] > ul > div';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
@@ -87,17 +87,22 @@ ipc.on('zoom-out', () => {
 
 function nextConversation() {
 	const index = getNextIndex(true);
-	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	selectConversation(index);
 }
 
 function previousConversation() {
 	const index = getNextIndex(false);
-	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	selectConversation(index);
 }
 
 function jumpToConversation(key) {
 	const index = key - 1;
-	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	selectConversation(index);
+}
+
+// focus on the conversation with the given index
+function selectConversation(index) {
+	document.querySelector(listSelector).children[index].firstChild.firstChild.click();
 }
 
 // returns the index of the selected conversation
