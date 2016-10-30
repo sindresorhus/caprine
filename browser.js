@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// prevent flash of white on startup when in dark mode
 	// TODO: find a CSS only solution
 	if (config.get('darkMode')) {
-		document.documentElement.style.backgroundColor = '#192633';
+		document.documentElement.style.backgroundColor = 'rgba(0,0,0,0)';
 	}
 });
 

@@ -34,12 +34,14 @@
     "electron-config": "^0.2.1",
     "electron-context-menu": "^0.6.0",
     "electron-debug": "^1.0.0",
-    "electron-dl": "^1.0.0"
+    "electron-dl": "^1.0.0",
+    "electron-vibrancy": "^0.1.0"
   },
   "devDependencies": {
     "electron": "^1.4.0",
     "electron-packager": "^8.0.0",
-    "xo": "*"
+    "xo": "*",
+    "electron-vibrancy": "^0.1.0"
   },
   "xo": {
     "esnext": true,

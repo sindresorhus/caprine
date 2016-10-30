@@ -5,6 +5,7 @@ const electron = require('electron');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+const electronVibrancy = require("electron-vibrancy")
 
 const app = electron.app;
 
@@ -64,7 +65,9 @@ function createMainWindow() {
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
-		backgroundColor: isDarkMode ? '#192633' : '#fff',
+		backgroundColor: isDarkMode ? false : '#fff',
+		transparent: isDarkMode,
+		frame: false,
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -77,6 +80,8 @@ function createMainWindow() {
 	}
 
 	win.loadURL('https://www.messenger.com/login/');
+
+	electronVibrancy.SetVibrancy(win, 9)
 
 	win.on('close', e => {
 		if (!isQuitting) {

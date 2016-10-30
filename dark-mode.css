@@ -1,16 +1,16 @@
 html.dark-mode body {
 	color: rgba(255, 255, 255, 0.7);
-	background: #192633 !important;
+	background-color: rgba(25, 38, 51, 0.35) !important;
 }
 
 /* main container? */
 html.dark-mode ._4sp8 {
-	background: #192633 !important;
+	background-color: rgba(0, 0, 0, 0) !important;
 }
 
 /* main content */
 html.dark-mode ._1q5- {
-	background: #192633 !important;
+	background-color: rgba(0, 0, 0, 0) !important;
 	border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
@@ -69,7 +69,7 @@ html.dark-mode ._497p {
 
 /* message list: header above */
 html.dark-mode ._5742 {
-	background: #202C3A !important;
+	background: rgba(255, 255, 255, 0.03) !important;
 	border-bottom: none;
 }
 /* message list: header above (invitation) */
@@ -107,7 +107,7 @@ html.dark-mode ._2v6o {
 
 /* contact list: header above */
 html.dark-mode ._36ic {
-	background: #202C3A !important;
+	background: rgba(255, 255, 255, 0.03) !important;
 	border-bottom: none;
 }
 
@@ -267,7 +267,7 @@ html.dark-mode ._1k1p {
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
 html.dark-mode ._2c9g {
-	background: #192633 !important;
+	background: rgba(24, 29, 34, 0.8) !important;
 }
 
 /* dialog: title and names */
@@ -275,7 +275,7 @@ html.dark-mode ._374c,
 html.dark-mode ._4ebz,
 html.dark-mode ._2c9i ._19jt,
 html.dark-mode .uiInputLabelLabel {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* gif and sticker dialog: hide white triangle */
@@ -285,7 +285,7 @@ html.dark-mode ._53io {
 
 /* gif and sticker dialog: style the bottom of the list */
 html.dark-mode .uiScrollableArea.contentAfter:after {
-	background: linear-gradient(rgba(25, 38, 51, .05), #192633);
+	background: linear-gradient(rgba(25, 38, 51, .05), rgba(24, 29, 34, 0.9));
 }
 
 /* sticker dialog: selected header */
@@ -319,5 +319,5 @@ html.dark-mode ._55r1._5f0v._43di {
 
 /* Login button */
 html.dark-mode button {
-	background: #192633 !important;
+	background: rgba(0, 0, 0, 0) !important;
 }
