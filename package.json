@@ -37,7 +37,7 @@
     "electron-dl": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^1.4.0",
+    "electron": "^1.4.5",
     "electron-packager": "^8.0.0",
     "xo": "*"
   },
@@ -46,9 +46,6 @@
     "envs": [
       "node",
       "browser"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": 0
-    }
+    ]
   }
 }
