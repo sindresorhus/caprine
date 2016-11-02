@@ -68,7 +68,7 @@ html {
 	margin-left: 65px !important;
 }
 
-@media all and (max-width: 640px) {
+@media all and (max-width: 700px) {
 	/* make right-column flexible in compact mode */
 	._1q5- {
 		position: absolute !important;
