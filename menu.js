@@ -40,19 +40,6 @@ const viewSubmenu = [
 		click() {
 			sendAction('zoom-out');
 		}
-	},
-	{
-		type: 'separator'
-	},
-	{
-		type: 'checkbox',
-		label: 'Always On Top',
-		accelerator: 'CmdOrCtrl+Shift+T',
-		checked: config.get('alwaysOnTop'),
-		click(item, focusedWindow) {
-			config.set('alwaysOnTop', item.checked);
-			focusedWindow.setAlwaysOnTop(item.checked);
-		}
 	}
 ];
 
@@ -270,6 +257,16 @@ const darwinTpl = [
 			},
 			{
 				role: 'togglefullscreen'
+			},
+			{
+				type: 'checkbox',
+				label: 'Always on Top',
+				accelerator: 'Cmd+Shift+T',
+				checked: config.get('alwaysOnTop'),
+				click(item, focusedWindow) {
+					config.set('alwaysOnTop', item.checked);
+					focusedWindow.setAlwaysOnTop(item.checked);
+				}
 			}
 		]
 	},
@@ -389,6 +386,21 @@ const otherTpl = [
 	{
 		label: 'View',
 		submenu: viewSubmenu
+	},
+	{
+		label: 'Window',
+		submenu: [
+			{
+				type: 'checkbox',
+				label: 'Always on Top',
+				accelerator: 'Ctrl+Shift+T',
+				checked: config.get('alwaysOnTop'),
+				click(item, focusedWindow) {
+					config.set('alwaysOnTop', item.checked);
+					focusedWindow.setAlwaysOnTop(item.checked);
+				}
+			}
+		]
 	},
 	{
 		role: 'help',

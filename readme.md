@@ -38,6 +38,10 @@ Desktop notifications can be turned on in Preferences.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
+### Always on Top mode
+
+You can toggle whether Caprine stays on top of other windows in the `Window` menu or with <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
+
 ### Keyboard shortcuts
 
 Description           | Keys
@@ -51,6 +55,7 @@ Jump to conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Mute conversation     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
+Toggle always on top  | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 
 
 ## Install
