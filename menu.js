@@ -82,6 +82,18 @@ if (process.platform !== 'darwin') {
 			});
 		}
 	});
+	viewSubmenu.push({
+		type: 'separator'
+	}, {
+		type: 'checkbox',
+		label: 'Always on Top',
+		accelerator: 'Ctrl+Shift+T',
+		checked: config.get('alwaysOnTop'),
+		click(item, focusedWindow) {
+			config.set('alwaysOnTop', item.checked);
+			focusedWindow.setAlwaysOnTop(item.checked);
+		}
+	});
 }
 
 const darwinTpl = [
@@ -386,21 +398,6 @@ const otherTpl = [
 	{
 		label: 'View',
 		submenu: viewSubmenu
-	},
-	{
-		label: 'Window',
-		submenu: [
-			{
-				type: 'checkbox',
-				label: 'Always on Top',
-				accelerator: 'Ctrl+Shift+T',
-				checked: config.get('alwaysOnTop'),
-				click(item, focusedWindow) {
-					config.set('alwaysOnTop', item.checked);
-					focusedWindow.setAlwaysOnTop(item.checked);
-				}
-			}
-		]
 	},
 	{
 		role: 'help',
