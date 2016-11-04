@@ -2,6 +2,7 @@
 const os = require('os');
 const path = require('path');
 const electron = require('electron');
+const config = require('./config');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -79,6 +80,19 @@ if (process.platform !== 'darwin') {
 				icon: path.join(__dirname, 'static/Icon.png'),
 				buttons: []
 			});
+		}
+	});
+
+	viewSubmenu.push({
+		type: 'separator'
+	}, {
+		type: 'checkbox',
+		label: 'Always on Top',
+		accelerator: 'Ctrl+Shift+T',
+		checked: config.get('alwaysOnTop'),
+		click(item, focusedWindow) {
+			config.set('alwaysOnTop', item.checked);
+			focusedWindow.setAlwaysOnTop(item.checked);
 		}
 	});
 }
@@ -256,6 +270,19 @@ const darwinTpl = [
 			},
 			{
 				role: 'togglefullscreen'
+			},
+			{
+				type: 'separator'
+			},
+			{
+				type: 'checkbox',
+				label: 'Always on Top',
+				accelerator: 'Cmd+Shift+T',
+				checked: config.get('alwaysOnTop'),
+				click(item, focusedWindow) {
+					config.set('alwaysOnTop', item.checked);
+					focusedWindow.setAlwaysOnTop(item.checked);
+				}
 			}
 		]
 	},
