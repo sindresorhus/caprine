@@ -263,6 +263,31 @@ html.dark-mode ._1k1p {
 	background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
+/* conversation search */
+html.dark-mode ._33p7 {
+	background-color: rgb(25, 38, 51);
+}
+html.dark-mode ._33p7 ._b-u, html.dark-mode ._33p7 ._b-v {
+	background-color: transparent !important;
+	background-image: url(/rsrc.php/v3/yb/r/TF9SFeEl2Ka.png) !important;
+	background-repeat: no-repeat !important;
+	background-size: auto !important;
+}
+html.dark-mode ._33p7 ._b-u {
+	background-position: 0px -66px !important;
+}
+html.dark-mode ._33p7 ._b-v {
+	background-position: 0 0 !important;
+}
+html.dark-mode ._33p7 input {
+	color: rgba(255, 255, 255, 0.7);
+	background-color: rgba(255, 255, 255, 0.05);
+}
+html.dark-mode ._33p7 ._5iwn ._58ak::before {
+	-webkit-filter: invert();
+	filter: invert();
+}
+
 /* dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
