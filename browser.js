@@ -85,6 +85,18 @@ ipc.on('zoom-out', () => {
 	}
 });
 
+ipc.on('toggle-sidebar', () => {
+	const root = document.querySelectorAll('[data-reactroot]')[0];
+
+	// Hiding the sidebar completely removes it on wide windows, but leaves it
+	// empty on smaller windows
+	const sidebar = root.firstElementChild.firstElementChild;
+	const display = sidebar.style.display;
+	const shouldHide = (display === '');
+	const newDisplay = shouldHide ? 'none' : '';
+	sidebar.style.display = newDisplay;
+});
+
 function nextConversation() {
 	const index = getNextIndex(true);
 	selectConversation(index);

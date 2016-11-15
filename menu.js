@@ -21,6 +21,16 @@ function sendAction(action) {
 
 const viewSubmenu = [
 	{
+		label: 'Toggle Sidebar Avatars',
+		accelerator: 'CmdOrCtrl+Shift+H',
+		click() {
+			sendAction('toggle-sidebar');
+		}
+	},
+	{
+		type: 'separator'
+	},
+	{
 		label: 'Reset Text Size',
 		accelerator: 'CmdOrCtrl+0',
 		click() {
