@@ -42,13 +42,13 @@ const viewSubmenu = [
 		}
 	},
     {
-        label: 'Reload Window',
-        accelerator: 'CmdOrCtrl+R',
-        click() {
-            const win = BrowserWindow.getAllWindows()[0];
-            win.reload();
-        }
-    }
+		label: 'Reload Window',
+		accelerator: 'CmdOrCtrl+R',
+		click() {
+			const win = BrowserWindow.getAllWindows()[0];
+			win.reload();
+		}
+	}
 ];
 
 const helpSubmenu = [
