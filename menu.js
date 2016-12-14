@@ -40,7 +40,15 @@ const viewSubmenu = [
 		click() {
 			sendAction('zoom-out');
 		}
-	}
+	},
+    {
+        label: 'Reload Window',
+        accelerator: 'CmdOrCtrl+R',
+        click() {
+            const win = BrowserWindow.getAllWindows()[0];
+            win.reload();
+        }
+    }
 ];
 
 const helpSubmenu = [
