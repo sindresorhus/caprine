@@ -23,6 +23,11 @@ html {
 	display: none;
 }
 
+/* "Keep the conversation going" bar */
+._s15 {
+	display: none !important;
+}
+
 /* right-column */
 ._1q5- {
 	border-left: 1px solid rgba(0, 0, 0, .10) !important;
