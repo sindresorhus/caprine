@@ -48,7 +48,7 @@ const viewSubmenu = [
 		label: 'Reload Window',
 		accelerator: 'CmdOrCtrl+R',
 		click() {
-			BrowserWindow.getAllWindows()[0].reload();
+			browserWindow.reload();
 		}
 	}
 ];
