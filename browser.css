@@ -8,6 +8,12 @@ html {
 	-webkit-app-region: drag;
 }
 
+/* fix broken scroll arrows on input on Windows */
+
+._kmc {
+	overflow-y: initial;
+}
+
 /* window wrapper */
 ._4sp8 {
 	min-width: 0;
