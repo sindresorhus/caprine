@@ -3,24 +3,24 @@ html.dark-mode body {
 	background: #192633 !important;
 }
 
-/* main container? */
+/* Main container? */
 html.dark-mode ._4sp8 {
 	background: #192633 !important;
 }
 
-/* main content */
+/* Main content */
 html.dark-mode ._1q5- {
 	background: #192633 !important;
 	border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
-/* message list: your message bubble */
+/* Message list: your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 {
 	background: rgba(255, 255, 255, 0.1);
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* fix dark mode overriding colors for code snippets */
+/* Fix dark mode overriding colors for code snippets */
 html.dark-mode ._wu0 {
 	color: black;
 }
@@ -30,22 +30,22 @@ html.dark-mode ._o46:not(._nd_) ._hh7 a {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* message list: link in message bubble */
+/* Message list: link in message bubble */
 html.dark-mode ._hh7 a:hover {
 	background: transparent !important;
 }
 
-/* message list: link in incoming message bubble */
+/* Message list: link in incoming message bubble */
 html.dark-mode ._o46._nd_ ._hh7 {
 	color: rgba(255, 255, 255, 0.9);
 }
 
-/* message list: link preview */
+/* Message list: link preview */
 html.dark-mode ._5i_d {
 	border: solid 1px rgba(255, 255, 255, 0.05);
 }
 
-/* message list: link preview text */
+/* Message list: link preview text */
 html.dark-mode ._5i_d .__6k,
 html.dark-mode ._5i_d .__6l {
 	color: rgba(255, 255, 255, 0.7);
@@ -55,36 +55,36 @@ html.dark-mode ._5i_d .__6m {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* message list: input bar */
+/* Message list: input bar */
 html.dark-mode ._4rv3 {
 	background: transparent !important;
 	border-top: solid 1px rgba(255, 255, 255, 0.05);
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* message list: timestamp */
+/* Message list: timestamp */
 html.dark-mode ._497p {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* message list: header above */
+/* Message list: header above */
 html.dark-mode ._5742 {
 	background: #202C3A !important;
 	border-bottom: none;
 }
-/* message list: header above (invitation) */
+/* Message list: header above (invitation) */
 html.dark-mode ._2y8z,
 html.dark-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
 html.dark-mode ._58-3 {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* message list: header above (invitation) (typed text) */
+/* Message list: header above (invitation) (typed text) */
 html.dark-mode ._14-7 ._58ah ._58al {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* messages list: user info (is in contacts) */
+/* Messages list: user info (is in contacts) */
 html.dark-mode ._36zg-e {
 	color: rgba(255, 255, 255, 0.7) !important;
 }
@@ -94,7 +94,7 @@ html.dark-mode ._1n-e {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* messages list: text header above the messages */
+/* Messages list: text header above the messages */
 html.dark-mode ._17w2,
 html.dark-mode ._ih3 ._3oh-,
 html.dark-mode ._llq ._3oh- {
@@ -105,13 +105,13 @@ html.dark-mode ._2v6o {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* contact list: header above */
+/* Contact list: header above */
 html.dark-mode ._36ic {
 	background: #202C3A !important;
 	border-bottom: none;
 }
 
-/* contact list: search input */
+/* Contact list: search input */
 html.dark-mode ._5iwm ._58al {
 	background: rgba(255, 255, 255, 0.1) !important;
 	color: rgba(255, 255, 255, 0.9);
@@ -121,22 +121,22 @@ html.dark-mode ._5iwm ._58al::-webkit-input-placeholder {
 	color: rgba(255, 255, 255, 0.3);
 }
 
-/* contact list: background */
+/* Contact list: background */
 html.dark-mode ._1enh {
 	background: transparent !important;
 }
 
-/* contact list: person */
+/* Contact list: person */
 html.dark-mode ._1ht1 {
 	background: transparent !important;
 }
 
-/* contact list: person (selected) */
+/* Contact list: person (selected) */
 html.dark-mode ._1ht1._1ht2 {
 	background: rgba(255, 255, 255, 0.03) !important;
 }
 
-/* contact list: person container */
+/* Contact list: person container */
 html.dark-mode ._1qt4 {
 	border-top: solid 1px rgba(255, 255, 255, 0.05);
 }
@@ -146,17 +146,17 @@ html.dark-mode ._1ht6 {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* contact list: message blurb */
+/* Contact list: message blurb */
 html.dark-mode ._1htf {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* contact list: timestamp */
+/* Contact list: timestamp */
 html.dark-mode ._1ht7 {
 	color: rgba(255, 255, 255, 0.2);
 }
 
-/* contact list: timestamp (unread) */
+/* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
 	color: rgba(0, 132, 255, 0.7)
 }
@@ -167,94 +167,94 @@ html.dark-mode ._5t4c ._5l37 {
 	color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* contact list: search results name */
+/* Contact list: search results name */
 html.dark-mode ._3q34,
 html.dark-mode ._364g {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* contact list: search results subname */
+/* Contact list: search results subname */
 html.dark-mode ._3q35 {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* contact list: search result label type */
+/* Contact list: search result label type */
 html.dark-mode ._3xcx,
 html.dark-mode ._225b {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* contact list: searching text */
+/* Contact list: searching text */
 html.dark-mode ._4g0h {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* right sidebar */
+/* Right sidebar */
 html.dark-mode ._4_j5 {
 	background: transparent;
 	border-left: solid 1px rgba(255, 255, 255, 0.05);
 }
 
-/* right sidebar: headings */
+/* Right sidebar: headings */
 html.dark-mode ._1lj0 {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* right sidebar: section spacer */
+/* Right sidebar: section spacer */
 html.dark-mode ._1li- {
 	border-top: solid 1px rgba(255, 255, 255, 0.05);
 }
 
-/* right sidebar: group chat names */
+/* Right sidebar: group chat names */
 html.dark-mode ._2jnv {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* right sidebar: messenger type info under name */
+/* Right sidebar: messenger type info under name */
 html.dark-mode ._3eus {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* right sidebar: mute notification label */
+/* Right sidebar: mute notification label */
 html.dark-mode ._3szq {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* right sidebar: mute notification time */
+/* Right sidebar: mute notification time */
 html.dark-mode ._3x6v {
 	color: rgba(255, 255, 255, 0.4);
 }
 
-/* right sidebar: people list */
+/* Right sidebar: people list */
 html.dark-mode ._4_j5 ._5l37 {
 	color: rgba(255, 255, 255, 0.4);
 	background: transparent;
 }
 
-/* right sidebar: people list (add people) */
+/* Right sidebar: people list (add people) */
 html.dark-mode ._4rph ._4rpj {
 	border-top: solid 1px rgba(255, 255, 255, 0.1);
 }
 
-/* right sidebar: people list item (name) */
+/* Right sidebar: people list item (name) */
 html.dark-mode ._364g,
 html.dark-mode ._3x6u,
 html.dark-mode ._4rph ._4rpj {
 	color: rgba(255, 255, 255, 0.7);
 }
 
-/* new conversation contact list: popup */
+/* New conversation contact list: popup */
 html.dark-mode ._2y8_ {
 	background: transparent;
 	border: solid 1px rgba(255, 255, 255, 0.05);
 }
 
-/* new conversation contact list: popup hr */
+/* New conversation contact list: popup hr */
 html.dark-mode ._5l38 {
 	border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 
-/* new conversation contact list: popup hover */
+/* New conversation contact list: popup hover */
 html.dark-mode ._1k1p ._5l38 {
 	border-top: none;
 }
@@ -263,7 +263,7 @@ html.dark-mode ._1k1p {
 	background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-/* conversation search */
+/* Conversation search */
 html.dark-mode ._33p7 {
 	background-color: rgb(25, 38, 51);
 }
@@ -289,14 +289,14 @@ html.dark-mode ._33p7 ._5iwn ._58ak::before {
 	filter: invert();
 }
 
-/* dialogs */
+/* Dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
 html.dark-mode ._2c9g {
 	background: #192633 !important;
 }
 
-/* dialog: title and names */
+/* Dialog: title and names */
 html.dark-mode ._374c,
 html.dark-mode ._4ebz,
 html.dark-mode ._2c9i ._19jt,
@@ -304,29 +304,29 @@ html.dark-mode .uiInputLabelLabel {
 	color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* gif and sticker dialog: hide white triangle */
+/* Gif and sticker dialog: hide white triangle */
 html.dark-mode ._53io {
 	visibility: hidden;
 }
 
-/* gif and sticker dialog: style the bottom of the list */
+/* Gif and sticker dialog: style the bottom of the list */
 html.dark-mode .uiScrollableArea.contentAfter:after {
 	background: linear-gradient(rgba(25, 38, 51, .05), #192633);
 }
 
-/* sticker dialog: selected header */
+/* Sticker dialog: selected header */
 html.dark-mode ._5r8a._5r8b,
 html.dark-mode ._eb3:before {
 	background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* sticker dialog: header borders */
+/* Sticker dialog: header borders */
 html.dark-mode ._5r8e,
 html.dark-mode ._5r86 {
 	border-color: rgba(255, 255, 255, 0.05);
 }
 
-/* record dialog: time */
+/* Record dialog: time */
 html.dark-mode ._3z53 {
 	color: rgba(255, 255, 255, 0.7);
 }
