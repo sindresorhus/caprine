@@ -40,6 +40,16 @@ const viewSubmenu = [
 		click() {
 			sendAction('zoom-out');
 		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Reload Window',
+		accelerator: 'CmdOrCtrl+R',
+		click() {
+			browserWindow.reload();
+		}
 	}
 ];
 
