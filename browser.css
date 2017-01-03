@@ -91,6 +91,11 @@ body {
 	margin-left: 65px !important;
 }
 
+/* better highlightment for the current thread (left side bar)*/
+._1ht1._1ht2{
+	background-color: rgba(79, 135, 251, .2);
+} 
+
 @media all and (max-width: 700px) {
 	/* Make right-column flexible in compact mode */
 	._1q5- {
@@ -111,3 +116,5 @@ a,
 *[role='button'] {
 	outline: none !important;
 }
+
+
