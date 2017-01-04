@@ -3,7 +3,6 @@ html {
 }
 
 /* Bind the toolbar as the window's draggable region */
-
 ._36ic._5l-3,
 ._5742 {
 	-webkit-app-region: drag;
@@ -64,6 +63,7 @@ html {
 ._fl2 {
 	padding: 3px 8px !important;
 }
+
 /* Adjust `To` field for narrower titlebar */
 ._2y8y {
 	min-height: 40px !important;
