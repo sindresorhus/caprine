@@ -2,6 +2,24 @@ html {
 	overflow: hidden;
 }
 
+/* Add OS specific fonts */
+body {
+	font-family: -apple-system,
+			BlinkMacSystemFont,
+			'Segoe UI',
+			Roboto,
+			Oxygen-Sans,
+			Ubuntu,
+			Cantarell,
+			'Helvetica Neue',
+			sans-serif,
+			'Apple Color Emoji',
+			'Segoe UI Emoji',
+			'Segoe UI Symbol' !important;
+	text-rendering: optimizeLegibility !important;
+	font-feature-settings: 'liga', 'clig', 'dlig', 'kern';
+}
+
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
 ._5742 {
