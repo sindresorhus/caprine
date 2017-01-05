@@ -77,8 +77,7 @@ if (process.platform !== 'darwin') {
 				title: `About ${appName}`,
 				message: `${appName} ${app.getVersion()}`,
 				detail: 'Created by Sindre Sorhus',
-				icon: path.join(__dirname, 'static/Icon.png'),
-				buttons: []
+				icon: path.join(__dirname, 'static/Icon.png')
 			});
 		}
 	});

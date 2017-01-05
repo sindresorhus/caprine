@@ -2,48 +2,71 @@ html {
 	overflow: hidden;
 }
 
-/* bind the toolbar as the window's draggable region */
+/* Add OS specific fonts */ 
+body {
+	font-family: -apple-system,
+			BlinkMacSystemFont, 
+			'Segoe UI', 
+			Roboto, 
+			Oxygen-Sans, 
+			Ubuntu, 
+			Cantarell, 
+			'Helvetica Neue',
+			sans-serif,
+			'Apple Color Emoji',
+			'Segoe UI Emoji',
+			'Segoe UI Symbol' !important;
+	text-rendering: optimizeLegibility !important;
+	font-feature-settings: 'liga', 'clig', 'dlig', 'kern';
+}
+
+/* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
 ._5742 {
 	-webkit-app-region: drag;
 }
 
-/* window wrapper */
+/* Window wrapper */
 ._4sp8 {
 	min-width: 0;
 }
 
-/* hide footer at login view */
+/* Hide footer at login view */
 ._210n {
 	display: none;
 }
 
-/* first time user popup */
+/* First time user popup */
 ._s15 {
 	display: none;
 }
 
-/* right-column */
+/* "Keep the conversation going" bar */
+._s15 {
+	display: none !important;
+}
+
+/* Right-column */
 ._1q5- {
 	border-left: 1px solid rgba(0, 0, 0, .10) !important;
 }
 
-/* hide settings menu */
+/* Hide settings menu */
 .uiContextualLayerBelowLeft ._5v-0._53il {
 	display: none !important;
 }
 
-/* hide settings icon */
+/* Hide settings icon */
 ._30yy._2fug._p {
 	display: none !important;
 }
 
-/* hide title */
+/* Hide title */
 ._1tqi {
 	display: none;
 }
 
-/* narrower titlebar */
+/* Narrower titlebar */
 ._36ic,
 ._5742 {
 	height: 40px !important;
@@ -52,7 +75,7 @@ html {
 ._fl2 {
 	padding: 3px 8px !important;
 }
-/* adjust `To` field for narrower titlebar */
+/* Adjust `To` field for narrower titlebar */
 ._2y8y {
 	min-height: 40px !important;
 	padding: 8px !important;
@@ -63,13 +86,13 @@ html {
 	display: none;
 }
 
-/* move the contextual back button so it's not obstructed by the native traffic lights */
+/* Move the contextual back button so it's not obstructed by the native traffic lights */
 ._30yy._2oc9 {
 	margin-left: 65px !important;
 }
 
 @media all and (max-width: 700px) {
-	/* make right-column flexible in compact mode */
+	/* Make right-column flexible in compact mode */
 	._1q5- {
 		position: absolute !important;
 		right: 0 !important;
@@ -83,9 +106,8 @@ html {
 	}
 }
 
-/* don't show outline on clickable elements
- * except in the delete/mute modal so that we know what we are selecting */
+/* Don't show outline on clickable elements except in the delete/mute modal so that we know what we are selecting */
 a,
-*[role="button"] {
+*[role='button'] {
 	outline: none !important;
 }
