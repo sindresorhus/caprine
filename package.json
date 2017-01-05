@@ -35,6 +35,7 @@
     "electron-context-menu": "^0.6.0",
     "electron-debug": "^1.0.0",
     "electron-dl": "^1.0.0",
+    "electron-spellchecker": "^0.7.1",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
