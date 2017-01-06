@@ -4,12 +4,12 @@ const config = require('./config');
 
 const ipc = electron.ipcRenderer;
 
-const listSelector = 'div[role="navigation"] > ul > li';
+const listSelector = 'div[role="navigation"] > ul > div';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
 ipc.on('show-preferences', () => {
-	// create the menu for the below
+	// Create the menu for the below
 	document.querySelector('._30yy._2fug._p').click();
 
 	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
@@ -21,7 +21,7 @@ ipc.on('new-conversation', () => {
 });
 
 ipc.on('log-out', () => {
-	// create the menu for the below
+	// Create the menu for the below
 	document.querySelector('._30yy._2fug._p').click();
 
 	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
@@ -87,21 +87,26 @@ ipc.on('zoom-out', () => {
 
 function nextConversation() {
 	const index = getNextIndex(true);
-	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	selectConversation(index);
 }
 
 function previousConversation() {
 	const index = getNextIndex(false);
-	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	selectConversation(index);
 }
 
 function jumpToConversation(key) {
 	const index = key - 1;
-	document.querySelectorAll(listSelector)[index].firstChild.firstChild.click();
+	selectConversation(index);
 }
 
-// returns the index of the selected conversation
-// if no conversation is selected, returns null.
+// Focus on the conversation with the given index
+function selectConversation(index) {
+	document.querySelector(listSelector).children[index].firstChild.firstChild.click();
+}
+
+// Returns the index of the selected conversation.
+// If no conversation is selected, returns null.
 function getIndex() {
 	const selected = document.querySelector(selectedConversationSelector);
 	if (!selected) {
@@ -113,7 +118,7 @@ function getIndex() {
 	return list.indexOf(selected);
 }
 
-// return the index for next node if next is true,
+// Return the index for next node if next is true,
 // else returns index for the previous node
 function getNextIndex(next) {
 	const selected = document.querySelector(selectedConversationSelector);
@@ -179,17 +184,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.body.appendChild(style);
 	setZoom(zoomFactor);
 
-	// activate Dark Mode if it was set before quitting
+	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
 
-	// prevent flash of white on startup when in dark mode
+	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS only solution
 	if (config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#192633';
 	}
 });
 
-// it's not possible to add multiple accelerators
+// It's not possible to add multiple accelerators
 // so need to do this the oldschool way
 document.addEventListener('keydown', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;

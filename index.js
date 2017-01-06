@@ -61,6 +61,7 @@ function createMainWindow() {
 		icon: process.platform === 'linux' && path.join(__dirname, 'static/Icon.png'),
 		minWidth: 400,
 		minHeight: 200,
+		alwaysOnTop: config.get('alwaysOnTop'),
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3

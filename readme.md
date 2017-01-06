@@ -38,19 +38,24 @@ Desktop notifications can be turned on in Preferences.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
+### Always on Top
+
+You can toggle whether Caprine stays on top of other windows in the `Window`/`View` menu or with <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
+
 ### Keyboard shortcuts
 
-Description           | Keys
---------------------- | -----------------------
-New conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
-Search conversations  | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
-Toggle Dark mode      | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
-Next conversation     | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
-Previous conversation | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
-Jump to conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
-Mute conversation     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
-Archive conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
-Delete conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
+Description            | Keys
+-----------------------| -----------------------
+New conversation       | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
+Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
+Toggle "Dark mode"     | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
+Next conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
+Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
+Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
+Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
+Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
+Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
+Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 
 
 ## Install
