@@ -8,7 +8,7 @@ const tray = require('./tray');
 
 const app = electron.app;
 
-require('electron-debug')();
+require('electron-debug')({enabled: true});
 require('electron-dl')();
 require('electron-context-menu')();
 
