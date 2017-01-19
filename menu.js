@@ -121,6 +121,13 @@ const darwinTpl = [
 				}
 			},
 			{
+				label: 'Reload',
+				accelerator: 'Cmd+R',
+				click(item, focusedWindow) {
+					if (focusedWindow) focusedWindow.reload();
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -233,6 +240,13 @@ const darwinTpl = [
 		submenu: [
 			{
 				role: 'minimize'
+			},
+			{
+				label: 'Reload',
+				accelerator: 'CmdOrCtrl+R',
+				click(item, focusedWindow) {
+					if (focusedWindow) focusedWindow.reload();
+				}
 			},
 			{
 				role: 'close'
@@ -348,6 +362,16 @@ const otherTpl = [
 			{
 				type: 'separator'
 			},
+			{
+				label: 'Reload',
+				accelerator: 'Ctrl+R',
+				click(item, focusedWindow) {
+					if (focusedWindow) focusedWindow.reload();
+				}
+			},
+			{
+				type: 'separator'
+			}
 			{
 				role: 'quit'
 			}
