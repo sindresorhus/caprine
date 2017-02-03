@@ -114,6 +114,13 @@ const darwinTpl = [
 				}
 			},
 			{
+				label: 'Toggle Vibrancy',
+				accelerator: 'Cmd+T',
+				click() {
+					sendAction('toggle-vibrancy');
+				}
+			},
+			{
 				label: 'Preferences...',
 				accelerator: 'Cmd+,',
 				click() {
