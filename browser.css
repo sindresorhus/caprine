@@ -26,11 +26,6 @@ body {
 	-webkit-app-region: drag;
 }
 
-/* Add back subpixel antialiasing */
-._2sdm {
-	-webkit-font-smoothing: initial;
-}
-
 /* Window wrapper */
 ._4sp8 {
 	min-width: 0;
@@ -77,11 +72,9 @@ body {
 	height: 40px !important;
 	padding: 4px !important;
 }
-
 ._fl2 {
 	padding: 3px 8px !important;
 }
-
 /* Adjust `To` field for narrower titlebar */
 ._2y8y {
 	min-height: 40px !important;
