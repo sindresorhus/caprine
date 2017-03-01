@@ -17,7 +17,7 @@ body {
 			'Segoe UI Emoji',
 			'Segoe UI Symbol' !important;
 	text-rendering: optimizeLegibility !important;
-	font-feature-settings: 'liga', 'clig', 'dlig', 'kern';
+	font-feature-settings: 'liga', 'clig', 'kern';
 }
 
 /* Bind the toolbar as the window's draggable region */
