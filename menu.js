@@ -114,6 +114,15 @@ const darwinTpl = [
 				}
 			},
 			{
+				label: 'Dock Bounce',
+				accelerator: 'Cmd+L',
+				type: 'checkbox',
+				checked: false,
+				click() {
+					sendAction('toggle-bounce');
+				}
+			},
+			{
 				label: 'Preferences...',
 				accelerator: 'Cmd+,',
 				click() {
