@@ -51,7 +51,7 @@ const helpSubmenu = [
 		}
 	},
 	{
-		label: 'Report an Issue...',
+		label: 'Report an Issue…',
 		click() {
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
@@ -114,7 +114,7 @@ const darwinTpl = [
 				}
 			},
 			{
-				label: 'Preferences...',
+				label: 'Preferences…',
 				accelerator: 'Cmd+,',
 				click() {
 					sendAction('show-preferences');

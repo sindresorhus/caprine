@@ -2,11 +2,16 @@
 const path = require('path');
 const fs = require('fs');
 const electron = require('electron');
+const log = require('electron-log');
+const {autoUpdater} = require('electron-updater');
+const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
 const app = electron.app;
+
+app.setAppUserModelId('com.sindresorhus.caprine');
 
 require('electron-debug')({enabled: true});
 require('electron-dl')();
@@ -97,6 +102,12 @@ function createMainWindow() {
 	});
 
 	return win;
+}
+
+if (!isDev && process.platform !== 'linux') {
+	autoUpdater.logger = log;
+	autoUpdater.logger.transports.file.level = 'info';
+	autoUpdater.checkForUpdates();
 }
 
 app.on('ready', () => {
