@@ -11,7 +11,6 @@ matrix:
 addons:
   apt:
     packages:
-      - libgnome-keyring-dev
       - icnsutils
       - graphicsmagick
       - xz-utils
@@ -20,6 +19,7 @@ install:
   - npm install
   - npm prune
 script:
+  - npm test
   - npm run dist
 branches:
   except:
