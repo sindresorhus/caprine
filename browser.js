@@ -4,7 +4,7 @@ const config = require('./config');
 
 const ipc = electron.ipcRenderer;
 
-const listSelector = 'div[role="navigation"] > ul > div';
+const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 

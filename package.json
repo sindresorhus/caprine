@@ -1,7 +1,7 @@
 {
   "name": "caprine",
   "productName": "Caprine",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Unofficial Facebook Messenger app",
   "license": "MIT",
   "repository": "sindresorhus/caprine",
@@ -32,13 +32,13 @@
   },
   "dependencies": {
     "electron-config": "^0.2.1",
-    "electron-context-menu": "^0.6.0",
+    "electron-context-menu": "^0.8.0",
     "electron-debug": "^1.0.0",
     "electron-dl": "^1.0.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "electron": "^1.4.10",
+    "electron": "^1.4.13",
     "electron-packager": "^8.0.0",
     "xo": "*"
   },
