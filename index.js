@@ -140,7 +140,7 @@ app.on('ready', () => {
 
 ipcMain.on('set-vibrancy', () => {
 	if (config.get('vibrancy')) {
-		mainWindow.setVibrancy(config.get('darkMode') ? 'dark' : 'light');
+		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
 	} else {
 		mainWindow.setVibrancy(null);
 	}
