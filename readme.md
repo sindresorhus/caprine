@@ -40,6 +40,10 @@ You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kb
 
 <img src="media/screenshot-dark.png" width="846">
 
+### Vibrancy
+
+On *macOS*, you can add vibrancy effect to the window in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>T</kbd>.
+
 ### Jump to conversation hotkey
 
 You can switch conversations similar to how you switch browser tabs: <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).

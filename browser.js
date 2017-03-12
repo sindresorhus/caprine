@@ -58,11 +58,25 @@ ipc.on('archive-conversation', () => {
 
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
+	ipc.send('set-vibrancy');
+}
+
+function setVibrancy() {
+	document.documentElement.classList.toggle('vibrancy',
+		config.get('vibrancy'));
+	ipc.send('set-vibrancy');
+
+	document.documentElement.style.backgroundColor = 'transparent';
 }
 
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
+});
+
+ipc.on('toggle-vibrancy', () => {
+	config.set('vibrancy', !config.get('vibrancy'));
+	setVibrancy();
 });
 
 ipc.on('zoom-reset', () => {
@@ -192,6 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#192633';
 	}
+
+	// Activate vibrancy effect if it was set before quitting
+	setVibrancy();
 });
 
 // It's not possible to add multiple accelerators

@@ -10,6 +10,7 @@ const config = require('./config');
 const tray = require('./tray');
 
 const app = electron.app;
+const ipcMain = electron.ipcMain;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -70,7 +71,7 @@ function createMainWindow() {
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
-		backgroundColor: isDarkMode ? '#192633' : '#fff',
+		transparent: true,
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -122,6 +123,7 @@ app.on('ready', () => {
 	page.on('dom-ready', () => {
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+		page.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 
 		if (argv.minimize) {
 			mainWindow.minimize();
@@ -134,6 +136,14 @@ app.on('ready', () => {
 		e.preventDefault();
 		electron.shell.openExternal(url);
 	});
+});
+
+ipcMain.on('set-vibrancy', () => {
+	if (config.get('vibrancy')) {
+		mainWindow.setVibrancy(config.get('darkMode') ? 'dark' : 'light');
+	} else {
+		mainWindow.setVibrancy(null);
+	}
 });
 
 app.on('activate', () => {
