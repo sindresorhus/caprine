@@ -89,7 +89,7 @@ html.dark-mode ._36zg-e {
 	color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* messages list: user info */
+/* Messages list: user info */
 html.dark-mode ._1n-e {
 	color: rgba(255, 255, 255, 0.4);
 }
@@ -364,6 +364,11 @@ html.dark-mode ._5r86 {
 /* Record dialog: time */
 html.dark-mode ._3z53 {
 	color: rgba(255, 255, 255, 0.7);
+}
+
+/* Delete popover */
+html.dark-mode ._hw2 ._53ij {
+	background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Login tile and names */
