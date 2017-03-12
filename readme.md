@@ -42,7 +42,7 @@ You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kb
 
 ### Vibrancy
 
-On *macOS*, you can add vibrancy effect to the window in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>T</kbd>.
+On *macOS*, you can toggle window vibrancy effect in the `Caprine` menu.
 
 ### Jump to conversation hotkey
 
