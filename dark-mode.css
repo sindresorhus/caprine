@@ -89,7 +89,7 @@ html.dark-mode ._36zg-e {
 	color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* messages list: user info */
+/* Messages list: user info */
 html.dark-mode ._1n-e {
 	color: rgba(255, 255, 255, 0.4);
 }
@@ -289,6 +289,41 @@ html.dark-mode ._33p7 ._5iwn ._58ak::before {
 	filter: invert();
 }
 
+/* Poll */
+/* Border */
+html.dark-mode ._3b4t {
+	border-color: rgba(255, 255, 255, 0.09);
+}
+/* "Poll" header text */
+html.dark-mode ._4qba {
+	color: rgba(255, 255, 255, 0.7);
+}
+/* Voting options text */
+html.dark-mode ._1mr_,
+html.dark-mode ._1mq_ ._1mq- {
+	color: rgba(255, 255, 255, 0.4);
+}
+/* Check box colors */
+html.dark-mode ._2m5p[aria-checked="false"][role="checkbox"] {
+	border: 1px solid rgba(255, 255, 255, .10);
+}
+/* New option text box */
+html.dark-mode ._58al {
+	color: white;
+}
+/* Poll results bar graph colors */
+html.dark-mode ._3b4h {
+	background-color: rgba(255, 255, 255, 0.09);
+}
+/* Poll results profile pictures */
+html.dark-mode ._4mnq {
+	border-color: #192633;
+}
+html.dark-mode ._34n6 {
+	color: rgba(255, 255, 255, 0.4);
+	background-color: rgba(255, 255, 255, 0.09);
+}
+
 /* Dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
@@ -329,6 +364,11 @@ html.dark-mode ._5r86 {
 /* Record dialog: time */
 html.dark-mode ._3z53 {
 	color: rgba(255, 255, 255, 0.7);
+}
+
+/* Delete popover */
+html.dark-mode ._hw2 ._53ij {
+	background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Login tile and names */
