@@ -54,11 +54,11 @@ function updateBadge(title) {
 }
 
 function enableHiresResources() {
-	const scaleFactor = Math.max(electron.screen.getAllDisplays().map(scr => scr.scaleFactor))
+	const scaleFactor = Math.max(electron.screen.getAllDisplays().map(scr => scr.scaleFactor));
 	if (scaleFactor == 1) return;
 
 	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-		let cookie = details.requestHeaders.Cookie
+		let cookie = details.requestHeaders.Cookie;
 		if (cookie && details.method === 'GET' && !details.url.indexOf('https://www.messenger.com/')) {
 			if (cookie.match(/(; )?dpr=\d/)) {
 				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
