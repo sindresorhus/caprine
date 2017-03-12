@@ -14,7 +14,9 @@ exports.create = win => {
 
 	const toggleWin = () => {
 		if (win.isVisible()) {
-			win.hide();
+			if (!win.isFocused()) {
+				win.focus();
+			}
 		} else {
 			win.show();
 		}
