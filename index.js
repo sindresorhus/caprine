@@ -53,6 +53,27 @@ function updateBadge(title) {
 	}
 }
 
+function enableHiresResources() {
+	const scaleFactor = Math.max.apply(null, electron.screen.getAllDisplays().map(scr => scr.scaleFactor));
+
+	if (scaleFactor === 1) {
+		return;
+	}
+
+	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+		let cookie = details.requestHeaders.Cookie;
+		if (cookie && details.method === 'GET' && !details.url.indexOf('https://www.messenger.com/')) {
+			if (cookie.match(/(; )?dpr=\d/)) {
+				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
+			} else {
+				cookie = `${cookie}; dpr=${scaleFactor}`;
+			}
+			details.requestHeaders.Cookie = cookie;
+		}
+		callback({cancel: false, requestHeaders: details.requestHeaders});
+	});
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -115,6 +136,8 @@ app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
+
+	enableHiresResources();
 
 	const page = mainWindow.webContents;
 
