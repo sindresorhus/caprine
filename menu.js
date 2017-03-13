@@ -38,6 +38,16 @@ const viewSubmenu = [
 		click() {
 			sendAction('zoom-out');
 		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Toggle Dark Mode',
+		accelerator: 'Cmd+D',
+		click() {
+			sendAction('toggle-dark-mode');
+		}
 	}
 ];
 
@@ -65,7 +75,14 @@ ${process.platform} ${process.arch} ${os.release()}`;
 	}
 ];
 
-if (process.platform !== 'darwin') {
+if (process.platform === 'darwin') {
+	viewSubmenu.push({
+		label: 'Toggle Vibrancy',
+		click() {
+			sendAction('toggle-vibrancy');
+		}
+	});
+} else {
 	helpSubmenu.push({
 		type: 'separator'
 	}, {
@@ -103,19 +120,6 @@ const darwinTpl = [
 			},
 			{
 				type: 'separator'
-			},
-			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Cmd+D',
-				click() {
-					sendAction('toggle-dark-mode');
-				}
-			},
-			{
-				label: 'Toggle Vibrancy',
-				click() {
-					sendAction('toggle-vibrancy');
-				}
 			},
 			{
 				label: 'Preferences…',

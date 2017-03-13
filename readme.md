@@ -37,13 +37,13 @@ If you like to have Caprine minimized on startup, open it from the command-line 
 
 ### Dark mode
 
-You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> / <kbd>Ctrl</kbd> <kbd>D</kbd>.
+You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> / <kbd>Ctrl</kbd> <kbd>D</kbd>.
 
 <img src="media/screenshot-dark.png" width="846">
 
 ### Vibrancy
 
-On *macOS*, you can toggle the window vibrancy effect in the `Caprine` menu.
+On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 <img src="media/screenshot-vibrancy.jpg" width="1165">
 
