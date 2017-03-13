@@ -8,7 +8,7 @@
 
 ## Install
 
-*macOS 10.9+, Linux, and Windows 7+ are supported.*
+*macOS 10.9+, Linux, and Windows 7+ are supported (64-bit only).*
 
 ### macOS
 
@@ -20,10 +20,11 @@ Or with [Cask](http://caskroom.io): `$ brew cask install caprine`
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
 
+*The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
+
 ### Windows
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
-
 
 
 ## Features
@@ -81,6 +82,7 @@ Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
+Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
 
 
 ---
@@ -90,14 +92,25 @@ Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 
 Built with [Electron](http://electron.atom.io).
 
-### Commands
+### Run
 
-- Init: `$ npm install`
-- Run: `$ npm start`
+```
+$ npm install && npm start
+```
 
-### Building
+### Build
 
 See the [`electron-builder` docs](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build).
+
+### Publish
+
+Use [`np`](https://github.com/sindresorhus/np) and for example run:
+
+```
+$ np minor --no-publish
+```
+
+Then edit the automatically created GitHub Releases draft, remove the `.pkg` file, and publish.
 
 
 ## License
