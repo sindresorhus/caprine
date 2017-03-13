@@ -2,7 +2,7 @@
 const electron = require('electron');
 const config = require('./config');
 
-const ipc = electron.ipcRenderer;
+const {ipcRenderer: ipc} = electron;
 
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
@@ -62,8 +62,7 @@ function setDarkMode() {
 }
 
 function setVibrancy() {
-	document.documentElement.classList.toggle('vibrancy',
-		config.get('vibrancy'));
+	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
 	ipc.send('set-vibrancy');
 
 	document.documentElement.style.backgroundColor = 'transparent';

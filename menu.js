@@ -4,13 +4,11 @@ const path = require('path');
 const electron = require('electron');
 const config = require('./config');
 
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const shell = electron.shell;
+const {app, BrowserWindow, shell} = electron;
 const appName = app.getName();
 
 function sendAction(action) {
-	const win = BrowserWindow.getAllWindows()[0];
+	const [win] = BrowserWindow.getAllWindows();
 
 	if (process.platform === 'darwin') {
 		win.restore();

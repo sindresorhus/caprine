@@ -9,8 +9,7 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
-const app = electron.app;
-const ipcMain = electron.ipcMain;
+const {app, ipcMain} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -145,14 +144,14 @@ app.on('ready', () => {
 
 	enableHiresResources();
 
-	const page = mainWindow.webContents;
+	const {webContents} = mainWindow;
 
 	const argv = require('minimist')(process.argv.slice(1));
 
-	page.on('dom-ready', () => {
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+	webContents.on('dom-ready', () => {
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 
 		if (argv.minimize) {
 			mainWindow.minimize();
@@ -161,7 +160,7 @@ app.on('ready', () => {
 		}
 	});
 
-	page.on('new-window', (e, url) => {
+	webContents.on('new-window', (e, url) => {
 		e.preventDefault();
 		electron.shell.openExternal(url);
 	});
