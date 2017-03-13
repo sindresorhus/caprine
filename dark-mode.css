@@ -387,3 +387,9 @@ html.dark-mode ._55r1._5f0v._43di {
 html.dark-mode button {
 	background: #192633 !important;
 }
+
+/* Fix the Sticker button */
+html.dark-mode ._4rv6 {
+	filter: invert() !important;
+	opacity: 0.6 !important;
+}
