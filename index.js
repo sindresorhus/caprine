@@ -55,7 +55,10 @@ function updateBadge(title) {
 
 function enableHiresResources() {
 	const scaleFactor = Math.max.apply(null, electron.screen.getAllDisplays().map(scr => scr.scaleFactor));
-	if (scaleFactor == 1) return;
+
+	if (scaleFactor === 1) {
+		return;
+	}
 
 	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
 		let cookie = details.requestHeaders.Cookie;
