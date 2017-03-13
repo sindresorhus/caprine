@@ -54,7 +54,7 @@ function updateBadge(title) {
 }
 
 function enableHiresResources() {
-	const scaleFactor = Math.max.apply(null, electron.screen.getAllDisplays().map(scr => scr.scaleFactor));
+	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
 
 	if (scaleFactor === 1) {
 		return;
@@ -62,15 +62,21 @@ function enableHiresResources() {
 
 	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
 		let cookie = details.requestHeaders.Cookie;
-		if (cookie && details.method === 'GET' && !details.url.indexOf('https://www.messenger.com/')) {
-			if (cookie.match(/(; )?dpr=\d/)) {
+
+		if (cookie && details.method === 'GET' && details.url.startsWith('https://www.messenger.com/')) {
+			if (/(; )?dpr=\d/.test(cookie)) {
 				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
 			} else {
 				cookie = `${cookie}; dpr=${scaleFactor}`;
 			}
+
 			details.requestHeaders.Cookie = cookie;
 		}
-		callback({cancel: false, requestHeaders: details.requestHeaders});
+
+		callback({
+			cancel: false,
+			requestHeaders: details.requestHeaders
+		});
 	});
 }
 
