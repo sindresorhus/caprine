@@ -60,10 +60,6 @@ function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 }
 
-ipc.on('toggle-bounce', () => {
-	config.set('bounce', !config.get('bounce'));
-});
-
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
