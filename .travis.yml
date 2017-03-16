@@ -1,3 +1,26 @@
-language: node_js
-node_js:
-  - 'node'
+sudo: required
+dist: trusty
+language: c
+osx_image: xcode8
+matrix:
+  include:
+    - os: osx
+    - os: linux
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
+addons:
+  apt:
+    packages:
+      - icnsutils
+      - graphicsmagick
+      - xz-utils
+install:
+  - nvm install 6
+  - npm install
+  - npm prune
+script:
+  - npm test
+  - npm run dist
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"

@@ -3,7 +3,28 @@
 > Unofficial Facebook Messenger app
 
 <br>
-[![](media/screenshot.png)](https://github.com/sindresorhus/caprine/releases/latest)
+[<img src="media/screenshot.png" width="846">](https://github.com/sindresorhus/caprine/releases/latest)
+
+
+## Install
+
+*macOS 10.9+, Linux, and Windows 7+ are supported (64-bit only).*
+
+### macOS
+
+[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.dmg` file.
+
+Or with [Cask](http://caskroom.io): `$ brew cask install caprine`
+
+### Linux
+
+[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
+
+*The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
+
+### Windows
+
+[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
 
 
 ## Features
@@ -16,14 +37,19 @@ If you like to have Caprine minimized on startup, open it from the command-line 
 
 ### Dark mode
 
-You can toggle dark mode in the `Caprine` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> / <kbd>Ctrl</kbd> <kbd>D</kbd>.
+You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> / <kbd>Ctrl</kbd> <kbd>D</kbd>.
 
-![](media/screenshot-dark.png)
+<img src="media/screenshot-dark.png" width="846">
+
+### Vibrancy
+
+On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
+
+<img src="media/screenshot-vibrancy.jpg" width="1165">
 
 ### Jump to conversation hotkey
 
 You can switch conversations similar to how you switch browser tabs: <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
-
 
 ### Compact mode
 
@@ -56,42 +82,7 @@ Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
-
-
-## Install
-
-*macOS 10.9+, Windows 7+ & Linux are supported.*
-
-### macOS
-
-#### [Homebrew Cask](http://caskroom.io)
-
-```
-$ brew update && brew cask install caprine
-```
-
-#### Manually
-
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest), unzip, and move `Caprine.app` to the `/Applications` directory.
-
-### Linux
-
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest) and unzip to some location.
-
-To add a shortcut to the app, create a file in `~/.local/share/applications` called `caprine.desktop` with the following contents:
-
-```
-[Desktop Entry]
-Name=Caprine
-Exec=/full/path/to/folder/Caprine
-Terminal=false
-Type=Application
-Icon=/full/path/to/folder/Caprine/resources/app/static/Icon.png
-```
-
-### Windows
-
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest) and unzip to some location.
+Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
 
 
 ---
@@ -101,19 +92,25 @@ Icon=/full/path/to/folder/Caprine/resources/app/static/Icon.png
 
 Built with [Electron](http://electron.atom.io).
 
-###### Commands
+### Run
 
-- Init: `$ npm install`
-- Run: `$ npm start`
-- Build macOS: `$ npm run build:macos`
-- Build Linux: `$ npm run build:linux`
-- Build Windows: `$ npm run build:windows`
-- Build all: `$ brew install wine` and `$ npm run build` *(macOS only)*
+```
+$ npm install && npm start
+```
 
+### Build
 
-## Related
+See the [`electron-builder` docs](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build).
 
-- [Anatine](https://github.com/sindresorhus/anatine) - Pristine Twitter app
+### Publish
+
+Use [`np`](https://github.com/sindresorhus/np) and for example run:
+
+```
+$ np minor --no-publish
+```
+
+Then edit the automatically created GitHub Releases draft, remove the `.pkg` file, and publish.
 
 
 ## License

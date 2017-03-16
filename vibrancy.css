@@ -1,0 +1,54 @@
+html.vibrancy body, html.vibrancy ._4sp8 {
+	background: transparent !important;
+}
+
+/* Message placholder text color */
+html.vibrancy ._kmc ._1p1t {
+	color: #999 !important;
+	-webkit-text-fill-color: #999 !important;
+}
+
+/* Contact list: search input */
+html.vibrancy ._5iwm ._58al {
+	background-color: rgba(246, 247, 249, 0.5) !important;
+}
+
+/* Contact list: person container */
+html.vibrancy ._1qt4 {
+	border-top: solid 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Styles for vibrancy in dark mode */
+html.dark-mode.vibrancy body {
+	background: rgba(0, 0, 0, 0.26) !important;
+}
+
+/* Main container? */
+html.dark-mode.vibrancy ._4sp8 {
+	background: transparent !important;
+}
+
+/* Main content */
+html.dark-mode.vibrancy ._1q5- {
+	background: transparent !important;
+}
+
+/* Message list: header above */
+html.dark-mode.vibrancy ._5742 {
+	background: transparent !important;
+}
+
+/* Contact list: header above */
+html.dark-mode.vibrancy ._36ic {
+	background: transparent !important;
+}
+
+/* Login button */
+html.dark-mode.vibrancy button {
+	background: transparent !important;
+}
+
+/* Contact list: search input */
+html.dark-mode.vibrancy ._5iwm ._58al {
+	background: rgba(255, 255, 255, 0.1) !important;
+}

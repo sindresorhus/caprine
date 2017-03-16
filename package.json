@@ -1,7 +1,7 @@
 {
   "name": "caprine",
   "productName": "Caprine",
-  "version": "1.8.0",
+  "version": "2.0.0-beta.1",
   "description": "Unofficial Facebook Messenger app",
   "license": "MIT",
   "repository": "sindresorhus/caprine",
@@ -23,30 +23,74 @@
     }
   ],
   "scripts": {
+    "postinstall": "install-app-deps",
     "test": "xo",
     "start": "electron .",
-    "build": "npm run build:macos && npm run build:linux && npm run build:windows",
-    "build:macos": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=darwin --arch=x64 --icon=static/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version && cd dist/Caprine-darwin-x64 && zip -ryXq9 ../Caprine-osx-${npm_package_version}.zip Caprine.app",
-    "build:linux": "electron-packager . --overwrite --out=dist --ignore='^media$' --prune --platform=linux --arch=x64 --app-bundle-id=com.sindresorhus.caprine --app-version=$npm_package_version && cd dist/Caprine-linux-x64/ && zip -ryq9 ../Caprine-linux-${npm_package_version}.zip *",
-    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=win32 --arch=ia32 --icon=static/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip *"
+    "pack": "build",
+    "dist": "build",
+    "dist:all": "build --platform=all"
   },
   "dependencies": {
     "electron-config": "^0.2.1",
     "electron-context-menu": "^0.8.0",
     "electron-debug": "^1.0.0",
     "electron-dl": "^1.0.0",
+    "electron-is-dev": "^0.1.2",
+    "electron-log": "^1.3.0",
+    "electron-updater": "^1.3.2",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "electron": "^1.4.13",
-    "electron-packager": "^8.0.0",
+    "electron": "^1.6.2",
+    "electron-builder": "^15.3.0",
     "xo": "*"
   },
   "xo": {
-    "esnext": true,
     "envs": [
       "node",
       "browser"
     ]
+  },
+  "build": {
+    "files": [
+      "**/*",
+      "!media${/*}"
+    ],
+    "appId": "com.sindresorhus.caprine",
+    "mac": {
+      "category": "public.app-category.social-networking",
+      "target": [
+        "dmg",
+        "zip",
+        "mas"
+      ]
+    },
+    "dmg": {
+      "iconSize": 160,
+      "contents": [
+        {
+          "x": 180,
+          "y": 180
+        },
+        {
+          "x": 480,
+          "y": 180,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "category": "Chat",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
   }
 }
