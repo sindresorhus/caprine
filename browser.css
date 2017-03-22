@@ -111,3 +111,13 @@ a,
 *[role='button'] {
 	outline: none !important;
 }
+
+/* Remove white background in Preferences */
+._1u5d {
+	background-color: transparent !important;
+}
+
+/* Fix incorrect border radius in Preferences */
+._4eby {
+	border-radius: 2px !important;
+}

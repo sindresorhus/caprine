@@ -4,13 +4,11 @@ const path = require('path');
 const electron = require('electron');
 const config = require('./config');
 
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const shell = electron.shell;
+const {app, BrowserWindow, shell} = electron;
 const appName = app.getName();
 
 function sendAction(action) {
-	const win = BrowserWindow.getAllWindows()[0];
+	const [win] = BrowserWindow.getAllWindows();
 
 	if (process.platform === 'darwin') {
 		win.restore();
@@ -40,6 +38,16 @@ const viewSubmenu = [
 		click() {
 			sendAction('zoom-out');
 		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Toggle Dark Mode',
+		accelerator: 'Cmd+D',
+		click() {
+			sendAction('toggle-dark-mode');
+		}
 	}
 ];
 
@@ -51,7 +59,7 @@ const helpSubmenu = [
 		}
 	},
 	{
-		label: 'Report an Issue...',
+		label: 'Report an Issue…',
 		click() {
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
@@ -67,7 +75,14 @@ ${process.platform} ${process.arch} ${os.release()}`;
 	}
 ];
 
-if (process.platform !== 'darwin') {
+if (process.platform === 'darwin') {
+	viewSubmenu.push({
+		label: 'Toggle Vibrancy',
+		click() {
+			sendAction('toggle-vibrancy');
+		}
+	});
+} else {
 	helpSubmenu.push({
 		type: 'separator'
 	}, {
@@ -107,14 +122,7 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Cmd+D',
-				click() {
-					sendAction('toggle-dark-mode');
-				}
-			},
-			{
-				label: 'Preferences...',
+				label: 'Preferences…',
 				accelerator: 'Cmd+,',
 				click() {
 					sendAction('show-preferences');

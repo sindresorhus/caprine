@@ -2,11 +2,16 @@
 const path = require('path');
 const fs = require('fs');
 const electron = require('electron');
+const log = require('electron-log');
+const {autoUpdater} = require('electron-updater');
+const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
-const app = electron.app;
+const {app, ipcMain} = electron;
+
+app.setAppUserModelId('com.sindresorhus.caprine');
 
 require('electron-debug')({enabled: true});
 require('electron-dl')();
@@ -47,6 +52,33 @@ function updateBadge(title) {
 	}
 }
 
+function enableHiresResources() {
+	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
+
+	if (scaleFactor === 1) {
+		return;
+	}
+
+	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+		let cookie = details.requestHeaders.Cookie;
+
+		if (cookie && details.method === 'GET' && details.url.startsWith('https://www.messenger.com/')) {
+			if (/(; )?dpr=\d/.test(cookie)) {
+				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
+			} else {
+				cookie = `${cookie}; dpr=${scaleFactor}`;
+			}
+
+			details.requestHeaders.Cookie = cookie;
+		}
+
+		callback({
+			cancel: false,
+			requestHeaders: details.requestHeaders
+		});
+	});
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -65,7 +97,7 @@ function createMainWindow() {
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
-		backgroundColor: isDarkMode ? '#192633' : '#fff',
+		transparent: true,
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -99,18 +131,27 @@ function createMainWindow() {
 	return win;
 }
 
+if (!isDev && process.platform !== 'linux') {
+	autoUpdater.logger = log;
+	autoUpdater.logger.transports.file.level = 'info';
+	autoUpdater.checkForUpdates();
+}
+
 app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
-	const page = mainWindow.webContents;
+	enableHiresResources();
+
+	const {webContents} = mainWindow;
 
 	const argv = require('minimist')(process.argv.slice(1));
 
-	page.on('dom-ready', () => {
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+	webContents.on('dom-ready', () => {
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 
 		if (argv.minimize) {
 			mainWindow.minimize();
@@ -119,10 +160,18 @@ app.on('ready', () => {
 		}
 	});
 
-	page.on('new-window', (e, url) => {
+	webContents.on('new-window', (e, url) => {
 		e.preventDefault();
 		electron.shell.openExternal(url);
 	});
+});
+
+ipcMain.on('set-vibrancy', () => {
+	if (config.get('vibrancy')) {
+		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
+	} else {
+		mainWindow.setVibrancy(null);
+	}
 });
 
 app.on('activate', () => {
