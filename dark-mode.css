@@ -20,6 +20,11 @@ html.dark-mode ._o46:not(._nd_) ._hh7 {
 	color: rgba(255, 255, 255, 0.7);
 }
 
+/* Message list: remove border from messages */
+._hh7._aol {
+	border-color: transparent !important;
+}
+
 /* Fix dark mode overriding colors for code snippets */
 html.dark-mode ._wu0 {
 	color: black;
