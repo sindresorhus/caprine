@@ -26,7 +26,7 @@ const isAlreadyRunning = app.makeSingleInstance(() => {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
 		}
-		
+
 		mainWindow.show();
 	}
 });
