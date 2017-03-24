@@ -4,7 +4,9 @@
 
 <br>  
 
-<a href='https://github.com/sindresorhus/caprine/releases/latest'><img src="media/screenshot.png" width="846"></a>
+<a href="https://github.com/sindresorhus/caprine/releases/latest">
+	<img src="media/screenshot.png" width="846">
+</a>
 
 
 ## Install
