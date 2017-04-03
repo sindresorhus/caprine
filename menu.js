@@ -124,7 +124,7 @@ const darwinTpl = [
 			{
 				label: 'Bounce Dock on Message',
 				type: 'checkbox',
-				checked: false,
+				checked: config.get('bounceDockOnMessage'),
 				click() {
 					config.set('bounceDockOnMessage', !config.get('bounceDockOnMessage'));
 				}
