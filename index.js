@@ -19,6 +19,7 @@ require('electron-context-menu')();
 
 let mainWindow;
 let isQuitting = false;
+let prevMessageCount = 0;
 
 const isAlreadyRunning = app.makeSingleInstance(() => {
 	if (mainWindow) {
@@ -45,6 +46,10 @@ function updateBadge(title) {
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		app.setBadgeCount(messageCount);
+		if (process.platform === 'darwin' && config.get('bounce') && prevMessageCount !== messageCount) {
+			app.dock.bounce('informational');
+			prevMessageCount = messageCount;
+		}
 	}
 
 	if (process.platform === 'linux' || process.platform === 'win32') {

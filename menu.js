@@ -122,7 +122,22 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Preferences…',
+				label: 'Toggle Dark Mode',
+				accelerator: 'Cmd+D',
+				click() {
+					sendAction('toggle-dark-mode');
+				}
+			},
+			{
+				label: 'Dock Bounce',
+				type: 'checkbox',
+				checked: false,
+				click() {
+					config.set('bounce', !config.get('bounce'));
+				}
+			},
+			{
+				label: 'Preferences...',
 				accelerator: 'Cmd+,',
 				click() {
 					sendAction('show-preferences');
