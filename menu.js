@@ -122,18 +122,11 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Cmd+D',
-				click() {
-					sendAction('toggle-dark-mode');
-				}
-			},
-			{
-				label: 'Dock Bounce',
+				label: 'Bounce Dock on Message',
 				type: 'checkbox',
 				checked: false,
 				click() {
-					config.set('bounce', !config.get('bounce'));
+					config.set('bounceDockOnMessage', !config.get('bounceDockOnMessage'));
 				}
 			},
 			{

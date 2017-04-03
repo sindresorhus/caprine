@@ -46,7 +46,7 @@ function updateBadge(title) {
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		app.setBadgeCount(messageCount);
-		if (process.platform === 'darwin' && config.get('bounce') && prevMessageCount !== messageCount) {
+		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
 		}

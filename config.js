@@ -11,6 +11,6 @@ module.exports = new Config({
 			height: 600
 		},
 		alwaysOnTop: false,
-		bounce: false
+		bounceDockOnMessage: false
 	}
 });
