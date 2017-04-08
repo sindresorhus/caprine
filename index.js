@@ -110,6 +110,8 @@ function createMainWindow() {
 		}
 	});
 
+	win.setResizable(true);
+
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);
 	}
