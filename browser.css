@@ -20,6 +20,12 @@ body {
 	font-feature-settings: 'liga', 'clig', 'kern';
 }
 
+/* Add back subpixel antialiasing */
+._2sdm {
+	-webkit-font-smoothing: initial;
+}
+
+
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
 ._5742 {
