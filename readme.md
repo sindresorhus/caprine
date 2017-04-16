@@ -17,7 +17,7 @@
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.dmg` file.
 
-Or with [Homebrew-Cask](https://caskroom.github.io): `$ brew cask install caprine`
+Or with [Homebrew Cask](https://caskroom.github.io): `$ brew cask install caprine`
 
 ### Linux
 
