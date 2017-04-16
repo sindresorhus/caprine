@@ -2,7 +2,7 @@
 
 > Unofficial Facebook Messenger app
 
-<br>  
+<br>
 
 <a href="https://github.com/sindresorhus/caprine/releases/latest">
 	<img src="media/screenshot.png" width="846">
@@ -17,7 +17,7 @@
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.dmg` file.
 
-Or with [Cask](http://caskroom.io): `$ brew cask install caprine`
+Or with [Homebrew-Cask](https://caskroom.github.io): `$ brew cask install caprine`
 
 ### Linux
 
