@@ -160,7 +160,10 @@ html.dark-mode ._1htf {
 html.dark-mode ._1ht7 {
 	color: rgba(255, 255, 255, 0.2);
 }
-
+/* Contact list: timestamp (selected) */
+html.dark-mode ._1ht2 ._1ht7 {
+	color: rgba(255, 255, 255, 0.7);
+}
 /* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
 	color: rgba(0, 132, 255, 0.7)
