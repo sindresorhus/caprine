@@ -138,7 +138,7 @@ html.dark-mode ._1ht1 {
 
 /* Contact list: person (selected) */
 html.dark-mode ._1ht1._1ht2 {
-	background-color: rgba(0, 132, 255, 0.6) !important;
+	background: linear-gradient(-45deg, #1871DC, #1870DB) !important
 }
 
 /* Contact list: person container */
