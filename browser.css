@@ -121,3 +121,12 @@ a,
 ._4eby {
 	border-radius: 2px !important;
 }
+
+/* Contact list: person (selected) */
+._1ht1._1ht2 {
+	background-color: rgba(0, 132, 255, 0.3) !important;
+}
+/* Contact list: latest message, under contact name */
+._1ht1 ._1htf {
+	color: rgba(0, 0, 0, 0.7);
+}

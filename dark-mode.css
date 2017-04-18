@@ -138,7 +138,7 @@ html.dark-mode ._1ht1 {
 
 /* Contact list: person (selected) */
 html.dark-mode ._1ht1._1ht2 {
-	background: rgba(255, 255, 255, 0.03) !important;
+	background: linear-gradient(180deg, #1871DC, #1870DB) !important;
 }
 
 /* Contact list: person container */
@@ -160,7 +160,10 @@ html.dark-mode ._1htf {
 html.dark-mode ._1ht7 {
 	color: rgba(255, 255, 255, 0.2);
 }
-
+/* Contact list: timestamp (selected) */
+html.dark-mode ._1ht2 ._1ht7 {
+	color: rgba(255, 255, 255, 0.5);
+}
 /* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
 	color: rgba(0, 132, 255, 0.7)
