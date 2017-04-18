@@ -41,8 +41,8 @@
     "minimist": "^1.2.0"
   },
   "devDependencies": {
-    "electron": "^1.6.5",
-    "electron-builder": "^16.6.1",
+    "electron": "^1.6.6",
+    "electron-builder": "^17.0.1",
     "xo": "*"
   },
   "xo": {
