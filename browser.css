@@ -130,3 +130,9 @@ a,
 ._1ht1 ._1htf {
 	color: rgba(0, 0, 0, 0.7);
 }
+
+/* Allow scrolling of "Edit Nicknames" dialog */
+._4h9n ._4h9o {
+	max-height: 100% !important;
+	height: 280px;
+}
