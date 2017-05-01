@@ -55,7 +55,21 @@ function updateBadge(title) {
 	if (process.platform === 'linux' || process.platform === 'win32') {
 		tray.setBadge(messageCount);
 	}
+
+	if (process.platform === 'win32') {
+		if (messageCount === 0) {
+			mainWindow.setOverlayIcon(null, '');
+		} else {
+			// Delegate drawing of overlay icon to renderer process
+			mainWindow.webContents.send('render-overlay-icon', messageCount);
+		}
+	}
 }
+
+ipcMain.on('update-overlay-icon', (event, data, text) => {
+	const img = electron.nativeImage.createFromDataURL(data);
+	mainWindow.setOverlayIcon(img, text);
+});
 
 function enableHiresResources() {
 	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));

@@ -68,6 +68,31 @@ function setVibrancy() {
 	document.documentElement.style.backgroundColor = 'transparent';
 }
 
+function renderOverlayIcon(messageCount) {
+	const canvas = document.createElement('canvas');
+	canvas.height = 128;
+	canvas.width = 128;
+	canvas.style.letterSpacing = '-5px';
+	const ctx = canvas.getContext('2d');
+	ctx.fillStyle = '#f42020';
+	ctx.beginPath();
+	ctx.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI);
+	ctx.fill();
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'white';
+	if (messageCount > 99) {
+		ctx.font = '96px sans-serif';
+		ctx.fillText('99', 64, 96);
+	} else if (messageCount > 9) {
+		ctx.font = '96px sans-serif';
+		ctx.fillText(String(messageCount), 64, 96);
+	} else {
+		ctx.font = '102px sans-serif';
+		ctx.fillText(String(messageCount), 64, 98);
+	}
+	return canvas;
+}
+
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
@@ -76,6 +101,10 @@ ipc.on('toggle-dark-mode', () => {
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
+});
+
+ipc.on('render-overlay-icon', (event, messageCount) => {
+	ipc.send('update-overlay-icon', renderOverlayIcon(messageCount).toDataURL(), String(messageCount));
 });
 
 ipc.on('zoom-reset', () => {
