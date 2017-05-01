@@ -102,7 +102,6 @@ function createMainWindow() {
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
-		transparent: process.platform === 'darwin',
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
