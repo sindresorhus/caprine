@@ -401,3 +401,8 @@ html.dark-mode ._4rv6 {
 	filter: invert() !important;
 	opacity: 0.6 !important;
 }
+
+/* Fix the @name-popover in the chat input box */
+html.dark-mode ._13iv {
+	background: #192633 !important;
+}
