@@ -44,7 +44,7 @@ const viewSubmenu = [
 	},
 	{
 		label: 'Toggle Dark Mode',
-		accelerator: 'Cmd+D',
+		accelerator: 'CmdOrCtrl+D',
 		click() {
 			sendAction('toggle-dark-mode');
 		}
@@ -311,16 +311,6 @@ const otherTpl = [
 				accelerator: 'Ctrl+Shift+D',
 				click() {
 					sendAction('delete-conversation');
-				}
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Ctrl+D',
-				click() {
-					sendAction('toggle-dark-mode');
 				}
 			},
 			{
