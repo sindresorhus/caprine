@@ -402,7 +402,7 @@ html.dark-mode ._4rv6 {
 	opacity: 0.6 !important;
 }
 
-/* Fix the @name-section */
+/* Fix the @name-popover in the chat input box */
 html.dark-mode ._13iv {
 	background: #192633 !important;
 }
