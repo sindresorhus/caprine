@@ -84,6 +84,20 @@ function enableHiresResources() {
 	});
 }
 
+function setUpPrivacyBlocking() {
+	const ses = electron.session.defaultSession;
+	const filter = {urls: ['*://*.messenger.com/*typ.php*', '*://*.messenger.com/*change_read_status.php*']};
+	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
+		let blocking = false;
+		if (details.url.includes('typ.php')) {
+			blocking = config.get('block.typingIndicator');
+		} else {
+			blocking = config.get('block.chatSeen');
+		}
+		callback({cancel: blocking});
+	});
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -109,6 +123,8 @@ function createMainWindow() {
 			plugins: true
 		}
 	});
+
+	setUpPrivacyBlocking();
 
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);

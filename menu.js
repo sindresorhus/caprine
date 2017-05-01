@@ -130,6 +130,22 @@ const darwinTpl = [
 				}
 			},
 			{
+				type: 'checkbox',
+				label: 'Block Seen Indicator',
+				checked: config.get('block.chatSeen'),
+				click(item) {
+					config.set('block.chatSeen', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Block Typing Indicator',
+				checked: config.get('block.typingIndicator'),
+				click(item) {
+					config.set('block.typingIndicator', item.checked);
+				}
+			},
+			{
 				label: 'Preferences...',
 				accelerator: 'Cmd+,',
 				click() {
@@ -311,6 +327,25 @@ const otherTpl = [
 				accelerator: 'Ctrl+Shift+D',
 				click() {
 					sendAction('delete-conversation');
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				type: 'checkbox',
+				label: 'Block Seen Indicator',
+				checked: config.get('block.chatSeen'),
+				click(item) {
+					config.set('block.chatSeen', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Block Typing Indicator',
+				checked: config.get('block.typingIndicator'),
+				click(item) {
+					config.set('block.typingIndicator', item.checked);
 				}
 			},
 			{
