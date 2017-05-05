@@ -81,14 +81,11 @@ function renderOverlayIcon(messageCount) {
 	ctx.textAlign = 'center';
 	ctx.fillStyle = 'white';
 	if (messageCount > 99) {
-		ctx.font = '96px sans-serif';
+		ctx.font = '90px sans-serif';
 		ctx.fillText('99', 64, 96);
-	} else if (messageCount > 9) {
-		ctx.font = '96px sans-serif';
-		ctx.fillText(String(messageCount), 64, 96);
 	} else {
-		ctx.font = '102px sans-serif';
-		ctx.fillText(String(messageCount), 64, 98);
+		ctx.font = '90px sans-serif';
+		ctx.fillText(String(messageCount), 64, 96);
 	}
 	return canvas;
 }
