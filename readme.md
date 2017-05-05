@@ -77,7 +77,7 @@ You can choose to prevent people from knowing when you've seen a message or are 
 
 ### Image paste confirmation
 
-Confirmation before sending images from clipboard, to prevent accidental copy-pastes.
+Confirmation before sending images from the clipboard, to prevent accidental copy-pastes.
 
 ### Keyboard shortcuts
 
