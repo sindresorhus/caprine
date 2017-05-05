@@ -75,6 +75,10 @@ You can toggle whether Caprine stays on top of other windows in the `Window`/`Vi
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
+### Image paste confirmation
+
+Confirmation before sending images from the clipboard, to prevent accidental copy-pastes.
+
 ### Keyboard shortcuts
 
 Description            | Keys

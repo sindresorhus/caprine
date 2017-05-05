@@ -38,7 +38,8 @@
     "electron-is-dev": "^0.1.2",
     "electron-log": "^2.0.2",
     "electron-updater": "^1.3.2",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.0",
+    "electron-localshortcut": "^1.1.1"
   },
   "devDependencies": {
     "electron": "1.6.7",

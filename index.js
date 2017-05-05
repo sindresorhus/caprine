@@ -2,6 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 const electron = require('electron');
+const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
@@ -167,6 +168,24 @@ app.on('ready', () => {
 	const {webContents} = mainWindow;
 
 	const argv = require('minimist')(process.argv.slice(1));
+
+	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
+		if (electron.clipboard.availableFormats().some(type => type.includes('image'))) {
+			electron.dialog.showMessageBox({
+				type: 'info',
+				buttons: ['Send', 'Cancel'],
+				message: 'Are you sure you want to send the image in the clipboard?',
+				icon: electron.clipboard.readImage()
+			}, resp => {
+				if (resp === 0) {
+					// User selected send
+					webContents.paste();
+				}
+			});
+		} else {
+			webContents.paste();
+		}
+	});
 
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
