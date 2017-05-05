@@ -80,13 +80,8 @@ function renderOverlayIcon(messageCount) {
 	ctx.fill();
 	ctx.textAlign = 'center';
 	ctx.fillStyle = 'white';
-	if (messageCount > 99) {
-		ctx.font = '90px sans-serif';
-		ctx.fillText('99', 64, 96);
-	} else {
-		ctx.font = '90px sans-serif';
-		ctx.fillText(String(messageCount), 64, 96);
-	}
+	ctx.font = '90px sans-serif';
+	ctx.fillText(String(Math.min(99, messageCount)), 64, 96);
 	return canvas;
 }
 
