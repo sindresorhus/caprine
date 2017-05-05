@@ -124,6 +124,12 @@ $ np minor --no-publish
 Then edit the automatically created GitHub Releases draft, remove the `.pkg` file, and publish.
 
 
+## Maintainers
+
+- [Sindre Sorhus](https://sindresorhus.com)
+- [Aw Young Qingzhuo](https://github.com/veniversum)
+
+
 ## License
 
-MIT © [Sindre Sorhus](https://sindresorhus.com)
+MIT
