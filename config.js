@@ -11,6 +11,10 @@ module.exports = new Config({
 			height: 600
 		},
 		alwaysOnTop: false,
-		bounceDockOnMessage: false
+		bounceDockOnMessage: false,
+		block: {
+			chatSeen: false,
+			typingIndicator: false
+		}
 	}
 });
