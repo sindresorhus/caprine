@@ -174,7 +174,7 @@ app.on('ready', () => {
 			electron.dialog.showMessageBox({
 				type: 'info',
 				buttons: ['Send', 'Cancel'],
-				message: 'Are you sure you want to send image in clipboard?',
+				message: 'Are you sure you want to send the image in the clipboard?',
 				icon: electron.clipboard.readImage()
 			}, resp => {
 				if (resp === 0) {
