@@ -29,6 +29,7 @@ Or with [Homebrew-Cask](https://caskroom.github.io): `$ brew cask install caprin
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
 
+*For taskbar notification badges to work on Windows 10, you'll need to [enable it in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
 
 ## Features
 
