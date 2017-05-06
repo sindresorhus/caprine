@@ -201,9 +201,11 @@ app.on('ready', () => {
 
 	webContents.on('new-window', (e, url, frameName, disposition, options) => {
 		e.preventDefault();
-		if (url === 'about:blank') {  // Voice/video call popup
-			options.show = true;
-			e.newGuest = new electron.BrowserWindow(options);
+		if (url === 'about:blank') {
+			if (frameName === 'Video Call') {  // Voice/video call popup
+				options.show = true;
+				e.newGuest = new electron.BrowserWindow(options);
+			}
 		} else {
 			electron.shell.openExternal(url);
 		}
