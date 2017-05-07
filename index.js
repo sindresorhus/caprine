@@ -204,6 +204,7 @@ app.on('ready', () => {
 		if (url === 'about:blank') {
 			if (frameName === 'Video Call') {  // Voice/video call popup
 				options.show = true;
+				options.titleBarStyle = 'default';
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
