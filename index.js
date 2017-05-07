@@ -213,9 +213,17 @@ app.on('ready', () => {
 		}
 	});
 
-	webContents.on('new-window', (e, url) => {
+	webContents.on('new-window', (e, url, frameName, disposition, options) => {
 		e.preventDefault();
-		electron.shell.openExternal(url);
+		if (url === 'about:blank') {
+			if (frameName === 'Video Call') {  // Voice/video call popup
+				options.show = true;
+				options.titleBarStyle = 'default';
+				e.newGuest = new electron.BrowserWindow(options);
+			}
+		} else {
+			electron.shell.openExternal(url);
+		}
 	});
 });
 
