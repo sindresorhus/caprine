@@ -1,6 +1,8 @@
 # Caprine <img src="static/Icon.png" width="60">
 
-> Unofficial Facebook Messenger app
+> Elegant Facebook Messenger desktop app
+
+Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.
 
 <br>
 
@@ -8,6 +10,18 @@
 	<img src="media/screenshot.png" width="846">
 </a>
 
+
+## Highlights
+
+- [Dark theme](#dark-mode)
+- [Vibrant theme](#vibrancy)*
+- [Privacy focused](#hide-last-seen--typing-indicator)
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- Cross-platform
+- Silent auto-updates
+- Custom text size
+
+\*macOS only
 
 ## Install
 
@@ -31,13 +45,8 @@ Or with [Homebrew-Cask](https://caskroom.github.io): `$ brew cask install caprin
 
 *For taskbar notification badges to work on Windows 10, you'll need to [enable it in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
 
+
 ## Features
-
-### Background behavior
-
-When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
-
-If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
 
 ### Dark mode
 
@@ -50,6 +59,12 @@ You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 <img src="media/screenshot-vibrancy.jpg" width="1165">
+
+### Hide last seen / typing indicator
+
+<img src="media/screenshot-block-typing-indicator.png" width="626">
+
+You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
 ### Jump to conversation hotkey
 
@@ -71,15 +86,15 @@ Desktop notifications can be turned on in Preferences.
 
 You can toggle whether Caprine stays on top of other windows in the `Window`/`View` menu or with <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
 
-### Hide last seen / typing indicator
-
-<img src="media/screenshot-block-typing-indicator.png" width="626">
-
-You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
-
 ### Image paste confirmation
 
 Confirmation before sending images from the clipboard, to prevent accidental copy-pastes.
+
+### Background behavior
+
+When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
+
+If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
 
 ### Keyboard shortcuts
 
@@ -130,6 +145,11 @@ Then edit the automatically created GitHub Releases draft, remove the `.pkg` fil
 
 - [Sindre Sorhus](https://sindresorhus.com)
 - [Aw Young Qingzhuo](https://github.com/veniversum)
+
+
+## Disclaimer
+
+Caprine is a third-party app and is not affiliated with Facebook.
 
 
 ## License
