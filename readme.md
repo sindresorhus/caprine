@@ -61,7 +61,6 @@ The interface adapts when resized to a small size.
 
 <div align="center"><img src="media/screenshot-compact.png" width="512"></div>
 
-
 ### Desktop notifications
 
 Desktop notifications can be turned on in Preferences.
@@ -73,6 +72,8 @@ Desktop notifications can be turned on in Preferences.
 You can toggle whether Caprine stays on top of other windows in the `Window`/`View` menu or with <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
 
 ### Hide last seen / typing indicator
+
+<img src="media/screenshot-block-typing-indicator.png" width="626">
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
