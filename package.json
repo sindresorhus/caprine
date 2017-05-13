@@ -1,7 +1,7 @@
 {
   "name": "caprine",
   "productName": "Caprine",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Unofficial Facebook Messenger app",
   "license": "MIT",
   "repository": "sindresorhus/caprine",
