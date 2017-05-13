@@ -26,9 +26,8 @@
     "postinstall": "install-app-deps",
     "test": "xo",
     "start": "electron .",
-    "pack": "build",
-    "dist": "build",
-    "dist:all": "build --platform=all"
+    "pack": "build --dir",
+    "dist": "build"
   },
   "dependencies": {
     "electron-config": "^0.2.1",

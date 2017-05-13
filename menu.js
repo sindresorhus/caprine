@@ -111,7 +111,7 @@ if (process.platform === 'darwin') {
 	});
 }
 
-const darwinTpl = [
+const macosTpl = [
 	{
 		label: appName,
 		submenu: [
@@ -417,6 +417,6 @@ const otherTpl = [
 	}
 ];
 
-const tpl = process.platform === 'darwin' ? darwinTpl : otherTpl;
+const tpl = process.platform === 'darwin' ? macosTpl : otherTpl;
 
 module.exports = electron.Menu.buildFromTemplate(tpl);
