@@ -1,23 +1,39 @@
+:root{
+	--base: black;
+	--base-ninety: rgba(255, 255, 255, 0.9);
+	--base-seventy-five: rgba(255, 255, 255, 0.75);
+	--base-seventy: rgba(255, 255, 255, 0.7);
+	--base-fifty: rgba(255, 255, 255, 0.5);
+	--base-fourty: rgba(255, 255, 255, 0.4);
+	--base-thiry: rgba(255, 255, 255, 0.3);
+	--base-twenty: rgba(255, 255, 255, 0.2);
+	--base-five: rgba(255, 255, 255, 0.05);
+	--base-ten: rgba(255, 255, 255, 0.1);
+	--base-nine: rgba(255, 255, 255, 0.09);
+	--container-color: #192633;
+	--conversation-bg: rgb(25, 38, 51);
+	--list-header-color: #202C3A;
+}
 html.dark-mode body {
-	color: rgba(255, 255, 255, 0.7);
-	background: #192633 !important;
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
 }
 
 /* Main container? */
 html.dark-mode ._4sp8 {
-	background: #192633 !important;
+	background: var(--container-color) !important;
 }
 
 /* Main content */
 html.dark-mode ._1q5- {
-	background: #192633 !important;
-	border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+	background: var(--container-color) !important;
+	border-left: 1px solid var(--base-five) !important;
 }
 
 /* Message list: your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 {
-	background: rgba(255, 255, 255, 0.1);
-	color: rgba(255, 255, 255, 0.7);
+	background: var(--base-ten);
+	color: var(--base-seventy);
 }
 
 /* Message list: remove border from messages */
@@ -27,12 +43,12 @@ html.dark-mode ._o46:not(._nd_) ._hh7 {
 
 /* Fix dark mode overriding colors for code snippets */
 html.dark-mode ._wu0 {
-	color: black;
+	color: var(--base);
 }
 
 /* message list: link in your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 a {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Message list: link in message bubble */
@@ -42,88 +58,88 @@ html.dark-mode ._hh7 a:hover {
 
 /* Message list: link in incoming message bubble */
 html.dark-mode ._o46._nd_ ._hh7 {
-	color: rgba(255, 255, 255, 0.9);
+	color: var(--base-ninety);
 }
 
 /* Message list: link preview */
 html.dark-mode ._5i_d {
-	border: solid 1px rgba(255, 255, 255, 0.05);
+	border: solid 1px var(--base-five);
 }
 
 /* Message list: link preview text */
 html.dark-mode ._5i_d .__6k,
 html.dark-mode ._5i_d .__6l {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 html.dark-mode ._5i_d .__6m {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Message list: input bar */
 html.dark-mode ._4rv3 {
 	background: transparent !important;
-	border-top: solid 1px rgba(255, 255, 255, 0.05);
-	color: rgba(255, 255, 255, 0.7);
+	border-top: solid 1px var(--base-five);
+	color: var(--base-seventy);
 }
 
 /* Message list: timestamp */
 html.dark-mode ._497p {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Message list: header above */
 html.dark-mode ._5742 {
-	background: #202C3A !important;
+	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
 /* Message list: header above (invitation) */
 html.dark-mode ._2y8z,
 html.dark-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
 html.dark-mode ._58-3 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Message list: header above (invitation) (typed text) */
 html.dark-mode ._14-7 ._58ah ._58al {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Messages list: user info (is in contacts) */
 html.dark-mode ._36zg-e {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
 /* Messages list: user info */
 html.dark-mode ._1n-e {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Messages list: text header above the messages */
 html.dark-mode ._17w2,
 html.dark-mode ._ih3 ._3oh-,
 html.dark-mode ._llq ._3oh- {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 html.dark-mode ._2v6o {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Contact list: header above */
 html.dark-mode ._36ic {
-	background: #202C3A !important;
+	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
 
 /* Contact list: search input */
 html.dark-mode ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.1) !important;
-	color: rgba(255, 255, 255, 0.9);
+	background: var(--base-ten) !important;
+	color: var(--base-ninety);
 }
 
 html.dark-mode ._5iwm ._58al::-webkit-input-placeholder {
-	color: rgba(255, 255, 255, 0.3);
+	color: var(--base-thirty);
 }
 
 /* Contact list: background */
@@ -143,123 +159,123 @@ html.dark-mode ._1ht1._1ht2 {
 
 /* Contact list: person container */
 html.dark-mode ._1qt4 {
-	border-top: solid 1px rgba(255, 255, 255, 0.05) !important;
+	border-top: solid 1px var(--base-five) !important;
 }
 
 /* contact list: person name */
 html.dark-mode ._1ht6 {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Contact list: message blurb */
 html.dark-mode ._1htf {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Contact list: timestamp */
 html.dark-mode ._1ht7 {
-	color: rgba(255, 255, 255, 0.2);
+	color: var(--base-twenty);
 }
 /* Contact list: timestamp (selected) */
 html.dark-mode ._1ht2 ._1ht7 {
-	color: rgba(255, 255, 255, 0.5);
+	color: var(--base-fifty);
 }
 /* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
-	color: rgba(0, 132, 255, 0.7)
+	color: rgba(0, 132, 255, 0.7);
 }
 
 /* contact list: search results */
 html.dark-mode ._5t4c,
 html.dark-mode ._5t4c ._5l37 {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
 /* Contact list: search results name */
 html.dark-mode ._3q34,
 html.dark-mode ._364g {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Contact list: search results subname */
 html.dark-mode ._3q35 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Contact list: search result label type */
 html.dark-mode ._3xcx,
 html.dark-mode ._225b {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Contact list: searching text */
 html.dark-mode ._4g0h {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Right sidebar */
 html.dark-mode ._4_j5 {
 	background: transparent;
-	border-left: solid 1px rgba(255, 255, 255, 0.05);
+	border-left: solid 1px var(--base-five);
 }
 
 /* Right sidebar: headings */
 html.dark-mode ._1lj0 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Right sidebar: section spacer */
 html.dark-mode ._1li- {
-	border-top: solid 1px rgba(255, 255, 255, 0.05);
+	border-top: solid 1px var(--base-five);
 }
 
 /* Right sidebar: group chat names */
 html.dark-mode ._2jnv {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Right sidebar: messenger type info under name */
 html.dark-mode ._3eus {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Right sidebar: mute notification label */
 html.dark-mode ._3szq {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Right sidebar: mute notification time */
 html.dark-mode ._3x6v {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
 /* Right sidebar: people list */
 html.dark-mode ._4_j5 ._5l37 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 	background: transparent;
 }
 
 /* Right sidebar: people list (add people) */
 html.dark-mode ._4rph ._4rpj {
-	border-top: solid 1px rgba(255, 255, 255, 0.1) !important;
+	border-top: solid 1px var(--base-ten) !important;
 }
 
 /* Right sidebar: people list item (name) */
 html.dark-mode ._364g,
 html.dark-mode ._3x6u,
 html.dark-mode ._4rph ._4rpj {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* New conversation contact list: popup */
 html.dark-mode ._2y8_ {
 	background: transparent;
-	border: solid 1px rgba(255, 255, 255, 0.05);
+	border: solid 1px var(--base-five);
 }
 
 /* New conversation contact list: popup hr */
 html.dark-mode ._5l38 {
-	border-top: 1px solid rgba(255, 255, 255, 0.10);
+	border-top: 1px solid var(--base-ten);
 }
 
 /* New conversation contact list: popup hover */
@@ -268,12 +284,12 @@ html.dark-mode ._1k1p ._5l38 {
 }
 html.dark-mode ._5l37:active,
 html.dark-mode ._1k1p {
-	background-color: rgba(255, 255, 255, 0.05) !important;
+	background-color: var(--base-five) !important;
 }
 
 /* Conversation search */
 html.dark-mode ._33p7 {
-	background-color: rgb(25, 38, 51);
+	background-color: var(--conversation-bg);
 }
 html.dark-mode ._33p7 ._b-u,
 html.dark-mode ._33p7 ._b-v {
@@ -289,8 +305,8 @@ html.dark-mode ._33p7 ._b-v {
 	background-position: 0 0 !important;
 }
 html.dark-mode ._33p7 input {
-	color: rgba(255, 255, 255, 0.7);
-	background-color: rgba(255, 255, 255, 0.05);
+	color: var(--base-seventy);
+	background-color: var(--base-five);
 }
 html.dark-mode ._33p7 ._5iwn ._58ak::before {
 	-webkit-filter: invert();
@@ -300,20 +316,20 @@ html.dark-mode ._33p7 ._5iwn ._58ak::before {
 /* Poll */
 /* Border */
 html.dark-mode ._3b4t {
-	border-color: rgba(255, 255, 255, 0.09);
+	border-color: --base-nine;
 }
 /* "Poll" header text */
 html.dark-mode ._4qba {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 /* Voting options text */
 html.dark-mode ._1mr_,
 html.dark-mode ._1mq_ ._1mq- {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 /* Check box colors */
 html.dark-mode ._2m5p[aria-checked="false"][role="checkbox"] {
-	border: 1px solid rgba(255, 255, 255, .10);
+	border: 1px solid var(--base-ten);
 }
 /* New option text box */
 html.dark-mode ._58al {
@@ -321,22 +337,22 @@ html.dark-mode ._58al {
 }
 /* Poll results bar graph colors */
 html.dark-mode ._3b4h {
-	background-color: rgba(255, 255, 255, 0.09);
+	background-color: --base-nine;
 }
 /* Poll results profile pictures */
 html.dark-mode ._4mnq {
-	border-color: #192633;
+	border-color: var(--container-color);
 }
 html.dark-mode ._34n6 {
-	color: rgba(255, 255, 255, 0.4);
-	background-color: rgba(255, 255, 255, 0.09);
+	color: var(--base-fourty);
+	background-color: --base-nine;
 }
 
 /* Dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
 html.dark-mode ._2c9g {
-	background: #192633 !important;
+	background: var(--container-color) !important;
 }
 
 /* Dialog: title and names */
@@ -344,7 +360,7 @@ html.dark-mode ._374c,
 html.dark-mode ._4ebz,
 html.dark-mode ._2c9i ._19jt,
 html.dark-mode .uiInputLabelLabel {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
 /* Gif and sticker dialog: hide white triangle */
@@ -354,46 +370,46 @@ html.dark-mode ._53io {
 
 /* Gif and sticker dialog: style the bottom of the list */
 html.dark-mode .uiScrollableArea.contentAfter:after {
-	background: linear-gradient(rgba(25, 38, 51, .05), #192633);
+	background: linear-gradient(rgba(25, 38, 51, .05), var(--container-color));
 }
 
 /* Sticker dialog: selected header */
 html.dark-mode ._5r8a._5r8b,
 html.dark-mode ._eb3:before {
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: var(--base-five);
 }
 
 /* Sticker dialog: header borders */
 html.dark-mode ._5r8e,
 html.dark-mode ._5r86 {
-	border-color: rgba(255, 255, 255, 0.05);
+	border-color: var(--base-five);
 }
 
 /* Record dialog: time */
 html.dark-mode ._3z53 {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 /* Delete popover */
 html.dark-mode ._hw2 ._53ij {
-	background-color: rgba(255, 255, 255, 0.1) !important;
+	background-color: var(--base-ten) !important;
 }
 
 /* Login tile and names */
 html.dark-mode ._5hy4,
 html.dark-mode ._3403 {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
 /* Login inputs */
 html.dark-mode ._55r1._5f0v._43di {
-	background: rgba(255, 255, 255, 0.1) !important;
-	color: rgba(255, 255, 255, 0.75);
+	background: var(--base-ten) !important;
+	color: var(--base-seventy-five);
 }
 
 /* Login button */
 html.dark-mode button {
-	background: #192633 !important;
+	background: var(--container-color) !important;
 }
 
 /* Fix the Sticker button */
@@ -404,5 +420,5 @@ html.dark-mode ._4rv6 {
 
 /* Fix the @name-popover in the chat input box */
 html.dark-mode ._13iv {
-	background: #192633 !important;
+	background: var(--container-color) !important;
 }
