@@ -6,6 +6,8 @@ const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
+const isReachable = require('is-reachable');
+const promiseRetry = require('promise-retry');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
@@ -21,6 +23,7 @@ require('electron-context-menu')();
 let mainWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
+let isReloadingMainWindow = false;
 
 const isAlreadyRunning = app.makeSingleInstance(() => {
 	if (mainWindow) {
@@ -113,6 +116,28 @@ function setUpPrivacyBlocking() {
 	});
 }
 
+function tryReloadMainWindow() {
+	if (isReloadingMainWindow) {
+		// Already trying to reload!
+		return;
+	}
+	isReloadingMainWindow = true;
+	promiseRetry(reload, {
+		forever: true,
+		maxTimeout: 300000
+	}).then(isReloadingMainWindow = false).catch();
+
+	function reload(retry) {
+		return isReachable('messenger.com').then(reachable => {
+			if (reachable) {
+				mainWindow.reload();
+			} else {
+				retry(new Error('messenger.com not reachable'));
+			}
+		});
+	}
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -180,6 +205,10 @@ app.on('ready', () => {
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
+
+	electron.powerMonitor.on('resume', () => {
+		tryReloadMainWindow();
+	});
 
 	const argv = require('minimist')(process.argv.slice(1));
 
