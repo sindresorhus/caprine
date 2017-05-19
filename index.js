@@ -6,8 +6,8 @@ const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const isReachable = require('is-reachable');
-const promiseRetry = require('promise-retry');
+const isOnline = require('is-online');
+const pRetry = require('p-retry');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
@@ -122,17 +122,19 @@ function tryReloadMainWindow() {
 		return;
 	}
 	isReloadingMainWindow = true;
-	promiseRetry(reload, {
+	pRetry(reload, {
 		forever: true,
 		maxTimeout: 300000
-	}).then(isReloadingMainWindow = false).catch();
+	}).then(() => {
+		isReloadingMainWindow = false;
+	}).catch(() => {});
 
-	function reload(retry) {
-		return isReachable('messenger.com').then(reachable => {
-			if (reachable) {
+	function reload() {
+		return isOnline().then(online => {
+			if (online) {
 				mainWindow.reload();
 			} else {
-				retry(new Error('messenger.com not reachable'));
+				throw new Error('no internet connection');
 			}
 		});
 	}
