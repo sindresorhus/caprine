@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:url" content="https://sindresorhus.com/caprine/">
+<meta property="og:title" content="Caprine">
+<meta property="og:description" content="An elegant Facebook Messenger desktop app">
+<meta property="og:image" content="https://sindresorhus.com/caprine/images/icon.jpg">
+<meta name="twitter:card" content="app">
+<meta name="twitter:site" content="@sindresorhus">
+<meta name="twitter:description" content="An elegant Facebook Messenger desktop app">
+<link rel="icon" href="images/Icon.ico" sizes="32x32">
+<title>Caprine</title>
+<link rel="stylesheet" href="bulma.min.css">
+<script defer src="main.js"></script>
+<style>
+  .main-title {
+    font-size: 50px !important;
+  }
+  .caprine-icon {
+    width: 200px;
+    margin-bottom: 30px;
+  }
+  .caprine-screenshot {
+    padding-top: 30px;
+  }
+  .disclaimer {
+    margin-bottom: 20px !important;
+  }
+  .screenshot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+  }
+  .feature-item {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  .feature-title {
+    padding-bottom: 0px !important;
+  }
+  .more-features {
+    margin-bottom: 40px;
+  }
+  .main-screenshot {
+    width: 60%;
+  }
+  @media screen and (max-width: 768px) {
+    .main-screenshot {
+      width: 100%;
+    }
+    .screenshot {
+      height: 300px;
+    }
+  }
+</style>
+</head>
+<body>
+  <section class="hero is-fluid is-default has-text-centered">
+    <div class="hero-body">
+      <div id="caprine-body" class="container">
+        <img class="caprine-icon" src="images/Icon.png" alt="caprine"/>
+        <h1 class="title main-title is-spaced">
+          <strong>Caprine</strong>
+        </h1>
+        <h2 class="subtitle">
+          An elegant Facebook Messenger desktop app
+        </h2>
+        <a id="download-button" class="button is-info is-outlined is-large" href="https://github.com/sindresorhus/caprine/releases/latest">
+          Download
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="hero is-fluid is-default is-light has-text-centered caprine-screenshot">
+    <div class="container">
+      <img class="main-screenshot" src="images/screenshot.png" alt="screenshot"/>
+    </div>
+  </section>
+  <section class="container">
+    <div class="hero hero-body has-text-centered feature-title">
+      <h1 class="title main-title">Features</h1>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <div class="hero">
+          <div class="hero-body has-text-centered feature-item">
+            <div class="screenshot">
+              <img src="images/screenshot-dark.png" alt="screenshot" width="500px"/>
+            </div>
+            <h1 class="title is-spaced">Dark mode</h1>
+            <h2 class="subtitle">Convert your messenger to a dark theme</h2>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="hero">
+          <div class="hero-body has-text-centered feature-item">
+            <div class="screenshot">
+              <img src="images/privacy.png" alt="screenshot" width="500px"/>
+            </div>
+            <h1 class="title is-spaced">Privacy</h1>
+            <h2 class="subtitle">Ability to toggle last seen/typing indicators</h2>
+          </div>
+        </div
+      </div>
+    </div>
+  </section>
+  <section class="container more-features">
+    <div class="columns">
+      <div class="column">
+        <div class="hero">
+          <div class="hero-body has-text-centered feature-item">
+            <div class="screenshot">
+              <img src="images/screenshot-compact.png" alt="screenshot" width="500px"/>
+            </div>
+            <h1 class="title is-spaced">Responsive</h1>
+            <h2 class="subtitle">Interface adapts to smaller sizes</h2>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="hero">
+          <div class="hero-body has-text-centered feature-item">
+            <div class="screenshot">
+              <img src="images/screenshot-notification.png" alt="screenshot" width="500px"/>
+            </div>
+            <h1 class="title is-spaced">Notifications</h1>
+            <h2 class="subtitle">In-house notifications to keep you up to date</h2>
+          </div>
+        </div
+      </div>
+    </div>
+  </section>
+  <footer class="footer hero is-info is-paddingless">
+    <div class="hero-body">
+      <div class="container">
+        <div class="has-text-centered">
+          <p class="disclaimer"><strong>Caprine</strong> is a third-party app and is not affiliated with Facebook.</p>
+          <div class="block">
+            <a class="button is-info is-inverted is-outlined" href="https://github.com/sindresorhus/caprine">
+              Source Code
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
