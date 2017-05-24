@@ -23,8 +23,6 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - Silent auto-updates
 - Custom text size
 
-\*macOS only
-
 ## Install
 
 *macOS 10.9+, Linux, and Windows 7+ are supported (64-bit only).*
