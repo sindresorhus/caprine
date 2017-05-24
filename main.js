@@ -1,37 +1,20 @@
 const getLatestRelease = ext =>
-  new Promise((resolve, reject) => {
-    const xmlhttp = new XMLHttpRequest();
-    const url = 'https://api.github.com/repos/sindresorhus/caprine/releases/latest';
-
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        const responseJSON = JSON.parse(this.responseText);
-        const asset = responseJSON.assets.filter(asset => asset.name.includes(ext));
-        resolve(asset[0].browser_download_url);
-      }
-    };
-
-    xmlhttp.open('GET', url, true);
-    xmlhttp.send();
-  });
+  fetch('https://api.github.com/repos/sindresorhus/caprine/releases/latest')
+    .then(res => res.json())
+    .then(responseJSON => {
+      const asset = responseJSON.assets.filter(asset => asset.name.includes(ext));
+      return asset[0].browser_download_url;
+    });
 
 const addDownloadURLToButton = (caprineBody, downloadButton) => url => {
-  const downloadButtonHref = document.createAttribute("href");
-  downloadButtonHref.value = url;
-  downloadButton.setAttributeNode(downloadButtonHref);
+  downloadButton.href = url;
   caprineBody.appendChild(downloadButton);
 }
 
 const addDownloadButtonToDOM = () => {
   const userAgent = navigator.userAgent.toLowerCase();
   const caprineBody = document.getElementById('caprine-body');
-  const downloadButton = document.createElement('a');
-  const downloadButtonClass = document.createAttribute("class");
-  const downloadText = document.createTextNode('Download');
-
-  downloadButtonClass.value = "button is-info is-outlined is-large";
-  downloadButton.setAttributeNode(downloadButtonClass);
-  downloadButton.appendChild(downloadText);
+  const downloadButton = document.getElementById('download-button');
 
   if (userAgent.match(/(mac|os x)/)) {
     getLatestRelease('dmg').then(addDownloadURLToButton(caprineBody, downloadButton));
