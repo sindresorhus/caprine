@@ -6,6 +6,8 @@ const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
+const isOnline = require('is-online');
+const pRetry = require('p-retry');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
@@ -21,6 +23,7 @@ require('electron-context-menu')();
 let mainWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
+let isReloadingMainWindow = false;
 
 const isAlreadyRunning = app.makeSingleInstance(() => {
 	if (mainWindow) {
@@ -113,6 +116,30 @@ function setUpPrivacyBlocking() {
 	});
 }
 
+function tryReloadMainWindow() {
+	if (isReloadingMainWindow) {
+		// Already trying to reload!
+		return;
+	}
+	isReloadingMainWindow = true;
+	pRetry(reload, {
+		forever: true,
+		maxTimeout: 300000
+	}).then(() => {
+		isReloadingMainWindow = false;
+	}).catch(() => {});
+
+	function reload() {
+		return isOnline().then(online => {
+			if (online) {
+				mainWindow.reload();
+			} else {
+				throw new Error('no internet connection');
+			}
+		});
+	}
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -180,6 +207,10 @@ app.on('ready', () => {
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
+
+	electron.powerMonitor.on('resume', () => {
+		tryReloadMainWindow();
+	});
 
 	const argv = require('minimist')(process.argv.slice(1));
 
