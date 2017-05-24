@@ -1,28 +1,27 @@
+const getExtension = () => {
+	const userAgent = navigator.userAgent.toLowerCase();
+
+	if (userAgent.match(/(mac|os x)/)) {
+		return 'dmg'
+	} else if (userAgent.match(/windows/)) {
+		return 'exe';
+	} else if (userAgent.match(/linux/)) {
+		return 'AppImage';
+	}
+};
+
 const getLatestRelease = ext =>
-  fetch('https://api.github.com/repos/sindresorhus/caprine/releases/latest')
-    .then(res => res.json())
-    .then(responseJSON => {
-      const asset = responseJSON.assets.filter(asset => asset.name.includes(ext));
-      return asset[0].browser_download_url;
-    });
+	fetch('https://api.github.com/repos/sindresorhus/caprine/releases/latest')
+		.then(res => res.json())
+		.then(json => {
+			const asset = json.assets.filter(asset => asset.name.includes(ext));
+			return asset[0].browser_download_url;
+		});
 
-const addDownloadURLToButton = (caprineBody, downloadButton) => url => {
-  downloadButton.href = url;
-  caprineBody.appendChild(downloadButton);
+const updateButtonUrl = () => {
+	getLatestRelease(getExtension()).then(url => {
+		document.getElementById('download-button').href = url;
+	});
 }
 
-const addDownloadButtonToDOM = () => {
-  const userAgent = navigator.userAgent.toLowerCase();
-  const caprineBody = document.getElementById('caprine-body');
-  const downloadButton = document.getElementById('download-button');
-
-  if (userAgent.match(/(mac|os x)/)) {
-    getLatestRelease('dmg').then(addDownloadURLToButton(caprineBody, downloadButton));
-  } else if (userAgent.match(/windows/)) {
-    getLatestRelease('exe').then(addDownloadURLToButton(caprineBody, downloadButton));
-  } else if (userAgent.match(/linux/)) {
-    getLatestRelease('AppImage').then(addDownloadURLToButton(caprineBody, downloadButton));
-  }
-}
-
-addDownloadButtonToDOM();
+updateButtonUrl();
