@@ -4,6 +4,9 @@
   "version": "2.3.1",
   "license": "MIT",
   "repository": "sindresorhus/caprine",
+  "engines": {
+    "node": "^6.10.3"
+  },
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
