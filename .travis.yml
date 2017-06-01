@@ -21,6 +21,9 @@ install:
 script:
   - npm test
   - npm run dist
+cache:
+  directories:
+    - node_modules
 branches:
   except:
     - "/^v\\d+\\.\\d+\\.\\d+$/"
