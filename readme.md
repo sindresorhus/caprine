@@ -1,4 +1,4 @@
-# Caprine <img src="static/Icon.png" width="60">
+# Caprine <img src="static/Icon.png" width="60"> [![Build Status](https://travis-ci.org/sindresorhus/caprine.svg?branch=master)](https://travis-ci.org/sindresorhus/caprine)
 
 > Elegant Facebook Messenger desktop app
 
