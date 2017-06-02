@@ -265,6 +265,13 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Insert GIF',
+				accelerator: 'CmdOrCtrl+G',
+				click() {
+					sendAction('insert-gif');
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -327,6 +334,13 @@ const otherTpl = [
 				accelerator: 'Ctrl+F',
 				click() {
 					sendAction('find');
+				}
+			},
+			{
+				label: 'Insert GIF',
+				accelerator: 'Ctrl+G',
+				click() {
+					sendAction('insert-gif');
 				}
 			},
 			{
