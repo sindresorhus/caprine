@@ -113,6 +113,13 @@ function setUpPrivacyBlocking() {
 	});
 }
 
+function setUserLocale() {
+	const facebookLocales = require('facebook-locales');
+	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale());
+	const cookie = {url: 'https://www.messenger.com/', name: 'locale', value: userLocale};
+	electron.session.defaultSession.cookies.set(cookie, () => {});
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -137,7 +144,7 @@ function createMainWindow() {
 			plugins: true
 		}
 	});
-
+	setUserLocale();
 	setUpPrivacyBlocking();
 
 	if (process.platform === 'darwin') {
