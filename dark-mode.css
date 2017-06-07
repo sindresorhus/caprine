@@ -168,7 +168,9 @@ html.dark-mode ._1ht6 {
 }
 
 /* Contact list: message blurb */
-html.dark-mode ._1htf {
+html.dark-mode ._1htf,
+/* Contact list: (for format) person: message blurb */
+html.dark-mode ._1htf ._4qba {
 	color: var(--base-fourty);
 }
 
