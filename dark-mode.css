@@ -412,8 +412,9 @@ html.dark-mode button {
 	background: var(--container-color) !important;
 }
 
-/* Fix the Sticker button */
-html.dark-mode ._4rv6 {
+/* Fix the Sticker and Gaming buttons */
+html.dark-mode ._4rv6,
+html.dark-mode ._4ce_ {
 	filter: invert() !important;
 	opacity: 0.6 !important;
 }
