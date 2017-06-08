@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
+const urlMod = require('url');
 const electron = require('electron');
 const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
@@ -222,6 +223,10 @@ app.on('ready', () => {
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
+			if (url.includes('://l.messenger.com/l.php')) {
+				url = urlMod.parse(url, true).query.u;
+			}
+
 			electron.shell.openExternal(url);
 		}
 	});
