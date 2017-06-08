@@ -36,15 +36,13 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title) {
-	// ignore `Sindre messaged you` blinking
-	if (title.indexOf('Messenger') === -1) {
-		return;
-	}
-
+function getMessageCount(title) {
 	let messageCount = (/\(([0-9]+)\)/).exec(title);
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
+	return messageCount;
+}
 
+function updateBadge(messageCount) {
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		app.setBadgeCount(messageCount);
 		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
@@ -160,7 +158,15 @@ function createMainWindow() {
 
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
-		updateBadge(title);
+		// ignore `Sindre messaged you` blinking
+		if (title.indexOf('Messenger') === -1) {
+			return;
+		}
+		const messageCount = getMessageCount(title);
+		updateBadge(messageCount);
+		if (messageCount !== 0) {
+			app.dock.bounce();
+		}
 	});
 
 	return win;
