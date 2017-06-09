@@ -447,3 +447,32 @@ html.dark-mode ._53ij ._4lh2 {
 html.dark-mode ._30vt ._4qba {
 	color: var(--blue);
 }
+
+/** WORK CHAT
+**/
+
+/* Login: background */
+html.dark-mode ._5rw0 {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Login: Email confirmation screen */
+html.dark-mode ._5rwd {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Contact List: search results */
+html.dark-mode ._4p-s {
+	background: var(--base-ten) !important;
+}
+
+
+html.dark-mode ._aou {
+	background: var(--base) !important;
+}
+
+html.dark-mode ._4kf5 {
+	background: var(--base) !important;
+}

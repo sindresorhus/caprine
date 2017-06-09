@@ -147,3 +147,37 @@ a,
 	max-height: 100% !important;
 	height: 280px;
 }
+
+/** WORK CHAT 
+**/
+
+/* Main: Hide header */
+#pagelet_bluebar {
+	/*display: none;*/
+}
+
+/* Login: Remove vertical scrollbar*/
+body {
+	overflow: hidden !important;
+}
+
+/* Login: Remove white top bar */
+._4b21 {
+	display: none
+}
+
+/* Footer: Remove Facebook links */
+#pageFooter ._51mz {
+	display: none
+}
+
+/* Footer: Remove horizontal seprators */
+#pageFooter ._60l6 {
+	display: none
+}
+
+/* Footer: Remove Facebook copyright */
+#pageFooter .copyright {
+	display: none
+}
+

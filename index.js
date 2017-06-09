@@ -38,9 +38,9 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title) {
+function updateBadge(title, titlePrefix) {
 	// ignore `Sindre messaged you` blinking
-	if (title.indexOf('Messenger') === -1) {
+	if (title.indexOf(titlePrefix) === -1) {
 		return;
 	}
 
@@ -88,7 +88,7 @@ function enableHiresResources() {
 	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
 		let cookie = details.requestHeaders.Cookie;
 
-		if (cookie && details.method === 'GET' && details.url.startsWith('https://www.messenger.com/')) {
+		if (cookie && details.method === 'GET' && details.url.startsWith('https://winamax.facebook.com/')) {
 			if (/(; )?dpr=\d/.test(cookie)) {
 				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
 			} else {
@@ -107,7 +107,7 @@ function enableHiresResources() {
 
 function setUpPrivacyBlocking() {
 	const ses = electron.session.defaultSession;
-	const filter = {urls: ['*://*.messenger.com/*typ.php*', '*://*.messenger.com/*change_read_status.php*']};
+	const filter = {urls: ['*://*.winamax.facebook.com/*typ.php*', '*://*.winamax.facebook.com/*change_read_status.php*']};
 	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
 		let blocking = false;
 		if (details.url.includes('typ.php')) {
@@ -133,6 +133,10 @@ function setUserLocale() {
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
+	// Messenger or WorkChat
+	const url = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
+	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
+	const trackingUrlPrefix = config.get('useWorkChat') ? 'https://l.facebook.com/l.php' : 'https://l.messenger.com/l.php';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -160,8 +164,8 @@ function createMainWindow() {
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);
 	}
-
-	win.loadURL('https://www.messenger.com/login/');
+	
+	win.loadURL(url);
 
 	win.on('close', e => {
 		if (!isQuitting) {
@@ -177,7 +181,7 @@ function createMainWindow() {
 
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
-		updateBadge(title);
+		updateBadge(title, titlePrefix);
 	});
 
 	win.on('focus', () => {
@@ -251,7 +255,7 @@ app.on('ready', () => {
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
-			if (url.startsWith('https://l.messenger.com/l.php')) {
+			if (url.startsWith(trackingUrlPrefix)) {
 				url = new URL(url).searchParams.get('u');
 			}
 
