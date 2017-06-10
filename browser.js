@@ -32,6 +32,10 @@ ipc.on('find', () => {
 	document.querySelector('._58al').focus();
 });
 
+ipc.on('insert-gif', () => {
+	document.querySelector('._yht').click();
+});
+
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
