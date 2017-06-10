@@ -266,7 +266,7 @@ const macosTpl = [
 			},
 			{
 				label: 'Insert GIF',
-				accelerator: 'CmdOrCtrl+G',
+				accelerator: 'Cmd+G',
 				click() {
 					sendAction('insert-gif');
 				}
