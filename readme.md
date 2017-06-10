@@ -100,6 +100,10 @@ When closing the window, the app will continue running in the background, in the
 
 If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
 
+### Prevent link tracking
+
+Links that you click on will not be tracked by Facebook.
+
 ### Keyboard shortcuts
 
 Description            | Keys
