@@ -13,6 +13,7 @@
 	--container-color: #192633;
 	--conversation-bg: rgb(25, 38, 51);
 	--list-header-color: #202C3A;
+	--blue: #0084ff;
 }
 html.dark-mode body {
 	color: var(--base-seventy);
@@ -424,4 +425,25 @@ html.dark-mode ._4ce_ {
 /* Fix the @name-popover in the chat input box */
 html.dark-mode ._13iv {
 	background: var(--container-color) !important;
+}
+
+/* Gaming popover */
+/* Gaming popover header text */
+html.dark-mode ._4lh7 {
+	color: var(--base-seventy);
+}
+
+/* Gaming popover header */
+html.dark-mode ._53ij ._3rh0 {
+	background: var(--list-header-color) !important;
+}
+
+/* Gaming popover content */
+html.dark-mode ._53ij ._4lh2 {
+	background: var(--container-color) !important;
+}
+
+/* Gaming popover "PLAY" text color */
+html.dark-mode ._30vt ._4qba {
+	color: var(--blue);
 }
