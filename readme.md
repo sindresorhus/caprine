@@ -70,6 +70,10 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
+### Prevents link tracking
+
+Links that you click on will not be tracked by Facebook.
+
 ### Jump to conversation hotkey
 
 You can switch conversations similar to how you switch browser tabs: <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
@@ -99,10 +103,6 @@ Confirmation before sending images from the clipboard, to prevent accidental cop
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
 If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
-
-### Prevent link tracking
-
-Links that you click on will not be tracked by Facebook.
 
 ### Keyboard shortcuts
 
