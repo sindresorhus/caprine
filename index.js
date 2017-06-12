@@ -64,6 +64,9 @@ function updateBadge(title) {
 			// Delegate drawing of overlay icon to renderer process
 			mainWindow.webContents.send('render-overlay-icon', messageCount);
 		}
+		if (config.get('flashWinOnMessage')) {
+			mainWindow.flashFrame(messageCount !== 0);
+		}
 	}
 }
 

@@ -372,6 +372,14 @@ const otherTpl = [
 			},
 			{
 				type: 'checkbox',
+				label: 'Flash Window on Message',
+				checked: config.get('flashWinOnMessage'),
+				click(item) {
+					config.set('flashWinOnMessage', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
 				click(item) {
