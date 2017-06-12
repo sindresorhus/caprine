@@ -13,6 +13,7 @@
 	--container-color: #192633;
 	--conversation-bg: rgb(25, 38, 51);
 	--list-header-color: #202C3A;
+	--blue: #0084ff;
 }
 html.dark-mode body {
 	color: var(--base-seventy);
@@ -168,7 +169,9 @@ html.dark-mode ._1ht6 {
 }
 
 /* Contact list: message blurb */
-html.dark-mode ._1htf {
+html.dark-mode ._1htf,
+/* Contact list: (for format) person: message blurb */
+html.dark-mode ._1htf ._4qba {
 	color: var(--base-fourty);
 }
 
@@ -412,8 +415,9 @@ html.dark-mode button {
 	background: var(--container-color) !important;
 }
 
-/* Fix the Sticker button */
-html.dark-mode ._4rv6 {
+/* Fix the Sticker and Gaming buttons */
+html.dark-mode ._4rv6,
+html.dark-mode ._4ce_ {
 	filter: invert() !important;
 	opacity: 0.6 !important;
 }
@@ -421,4 +425,25 @@ html.dark-mode ._4rv6 {
 /* Fix the @name-popover in the chat input box */
 html.dark-mode ._13iv {
 	background: var(--container-color) !important;
+}
+
+/* Gaming popover */
+/* Gaming popover header text */
+html.dark-mode ._4lh7 {
+	color: var(--base-seventy);
+}
+
+/* Gaming popover header */
+html.dark-mode ._53ij ._3rh0 {
+	background: var(--list-header-color) !important;
+}
+
+/* Gaming popover content */
+html.dark-mode ._53ij ._4lh2 {
+	background: var(--container-color) !important;
+}
+
+/* Gaming popover "PLAY" text color */
+html.dark-mode ._30vt ._4qba {
+	color: var(--blue);
 }
