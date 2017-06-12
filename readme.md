@@ -70,6 +70,10 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
+### Prevents link tracking
+
+Links that you click on will not be tracked by Facebook.
+
 ### Jump to conversation hotkey
 
 You can switch conversations similar to how you switch browser tabs: <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
