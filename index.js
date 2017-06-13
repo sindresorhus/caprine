@@ -64,7 +64,7 @@ function updateBadge(title) {
 			// Delegate drawing of overlay icon to renderer process
 			mainWindow.webContents.send('render-overlay-icon', messageCount);
 		}
-		if (config.get('flashWinOnMessage')) {
+		if (config.get('flashWindowOnMessage')) {
 			mainWindow.flashFrame(messageCount !== 0);
 		}
 	}
@@ -175,6 +175,12 @@ function createMainWindow() {
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
 		updateBadge(title);
+	});
+
+	win.on('focus', () => {
+		if (config.get('flashWindowOnMessage')) {
+			mainWindow.flashFrame(false);
+		}
 	});
 
 	return win;

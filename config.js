@@ -12,7 +12,7 @@ module.exports = new Config({
 		},
 		alwaysOnTop: false,
 		bounceDockOnMessage: false,
-		flashWinOnMessage: true,
+		flashWindowOnMessage: true,
 		block: {
 			chatSeen: false,
 			typingIndicator: false
