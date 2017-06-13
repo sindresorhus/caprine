@@ -179,7 +179,8 @@ function createMainWindow() {
 
 	win.on('focus', () => {
 		if (config.get('flashWindowOnMessage')) {
-			mainWindow.flashFrame(false);
+			// This is a security in the case where messageCount is not reset by page title update
+			win.flashFrame(false);
 		}
 	});
 
