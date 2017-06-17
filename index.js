@@ -10,6 +10,7 @@ const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+const menuBar = require('./menu-bar');
 
 const {app, ipcMain} = electron;
 
@@ -197,6 +198,7 @@ if (!isDev && process.platform !== 'linux') {
 
 app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
+	menuBar.create();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
