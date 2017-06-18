@@ -13,10 +13,11 @@ exports.create = win => {
 
 	let iconPath = '';
 
-	if (process.platform === 'darwin')
+	if (process.platform === 'darwin') {
 		iconPath = getDarwinIconPath(0);
-	else
+	} else {
 		iconPath = path.join(__dirname, 'static/IconTray.png');
+	}
 
 	const contextMenu = electron.Menu.buildFromTemplate([
 		{
@@ -55,7 +56,7 @@ exports.update = messageCount => {
 	updateToolTip(messageCount);
 };
 
-function setBadge (shouldDisplayUnread) {
+function setBadge(shouldDisplayUnread) {
 	if (process.platform === 'darwin' || !tray) {
 		return;
 	}
@@ -66,15 +67,16 @@ function setBadge (shouldDisplayUnread) {
 }
 
 function updateToolTip(counter) {
-	if (!Number.isInteger(counter) || lastCounter === counter)
+	if (!Number.isInteger(counter) || lastCounter === counter) {
 		return;
+	}
 
 	lastCounter = counter;
 
 	let tip = app.getName();
 
 	if (counter > 0) {
-		let msg = (counter === 1 ? 'message' : 'messages');
+		const msg = (counter === 1 ? 'message' : 'messages');
 		tip = tip.concat(' - ', counter, ' unread ', msg);
 	}
 
@@ -82,8 +84,9 @@ function updateToolTip(counter) {
 }
 
 function getDarwinIconPath(counter) {
-	if (Number.isInteger(counter) && counter > 0)
+	if (Number.isInteger(counter) && counter > 0) {
 		return path.join(__dirname, 'static/IconMenuBarUnread.png');
+	}
 
 	return path.join(__dirname, 'static/IconMenuBar.png');
 }

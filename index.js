@@ -51,7 +51,6 @@ function getMessageCount(title) {
 }
 
 function updateBadge(messageCount) {
-
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		app.setBadgeCount(messageCount);
 		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
@@ -183,9 +182,10 @@ function createMainWindow() {
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
 
-		let messageCount = getMessageCount(title);
-		if (messageCount === -1)
+		const messageCount = getMessageCount(title);
+		if (messageCount === -1) {
 			return;
+		}
 
 		updateBadge(messageCount);
 	});
@@ -218,7 +218,7 @@ app.on('ready', () => {
 	const argv = require('minimist')(process.argv.slice(1));
 
 	electron.globalShortcut.register('Control+M', () => {
-		mainWindow.toggle()
+		mainWindow.toggle();
 	});
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
