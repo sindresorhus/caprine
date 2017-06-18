@@ -217,7 +217,7 @@ app.on('ready', () => {
 
 	const argv = require('minimist')(process.argv.slice(1));
 
-	electron.globalShortcut.register('CommandOrControl+M', () => {
+	electron.globalShortcut.register('Control+M', () => {
 		mainWindow.toggle()
 	});
 
