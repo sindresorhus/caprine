@@ -38,14 +38,19 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title) {
+function getMessageCount(title) {
 	// ignore `Sindre messaged you` blinking
 	if (title.indexOf('Messenger') === -1) {
-		return;
+		return -1;
 	}
 
 	let messageCount = (/\(([0-9]+)\)/).exec(title);
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
+
+	return messageCount;
+}
+
+function updateBadge(messageCount) {
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		app.setBadgeCount(messageCount);
@@ -177,7 +182,13 @@ function createMainWindow() {
 
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
-		updateBadge(title);
+
+		let messageCount = getMessageCount(title);
+		if (messageCount === -1)
+			return;
+
+		updateBadge(messageCount);
+		menuBar.update(messageCount);
 	});
 
 	win.on('focus', () => {
@@ -198,9 +209,9 @@ if (!isDev && process.platform !== 'linux') {
 
 app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
-	menuBar.create();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
+	menuBar.create();
 
 	enableHiresResources();
 
