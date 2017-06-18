@@ -7,6 +7,7 @@ const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
+const togglify = require('electron-togglify-window');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
@@ -139,7 +140,7 @@ function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
 
-	const win = new electron.BrowserWindow({
+	const win = togglify(new electron.BrowserWindow({
 		title: app.getName(),
 		show: false,
 		x: lastWindowState.x,
@@ -158,7 +159,7 @@ function createMainWindow() {
 			nodeIntegration: false,
 			plugins: true
 		}
-	});
+	}));
 	setUserLocale();
 	setUpPrivacyBlocking();
 
@@ -218,6 +219,10 @@ app.on('ready', () => {
 	const {webContents} = mainWindow;
 
 	const argv = require('minimist')(process.argv.slice(1));
+
+	electron.globalShortcut.register('CommandOrControl+M', () => {
+		mainWindow.toggle()
+	});
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
 		if (electron.clipboard.availableFormats().some(type => type.includes('image'))) {

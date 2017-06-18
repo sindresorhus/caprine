@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {Tray} = require('electron');
+const {Tray, app} = require('electron');
 
 let menuBar = null;
 
@@ -10,11 +10,8 @@ exports.create = win => {
 
 	menuBar.setHighlightMode('never');
 
-	menuBar.on('click', e => {
-		if (win.isVisible())
-			win.hide();
-		else
-			win.show();
+	menuBar.on('click', () => {
+		win.toggle()
 	});
 };
 
@@ -24,7 +21,7 @@ exports.update = messageCount => {
 };
 
 function updateToolTip(counter) {
-	let tip = 'Caprine';
+	let tip = app.getName();
 
 	if (Number.isInteger(counter) && counter > 0) {
 		let msg = (counter === 1 ? 'message' : 'messages');
