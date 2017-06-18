@@ -35,9 +35,13 @@ exports.create = win => {
 
 	tray = new electron.Tray(iconPath);
 	tray.setToolTip(`${app.getName()}`);
-	tray.setContextMenu(contextMenu);
+
 	tray.on('click', () => {
-		win.toggle()
+		win.toggle();
+	});
+
+	tray.on('right-click', () => {
+		tray.popUpContextMenu(contextMenu);
 	});
 };
 
