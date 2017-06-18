@@ -211,7 +211,7 @@ app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
-	menuBar.create();
+	menuBar.create(mainWindow);
 
 	enableHiresResources();
 

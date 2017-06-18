@@ -4,13 +4,21 @@ const {Tray} = require('electron');
 
 let menuBar = null;
 
-exports.create = () => {
+exports.create = win => {
 	menuBar = new Tray(getIconPath(0));
 	updateToolTip(0);
+
+	menuBar.setHighlightMode('never');
+
+	menuBar.on('click', e => {
+		if (win.isVisible())
+			win.hide();
+		else
+			win.show();
+	});
 };
 
 exports.update = messageCount => {
-	console.log(messageCount);
 	updateIcon(messageCount);
 	updateToolTip(messageCount);
 };
