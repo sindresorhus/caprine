@@ -4,19 +4,25 @@ const electron = require('electron');
 
 const {app} = electron;
 let tray = null;
+let lastCounter = 0;
 
 exports.create = win => {
-	if (process.platform === 'darwin' || tray) {
+	if (tray) {
 		return;
 	}
 
-	const iconPath = path.join(__dirname, 'static/IconTray.png');
+	let iconPath = '';
+
+	if (process.platform === 'darwin')
+		iconPath = getDarwinIconPath(0);
+	else
+		iconPath = path.join(__dirname, 'static/IconTray.png');
 
 	const contextMenu = electron.Menu.buildFromTemplate([
 		{
 			label: 'Toggle',
 			click() {
-				toggleWin();
+				win.toggle();
 			}
 		},
 		{
@@ -30,10 +36,22 @@ exports.create = win => {
 	tray = new electron.Tray(iconPath);
 	tray.setToolTip(`${app.getName()}`);
 	tray.setContextMenu(contextMenu);
-	tray.on('click', win.toggle());
+	tray.on('click', () => {
+		win.toggle()
+	});
 };
 
-exports.setBadge = shouldDisplayUnread => {
+exports.update = messageCount => {
+	if (process.platform === 'darwin') {
+		tray.setImage(getDarwinIconPath(messageCount));
+	} else {
+		setBadge(messageCount);
+	}
+
+	updateToolTip(messageCount);
+};
+
+function setBadge (shouldDisplayUnread) {
 	if (process.platform === 'darwin' || !tray) {
 		return;
 	}
@@ -41,4 +59,27 @@ exports.setBadge = shouldDisplayUnread => {
 	const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
 	const iconPath = path.join(__dirname, `static/${icon}`);
 	tray.setImage(iconPath);
-};
+}
+
+function updateToolTip(counter) {
+	if (!Number.isInteger(counter) || lastCounter === counter)
+		return;
+
+	lastCounter = counter;
+
+	let tip = app.getName();
+
+	if (counter > 0) {
+		let msg = (counter === 1 ? 'message' : 'messages');
+		tip = tip.concat(' - ', counter, ' unread ', msg);
+	}
+
+	tray.setToolTip(tip);
+}
+
+function getDarwinIconPath(counter) {
+	if (Number.isInteger(counter) && counter > 0)
+		return path.join(__dirname, 'static/IconMenuBarUnread.png');
+
+	return path.join(__dirname, 'static/IconMenuBar.png');
+}

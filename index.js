@@ -11,7 +11,6 @@ const togglify = require('electron-togglify-window');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
-const menuBar = require('./menu-bar');
 
 const {app, ipcMain} = electron;
 
@@ -61,8 +60,8 @@ function updateBadge(messageCount) {
 		}
 	}
 
-	if (process.platform === 'linux' || process.platform === 'win32') {
-		tray.setBadge(messageCount);
+	if (['linux', 'win32', 'darwin'].indexOf(process.platform) !== -1) {
+		tray.update(messageCount);
 	}
 
 	if (process.platform === 'win32') {
@@ -189,7 +188,6 @@ function createMainWindow() {
 			return;
 
 		updateBadge(messageCount);
-		menuBar.update(messageCount);
 	});
 
 	win.on('focus', () => {
@@ -212,7 +210,6 @@ app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
-	menuBar.create(mainWindow);
 
 	enableHiresResources();
 
