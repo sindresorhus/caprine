@@ -165,7 +165,7 @@ function createMainWindow() {
 	win.on('close', e => {
 		if (!isQuitting) {
 			e.preventDefault();
-
+			win.blur();
 			if (process.platform === 'darwin') {
 				app.hide();
 			} else {
