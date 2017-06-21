@@ -63,11 +63,11 @@ ipc.on('archive-conversation', () => {
 ipc.on('toggle-sidebar', () => {
 	const sidebar = document.querySelector('._1enh');
 	const display = sidebar.style.display;
-	sidebar.style.display = (display === '') ? 'none' : '';
+	sidebar.style.display = display === '' ? 'none' : '';
 
 	// Fix for left space in compact mode
 	const mainSelector = document.querySelector('._1q5-');
-	mainSelector.classList.toggle('sidebarHidden');
+	mainSelector.classList.toggle('sidebar-hidden');
 });
 
 function setDarkMode() {
