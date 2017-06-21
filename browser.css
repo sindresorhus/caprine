@@ -101,7 +101,7 @@ body {
 	}
 
 	/* Fix for left space in compact mode */
-	._1q5-.sidebarHidden {
+	._1q5-.sidebar-hidden {
 		left: 0px !important;
 	}
 
