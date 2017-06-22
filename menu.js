@@ -43,6 +43,13 @@ const viewSubmenu = [
 		type: 'separator'
 	},
 	{
+		label: 'Toggle Sidebar',
+		accelerator: 'CmdOrCtrl+Shift+S',
+		click() {
+			sendAction('toggle-sidebar');
+		}
+	},
+	{
 		label: 'Toggle Dark Mode',
 		accelerator: 'CmdOrCtrl+D',
 		click() {

@@ -100,6 +100,11 @@ body {
 		height: 100% !important;
 	}
 
+	/* Fix for left space in compact mode */
+	._1q5-.sidebar-hidden {
+		left: 0px !important;
+	}
+
 	/* `New Conversation` icon */
 	._30yy[href='/new'] {
 		display: none !important;
