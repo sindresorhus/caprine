@@ -14,6 +14,7 @@ const tray = require('./tray');
 const {app, ipcMain} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
+app.disableHardwareAcceleration();
 
 require('electron-debug')({enabled: true});
 require('electron-dl')();
