@@ -147,3 +147,42 @@ a,
 	max-height: 100% !important;
 	height: 280px;
 }
+
+/* Tomorrow light theme for code blocks */
+
+._wu0 {
+	background-color: #ffffff !important;
+	border: 1px solid #b9b9b9 !important;
+	color: #1d1f21 !important;
+}
+
+._wu0 .token.punctuation { color: #1d1f21 !important }
+._wu0 .token.property    { color: #1d1f21 !important }
+._wu0 .token.operator    { color: #1d1f21 !important }
+._wu0 .token.boolean     { color: #de935f !important }
+._wu0 .token.number      { color: #de935f !important }
+._wu0 .token.constant    { color: #de935f !important }
+._wu0 .token.selector    { color: #de935f !important }
+._wu0 .token.bold        { color: #de935f !important; font-weight: bold; }
+._wu0 .token.comment     { color: #969896 !important }
+._wu0 .token.prolog      { color: #969896 !important }
+._wu0 .token.doctype     { color: #969896 !important }
+._wu0 .token.cdata       { color: #969896 !important }
+._wu0 .token.tag         { color: #a3685a !important }
+._wu0 .token.symbol      { color: #b5bd68 !important }
+._wu0 .token.string      { color: #b5bd68 !important }
+._wu0 .token.char        { color: #b5bd68 !important }
+._wu0 .token.inserted    { color: #b5bd68 !important }
+._wu0 .token.attr-name   { color: #cc6666 !important }
+._wu0 .token.url         { color: #cc6666 !important }
+._wu0 .token.entity      { color: #cc6666 !important }
+._wu0 .token.variable    { color: #cc6666 !important }
+._wu0 .token.deleted     { color: #cc6666 !important }
+._wu0 .token.builtin     { color: #8abeb7 !important }
+._wu0 .token.hexcode     { color: #8abeb7 !important }
+._wu0 .token.regex       { color: #8abeb7 !important }
+._wu0 .token.attr-value  { color: #139543 !important }
+._wu0 .token.keyword     { color: #b294bb !important }
+._wu0 .token.important   { color: #b294bb !important }
+._wu0 .token.italic      { color: #b294bb !important; font-style: italic; }
+._wu0 .token.function    { color: #81a2be !important }
