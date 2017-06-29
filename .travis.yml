@@ -1,12 +1,9 @@
-sudo: required
 dist: trusty
+sudo: false
+os: osx
 osx_image: xcode8.3
 language: node_js
 node_js: '8'
-matrix:
-  include:
-    - os: osx
-    - os: linux
 script:
   - npm test
   - npm run dist
