@@ -21,11 +21,20 @@ ipc.on('new-conversation', () => {
 });
 
 ipc.on('log-out', () => {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
+	if (config.get('useWorkChat')) {
+		// Create the menu for the below
+		document.querySelector('._5lxs._3qct._p').click();
+		// Menu creation is slow
+		setTimeout(() => {
+			const nodes = document.querySelectorAll('._54nq._9jo._558b._2n_z li:last-child a');
+			nodes[nodes.length - 1].click();
+		}, 250);
+	} else {
+		document.querySelector('._30yy._2fug._p').click();
+		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+		nodes[nodes.length - 1].click();
+	}
 
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
-	nodes[nodes.length - 1].click();
 });
 
 ipc.on('find', () => {

@@ -424,6 +424,24 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Switch to Work Chat...',
+				visible: !config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', true);
+					app.relaunch();
+					app.quit();
+				}
+			},
+			{
+				label: 'Switch to Messenger...',
+				visible: config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', false);
+					app.relaunch();
+					app.quit();
+				}
+			},
+			{
 				label: 'Log Out',
 				click() {
 					sendAction('log-out');

@@ -153,7 +153,12 @@ a,
 
 /* Main: Hide header */
 #pagelet_bluebar {
-	/*display: none;*/
+	display: none;
+}
+
+/* Hide settings menu */
+.uiContextualLayer._5v-0._53il.uiContextualLayerBelowRight {
+	display: none !important;
 }
 
 /* Login: Remove vertical scrollbar*/
@@ -166,17 +171,17 @@ body {
 	display: none
 }
 
-/* Footer: Remove Facebook links */
+/* Login: Remove Facebook links */
 #pageFooter ._51mz {
 	display: none
 }
 
-/* Footer: Remove horizontal seprators */
+/* Login: Remove horizontal seprators */
 #pageFooter ._60l6 {
 	display: none
 }
 
-/* Footer: Remove Facebook copyright */
+/* Login: Remove Facebook copyright */
 #pageFooter .copyright {
 	display: none
 }
