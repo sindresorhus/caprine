@@ -207,19 +207,34 @@ app.on('ready', () => {
 
 	const argv = require('minimist')(process.argv.slice(1));
 
+	const settings = require('electron-settings');
+
+	if (!settings.has('neverAskMeAgain')){
+		settings.set('neverAskMeAgain', {
+			state: false
+		});
+	}
+
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
 		if (electron.clipboard.availableFormats().some(type => type.includes('image'))) {
-			electron.dialog.showMessageBox({
-				type: 'info',
-				buttons: ['Send', 'Cancel'],
-				message: 'Are you sure you want to send the image in the clipboard?',
-				icon: electron.clipboard.readImage()
-			}, resp => {
-				if (resp === 0) {
-					// User selected send
-					webContents.paste();
-				}
-			});
+			if (!settings.get('neverAskMeAgain.state')) {
+				electron.dialog.showMessageBox({
+					type: 'info',
+					buttons: ['Send', 'Cancel'],
+					message: 'Are you sure you want to send the image in the clipboard?',
+					icon: electron.clipboard.readImage(),
+					checkboxLabel: 'Never ask me again',
+					checkboxChecked: false
+				}, (resp, checkboxChecked) => {
+					if (resp === 0) {
+						// User selected send
+						webContents.paste();
+						settings.set('neverAskMeAgain.state', checkboxChecked);
+					}
+				});
+			} else if (settings.get('neverAskMeAgain.state')) {
+				webContents.paste();
+			}
 		} else {
 			webContents.paste();
 		}
