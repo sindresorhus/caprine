@@ -204,7 +204,7 @@ app.on('ready', () => {
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
-	
+
 	const argv = require('minimist')(process.argv.slice(1));
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
