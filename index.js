@@ -209,25 +209,23 @@ app.on('ready', () => {
 
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
-		if (electron.clipboard.availableFormats().some(type => type.includes('image'))) {
-			if (config.get('askConfirmationOnImagePaste')) {
-				electron.dialog.showMessageBox({
-					type: 'info',
-					buttons: ['Send', 'Cancel'],
-					message: 'Are you sure you want to send the image in the clipboard?',
-					icon: electron.clipboard.readImage(),
-					checkboxLabel: 'Don\'t ask me again',
-					checkboxChecked: false
-				}, (resp, checkboxChecked) => {
-					if (resp === 0) {
-						// User selected send
-						webContents.paste();
-						config.set('askConfirmationOnImagePaste', !checkboxChecked);
-					}
-				});
-			} else {
-				webContents.paste();
-			}
+		const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
+
+		if (clipboardHasImage && config.get('confirmImagePaste')) {
+			electron.dialog.showMessageBox({
+				type: 'info',
+				buttons: ['Send', 'Cancel'],
+				message: 'Are you sure you want to send the image in the clipboard?',
+				icon: electron.clipboard.readImage(),
+				checkboxLabel: 'Don\'t ask me again',
+				checkboxChecked: false
+			}, (resp, checkboxChecked) => {
+				if (resp === 0) {
+					// User selected send
+					webContents.paste();
+					config.set('confirmImagePaste', !checkboxChecked);
+				}
+			});
 		} else {
 			webContents.paste();
 		}
