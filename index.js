@@ -204,9 +204,8 @@ app.on('ready', () => {
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
-
+	
 	const argv = require('minimist')(process.argv.slice(1));
-
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
 		const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
