@@ -34,7 +34,6 @@ ipc.on('log-out', () => {
 		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
 		nodes[nodes.length - 1].click();
 	}
-
 });
 
 ipc.on('find', () => {

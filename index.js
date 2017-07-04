@@ -11,7 +11,7 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
-const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com'; 
+const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
 const {app, ipcMain} = electron;
 
@@ -138,7 +138,6 @@ function createMainWindow() {
 	// Messenger or WorkChat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
-	const trackingUrlPrefix =`https://l.${domain}/l.php`;
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -203,6 +202,7 @@ if (!isDev && process.platform !== 'linux') {
 }
 
 app.on('ready', () => {
+	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
@@ -240,6 +240,9 @@ app.on('ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+		if (config.get('useWorkChat')) {
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
+		}
 
 		if (argv.minimize) {
 			mainWindow.minimize();

@@ -1,0 +1,59 @@
+/* Main: Hide header */
+#pagelet_bluebar {
+	display: none;
+}
+
+/* Login: Remove vertical scrollbar*/
+body {
+	overflow: hidden !important;
+}
+
+/* Login: Remove white top bar */
+._4b21 {
+	display: none
+}
+
+/* Login: Remove Facebook links */
+#pageFooter ._51mz {
+	display: none
+}
+
+/* Login: Remove horizontal seprators */
+#pageFooter ._60l6 {
+	display: none
+}
+
+/* Login: Remove Facebook copyright */
+#pageFooter .copyright {
+	display: none
+}
+
+/**
+ * Dark Mode
+ */
+
+ /* Login: background */
+html.dark-mode ._5rw0 {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Login: Email confirmation screen */
+html.dark-mode ._5rwd {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Contact List: search results */
+html.dark-mode ._4p-s {
+	background: var(--base-ten) !important;
+}
+
+
+html.dark-mode ._aou {
+	background: var(--base) !important;
+}
+
+html.dark-mode ._4kf5 {
+	background: var(--base) !important;
+}
