@@ -11,6 +11,8 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
+const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com'; 
+
 const {app, ipcMain} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
@@ -80,15 +82,15 @@ ipcMain.on('update-overlay-icon', (event, data, text) => {
 
 function enableHiresResources() {
 	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
-
 	if (scaleFactor === 1) {
 		return;
 	}
 
-	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+	const filter = {urls: [`*://*.${domain}/`]};
+	electron.session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
 		let cookie = details.requestHeaders.Cookie;
 
-		if (cookie && details.method === 'GET' && details.url.startsWith('https://winamax.facebook.com/')) {
+		if (cookie && details.method === 'GET') {
 			if (/(; )?dpr=\d/.test(cookie)) {
 				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
 			} else {
@@ -107,7 +109,7 @@ function enableHiresResources() {
 
 function setUpPrivacyBlocking() {
 	const ses = electron.session.defaultSession;
-	const filter = {urls: ['*://*.winamax.facebook.com/*typ.php*', '*://*.winamax.facebook.com/*change_read_status.php*']};
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
 	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
 		let blocking = false;
 		if (details.url.includes('typ.php')) {
@@ -134,9 +136,9 @@ function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
 	// Messenger or WorkChat
-	const url = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
+	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
-	const trackingUrlPrefix = config.get('useWorkChat') ? 'https://l.facebook.com/l.php' : 'https://l.messenger.com/l.php';
+	const trackingUrlPrefix =`https://l.${domain}/l.php`;
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -164,8 +166,8 @@ function createMainWindow() {
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);
 	}
-	
-	win.loadURL(url);
+
+	win.loadURL(mainURL);
 
 	win.on('close', e => {
 		if (!isQuitting) {

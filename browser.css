@@ -148,17 +148,13 @@ a,
 	height: 280px;
 }
 
-/** WORK CHAT 
-**/
+/**
+ * WORK CHAT
+ */
 
 /* Main: Hide header */
 #pagelet_bluebar {
 	display: none;
-}
-
-/* Hide settings menu */
-.uiContextualLayer._5v-0._53il.uiContextualLayerBelowRight {
-	display: none !important;
 }
 
 /* Login: Remove vertical scrollbar*/
@@ -185,4 +181,3 @@ body {
 #pageFooter .copyright {
 	display: none
 }
-
