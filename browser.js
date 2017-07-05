@@ -8,6 +8,13 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
+const { webFrame } = require('electron');
+webFrame.setSpellCheckProvider('en-US', true, {
+	spellCheck (text) {
+		return !(require('spellchecker').isMisspelled(text))
+	}
+});
+
 ipc.on('show-preferences', () => {
 	// Create the menu for the below
 	document.querySelector('._30yy._2fug._p').click();
