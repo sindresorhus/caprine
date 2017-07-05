@@ -16,7 +16,7 @@ const {app, ipcMain} = electron;
 app.setAppUserModelId('com.sindresorhus.caprine');
 app.disableHardwareAcceleration();
 
-require('electron-debug')({ enabled: true });
+require('electron-debug')({enabled: true});
 require('electron-dl')();
 require('electron-context-menu')();
 
