@@ -4,16 +4,19 @@ const config = require('./config');
 
 const {ipcRenderer: ipc} = electron;
 
+// Spellchecking for user input
+const { SpellCheckHandler, ContextMenuListener, ContextMenuBuilder } = require('electron-spellchecker');
+window.spellCheckHandler = new SpellCheckHandler();
+window.spellCheckHandler.attachToInput();
+window.spellCheckHandler.switchLanguage(navigator.language);
+let contextMenuBuilder = new ContextMenuBuilder(window.spellCheckHandler);
+let contextMenuListener = new ContextMenuListener((info) => {
+  contextMenuBuilder.showPopupMenu(info);
+});
+
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
-
-const { webFrame } = require('electron');
-webFrame.setSpellCheckProvider(navigator.language, true, {
-	spellCheck (text) {
-		return !(require('spellchecker').isMisspelled(text))
-	}
-});
 
 ipc.on('show-preferences', () => {
 	// Create the menu for the below
