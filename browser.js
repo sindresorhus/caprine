@@ -9,7 +9,7 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
 const { webFrame } = require('electron');
-webFrame.setSpellCheckProvider('en-US', true, {
+webFrame.setSpellCheckProvider(navigator.language, true, {
 	spellCheck (text) {
 		return !(require('spellchecker').isMisspelled(text))
 	}
