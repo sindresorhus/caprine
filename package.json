@@ -64,7 +64,10 @@
         "dmg",
         "zip",
         "mas"
-      ]
+      ],
+	  "extendInfo": {
+		"LSUIElement": true
+	  }
     },
     "dmg": {
       "iconSize": 160,
