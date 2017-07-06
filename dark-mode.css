@@ -451,11 +451,7 @@ html.dark-mode ._30vt ._4qba {
 /* Tomorrow dark theme for code blocks */
 
 html.dark-mode ._wu0 {
-	background-color: #1d1f21 !important;
-	border: 1px solid #0a0c14 !important;
-	color: #c5c8c6 !important;
+	--code-block-base: #c5c8c6;
+	--code-block-background: #1d1f21;
+	--code-block-border: #0a0c14;
 }
-
-html.dark-mode ._wu0 .token.punctuation   { color: #c5c8c6 !important }
-html.dark-mode ._wu0 .token.property 	  { color: #c5c8c6 !important }
-html.dark-mode ._wu0 .token.operator 	  { color: #c5c8c6 !important }
