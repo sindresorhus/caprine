@@ -3,7 +3,7 @@
 	display: none;
 }
 
-/* Login: Remove vertical scrollbar*/
+/* Login: Remove vertical scrollbar */
 body {
 	overflow: hidden !important;
 }
