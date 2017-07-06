@@ -11,14 +11,6 @@ exports.create = win => {
 		return;
 	}
 
-	let iconPath = '';
-
-	if (process.platform === 'darwin') {
-		iconPath = getDarwinIconPath(0);
-	} else {
-		iconPath = path.join(__dirname, 'static/IconTray.png');
-	}
-
 	const contextMenu = electron.Menu.buildFromTemplate([
 		{
 			label: 'Toggle',
@@ -34,8 +26,8 @@ exports.create = win => {
 		}
 	]);
 
-	tray = new electron.Tray(iconPath);
-	tray.setToolTip(`${app.getName()}`);
+	tray = new electron.Tray(getIconPath(false));
+	updateToolTip(0);
 
 	tray.on('click', () => {
 		win.toggle();
@@ -47,46 +39,44 @@ exports.create = win => {
 };
 
 exports.update = messageCount => {
-	if (process.platform === 'darwin') {
-		tray.setImage(getDarwinIconPath(messageCount));
-	} else {
-		setBadge(messageCount);
+	if (!tray || !Number.isInteger(messageCount) || lastCounter === messageCount) {
+		return;
 	}
+
+	lastCounter = messageCount;
+
+	tray.setImage(getIconPath(messageCount > 0));
 
 	updateToolTip(messageCount);
 };
 
-function setBadge(shouldDisplayUnread) {
-	if (process.platform === 'darwin' || !tray) {
-		return;
-	}
-
-	const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-	const iconPath = path.join(__dirname, `static/${icon}`);
-	tray.setImage(iconPath);
-}
-
 function updateToolTip(counter) {
-	if (!Number.isInteger(counter) || lastCounter === counter) {
-		return;
-	}
-
-	lastCounter = counter;
-
 	let tip = app.getName();
 
 	if (counter > 0) {
 		const msg = (counter === 1 ? 'message' : 'messages');
-		tip = tip.concat(' - ', counter, ' unread ', msg);
+		tip += ` - ${counter} unread ${msg}`;
 	}
 
 	tray.setToolTip(tip);
 }
 
-function getDarwinIconPath(counter) {
-	if (Number.isInteger(counter) && counter > 0) {
-		return path.join(__dirname, 'static/IconMenuBarUnread.png');
+function getNonDarwinIconPath(hasUnreadMessages) {
+	return hasUnreadMessages ? 'IconTrayUnread.png' : 'IconTray.png';
+}
+
+function getDarwinIconPath(hasUnreadMessages) {
+	return hasUnreadMessages ? 'IconMenuBarUnread.png' : 'IconMenuBar.png';
+}
+
+function getIconPath(hasUnreadMessages) {
+	let icon = '';
+
+	if (process.platform === 'darwin') {
+		icon = getDarwinIconPath(hasUnreadMessages);
+	} else {
+		icon = getNonDarwinIconPath(hasUnreadMessages);
 	}
 
-	return path.join(__dirname, 'static/IconMenuBar.png');
+	return path.join(__dirname, `static/${icon}`);
 }

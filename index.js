@@ -41,7 +41,7 @@ if (isAlreadyRunning) {
 function getMessageCount(title) {
 	// ignore `Sindre messaged you` blinking
 	if (title.indexOf('Messenger') === -1) {
-		return -1;
+		return null;
 	}
 
 	let messageCount = (/\(([0-9]+)\)/).exec(title);
@@ -51,6 +51,10 @@ function getMessageCount(title) {
 }
 
 function updateBadge(messageCount) {
+	if (messageCount === null) {
+		return;
+	}
+
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		app.setBadgeCount(messageCount);
 		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
@@ -59,9 +63,7 @@ function updateBadge(messageCount) {
 		}
 	}
 
-	if (['linux', 'win32', 'darwin'].indexOf(process.platform) !== -1) {
-		tray.update(messageCount);
-	}
+	tray.update(messageCount);
 
 	if (process.platform === 'win32') {
 		if (messageCount === 0) {
@@ -182,12 +184,7 @@ function createMainWindow() {
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
 
-		const messageCount = getMessageCount(title);
-		if (messageCount === -1) {
-			return;
-		}
-
-		updateBadge(messageCount);
+		updateBadge(getMessageCount(title));
 	});
 
 	win.on('focus', () => {
