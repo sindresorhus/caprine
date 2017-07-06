@@ -60,6 +60,16 @@ ipc.on('archive-conversation', () => {
 	}, 10);
 });
 
+ipc.on('toggle-sidebar', () => {
+	const sidebar = document.querySelector('._1enh');
+	const display = sidebar.style.display;
+	sidebar.style.display = display === '' ? 'none' : '';
+
+	// Fix for left space in compact mode
+	const mainSelector = document.querySelector('._1q5-');
+	mainSelector.classList.toggle('sidebar-hidden');
+});
+
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 	ipc.send('set-vibrancy');

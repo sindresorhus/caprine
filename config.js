@@ -16,6 +16,7 @@ module.exports = new Store({
 		block: {
 			chatSeen: false,
 			typingIndicator: false
-		}
+		},
+		confirmImagePaste: true
 	}
 });

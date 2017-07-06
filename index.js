@@ -15,6 +15,7 @@ const tray = require('./tray');
 const {app, ipcMain} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
+app.disableHardwareAcceleration();
 
 require('electron-debug')({enabled: true});
 require('electron-dl')();
@@ -219,16 +220,21 @@ app.on('ready', () => {
 	});
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
-		if (electron.clipboard.availableFormats().some(type => type.includes('image'))) {
+		const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
+
+		if (clipboardHasImage && config.get('confirmImagePaste')) {
 			electron.dialog.showMessageBox({
 				type: 'info',
 				buttons: ['Send', 'Cancel'],
 				message: 'Are you sure you want to send the image in the clipboard?',
-				icon: electron.clipboard.readImage()
-			}, resp => {
+				icon: electron.clipboard.readImage(),
+				checkboxLabel: 'Don\'t ask me again',
+				checkboxChecked: false
+			}, (resp, checkboxChecked) => {
 				if (resp === 0) {
 					// User selected send
 					webContents.paste();
+					config.set('confirmImagePaste', !checkboxChecked);
 				}
 			});
 		} else {
