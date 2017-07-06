@@ -29,7 +29,6 @@
 		"dist": "build"
 	},
 	"dependencies": {
-		"electron-context-menu": "^0.8.0",
 		"electron-debug": "^1.0.0",
 		"electron-dl": "^1.0.0",
 		"electron-is-dev": "^0.1.2",
