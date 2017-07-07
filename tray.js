@@ -13,15 +13,6 @@ exports.create = win => {
 
 	const contextMenu = electron.Menu.buildFromTemplate([
 		{
-			label: 'Toggle',
-			click() {
-				win.toggle();
-			}
-		},
-		{
-			type: 'separator'
-		},
-		{
 			role: 'quit'
 		}
 	]);
