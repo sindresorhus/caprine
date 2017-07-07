@@ -101,7 +101,9 @@ Confirmation before sending images from the clipboard, to prevent accidental cop
 
 ### Work Chat
 
-TODO desc + screenshot
+Support for Work Chat: Messenger for [Workplace](https://www.facebook.com/workplace).
+
+<div align="center"><img src="media/logo-workchat.png" height="150">&nbsp;<img src="media/screenshot-workchat.jpg" height="200"></div>
 
 ### Background behavior
 
