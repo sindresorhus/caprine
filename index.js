@@ -7,7 +7,6 @@ const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const togglify = require('electron-togglify-window');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
@@ -141,7 +140,7 @@ function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
 
-	const win = togglify(new electron.BrowserWindow({
+	const win = new electron.BrowserWindow({
 		title: app.getName(),
 		show: false,
 		x: lastWindowState.x,
@@ -160,9 +159,17 @@ function createMainWindow() {
 			nodeIntegration: false,
 			plugins: true
 		}
-	}));
+	});
 	setUserLocale();
 	setUpPrivacyBlocking();
+
+	win.toggle = function () {
+		if (this.isVisible()) {
+			this.hide();
+		} else {
+			this.show();
+		}
+	};
 
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);

@@ -33,6 +33,10 @@ exports.create = win => {
 		win.toggle();
 	});
 
+	tray.on('double-click', () => {
+		win.toggle();
+	});
+
 	tray.on('right-click', () => {
 		tray.popUpContextMenu(contextMenu);
 	});
