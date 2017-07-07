@@ -11,6 +11,8 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
+const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
+
 const {app, ipcMain} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
@@ -38,9 +40,9 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title) {
+function updateBadge(title, titlePrefix) {
 	// ignore `Sindre messaged you` blinking
-	if (title.indexOf('Messenger') === -1) {
+	if (title.indexOf(titlePrefix) === -1) {
 		return;
 	}
 
@@ -80,15 +82,15 @@ ipcMain.on('update-overlay-icon', (event, data, text) => {
 
 function enableHiresResources() {
 	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
-
 	if (scaleFactor === 1) {
 		return;
 	}
 
-	electron.session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+	const filter = {urls: [`*://*.${domain}/`]};
+	electron.session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
 		let cookie = details.requestHeaders.Cookie;
 
-		if (cookie && details.method === 'GET' && details.url.startsWith('https://www.messenger.com/')) {
+		if (cookie && details.method === 'GET') {
 			if (/(; )?dpr=\d/.test(cookie)) {
 				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
 			} else {
@@ -107,7 +109,7 @@ function enableHiresResources() {
 
 function setUpPrivacyBlocking() {
 	const ses = electron.session.defaultSession;
-	const filter = {urls: ['*://*.messenger.com/*typ.php*', '*://*.messenger.com/*change_read_status.php*']};
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
 	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
 		let blocking = false;
 		if (details.url.includes('typ.php')) {
@@ -133,6 +135,9 @@ function setUserLocale() {
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
+	// Messenger or Work Chat
+	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
+	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -161,7 +166,7 @@ function createMainWindow() {
 		win.setSheetOffset(40);
 	}
 
-	win.loadURL('https://www.messenger.com/login/');
+	win.loadURL(mainURL);
 
 	win.on('close', e => {
 		if (!isQuitting) {
@@ -177,7 +182,7 @@ function createMainWindow() {
 
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
-		updateBadge(title);
+		updateBadge(title, titlePrefix);
 	});
 
 	win.on('focus', () => {
@@ -197,6 +202,7 @@ if (!isDev && process.platform !== 'linux') {
 }
 
 app.on('ready', () => {
+	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
@@ -234,6 +240,9 @@ app.on('ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+		if (config.get('useWorkChat')) {
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
+		}
 
 		if (argv.minimize) {
 			mainWindow.minimize();
@@ -251,7 +260,7 @@ app.on('ready', () => {
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
-			if (url.startsWith('https://l.messenger.com/l.php')) {
+			if (url.startsWith(trackingUrlPrefix)) {
 				url = new URL(url).searchParams.get('u');
 			}
 

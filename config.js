@@ -17,6 +17,7 @@ module.exports = new Store({
 			chatSeen: false,
 			typingIndicator: false
 		},
-		confirmImagePaste: true
+		confirmImagePaste: true,
+		useWorkChat: false
 	}
 });

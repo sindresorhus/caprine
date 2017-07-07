@@ -19,6 +19,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - [Vibrant theme](#vibrancy)*
 - [Privacy focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
+- [Work Chat support](#work-chat)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -97,6 +98,12 @@ You can toggle whether Caprine stays on top of other windows in the `Window`/`Vi
 ### Image paste confirmation
 
 Confirmation before sending images from the clipboard, to prevent accidental copy-pastes.
+
+### Work Chat
+
+Support for Work Chat: Messenger for [Workplace](https://www.facebook.com/workplace).
+
+<div align="center"><img src="media/logo-workchat.png" height="150">&nbsp;<img src="media/screenshot-workchat.jpg" height="200"></div>
 
 ### Background behavior
 
