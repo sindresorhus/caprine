@@ -14,18 +14,29 @@ body {
 }
 
 /* Login: Remove Facebook links */
-#pageFooter ._51mz {
+#pageFooter  {
 	display: none
 }
 
-/* Login: Remove horizontal seprators */
-#pageFooter ._60l6 {
-	display: none
+/* Login: Vertically center login box */
+html {
+	height: 100%;
 }
-
-/* Login: Remove Facebook copyright */
-#pageFooter .copyright {
-	display: none
+body {
+	height: 100%;
+}
+.UIPage_LoggedOut ._li {
+	height: 100%;
+}
+#globalContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+}
+._5rw2 {
+	min-height: 0 !important;
+	padding: 0 !important;
 }
 
 /**
@@ -35,7 +46,7 @@ body {
  /* Login: background */
 html.dark-mode ._5rw0 {
 	color: var(--base-seventy);
-	background: var(--container-color) !important;
+	background-color: transparent !important;
 }
 
 /* Login: Email confirmation screen */
@@ -48,7 +59,6 @@ html.dark-mode ._5rwd {
 html.dark-mode ._4p-s {
 	background: var(--base-ten) !important;
 }
-
 
 html.dark-mode ._aou {
 	background: var(--base) !important;
