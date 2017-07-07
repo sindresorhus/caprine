@@ -19,7 +19,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - [Vibrant theme](#vibrancy)*
 - [Privacy focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
-- [Work Chat](#work-chat)
+- [Work Chat support](#work-chat)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
