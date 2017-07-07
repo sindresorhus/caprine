@@ -163,7 +163,7 @@ const macosTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Switch to Work Chat...',
+				label: 'Switch to Work Chat…',
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -172,7 +172,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Switch to Messenger...',
+				label: 'Switch to Messenger…',
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
@@ -424,7 +424,7 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Switch to Work Chat...',
+				label: 'Switch to Work Chat…',
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -433,7 +433,7 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Switch to Messenger...',
+				label: 'Switch to Messenger…',
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
