@@ -49,6 +49,11 @@ html.dark-mode ._5rw0 {
 	background-color: transparent !important;
 }
 
+/* Login button */
+html.dark-mode.vibrancy button {
+	background: var(--container-color) !important;
+}
+
 /* Login: Email confirmation screen */
 html.dark-mode ._5rwd {
 	color: var(--base-seventy);
