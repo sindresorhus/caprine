@@ -4,6 +4,7 @@ const Store = require('electron-store');
 module.exports = new Store({
 	defaults: {
 		darkMode: false,
+		glowMode:false,
 		vibrancy: false,
 		zoomFactor: 1,
 		lastWindowState: {

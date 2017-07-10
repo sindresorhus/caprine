@@ -55,6 +55,13 @@ const viewSubmenu = [
 		click() {
 			sendAction('toggle-dark-mode');
 		}
+	},
+	{
+		label: 'Toggle Glow Mode',
+		accelerator: 'CmdOrCtrl+1',
+		click() {
+			sendAction('toggle-glow-mode');
+		}
 	}
 ];
 

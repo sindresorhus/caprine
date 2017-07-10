@@ -135,6 +135,7 @@ function setUserLocale() {
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
+	const isGlowMode = config.get('glowMode');
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
@@ -149,10 +150,12 @@ function createMainWindow() {
 		icon: process.platform === 'linux' && path.join(__dirname, 'static/Icon.png'),
 		minWidth: 400,
 		minHeight: 200,
+		frame: false,
 		alwaysOnTop: config.get('alwaysOnTop'),
 		titleBarStyle: 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
+		glowTheme: isGlowMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -239,6 +242,7 @@ app.on('ready', () => {
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'glow-mode.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
@@ -272,6 +276,7 @@ app.on('ready', () => {
 ipcMain.on('set-vibrancy', () => {
 	if (config.get('vibrancy')) {
 		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
+		mainWindow.setVibrancy(config.get('glowMode') ? 'ultra-glow' : 'light');
 	} else {
 		mainWindow.setVibrancy(null);
 	}

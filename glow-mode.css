@@ -1,0 +1,458 @@
+:root{
+	--base: black;
+	--base-ninety: rgba(255, 255, 255, 0.9);
+	--base-seventy-five: rgba(255, 255, 255, 0.75);
+	--base-seventy: rgba(255, 255, 255, 0.75);
+	--names: #ED4781;
+	--messages: #6DFEDF;
+	--base-fifty: rgba(255, 255, 255, 0.5);
+/*Side messages and timestap*/
+	--base-fourty: #66D9EF;
+	--base-thiry: rgba(255, 255, 255, 0.3);
+	--base-twenty: rgba(255, 255, 255, 0.2);
+/*Separator Line*/
+	--base-five: rgba(255, 255, 255, 0.05);
+/*Other speech bubble*/
+	--bubblecolor: #4F528A;
+	--base-nine: rgba(255, 255, 255, 0.09);
+	--container-color: #333454;
+	--conversation-bg: rgb(25, 38, 51);
+	--list-header-color: #292A44;
+	--blue: #0084ff;
+}
+html.glow-mode body {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Main container? */
+html.glow-mode ._4sp8 {
+	background: var(--container-color) !important;
+}
+
+/* Main cont */
+html.glow-mode ._1q5- {
+	background: var(--container-color) !important;
+	border-left: 1px solid var(--base-five) !important;
+}
+
+/* Message list: your message bubble */
+html.glow-mode ._o46:not(._nd_) ._hh7 {
+	background: var(--bubblecolor);
+	color: var(--messages);
+}
+
+/* Message list: remove border from messages */
+._hh7._aol {
+	border-color: transparent !important;
+}
+
+/* Fix glow mode overriding colors for code snippets */
+html.glow-mode ._wu0 {
+	color: var(--base);
+}
+
+/* message list: link in your message bubble */
+html.glow-mode ._o46:not(._nd_) ._hh7 a {
+	color: var(--base-seventy);
+}
+
+/* Message list: link in message bubble */
+html.glow-mode ._hh7 a:hover {
+	background: transparent !important;
+}
+
+/* Message list: link in incoming message bubble */
+html.glow-mode ._o46._nd_ ._hh7 {
+	color: var(--base-ninety);
+}
+
+/* Message list: link preview */
+html.glow-mode ._5i_d {
+	border: solid 1px var(--base-five);
+}
+
+/* Message list: link preview text */
+html.glow-mode ._5i_d .__6k,
+html.glow-mode ._5i_d .__6l {
+	color: var(--base-seventy);
+}
+
+html.glow-mode ._5i_d .__6m {
+	color: var(--base-fourty);
+}
+
+/* Message list: input bar */
+html.glow-mode ._4rv3 {
+	background: transparent !important;
+	border-top: solid 1px var(--base-five);
+	color: var(--base-seventy);
+}
+
+/* Message list: timestamp */
+html.glow-mode ._497p {
+	color: var(--base-fourty);
+}
+
+/* Message list: header above */
+html.glow-mode ._5742 {
+	background: var(--list-header-color) !important;
+	border-bottom: none;
+}
+/* Message list: header above (invitation) */
+html.glow-mode ._2y8z,
+html.glow-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
+html.glow-mode ._58-3 {
+	color: var(--base-fourty);
+}
+
+/* Message list: header above (invitation) (typed text) */
+html.glow-mode ._14-7 ._58ah ._58al {
+	color: var(--base-seventy);
+}
+
+/* Messages list: user info (is in contacts) */
+html.glow-mode ._36zg-e {
+	color: var(--base-seventy) !important;
+}
+
+/* Messages list: user info */
+html.glow-mode ._1n-e {
+	color: var(--base-fourty);
+}
+
+/* Messages list: text header above the messages */
+html.glow-mode ._17w2,
+html.glow-mode ._ih3 ._3oh-,
+html.glow-mode ._llq ._3oh- {
+	color: var(--base-seventy);
+}
+
+html.glow-mode ._2v6o {
+	color: var(--base-fourty);
+}
+
+/* Contact list: header above */
+html.glow-mode ._36ic {
+	background: var(--list-header-color) !important;
+	border-bottom: none;
+}
+
+/* Contact list: search input */
+html.glow-mode ._5iwm ._58al {
+	background: var(--bubblecolor) !important;
+	color: var(--base-ninety);
+}
+
+html.glow-mode ._5iwm ._58al::-webkit-input-placeholder {
+	color: var(--base-thirty);
+}
+
+/* Contact list: background */
+html.glow-mode ._1enh {
+	background: transparent !important;
+}
+
+/* Contact list: person */
+html.glow-mode ._1ht1 {
+	background: transparent !important;
+}
+
+/* Contact list: person (selected) */
+html.glow-mode ._1ht1._1ht2 {
+	background: linear-gradient(180deg, #1871DC, #1870DB) !important;
+}
+
+/* Contact list: person container */
+html.glow-mode ._1qt4 {
+	border-top: solid 1px var(--base-five) !important;
+}
+
+/* contact list: person name */
+html.glow-mode ._1ht6 {
+	color: var(--names);
+}
+
+html.glow-mode ._1ht6 .onHover {
+	color: #000000;
+}
+
+/* Contact list: message blurb */
+html.glow-mode ._1htf,
+/* Contact list: (for format) person: message blurb */
+html.glow-mode ._1htf ._4qba {
+	color: var(--base-fourty);
+}
+
+/* Contact list: timestamp */
+html.glow-mode ._1ht7 {
+	color: var(--base-ninety);
+}
+/* Contact list: timestamp (selected) */
+html.glow-mode ._1ht2 ._1ht7 {
+	color: var(--base-ninety);
+}
+/* Contact list: timestamp (unread) */
+html.glow-mode ._1ht3 ._1ht7 {
+	color: rgba(0, 132, 255, 0.7);
+}
+
+/* contact list: search results */
+html.glow-mode ._5t4c,
+html.glow-mode ._5t4c ._5l37 {
+	color: var(--base-seventy) !important;
+}
+
+/* Contact list: search results name */
+html.glow-mode ._3q34,
+html.glow-mode ._364g {
+	color: var(--base-seventy);
+}
+
+/* Contact list: search results subname */
+html.glow-mode ._3q35 {
+	color: var(--base-fourty);
+}
+
+/* Contact list: search result label type */
+html.glow-mode ._3xcx,
+html.glow-mode ._225b {
+	color: var(--base-fourty);
+}
+
+/* Contact list: searching text */
+html.glow-mode ._4g0h {
+	color: var(--base-fourty);
+}
+
+/* Right sidebar */
+html.glow-mode ._4_j5 {
+	background: transparent;
+	border-left: solid 1px var(--base-five);
+}
+
+/* Right sidebar: headings */
+html.glow-mode ._1lj0 {
+	color: var(--base-fourty);
+}
+
+/* Right sidebar: section spacer */
+html.glow-mode ._1li- {
+	border-top: solid 1px var(--base-five);
+}
+
+/* Right sidebar: group chat names */
+html.glow-mode ._2jnv {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: messenger type info under name */
+html.glow-mode ._3eus {
+	color: var(--base-fourty);
+}
+
+/* Right sidebar: mute notification label */
+html.glow-mode ._3szq {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: mute notification time */
+html.glow-mode ._3x6v {
+	color: var(--base-fourty);
+}
+
+/* Right sidebar: people list */
+html.glow-mode ._4_j5 ._5l37 {
+	color: var(--base-fourty);
+	background: transparent;
+}
+
+/* Right sidebar: people list (add people) */
+html.glow-mode ._4rph ._4rpj {
+	border-top: solid 1px var(--bubblecolor) !important;
+}
+
+/* Right sidebar: people list item (name) */
+html.glow-mode ._364g,
+html.glow-mode ._3x6u,
+html.glow-mode ._4rph ._4rpj {
+	color: var(--base-seventy);
+}
+
+/* New conversation contact list: popup */
+html.glow-mode ._2y8_ {
+	background: transparent;
+	border: solid 1px var(--base-five);
+}
+
+/* New conversation contact list: popup hr */
+html.glow-mode ._5l38 {
+	border-top: 1px solid var(--bubblecolor);
+}
+
+/* New conversation contact list: popup hover */
+html.glow-mode ._1k1p ._5l38 {
+	border-top: none;
+}
+html.glow-mode ._5l37:active,
+html.glow-mode ._1k1p {
+	background-color: var(--base-five) !important;
+}
+
+/* Conversation search */
+html.glow-mode ._33p7 {
+	background-color: var(--conversation-bg);
+}
+html.glow-mode ._33p7 ._b-u,
+html.glow-mode ._33p7 ._b-v {
+	background-color: transparent !important;
+	background-image: url(/rsrc.php/v3/yb/r/TF9SFeEl2Ka.png) !important;
+	background-repeat: no-repeat !important;
+	background-size: auto !important;
+}
+html.glow-mode ._33p7 ._b-u {
+	background-position: 0px -66px !important;
+}
+html.glow-mode ._33p7 ._b-v {
+	background-position: 0 0 !important;
+}
+html.glow-mode ._33p7 input {
+	color: var(--base-seventy);
+	background-color: var(--base-five);
+}
+html.glow-mode ._33p7 ._5iwn ._58ak::before {
+	-webkit-filter: invert();
+	filter: invert();
+}
+
+/* Poll */
+/* Border */
+html.glow-mode ._3b4t {
+	border-color: --base-nine;
+}
+/* "Poll" header text */
+html.glow-mode ._4qba {
+	color: var(--base-seventy);
+}
+/* Voting options text */
+html.glow-mode ._1mr_,
+html.glow-mode ._1mq_ ._1mq- {
+	color: var(--base-fourty);
+}
+/* Check box colors */
+html.glow-mode ._2m5p[aria-checked="false"][role="checkbox"] {
+	border: 1px solid var(--bubblecolor);
+}
+/* New option text box */
+html.glow-mode ._58al {
+	color: white;
+}
+/* Poll results bar graph colors */
+html.glow-mode ._3b4h {
+	background-color: --base-nine;
+}
+/* Poll results profile pictures */
+html.glow-mode ._4mnq {
+	border-color: var(--container-color);
+}
+html.glow-mode ._34n6 {
+	color: var(--base-fourty);
+	background-color: --base-nine;
+}
+
+/* Dialogs */
+html.glow-mode ._53ij,
+html.glow-mode ._4eby,
+html.glow-mode ._2c9g {
+	background: var(--container-color) !important;
+}
+
+/* Dialog: title and names */
+html.glow-mode ._374c,
+html.glow-mode ._4ebz,
+html.glow-mode ._2c9i ._19jt,
+html.glow-mode .uiInputLabelLabel {
+	color: var(--base-seventy) !important;
+}
+
+/* Gif and sticker dialog: hide white triangle */
+html.glow-mode ._53io {
+	visibility: hidden;
+}
+
+/* Gif and sticker dialog: style the bottom of the list */
+html.glow-mode .uiScrollableArea.contentAfter:after {
+	background: linear-gradient(rgba(25, 38, 51, .05), var(--container-color));
+}
+
+/* Sticker dialog: selected header */
+html.glow-mode ._5r8a._5r8b,
+html.glow-mode ._eb3:before {
+	background-color: var(--base-five);
+}
+
+/* Sticker dialog: header borders */
+html.glow-mode ._5r8e,
+html.glow-mode ._5r86 {
+	border-color: var(--base-five);
+}
+
+/* Record dialog: time */
+html.glow-mode ._3z53 {
+	color: var(--base-seventy);
+}
+
+/* Delete popover */
+html.glow-mode ._hw2 ._53ij {
+	background-color: var(--bubblecolor) !important;
+}
+
+/* Login tile and names */
+html.glow-mode ._5hy4,
+html.glow-mode ._3403 {
+	color: var(--base-seventy) !important;
+}
+
+/* Login inputs */
+html.glow-mode ._55r1._5f0v._43di {
+	background: var(--bubblecolor) !important;
+	color: var(--base-seventy-five);
+}
+
+/* Login button */
+html.glow-mode button {
+	background: var(--container-color) !important;
+}
+
+/* Fix the Sticker and Gaming buttons */
+html.glow-mode ._4rv6,
+html.glow-mode ._4ce_ {
+	filter: invert() !important;
+	opacity: 0.6 !important;
+}
+
+/* Fix the @name-popover in the chat input box */
+html.glow-mode ._13iv {
+	background: var(--container-color) !important;
+}
+
+/* Gaming popover */
+/* Gaming popover header text */
+html.glow-mode ._4lh7 {
+	color: var(--base-seventy);
+}
+
+/* Gaming popover header */
+html.glow-mode ._53ij ._3rh0 {
+	background: var(--list-header-color) !important;
+}
+
+/* Gaming popover content */
+html.glow-mode ._53ij ._4lh2 {
+	background: var(--container-color) !important;
+}
+
+/* Gaming popover "PLAY" text color */
+html.glow-mode ._30vt ._4qba {
+	color: var(--blue);
+}

@@ -85,3 +85,50 @@ html.dark-mode ._aou {
 html.dark-mode ._4kf5 {
 	background: var(--base) !important;
 }
+
+/**
+ * Glow Mode
+ */
+
+/* Login: Background */
+html.glow-mode ._5rw0 {
+	color: var(--base-seventy);
+	background-color: transparent !important;
+}
+
+/* Login: Fix background color in vibrancy mode */
+html.vibrancy ._5rw0 {
+	background-color: transparent !important;
+}
+html.vibrancy:not(.glow-mode) ._5rw2 {
+	color: #242424 !important;
+}
+
+/* Login: Login button */
+html.glow-mode.vibrancy button {
+	background: var(--container-color) !important;
+}
+
+/* Login: Remove login button border */
+html.glow-mode button {
+	border-color: var(--container-color) !important;
+}
+
+/* Login: Email confirmation screen */
+html.glow-mode ._5rwd {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Contact List: Search results */
+html.glow-mode ._4p-s {
+	background: var(--base-ten) !important;
+}
+
+html.glow-mode ._aou {
+	background: var(--base) !important;
+}
+
+html.glow-mode ._4kf5 {
+	background: var(--base) !important;
+}

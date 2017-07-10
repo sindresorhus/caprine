@@ -83,6 +83,11 @@ function setDarkMode() {
 	ipc.send('set-vibrancy');
 }
 
+function setGlowMode() {
+	document.documentElement.classList.toggle('glow-mode', config.get('glowMode'));
+	ipc.send('set-vibrancy');
+}
+
 function setVibrancy() {
 	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
 	ipc.send('set-vibrancy');
@@ -110,6 +115,11 @@ function renderOverlayIcon(messageCount) {
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
+});
+
+ipc.on('toggle-glow-mode', () => {
+	config.set('glowMode', !config.get('glowMode'));
+	setGlowMode();
 });
 
 ipc.on('toggle-vibrancy', () => {
@@ -247,6 +257,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	// TODO: find a CSS only solution
 	if (config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#192633';
+	}
+
+
+	// Activate Glow Mode if it was set before quitting
+	setGlowMode();
+
+	// Prevent flash of white on startup when in glow mode
+	// TODO: find a CSS only solution
+	if (config.get('glowMode')) {
+		document.documentElement.style.backgroundColor = '#292A44';
 	}
 
 	// Activate vibrancy effect if it was set before quitting
