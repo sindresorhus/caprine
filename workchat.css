@@ -86,7 +86,7 @@ html.dark-mode ._4kf5 {
 	background: var(--base) !important;
 }
 
-/* Message ist: sender (group chat) */
+/* Message list: sender (group chat) */
 html.dark-mode ._ih3 {
 	color: var(--base-fourty);
 }
