@@ -10,6 +10,7 @@ module.exports = new Store({
 			width: 800,
 			height: 600
 		},
+		continuity: false,
 		alwaysOnTop: false,
 		bounceDockOnMessage: false,
 		flashWindowOnMessage: true,

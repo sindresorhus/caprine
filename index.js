@@ -181,11 +181,7 @@ function createMainWindow() {
 		if (!isQuitting) {
 			e.preventDefault();
 
-			if (process.platform === 'darwin') {
-				app.hide();
-			} else {
-				win.hide();
-			}
+			win.hide();
 		}
 	});
 
@@ -202,6 +198,12 @@ function createMainWindow() {
 		}
 	});
 
+	win.on('blur', () => {
+		if (process.platform === 'darwin' && config.get('continuity')) {
+			win.hide();
+		}
+	});
+
 	return win;
 }
 
@@ -214,17 +216,23 @@ if (!isDev && process.platform !== 'linux') {
 app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
-	tray.create(mainWindow);
+
+	if (process.platform === 'darwin') {
+		mainWindow.toggleContinuity = function () {
+			const enabled = config.get('continuity');
+			setContinuity(enabled);
+		};
+
+		setContinuity(config.get('continuity'));
+	} else {
+		tray.create(mainWindow);
+	}
 
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
 
 	const argv = require('minimist')(process.argv.slice(1));
-
-	electron.globalShortcut.register('Control+M', () => {
-		mainWindow.toggle();
-	});
 
 	electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
 		const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
@@ -298,3 +306,43 @@ app.on('before-quit', () => {
 		config.set('lastWindowState', mainWindow.getBounds());
 	}
 });
+
+function setContinuity(state) {
+	setWindowContinuity(state);
+	setAppContinuity(state);
+	setGlobalShortcutContinuity(state);
+	setTrayContinuity(state);
+}
+
+function setWindowContinuity(state) {
+	mainWindow.setVisibleOnAllWorkspaces(state);
+	mainWindow.setAlwaysOnTop(state);
+}
+
+function setAppContinuity(state) {
+	if (state) {
+		app.dock.hide();
+	} else {
+		app.dock.show();
+	}
+}
+
+function setGlobalShortcutContinuity(state) {
+	const key = 'Control+M';
+
+	if (state) {
+		electron.globalShortcut.register(key, () => {
+			mainWindow.toggle();
+		});
+	} else {
+		electron.globalShortcut.unregister(key);
+	}
+}
+
+function setTrayContinuity(state) {
+	if (state) {
+		tray.create(mainWindow);
+	} else {
+		tray.destroy();
+	}
+}
