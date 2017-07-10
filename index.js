@@ -193,7 +193,7 @@ function createMainWindow() {
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
 
-		updateBadge(getMessageCount(title, tilePrefix));
+		updateBadge(getMessageCount(title, titlePrefix));
 	});
 
 	win.on('focus', () => {
