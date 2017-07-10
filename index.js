@@ -217,7 +217,7 @@ app.on('ready', () => {
 		const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
 
 		if (clipboardHasImage && config.get('confirmImagePaste')) {
-			electron.dialog.showMessageBox({
+			electron.dialog.showMessageBox(mainWindow, {
 				type: 'info',
 				buttons: ['Send', 'Cancel'],
 				message: 'Are you sure you want to send the image in the clipboard?',
