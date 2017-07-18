@@ -12,6 +12,33 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 	<img src="media/screenshot.png" width="846">
 </a>
 
+## Table of Contents
+
+- [Highlights](#highlights)
+- [Install](#install)
+  - [macOS](#macos)
+  - [Linux](#linux)
+  - [Windows](#windows)
+- [Features](#features)
+  - [Dark mode](#dark-mode)
+  - [Vibrancy](#vibrancy)
+  - [Hide last seen / typing indicator](#hide-last-seen--typing-indicator)
+  - [Prevents link tracking](#prevents-link-tracking)
+  - [Jump to conversation hotkey](#jump-to-conversation-hotkey)
+  - [Compact mode](#compact-mode)
+  - [Desktop notifications](#desktop-notifications)
+  - [Always on Top](#always-on-top)
+  - [Image paste confirmation](#image-paste-confirmation)
+  - [Work Chat support](#work-chat-support)
+  - [Background behavior](#background-behavior)
+  - [Keyboard shortcuts](#keyboard-shortcuts)
+- [Dev](#dev)
+  - [Run](#run)
+  - [Build](#build)
+  - [Publish](#publish)
+- [Maintainers](#maintainers)
+- [Disclaimer](#disclaimer)
+- [License](#license)
 
 ## Highlights
 
