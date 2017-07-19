@@ -19,6 +19,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - [Vibrant theme](#vibrancy)*
 - [Privacy focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
+- [Code blocks](#code-blocks)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -97,6 +98,12 @@ You can toggle whether Caprine stays on top of other windows in the `Window`/`Vi
 ### Image paste confirmation
 
 Confirmation before sending images from the clipboard, to prevent accidental copy-pastes.
+
+### Code blocks
+
+You can send code blocks by using [Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
+
+<div align="center"><img src="media/screenshot-codeblocks.png" width="358"></div>
 
 ### Background behavior
 
