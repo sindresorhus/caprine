@@ -103,7 +103,7 @@ Confirmation before sending images from the clipboard, to prevent accidental cop
 
 You can send code blocks by using [Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
 
-<div align="center"><img src="media/screenshot-codeblocks.png" width="358"></div>
+<div align="center"><img src="media/screenshot-codeblocks.png" width="805"></div>
 
 ### Background behavior
 
