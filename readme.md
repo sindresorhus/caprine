@@ -20,6 +20,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - [Privacy focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
+- [Code blocks](#code-blocks)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -104,6 +105,12 @@ Confirmation before sending images from the clipboard, to prevent accidental cop
 Support for Work Chat: Messenger for [Workplace](https://www.facebook.com/workplace). You can switch to it in the `Caprine`/`File` menu.
 
 <div align="center"><img src="media/screenshot-work-chat.png" width="788"></div>
+
+### Code blocks
+
+You can send code blocks by using [Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
+
+<div align="center"><img src="media/screenshot-codeblocks.png" width="805"></div>
 
 ### Background behavior
 
