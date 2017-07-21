@@ -108,9 +108,10 @@ Support for Work Chat: Messenger for [Workplace](https://www.facebook.com/workpl
 
 ### Code blocks
 
-You can send code blocks by using [Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code)
+You can send code blocks by using [Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code).
 
-<div align="center"><img src="media/screenshot-codeblocks.png" width="805"></div>
+<div align="center"><img src="media/screenshot-codeblocks-dark.png" width="784"></div>
+<div align="center"><img src="media/screenshot-codeblocks-light.png" width="784"></div>
 
 ### Background behavior
 
