@@ -149,7 +149,6 @@ a,
 }
 
 /* Tomorrow light theme for code blocks */
-
 ._wu0 {
 	--code-block-base: #1d1f21;
 	--code-block-background: #ffffff;
@@ -163,12 +162,10 @@ a,
 	--code-block-attr-value: #139543;
 	--code-block-keyword: #b294bb;
 	--code-block-function: #81a2be;
-
 	background-color: var(--code-block-background) !important;
 	border: 1px solid var(--code-block-border) !important;
 	color: var(--code-block-base) !important;
 }
-
 ._wu0 .token.punctuation { color: var(--code-block-base) !important }
 ._wu0 .token.property    { color: var(--code-block-base) !important }
 ._wu0 .token.operator    { color: var(--code-block-base) !important }
