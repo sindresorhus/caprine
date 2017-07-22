@@ -44,6 +44,10 @@ ipc.on('insert-gif', () => {
 	document.querySelector('._yht').click();
 });
 
+ipc.on('insert-emoji', () => {
+	document.querySelector('._5s2p').click();
+});
+
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
