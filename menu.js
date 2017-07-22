@@ -71,7 +71,8 @@ const helpSubmenu = [
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
 
--
+
+---
 
 ${app.getName()} ${app.getVersion()}
 Electron ${process.versions.electron}
