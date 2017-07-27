@@ -20,7 +20,6 @@ app.disableHardwareAcceleration();
 
 require('electron-debug')({enabled: true});
 require('electron-dl')();
-require('electron-context-menu')();
 
 let mainWindow;
 let isQuitting = false;

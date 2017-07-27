@@ -14,6 +14,7 @@ addons:
       - icnsutils
       - graphicsmagick
       - xz-utils
+      - libxkbfile-dev
 install:
   - nvm install 6
   - npm install
