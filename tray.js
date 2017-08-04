@@ -93,5 +93,5 @@ function getNonDarwinIconPath(hasUnreadMessages) {
 }
 
 function getDarwinIconPath(hasUnreadMessages) {
-	return hasUnreadMessages ? 'IconMenuBarUnread.png' : 'IconMenuBar.png';
+	return hasUnreadMessages ? 'IconMenuBarUnreadTemplate.png' : 'IconMenuBarTemplate.png';
 }
