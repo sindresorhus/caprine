@@ -71,7 +71,8 @@ const helpSubmenu = [
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
 
--
+
+---
 
 ${app.getName()} ${app.getVersion()}
 Electron ${process.versions.electron}
@@ -297,6 +298,13 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Insert Emoji',
+				accelerator: 'Cmd+E',
+				click() {
+					sendAction('insert-emoji');
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -375,6 +383,13 @@ const otherTpl = [
 				accelerator: 'Ctrl+G',
 				click() {
 					sendAction('insert-gif');
+				}
+			},
+			{
+				label: 'Insert Emoji',
+				accelerator: 'Ctrl+E',
+				click() {
+					sendAction('insert-emoji');
 				}
 			},
 			{

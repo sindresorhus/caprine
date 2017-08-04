@@ -20,6 +20,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - [Privacy focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
+- [Code blocks](#code-blocks)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -105,6 +106,13 @@ Support for Work Chat: Messenger for [Workplace](https://www.facebook.com/workpl
 
 <div align="center"><img src="media/screenshot-work-chat.png" width="788"></div>
 
+### Code blocks
+
+You can send code blocks by using [Markdown syntax](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code).
+
+<div align="center"><img src="media/screenshot-codeblocks-dark.png" width="784"></div>
+<div align="center"><img src="media/screenshot-codeblocks-light.png" width="784"></div>
+
 ### Background behavior
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
@@ -122,12 +130,14 @@ Next conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kb
 Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Cmd/Ctrl</kbd> <kbd>g</kbd>
+Insert emoji           | <kbd>Cmd/Ctrl</kbd> <kbd>e</kbd>
 Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
 Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
+Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
 
 
 ---
