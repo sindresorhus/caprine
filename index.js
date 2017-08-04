@@ -334,6 +334,7 @@ function setAppContinuity(state) {
 		app.dock.hide();
 	} else {
 		app.dock.show();
+		mainWindow.show();
 	}
 }
 

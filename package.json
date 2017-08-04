@@ -64,9 +64,9 @@
         "zip",
         "mas"
       ],
-	  "extendInfo": {
-		"LSUIElement": true
-	  }
+      "extendInfo": {
+        "LSUIElement": true
+      }
     },
     "dmg": {
       "iconSize": 160,
