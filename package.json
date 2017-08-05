@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "electron-context-menu": "^0.8.0",
-    "electron-debug": "^1.0.0",
+    "electron-debug": "^1.4.0",
     "electron-dl": "^1.0.0",
     "electron-is-dev": "^0.1.2",
     "electron-localshortcut": "^2.0.0",
