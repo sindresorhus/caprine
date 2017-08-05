@@ -204,7 +204,7 @@ function createMainWindow() {
 	});
 
 	win.on('blur', () => {
-		if (process.platform === 'darwin' && config.get('continuity')) {
+		if (process.platform === 'darwin' && config.get('continuity') && !win.isFullScreen()) {
 			win.hide();
 		}
 	});
