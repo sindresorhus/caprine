@@ -197,7 +197,7 @@ function openConversationMenu() {
 	}
 
 	// Open and close the menu for the below
-	const menu = document.querySelectorAll('._5blh._4-0h')[index];
+	const menu = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
 	menu.click();
 
 	return true;
