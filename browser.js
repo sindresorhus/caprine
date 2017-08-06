@@ -21,15 +21,31 @@ ipc.on('new-conversation', () => {
 });
 
 ipc.on('log-out', () => {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
-	nodes[nodes.length - 1].click();
+	if (config.get('useWorkChat')) {
+		// Create the menu for the below
+		document.querySelector('._5lxs._3qct._p').click();
+		// Menu creation is slow
+		setTimeout(() => {
+			const nodes = document.querySelectorAll('._54nq._9jo._558b._2n_z li:last-child a');
+			nodes[nodes.length - 1].click();
+		}, 250);
+	} else {
+		document.querySelector('._30yy._2fug._p').click();
+		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+		nodes[nodes.length - 1].click();
+	}
 });
 
 ipc.on('find', () => {
 	document.querySelector('._58al').focus();
+});
+
+ipc.on('insert-gif', () => {
+	document.querySelector('._yht').click();
+});
+
+ipc.on('insert-emoji', () => {
+	document.querySelector('._5s2p').click();
 });
 
 ipc.on('next-conversation', nextConversation);
@@ -56,6 +72,16 @@ ipc.on('archive-conversation', () => {
 	}, 10);
 });
 
+ipc.on('toggle-sidebar', () => {
+	const sidebar = document.querySelector('._1enh');
+	const display = sidebar.style.display;
+	sidebar.style.display = display === '' ? 'none' : '';
+
+	// Fix for left space in compact mode
+	const mainSelector = document.querySelector('._1q5-');
+	mainSelector.classList.toggle('sidebar-hidden');
+});
+
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 	ipc.send('set-vibrancy');
@@ -68,6 +94,23 @@ function setVibrancy() {
 	document.documentElement.style.backgroundColor = 'transparent';
 }
 
+function renderOverlayIcon(messageCount) {
+	const canvas = document.createElement('canvas');
+	canvas.height = 128;
+	canvas.width = 128;
+	canvas.style.letterSpacing = '-5px';
+	const ctx = canvas.getContext('2d');
+	ctx.fillStyle = '#f42020';
+	ctx.beginPath();
+	ctx.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI);
+	ctx.fill();
+	ctx.textAlign = 'center';
+	ctx.fillStyle = 'white';
+	ctx.font = '90px sans-serif';
+	ctx.fillText(String(Math.min(99, messageCount)), 64, 96);
+	return canvas;
+}
+
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
@@ -76,6 +119,10 @@ ipc.on('toggle-dark-mode', () => {
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
+});
+
+ipc.on('render-overlay-icon', (event, messageCount) => {
+	ipc.send('update-overlay-icon', renderOverlayIcon(messageCount).toDataURL(), String(messageCount));
 });
 
 ipc.on('zoom-reset', () => {

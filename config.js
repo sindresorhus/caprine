@@ -1,7 +1,7 @@
 'use strict';
-const Config = require('electron-config');
+const Store = require('electron-store');
 
-module.exports = new Config({
+module.exports = new Store({
 	defaults: {
 		darkMode: false,
 		vibrancy: false,
@@ -11,6 +11,13 @@ module.exports = new Config({
 			height: 600
 		},
 		alwaysOnTop: false,
-		bounce: false
+		bounceDockOnMessage: false,
+		flashWindowOnMessage: true,
+		block: {
+			chatSeen: false,
+			typingIndicator: false
+		},
+		confirmImagePaste: true,
+		useWorkChat: false
 	}
 });

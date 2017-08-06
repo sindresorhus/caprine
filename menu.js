@@ -43,8 +43,15 @@ const viewSubmenu = [
 		type: 'separator'
 	},
 	{
+		label: 'Toggle Sidebar',
+		accelerator: 'CmdOrCtrl+Shift+S',
+		click() {
+			sendAction('toggle-sidebar');
+		}
+	},
+	{
 		label: 'Toggle Dark Mode',
-		accelerator: 'Cmd+D',
+		accelerator: 'CmdOrCtrl+D',
 		click() {
 			sendAction('toggle-dark-mode');
 		}
@@ -64,7 +71,8 @@ const helpSubmenu = [
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
 
--
+
+---
 
 ${app.getName()} ${app.getVersion()}
 Electron ${process.versions.electron}
@@ -111,7 +119,7 @@ if (process.platform === 'darwin') {
 	});
 }
 
-const darwinTpl = [
+const macosTpl = [
 	{
 		label: appName,
 		submenu: [
@@ -122,18 +130,27 @@ const darwinTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Cmd+D',
+				label: 'Bounce Dock on Message',
+				type: 'checkbox',
+				checked: config.get('bounceDockOnMessage'),
 				click() {
-					sendAction('toggle-dark-mode');
+					config.set('bounceDockOnMessage', !config.get('bounceDockOnMessage'));
 				}
 			},
 			{
-				label: 'Dock Bounce',
 				type: 'checkbox',
-				checked: false,
-				click() {
-					config.set('bounce', !config.get('bounce'));
+				label: 'Block Seen Indicator',
+				checked: config.get('block.chatSeen'),
+				click(item) {
+					config.set('block.chatSeen', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Block Typing Indicator',
+				checked: config.get('block.typingIndicator'),
+				click(item) {
+					config.set('block.typingIndicator', item.checked);
 				}
 			},
 			{
@@ -145,6 +162,24 @@ const darwinTpl = [
 			},
 			{
 				type: 'separator'
+			},
+			{
+				label: 'Switch to Work Chat…',
+				visible: !config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', true);
+					app.relaunch();
+					app.quit();
+				}
+			},
+			{
+				label: 'Switch to Messenger…',
+				visible: config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', false);
+					app.relaunch();
+					app.quit();
+				}
 			},
 			{
 				label: 'Log Out',
@@ -216,36 +251,7 @@ const darwinTpl = [
 		]
 	},
 	{
-		label: 'Edit',
-		submenu: [
-			{
-				role: 'undo'
-			},
-			{
-				role: 'redo'
-			},
-			{
-				type: 'separator'
-			},
-			{
-				role: 'cut'
-			},
-			{
-				role: 'copy'
-			},
-			{
-				role: 'paste'
-			},
-			{
-				role: 'pasteandmatchstyle'
-			},
-			{
-				role: 'delete'
-			},
-			{
-				role: 'selectall'
-			}
-		]
+		role: 'editMenu'
 	},
 	{
 		label: 'View',
@@ -282,6 +288,20 @@ const darwinTpl = [
 				accelerator: 'Cmd+F',
 				click() {
 					sendAction('find');
+				}
+			},
+			{
+				label: 'Insert GIF',
+				accelerator: 'Cmd+G',
+				click() {
+					sendAction('insert-gif');
+				}
+			},
+			{
+				label: 'Insert Emoji',
+				accelerator: 'Cmd+E',
+				click() {
+					sendAction('insert-emoji');
 				}
 			},
 			{
@@ -329,6 +349,44 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
+				label: 'Select Next Conversation',
+				accelerator: 'Ctrl+Tab',
+				click() {
+					sendAction('next-conversation');
+				}
+			},
+			{
+				label: 'Select Previous Conversation',
+				accelerator: 'Ctrl+Shift+Tab',
+				click() {
+					sendAction('previous-conversation');
+				}
+			},
+			{
+				label: 'Find Conversation',
+				accelerator: 'Ctrl+F',
+				click() {
+					sendAction('find');
+				}
+			},
+			{
+				label: 'Insert GIF',
+				accelerator: 'Ctrl+G',
+				click() {
+					sendAction('insert-gif');
+				}
+			},
+			{
+				label: 'Insert Emoji',
+				accelerator: 'Ctrl+E',
+				click() {
+					sendAction('insert-emoji');
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
 				label: 'Mute Conversation',
 				accelerator: 'Ctrl+Shift+M',
 				click() {
@@ -353,14 +411,50 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Toggle Dark Mode',
-				accelerator: 'Ctrl+D',
-				click() {
-					sendAction('toggle-dark-mode');
+				type: 'checkbox',
+				label: 'Flash Window on Message',
+				visible: process.platform === 'win32',
+				checked: config.get('flashWindowOnMessage'),
+				click(item) {
+					config.set('flashWindowOnMessage', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Block Seen Indicator',
+				checked: config.get('block.chatSeen'),
+				click(item) {
+					config.set('block.chatSeen', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Block Typing Indicator',
+				checked: config.get('block.typingIndicator'),
+				click(item) {
+					config.set('block.typingIndicator', item.checked);
 				}
 			},
 			{
 				type: 'separator'
+			},
+			{
+				label: 'Switch to Work Chat…',
+				visible: !config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', true);
+					app.relaunch();
+					app.quit();
+				}
+			},
+			{
+				label: 'Switch to Messenger…',
+				visible: config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', false);
+					app.relaunch();
+					app.quit();
+				}
 			},
 			{
 				label: 'Log Out',
@@ -398,9 +492,6 @@ const otherTpl = [
 				role: 'paste'
 			},
 			{
-				role: 'pasteandmatchstyle'
-			},
-			{
 				role: 'delete'
 			},
 			{
@@ -431,6 +522,6 @@ const otherTpl = [
 	}
 ];
 
-const tpl = process.platform === 'darwin' ? darwinTpl : otherTpl;
+const tpl = process.platform === 'darwin' ? macosTpl : otherTpl;
 
 module.exports = electron.Menu.buildFromTemplate(tpl);
