@@ -61,15 +61,7 @@ ipc.on('delete-conversation', () => {
 });
 
 ipc.on('archive-conversation', () => {
-	// Open the modal for the below
-	openDeleteModal();
-
-	const archiveSelector = '._3quh._30yy._2u0._5ixy';
-
-	// Wait for the button to be created
-	window.setTimeout(() => {
-		document.querySelectorAll(archiveSelector)[1].click();
-	}, 10);
+	openArchiveModal();
 });
 
 ipc.on('toggle-sidebar', () => {
@@ -205,8 +197,7 @@ function openConversationMenu() {
 	}
 
 	// Open and close the menu for the below
-	const menu = document.querySelectorAll('.uiPopover')[index + 1].firstChild;
-	menu.click();
+	const menu = document.querySelectorAll('._5blh._4-0h')[index];
 	menu.click();
 
 	return true;
@@ -222,17 +213,24 @@ function openMuteModal() {
 	nodes[nodes.length - 1].click();
 }
 
+function openArchiveModal() {
+	if (!openConversationMenu()) {
+		return;
+	}
+
+	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
+	const nodes = document.querySelectorAll(selector);
+	nodes[nodes.length - 1].click();
+}
+
 function openDeleteModal() {
 	if (!openConversationMenu()) {
 		return;
 	}
 
-	const selector = `._54nq._2i-c._558b._2n_z ul`;
+	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
 	const nodes = document.querySelectorAll(selector);
-	const menuList = nodes[nodes.length - 1];
-	const position = menuList.childNodes.length - 3;
-
-	menuList.childNodes[position - 1].firstChild.click();
+	nodes[nodes.length - 1].click();
 }
 
 // Inject a global style node to maintain zoom factor after conversation change.
