@@ -138,6 +138,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Enable notification counter',
+				type: 'checkbox',
+				checked: config.get('incrementDockOnMessage'),
+				click() {
+					config.set('incrementDockOnMessage', !config.get('incrementDockOnMessage'));
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
@@ -417,6 +425,14 @@ const otherTpl = [
 				checked: config.get('flashWindowOnMessage'),
 				click(item) {
 					config.set('flashWindowOnMessage', item.checked);
+				}
+			},
+			{
+				label: 'Enable notification counter',
+				type: 'checkbox',
+				checked: config.get('incrementDockOnMessage'),
+				click() {
+					config.set('incrementDockOnMessage', !config.get('incrementDockOnMessage'));
 				}
 			},
 			{
