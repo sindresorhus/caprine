@@ -215,6 +215,17 @@ app.on('ready', () => {
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
+	const dockMenu = electron.Menu.buildFromTemplate([
+		{
+			label: 'Mute Notifications',
+			type: 'checkbox',
+			click(event) {
+				mainWindow.webContents.send('toggle-mute-notifications');
+			}
+		}
+	])
+	app.dock.setMenu(dockMenu)
+
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
