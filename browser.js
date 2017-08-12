@@ -209,8 +209,7 @@ function openMuteModal() {
 	}
 
 	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(1) a';
-	const nodes = document.querySelectorAll(selector);
-	nodes[nodes.length - 1].click();
+	document.querySelector(selector).click();
 }
 
 function openArchiveModal() {
@@ -219,8 +218,7 @@ function openArchiveModal() {
 	}
 
 	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
-	const nodes = document.querySelectorAll(selector);
-	nodes[nodes.length - 1].click();
+	document.querySelector(selector).click();
 }
 
 function openDeleteModal() {
@@ -229,8 +227,7 @@ function openDeleteModal() {
 	}
 
 	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
-	const nodes = document.querySelectorAll(selector);
-	nodes[nodes.length - 1].click();
+	document.querySelector(selector).click();
 }
 
 // Inject a global style node to maintain zoom factor after conversation change.
