@@ -2,7 +2,7 @@
 const electron = require('electron');
 const config = require('./config');
 
-const {ipcRenderer: ipc} = electron;
+const {ipcRenderer: ipc, remote} = electron;
 
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
@@ -280,3 +280,51 @@ document.addEventListener('keydown', event => {
 		jumpToConversation(num);
 	}
 });
+
+// Add title bar buttons if not on macos
+function tryAddMenuButtons() {
+}
+
+if (process.platform !== 'darwin') {
+	//Menu creation is slow, try until success
+	const tryAddTitleButtonsInterval = setInterval(function() {
+		const menu = document.querySelector('._fl2');
+		if (menu != undefined) {
+			clearInterval(tryAddTitleButtonsInterval);
+
+			menu.insertAdjacentHTML('beforeend', "\
+			<li>\
+				<a class='_30yy'>\
+					<div id='caprine_minimize' style='height: 32px; width: 32px;'>\
+						<svg viewBox='0 0 64 64' style='clip-rule: evenodd; fill: none; fill-rule: evenodd; stroke: #000; stroke-miterlimit: 10; stroke-width: 2;'>\
+							<title>Minimize</title>\
+							<line x1='16' y1='31' x2='48' y2='31' />\
+						</svg>\
+					</div>\
+				</a>\
+			</li>\
+			")
+			menu.insertAdjacentHTML('beforeend', "\
+			<li>\
+				<a id='caprine_close' class='_30yy'>\
+					<div style='height: 32px; width: 32px;'>\
+						<svg viewBox='0 0 64 64' style='clip-rule: evenodd; fill: none; fill-rule: evenodd; stroke: #000; stroke-miterlimit: 10; stroke-width: 2;'>\
+							<title>Close</title>\
+							<line x1='16' y1='48' x2='48' y2='16' />\
+							<line x1='16' y1='16' x2='48' y2='48' />\
+						</svg>\
+					</div>\
+				</a>\
+			</li>\
+			")
+
+			document.getElementById("caprine_minimize").addEventListener('click', function() {
+				remote.getCurrentWindow().minimize();
+			})
+
+			document.getElementById("caprine_close").addEventListener('click', function() {
+				remote.getCurrentWindow().close();
+			})
+		}
+	}, 100);
+}
