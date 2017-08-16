@@ -50,7 +50,7 @@ function updateBadge(title, titlePrefix) {
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
-		if (config.get('incrementDockOnMessage')) {
+		if (config.get('showUnreadBadge')) {
 			app.setBadgeCount(messageCount);
 		}
 		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
@@ -59,12 +59,12 @@ function updateBadge(title, titlePrefix) {
 		}
 	}
 
-	if ((process.platform === 'linux' || process.platform === 'win32') && config.get('incrementDockOnMessage')) {
+	if ((process.platform === 'linux' || process.platform === 'win32') && config.get('showUnreadBadge')) {
 		tray.setBadge(messageCount);
 	}
 
 	if (process.platform === 'win32') {
-		if (config.get('incrementDockOnMessage')) {
+		if (config.get('showUnreadBadge')) {
 			if (messageCount === 0) {
 				mainWindow.setOverlayIcon(null, '');
 			} else {

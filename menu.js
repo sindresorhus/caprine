@@ -138,11 +138,11 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Enable notification counter',
+				label: 'Show Unread Badge',
 				type: 'checkbox',
-				checked: config.get('incrementDockOnMessage'),
+				checked: config.get('showUnreadBadge'),
 				click() {
-					config.set('incrementDockOnMessage', !config.get('incrementDockOnMessage'));
+					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
 				}
 			},
 			{
@@ -428,11 +428,11 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Enable notification counter',
+				label: 'Show Unread Badge',
 				type: 'checkbox',
-				checked: config.get('incrementDockOnMessage'),
+				checked: config.get('showUnreadBadge'),
 				click() {
-					config.set('incrementDockOnMessage', !config.get('incrementDockOnMessage'));
+					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
 				}
 			},
 			{
