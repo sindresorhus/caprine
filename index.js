@@ -230,6 +230,15 @@ app.on('ready', () => {
 		};
 
 		setContinuity(config.get('continuity'));
+
+		mainWindow.on('enter-full-screen', () => {
+			app.dock.show();
+		});
+		mainWindow.on('leave-full-screen', () => {
+			if (config.get('continuity')) {
+				app.dock.hide();
+			}
+		});
 	} else {
 		tray.create(mainWindow);
 	}

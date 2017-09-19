@@ -33,11 +33,15 @@ exports.create = win => {
 	updateToolTip(0);
 
 	tray.on('click', () => {
-		win.toggle();
+		if (!win.isFullScreen()) {
+			win.toggle();
+		}
 	});
 
 	tray.on('double-click', () => {
-		win.toggle();
+		if (!win.isFullScreen()) {
+			win.toggle();
+		}
 	});
 
 	tray.on('right-click', () => {
