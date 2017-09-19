@@ -40,6 +40,10 @@ ipc.on('find', () => {
 	document.querySelector('._58al').focus();
 });
 
+ipc.on('search', () => {
+	document.querySelector('._3szn:nth-of-type(1)').click();
+});
+
 ipc.on('insert-gif', () => {
 	document.querySelector('._yht').click();
 });

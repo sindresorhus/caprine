@@ -307,9 +307,16 @@ const macosTpl = [
 			},
 			{
 				label: 'Find Conversation',
-				accelerator: 'Cmd+F',
+				accelerator: 'Cmd+K',
 				click() {
 					sendAction('find');
+				}
+			},
+			{
+				label: 'Search Conversation',
+				accelerator: 'Cmd+F',
+				click() {
+					sendAction('search');
 				}
 			},
 			{
@@ -386,9 +393,16 @@ const otherTpl = [
 			},
 			{
 				label: 'Find Conversation',
-				accelerator: 'Ctrl+F',
+				accelerator: 'Ctrl+K',
 				click() {
 					sendAction('find');
+				}
+			},
+			{
+				label: 'Search Conversation',
+				accelerator: 'Ctrl+F',
+				click() {
+					sendAction('search');
 				}
 			},
 			{
