@@ -340,7 +340,9 @@ function setWindowContinuity(state) {
 
 function setAppContinuity(state) {
 	if (state) {
-		app.dock.hide();
+		if (!mainWindow.isFullScreen()) {
+			app.dock.hide();
+		}
 	} else {
 		app.dock.show();
 		mainWindow.show();
