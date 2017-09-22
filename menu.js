@@ -138,6 +138,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Show Unread Badge',
+				type: 'checkbox',
+				checked: config.get('showUnreadBadge'),
+				click() {
+					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
@@ -417,6 +425,14 @@ const otherTpl = [
 				checked: config.get('flashWindowOnMessage'),
 				click(item) {
 					config.set('flashWindowOnMessage', item.checked);
+				}
+			},
+			{
+				label: 'Show Unread Badge',
+				type: 'checkbox',
+				checked: config.get('showUnreadBadge'),
+				click() {
+					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
 				}
 			},
 			{

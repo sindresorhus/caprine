@@ -50,23 +50,27 @@ function updateBadge(title, titlePrefix) {
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
-		app.setBadgeCount(messageCount);
+		if (config.get('showUnreadBadge')) {
+			app.setBadgeCount(messageCount);
+		}
 		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
 		}
 	}
 
-	if (process.platform === 'linux' || process.platform === 'win32') {
+	if ((process.platform === 'linux' || process.platform === 'win32') && config.get('showUnreadBadge')) {
 		tray.setBadge(messageCount);
 	}
 
 	if (process.platform === 'win32') {
-		if (messageCount === 0) {
-			mainWindow.setOverlayIcon(null, '');
-		} else {
-			// Delegate drawing of overlay icon to renderer process
-			mainWindow.webContents.send('render-overlay-icon', messageCount);
+		if (config.get('showUnreadBadge')) {
+			if (messageCount === 0) {
+				mainWindow.setOverlayIcon(null, '');
+			} else {
+				// Delegate drawing of overlay icon to renderer process
+				mainWindow.webContents.send('render-overlay-icon', messageCount);
+			}
 		}
 
 		if (config.get('flashWindowOnMessage')) {

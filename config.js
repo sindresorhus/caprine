@@ -12,6 +12,7 @@ module.exports = new Store({
 		},
 		alwaysOnTop: false,
 		bounceDockOnMessage: false,
+		showUnreadBadge: true,
 		flashWindowOnMessage: true,
 		block: {
 			chatSeen: false,
