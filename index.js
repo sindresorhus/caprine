@@ -262,6 +262,7 @@ app.on('ready', () => {
 			if (frameName !== 'about:blank') {  // Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
+				options.webPreferences.sandbox = true;
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
