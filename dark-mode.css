@@ -268,6 +268,15 @@ html.dark-mode ._4rph ._4rpj {
 	border-top: solid 1px var(--base-ten) !important;
 }
 
+/* Invite friends popup */
+html.dark-mode ._4jgu {
+	background-color: var(--conversation-bg);
+}
+
+html.dark-mode ._5rh4 {
+	color: var(--base-seventy);
+}
+
 /* Right sidebar: people list item (name) */
 html.dark-mode ._364g,
 html.dark-mode ._3x6u,
