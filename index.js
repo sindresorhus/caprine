@@ -259,9 +259,10 @@ app.on('ready', () => {
 	webContents.on('new-window', (e, url, frameName, disposition, options) => {
 		e.preventDefault();
 		if (url === 'about:blank') {
-			if (frameName === 'Video Call') {  // Voice/video call popup
+			if (frameName !== 'about:blank') {  // Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
+				options.webPreferences.sandbox = true;
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
