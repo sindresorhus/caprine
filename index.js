@@ -165,10 +165,10 @@ function createMainWindow() {
 	win.on('close', e => {
 		if (!isQuitting) {
 			e.preventDefault();
-			
+
 			// Workaround for electron/electron#10023
 			win.blur();
-			
+
 			if (process.platform === 'darwin') {
 				app.hide();
 			} else {
