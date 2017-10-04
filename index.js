@@ -58,7 +58,9 @@ function updateBadge(messageCount) {
 	}
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
-		app.setBadgeCount(messageCount);
+		if (config.get('showUnreadBadge')) {
+			app.setBadgeCount(messageCount);
+		}
 		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
@@ -68,11 +70,13 @@ function updateBadge(messageCount) {
 	tray.update(messageCount);
 
 	if (process.platform === 'win32') {
-		if (messageCount === 0) {
-			mainWindow.setOverlayIcon(null, '');
-		} else {
-			// Delegate drawing of overlay icon to renderer process
-			mainWindow.webContents.send('render-overlay-icon', messageCount);
+		if (config.get('showUnreadBadge')) {
+			if (messageCount === 0) {
+				mainWindow.setOverlayIcon(null, '');
+			} else {
+				// Delegate drawing of overlay icon to renderer process
+				mainWindow.webContents.send('render-overlay-icon', messageCount);
+			}
 		}
 
 		if (config.get('flashWindowOnMessage')) {
@@ -143,7 +147,7 @@ function createMainWindow() {
 	const isDarkMode = config.get('darkMode');
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
-	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
+	const titlePrefix = config.get('useWorkChat') ? 'Workplace Chat' : 'Messenger';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -156,7 +160,8 @@ function createMainWindow() {
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
-		titleBarStyle: 'hidden-inset',
+		// Temp workaround for macOS High Sierra, see #295
+		titleBarStyle: process.platform === 'darwin' && Number(require('os').release().split('.')[0]) >= 17 ? null : 'hidden-inset',
 		autoHideMenuBar: true,
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
@@ -185,6 +190,9 @@ function createMainWindow() {
 	win.on('close', e => {
 		if (!isQuitting) {
 			e.preventDefault();
+
+			// Workaround for electron/electron#10023
+			win.blur();
 
 			win.hide();
 		}
@@ -291,9 +299,10 @@ app.on('ready', () => {
 	webContents.on('new-window', (e, url, frameName, disposition, options) => {
 		e.preventDefault();
 		if (url === 'about:blank') {
-			if (frameName === 'Video Call') {  // Voice/video call popup
+			if (frameName !== 'about:blank') {  // Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
+				options.webPreferences.sandbox = true;
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {

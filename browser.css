@@ -72,6 +72,11 @@ body {
 	display: none;
 }
 
+/* Center names in titlebar */
+._5742 {
+	text-align: center !important;
+}
+
 /* Narrower titlebar */
 ._36ic,
 ._5742 {
