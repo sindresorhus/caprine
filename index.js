@@ -141,7 +141,7 @@ function createMainWindow() {
 	const isDarkMode = config.get('darkMode');
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
-	const titlePrefix = config.get('useWorkChat') ? 'Work Chat' : 'Messenger';
+	const titlePrefix = config.get('useWorkChat') ? 'Workplace Chat' : 'Messenger';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
