@@ -50,6 +50,15 @@ const viewSubmenu = [
 		}
 	},
 	{
+		label: 'Toggle Menu Bar',
+		type: 'checkbox',
+		checked: config.get('showMenuBar'),
+		visible: !(process.platform === 'darwin'),
+		click() {
+			sendAction('toggle-menu-bar');
+		}
+	},
+	{
 		label: 'Toggle Dark Mode',
 		accelerator: 'CmdOrCtrl+D',
 		click() {

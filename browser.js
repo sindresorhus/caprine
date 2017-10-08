@@ -86,6 +86,10 @@ function setVibrancy() {
 	document.documentElement.style.backgroundColor = 'transparent';
 }
 
+function setMenuBar() {
+	ipc.send('set-menu-bar');
+}
+
 function renderOverlayIcon(messageCount) {
 	const canvas = document.createElement('canvas');
 	canvas.height = 128;
@@ -111,6 +115,11 @@ ipc.on('toggle-dark-mode', () => {
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
+});
+
+ipc.on('toggle-menu-bar', () => {
+	config.set('showMenuBar', !config.get('showMenuBar'));
+	setMenuBar();
 });
 
 ipc.on('render-overlay-icon', (event, messageCount) => {
@@ -238,6 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	style.id = 'zoomFactor';
 	document.body.appendChild(style);
 	setZoom(zoomFactor);
+
+	// Activate the menu bar if it was set before quitting
+	setMenuBar();
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();

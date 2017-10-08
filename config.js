@@ -5,6 +5,7 @@ module.exports = new Store({
 	defaults: {
 		darkMode: false,
 		vibrancy: false,
+		showMenuBar: false,
 		zoomFactor: 1,
 		lastWindowState: {
 			width: 800,

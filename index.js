@@ -287,6 +287,20 @@ ipcMain.on('set-vibrancy', () => {
 	}
 });
 
+ipcMain.on('set-menu-bar', () => {
+	if (config.get('showMenuBar')) {
+		// Make the menu bar persistently visible
+		mainWindow.setMenuBarVisibility(true);
+		// Disable ALT key toggling
+		mainWindow.setAutoHideMenuBar(false);
+	} else {
+		// Hide the menu bar
+		mainWindow.setMenuBarVisibility(false);
+		// Restore ALT key toggling
+		mainWindow.setAutoHideMenuBar(true);
+	}
+});
+
 app.on('activate', () => {
 	mainWindow.show();
 });
