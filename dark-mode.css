@@ -468,3 +468,7 @@ html.dark-mode ._wu0 {
 	--code-block-background: #1d1f21;
 	--code-block-border: #0a0c14;
 }
+
+html.dark-mode ._2wy4 {
+	color: var(--base-twenty);
+}
