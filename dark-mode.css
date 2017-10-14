@@ -521,3 +521,23 @@ html.dark-mode ._wu0 {
 	--code-block-background: #1d1f21;
 	--code-block-border: #0a0c14;
 }
+
+/* Plan dialog primary text */
+
+html.dark-mode ._4dx5,
+html.dark-mode ._38wl {
+	color: var(--base-seventy) !important;
+}
+
+/* Plan dialog input fields */
+html.dark-mode ._2mes._3smo ._3smp,
+html.dark-mode ._5pw9,
+html.dark-mode ._5pw6{
+	background-color: transparent !important;
+	color: var(--base-fourty) !important;
+}
+
+/* Plan dialog time selector active highlight */
+html.dark-mode ._5pw1 {
+    background: var(--base-nine);
+}
