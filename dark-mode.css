@@ -84,6 +84,11 @@ html.dark-mode ._4rv3 {
 	color: var(--base-seventy);
 }
 
+/* Message list: input bar on block */
+html.dark-mode ._2wy4 {
+	color: var(--base-twenty);
+}
+
 /* Message list: timestamp */
 html.dark-mode ._497p {
 	color: var(--base-fourty);
@@ -467,8 +472,4 @@ html.dark-mode ._wu0 {
 	--code-block-base: #c5c8c6;
 	--code-block-background: #1d1f21;
 	--code-block-border: #0a0c14;
-}
-
-html.dark-mode ._2wy4 {
-	color: var(--base-twenty);
 }
