@@ -94,6 +94,22 @@ html.dark-mode ._5742 {
 	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
+
+/* Message list: header above (event) */
+html.dark-mode ._3nta {
+	border-bottom: 1px solid rgba(25, 38, 51, 0.8);
+}
+
+/* Message list: header above (event) */
+html.dark-mode ._2n3t {
+	background-color: var(--conversation-bg);
+}
+
+/* Message list: header above (event) */
+html.dark-mode ._2n3u {
+	color: var(--base-thiry);
+}
+
 /* Message list: header above (invitation) */
 html.dark-mode ._2y8z,
 html.dark-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
@@ -467,16 +483,4 @@ html.dark-mode ._wu0 {
 	--code-block-base: #c5c8c6;
 	--code-block-background: #1d1f21;
 	--code-block-border: #0a0c14;
-}
-
-html.dark-mode ._3nta {
-	border-bottom: 1px solid rgba(25, 38, 51, 0.8);
-}
-
-html.dark-mode ._2n3t {
-	background-color: var(--conversation-bg);
-}
-
-html.dark-mode ._2n3u {
-	color: var(--base-thiry);
 }
