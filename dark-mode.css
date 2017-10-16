@@ -84,6 +84,11 @@ html.dark-mode ._4rv3 {
 	color: var(--base-seventy);
 }
 
+/* Message list: input bar on block */
+html.dark-mode ._2wy4 {
+	color: var(--base-twenty);
+}
+
 /* Message list: timestamp */
 html.dark-mode ._497p {
 	color: var(--base-fourty);
