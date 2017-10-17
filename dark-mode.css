@@ -37,6 +37,11 @@ html.dark-mode ._o46:not(._nd_) ._hh7 {
 	color: var(--base-seventy);
 }
 
+/* Message list: remove background if emoji */
+html.dark-mode ._hh7._2f5r {
+	background: none !important;
+}
+
 /* Message list: remove border from messages */
 ._hh7._aol {
 	border-color: transparent !important;
