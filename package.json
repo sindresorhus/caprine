@@ -37,13 +37,13 @@
     "electron-localshortcut": "^2.0.0",
     "electron-log": "^2.0.2",
     "electron-store": "^1.1.0",
-    "electron-updater": "^2.4.3",
+    "electron-updater": "^2.15.0",
     "facebook-locales": "^1.0.464",
     "minimist": "^1.2.0"
   },
   "devDependencies": {
     "electron": "1.6.11",
-    "electron-builder": "19.13.0",
+    "electron-builder": "19.41.0",
     "xo": "*"
   },
   "xo": {
@@ -82,7 +82,6 @@
       ]
     },
     "linux": {
-      "category": "Chat",
       "target": [
         "AppImage",
         "deb"
