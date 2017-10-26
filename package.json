@@ -1,97 +1,97 @@
 {
-	"name": "caprine",
-	"productName": "Caprine",
-	"version": "2.4.0",
-	"description": "Elegant Facebook Messenger desktop app",
-	"license": "MIT",
-	"repository": "sindresorhus/caprine",
-	"author": {
-		"name": "Sindre Sorhus",
-		"email": "sindresorhus@gmail.com",
-		"url": "sindresorhus.com"
-	},
-	"maintainers": [
-		{
-			"name": "Oskar Krawczyk",
-			"email": "oskar.krawczyk@gmail.com",
-			"url": "krawczyk.io"
-		},
-		{
-			"name": "Daniel Pham",
-			"email": "pham.dany@gmail.com",
-			"url": "danhp.github.io"
-		}
-	],
-	"scripts": {
-		"postinstall": "electron-builder install-app-deps",
-		"test": "xo",
-		"start": "electron .",
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder --mac --linux"
-	},
-	"dependencies": {
-		"electron-context-menu": "^0.8.0",
-		"electron-debug": "^1.0.0",
-		"electron-dl": "^1.0.0",
-		"electron-is-dev": "^0.1.2",
-		"electron-localshortcut": "^2.0.0",
-		"electron-log": "^2.0.2",
-		"electron-store": "^1.1.0",
-		"electron-updater": "^2.4.3",
-		"facebook-locales": "^1.0.464",
-		"minimist": "^1.2.0"
-	},
-	"devDependencies": {
-		"electron": "1.6.11",
-		"electron-builder": "19.13.0",
-		"xo": "*"
-	},
-	"xo": {
-		"envs": [
-			"node",
-			"browser"
-		]
-	},
-	"build": {
-		"files": [
-			"**/*",
-			"!media${/*}"
-		],
-		"appId": "com.sindresorhus.caprine",
-		"mac": {
-			"category": "public.app-category.social-networking",
-			"target": [
-				"dmg",
-				"zip",
-				"mas"
-			]
-		},
-		"dmg": {
-			"iconSize": 160,
-			"contents": [
-				{
-					"x": 180,
-					"y": 170
-				},
-				{
-					"x": 480,
-					"y": 170,
-					"type": "link",
-					"path": "/Applications"
-				}
-			]
-		},
-		"linux": {
-			"category": "Chat",
-			"target": [
-				"AppImage",
-				"deb"
-			]
-		},
-		"win": {
-			"target": [
-				"nsis"
-			]
-		}
-	}
+  "name": "caprine",
+  "productName": "Caprine",
+  "version": "2.4.0",
+  "description": "Elegant Facebook Messenger desktop app",
+  "license": "MIT",
+  "repository": "sindresorhus/caprine",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "maintainers": [
+    {
+      "name": "Oskar Krawczyk",
+      "email": "oskar.krawczyk@gmail.com",
+      "url": "krawczyk.io"
+    },
+    {
+      "name": "Daniel Pham",
+      "email": "pham.dany@gmail.com",
+      "url": "danhp.github.io"
+    }
+  ],
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "test": "xo",
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --mac --linux"
+  },
+  "dependencies": {
+    "electron-context-menu": "^0.8.0",
+    "electron-debug": "^1.0.0",
+    "electron-dl": "^1.0.0",
+    "electron-is-dev": "^0.1.2",
+    "electron-localshortcut": "^2.0.0",
+    "electron-log": "^2.0.2",
+    "electron-store": "^1.1.0",
+    "electron-updater": "^2.4.3",
+    "facebook-locales": "^1.0.464",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "electron": "1.6.11",
+    "electron-builder": "19.13.0",
+    "xo": "*"
+  },
+  "xo": {
+    "envs": [
+      "node",
+      "browser"
+    ]
+  },
+  "build": {
+    "files": [
+      "**/*",
+      "!media${/*}"
+    ],
+    "appId": "com.sindresorhus.caprine",
+    "mac": {
+      "category": "public.app-category.social-networking",
+      "target": [
+        "dmg",
+        "zip",
+        "mas"
+      ]
+    },
+    "dmg": {
+      "iconSize": 160,
+      "contents": [
+        {
+          "x": 180,
+          "y": 170
+        },
+        {
+          "x": 480,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "category": "Chat",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
+  }
 }
