@@ -146,6 +146,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Start Minimized',
+				type: 'checkbox',
+				checked: config.get('startMinimized'),
+				click() {
+					config.set('startMinimized', !config.get('startMinimized'));
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
