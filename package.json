@@ -27,7 +27,7 @@
     "test": "xo",
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --mac --linux"
+    "dist": "electron-builder --mac --linux --win"
   },
   "dependencies": {
     "electron-context-menu": "^0.8.0",
