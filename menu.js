@@ -319,6 +319,15 @@ const macosTpl = [
 				role: 'front'
 			},
 			{
+				label: 'Enable Continuity',
+				click() {
+					config.set('continuity', true);
+
+					const [win] = BrowserWindow.getAllWindows();
+					win.toggleContinuity();
+				}
+			},
+			{
 				role: 'togglefullscreen'
 			},
 			{
