@@ -71,7 +71,8 @@ const helpSubmenu = [
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
 
--
+
+---
 
 ${app.getName()} ${app.getVersion()}
 Electron ${process.versions.electron}
@@ -137,6 +138,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Show Unread Badge',
+				type: 'checkbox',
+				checked: config.get('showUnreadBadge'),
+				click() {
+					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
@@ -161,6 +170,24 @@ const macosTpl = [
 			},
 			{
 				type: 'separator'
+			},
+			{
+				label: 'Switch to Work Chat…',
+				visible: !config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', true);
+					app.relaunch();
+					app.quit();
+				}
+			},
+			{
+				label: 'Switch to Messenger…',
+				visible: config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', false);
+					app.relaunch();
+					app.quit();
+				}
 			},
 			{
 				label: 'Log Out',
@@ -279,6 +306,13 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Insert Emoji',
+				accelerator: 'Cmd+E',
+				click() {
+					sendAction('insert-emoji');
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -351,6 +385,13 @@ const otherTpl = [
 				}
 			},
 			{
+				label: 'Insert Emoji',
+				accelerator: 'Ctrl+E',
+				click() {
+					sendAction('insert-emoji');
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -387,6 +428,14 @@ const otherTpl = [
 				}
 			},
 			{
+				label: 'Show Unread Badge',
+				type: 'checkbox',
+				checked: config.get('showUnreadBadge'),
+				click() {
+					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
@@ -404,6 +453,24 @@ const otherTpl = [
 			},
 			{
 				type: 'separator'
+			},
+			{
+				label: 'Switch to Work Chat…',
+				visible: !config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', true);
+					app.relaunch();
+					app.quit();
+				}
+			},
+			{
+				label: 'Switch to Messenger…',
+				visible: config.get('useWorkChat'),
+				click() {
+					config.set('useWorkChat', false);
+					app.relaunch();
+					app.quit();
+				}
 			},
 			{
 				label: 'Log Out',

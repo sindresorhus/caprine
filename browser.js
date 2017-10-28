@@ -21,11 +21,19 @@ ipc.on('new-conversation', () => {
 });
 
 ipc.on('log-out', () => {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
-	nodes[nodes.length - 1].click();
+	if (config.get('useWorkChat')) {
+		// Create the menu for the below
+		document.querySelector('._5lxs._3qct._p').click();
+		// Menu creation is slow
+		setTimeout(() => {
+			const nodes = document.querySelectorAll('._54nq._9jo._558b._2n_z li:last-child a');
+			nodes[nodes.length - 1].click();
+		}, 250);
+	} else {
+		document.querySelector('._30yy._2fug._p').click();
+		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+		nodes[nodes.length - 1].click();
+	}
 });
 
 ipc.on('find', () => {
@@ -34,6 +42,10 @@ ipc.on('find', () => {
 
 ipc.on('insert-gif', () => {
 	document.querySelector('._yht').click();
+});
+
+ipc.on('insert-emoji', () => {
+	document.querySelector('._5s2p').click();
 });
 
 ipc.on('next-conversation', nextConversation);
@@ -49,15 +61,7 @@ ipc.on('delete-conversation', () => {
 });
 
 ipc.on('archive-conversation', () => {
-	// Open the modal for the below
-	openDeleteModal();
-
-	const archiveSelector = '._3quh._30yy._2u0._5ixy';
-
-	// Wait for the button to be created
-	window.setTimeout(() => {
-		document.querySelectorAll(archiveSelector)[1].click();
-	}, 10);
+	openArchiveModal();
 });
 
 ipc.on('toggle-sidebar', () => {
@@ -193,8 +197,7 @@ function openConversationMenu() {
 	}
 
 	// Open and close the menu for the below
-	const menu = document.querySelectorAll('.uiPopover')[index + 1].firstChild;
-	menu.click();
+	const menu = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
 	menu.click();
 
 	return true;
@@ -206,8 +209,16 @@ function openMuteModal() {
 	}
 
 	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(1) a';
-	const nodes = document.querySelectorAll(selector);
-	nodes[nodes.length - 1].click();
+	document.querySelector(selector).click();
+}
+
+function openArchiveModal() {
+	if (!openConversationMenu()) {
+		return;
+	}
+
+	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
+	document.querySelector(selector).click();
 }
 
 function openDeleteModal() {
@@ -215,12 +226,8 @@ function openDeleteModal() {
 		return;
 	}
 
-	const selector = `._54nq._2i-c._558b._2n_z ul`;
-	const nodes = document.querySelectorAll(selector);
-	const menuList = nodes[nodes.length - 1];
-	const position = menuList.childNodes.length - 3;
-
-	menuList.childNodes[position - 1].firstChild.click();
+	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
+	document.querySelector(selector).click();
 }
 
 // Inject a global style node to maintain zoom factor after conversation change.
