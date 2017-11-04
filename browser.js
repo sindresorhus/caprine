@@ -9,7 +9,9 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
 ipc.on('show-preferences', () => {
-	if (isPreferencesOpen()) return;
+	if (isPreferencesOpen()) {
+		return;
+	}
 
 	openPreferences();
 });
@@ -67,16 +69,28 @@ function setSidebarVisibility() {
 	ipc.send('set-sidebar-visibility');
 }
 
-ipc.on('toggle-mute-notifications', () => {
+ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 	const wasPreferencesOpen = isPreferencesOpen();
 
-	if (!wasPreferencesOpen) openPreferences();
+	if (!wasPreferencesOpen) {
+		openPreferences();
+	}
 
 	const notificationCheckbox =
 		document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
-	notificationCheckbox.click();
 
-	if (!wasPreferencesOpen) closePreferences();
+	if (defaultStatus === undefined) {
+		notificationCheckbox.click();
+	} else if ((defaultStatus && !notificationCheckbox.checked) ||
+						(!defaultStatus && notificationCheckbox.checked)) {
+		notificationCheckbox.click();
+	}
+
+	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+
+	if (!wasPreferencesOpen) {
+		closePreferences();
+	}
 });
 
 function setDarkMode() {
@@ -240,7 +254,7 @@ function openDeleteModal() {
 	document.querySelector(selector).click();
 }
 
-function openPreferences () {
+function openPreferences() {
 	// Create the menu for the below
 	document.querySelector('._30yy._2fug._p').click();
 
@@ -248,11 +262,11 @@ function openPreferences () {
 	nodes[nodes.length - 1].click();
 }
 
-function isPreferencesOpen () {
+function isPreferencesOpen() {
 	return document.querySelector('._3quh._30yy._2t_._5ixy');
 }
 
-function closePreferences () {
+function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }

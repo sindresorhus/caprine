@@ -22,6 +22,7 @@ module.exports = new Store({
 		confirmImagePaste: true,
 		useWorkChat: false,
 		sidebarHidden: false,
-		autoHideMenuBar: false
+		autoHideMenuBar: false,
+		notificationsMuted: false
 	}
 });

@@ -13,7 +13,7 @@ const tray = require('./tray');
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
-const {app, ipcMain} = electron;
+const {app, ipcMain, Menu} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 app.disableHardwareAcceleration();
@@ -25,6 +25,7 @@ require('electron-context-menu')();
 let mainWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
+let dockMenu;
 
 const isAlreadyRunning = app.makeSingleInstance(() => {
 	if (mainWindow) {
@@ -136,6 +137,20 @@ function setUserLocale() {
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
+function setNotificationsMute(status) {
+	const mainMenuItemIndex = process.platform === 'darwin' ? 3 : 14;
+	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items[mainMenuItemIndex];
+
+	console.log(status);
+	config.set('notificationsMuted', status);
+	muteMenuItem.checked = status;
+
+	if (process.platform === 'darwin') {
+		const dockMenuItem = dockMenu.items[0];
+		dockMenuItem.checked = status;
+	}
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -215,16 +230,19 @@ app.on('ready', () => {
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
-	const dockMenu = electron.Menu.buildFromTemplate([
-		{
-			label: 'Mute Notifications',
-			type: 'checkbox',
-			click(event) {
-				mainWindow.webContents.send('toggle-mute-notifications');
+	if (process.platform === 'darwin') {
+		dockMenu = electron.Menu.buildFromTemplate([
+			{
+				label: 'Mute Notifications',
+				type: 'checkbox',
+				checked: config.get('notificationsMuted'),
+				click() {
+					mainWindow.webContents.send('toggle-mute-notifications');
+				}
 			}
-		}
-	])
-	app.dock.setMenu(dockMenu)
+		]);
+		app.dock.setMenu(dockMenu);
+	}
 
 	enableHiresResources();
 
@@ -267,6 +285,8 @@ app.on('ready', () => {
 		} else {
 			mainWindow.show();
 		}
+
+		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
@@ -296,6 +316,10 @@ ipcMain.on('set-vibrancy', () => {
 	} else {
 		mainWindow.setVibrancy(null);
 	}
+});
+
+ipcMain.on('mute-notifications-toggled', (event, status) => {
+	setNotificationsMute(status);
 });
 
 app.on('activate', () => {
