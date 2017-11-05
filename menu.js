@@ -146,14 +146,6 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Start Minimized',
-				type: 'checkbox',
-				checked: config.get('startMinimized'),
-				click() {
-					config.set('startMinimized', !config.get('startMinimized'));
-				}
-			},
-			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
@@ -441,6 +433,14 @@ const otherTpl = [
 				checked: config.get('showUnreadBadge'),
 				click() {
 					config.set('showUnreadBadge', !config.get('showUnreadBadge'));
+				}
+			},
+			{
+				label: 'Launch Minimized',
+				type: 'checkbox',
+				checked: config.get('launchMinimized'),
+				click() {
+					config.set('launchMinimized', !config.get('launchMinimized'));
 				}
 			},
 			{
