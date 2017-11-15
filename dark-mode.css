@@ -1,4 +1,4 @@
-:root{
+:root {
 	--base: black;
 	--base-ninety: rgba(255, 255, 255, 0.9);
 	--base-seventy-five: rgba(255, 255, 255, 0.75);
@@ -15,6 +15,7 @@
 	--list-header-color: #202C3A;
 	--blue: #0084ff;
 }
+
 html.dark-mode body {
 	color: var(--base-seventy);
 	background: var(--container-color) !important;
@@ -156,6 +157,11 @@ html.dark-mode ._llq ._3oh- {
 
 html.dark-mode ._2v6o {
 	color: var(--base-fourty);
+}
+
+/* Messages list: typing indicator dots */
+html.dark-mode ._5pd7 {
+	background: var(--base-seventy) !important;
 }
 
 /* Contact list: header above */
