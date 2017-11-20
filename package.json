@@ -26,8 +26,7 @@
 		"electron-log": "^2.0.2",
 		"electron-store": "^1.1.0",
 		"electron-updater": "^2.15.0",
-		"facebook-locales": "^1.0.464",
-		"minimist": "^1.2.0"
+		"facebook-locales": "^1.0.464"
 	},
 	"devDependencies": {
 		"electron": "1.6.11",

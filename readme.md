@@ -117,8 +117,6 @@ You can send code blocks by using [Markdown syntax](https://github.com/adam-p/ma
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
-If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
-
 ### Keyboard shortcuts
 
 Description            | Keys

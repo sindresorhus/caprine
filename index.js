@@ -219,8 +219,6 @@ app.on('ready', () => {
 
 	const {webContents} = mainWindow;
 
-	const argv = require('minimist')(process.argv.slice(1));
-
 	// Disabled because of #258
 	// electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
 	// 	const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
@@ -253,7 +251,7 @@ app.on('ready', () => {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
 		}
 
-		if (argv.minimize) {
+		if (config.get('launchMinimized')) {
 			mainWindow.minimize();
 		} else {
 			mainWindow.show();
