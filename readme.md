@@ -74,7 +74,7 @@ You can choose to prevent people from knowing when you've seen a message or are 
 
 ### Mute desktop notifications
 
-You can easily disable receiving notifications from the main menu, or on _macOS_, from the Dock.
+You can quickly disable receiving notifications from the `Caprine`/`File` menu or the Dock on macOS.
 
 ### Prevents link tracking
 
