@@ -64,15 +64,10 @@ ipc.on('archive-conversation', () => {
 	openArchiveModal();
 });
 
-ipc.on('toggle-sidebar', () => {
-	const sidebar = document.querySelector('._1enh');
-	const display = sidebar.style.display;
-	sidebar.style.display = display === '' ? 'none' : '';
-
-	// Fix for left space in compact mode
-	const mainSelector = document.querySelector('._1q5-');
-	mainSelector.classList.toggle('sidebar-hidden');
-});
+function setSidebarVisibility() {
+	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
+	ipc.send('set-sidebar-visibility');
+}
 
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
@@ -82,8 +77,6 @@ function setDarkMode() {
 function setVibrancy() {
 	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
 	ipc.send('set-vibrancy');
-
-	document.documentElement.style.backgroundColor = 'transparent';
 }
 
 function renderOverlayIcon(messageCount) {
@@ -103,6 +96,11 @@ function renderOverlayIcon(messageCount) {
 	return canvas;
 }
 
+ipc.on('toggle-sidebar', () => {
+	config.set('sidebarHidden', !config.get('sidebarHidden'));
+	setSidebarVisibility();
+});
+
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
@@ -111,6 +109,8 @@ ipc.on('toggle-dark-mode', () => {
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
+
+	document.documentElement.style.backgroundColor = 'transparent';
 });
 
 ipc.on('render-overlay-icon', (event, messageCount) => {
@@ -230,20 +230,24 @@ function openDeleteModal() {
 	document.querySelector(selector).click();
 }
 
-// Inject a global style node to maintain zoom factor after conversation change.
-// Also set the zoom factor if it was set before quitting.
+// Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
-	const zoomFactor = config.get('zoomFactor') || 1.0;
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.appendChild(style);
+
+	// Set the zoom factor if it was set before quitting
+	const zoomFactor = config.get('zoomFactor') || 1.0;
 	setZoom(zoomFactor);
+
+	// Hide sidebar if it was hidden before quitting
+	setSidebarVisibility();
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
 
 	// Prevent flash of white on startup when in dark mode
-	// TODO: find a CSS only solution
+	// TODO: find a CSS-only solution
 	if (config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#192633';
 	}
@@ -253,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // It's not possible to add multiple accelerators
-// so need to do this the oldschool way
+// so this needs to be done the old-school way
 document.addEventListener('keydown', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
 

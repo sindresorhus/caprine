@@ -19,6 +19,7 @@ module.exports = new Store({
 			typingIndicator: false
 		},
 		confirmImagePaste: true,
-		useWorkChat: false
+		useWorkChat: false,
+		sidebarHidden: false
 	}
 });
