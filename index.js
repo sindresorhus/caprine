@@ -265,6 +265,7 @@ app.on('ready', () => {
 				options.show = true;
 				options.titleBarStyle = 'default';
 				options.webPreferences.sandbox = true;
+				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				e.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
