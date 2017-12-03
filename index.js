@@ -258,15 +258,16 @@ app.on('ready', () => {
 		}
 	});
 
-	webContents.on('new-window', (e, url, frameName, disposition, options) => {
-		e.preventDefault();
+	webContents.on('new-window', (event, url, frameName, disposition, options) => {
+		event.preventDefault();
+
 		if (url === 'about:blank') {
-			if (frameName !== 'about:blank') {  // Voice/video call popup
+			if (frameName !== 'about:blank') { // Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
-				options.webPreferences.sandbox = true;
+				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
-				e.newGuest = new electron.BrowserWindow(options);
+				event.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
 			if (url.startsWith(trackingUrlPrefix)) {
