@@ -316,6 +316,15 @@ html.dark-mode ._4rph ._4rpj {
 	color: var(--base-seventy);
 }
 
+/* Photos info color */
+html.dark-mode ._2zn2 {
+	color: var(--base-seventy);
+}
+
+html.dark-mode ._2zn6 {
+	color: var(--base-fourty);
+}
+
 /* New conversation contact list: popup */
 html.dark-mode ._2y8_ {
 	background: transparent;
