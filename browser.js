@@ -118,7 +118,7 @@ ipc.on('toggle-vibrancy', () => {
 });
 
 ipc.on('toggle-menu-bar', () => {
-	config.set('showMenuBar', !config.get('showMenuBar'));
+	config.set('autoHideMenuBar', !config.get('autoHideMenuBar'));
 	setMenuBar();
 });
 

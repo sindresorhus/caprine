@@ -288,16 +288,16 @@ ipcMain.on('set-vibrancy', () => {
 });
 
 ipcMain.on('set-menu-bar', () => {
-	if (config.get('showMenuBar')) {
+	if (config.get('autoHideMenuBar')) {
+		// Hide the menu bar
+		mainWindow.setMenuBarVisibility(false);
+		// Enable ALT key toggling
+		mainWindow.setAutoHideMenuBar(true);
+	} else {
 		// Make the menu bar persistently visible
 		mainWindow.setMenuBarVisibility(true);
 		// Disable ALT key toggling
 		mainWindow.setAutoHideMenuBar(false);
-	} else {
-		// Hide the menu bar
-		mainWindow.setMenuBarVisibility(false);
-		// Restore ALT key toggling
-		mainWindow.setAutoHideMenuBar(true);
 	}
 });
 

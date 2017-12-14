@@ -50,9 +50,9 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Toggle Menu Bar',
+		label: 'Auto Hide Menu Bar',
 		type: 'checkbox',
-		checked: config.get('showMenuBar'),
+		checked: config.get('autoHideMenuBar'),
 		visible: !(process.platform === 'darwin'),
 		click() {
 			sendAction('toggle-menu-bar');
