@@ -143,7 +143,7 @@ Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
 
 ## Dev
 
-Built with [Electron](http://electron.atom.io).
+Built with [Electron](https://electronjs.org).
 
 ### Run
 
