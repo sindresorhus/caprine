@@ -50,17 +50,6 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Auto Hide Menu Bar',
-		type: 'checkbox',
-		checked: config.get('autoHideMenuBar'),
-		visible: process.platform !== 'darwin',
-		click(item, focusedWindow) {
-			config.set('autoHideMenuBar', item.checked);
-			focusedWindow.setAutoHideMenuBar(item.checked);
-			focusedWindow.setMenuBarVisibility(!item.checked);
-		}
-	},
-	{
 		label: 'Toggle Dark Mode',
 		accelerator: 'CmdOrCtrl+D',
 		click() {
@@ -460,6 +449,16 @@ const otherTpl = [
 				checked: config.get('block.typingIndicator'),
 				click(item) {
 					config.set('block.typingIndicator', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Auto Hide Menu Bar',
+				checked: config.get('autoHideMenuBar'),
+				click(item, focusedWindow) {
+					config.set('autoHideMenuBar', item.checked);
+					focusedWindow.setAutoHideMenuBar(item.checked);
+					focusedWindow.setMenuBarVisibility(!item.checked);
 				}
 			},
 			{
