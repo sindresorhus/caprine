@@ -156,7 +156,7 @@ function createMainWindow() {
 		alwaysOnTop: config.get('alwaysOnTop'),
 		// Temp workaround for macOS High Sierra, see #295
 		titleBarStyle: process.platform === 'darwin' && Number(require('os').release().split('.')[0]) >= 17 ? null : 'hidden-inset',
-		autoHideMenuBar: true,
+		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
@@ -284,20 +284,6 @@ ipcMain.on('set-vibrancy', () => {
 		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
 	} else {
 		mainWindow.setVibrancy(null);
-	}
-});
-
-ipcMain.on('set-menu-bar', () => {
-	if (config.get('autoHideMenuBar')) {
-		// Hide the menu bar
-		mainWindow.setMenuBarVisibility(false);
-		// Enable ALT key toggling
-		mainWindow.setAutoHideMenuBar(true);
-	} else {
-		// Make the menu bar persistently visible
-		mainWindow.setMenuBarVisibility(true);
-		// Disable ALT key toggling
-		mainWindow.setAutoHideMenuBar(false);
 	}
 });
 

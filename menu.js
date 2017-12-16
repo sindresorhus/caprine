@@ -53,9 +53,11 @@ const viewSubmenu = [
 		label: 'Auto Hide Menu Bar',
 		type: 'checkbox',
 		checked: config.get('autoHideMenuBar'),
-		visible: !(process.platform === 'darwin'),
-		click() {
-			sendAction('toggle-menu-bar');
+		visible: process.platform !== 'darwin',
+		click(item, focusedWindow) {
+			config.set('autoHideMenuBar', item.checked);
+			focusedWindow.setAutoHideMenuBar(item.checked);
+			focusedWindow.setMenuBarVisibility(!item.checked);
 		}
 	},
 	{

@@ -5,7 +5,6 @@ module.exports = new Store({
 	defaults: {
 		darkMode: false,
 		vibrancy: false,
-		autoHideMenuBar: false,
 		zoomFactor: 1,
 		lastWindowState: {
 			width: 800,
@@ -20,6 +19,7 @@ module.exports = new Store({
 			typingIndicator: false
 		},
 		confirmImagePaste: true,
-		useWorkChat: false
+		useWorkChat: false,
+		autoHideMenuBar: false
 	}
 });
