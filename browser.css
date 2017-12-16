@@ -2,7 +2,7 @@ html {
 	overflow: hidden;
 }
 
-/* Add OS specific fonts */
+/* Add OS-specific fonts */
 body {
 	font-family: -apple-system,
 			BlinkMacSystemFont,
@@ -25,6 +25,7 @@ body {
 ._5742 {
 	-webkit-app-region: drag;
 }
+
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
 ._36ic._5l-3 ._30yy,
 ._5742 ._30yy {
@@ -35,6 +36,11 @@ body {
 /* Window wrapper */
 ._4sp8 {
 	min-width: 0;
+}
+
+/* Hide sidebar (optionally) */
+html.sidebar-hidden ._1enh {
+	display: none;
 }
 
 /* Hide footer at login view */
@@ -52,7 +58,7 @@ body {
 	display: none !important;
 }
 
-/* Right-column */
+/* Right column */
 ._1q5- {
 	border-left: 1px solid rgba(0, 0, 0, .10) !important;
 }
@@ -103,7 +109,7 @@ body {
 }
 
 @media all and (max-width: 700px) {
-	/* Make right-column flexible in compact mode */
+	/* Make right column flexible in compact mode */
 	._1q5- {
 		position: absolute !important;
 		right: 0 !important;
@@ -112,7 +118,7 @@ body {
 	}
 
 	/* Fix for left space in compact mode */
-	._1q5-.sidebar-hidden {
+	html.sidebar-hidden ._1q5- {
 		left: 0px !important;
 	}
 

@@ -436,6 +436,14 @@ const otherTpl = [
 				}
 			},
 			{
+				label: 'Launch Minimized',
+				type: 'checkbox',
+				checked: config.get('launchMinimized'),
+				click() {
+					config.set('launchMinimized', !config.get('launchMinimized'));
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),

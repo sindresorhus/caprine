@@ -13,6 +13,7 @@ module.exports = new Store({
 		alwaysOnTop: false,
 		bounceDockOnMessage: false,
 		showUnreadBadge: true,
+		launchMinimized: false,
 		flashWindowOnMessage: true,
 		block: {
 			chatSeen: false,
@@ -20,6 +21,7 @@ module.exports = new Store({
 		},
 		confirmImagePaste: true,
 		useWorkChat: false,
+		sidebarHidden: false,
 		autoHideMenuBar: false
 	}
 });
