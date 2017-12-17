@@ -460,6 +460,16 @@ const otherTpl = [
 				}
 			},
 			{
+				type: 'checkbox',
+				label: 'Auto Hide Menu Bar',
+				checked: config.get('autoHideMenuBar'),
+				click(item, focusedWindow) {
+					config.set('autoHideMenuBar', item.checked);
+					focusedWindow.setAutoHideMenuBar(item.checked);
+					focusedWindow.setMenuBarVisibility(!item.checked);
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{

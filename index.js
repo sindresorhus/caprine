@@ -156,7 +156,7 @@ function createMainWindow() {
 		alwaysOnTop: config.get('alwaysOnTop'),
 		// Temp workaround for macOS High Sierra, see #295
 		titleBarStyle: process.platform === 'darwin' && Number(require('os').release().split('.')[0]) >= 17 ? null : 'hidden-inset',
-		autoHideMenuBar: true,
+		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
