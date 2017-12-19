@@ -138,10 +138,9 @@ function setUserLocale() {
 }
 
 function setNotificationsMute(status) {
-	const mainMenuItemIndex = process.platform === 'darwin' ? 3 : 14;
-	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items[mainMenuItemIndex];
+	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items
+		.find(item => (item.label === 'Mute Notifications'));
 
-	console.log(status);
 	config.set('notificationsMuted', status);
 	muteMenuItem.checked = status;
 
