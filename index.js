@@ -47,7 +47,7 @@ function updateBadge(title, titlePrefix) {
 		return;
 	}
 
-	let messageCount = (/\(([0-9]+)\)/).exec(title);
+	let messageCount = (/\((\d+)\)/).exec(title);
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
@@ -138,15 +138,16 @@ function setUserLocale() {
 }
 
 function setNotificationsMute(status) {
+	const label = 'Mute Notifications';
 	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items
-		.find(item => item.label === 'Mute Notifications');
+		.find(x => x.label === label);
 
 	config.set('notificationsMuted', status);
 	muteMenuItem.checked = status;
 
 	if (process.platform === 'darwin') {
-		const dockMenuItem = dockMenu.items[0];
-		dockMenuItem.checked = status;
+		const item = dockMenu.items.find(x => x.label === label);
+		item.checked = status;
 	}
 }
 
