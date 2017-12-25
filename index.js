@@ -139,7 +139,7 @@ function setUserLocale() {
 
 function setNotificationsMute(status) {
 	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items
-		.find(item => (item.label === 'Mute Notifications'));
+		.find(item => item.label === 'Mute Notifications');
 
 	config.set('notificationsMuted', status);
 	muteMenuItem.checked = status;
