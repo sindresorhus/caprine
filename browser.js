@@ -76,13 +76,11 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 		openPreferences();
 	}
 
-	const notificationCheckbox =
-		document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
+	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
-	} else if ((defaultStatus && !notificationCheckbox.checked) ||
-						(!defaultStatus && notificationCheckbox.checked)) {
+	} else if ((defaultStatus && !notificationCheckbox.checked) || (!defaultStatus && notificationCheckbox.checked)) {
 		notificationCheckbox.click();
 	}
 
