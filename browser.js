@@ -9,11 +9,11 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
 ipc.on('show-preferences', () => {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
+	if (isPreferencesOpen()) {
+		return;
+	}
 
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
-	nodes[nodes.length - 1].click();
+	openPreferences();
 });
 
 ipc.on('new-conversation', () => {
@@ -68,6 +68,28 @@ function setSidebarVisibility() {
 	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
 	ipc.send('set-sidebar-visibility');
 }
+
+ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
+	const wasPreferencesOpen = isPreferencesOpen();
+
+	if (!wasPreferencesOpen) {
+		openPreferences();
+	}
+
+	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
+
+	if (defaultStatus === undefined) {
+		notificationCheckbox.click();
+	} else if ((defaultStatus && !notificationCheckbox.checked) || (!defaultStatus && notificationCheckbox.checked)) {
+		notificationCheckbox.click();
+	}
+
+	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+
+	if (!wasPreferencesOpen) {
+		closePreferences();
+	}
+});
 
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
@@ -228,6 +250,23 @@ function openDeleteModal() {
 
 	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
 	document.querySelector(selector).click();
+}
+
+function openPreferences() {
+	// Create the menu for the below
+	document.querySelector('._30yy._2fug._p').click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
+	nodes[nodes.length - 1].click();
+}
+
+function isPreferencesOpen() {
+	return document.querySelector('._3quh._30yy._2t_._5ixy');
+}
+
+function closePreferences() {
+	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
+	doneButton.click();
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup

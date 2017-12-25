@@ -72,6 +72,10 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
+### Mute desktop notifications
+
+You can quickly disable receiving notifications from the `Caprine`/`File` menu or the Dock on macOS.
+
 ### Prevents link tracking
 
 Links that you click on will not be tracked by Facebook.

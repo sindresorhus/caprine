@@ -138,6 +138,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Mute Notifications',
+				type: 'checkbox',
+				checked: config.get('notificationsMuted'),
+				click() {
+					sendAction('toggle-mute-notifications');
+				}
+			},
+			{
 				label: 'Show Unread Badge',
 				type: 'checkbox',
 				checked: config.get('showUnreadBadge'),
@@ -441,6 +449,14 @@ const otherTpl = [
 				checked: config.get('launchMinimized'),
 				click() {
 					config.set('launchMinimized', !config.get('launchMinimized'));
+				}
+			},
+			{
+				label: 'Mute Notifications',
+				type: 'checkbox',
+				checked: config.get('notificationsMuted'),
+				click() {
+					sendAction('toggle-mute-notifications');
 				}
 			},
 			{
