@@ -60,7 +60,13 @@ const viewSubmenu = [
 
 const helpSubmenu = [
 	{
-		label: `${appName} Website`,
+		label: `Website`,
+		click() {
+			shell.openExternal('https://sindresorhus.com/caprine');
+		}
+	},
+	{
+		label: `Source Code`,
 		click() {
 			shell.openExternal('https://github.com/sindresorhus/caprine');
 		}
