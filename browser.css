@@ -126,6 +126,10 @@ html.sidebar-hidden ._1enh {
 	._30yy[href='/new'] {
 		display: none !important;
 	}
+
+	._4_j5 {
+		display: none !important;
+	}
 }
 
 /* Don't show outline on clickable elements except in the delete/mute modal so that we know what we are selecting */
