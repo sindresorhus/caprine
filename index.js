@@ -11,16 +11,21 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
-const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
+require('electron-debug')({enabled: true});
+require('electron-dl')();
+require('electron-context-menu')();
 
+const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 const {app, ipcMain, Menu} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 app.disableHardwareAcceleration();
 
-require('electron-debug')({enabled: true});
-require('electron-dl')();
-require('electron-context-menu')();
+if (!isDev) {
+	autoUpdater.logger = log;
+	autoUpdater.logger.transports.file.level = 'info';
+	autoUpdater.checkForUpdates();
+}
 
 let mainWindow;
 let isQuitting = false;
@@ -216,12 +221,6 @@ function createMainWindow() {
 	});
 
 	return win;
-}
-
-if (!isDev && process.platform !== 'linux') {
-	autoUpdater.logger = log;
-	autoUpdater.logger.transports.file.level = 'info';
-	autoUpdater.checkForUpdates();
 }
 
 app.on('ready', () => {
