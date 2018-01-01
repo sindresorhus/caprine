@@ -176,7 +176,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Preferences...',
+				label: 'Preferences…',
 				accelerator: 'Cmd+,',
 				click() {
 					sendAction('show-preferences');
