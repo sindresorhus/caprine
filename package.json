@@ -25,13 +25,13 @@
 		"electron-localshortcut": "^2.0.0",
 		"electron-log": "^2.0.2",
 		"electron-store": "^1.1.0",
-		"electron-updater": "^2.16.1",
+		"electron-updater": "^2.18.0",
 		"element-ready": "^2.2.0",
 		"facebook-locales": "^1.0.464"
 	},
 	"devDependencies": {
-		"electron": "1.7.9",
-		"electron-builder": "19.49.0",
+		"electron": "1.7.10",
+		"electron-builder": "19.50.0",
 		"xo": "*"
 	},
 	"xo": {
@@ -48,11 +48,7 @@
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
 			"category": "public.app-category.social-networking",
-			"target": [
-				"dmg",
-				"zip"
-			],
-			"electronUpdaterCompatibility": ">=2.16.0"
+			"electronUpdaterCompatibility": ">=2.18.0"
 		},
 		"dmg": {
 			"iconSize": 160,
@@ -73,11 +69,6 @@
 			"target": [
 				"AppImage",
 				"deb"
-			]
-		},
-		"win": {
-			"target": [
-				"nsis"
 			]
 		}
 	}
