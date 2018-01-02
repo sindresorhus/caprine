@@ -48,6 +48,10 @@ ipc.on('insert-emoji', () => {
 	document.querySelector('._5s2p').click();
 });
 
+ipc.on('insert-files', () => {
+	document.querySelector('._260t').click();
+});
+
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);

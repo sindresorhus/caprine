@@ -327,6 +327,13 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Insert Files',
+				accelerator: 'Cmd+U',
+				click() {
+					sendAction('insert-files');
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -403,6 +410,13 @@ const otherTpl = [
 				accelerator: 'Ctrl+E',
 				click() {
 					sendAction('insert-emoji');
+				}
+			},
+			{
+				label: 'Insert Files',
+				accelerator: 'Ctrl+U',
+				click() {
+					sendAction('insert-files');
 				}
 			},
 			{
