@@ -327,6 +327,13 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Insert Text',
+				accelerator: 'Cmd+I',
+				click() {
+					sendAction('insert-text');
+				}
+			},
+			{
 				type: 'separator'
 			},
 			{
@@ -403,6 +410,13 @@ const otherTpl = [
 				accelerator: 'Ctrl+E',
 				click() {
 					sendAction('insert-emoji');
+				}
+			},
+			{
+				label: 'Insert Text',
+				accelerator: 'Ctrl+I',
+				click() {
+					sendAction('insert-text');
 				}
 			},
 			{
