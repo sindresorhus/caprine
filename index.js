@@ -280,7 +280,7 @@ app.on('ready', () => {
 		}
 
 		if (config.get('launchMinimized')) {
-			mainWindow.minimize();
+			mainWindow.hide();
 		} else {
 			mainWindow.show();
 		}
