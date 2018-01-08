@@ -122,6 +122,21 @@ html.dark-mode ._2n3u {
 	color: var(--base-thiry);
 }
 
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7m {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x79 {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7b {
+	color: var(--base-thiry);
+}
+
 /* Message list: header above (invitation) */
 html.dark-mode ._2y8z,
 html.dark-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
