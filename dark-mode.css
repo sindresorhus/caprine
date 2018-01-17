@@ -296,6 +296,21 @@ html.dark-mode ._4_j5 {
 	border-left: solid 1px var(--base-five);
 }
 
+/* Right sidebar: menus background */
+html.dark-mode ._54ng {
+	background: var(--conversation-bg);
+}
+
+/* Right sidebar: menus text color */
+html.dark-mode ._2i-c ._54nf ._54nh {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: menus selected text color */
+html.dark-mode ._2i-c ._54nf .selected ._54nh {
+	color: rgb(255, 255, 255);
+}
+
 /* Right sidebar: headings */
 html.dark-mode ._1lj0 {
 	color: var(--base-fourty);
