@@ -127,6 +127,7 @@ html.sidebar-hidden ._1enh {
 		display: none !important;
 	}
 
+	/* Hide right sidebar in compact mode */
 	._4_j5 {
 		display: none !important;
 	}
