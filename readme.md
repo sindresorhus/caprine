@@ -126,13 +126,14 @@ When closing the window, the app will continue running in the background, in the
 Description            | Keys
 -----------------------| -----------------------
 New conversation       | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
-Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
+Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>k</kbd>
 Toggle "Dark mode"     | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
 Next conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
 Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Cmd/Ctrl</kbd> <kbd>g</kbd>
 Insert emoji           | <kbd>Cmd/Ctrl</kbd> <kbd>e</kbd>
+Search in conversation | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
 Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
