@@ -333,7 +333,7 @@ const macosTpl = [
 				role: 'front'
 			},
 			{
-				label: 'Enable Continuity',
+				label: 'Enable Menu Bar Mode',
 				click() {
 					config.set('continuity', true);
 
