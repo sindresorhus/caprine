@@ -72,6 +72,10 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
+### Mute desktop notifications
+
+You can quickly disable receiving notifications from the `Caprine`/`File` menu or the Dock on macOS.
+
 ### Prevents link tracking
 
 Links that you click on will not be tracked by Facebook.
@@ -119,7 +123,7 @@ When closing the window, the app will continue running in the background, in the
 
 If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
 
-### Continuity
+### Menu Bar Mode
 
 On *macOS*, you can remove the app from the dock, create a menu bar icon and have a global shortcut to toggle the window. Caprine will show above any app, even if they are full screen, and it'll hide when is not focused.
 You can enable this in the menu bar options and disable in the options of the menu bar icon (right click on it).
@@ -152,7 +156,7 @@ Toggle window (global*)| <kbd>Ctrl</kbd> <kbd>m</kbd>
 
 ## Dev
 
-Built with [Electron](http://electron.atom.io).
+Built with [Electron](https://electronjs.org).
 
 ### Run
 

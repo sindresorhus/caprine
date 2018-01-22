@@ -60,7 +60,13 @@ const viewSubmenu = [
 
 const helpSubmenu = [
 	{
-		label: `${appName} Website`,
+		label: `Website`,
+		click() {
+			shell.openExternal('https://sindresorhus.com/caprine');
+		}
+	},
+	{
+		label: `Source Code`,
 		click() {
 			shell.openExternal('https://github.com/sindresorhus/caprine');
 		}
@@ -138,6 +144,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Mute Notifications',
+				type: 'checkbox',
+				checked: config.get('notificationsMuted'),
+				click() {
+					sendAction('toggle-mute-notifications');
+				}
+			},
+			{
 				label: 'Show Unread Badge',
 				type: 'checkbox',
 				checked: config.get('showUnreadBadge'),
@@ -162,7 +176,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Preferences...',
+				label: 'Preferences…',
 				accelerator: 'Cmd+,',
 				click() {
 					sendAction('show-preferences');
@@ -445,6 +459,22 @@ const otherTpl = [
 				}
 			},
 			{
+				label: 'Launch Minimized',
+				type: 'checkbox',
+				checked: config.get('launchMinimized'),
+				click() {
+					config.set('launchMinimized', !config.get('launchMinimized'));
+				}
+			},
+			{
+				label: 'Mute Notifications',
+				type: 'checkbox',
+				checked: config.get('notificationsMuted'),
+				click() {
+					sendAction('toggle-mute-notifications');
+				}
+			},
+			{
 				type: 'checkbox',
 				label: 'Block Seen Indicator',
 				checked: config.get('block.chatSeen'),
@@ -458,6 +488,16 @@ const otherTpl = [
 				checked: config.get('block.typingIndicator'),
 				click(item) {
 					config.set('block.typingIndicator', item.checked);
+				}
+			},
+			{
+				type: 'checkbox',
+				label: 'Auto Hide Menu Bar',
+				checked: config.get('autoHideMenuBar'),
+				click(item, focusedWindow) {
+					config.set('autoHideMenuBar', item.checked);
+					focusedWindow.setAutoHideMenuBar(item.checked);
+					focusedWindow.setMenuBarVisibility(!item.checked);
 				}
 			},
 			{

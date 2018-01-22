@@ -9,11 +9,11 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
 ipc.on('show-preferences', () => {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
+	if (isPreferencesOpen()) {
+		return;
+	}
 
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
-	nodes[nodes.length - 1].click();
+	openPreferences();
 });
 
 ipc.on('new-conversation', () => {
@@ -64,14 +64,31 @@ ipc.on('archive-conversation', () => {
 	openArchiveModal();
 });
 
-ipc.on('toggle-sidebar', () => {
-	const sidebar = document.querySelector('._1enh');
-	const display = sidebar.style.display;
-	sidebar.style.display = display === '' ? 'none' : '';
+function setSidebarVisibility() {
+	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
+	ipc.send('set-sidebar-visibility');
+}
 
-	// Fix for left space in compact mode
-	const mainSelector = document.querySelector('._1q5-');
-	mainSelector.classList.toggle('sidebar-hidden');
+ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
+	const wasPreferencesOpen = isPreferencesOpen();
+
+	if (!wasPreferencesOpen) {
+		openPreferences();
+	}
+
+	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
+
+	if (defaultStatus === undefined) {
+		notificationCheckbox.click();
+	} else if ((defaultStatus && !notificationCheckbox.checked) || (!defaultStatus && notificationCheckbox.checked)) {
+		notificationCheckbox.click();
+	}
+
+	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+
+	if (!wasPreferencesOpen) {
+		closePreferences();
+	}
 });
 
 function setDarkMode() {
@@ -82,8 +99,6 @@ function setDarkMode() {
 function setVibrancy() {
 	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
 	ipc.send('set-vibrancy');
-
-	document.documentElement.style.backgroundColor = 'transparent';
 }
 
 function renderOverlayIcon(messageCount) {
@@ -103,6 +118,11 @@ function renderOverlayIcon(messageCount) {
 	return canvas;
 }
 
+ipc.on('toggle-sidebar', () => {
+	config.set('sidebarHidden', !config.get('sidebarHidden'));
+	setSidebarVisibility();
+});
+
 ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
@@ -111,6 +131,8 @@ ipc.on('toggle-dark-mode', () => {
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
+
+	document.documentElement.style.backgroundColor = 'transparent';
 });
 
 ipc.on('render-overlay-icon', (event, messageCount) => {
@@ -230,20 +252,41 @@ function openDeleteModal() {
 	document.querySelector(selector).click();
 }
 
-// Inject a global style node to maintain zoom factor after conversation change.
-// Also set the zoom factor if it was set before quitting.
+function openPreferences() {
+	// Create the menu for the below
+	document.querySelector('._30yy._2fug._p').click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
+	nodes[nodes.length - 1].click();
+}
+
+function isPreferencesOpen() {
+	return document.querySelector('._3quh._30yy._2t_._5ixy');
+}
+
+function closePreferences() {
+	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
+	doneButton.click();
+}
+
+// Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
-	const zoomFactor = config.get('zoomFactor') || 1.0;
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.appendChild(style);
+
+	// Set the zoom factor if it was set before quitting
+	const zoomFactor = config.get('zoomFactor') || 1.0;
 	setZoom(zoomFactor);
+
+	// Hide sidebar if it was hidden before quitting
+	setSidebarVisibility();
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
 
 	// Prevent flash of white on startup when in dark mode
-	// TODO: find a CSS only solution
+	// TODO: find a CSS-only solution
 	if (config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#192633';
 	}
@@ -253,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // It's not possible to add multiple accelerators
-// so need to do this the oldschool way
+// so this needs to be done the old-school way
 document.addEventListener('keydown', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
 
