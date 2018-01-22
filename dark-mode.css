@@ -108,7 +108,8 @@ html.dark-mode ._5742 {
 
 /* Message list: header above (event) */
 html.dark-mode ._3nta {
-	border-bottom: 1px solid rgba(25, 38, 51, 0.8);
+	background: var(--container-color) !important;
+	border-bottom: 1px solid var(--base-five);
 }
 
 /* Message list: header above (event) */
@@ -118,6 +119,21 @@ html.dark-mode ._2n3t {
 
 /* Message list: header above (event) */
 html.dark-mode ._2n3u {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7m {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x79 {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7b {
 	color: var(--base-thiry);
 }
 
@@ -146,6 +162,27 @@ html.dark-mode ._36zg-e {
 /* Messages list: user info */
 html.dark-mode ._1n-e {
 	color: var(--base-fourty);
+}
+
+/* Messages list: event box (event name) */
+html.dark-mode ._618l {
+	color: var(--base-seventy);
+}
+
+/* Messages list: event box (event icon) */
+html.dark-mode ._618m {
+	width: 28px;
+}
+
+/* Messages list: event box (event description) */
+html.dark-mode ._618n {
+	color: var(--base-thiry);
+}
+
+/* Messages list: event box (line) */
+html.dark-mode ._618k div hr {
+	background: var(--container-color) !important;
+	border-top: 1px solid var(--base-five);
 }
 
 /* Messages list: text header above the messages */
@@ -257,6 +294,21 @@ html.dark-mode ._4g0h {
 html.dark-mode ._4_j5 {
 	background: transparent;
 	border-left: solid 1px var(--base-five);
+}
+
+/* Right sidebar: menus background */
+html.dark-mode ._54ng {
+	background: var(--conversation-bg);
+}
+
+/* Right sidebar: menus text color */
+html.dark-mode ._2i-c ._54nf ._54nh {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: menus selected text color */
+html.dark-mode ._2i-c ._54nf .selected ._54nh {
+	color: rgb(255, 255, 255);
 }
 
 /* Right sidebar: headings */
