@@ -52,6 +52,10 @@ ipc.on('insert-emoji', () => {
 	document.querySelector('._5s2p').click();
 });
 
+ipc.on('insert-text', () => {
+	document.querySelector('._5rpu').focus();
+});
+
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);

@@ -133,6 +133,7 @@ Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kb
 Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Cmd/Ctrl</kbd> <kbd>g</kbd>
 Insert emoji           | <kbd>Cmd/Ctrl</kbd> <kbd>e</kbd>
+Insert text            | <kbd>Cmd/Ctrl</kbd> <kbd>i</kbd>
 Search in conversation | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
 Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
