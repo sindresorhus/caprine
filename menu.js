@@ -72,6 +72,12 @@ const helpSubmenu = [
 		}
 	},
 	{
+		label: `Donate…`,
+		click() {
+			shell.openExternal('https://sindresorhus.com/donate');
+		}
+	},
+	{
 		label: 'Report an Issue…',
 		click() {
 			const body = `
