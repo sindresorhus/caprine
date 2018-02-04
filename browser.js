@@ -92,7 +92,7 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 		notificationCheckbox.click();
 	}
 
-	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+	ipc.send('mute-notifications-toggled', notificationCheckbox.checked);
 
 	if (!wasPreferencesOpen) {
 		closePreferences();
