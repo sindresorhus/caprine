@@ -322,7 +322,8 @@ html.dark-mode ._1li- {
 }
 
 /* Right sidebar: group chat names */
-html.dark-mode ._2jnv {
+html.dark-mode ._2jnv,
+html.dark-mode ._5rpu {
 	color: var(--base-seventy);
 }
 
