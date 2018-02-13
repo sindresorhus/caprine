@@ -91,6 +91,22 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 	}
 });
 
+ipc.on('toggle-message-buttons', () => {
+	const messageButtons = document.querySelector('._39bj');
+
+	let messageButtonsStatus = window.getComputedStyle(messageButtons, null).getPropertyValue('display');
+
+	if (config.get('showMessageButtons')) {
+		messageButtons.style.display = 'flex';
+	} else {
+		messageButtons.style.display = 'none';
+	}
+
+	messageButtonsStatus = window.getComputedStyle(messageButtons, null).getPropertyValue('display');
+
+	ipc.send('message-buttons-toggled', messageButtonsStatus === 'flex');
+});
+
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 	ipc.send('set-vibrancy');

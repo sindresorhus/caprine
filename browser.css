@@ -133,16 +133,6 @@ html.sidebar-hidden ._1enh {
 	}
 }
 
-/* Aditional icons message box: hide */
-._39bj {
-	display: none !important;
-}
-
-._4rv4:hover>._39bj {
-	display: flex !important;
-}
-
-
 /* Don't show outline on clickable elements except in the delete/mute modal so that we know what we are selecting */
 a,
 *[role='button'] {

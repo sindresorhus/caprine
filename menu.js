@@ -55,6 +55,15 @@ const viewSubmenu = [
 		click() {
 			sendAction('toggle-dark-mode');
 		}
+	},
+	{
+		label: 'Show Message Buttons',
+		type: 'checkbox',
+		checked: config.get('showMessageButtons'),
+		click() {
+			config.set('showMessageButtons', !config.get('showMessageButtons'));
+			sendAction('toggle-message-buttons');
+		}
 	}
 ];
 

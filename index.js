@@ -156,6 +156,20 @@ function setNotificationsMute(status) {
 	}
 }
 
+function setMessageButtonsVisible(status) {
+	const label = 'Show Message Buttons';
+	const buttonsVisibleMenuItem = Menu.getApplicationMenu().items[0].submenu.items
+		.find(x => x.label === label);
+
+	config.set('showMessageButtons', status);
+	buttonsVisibleMenuItem.checked = status;
+
+	if (process.platform === 'darwin') {
+		const item = dockMenu.items.find(x => x.label === label);
+		item.checked = status;
+	}
+}
+
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
@@ -319,6 +333,10 @@ ipcMain.on('set-vibrancy', () => {
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
 	setNotificationsMute(status);
+});
+
+ipcMain.on('message-buttons-toggled', (event, status) => {
+	setMessageButtonsVisible(status);
 });
 
 app.on('activate', () => {
