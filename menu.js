@@ -55,6 +55,33 @@ const viewSubmenu = [
 		click() {
 			sendAction('toggle-dark-mode');
 		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Open Active Contacts',
+		click() {
+			sendAction('open-active-contacts-view');
+		}
+	},
+	{
+		label: 'Open Message Requests',
+		click() {
+			sendAction('open-message-requests-view');
+		}
+	},
+	{
+		label: 'Open Archived Threads',
+		click() {
+			sendAction('open-archived-threads-view');
+		}
+	},
+	{
+		label: 'Toggle Unread Threads',
+		click() {
+			sendAction('toggle-unread-threads-view');
+		}
 	}
 ];
 
