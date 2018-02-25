@@ -105,6 +105,22 @@ ipc.on('toggle-message-buttons', async () => {
 	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
 });
 
+ipc.on('open-active-contacts-view', () => {
+	openActiveContactsView();
+});
+
+ipc.on('open-message-requests-view', () => {
+	openMessageRequestsView();
+});
+
+ipc.on('open-archived-threads-view', () => {
+	openArchivedThreadsView();
+});
+
+ipc.on('toggle-unread-threads-view', () => {
+	toggleUnreadThreadsView();
+});
+
 function setDarkMode() {
 	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 	ipc.send('set-vibrancy');
@@ -326,6 +342,38 @@ function initTouchBar() {
 		attributes: true,
 		attributeFilter: ['class']
 	});
+}
+
+function openActiveContactsView() {
+	// Create the menu for the below
+	document.querySelector('._30yy._2fug._p').click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(3) a');
+	nodes[nodes.length - 1].click();
+}
+
+function openMessageRequestsView() {
+	// Create the menu for the below
+	document.querySelector('._30yy._2fug._p').click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(4) a');
+	nodes[nodes.length - 1].click();
+}
+
+function openArchivedThreadsView() {
+	// Create the menu for the below
+	document.querySelector('._30yy._2fug._p').click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(5) a');
+	nodes[nodes.length - 1].click();
+}
+
+function toggleUnreadThreadsView() {
+	// Create the menu for the below
+	document.querySelector('._30yy._2fug._p').click();
+
+	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(6) a');
+	nodes[nodes.length - 1].click();
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
