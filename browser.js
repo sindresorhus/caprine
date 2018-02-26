@@ -77,6 +77,17 @@ function setSidebarVisibility() {
 	ipc.send('set-sidebar-visibility');
 }
 
+ipc.on('set-back-button-margin', (event, defaultStatus) => {
+	// Workaround for slow load of button element
+	setTimeout(() => {
+		if (defaultStatus) {
+			document.getElementsByClassName('_30yy _2oc9')[0].style.marginLeft = '65px !important';
+		} else {
+			document.getElementsByClassName('_30yy _2oc9')[0].style.marginLeft = '0 !important';
+		}
+	}, 1000);
+});
+
 ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 	const wasPreferencesOpen = isPreferencesOpen();
 
