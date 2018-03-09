@@ -123,8 +123,8 @@ html.sidebar-hidden ._1enh {
 	width: 100% !important;
 }
 
-/* Move the contextual back button so it's not obstructed by the native traffic lights */
-._30yy._2oc9 {
+/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
+.os-darwin ._30yy._2oc9 {
 	margin-left: 65px !important;
 }
 

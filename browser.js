@@ -287,6 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const zoomFactor = config.get('zoomFactor') || 1.0;
 	setZoom(zoomFactor);
 
+	// Enable OS specific styles
+	document.documentElement.classList.add(`os-${process.platform}`);
+
 	// Hide sidebar if it was hidden before quitting
 	setSidebarVisibility();
 
