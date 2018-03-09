@@ -158,11 +158,8 @@ function setNotificationsMute(status) {
 
 function setMessageButtonsVisible(status) {
 	const label = 'Show Message Buttons';
-	const buttonsVisibleMenuItem = Menu.getApplicationMenu().items[0].submenu.items
-		.find(x => x.label === label);
 
 	config.set('showMessageButtons', status);
-	buttonsVisibleMenuItem.checked = status;
 
 	if (process.platform === 'darwin') {
 		const item = dockMenu.items.find(x => x.label === label);
