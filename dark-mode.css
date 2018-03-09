@@ -380,7 +380,7 @@ html.dark-mode ._2zn6 {
 
 /* New conversation contact list: popup */
 html.dark-mode ._2y8_ {
-	background: transparent;
+	background-color: var(--container-color);
 	border: solid 1px var(--base-five);
 }
 
