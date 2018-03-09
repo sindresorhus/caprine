@@ -285,6 +285,8 @@ app.on('ready', () => {
 			mainWindow.show();
 		}
 
+		mainWindow.webContents.send('set-back-button-margin', process.platform === 'darwin');
+
 		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 	});
 

@@ -123,11 +123,6 @@ html.sidebar-hidden ._1enh {
 	width: 100% !important;
 }
 
-/* Move the contextual back button so it's not obstructed by the native traffic lights */
-._30yy._2oc9 {
-	margin-left: 65px !important;
-}
-
 @media all and (max-width: 700px) {
 	/* Make right column flexible in compact mode */
 	._1q5- {
