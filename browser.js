@@ -8,6 +8,20 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
+function showSettingsMenu() {
+	document.querySelector('._30yy._2fug._p').click();
+}
+
+function selectMenuItem(itemNumber) {
+	const selector = document.querySelector(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
+	selector.click();
+}
+
+function clickBackButton() {
+	const backButton = document.querySelector('._30yy._2oc9');
+	backButton ? backButton.click() : null; // eslint-disable-line no-unused-expressions
+}
+
 ipc.on('show-preferences', () => {
 	if (isPreferencesOpen()) {
 		return;
@@ -30,7 +44,7 @@ ipc.on('log-out', () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		document.querySelector('._30yy._2fug._p').click();
+		showSettingsMenu();
 		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
 		nodes[nodes.length - 1].click();
 	}
@@ -99,20 +113,44 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 	}
 });
 
-ipc.on('open-active-contacts-view', () => {
-	openActiveContactsView();
+ipc.on('show-active-contacts-view', () => {
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(3);
 });
 
-ipc.on('open-message-requests-view', () => {
-	openMessageRequestsView();
+ipc.on('show-message-requests-view', () => {
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(4);
 });
 
-ipc.on('open-archived-threads-view', () => {
-	openArchivedThreadsView();
+ipc.on('show-archived-threads-view', () => {
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(5);
 });
 
 ipc.on('toggle-unread-threads-view', () => {
-	toggleUnreadThreadsView();
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(6);
 });
 
 function setDarkMode() {
@@ -254,8 +292,7 @@ function openMuteModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(1) a';
-	document.querySelector(selector).click();
+	selectMenuItem(1);
 }
 
 function openArchiveModal() {
@@ -263,8 +300,7 @@ function openArchiveModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
-	document.querySelector(selector).click();
+	selectMenuItem(3);
 }
 
 function openDeleteModal() {
@@ -272,16 +308,14 @@ function openDeleteModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
-	document.querySelector(selector).click();
+	selectMenuItem(4);
 }
 
 function openPreferences() {
 	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
+	showSettingsMenu();
 
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
-	nodes[nodes.length - 1].click();
+	selectMenuItem(1);
 }
 
 function isPreferencesOpen() {
@@ -291,38 +325,6 @@ function isPreferencesOpen() {
 function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
-}
-
-function openActiveContactsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(3) a');
-	nodes[nodes.length - 1].click();
-}
-
-function openMessageRequestsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(4) a');
-	nodes[nodes.length - 1].click();
-}
-
-function openArchivedThreadsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(5) a');
-	nodes[nodes.length - 1].click();
-}
-
-function toggleUnreadThreadsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(6) a');
-	nodes[nodes.length - 1].click();
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup

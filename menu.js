@@ -60,21 +60,21 @@ const viewSubmenu = [
 		type: 'separator'
 	},
 	{
-		label: 'Open Active Contacts',
+		label: 'Show Active Contacts',
 		click() {
-			sendAction('open-active-contacts-view');
+			sendAction('show-active-contacts-view');
 		}
 	},
 	{
-		label: 'Open Message Requests',
+		label: 'Show Message Requests',
 		click() {
-			sendAction('open-message-requests-view');
+			sendAction('show-message-requests-view');
 		}
 	},
 	{
-		label: 'Open Archived Threads',
+		label: 'Show Archived Threads',
 		click() {
-			sendAction('open-archived-threads-view');
+			sendAction('show-archived-threads-view');
 		}
 	},
 	{
