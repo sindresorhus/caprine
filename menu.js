@@ -72,6 +72,12 @@ const helpSubmenu = [
 		}
 	},
 	{
+		label: `Donate…`,
+		click() {
+			shell.openExternal('https://sindresorhus.com/donate');
+		}
+	},
+	{
 		label: 'Report an Issue…',
 		click() {
 			const body = `
@@ -307,9 +313,16 @@ const macosTpl = [
 			},
 			{
 				label: 'Find Conversation',
-				accelerator: 'Cmd+F',
+				accelerator: 'Cmd+K',
 				click() {
 					sendAction('find');
+				}
+			},
+			{
+				label: 'Search Conversation',
+				accelerator: 'Cmd+F',
+				click() {
+					sendAction('search');
 				}
 			},
 			{
@@ -324,6 +337,13 @@ const macosTpl = [
 				accelerator: 'Cmd+E',
 				click() {
 					sendAction('insert-emoji');
+				}
+			},
+			{
+				label: 'Insert Text',
+				accelerator: 'Cmd+I',
+				click() {
+					sendAction('insert-text');
 				}
 			},
 			{
@@ -395,9 +415,16 @@ const otherTpl = [
 			},
 			{
 				label: 'Find Conversation',
-				accelerator: 'Ctrl+F',
+				accelerator: 'Ctrl+K',
 				click() {
 					sendAction('find');
+				}
+			},
+			{
+				label: 'Search Conversation',
+				accelerator: 'Ctrl+F',
+				click() {
+					sendAction('search');
 				}
 			},
 			{
@@ -412,6 +439,13 @@ const otherTpl = [
 				accelerator: 'Ctrl+E',
 				click() {
 					sendAction('insert-emoji');
+				}
+			},
+			{
+				label: 'Insert Text',
+				accelerator: 'Ctrl+I',
+				click() {
+					sendAction('insert-text');
 				}
 			},
 			{

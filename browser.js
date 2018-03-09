@@ -40,12 +40,20 @@ ipc.on('find', () => {
 	document.querySelector('._58al').focus();
 });
 
+ipc.on('search', () => {
+	document.querySelector('._3szn:nth-of-type(1)').click();
+});
+
 ipc.on('insert-gif', () => {
 	document.querySelector('._yht').click();
 });
 
 ipc.on('insert-emoji', () => {
 	document.querySelector('._5s2p').click();
+});
+
+ipc.on('insert-text', () => {
+	document.querySelector('._5rpu').focus();
 });
 
 ipc.on('next-conversation', nextConversation);
@@ -84,7 +92,7 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 		notificationCheckbox.click();
 	}
 
-	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+	ipc.send('mute-notifications-toggled', notificationCheckbox.checked);
 
 	if (!wasPreferencesOpen) {
 		closePreferences();
@@ -278,6 +286,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor') || 1.0;
 	setZoom(zoomFactor);
+
+	// Enable OS specific styles
+	document.documentElement.classList.add(`os-${process.platform}`);
 
 	// Hide sidebar if it was hidden before quitting
 	setSidebarVisibility();

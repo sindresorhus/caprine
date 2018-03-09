@@ -12,6 +12,10 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 	<img src="media/screenshot.png" width="846">
 </a>
 
+<a href="https://www.patreon.com/sindresorhus">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
+
 
 ## Highlights
 
@@ -133,13 +137,15 @@ You can enable this in the menu bar options and disable in the options of the me
 Description            | Keys
 -----------------------| -----------------------
 New conversation       | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
-Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
+Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>k</kbd>
 Toggle "Dark mode"     | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
 Next conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
 Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Cmd/Ctrl</kbd> <kbd>g</kbd>
 Insert emoji           | <kbd>Cmd/Ctrl</kbd> <kbd>e</kbd>
+Insert text            | <kbd>Cmd/Ctrl</kbd> <kbd>i</kbd>
+Search in conversation | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
 Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
