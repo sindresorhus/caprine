@@ -92,6 +92,12 @@ html.sidebar-hidden ._1enh {
 ._fl2 {
 	padding: 3px 8px !important;
 }
+
+/* Vertically center chat options */
+._fl2 {
+	padding-bottom: 8px !important;
+}
+
 /* Adjust `To` field for narrower titlebar */
 ._2y8y {
 	min-height: 40px !important;
