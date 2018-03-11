@@ -9,6 +9,20 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
+function showSettingsMenu() {
+	document.querySelector('._30yy._2fug._p').click();
+}
+
+function selectMenuItem(itemNumber) {
+	const selector = document.querySelector(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
+	selector.click();
+}
+
+function clickBackButton() {
+	const backButton = document.querySelector('._30yy._2oc9');
+	if (backButton) backButton.click();
+}
+
 ipc.on('show-preferences', async () => {
 	if (isPreferencesOpen()) {
 		return;
