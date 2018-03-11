@@ -19,7 +19,9 @@ function selectMenuItem(itemNumber) {
 
 function clickBackButton() {
 	const backButton = document.querySelector('._30yy._2oc9');
-	if (backButton) backButton.click();
+	if (backButton) {
+		backButton.click();
+	}
 }
 
 ipc.on('show-preferences', () => {
