@@ -19,7 +19,7 @@ function selectMenuItem(itemNumber) {
 
 function clickBackButton() {
 	const backButton = document.querySelector('._30yy._2oc9');
-	backButton ? backButton.click() : null; // eslint-disable-line no-unused-expressions
+	if (backButton) backButton.click();
 }
 
 ipc.on('show-preferences', () => {
