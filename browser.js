@@ -249,7 +249,7 @@ function openArchiveModal() {
 	const canaryValidator = '._54nq._2i-c._558b._2n_z li:nth-child(5)';
 	let selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
 
-	if(document.querySelector(canaryValidator).getAttribute('role') !== 'separator') {
+	if (document.querySelector(canaryValidator).getAttribute('role') !== 'separator') {
 		selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
 	}
 	document.querySelector(selector).click();
