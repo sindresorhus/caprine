@@ -1,4 +1,4 @@
-:root{
+:root {
 	--base: black;
 	--base-ninety: rgba(255, 255, 255, 0.9);
 	--base-seventy-five: rgba(255, 255, 255, 0.75);
@@ -15,6 +15,7 @@
 	--list-header-color: #202C3A;
 	--blue: #0084ff;
 }
+
 html.dark-mode body {
 	color: var(--base-seventy);
 	background: var(--container-color) !important;
@@ -35,6 +36,11 @@ html.dark-mode ._1q5- {
 html.dark-mode ._o46:not(._nd_) ._hh7 {
 	background: var(--base-ten);
 	color: var(--base-seventy);
+}
+
+/* Message list: remove background if emoji */
+html.dark-mode ._hh7._2f5r {
+	background: none !important;
 }
 
 /* Message list: remove border from messages */
@@ -84,6 +90,11 @@ html.dark-mode ._4rv3 {
 	color: var(--base-seventy);
 }
 
+/* Message list: input bar on block */
+html.dark-mode ._2wy4 {
+	color: var(--base-twenty);
+}
+
 /* Message list: timestamp */
 html.dark-mode ._497p {
 	color: var(--base-fourty);
@@ -94,6 +105,38 @@ html.dark-mode ._5742 {
 	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
+
+/* Message list: header above (event) */
+html.dark-mode ._3nta {
+	background: var(--container-color) !important;
+	border-bottom: 1px solid var(--base-five);
+}
+
+/* Message list: header above (event) */
+html.dark-mode ._2n3t {
+	background-color: var(--conversation-bg);
+}
+
+/* Message list: header above (event) */
+html.dark-mode ._2n3u {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7m {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x79 {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7b {
+	color: var(--base-thiry);
+}
+
 /* Message list: header above (invitation) */
 html.dark-mode ._2y8z,
 html.dark-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
@@ -106,6 +149,11 @@ html.dark-mode ._14-7 ._58ah ._58al {
 	color: var(--base-seventy);
 }
 
+/* Message list: sender (group chat) */
+html.dark-mode ._ih3 {
+	color: var(--base-fourty);
+}
+
 /* Messages list: user info (is in contacts) */
 html.dark-mode ._36zg-e {
 	color: var(--base-seventy) !important;
@@ -114,6 +162,27 @@ html.dark-mode ._36zg-e {
 /* Messages list: user info */
 html.dark-mode ._1n-e {
 	color: var(--base-fourty);
+}
+
+/* Messages list: event box (event name) */
+html.dark-mode ._618l {
+	color: var(--base-seventy);
+}
+
+/* Messages list: event box (event icon) */
+html.dark-mode ._618m {
+	width: 28px;
+}
+
+/* Messages list: event box (event description) */
+html.dark-mode ._618n {
+	color: var(--base-thiry);
+}
+
+/* Messages list: event box (line) */
+html.dark-mode ._618k div hr {
+	background: var(--container-color) !important;
+	border-top: 1px solid var(--base-five);
 }
 
 /* Messages list: text header above the messages */
@@ -125,6 +194,11 @@ html.dark-mode ._llq ._3oh- {
 
 html.dark-mode ._2v6o {
 	color: var(--base-fourty);
+}
+
+/* Messages list: typing indicator dots */
+html.dark-mode ._5pd7 {
+	background: var(--base-seventy) !important;
 }
 
 /* Contact list: header above */
@@ -222,6 +296,21 @@ html.dark-mode ._4_j5 {
 	border-left: solid 1px var(--base-five);
 }
 
+/* Right sidebar: menus background */
+html.dark-mode ._54ng {
+	background: var(--conversation-bg);
+}
+
+/* Right sidebar: menus text color */
+html.dark-mode ._2i-c ._54nf ._54nh {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: menus selected text color */
+html.dark-mode ._2i-c ._54nf .selected ._54nh {
+	color: rgb(255, 255, 255);
+}
+
 /* Right sidebar: headings */
 html.dark-mode ._1lj0 {
 	color: var(--base-fourty);
@@ -233,7 +322,8 @@ html.dark-mode ._1li- {
 }
 
 /* Right sidebar: group chat names */
-html.dark-mode ._2jnv {
+html.dark-mode ._2jnv,
+html.dark-mode ._5rpu {
 	color: var(--base-seventy);
 }
 
@@ -263,6 +353,15 @@ html.dark-mode ._4rph ._4rpj {
 	border-top: solid 1px var(--base-ten) !important;
 }
 
+/* Invite friends popup */
+html.dark-mode ._4jgu {
+	background-color: var(--conversation-bg);
+}
+
+html.dark-mode ._5rh4 {
+	color: var(--base-seventy);
+}
+
 /* Right sidebar: people list item (name) */
 html.dark-mode ._364g,
 html.dark-mode ._3x6u,
@@ -270,9 +369,18 @@ html.dark-mode ._4rph ._4rpj {
 	color: var(--base-seventy);
 }
 
+/* Photos info color */
+html.dark-mode ._2zn2 {
+	color: var(--base-seventy);
+}
+
+html.dark-mode ._2zn6 {
+	color: var(--base-fourty);
+}
+
 /* New conversation contact list: popup */
 html.dark-mode ._2y8_ {
-	background: transparent;
+	background-color: var(--container-color);
 	border: solid 1px var(--base-five);
 }
 
@@ -297,12 +405,12 @@ html.dark-mode ._33p7 {
 html.dark-mode ._33p7 ._b-u,
 html.dark-mode ._33p7 ._b-v {
 	background-color: transparent !important;
-	background-image: url(/rsrc.php/v3/yb/r/TF9SFeEl2Ka.png) !important;
+	background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/CV3cVGSAcf3.png) !important;
 	background-repeat: no-repeat !important;
 	background-size: auto !important;
 }
 html.dark-mode ._33p7 ._b-u {
-	background-position: 0px -66px !important;
+	background-position: 0 -42px !important;
 }
 html.dark-mode ._33p7 ._b-v {
 	background-position: 0 0 !important;
@@ -319,7 +427,7 @@ html.dark-mode ._33p7 ._5iwn ._58ak::before {
 /* Poll */
 /* Border */
 html.dark-mode ._3b4t {
-	border-color: --base-nine;
+	border-color: var(--base-nine);
 }
 /* "Poll" header text */
 html.dark-mode ._4qba {
@@ -340,7 +448,7 @@ html.dark-mode ._58al {
 }
 /* Poll results bar graph colors */
 html.dark-mode ._3b4h {
-	background-color: --base-nine;
+	background-color: var(--base-nine);
 }
 /* Poll results profile pictures */
 html.dark-mode ._4mnq {
@@ -348,7 +456,39 @@ html.dark-mode ._4mnq {
 }
 html.dark-mode ._34n6 {
 	color: var(--base-fourty);
-	background-color: --base-nine;
+	background-color: var(--base-nine);
+}
+
+/* Message reaction buttons */
+html.dark-mode ._aou,
+html.dark-mode ._4kf5 {
+	background-color: var(--conversation-bg);
+}
+
+/* Message action buttons */
+html.dark-mode ._3erg ._hh7 a._2q1l,
+html.dark-mode ._2f5n {
+	background-color: var(--container-color);
+}
+
+/* Bot quick-reply buttons */
+html.dark-mode ._3u69 {
+	background: var(--container-color) !important;
+}
+
+/* Bot quick-reply button border */
+html.dark-mode ._36wf {
+    border: 1px solid var(--base-five) !important;
+}
+
+/* Bot card title */
+html.dark-mode ._3cn0 {
+	color: var(--base-seventy);
+}
+
+/* Bot card content */
+html.dark-mode ._3cnl, ._3cnn a, ._3cnj {
+	color: var(--base-fourty);
 }
 
 /* Dialogs */
@@ -364,6 +504,27 @@ html.dark-mode ._4ebz,
 html.dark-mode ._2c9i ._19jt,
 html.dark-mode .uiInputLabelLabel {
 	color: var(--base-seventy) !important;
+}
+
+/* Send cash dialog background */
+html.dark-mode ._49no,
+html.dark-mode ._2z8r {
+	background-color: transparent !important;
+}
+
+/* Send cash dialog disabled */
+html.dark-mode ._3org {
+	background-color: var(--base-twenty) !important;
+}
+
+/* Send cash dialog primary text */
+html.dark-mode ._39r6 {
+	color: var(--base-seventy) !important;
+}
+
+/* Send cash dialog secondary text */
+html.dark-mode ._39r7 {
+	color: var(--base-fourty) !important;
 }
 
 /* Gif and sticker dialog: hide white triangle */
@@ -395,13 +556,13 @@ html.dark-mode ._3z53 {
 
 /* Delete popover */
 html.dark-mode ._hw2 ._53ij {
-	background-color: var(--base-ten) !important;
+	background-color: var(--base-seventy) !important;
 }
 
 /* Login tile and names */
 html.dark-mode ._5hy4,
 html.dark-mode ._3403 {
-	color: var(--base-seventy) !important;
+	color: var(--base-fourty) !important;
 }
 
 /* Login inputs */
@@ -453,4 +614,28 @@ html.dark-mode ._wu0 {
 	--code-block-base: #c5c8c6;
 	--code-block-background: #1d1f21;
 	--code-block-border: #0a0c14;
+}
+
+/* Plan dialog primary text */
+html.dark-mode ._4dx5,
+html.dark-mode ._38wl {
+	color: var(--base-seventy) !important;
+}
+
+/* Plan dialog input fields */
+html.dark-mode ._2mes._3smo ._3smp,
+html.dark-mode ._5pw9,
+html.dark-mode ._5pw6{
+	background-color: transparent !important;
+	color: var(--base-fourty) !important;
+}
+
+/* Plan dialog time selector active highlight */
+html.dark-mode ._5pw1 {
+    background: var(--base-nine);
+}
+
+/* Rich media integration text */
+html.dark-mode ._29ey {
+	color: var(--base-fourty) !important;
 }

@@ -2,7 +2,7 @@ html {
 	overflow: hidden;
 }
 
-/* Add OS specific fonts */
+/* Add OS-specific fonts */
 body {
 	font-family: -apple-system,
 			BlinkMacSystemFont,
@@ -25,6 +25,7 @@ body {
 ._5742 {
 	-webkit-app-region: drag;
 }
+
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
 ._36ic._5l-3 ._30yy,
 ._5742 ._30yy {
@@ -35,6 +36,11 @@ body {
 /* Window wrapper */
 ._4sp8 {
 	min-width: 0;
+}
+
+/* Hide sidebar (optionally) */
+html.sidebar-hidden ._1enh {
+	display: none;
 }
 
 /* Hide footer at login view */
@@ -52,7 +58,7 @@ body {
 	display: none !important;
 }
 
-/* Right-column */
+/* Right column */
 ._1q5- {
 	border-left: 1px solid rgba(0, 0, 0, .10) !important;
 }
@@ -70,6 +76,11 @@ body {
 /* Hide title */
 ._1tqi {
 	display: none;
+}
+
+/* Center names in titlebar */
+._5742 {
+	text-align: center !important;
 }
 
 /* Narrower titlebar */
@@ -92,13 +103,33 @@ body {
 	display: none;
 }
 
-/* Move the contextual back button so it's not obstructed by the native traffic lights */
-._30yy._2oc9 {
+/* Message box: fix video width */
+._3zvs._5z-5 {
+	width: 100% !important;
+}
+._2poz._52mr._ui9._2n8h._2n8i._5fk1 {
+	width: 100% !important;
+}
+._ccq._4tsk._3o67._52mr._4-od {
+	width: 100% !important;
+}
+._1c_u {
+	width: 100% !important;
+}
+._53j5 {
+	width: 100% !important;
+}
+._ox1._21y0 {
+	width: 100% !important;
+}
+
+/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
+.os-darwin ._30yy._2oc9 {
 	margin-left: 65px !important;
 }
 
 @media all and (max-width: 700px) {
-	/* Make right-column flexible in compact mode */
+	/* Make right column flexible in compact mode */
 	._1q5- {
 		position: absolute !important;
 		right: 0 !important;
@@ -107,12 +138,17 @@ body {
 	}
 
 	/* Fix for left space in compact mode */
-	._1q5-.sidebar-hidden {
+	html.sidebar-hidden ._1q5- {
 		left: 0px !important;
 	}
 
 	/* `New Conversation` icon */
 	._30yy[href='/new'] {
+		display: none !important;
+	}
+
+	/* Hide right sidebar in compact mode */
+	._4_j5 {
 		display: none !important;
 	}
 }

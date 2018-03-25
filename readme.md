@@ -12,6 +12,10 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 	<img src="media/screenshot.png" width="846">
 </a>
 
+<a href="https://www.patreon.com/sindresorhus">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
+
 
 ## Highlights
 
@@ -72,6 +76,10 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
 
+### Mute desktop notifications
+
+You can quickly disable receiving notifications from the `Caprine`/`File` menu or the Dock on macOS.
+
 ### Prevents link tracking
 
 Links that you click on will not be tracked by Facebook.
@@ -117,20 +125,20 @@ You can send code blocks by using [Markdown syntax](https://github.com/adam-p/ma
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
-If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
-
 ### Keyboard shortcuts
 
 Description            | Keys
 -----------------------| -----------------------
 New conversation       | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
-Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
+Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>k</kbd>
 Toggle "Dark mode"     | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
 Next conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
 Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Cmd/Ctrl</kbd> <kbd>g</kbd>
 Insert emoji           | <kbd>Cmd/Ctrl</kbd> <kbd>e</kbd>
+Insert text            | <kbd>Cmd/Ctrl</kbd> <kbd>i</kbd>
+Search in conversation | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
 Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
 Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
@@ -145,7 +153,7 @@ Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
 
 ## Dev
 
-Built with [Electron](http://electron.atom.io).
+Built with [Electron](https://electronjs.org).
 
 ### Run
 
