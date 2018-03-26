@@ -92,12 +92,9 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 	}
 });
 
-ipc.on('toggle-message-buttons', () => {
-	elementReady('._39bj').then(messageButtons => {
-		messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
-	}).catch(err => {
-		console.error(err);
-	});
+ipc.on('toggle-message-buttons', async () => {
+	const messageButtons = await elementReady('._39bj');
+	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
 });
 
 function setDarkMode() {
