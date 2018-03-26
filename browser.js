@@ -18,6 +18,16 @@ function selectMenuItem(itemNumber) {
 	selector.click();
 }
 
+function selectOtherListViews(itemNumber) {
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(itemNumber);
+}
+
 function clickBackButton() {
 	const backButton = document.querySelector('._30yy._2oc9');
 	if (backButton) {
@@ -121,20 +131,20 @@ ipc.on('toggle-message-buttons', async () => {
 	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
 });
 
-ipc.on('open-active-contacts-view', () => {
-	openActiveContactsView();
+ipc.on('show-active-contacts-view', () => {
+	selectOtherListViews(3);
 });
 
-ipc.on('open-message-requests-view', () => {
-	openMessageRequestsView();
+ipc.on('show-message-requests-view', () => {
+	selectOtherListViews(4);
 });
 
-ipc.on('open-archived-threads-view', () => {
-	openArchivedThreadsView();
+ipc.on('show-archived-threads-view', () => {
+	selectOtherListViews(5);
 });
 
 ipc.on('toggle-unread-threads-view', () => {
-	toggleUnreadThreadsView();
+	selectOtherListViews(6);
 });
 
 function setDarkMode() {
