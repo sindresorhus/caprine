@@ -327,6 +327,11 @@ html.dark-mode ._5rpu {
 	color: var(--base-seventy);
 }
 
+/* Right sidebar: group chat names admin label */
+html.dark-mode ._5qsj {
+	color: var(--base-fourty);
+}
+
 /* Right sidebar: messenger type info under name */
 html.dark-mode ._3eus {
 	color: var(--base-fourty);
