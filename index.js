@@ -238,6 +238,15 @@ app.on('ready', () => {
 				click() {
 					mainWindow.webContents.send('toggle-mute-notifications');
 				}
+			},
+			{
+				label: 'Show Message Buttons',
+				type: 'checkbox',
+				checked: config.get('showMessageButtons'),
+				click() {
+					config.set('showMessageButtons', !config.get('showMessageButtons'));
+					mainWindow.webContents.send('toggle-message-buttons');
+				}
 			}
 		]);
 		app.dock.setMenu(dockMenu);
