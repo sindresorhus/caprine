@@ -17,6 +17,16 @@ function selectMenuItem(itemNumber) {
 	selector.click();
 }
 
+function selectOtherListViews(itemNumber) {
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(itemNumber);
+}
+
 function clickBackButton() {
 	const backButton = document.querySelector('._30yy._2oc9');
 	if (backButton) {
@@ -116,43 +126,19 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 });
 
 ipc.on('show-active-contacts-view', () => {
-	// In case one of other views is shown
-	clickBackButton();
-
-	// Create the menu for the below
-	showSettingsMenu();
-
-	selectMenuItem(3);
+	selectOtherListViews(3);
 });
 
 ipc.on('show-message-requests-view', () => {
-	// In case one of other views is shown
-	clickBackButton();
-
-	// Create the menu for the below
-	showSettingsMenu();
-
-	selectMenuItem(4);
+	selectOtherListViews(4);
 });
 
 ipc.on('show-archived-threads-view', () => {
-	// In case one of other views is shown
-	clickBackButton();
-
-	// Create the menu for the below
-	showSettingsMenu();
-
-	selectMenuItem(5);
+	selectOtherListViews(5);
 });
 
 ipc.on('toggle-unread-threads-view', () => {
-	// In case one of other views is shown
-	clickBackButton();
-
-	// Create the menu for the below
-	showSettingsMenu();
-
-	selectMenuItem(6);
+	selectOtherListViews(6);
 });
 
 function setDarkMode() {
