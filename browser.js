@@ -246,13 +246,17 @@ function openArchiveModal() {
 	if (!openConversationMenu()) {
 		return;
 	}
-	const canaryValidator = '._54nq._2i-c._558b._2n_z li:nth-child(5)';
-	let selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
 
-	if (document.querySelector(canaryValidator).getAttribute('role') !== 'separator') {
-		selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
+	// Selector for private chat is set as the default selector
+	let archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
+	const separatorSelector = '._54nq._2i-c._558b._2n_z li:nth-child(5)';
+
+	// Check element's role
+	if (document.querySelector(separatorSelector).getAttribute('role') !== 'separator') {
+		// If the role isn't separator, dealing with a group chat
+		archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
 	}
-	document.querySelector(selector).click();
+	document.querySelector(archiveButtonSelector).click();
 }
 
 function openDeleteModal() {
