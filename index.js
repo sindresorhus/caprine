@@ -285,11 +285,8 @@ app.on('ready', () => {
 			mainWindow.show();
 		}
 
-		// Workaround for setting config after startup
-		setTimeout(() => {
-			mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
-			mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
-		}, 1000);
+		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {

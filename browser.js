@@ -1,5 +1,6 @@
 'use strict';
 const electron = require('electron');
+const elementReady = require('element-ready');
 const config = require('./config');
 
 const {ipcRenderer: ipc} = electron;
@@ -92,8 +93,11 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 });
 
 ipc.on('toggle-message-buttons', () => {
-	const messageButtons = document.querySelector('._39bj');
-	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
+	elementReady('._39bj').then(messageButtons => {
+		messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
+	}).catch(err => {
+		console.error(err);
+	});
 });
 
 function setDarkMode() {
