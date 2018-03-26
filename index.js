@@ -285,7 +285,11 @@ app.on('ready', () => {
 			mainWindow.show();
 		}
 
-		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		// Workaround for setting config after startup
+		setTimeout(() => {
+			mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+			mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+		}, 1000);
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
