@@ -93,8 +93,7 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 
 ipc.on('toggle-message-buttons', () => {
 	const messageButtons = document.querySelector('._39bj');
-
-	messageButtons.style.display = (config.get('showMessageButtons') ? 'flex' : 'none');
+	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
 });
 
 function setDarkMode() {
