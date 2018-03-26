@@ -238,15 +238,6 @@ app.on('ready', () => {
 				click() {
 					mainWindow.webContents.send('toggle-mute-notifications');
 				}
-			},
-			{
-				label: 'Show Message Buttons',
-				type: 'checkbox',
-				checked: config.get('showMessageButtons'),
-				click() {
-					config.set('showMessageButtons', !config.get('showMessageButtons'));
-					mainWindow.webContents.send('toggle-message-buttons');
-				}
 			}
 		]);
 		app.dock.setMenu(dockMenu);
@@ -328,17 +319,6 @@ ipcMain.on('set-vibrancy', () => {
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
 	setNotificationsMute(status);
-});
-
-ipcMain.on('message-buttons-toggled', (event, status) => {
-	const label = 'Show Message Buttons';
-
-	config.set('showMessageButtons', status);
-
-	if (process.platform === 'darwin') {
-		const item = dockMenu.items.find(x => x.label === label);
-		item.checked = status;
-	}
 });
 
 app.on('activate', () => {
