@@ -355,10 +355,10 @@ const macosTpl = [
 			{
 				label: 'Enable Menu Bar Mode',
 				click() {
-					config.set('continuity', true);
+					config.set('menubarmode', true);
 
 					const [win] = BrowserWindow.getAllWindows();
-					win.toggleContinuity();
+					win.toggleMenuBarMode();
 				}
 			},
 			{

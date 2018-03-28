@@ -137,6 +137,28 @@ function setUpPrivacyBlocking() {
 	});
 }
 
+function setupMenuBarMode(mainWindow) {
+	if (process.platform === 'darwin') {
+		mainWindow.toggleMenuBarMode = function () {
+			const enabled = config.get('menubarmode');
+			setMenuBarMode(enabled);
+		};
+
+		setMenuBarMode(config.get('menubarmode'));
+
+		mainWindow.on('enter-full-screen', () => {
+			app.dock.show();
+		});
+		mainWindow.on('leave-full-screen', () => {
+			if (config.get('menubarmode')) {
+				app.dock.hide();
+			}
+		});
+	} else {
+		tray.create(mainWindow);
+	}
+}
+
 function setUserLocale() {
 	const facebookLocales = require('facebook-locales');
 	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale());
@@ -193,7 +215,7 @@ function createMainWindow() {
 	setUserLocale();
 	setUpPrivacyBlocking();
 
-	win.toggle = function () {
+	win.toggle = () => {
 		if (this.isVisible()) {
 			this.hide();
 		} else {
@@ -232,7 +254,7 @@ function createMainWindow() {
 	});
 
 	win.on('blur', () => {
-		if (process.platform === 'darwin' && config.get('continuity') && !win.isFullScreen()) {
+		if (process.platform === 'darwin' && config.get('menubarmode') && !win.isFullScreen()) {
 			win.hide();
 		}
 	});
@@ -245,25 +267,8 @@ app.on('ready', () => {
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 
-	if (process.platform === 'darwin') {
-		mainWindow.toggleContinuity = function () {
-			const enabled = config.get('continuity');
-			setContinuity(enabled);
-		};
-
-		setContinuity(config.get('continuity'));
-
-		mainWindow.on('enter-full-screen', () => {
-			app.dock.show();
-		});
-		mainWindow.on('leave-full-screen', () => {
-			if (config.get('continuity')) {
-				app.dock.hide();
-			}
-		});
-	} else {
-		tray.create(mainWindow);
-	}
+	// Start in Menu Bar mode if enabled, otherwise start normally
+	setupMenuBarMode(mainWindow);
 
 	if (process.platform === 'darwin') {
 		dockMenu = electron.Menu.buildFromTemplate([
@@ -369,19 +374,19 @@ app.on('before-quit', () => {
 	}
 });
 
-function setContinuity(state) {
-	setWindowContinuity(state);
-	setAppContinuity(state);
-	setGlobalShortcutContinuity(state);
-	setTrayContinuity(state);
+function setMenuBarMode(state) {
+	setWindowMenuBarMode(state);
+	setAppMenuBarMode(state);
+	setGlobalShortcutMenuBarMode(state);
+	setTrayMenuBarMode(state);
 }
 
-function setWindowContinuity(state) {
+function setWindowMenuBarMode(state) {
 	mainWindow.setVisibleOnAllWorkspaces(state);
 	mainWindow.setAlwaysOnTop(state);
 }
 
-function setAppContinuity(state) {
+function setAppMenuBarMode(state) {
 	if (state) {
 		if (!mainWindow.isFullScreen()) {
 			app.dock.hide();
@@ -392,7 +397,7 @@ function setAppContinuity(state) {
 	}
 }
 
-function setGlobalShortcutContinuity(state) {
+function setGlobalShortcutMenuBarMode(state) {
 	const key = 'Control+M';
 
 	if (state) {
@@ -404,7 +409,7 @@ function setGlobalShortcutContinuity(state) {
 	}
 }
 
-function setTrayContinuity(state) {
+function setTrayMenuBarMode(state) {
 	if (state) {
 		tray.create(mainWindow);
 	} else {

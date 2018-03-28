@@ -125,8 +125,6 @@ You can send code blocks by using [Markdown syntax](https://github.com/adam-p/ma
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
-If you like to have Caprine minimized on startup, open it from the command-line with the `--minimize` flag.
-
 ### Menu Bar Mode
 
 On *macOS*, you can remove the app from the dock, create a menu bar icon and have a global shortcut to toggle the window. Caprine will show above any app, even if they are full screen, and it'll hide when is not focused.
@@ -155,7 +153,7 @@ Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
 Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
 Toggle window (global*)| <kbd>Ctrl</kbd> <kbd>m</kbd>
 
-\*In continuity only
+\*In Menu Bar Mode only
 
 ---
 
@@ -199,5 +197,3 @@ Caprine is a third-party app and is not affiliated with Facebook.
 ## License
 
 MIT
-
-

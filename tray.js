@@ -6,7 +6,7 @@ const config = require('./config');
 const {app} = electron;
 let contextMenu = null;
 let tray = null;
-let lastCounter = 0;
+let previousMessageCount = 0;
 
 exports.create = win => {
 	if (tray !== null && !tray.isDestroyed()) {
@@ -15,10 +15,10 @@ exports.create = win => {
 
 	contextMenu = electron.Menu.buildFromTemplate([
 		{
-			label: 'Disable Continuity',
+			label: 'Disable Menu Bar Mode',
 			click() {
-				config.set('continuity', false);
-				win.toggleContinuity();
+				config.set('menubarmode', false);
+				win.toggleMenuBarMode();
 			}
 		},
 		{
@@ -52,11 +52,11 @@ exports.create = win => {
 };
 
 exports.update = messageCount => {
-	if (!tray || !Number.isInteger(messageCount) || lastCounter === messageCount) {
+	if (!tray || !Number.isInteger(messageCount) || previousMessageCount === messageCount) {
 		return;
 	}
 
-	lastCounter = messageCount;
+	previousMessageCount = messageCount;
 
 	tray.setImage(getIconPath(messageCount > 0));
 
@@ -82,13 +82,7 @@ function updateToolTip(counter) {
 
 function getIconPath(hasUnreadMessages) {
 	let icon = '';
-
-	if (process.platform === 'darwin') {
-		icon = getDarwinIconPath(hasUnreadMessages);
-	} else {
-		icon = getNonDarwinIconPath(hasUnreadMessages);
-	}
-
+	icon = process.platform === 'darwin' ? getDarwinIconPath(hasUnreadMessages) : getNonDarwinIconPath(hasUnreadMessages);
 	return path.join(__dirname, `static/${icon}`);
 }
 
