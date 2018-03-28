@@ -1,7 +1,7 @@
 {
-  "name": "caprine",
+	"name": "caprine",
 	"productName": "Caprine",
-	"version": "2.10.0",
+	"version": "2.11.0",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "sindresorhus/caprine",
@@ -10,76 +10,69 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "sindresorhus.com"
 	},
-  "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "test": "xo",
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder --mac --linux --win"
-  },
-  "dependencies": {
-    "electron-context-menu": "^0.9.1",
-    "electron-debug": "^1.4.0",
-    "electron-dl": "^1.0.0",
-    "electron-is-dev": "^0.3.0",
-    "electron-localshortcut": "^2.0.0",
-    "electron-log": "^2.0.2",
-    "electron-store": "^1.1.0",
-    "electron-updater": "^2.18.2",
-    "element-ready": "^2.2.0",
-    "facebook-locales": "^1.0.464",
-    "minimist": "^1.2.0"
-  },
-  "devDependencies": {
-		"electron": "1.7.10",
-		"electron-builder": "19.54.0",
+	"scripts": {
+		"postinstall": "electron-builder install-app-deps",
+		"test": "xo",
+		"start": "electron .",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder --mac --linux --win"
+	},
+	"dependencies": {
+		"electron-context-menu": "^0.9.1",
+		"electron-debug": "^1.4.0",
+		"electron-dl": "^1.0.0",
+		"electron-is-dev": "^0.3.0",
+		"electron-localshortcut": "^2.0.0",
+		"electron-log": "^2.0.2",
+		"electron-store": "^1.1.0",
+		"electron-updater": "^2.21.3",
+		"element-ready": "^2.2.0",
+		"facebook-locales": "^1.0.464"
+	},
+	"devDependencies": {
+		"electron": "^1.8.4",
+		"electron-builder": "^20.6.2",
 		"xo": "*"
 	},
-  "xo": {
-    "envs": [
-      "node",
-      "browser"
-    ]
-  },
-  "build": {
-    "files": [
-      "**/*",
-      "!media${/*}"
-    ],
-    "appId": "com.sindresorhus.caprine",
-    "mac": {
-      "category": "public.app-category.social-networking",
-      "electronUpdaterCompatibility": ">=2.18.2",
-      "extendInfo": {
-        "LSUIElement": true
-      }
-    },
-    "dmg": {
-      "iconSize": 160,
-      "contents": [
-        {
-          "x": 180,
-          "y": 170
-        },
-        {
-          "x": 480,
-          "y": 170,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "linux": {
-      "category": "Chat",
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "win": {
-      "target": [
-        "nsis"
-      ]
-    }
-  }
+	"xo": {
+		"envs": [
+			"node",
+			"browser"
+		]
+	},
+	"build": {
+		"files": [
+			"**/*",
+			"!media${/*}"
+		],
+		"appId": "com.sindresorhus.caprine",
+		"mac": {
+			"category": "public.app-category.social-networking",
+			"electronUpdaterCompatibility": ">=2.21.3",
+			"extendInfo": {
+				"LSUIElement": true
+			}
+		},
+		"dmg": {
+			"iconSize": 160,
+			"contents": [
+				{
+					"x": 180,
+					"y": 170
+				},
+				{
+					"x": 480,
+					"y": 170,
+					"type": "link",
+					"path": "/Applications"
+				}
+			]
+		},
+		"linux": {
+			"target": [
+				"AppImage",
+				"deb"
+			]
+		}
+	}
 }

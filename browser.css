@@ -92,6 +92,12 @@ html.sidebar-hidden ._1enh {
 ._fl2 {
 	padding: 3px 8px !important;
 }
+
+/* Vertically center chat options */
+._fl2 {
+	padding-bottom: 8px !important;
+}
+
 /* Adjust `To` field for narrower titlebar */
 ._2y8y {
 	min-height: 40px !important;
@@ -121,6 +127,11 @@ html.sidebar-hidden ._1enh {
 }
 ._ox1._21y0 {
 	width: 100% !important;
+}
+
+/* Message box: hide bottom white line */
+.fbNubFlyoutAttachments {
+	display: none !important;
 }
 
 /* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
@@ -232,3 +243,8 @@ a,
 ._wu0 .token.important   { color: var(--code-block-keyword) !important }
 ._wu0 .token.italic      { color: var(--code-block-keyword) !important; font-style: italic; }
 ._wu0 .token.function    { color: var(--code-block-function) !important }
+
+/* Hide hidden accessibility elements so they're not included in copy-pasting of chat logs */
+.accessible_elem {
+	display: none !important;
+}
