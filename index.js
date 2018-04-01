@@ -286,6 +286,7 @@ app.on('ready', () => {
 		}
 
 		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		mainWindow.webContents.send('set-emoji-color', config.get('emojiColor'));
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {

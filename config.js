@@ -23,6 +23,7 @@ module.exports = new Store({
 		useWorkChat: false,
 		sidebarHidden: false,
 		autoHideMenuBar: false,
-		notificationsMuted: false
+		notificationsMuted: false,
+		emojiColor: 2
 	}
 });
