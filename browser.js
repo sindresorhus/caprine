@@ -1,5 +1,6 @@
 'use strict';
 const electron = require('electron');
+const elementReady = require('element-ready');
 const config = require('./config');
 
 const {ipcRenderer: ipc} = electron;
@@ -93,6 +94,20 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 	}
 
 	ipc.send('mute-notifications-toggled', notificationCheckbox.checked);
+
+	if (!wasPreferencesOpen) {
+		closePreferences();
+	}
+});
+
+ipc.on('set-emoji-color', async (event, defaultStatus) => {
+	const wasPreferencesOpen = isPreferencesOpen();
+
+	if (!wasPreferencesOpen) {
+		openPreferences();
+	}
+
+	(await elementReady(`._51mx td:nth-child(${defaultStatus + 1}) ._4rlu`)).click();
 
 	if (!wasPreferencesOpen) {
 		closePreferences();
@@ -329,3 +344,25 @@ document.addEventListener('keydown', event => {
 		jumpToConversation(num);
 	}
 });
+
+// Add event listener to catch a change of emoji color
+(async function () {
+	(await elementReady('._51mx td:nth-child(1) ._4rlu')).addEventListener('click', () => {
+		config.set('emojiColor', 0);
+	});
+	(await elementReady('._51mx td:nth-child(1) ._4rlu')).addEventListener('click', () => {
+		config.set('emojiColor', 1);
+	});
+	(await elementReady('._51mx td:nth-child(1) ._4rlu')).addEventListener('click', () => {
+		config.set('emojiColor', 2);
+	});
+	(await elementReady('._51mx td:nth-child(1) ._4rlu')).addEventListener('click', () => {
+		config.set('emojiColor', 3);
+	});
+	(await elementReady('._51mx td:nth-child(1) ._4rlu')).addEventListener('click', () => {
+		config.set('emojiColor', 4);
+	});
+	(await elementReady('._51mx td:nth-child(1) ._4rlu')).addEventListener('click', () => {
+		config.set('emojiColor', 5);
+	});
+})();
