@@ -48,7 +48,10 @@
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
 			"category": "public.app-category.social-networking",
-			"electronUpdaterCompatibility": ">=2.21.3"
+			"electronUpdaterCompatibility": ">=2.21.3",
+			"extendInfo": {
+				"LSUIElement": true
+			}
 		},
 		"dmg": {
 			"iconSize": 160,

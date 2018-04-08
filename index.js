@@ -46,14 +46,22 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title, titlePrefix) {
+function getMessageCount(title, titlePrefix) {
 	// ignore `Sindre messaged you` blinking
 	if (title.indexOf(titlePrefix) === -1) {
-		return;
+		return null;
 	}
 
 	let messageCount = (/\((\d+)\)/).exec(title);
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
+
+	return messageCount;
+}
+
+function updateBadge(messageCount) {
+	if (messageCount === null) {
+		return;
+	}
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		if (config.get('showUnreadBadge')) {
@@ -65,9 +73,7 @@ function updateBadge(title, titlePrefix) {
 		}
 	}
 
-	if ((process.platform === 'linux' || process.platform === 'win32') && config.get('showUnreadBadge')) {
-		tray.setBadge(messageCount);
-	}
+	tray.update(messageCount);
 
 	if (process.platform === 'win32') {
 		if (config.get('showUnreadBadge')) {
@@ -131,6 +137,28 @@ function setUpPrivacyBlocking() {
 	});
 }
 
+function setupMenuBarMode(mainWindow) {
+	if (process.platform === 'darwin') {
+		mainWindow.toggleMenuBarMode = function () {
+			const enabled = config.get('menubarmode');
+			setMenuBarMode(enabled);
+		};
+
+		setMenuBarMode(config.get('menubarmode'));
+
+		mainWindow.on('enter-full-screen', () => {
+			app.dock.show();
+		});
+		mainWindow.on('leave-full-screen', () => {
+			if (config.get('menubarmode')) {
+				app.dock.hide();
+			}
+		});
+	} else {
+		tray.create(mainWindow);
+	}
+}
+
 function setUserLocale() {
 	const facebookLocales = require('facebook-locales');
 	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale());
@@ -187,6 +215,14 @@ function createMainWindow() {
 	setUserLocale();
 	setUpPrivacyBlocking();
 
+	win.toggle = () => {
+		if (this.isVisible()) {
+			this.hide();
+		} else {
+			this.show();
+		}
+	};
+
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);
 	}
@@ -200,23 +236,26 @@ function createMainWindow() {
 			// Workaround for electron/electron#10023
 			win.blur();
 
-			if (process.platform === 'darwin') {
-				app.hide();
-			} else {
-				win.hide();
-			}
+			win.hide();
 		}
 	});
 
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
-		updateBadge(title, titlePrefix);
+
+		updateBadge(getMessageCount(title, titlePrefix));
 	});
 
 	win.on('focus', () => {
 		if (config.get('flashWindowOnMessage')) {
 			// This is a security in the case where messageCount is not reset by page title update
 			win.flashFrame(false);
+		}
+	});
+
+	win.on('blur', () => {
+		if (process.platform === 'darwin' && config.get('menubarmode') && !win.isFullScreen()) {
+			win.hide();
 		}
 	});
 
@@ -227,7 +266,9 @@ app.on('ready', () => {
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
-	tray.create(mainWindow);
+
+	// Start in Menu Bar mode if enabled, otherwise start normally
+	setupMenuBarMode(mainWindow);
 
 	if (process.platform === 'darwin') {
 		dockMenu = electron.Menu.buildFromTemplate([
@@ -332,3 +373,46 @@ app.on('before-quit', () => {
 		config.set('lastWindowState', mainWindow.getBounds());
 	}
 });
+
+function setMenuBarMode(state) {
+	setWindowMenuBarMode(state);
+	setAppMenuBarMode(state);
+	setGlobalShortcutMenuBarMode(state);
+	setTrayMenuBarMode(state);
+}
+
+function setWindowMenuBarMode(state) {
+	mainWindow.setVisibleOnAllWorkspaces(state);
+	mainWindow.setAlwaysOnTop(state);
+}
+
+function setAppMenuBarMode(state) {
+	if (state) {
+		if (!mainWindow.isFullScreen()) {
+			app.dock.hide();
+		}
+	} else {
+		app.dock.show();
+		mainWindow.show();
+	}
+}
+
+function setGlobalShortcutMenuBarMode(state) {
+	const key = 'Control+M';
+
+	if (state) {
+		electron.globalShortcut.register(key, () => {
+			mainWindow.toggle();
+		});
+	} else {
+		electron.globalShortcut.unregister(key);
+	}
+}
+
+function setTrayMenuBarMode(state) {
+	if (state) {
+		tray.create(mainWindow);
+	} else {
+		tray.destroy();
+	}
+}

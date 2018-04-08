@@ -1,30 +1,24 @@
 'use strict';
 const path = require('path');
 const electron = require('electron');
+const config = require('./config');
 
 const {app} = electron;
+let contextMenu = null;
 let tray = null;
+let previousMessageCount = 0;
 
 exports.create = win => {
-	if (process.platform === 'darwin' || tray) {
+	if (tray !== null && !tray.isDestroyed()) {
 		return;
 	}
 
-	const iconPath = path.join(__dirname, 'static/IconTray.png');
-
-	const toggleWin = () => {
-		if (win.isVisible()) {
-			win.hide();
-		} else {
-			win.show();
-		}
-	};
-
-	const contextMenu = electron.Menu.buildFromTemplate([
+	contextMenu = electron.Menu.buildFromTemplate([
 		{
-			label: 'Toggle',
+			label: 'Disable Menu Bar Mode',
 			click() {
-				toggleWin();
+				config.set('menubarmode', false);
+				win.toggleMenuBarMode();
 			}
 		},
 		{
@@ -35,18 +29,67 @@ exports.create = win => {
 		}
 	]);
 
-	tray = new electron.Tray(iconPath);
-	tray.setToolTip(`${app.getName()}`);
-	tray.setContextMenu(contextMenu);
-	tray.on('click', toggleWin);
+	tray = new electron.Tray(getIconPath(false));
+	updateToolTip(0);
+
+	tray.on('click', () => {
+		if (!win.isFullScreen()) {
+			win.toggle();
+		}
+	});
+
+	tray.on('double-click', () => {
+		if (!win.isFullScreen()) {
+			win.toggle();
+		}
+	});
+
+	tray.on('right-click', () => {
+		if (process.platform === 'darwin') {
+			tray.popUpContextMenu(contextMenu);
+		}
+	});
 };
 
-exports.setBadge = shouldDisplayUnread => {
-	if (process.platform === 'darwin' || !tray) {
+exports.update = messageCount => {
+	if (!tray || !Number.isInteger(messageCount) || previousMessageCount === messageCount) {
 		return;
 	}
 
-	const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-	const iconPath = path.join(__dirname, `static/${icon}`);
-	tray.setImage(iconPath);
+	previousMessageCount = messageCount;
+
+	tray.setImage(getIconPath(messageCount > 0));
+
+	updateToolTip(messageCount);
 };
+
+exports.destroy = () => {
+	if (tray !== null && !tray.isDestroyed()) {
+		tray.destroy();
+	}
+};
+
+function updateToolTip(counter) {
+	let tip = app.getName();
+
+	if (counter > 0) {
+		const msg = (counter === 1 ? 'message' : 'messages');
+		tip += ` - ${counter} unread ${msg}`;
+	}
+
+	tray.setToolTip(tip);
+}
+
+function getIconPath(hasUnreadMessages) {
+	let icon = '';
+	icon = process.platform === 'darwin' ? getDarwinIconPath(hasUnreadMessages) : getNonDarwinIconPath(hasUnreadMessages);
+	return path.join(__dirname, `static/${icon}`);
+}
+
+function getNonDarwinIconPath(hasUnreadMessages) {
+	return hasUnreadMessages ? 'IconTrayUnread.png' : 'IconTray.png';
+}
+
+function getDarwinIconPath(hasUnreadMessages) {
+	return hasUnreadMessages ? 'IconMenuBarUnreadTemplate.png' : 'IconMenuBarTemplate.png';
+}

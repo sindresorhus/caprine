@@ -125,6 +125,11 @@ You can send code blocks by using [Markdown syntax](https://github.com/adam-p/ma
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
 
+### Menu Bar Mode
+
+On *macOS*, you can remove the app from the dock, create a menu bar icon and have a global shortcut to toggle the window. Caprine will show above any app, even if they are full screen, and it'll hide when is not focused.
+You can enable this in the menu bar options and disable in the options of the menu bar icon (right click on it).
+
 ### Keyboard shortcuts
 
 Description            | Keys
@@ -146,7 +151,9 @@ Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
 Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
 Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
+Toggle window (global*)| <kbd>Ctrl</kbd> <kbd>m</kbd>
 
+\*In Menu Bar Mode only
 
 ---
 
