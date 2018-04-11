@@ -11,6 +11,8 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
+require('./touchBar')
+
 require('electron-debug')({enabled: true});
 require('electron-dl')();
 require('electron-context-menu')();

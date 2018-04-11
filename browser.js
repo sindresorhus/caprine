@@ -167,6 +167,11 @@ ipc.on('zoom-out', () => {
 	}
 });
 
+
+ipc.on('jumpToConversation', (event, index) => {
+	jumpToConversation(index)
+});
+
 function nextConversation() {
 	const index = getNextIndex(true);
 	selectConversation(index);
@@ -277,6 +282,16 @@ function closePreferences() {
 	doneButton.click();
 }
 
+function setTouchBar() {
+	const conversations = []
+	for (const el of document.querySelectorAll("[role=navigation] a ._1ht6")) {
+		conversations.push(el.textContent)
+	}
+	
+	if (conversations.length)
+		ipc.send('touchBar', conversations)
+}
+
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
 	const style = document.createElement('style');
@@ -304,6 +319,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Activate vibrancy effect if it was set before quitting
 	setVibrancy();
+});
+
+window.addEventListener("load", function (event) {
+	setTouchBar()
 });
 
 // It's not possible to add multiple accelerators
