@@ -167,9 +167,8 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-
 ipc.on('jumpToConversation', (event, index) => {
-	jumpToConversation(index)
+	jumpToConversation(index);
 });
 
 function nextConversation() {
@@ -283,13 +282,14 @@ function closePreferences() {
 }
 
 function setTouchBar() {
-	const conversations = []
-	for (const el of document.querySelectorAll("[role=navigation] a ._1ht6")) {
-		conversations.push(el.textContent)
+	const conversations = [];
+	for (const el of document.querySelectorAll('[role=navigation] a ._1ht6')) {
+		conversations.push(el.textContent);
 	}
-	
-	if (conversations.length)
-		ipc.send('touchBar', conversations)
+
+	if (conversations.length > 0) {
+		ipc.send('touchBar', conversations);
+	}
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
@@ -321,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	setVibrancy();
 });
 
-window.addEventListener("load", function (event) {
-	setTouchBar()
+window.addEventListener('load', () => {
+	setTouchBar();
 });
 
 // It's not possible to add multiple accelerators

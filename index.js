@@ -11,7 +11,7 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 
-require('./touchBar')
+require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
 require('electron-debug')({enabled: true});
 require('electron-dl')();
