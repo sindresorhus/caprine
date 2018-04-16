@@ -19,9 +19,10 @@ function sendAction(action, ...args) {
 
 ipc.on('touchBar', (event, conversations) => {
 	const touchBar = new TouchBar(
-		conversations.map((label, index) => {
+		conversations.map(({label, selected}, index) => {
 			return new TouchBarButton({
 				label,
+				backgroundColor: selected ? '#0084ff' : undefined,
 				click: () => {
 					sendAction('jumpToConversation', index + 1);
 				}

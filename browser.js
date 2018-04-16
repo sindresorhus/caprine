@@ -281,15 +281,34 @@ function closePreferences() {
 	doneButton.click();
 }
 
-function setTouchBar() {
-	const conversations = [];
-	for (const el of document.querySelectorAll('[role=navigation] a ._1ht6')) {
-		conversations.push(el.textContent);
+function initTouchBar() {
+	const sidebar = document.querySelector('[role=navigation]');
+
+	function sendTouchBar() {
+		const conversations = [];
+		for (const el of sidebar.querySelectorAll('._1ht1')) {
+			conversations.push({
+				label: el.querySelector('._1ht6').textContent,
+				selected: el.classList.contains('_1ht2'),
+				unread: el.classList.contains('_1ht3')
+			});
+
+			if (conversations.length >= 5) {
+				break;
+			}
+		}
+
+		if (conversations.length > 0) {
+			ipc.send('touchBar', conversations);
+		}
 	}
 
-	if (conversations.length > 0) {
-		ipc.send('touchBar', conversations);
-	}
+	sendTouchBar();
+
+	const conversationListObserver = new MutationObserver(sendTouchBar);
+	// Const conversationStateObserver = new MutationObserver(sendTouchBar)
+	// const observer = new MutationObserver(sendTouchBar)
+	conversationListObserver.observe(sidebar, {subtree: true, childList: true, attributes: true, attributeFilter: ['class']});
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
@@ -322,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-	setTouchBar();
+	initTouchBar();
 });
 
 // It's not possible to add multiple accelerators
