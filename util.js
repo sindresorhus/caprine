@@ -8,10 +8,10 @@ function getWindow() {
 function sendAction(action, ...args) {
 	const win = getWindow();
 	if (process.platform === 'darwin') {
-    win.restore();
+		win.restore();
 	}
 
-  win.webContents.send(action, ...args);
+	win.webContents.send(action, ...args);
 }
 
 exports.getWindow = getWindow;
