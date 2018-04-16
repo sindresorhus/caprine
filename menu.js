@@ -3,19 +3,9 @@ const os = require('os');
 const path = require('path');
 const electron = require('electron');
 const config = require('./config');
-
+const {sendAction} = require('./util')
 const {app, BrowserWindow, shell} = electron;
 const appName = app.getName();
-
-function sendAction(action) {
-	const [win] = BrowserWindow.getAllWindows();
-
-	if (process.platform === 'darwin') {
-		win.restore();
-	}
-
-	win.webContents.send(action);
-}
 
 const viewSubmenu = [
 	{

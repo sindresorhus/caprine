@@ -1,22 +1,7 @@
-const electron = require('electron');
 const path = require('path');
-
-const { BrowserWindow, TouchBar, ipcMain: ipc, nativeImage} = electron;
-const {TouchBarButton} = TouchBar;
-
-function getWindow() {
-	const [win] = BrowserWindow.getAllWindows();
-	return win;
-}
-
-function sendAction(action, ...args) {
-	const win = getWindow();
-	if (process.platform === 'darwin') {
-		win.restore();
-	}
-
-  win.webContents.send(action, ...args);
-}
+const { TouchBar, ipcMain: ipc, nativeImage } = require('electron');
+const { sendAction, getWindow } = require('./util');
+const { TouchBarButton } = TouchBar;
 
 ipc.on('touchBar', (event, conversations) => {
 	const touchBar = new TouchBar(
