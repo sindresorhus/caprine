@@ -3,8 +3,9 @@ const os = require('os');
 const path = require('path');
 const electron = require('electron');
 const config = require('./config');
-const {sendAction} = require('./util')
-const {app, BrowserWindow, shell} = electron;
+const {sendAction} = require('./util');
+
+const {app, shell} = electron;
 const appName = app.getName();
 
 const viewSubmenu = [

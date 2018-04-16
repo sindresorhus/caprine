@@ -1,7 +1,8 @@
 const path = require('path');
-const { TouchBar, ipcMain: ipc, nativeImage } = require('electron');
-const { sendAction, getWindow } = require('./util');
-const { TouchBarButton } = TouchBar;
+const {TouchBar, ipcMain: ipc} = require('electron');
+const {sendAction, getWindow} = require('./util');
+
+const {TouchBarButton} = TouchBar;
 
 ipc.on('touchBar', (event, conversations) => {
 	const touchBar = new TouchBar(
