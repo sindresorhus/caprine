@@ -167,7 +167,7 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jumpToConversation', (event, index) => {
+ipc.on('jump-to-conversation', (event, index) => {
 	jumpToConversation(index);
 });
 

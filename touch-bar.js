@@ -1,7 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 
-const {BrowserWindow, TouchBar, ipcMain: ipc} = electron;
+const { BrowserWindow, TouchBar, ipcMain: ipc, nativeImage} = electron;
 const {TouchBarButton} = TouchBar;
 
 function getWindow() {
@@ -25,9 +25,9 @@ ipc.on('touchBar', (event, conversations) => {
 				label,
 				backgroundColor: selected ? '#0084ff' : undefined,
 				icon: unread ? path.join(__dirname, 'static/IconTouchBarUnread.png') : undefined,
-				iconPosition: 'left',
+				iconPosition: 'right',
 				click: () => {
-					sendAction('jumpToConversation', index + 1);
+					sendAction('jump-to-conversation', index + 1);
 				}
 			});
 		})
