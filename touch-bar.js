@@ -1,4 +1,5 @@
 const electron = require('electron');
+const path = require('path');
 
 const {BrowserWindow, TouchBar, ipcMain: ipc} = electron;
 const {TouchBarButton} = TouchBar;
@@ -19,10 +20,12 @@ function sendAction(action, ...args) {
 
 ipc.on('touchBar', (event, conversations) => {
 	const touchBar = new TouchBar(
-		conversations.map(({label, selected}, index) => {
+		conversations.map(({label, selected, unread}, index) => {
 			return new TouchBarButton({
 				label,
 				backgroundColor: selected ? '#0084ff' : undefined,
+				icon: unread ? path.join(__dirname, 'static/IconTouchBarUnread.png') : undefined,
+				iconPosition: 'left',
 				click: () => {
 					sendAction('jumpToConversation', index + 1);
 				}
