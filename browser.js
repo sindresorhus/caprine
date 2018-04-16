@@ -293,7 +293,7 @@ function initTouchBar() {
 				unread: el.classList.contains('_1ht3')
 			});
 
-			if (conversations.length >= 5) {
+			if (conversations.length >= 15) {
 				break;
 			}
 		}
@@ -306,8 +306,6 @@ function initTouchBar() {
 	sendTouchBar();
 
 	const conversationListObserver = new MutationObserver(sendTouchBar);
-	// Const conversationStateObserver = new MutationObserver(sendTouchBar)
-	// const observer = new MutationObserver(sendTouchBar)
 	conversationListObserver.observe(sidebar, {subtree: true, childList: true, attributes: true, attributeFilter: ['class']});
 }
 
