@@ -1,3 +1,4 @@
+'use strict';
 const path = require('path');
 const {TouchBar, ipcMain: ipc} = require('electron');
 const {sendAction, getWindow} = require('./util');
