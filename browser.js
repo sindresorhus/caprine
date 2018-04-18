@@ -298,13 +298,16 @@ function closePreferences() {
 function initTouchBar() {
 	const sidebar = document.querySelector('[role=navigation]');
 
-	const sendTouchBar = () => {
+	const sendTouchBar = async () => {
 		const conversations = [];
 		for (const el of sidebar.querySelectorAll('._1ht1')) {
 			conversations.push({
 				label: el.querySelector('._1ht6').textContent,
 				selected: el.classList.contains('_1ht2'),
-				unread: el.classList.contains('_1ht3')
+				icon: await getRenderedUnreadMarker( // eslint-disable-line no-await-in-loop
+					el.querySelector('._55lt img'),
+					el.classList.contains('_1ht3')
+				)
 			});
 
 			if (conversations.length >= 15) {
@@ -325,6 +328,63 @@ function initTouchBar() {
 		childList: true,
 		attributes: true,
 		attributeFilter: ['class']
+	});
+}
+
+function getRenderedUnreadMarker(img, unread) {
+	return new Promise(async resolve => {
+		const avatar = await getAvatarDataUrl(img);
+		if (!unread) {
+			return resolve(avatar);
+		}
+
+		const im = new Image();
+		im.crossOrigin = 'anonymous';
+		im.addEventListener('load', function () {
+			const canvas = document.createElement('canvas');
+			canvas.width = this.naturalWidth;
+			canvas.height = this.naturalHeight;
+
+			const ctx = canvas.getContext('2d');
+			ctx.drawImage(this, 0, 0);
+
+			const markerSize = 6;
+			ctx.fillStyle = '#f42020';
+			ctx.beginPath();
+			ctx.ellipse(this.naturalWidth - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
+			ctx.fill();
+			resolve(canvas.toDataURL());
+		});
+		im.src = avatar;
+	});
+}
+
+function getAvatarDataUrl(img) {
+	return new Promise(resolve => {
+		if (img.dataUrl) {
+			return resolve(img.dataUrl);
+		}
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+		const avatarSize = 30;
+		canvas.width = avatarSize + 5;
+		canvas.height = avatarSize + 10;
+
+		const im = new Image();
+		im.crossOrigin = 'anonymous';
+
+		im.addEventListener('load', function () {
+			ctx.beginPath();
+			ctx.arc(15, 20, 15, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.clip();
+
+			ctx.drawImage(this, 0, 5, avatarSize, avatarSize);
+
+			img.dataUrl = canvas.toDataURL();
+			resolve(img.dataUrl);
+		});
+		im.src = img.src;
 	});
 }
 
