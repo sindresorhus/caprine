@@ -31,10 +31,8 @@ const viewSubmenu = [
 		}
 	},
 	{
-		type: 'separator'
-	},
-	{
 		label: 'Toggle Sidebar',
+		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+Shift+S',
 		click() {
 			sendAction('toggle-sidebar');
@@ -51,6 +49,7 @@ const viewSubmenu = [
 	},
 	{
 		label: 'Toggle Dark Mode',
+		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+D',
 		click() {
 			sendAction('toggle-dark-mode');
@@ -123,8 +122,9 @@ ${process.platform} ${process.arch} ${os.release()}`;
 ];
 
 if (process.platform === 'darwin') {
-	viewSubmenu.splice(6, 0, {
+	viewSubmenu.push({
 		label: 'Toggle Vibrancy',
+		position: 'endof=toggle',
 		click() {
 			sendAction('toggle-vibrancy');
 		}
