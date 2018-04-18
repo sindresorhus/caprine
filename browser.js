@@ -167,6 +167,10 @@ ipc.on('zoom-out', () => {
 	}
 });
 
+ipc.on('jump-to-conversation', (event, index) => {
+	jumpToConversation(index);
+});
+
 function nextConversation() {
 	const index = getNextIndex(true);
 	selectConversation(index);
@@ -277,6 +281,34 @@ function closePreferences() {
 	doneButton.click();
 }
 
+function initTouchBar() {
+	const sidebar = document.querySelector('[role=navigation]');
+
+	function sendTouchBar() {
+		const conversations = [];
+		for (const el of sidebar.querySelectorAll('._1ht1')) {
+			conversations.push({
+				label: el.querySelector('._1ht6').textContent,
+				selected: el.classList.contains('_1ht2'),
+				unread: el.classList.contains('_1ht3')
+			});
+
+			if (conversations.length >= 15) {
+				break;
+			}
+		}
+
+		if (conversations.length > 0) {
+			ipc.send('touchBar', conversations);
+		}
+	}
+
+	sendTouchBar();
+
+	const conversationListObserver = new MutationObserver(sendTouchBar);
+	conversationListObserver.observe(sidebar, {subtree: true, childList: true, attributes: true, attributeFilter: ['class']});
+}
+
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
 	const style = document.createElement('style');
@@ -304,6 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Activate vibrancy effect if it was set before quitting
 	setVibrancy();
+});
+
+window.addEventListener('load', () => {
+	initTouchBar();
 });
 
 // It's not possible to add multiple accelerators
