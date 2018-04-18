@@ -9,12 +9,12 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
-ipc.on('show-preferences', () => {
+ipc.on('show-preferences', async () => {
 	if (isPreferencesOpen()) {
 		return;
 	}
 
-	openPreferences();
+	await openPreferences();
 });
 
 ipc.on('new-conversation', () => {
@@ -78,11 +78,11 @@ function setSidebarVisibility() {
 	ipc.send('set-sidebar-visibility');
 }
 
-ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
+ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 	const wasPreferencesOpen = isPreferencesOpen();
 
 	if (!wasPreferencesOpen) {
-		openPreferences();
+		await openPreferences();
 	}
 
 	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
@@ -93,7 +93,7 @@ ipc.on('toggle-mute-notifications', (event, defaultStatus) => {
 		notificationCheckbox.click();
 	}
 
-	ipc.send('mute-notifications-toggled', notificationCheckbox.checked);
+	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
 
 	if (!wasPreferencesOpen) {
 		closePreferences();
@@ -278,9 +278,9 @@ function openDeleteModal() {
 	document.querySelector(selector).click();
 }
 
-function openPreferences() {
+async function openPreferences() {
 	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
+	(await elementReady('._30yy._2fug._p')).click();
 
 	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
 	nodes[nodes.length - 1].click();
