@@ -288,6 +288,7 @@ app.on('ready', () => {
 		}
 
 		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
