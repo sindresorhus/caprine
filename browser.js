@@ -257,8 +257,16 @@ function openArchiveModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
-	document.querySelector(selector).click();
+	// Selector for private chat is set as the default selector
+	let archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
+	const separatorSelector = '._54nq._2i-c._558b._2n_z li:nth-child(5)';
+
+	// Check element's role
+	if (document.querySelector(separatorSelector).getAttribute('role') !== 'separator') {
+		// If the role isn't separator, dealing with a group chat
+		archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
+	}
+	document.querySelector(archiveButtonSelector).click();
 }
 
 function openDeleteModal() {
