@@ -123,10 +123,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
 ];
 
 if (process.platform === 'darwin') {
-	viewSubmenu.push({
-		type: 'separator'
-	},
-	{
+	viewSubmenu.splice(6, 0, {
 		label: 'Toggle Vibrancy',
 		click() {
 			sendAction('toggle-vibrancy');
