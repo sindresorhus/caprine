@@ -57,7 +57,7 @@ ipc.on('log-out', () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		document.querySelector('._30yy._2fug._p').click();
+		showSettingsMenu();
 		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
 		nodes[nodes.length - 1].click();
 	}
@@ -290,8 +290,7 @@ function openMuteModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(1) a';
-	document.querySelector(selector).click();
+	selectMenuItem(1);
 }
 
 function openArchiveModal() {
@@ -299,16 +298,7 @@ function openArchiveModal() {
 		return;
 	}
 
-	// Selector for private chat is set as the default selector
-	let archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
-	const separatorSelector = '._54nq._2i-c._558b._2n_z li:nth-child(5)';
-
-	// Check element's role
-	if (document.querySelector(separatorSelector).getAttribute('role') !== 'separator') {
-		// If the role isn't separator, dealing with a group chat
-		archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
-	}
-	document.querySelector(archiveButtonSelector).click();
+	selectMenuItem(3);
 }
 
 function openDeleteModal() {
@@ -316,16 +306,14 @@ function openDeleteModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
-	document.querySelector(selector).click();
+	selectMenuItem(4);
 }
 
 async function openPreferences() {
 	// Create the menu for the below
 	(await elementReady('._30yy._2fug._p')).click();
 
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
-	nodes[nodes.length - 1].click();
+	selectMenuItem(1);
 }
 
 function isPreferencesOpen() {
@@ -368,38 +356,6 @@ function initTouchBar() {
 		attributes: true,
 		attributeFilter: ['class']
 	});
-}
-
-function openActiveContactsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(3) a');
-	nodes[nodes.length - 1].click();
-}
-
-function openMessageRequestsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(4) a');
-	nodes[nodes.length - 1].click();
-}
-
-function openArchivedThreadsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(5) a');
-	nodes[nodes.length - 1].click();
-}
-
-function toggleUnreadThreadsView() {
-	// Create the menu for the below
-	document.querySelector('._30yy._2fug._p').click();
-
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:nth-child(6) a');
-	nodes[nodes.length - 1].click();
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
