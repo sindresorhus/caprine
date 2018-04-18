@@ -331,6 +331,7 @@ function initTouchBar() {
 	});
 }
 
+// Uses a previously generated url image and adds a marker to it
 function getRenderedUnreadMarker(img, unread) {
 	return new Promise(async resolve => {
 		const avatar = await getAvatarDataUrl(img);
@@ -359,6 +360,7 @@ function getRenderedUnreadMarker(img, unread) {
 	});
 }
 
+// Generates the date url for a picture for storing it for reuse
 function getAvatarDataUrl(img) {
 	return new Promise(resolve => {
 		if (img.dataUrl) {
