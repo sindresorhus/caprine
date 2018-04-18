@@ -5,7 +5,7 @@ const {sendAction, getWindow} = require('./util');
 
 const {TouchBarButton} = TouchBar;
 
-ipc.on('touchBar', (event, conversations) => {
+ipc.on('touch-bar', (event, conversations) => {
 	const touchBar = new TouchBar(
 		conversations.map(({label, selected, unread}, index) => {
 			return new TouchBarButton({

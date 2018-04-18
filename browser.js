@@ -284,7 +284,7 @@ function closePreferences() {
 function initTouchBar() {
 	const sidebar = document.querySelector('[role=navigation]');
 
-	function sendTouchBar() {
+	const sendTouchBar = () => {
 		const conversations = [];
 		for (const el of sidebar.querySelectorAll('._1ht1')) {
 			conversations.push({
@@ -299,14 +299,19 @@ function initTouchBar() {
 		}
 
 		if (conversations.length > 0) {
-			ipc.send('touchBar', conversations);
+			ipc.send('touch-bar', conversations);
 		}
-	}
+	};
 
 	sendTouchBar();
 
 	const conversationListObserver = new MutationObserver(sendTouchBar);
-	conversationListObserver.observe(sidebar, {subtree: true, childList: true, attributes: true, attributeFilter: ['class']});
+	conversationListObserver.observe(sidebar, {
+		subtree: true,
+		childList: true,
+		attributes: true,
+		attributeFilter: ['class']
+	});
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup

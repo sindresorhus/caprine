@@ -25,6 +25,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
+- [Touch Bar support](#touch-bar-support)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -124,6 +125,10 @@ You can send code blocks by using [Markdown syntax](https://github.com/adam-p/ma
 ### Background behavior
 
 When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
+
+### Touch Bar support
+
+<img src="media/screenshot-touchbar.png" width="1085">
 
 ### Keyboard shortcuts
 
