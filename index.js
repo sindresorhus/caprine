@@ -281,7 +281,7 @@ app.on('ready', () => {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
 		}
 
-		if (config.get('launchMinimized')) {
+		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
 			mainWindow.hide();
 		} else {
 			mainWindow.show();
