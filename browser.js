@@ -9,6 +9,32 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
+function showSettingsMenu() {
+	document.querySelector('._30yy._2fug._p').click();
+}
+
+function selectMenuItem(itemNumber) {
+	const selector = document.querySelector(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
+	selector.click();
+}
+
+function selectOtherListViews(itemNumber) {
+	// In case one of other views is shown
+	clickBackButton();
+
+	// Create the menu for the below
+	showSettingsMenu();
+
+	selectMenuItem(itemNumber);
+}
+
+function clickBackButton() {
+	const backButton = document.querySelector('._30yy._2oc9');
+	if (backButton) {
+		backButton.click();
+	}
+}
+
 ipc.on('show-preferences', async () => {
 	if (isPreferencesOpen()) {
 		return;
@@ -31,7 +57,7 @@ ipc.on('log-out', () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		document.querySelector('._30yy._2fug._p').click();
+		showSettingsMenu();
 		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
 		nodes[nodes.length - 1].click();
 	}
@@ -103,6 +129,22 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 ipc.on('toggle-message-buttons', async () => {
 	const messageButtons = await elementReady('._39bj');
 	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
+});
+
+ipc.on('show-active-contacts-view', () => {
+	selectOtherListViews(3);
+});
+
+ipc.on('show-message-requests-view', () => {
+	selectOtherListViews(4);
+});
+
+ipc.on('show-archived-threads-view', () => {
+	selectOtherListViews(5);
+});
+
+ipc.on('toggle-unread-threads-view', () => {
+	selectOtherListViews(6);
 });
 
 function setDarkMode() {
@@ -248,8 +290,7 @@ function openMuteModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(1) a';
-	document.querySelector(selector).click();
+	selectMenuItem(1);
 }
 
 function openArchiveModal() {
@@ -257,16 +298,7 @@ function openArchiveModal() {
 		return;
 	}
 
-	// Selector for private chat is set as the default selector
-	let archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(3) a';
-	const separatorSelector = '._54nq._2i-c._558b._2n_z li:nth-child(5)';
-
-	// Check element's role
-	if (document.querySelector(separatorSelector).getAttribute('role') !== 'separator') {
-		// If the role isn't separator, dealing with a group chat
-		archiveButtonSelector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
-	}
-	document.querySelector(archiveButtonSelector).click();
+	selectMenuItem(3);
 }
 
 function openDeleteModal() {
@@ -274,16 +306,14 @@ function openDeleteModal() {
 		return;
 	}
 
-	const selector = '._54nq._2i-c._558b._2n_z li:nth-child(4) a';
-	document.querySelector(selector).click();
+	selectMenuItem(4);
 }
 
 async function openPreferences() {
 	// Create the menu for the below
 	(await elementReady('._30yy._2fug._p')).click();
 
-	const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:first-child a');
-	nodes[nodes.length - 1].click();
+	selectMenuItem(1);
 }
 
 function isPreferencesOpen() {

@@ -31,10 +31,8 @@ const viewSubmenu = [
 		}
 	},
 	{
-		type: 'separator'
-	},
-	{
 		label: 'Toggle Sidebar',
+		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+Shift+S',
 		click() {
 			sendAction('toggle-sidebar');
@@ -51,9 +49,37 @@ const viewSubmenu = [
 	},
 	{
 		label: 'Toggle Dark Mode',
+		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+D',
 		click() {
 			sendAction('toggle-dark-mode');
+		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Show Active Contacts',
+		click() {
+			sendAction('show-active-contacts-view');
+		}
+	},
+	{
+		label: 'Show Message Requests',
+		click() {
+			sendAction('show-message-requests-view');
+		}
+	},
+	{
+		label: 'Show Archived Threads',
+		click() {
+			sendAction('show-archived-threads-view');
+		}
+	},
+	{
+		label: 'Toggle Unread Threads',
+		click() {
+			sendAction('toggle-unread-threads-view');
 		}
 	}
 ];
@@ -98,6 +124,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
 if (process.platform === 'darwin') {
 	viewSubmenu.push({
 		label: 'Toggle Vibrancy',
+		position: 'endof=toggle',
 		click() {
 			sendAction('toggle-vibrancy');
 		}
