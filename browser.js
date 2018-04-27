@@ -331,65 +331,62 @@ function initTouchBar() {
 	});
 }
 
-// Uses a previously generated url image and adds a marker to it
-function getRenderedUnreadMarker(img, unread) {
+// Return canvas with rounded image
+function urlToCanvas(url, size) {
+	return new Promise(resolve => {
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.addEventListener('load', () => {
+			const canvas = document.createElement('canvas');
+			const topPadding = 5
+			canvas.width = size;
+			canvas.height = size + topPadding*2;
+	
+			const ctx = canvas.getContext('2d');
+
+			ctx.save();
+			ctx.beginPath();
+			ctx.arc(size / 2, canvas.height / 2, size/2, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.clip();
+
+			ctx.drawImage(img, 0, topPadding, size, size);
+
+			ctx.restore();
+	
+			resolve(canvas);
+		});
+		img.src = url;
+	})
+}
+
+// Return data url for user avatar
+function getDataUrlFromImg(img, unread) {
 	return new Promise(async resolve => {
-		const avatar = await getAvatarDataUrl(img);
 		if (!unread) {
-			return resolve(avatar);
+			if (img.dataUrl) {
+				return resolve(img.dataUrl);
+			}
 		} else if (img.dataUnreadUrl) {
 			return resolve(img.dataUnreadUrl);
 		}
 
-		const im = new Image();
-		im.crossOrigin = 'anonymous';
-		im.addEventListener('load', function () {
-			const canvas = document.createElement('canvas');
-			canvas.width = this.naturalWidth;
-			canvas.height = this.naturalHeight;
+		const canvasSize = 30
+		const canvas = await urlToCanvas(img.src, canvasSize)
+		const ctx = canvas.getContext('2d');
+		img.dataUrl = canvas.toDataURL()
 
-			const ctx = canvas.getContext('2d');
-			ctx.drawImage(this, 0, 0);
-
-			const markerSize = 6;
-			ctx.fillStyle = '#f42020';
-			ctx.beginPath();
-			ctx.ellipse(this.naturalWidth - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
-			ctx.fill();
-			img.dataUnreadUrl = canvas.toDataURL()
-			resolve(img.dataUnreadUrl);
-		});
-		im.src = avatar;
-	});
-}
-
-// Generates the date url for a picture for storing it for reuse
-function getAvatarDataUrl(img) {
-	return new Promise(resolve => {
-		if (img.dataUrl) {
+		if (!unread) {
 			return resolve(img.dataUrl);
 		}
-		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
-		const avatarSize = 30;
-		canvas.width = avatarSize + 5;
-		canvas.height = avatarSize + 10;
 
-		const im = new Image();
-		im.crossOrigin = 'anonymous';
-
-		im.addEventListener('load', function () {
-			ctx.beginPath();
-			ctx.arc(15, 20, 15, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.clip();
-
-			ctx.drawImage(this, 0, 5, avatarSize, avatarSize);
-
-			img.dataUrl = canvas.toDataURL();
-			resolve(img.dataUrl);
-		});
-		im.src = img.src;
+		const markerSize = 6;
+		ctx.fillStyle = '#f42020';
+		ctx.beginPath();
+		ctx.ellipse(canvasSize - markerSize, markerSize+2, markerSize, markerSize, 0, 0, 2 * Math.PI);
+		ctx.fill();
+		img.dataUnreadUrl = canvas.toDataURL()
+		resolve(img.dataUnreadUrl);
 	});
 }
 
