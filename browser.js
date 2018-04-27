@@ -338,19 +338,19 @@ function urlToCanvas(url, size) {
 		img.crossOrigin = 'anonymous';
 		img.addEventListener('load', () => {
 			const canvas = document.createElement('canvas');
-			const topPadding = 5;
+			const padding = 6;
 			canvas.width = size;
-			canvas.height = size + (topPadding * 2);
+			canvas.height = size;
 
 			const ctx = canvas.getContext('2d');
 
 			ctx.save();
 			ctx.beginPath();
-			ctx.arc(size / 2, canvas.height / 2, size / 2, 0, Math.PI * 2, true);
+			ctx.arc(size / 2, size / 2, (size - padding) / 2, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.clip();
 
-			ctx.drawImage(img, 0, topPadding, size, size);
+			ctx.drawImage(img, padding / 2, padding / 2, size - padding, size - padding);
 
 			ctx.restore();
 
@@ -383,7 +383,7 @@ function getDataUrlFromImg(img, unread) {
 		const markerSize = 6;
 		ctx.fillStyle = '#f42020';
 		ctx.beginPath();
-		ctx.ellipse(canvasSize - markerSize, markerSize + 2, markerSize, markerSize, 0, 0, 2 * Math.PI);
+		ctx.ellipse(canvasSize - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
 		img.dataUnreadUrl = canvas.toDataURL();
 		resolve(img.dataUnreadUrl);
