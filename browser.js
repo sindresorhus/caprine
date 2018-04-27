@@ -337,6 +337,8 @@ function getRenderedUnreadMarker(img, unread) {
 		const avatar = await getAvatarDataUrl(img);
 		if (!unread) {
 			return resolve(avatar);
+		} else if (img.dataUnreadUrl) {
+			return resolve(img.dataUnreadUrl);
 		}
 
 		const im = new Image();
@@ -354,7 +356,8 @@ function getRenderedUnreadMarker(img, unread) {
 			ctx.beginPath();
 			ctx.ellipse(this.naturalWidth - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 			ctx.fill();
-			resolve(canvas.toDataURL());
+			img.dataUnreadUrl = canvas.toDataURL()
+			resolve(img.dataUnreadUrl);
 		});
 		im.src = avatar;
 	});
