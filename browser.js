@@ -304,7 +304,7 @@ function initTouchBar() {
 			conversations.push({
 				label: el.querySelector('._1ht6').textContent,
 				selected: el.classList.contains('_1ht2'),
-				icon: await getRenderedUnreadMarker( // eslint-disable-line no-await-in-loop
+				icon: await getDataUrlFromImg( // eslint-disable-line no-await-in-loop
 					el.querySelector('._55lt img'),
 					el.classList.contains('_1ht3')
 				)
@@ -338,26 +338,26 @@ function urlToCanvas(url, size) {
 		img.crossOrigin = 'anonymous';
 		img.addEventListener('load', () => {
 			const canvas = document.createElement('canvas');
-			const topPadding = 5
+			const topPadding = 5;
 			canvas.width = size;
-			canvas.height = size + topPadding*2;
-	
+			canvas.height = size + (topPadding * 2);
+
 			const ctx = canvas.getContext('2d');
 
 			ctx.save();
 			ctx.beginPath();
-			ctx.arc(size / 2, canvas.height / 2, size/2, 0, Math.PI * 2, true);
+			ctx.arc(size / 2, canvas.height / 2, size / 2, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.clip();
 
 			ctx.drawImage(img, 0, topPadding, size, size);
 
 			ctx.restore();
-	
+
 			resolve(canvas);
 		});
 		img.src = url;
-	})
+	});
 }
 
 // Return data url for user avatar
@@ -371,10 +371,10 @@ function getDataUrlFromImg(img, unread) {
 			return resolve(img.dataUnreadUrl);
 		}
 
-		const canvasSize = 30
-		const canvas = await urlToCanvas(img.src, canvasSize)
+		const canvasSize = 30;
+		const canvas = await urlToCanvas(img.src, canvasSize);
 		const ctx = canvas.getContext('2d');
-		img.dataUrl = canvas.toDataURL()
+		img.dataUrl = canvas.toDataURL();
 
 		if (!unread) {
 			return resolve(img.dataUrl);
@@ -383,9 +383,9 @@ function getDataUrlFromImg(img, unread) {
 		const markerSize = 6;
 		ctx.fillStyle = '#f42020';
 		ctx.beginPath();
-		ctx.ellipse(canvasSize - markerSize, markerSize+2, markerSize, markerSize, 0, 0, 2 * Math.PI);
+		ctx.ellipse(canvasSize - markerSize, markerSize + 2, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
-		img.dataUnreadUrl = canvas.toDataURL()
+		img.dataUnreadUrl = canvas.toDataURL();
 		resolve(img.dataUnreadUrl);
 	});
 }
