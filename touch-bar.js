@@ -1,18 +1,17 @@
 'use strict';
-const path = require('path');
-const {TouchBar, ipcMain: ipc} = require('electron');
+const {TouchBar, ipcMain: ipc, nativeImage} = require('electron');
 const {sendAction, getWindow} = require('./util');
 
 const {TouchBarButton} = TouchBar;
 
 ipc.on('touch-bar', (event, conversations) => {
 	const touchBar = new TouchBar(
-		conversations.map(({label, selected, unread}, index) => {
+		conversations.map(({label, selected, icon}, index) => {
 			return new TouchBarButton({
 				label,
 				backgroundColor: selected ? '#0084ff' : undefined,
-				icon: unread ? path.join(__dirname, 'static/IconTouchBarUnread.png') : undefined,
-				iconPosition: 'right',
+				icon: nativeImage.createFromDataURL(icon),
+				iconPosition: 'left',
 				click: () => {
 					sendAction('jump-to-conversation', index + 1);
 				}

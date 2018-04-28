@@ -328,13 +328,16 @@ function closePreferences() {
 function initTouchBar() {
 	const sidebar = document.querySelector('[role=navigation]');
 
-	const sendTouchBar = () => {
+	const sendTouchBar = async () => {
 		const conversations = [];
 		for (const el of sidebar.querySelectorAll('._1ht1')) {
 			conversations.push({
 				label: el.querySelector('._1ht6').textContent,
 				selected: el.classList.contains('_1ht2'),
-				unread: el.classList.contains('_1ht3')
+				icon: await getDataUrlFromImg( // eslint-disable-line no-await-in-loop
+					el.querySelector('._55lt img'),
+					el.classList.contains('_1ht3')
+				)
 			});
 
 			if (conversations.length >= 15) {
@@ -355,6 +358,65 @@ function initTouchBar() {
 		childList: true,
 		attributes: true,
 		attributeFilter: ['class']
+	});
+}
+
+// Return canvas with rounded image
+function urlToCanvas(url, size) {
+	return new Promise(resolve => {
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.addEventListener('load', () => {
+			const canvas = document.createElement('canvas');
+			const padding = 6;
+			canvas.width = size;
+			canvas.height = size;
+
+			const ctx = canvas.getContext('2d');
+
+			ctx.save();
+			ctx.beginPath();
+			ctx.arc(size / 2, size / 2, (size - padding) / 2, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.clip();
+
+			ctx.drawImage(img, padding / 2, padding / 2, size - padding, size - padding);
+
+			ctx.restore();
+
+			resolve(canvas);
+		});
+		img.src = url;
+	});
+}
+
+// Return data url for user avatar
+function getDataUrlFromImg(img, unread) {
+	return new Promise(async resolve => {
+		if (!unread) {
+			if (img.dataUrl) {
+				return resolve(img.dataUrl);
+			}
+		} else if (img.dataUnreadUrl) {
+			return resolve(img.dataUnreadUrl);
+		}
+
+		const canvasSize = 30;
+		const canvas = await urlToCanvas(img.src, canvasSize);
+		const ctx = canvas.getContext('2d');
+		img.dataUrl = canvas.toDataURL();
+
+		if (!unread) {
+			return resolve(img.dataUrl);
+		}
+
+		const markerSize = 6;
+		ctx.fillStyle = '#f42020';
+		ctx.beginPath();
+		ctx.ellipse(canvasSize - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
+		ctx.fill();
+		img.dataUnreadUrl = canvas.toDataURL();
+		resolve(img.dataUnreadUrl);
 	});
 }
 
