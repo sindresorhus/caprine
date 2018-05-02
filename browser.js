@@ -115,7 +115,7 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
-	} else if ((defaultStatus && !notificationCheckbox.checked) || (!defaultStatus && notificationCheckbox.checked)) {
+	} else if ((defaultStatus && notificationCheckbox.checked) || (!defaultStatus && !notificationCheckbox.checked)) {
 		notificationCheckbox.click();
 	}
 
