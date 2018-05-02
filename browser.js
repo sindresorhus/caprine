@@ -368,19 +368,25 @@ function urlToCanvas(url, size) {
 		img.crossOrigin = 'anonymous';
 		img.addEventListener('load', () => {
 			const canvas = document.createElement('canvas');
-			const padding = 6;
-			canvas.width = size;
-			canvas.height = size;
+			const padding = {
+				top: 3,
+				right: 0,
+				bottom: 3,
+				left: 0
+			};
+
+			canvas.width = size + padding.left + padding.right;
+			canvas.height = size + padding.top + padding.bottom;
 
 			const ctx = canvas.getContext('2d');
 
 			ctx.save();
 			ctx.beginPath();
-			ctx.arc(size / 2, size / 2, (size - padding) / 2, 0, Math.PI * 2, true);
+			ctx.arc((size / 2) + padding.left, (size / 2) + padding.top, size / 2, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.clip();
 
-			ctx.drawImage(img, padding / 2, padding / 2, size - padding, size - padding);
+			ctx.drawImage(img, padding.left, padding.top, size, size);
 
 			ctx.restore();
 
@@ -401,8 +407,7 @@ function getDataUrlFromImg(img, unread) {
 			return resolve(img.dataUnreadUrl);
 		}
 
-		const canvasSize = 30;
-		const canvas = await urlToCanvas(img.src, canvasSize);
+		const canvas = await urlToCanvas(img.src, 30);
 		const ctx = canvas.getContext('2d');
 		img.dataUrl = canvas.toDataURL();
 
@@ -410,10 +415,10 @@ function getDataUrlFromImg(img, unread) {
 			return resolve(img.dataUrl);
 		}
 
-		const markerSize = 6;
+		const markerSize = 8;
 		ctx.fillStyle = '#f42020';
 		ctx.beginPath();
-		ctx.ellipse(canvasSize - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
+		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
 		img.dataUnreadUrl = canvas.toDataURL();
 		resolve(img.dataUnreadUrl);
