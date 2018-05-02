@@ -415,7 +415,7 @@ function getDataUrlFromImg(img, unread) {
 			return resolve(img.dataUrl);
 		}
 
-		const markerSize = 6;
+		const markerSize = 8;
 		ctx.fillStyle = '#f42020';
 		ctx.beginPath();
 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
