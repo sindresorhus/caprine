@@ -80,10 +80,11 @@ function updateBadge(title, titlePrefix) {
 				mainWindow.webContents.send('render-overlay-icon', messageCount);
 			}
 		}
+	}
 
-		if (config.get('flashWindowOnMessage')) {
-			mainWindow.flashFrame(messageCount !== 0);
-		}
+	if (config.get('flashWindowOnMessage')) {
+		console.log(messageCount);
+		mainWindow.flashFrame(messageCount !== 0);
 	}
 }
 
