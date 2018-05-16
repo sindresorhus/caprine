@@ -247,7 +247,7 @@ function getIndex() {
 		return null;
 	}
 
-	const list = Array.from(selected.parentNode.children);
+	const list = [...selected.parentNode.children];
 
 	return list.indexOf(selected);
 }
@@ -260,7 +260,7 @@ function getNextIndex(next) {
 		return 0;
 	}
 
-	const list = Array.from(selected.parentNode.children);
+	const list = [...selected.parentNode.children];
 	const index = list.indexOf(selected) + (next ? 1 : -1);
 
 	return ((index % list.length) + list.length) % list.length;

@@ -4,7 +4,7 @@ const path = require('path');
 const electron = require('electron');
 const config = require('./config');
 const {sendAction} = require('./util');
-const i18n = require('./i18n')
+const i18n = require('./i18n');
 
 const {app, shell} = electron;
 const appName = app.getName();
