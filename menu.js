@@ -4,34 +4,35 @@ const path = require('path');
 const electron = require('electron');
 const config = require('./config');
 const {sendAction} = require('./util');
+const i18n = require('./i18n')
 
 const {app, shell} = electron;
 const appName = app.getName();
 
 const viewSubmenu = [
 	{
-		label: 'Reset Text Size',
+		label: i18n._('Reset Text Size'),
 		accelerator: 'CmdOrCtrl+0',
 		click() {
 			sendAction('zoom-reset');
 		}
 	},
 	{
-		label: 'Increase Text Size',
+		label: i18n._('Increase Text Size'),
 		accelerator: 'CmdOrCtrl+Plus',
 		click() {
 			sendAction('zoom-in');
 		}
 	},
 	{
-		label: 'Decrease Text Size',
+		label: i18n._('Decrease Text Size'),
 		accelerator: 'CmdOrCtrl+-',
 		click() {
 			sendAction('zoom-out');
 		}
 	},
 	{
-		label: 'Toggle Sidebar',
+		label: i18n._('Toggle Sidebar'),
 		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+Shift+S',
 		click() {
@@ -39,7 +40,7 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Show Message Buttons',
+		label: i18n._('Show Message Buttons'),
 		type: 'checkbox',
 		checked: config.get('showMessageButtons'),
 		click() {
@@ -48,7 +49,7 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Toggle Dark Mode',
+		label: i18n._('Toggle Dark Mode'),
 		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+D',
 		click() {
@@ -59,25 +60,25 @@ const viewSubmenu = [
 		type: 'separator'
 	},
 	{
-		label: 'Show Active Contacts',
+		label: i18n._('Show Active Contacts'),
 		click() {
 			sendAction('show-active-contacts-view');
 		}
 	},
 	{
-		label: 'Show Message Requests',
+		label: i18n._('Show Message Requests'),
 		click() {
 			sendAction('show-message-requests-view');
 		}
 	},
 	{
-		label: 'Show Archived Threads',
+		label: i18n._('Show Archived Threads'),
 		click() {
 			sendAction('show-archived-threads-view');
 		}
 	},
 	{
-		label: 'Toggle Unread Threads',
+		label: i18n._('Toggle Unread Threads'),
 		click() {
 			sendAction('toggle-unread-threads-view');
 		}
@@ -86,25 +87,25 @@ const viewSubmenu = [
 
 const helpSubmenu = [
 	{
-		label: `Website`,
+		label: i18n._(`Website`),
 		click() {
 			shell.openExternal('https://sindresorhus.com/caprine');
 		}
 	},
 	{
-		label: `Source Code`,
+		label: i18n._(`Source Code`),
 		click() {
 			shell.openExternal('https://github.com/sindresorhus/caprine');
 		}
 	},
 	{
-		label: `Donate…`,
+		label: i18n._(`Donate…`),
 		click() {
 			shell.openExternal('https://sindresorhus.com/donate');
 		}
 	},
 	{
-		label: 'Report an Issue…',
+		label: i18n._('Report an Issue…'),
 		click() {
 			const body = `
 <!-- Please succinctly describe your issue and steps to reproduce it. -->
@@ -123,7 +124,7 @@ ${process.platform} ${process.arch} ${os.release()}`;
 
 if (process.platform === 'darwin') {
 	viewSubmenu.push({
-		label: 'Toggle Vibrancy',
+		label: i18n._('Toggle Vibrancy'),
 		position: 'endof=toggle',
 		click() {
 			sendAction('toggle-vibrancy');
@@ -148,7 +149,7 @@ if (process.platform === 'darwin') {
 		type: 'separator'
 	}, {
 		type: 'checkbox',
-		label: 'Always on Top',
+		label: i18n._('Always on Top'),
 		accelerator: 'Ctrl+Shift+T',
 		checked: config.get('alwaysOnTop'),
 		click(item, focusedWindow) {
@@ -169,7 +170,7 @@ const macosTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Bounce Dock on Message',
+				label: i18n._('Bounce Dock on Message'),
 				type: 'checkbox',
 				checked: config.get('bounceDockOnMessage'),
 				click() {
@@ -177,7 +178,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Mute Notifications',
+				label: i18n._('Mute Notifications'),
 				type: 'checkbox',
 				checked: config.get('notificationsMuted'),
 				click() {
@@ -185,7 +186,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Show Unread Badge',
+				label: i18n._('Show Unread Badge'),
 				type: 'checkbox',
 				checked: config.get('showUnreadBadge'),
 				click() {
@@ -194,7 +195,7 @@ const macosTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Block Seen Indicator',
+				label: i18n._('Block Seen Indicator'),
 				checked: config.get('block.chatSeen'),
 				click(item) {
 					config.set('block.chatSeen', item.checked);
@@ -202,14 +203,14 @@ const macosTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Block Typing Indicator',
+				label: i18n._('Block Typing Indicator'),
 				checked: config.get('block.typingIndicator'),
 				click(item) {
 					config.set('block.typingIndicator', item.checked);
 				}
 			},
 			{
-				label: 'Preferences…',
+				label: i18n._('Preferences…'),
 				accelerator: 'Cmd+,',
 				click() {
 					sendAction('show-preferences');
@@ -219,7 +220,7 @@ const macosTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Switch to Work Chat…',
+				label: i18n._('Switch to Work Chat…'),
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -228,7 +229,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Switch to Messenger…',
+				label: i18n._('Switch to Messenger…'),
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
@@ -237,7 +238,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Log Out',
+				label: i18n._('Log Out'),
 				click() {
 					sendAction('log-out');
 				}
@@ -270,10 +271,10 @@ const macosTpl = [
 		]
 	},
 	{
-		label: 'File',
+		label: i18n._('File'),
 		submenu: [
 			{
-				label: 'New Conversation',
+				label: i18n._('New Conversation'),
 				accelerator: 'Cmd+N',
 				click() {
 					sendAction('new-conversation');
@@ -283,21 +284,21 @@ const macosTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Mute Conversation',
+				label: i18n._('Mute Conversation'),
 				accelerator: 'Cmd+Shift+M',
 				click() {
 					sendAction('mute-conversation');
 				}
 			},
 			{
-				label: 'Archive Conversation',
+				label: i18n._('Archive Conversation'),
 				accelerator: 'Cmd+Shift+A',
 				click() {
 					sendAction('archive-conversation');
 				}
 			},
 			{
-				label: 'Delete Conversation',
+				label: i18n._('Delete Conversation'),
 				accelerator: 'Cmd+Shift+D',
 				click() {
 					sendAction('delete-conversation');
@@ -309,7 +310,7 @@ const macosTpl = [
 		role: 'editMenu'
 	},
 	{
-		label: 'View',
+		label: i18n._('View'),
 		submenu: viewSubmenu
 	},
 	{
@@ -325,49 +326,49 @@ const macosTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Select Next Conversation',
+				label: i18n._('Select Next Conversation'),
 				accelerator: 'Ctrl+Tab',
 				click() {
 					sendAction('next-conversation');
 				}
 			},
 			{
-				label: 'Select Previous Conversation',
+				label: i18n._('Select Previous Conversation'),
 				accelerator: 'Ctrl+Shift+Tab',
 				click() {
 					sendAction('previous-conversation');
 				}
 			},
 			{
-				label: 'Find Conversation',
+				label: i18n._('Find Conversation'),
 				accelerator: 'Cmd+K',
 				click() {
 					sendAction('find');
 				}
 			},
 			{
-				label: 'Search Conversation',
+				label: i18n._('Search Conversation'),
 				accelerator: 'Cmd+F',
 				click() {
 					sendAction('search');
 				}
 			},
 			{
-				label: 'Insert GIF',
+				label: i18n._('Insert GIF'),
 				accelerator: 'Cmd+G',
 				click() {
 					sendAction('insert-gif');
 				}
 			},
 			{
-				label: 'Insert Emoji',
+				label: i18n._('Insert Emoji'),
 				accelerator: 'Cmd+E',
 				click() {
 					sendAction('insert-emoji');
 				}
 			},
 			{
-				label: 'Insert Text',
+				label: i18n._('Insert Text'),
 				accelerator: 'Cmd+I',
 				click() {
 					sendAction('insert-text');
@@ -387,7 +388,7 @@ const macosTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Always on Top',
+				label: i18n._('Always on Top'),
 				accelerator: 'Cmd+Shift+T',
 				checked: config.get('alwaysOnTop'),
 				click(item, focusedWindow) {
@@ -405,10 +406,10 @@ const macosTpl = [
 
 const otherTpl = [
 	{
-		label: 'File',
+		label: i18n._('File'),
 		submenu: [
 			{
-				label: 'New Conversation',
+				label: i18n._('New Conversation'),
 				accelerator: 'Ctrl+N',
 				click() {
 					sendAction('new-conversation');
@@ -418,49 +419,49 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Select Next Conversation',
+				label: i18n._('Select Next Conversation'),
 				accelerator: 'Ctrl+Tab',
 				click() {
 					sendAction('next-conversation');
 				}
 			},
 			{
-				label: 'Select Previous Conversation',
+				label: i18n._('Select Previous Conversation'),
 				accelerator: 'Ctrl+Shift+Tab',
 				click() {
 					sendAction('previous-conversation');
 				}
 			},
 			{
-				label: 'Find Conversation',
+				label: i18n._('Find Conversation'),
 				accelerator: 'Ctrl+K',
 				click() {
 					sendAction('find');
 				}
 			},
 			{
-				label: 'Search Conversation',
+				label: i18n._('Search Conversation'),
 				accelerator: 'Ctrl+F',
 				click() {
 					sendAction('search');
 				}
 			},
 			{
-				label: 'Insert GIF',
+				label: i18n._('Insert GIF'),
 				accelerator: 'Ctrl+G',
 				click() {
 					sendAction('insert-gif');
 				}
 			},
 			{
-				label: 'Insert Emoji',
+				label: i18n._('Insert Emoji'),
 				accelerator: 'Ctrl+E',
 				click() {
 					sendAction('insert-emoji');
 				}
 			},
 			{
-				label: 'Insert Text',
+				label: i18n._('Insert Text'),
 				accelerator: 'Ctrl+I',
 				click() {
 					sendAction('insert-text');
@@ -470,21 +471,21 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Mute Conversation',
+				label: i18n._('Mute Conversation'),
 				accelerator: 'Ctrl+Shift+M',
 				click() {
 					sendAction('mute-conversation');
 				}
 			},
 			{
-				label: 'Archive Conversation',
+				label: i18n._('Archive Conversation'),
 				accelerator: 'Ctrl+Shift+A',
 				click() {
 					sendAction('archive-conversation');
 				}
 			},
 			{
-				label: 'Delete Conversation',
+				label: i18n._('Delete Conversation'),
 				accelerator: 'Ctrl+Shift+D',
 				click() {
 					sendAction('delete-conversation');
@@ -495,7 +496,7 @@ const otherTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Flash Window on Message',
+				label: i18n._('Flash Window on Message'),
 				visible: process.platform === 'win32',
 				checked: config.get('flashWindowOnMessage'),
 				click(item) {
@@ -503,7 +504,7 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Show Unread Badge',
+				label: i18n._('Show Unread Badge'),
 				type: 'checkbox',
 				checked: config.get('showUnreadBadge'),
 				click() {
@@ -511,7 +512,7 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Launch Minimized',
+				label: i18n._('Launch Minimized'),
 				type: 'checkbox',
 				checked: config.get('launchMinimized'),
 				click() {
@@ -519,7 +520,7 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Mute Notifications',
+				label: i18n._('Mute Notifications'),
 				type: 'checkbox',
 				checked: config.get('notificationsMuted'),
 				click() {
@@ -528,7 +529,7 @@ const otherTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Block Seen Indicator',
+				label: i18n._('Block Seen Indicator'),
 				checked: config.get('block.chatSeen'),
 				click(item) {
 					config.set('block.chatSeen', item.checked);
@@ -536,7 +537,7 @@ const otherTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Block Typing Indicator',
+				label: i18n._('Block Typing Indicator'),
 				checked: config.get('block.typingIndicator'),
 				click(item) {
 					config.set('block.typingIndicator', item.checked);
@@ -544,7 +545,7 @@ const otherTpl = [
 			},
 			{
 				type: 'checkbox',
-				label: 'Auto Hide Menu Bar',
+				label: i18n._('Auto Hide Menu Bar'),
 				checked: config.get('autoHideMenuBar'),
 				click(item, focusedWindow) {
 					config.set('autoHideMenuBar', item.checked);
@@ -556,7 +557,7 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Switch to Work Chat…',
+				label: i18n._('Switch to Work Chat…'),
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -565,7 +566,7 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Switch to Messenger…',
+				label: i18n._('Switch to Messenger…'),
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
@@ -574,7 +575,7 @@ const otherTpl = [
 				}
 			},
 			{
-				label: 'Log Out',
+				label: i18n._('Log Out'),
 				click() {
 					sendAction('log-out');
 				}
@@ -588,7 +589,7 @@ const otherTpl = [
 		]
 	},
 	{
-		label: 'Edit',
+		label: i18n._('Edit'),
 		submenu: [
 			{
 				role: 'undo'
@@ -621,7 +622,7 @@ const otherTpl = [
 				type: 'separator'
 			},
 			{
-				label: 'Preferences',
+				label: i18n._('Preferences'),
 				accelerator: 'Ctrl+,',
 				click() {
 					sendAction('show-preferences');
@@ -630,7 +631,7 @@ const otherTpl = [
 		]
 	},
 	{
-		label: 'View',
+		label: i18n._('View'),
 		submenu: viewSubmenu
 	},
 	{

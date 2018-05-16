@@ -7,9 +7,9 @@ const electron = require('electron');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+const i18n = require('./i18n')
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -134,18 +134,16 @@ function setUpPrivacyBlocking() {
 }
 
 function setUserLocale() {
-	const facebookLocales = require('facebook-locales');
-	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale());
 	const cookie = {
 		url: 'https://www.messenger.com/',
 		name: 'locale',
-		value: userLocale
+		value: i18n.locale
 	};
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
 function setNotificationsMute(status) {
-	const label = 'Mute Notifications';
+	const label = i18n._('Mute Notifications');
 	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items
 		.find(x => x.label === label);
 
@@ -226,7 +224,14 @@ function createMainWindow() {
 }
 
 app.on('ready', () => {
+	const facebookLocales = require('facebook-locales');
+	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale());
+	i18n.initLocale(userLocale)
+
+
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
+	const appMenu = require('./menu');
+	
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
@@ -234,7 +239,7 @@ app.on('ready', () => {
 	if (process.platform === 'darwin') {
 		dockMenu = electron.Menu.buildFromTemplate([
 			{
-				label: 'Mute Notifications',
+				label: i18n._('Mute Notifications'),
 				type: 'checkbox',
 				checked: config.get('notificationsMuted'),
 				click() {
