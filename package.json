@@ -13,9 +13,10 @@
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"test": "xo",
-		"start": "electron .",
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder --mac --linux --win"
+		"start": "npm run compileL10n && electron .",
+		"pack": "npm run compileL10n && electron-builder --dir",
+		"dist": "npm run compileL10n && electron-builder --mac --linux --win",
+		"compileL10n": "node ./build/compile-l10n.js"
 	},
 	"dependencies": {
 		"electron-context-menu": "^0.9.1",
@@ -32,6 +33,7 @@
 	"devDependencies": {
 		"electron": "^1.8.6",
 		"electron-builder": "^20.10.0",
+		"po2json": "^0.4.5",
 		"xo": "*"
 	},
 	"xo": {

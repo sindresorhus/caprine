@@ -1,0 +1,189 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: caprine\n"
+"POT-Creation-Date: 2018-05-16 19:22+0300\n"
+"PO-Revision-Date: 2018-05-17 04:15-0400\n"
+"Last-Translator: kozackunisoft <kozackunisoft@gmail.com>\n"
+"Language-Team: Ukrainian\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: crowdin.com\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Poedit-KeywordsList: i18n._\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: build\n"
+"X-Poedit-SearchPathExcluded-1: dist\n"
+"X-Poedit-SearchPathExcluded-2: lang\n"
+"X-Poedit-SearchPathExcluded-3: media\n"
+"X-Poedit-SearchPathExcluded-4: node_modules\n"
+"X-Poedit-SearchPathExcluded-5: po\n"
+"X-Poedit-SearchPathExcluded-6: static\n"
+"X-Poedit-SearchPathExcluded-7: *.css\n"
+"X-Poedit-SearchPathExcluded-8: *.md\n"
+"X-Crowdin-Project: caprine\n"
+"X-Crowdin-Language: uk\n"
+"X-Crowdin-File: /i18n/po/all.pot\n"
+
+#: index.js:152 index.js:243 menu.js:181 menu.js:523
+msgid "Mute Notifications"
+msgstr "Вимкнути сповіщення"
+
+#: menu.js:14
+msgid "Reset Text Size"
+msgstr "Розмір тексту повідомлень"
+
+#: menu.js:21
+msgid "Increase Text Size"
+msgstr "Збільшити розмір шрифту"
+
+#: menu.js:28
+msgid "Decrease Text Size"
+msgstr "Зменшити розмір шрифту"
+
+#: menu.js:35
+msgid "Toggle Sidebar"
+msgstr "Перемикач бічної панелі"
+
+#: menu.js:43
+msgid "Show Message Buttons"
+msgstr "Показати Кнопки Повідомлення"
+
+#: menu.js:52
+msgid "Toggle Dark Mode"
+msgstr "Увімкнути або вимкнути режим темно"
+
+#: menu.js:63
+msgid "Show Active Contacts"
+msgstr "Активні контакти"
+
+#: menu.js:69
+msgid "Show Message Requests"
+msgstr "Показати повідомлення запитів"
+
+#: menu.js:75
+msgid "Show Archived Threads"
+msgstr "Показати Архівні Теми"
+
+#: menu.js:81
+msgid "Toggle Unread Threads"
+msgstr "Увімкнути або вимкнути непрочитані теми"
+
+#: menu.js:108
+msgid "Report an Issue…"
+msgstr "Повідомити про проблему…"
+
+#: menu.js:127
+msgid "Toggle Vibrancy"
+msgstr "Перемкнути Яскравість"
+
+#: menu.js:152 menu.js:391
+msgid "Always on Top"
+msgstr "Завжди над усіма"
+
+#: menu.js:173
+msgid "Bounce Dock on Message"
+msgstr "Стрибати при повідомленні"
+
+#: menu.js:189 menu.js:507
+msgid "Show Unread Badge"
+msgstr "Показувати  бейдж непрочитаного"
+
+#: menu.js:198 menu.js:532
+msgid "Block Seen Indicator"
+msgstr "Блокувати індикатор перегляду"
+
+#: menu.js:206 menu.js:540
+msgid "Block Typing Indicator"
+msgstr "Блокувати індикатор друкування"
+
+#: menu.js:213
+msgid "Preferences…"
+msgstr "Налаштування…"
+
+#: menu.js:223 menu.js:560
+msgid "Switch to Work Chat…"
+msgstr "Перейти на Work Chat…"
+
+#: menu.js:232 menu.js:569
+msgid "Switch to Messenger…"
+msgstr "Перейти на Messenger…"
+
+#: menu.js:241 menu.js:578
+msgid "Log Out"
+msgstr "Вийти"
+
+#: menu.js:274 menu.js:409
+msgid "File"
+msgstr "Файл"
+
+#: menu.js:277 menu.js:412
+msgid "New Conversation"
+msgstr "Нова розмова"
+
+#: menu.js:287 menu.js:474
+msgid "Mute Conversation"
+msgstr "Вимкнути звук розмови"
+
+#: menu.js:294 menu.js:481
+msgid "Archive Conversation"
+msgstr "Архівувати розмову"
+
+#: menu.js:301 menu.js:488
+msgid "Delete Conversation"
+msgstr "Видалити розмову"
+
+#: menu.js:313 menu.js:634
+msgid "View"
+msgstr "Перегляд"
+
+#: menu.js:329 menu.js:422
+msgid "Select Next Conversation"
+msgstr "Наступна розмова"
+
+#: menu.js:336 menu.js:429
+msgid "Select Previous Conversation"
+msgstr "Попередня розмова"
+
+#: menu.js:343 menu.js:436
+msgid "Find Conversation"
+msgstr "Знайти розмову"
+
+#: menu.js:350 menu.js:443
+msgid "Search Conversation"
+msgstr "Пошук розмови"
+
+#: menu.js:357 menu.js:450
+msgid "Insert GIF"
+msgstr "Вставити GIF"
+
+#: menu.js:364 menu.js:457
+msgid "Insert Emoji"
+msgstr "Вставити смайл"
+
+#: menu.js:371 menu.js:464
+msgid "Insert Text"
+msgstr "Вставити текст"
+
+#: menu.js:499
+msgid "Flash Window on Message"
+msgstr "Вікно спалаху на повідомлення"
+
+#: menu.js:515
+msgid "Launch Minimized"
+msgstr "Запускати у згорнотому стані"
+
+#: menu.js:548
+msgid "Auto Hide Menu Bar"
+msgstr "Автоматично приховувати меню"
+
+#: menu.js:592
+msgid "Edit"
+msgstr "Редагувати"
+
+#: menu.js:625
+msgid "Preferences"
+msgstr "Налаштування"
+
