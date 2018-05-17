@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: caprine\n"
 "POT-Creation-Date: 2018-05-16 19:22+0300\n"
-"PO-Revision-Date: 2018-05-16 13:31-0400\n"
+"PO-Revision-Date: 2018-05-17 04:15-0400\n"
 "Last-Translator: kozackunisoft <kozackunisoft@gmail.com>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-8: *.md\n"
 "X-Crowdin-Project: caprine\n"
 "X-Crowdin-Language: uk\n"
-"X-Crowdin-File: /master/po/all.pot\n"
+"X-Crowdin-File: /i18n/po/all.pot\n"
 
 #: index.js:152 index.js:243 menu.js:181 menu.js:523
 msgid "Mute Notifications"
@@ -169,7 +169,7 @@ msgstr "Вставити текст"
 
 #: menu.js:499
 msgid "Flash Window on Message"
-msgstr ""
+msgstr "Вікно спалаху на повідомлення"
 
 #: menu.js:515
 msgid "Launch Minimized"
@@ -181,7 +181,7 @@ msgstr "Автоматично приховувати меню"
 
 #: menu.js:592
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
 #: menu.js:625
 msgid "Preferences"
