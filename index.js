@@ -1,7 +1,7 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-const URL = require('url').URL;
+const {URL} = require('url');
 const electron = require('electron');
 // -const electronLocalShortcut = require('electron-localshortcut');
 const log = require('electron-log');
