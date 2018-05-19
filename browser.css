@@ -22,7 +22,8 @@ body {
 
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
-._5742, ._673w {
+._5742,
+._673w {
 	-webkit-app-region: drag;
 }
 
