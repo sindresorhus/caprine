@@ -29,7 +29,8 @@ body {
 
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
 ._36ic._5l-3 ._30yy,
-._5742 ._30yy {
+._5742 ._30yy,
+._673w ._30yy {
 	-webkit-app-region: no-drag;
 	-webkit-user-drag: none;
 }
@@ -80,23 +81,23 @@ html.sidebar-hidden ._1enh {
 }
 
 /* Center names in titlebar */
-._5742 {
+._5742,
+._673w {
 	text-align: center !important;
 }
 
 /* Narrower titlebar */
 ._36ic,
-._5742 {
+._5742,
+._673w {
 	height: 40px !important;
 	padding: 4px !important;
 }
-._fl2 {
-	padding: 3px 8px !important;
-}
-
 /* Vertically center chat options */
 ._fl2 {
-	padding-bottom: 8px !important;
+	padding: 0 !important;
+	top: 4px !important;
+	right: 6px !important;
 }
 
 /* Adjust `To` field for narrower titlebar */
@@ -244,4 +245,8 @@ a,
 /* Hide hidden accessibility elements so they're not included in copy-pasting of chat logs */
 .accessible_elem {
 	display: none !important;
+}
+
+[role='navigation'] a {
+	cursor: default !important;
 }

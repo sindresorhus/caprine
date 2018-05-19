@@ -122,13 +122,13 @@ ${process.platform} ${process.arch} ${os.release()}`;
 ];
 
 if (process.platform === 'darwin') {
-	viewSubmenu.push({
-		label: 'Toggle Vibrancy',
-		position: 'endof=toggle',
-		click() {
-			sendAction('toggle-vibrancy');
-		}
-	});
+	/// viewSubmenu.push({
+	// 	label: 'Toggle Vibrancy',
+	// 	position: 'endof=toggle',
+	// 	click() {
+	// 		sendAction('toggle-vibrancy');
+	// 	}
+	// });
 } else {
 	helpSubmenu.push({
 		type: 'separator'

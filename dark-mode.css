@@ -101,7 +101,8 @@ html.dark-mode ._497p {
 }
 
 /* Message list: header above */
-html.dark-mode ._5742 {
+html.dark-mode ._5742,
+html.dark-mode ._673w {
 	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
@@ -229,7 +230,7 @@ html.dark-mode ._1ht1 {
 
 /* Contact list: person (selected) */
 html.dark-mode ._1ht1._1ht2 {
-	background: linear-gradient(180deg, #1871DC, #1870DB) !important;
+	background: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Contact list: person container */

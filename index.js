@@ -21,7 +21,6 @@ const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 const {app, ipcMain, Menu} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
-app.disableHardwareAcceleration();
 
 if (!isDev) {
 	autoUpdater.logger = log;
@@ -177,7 +176,7 @@ function createMainWindow() {
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
 		// Temp workaround for macOS High Sierra, see #295
-		titleBarStyle: process.platform === 'darwin' && Number(require('os').release().split('.')[0]) >= 17 ? null : 'hidden-inset',
+		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
@@ -186,6 +185,7 @@ function createMainWindow() {
 			plugins: true
 		}
 	});
+
 	setUserLocale();
 	setUpPrivacyBlocking();
 
