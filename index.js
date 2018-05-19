@@ -176,8 +176,9 @@ function createMainWindow() {
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
+		titleBarStyle: 'hidden-inset',
 		// Temp workaround for macOS High Sierra, see #295
-		titleBarStyle: process.platform === 'darwin' && Number(require('os').release().split('.')[0]) >= 17 ? null : 'hidden-inset',
+		transparent: process.platform === 'darwin' && Number(require('os').release().split('.')[0]) >= 17,
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
