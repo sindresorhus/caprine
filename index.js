@@ -310,6 +310,11 @@ app.on('ready', () => {
 			electron.shell.openExternal(url);
 		}
 	});
+
+	webContents.on('will-navigate', (event, url) => {
+		event.preventDefault();
+		electron.shell.openExternal(url);
+	});
 });
 
 ipcMain.on('set-vibrancy', () => {
