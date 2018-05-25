@@ -347,8 +347,6 @@ async function sendConversationList() {
 		}
 	}
 
-	console.log(conversations);
-
 	ipc.send('conversations', conversations);
 }
 
