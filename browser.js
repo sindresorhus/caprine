@@ -326,10 +326,9 @@ function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
-
 async function sendConversationList() {
 	const sidebar = document.querySelector('[role=navigation]');
-
+	
 	const conversations = [];
 	for (const el of sidebar.querySelectorAll('._1ht1')) {
 		conversations.push({
@@ -341,14 +340,15 @@ async function sendConversationList() {
 				el.classList.contains('_1ht3')
 			)
 		});
-
+		
 		if (conversations.length >= 10) {
 			break;
 		}
 	}
-
+	
 	ipc.send('conversations', conversations);
 }
+window.s = ipc.send
 
 // Return canvas with rounded image
 function urlToCanvas(url, size) {
