@@ -250,12 +250,10 @@ app.on('ready', () => {
 			}
 
 			mainWindow.show();
-			const items = conversations.map(({label, unread, icon}, index) => {
+			const items = conversations.map(({label, icon}, index) => {
 				return {
 					label: `${label}`,
 					icon: nativeImage.createFromDataURL(icon),
-					type: 'radio',
-					checked: unread,
 					click: () => {
 						sendAction('jump-to-conversation', index + 1);
 					}
