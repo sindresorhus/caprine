@@ -12,10 +12,6 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 	<img src="media/screenshot.png" width="846">
 </a>
 
-<a href="https://www.patreon.com/sindresorhus">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
 ### Quick access to dialogs just from the panel
 <a href="https://www.patreon.com/sindresorhus">
 	<img src="https://user-images.githubusercontent.com/1662812/40548807-66c154aa-603e-11e8-89b5-b514d426eafd.png" width="100">
@@ -24,6 +20,9 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 ### And Touch Bar support
 <img src="media/screenshot-touchbar.png" width="1085">
 
+<a href="https://www.patreon.com/sindresorhus">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
 
 ## Highlights
 
