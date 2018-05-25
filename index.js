@@ -10,6 +10,7 @@ const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+const {sendAction} = require('./util');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -18,7 +19,7 @@ require('electron-dl')();
 require('electron-context-menu')();
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
-const {app, ipcMain, Menu} = electron;
+const {app, ipcMain, Menu, nativeImage} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -232,17 +233,36 @@ app.on('ready', () => {
 	tray.create(mainWindow);
 
 	if (process.platform === 'darwin') {
-		dockMenu = electron.Menu.buildFromTemplate([
-			{
-				label: 'Mute Notifications',
-				type: 'checkbox',
-				checked: config.get('notificationsMuted'),
-				click() {
-					mainWindow.webContents.send('toggle-mute-notifications');
-				}
+		const firstItem = {
+			label: 'Mute Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationsMuted'),
+			click() {
+				mainWindow.webContents.send('toggle-mute-notifications');
 			}
-		]);
+		};
+		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
+
+		ipcMain.on('conversations', (event, conversations) => {
+			if (conversations.length === 0) {
+				return;
+			}
+
+			mainWindow.show();
+			const items = conversations.map(({label, unread, icon}, index) => {
+				return {
+					label: `${label}`,
+					icon: nativeImage.createFromDataURL(icon),
+					type: 'radio',
+					checked: unread,
+					click: () => {
+						sendAction('jump-to-conversation', index + 1);
+					}
+				};
+			});
+			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
+		});
 	}
 
 	enableHiresResources();
