@@ -134,7 +134,7 @@ function setUpPrivacyBlocking() {
 
 function setUserLocale() {
 	const facebookLocales = require('facebook-locales');
-	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale());
+	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
 	const cookie = {
 		url: 'https://www.messenger.com/',
 		name: 'locale',
