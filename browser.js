@@ -44,7 +44,7 @@ ipc.on('show-preferences', async () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector('._30yy[href=\'/new\']').click();
+	document.querySelector('._30yy[data-href=\'https://www.messenger.com/new\']').click();
 });
 
 ipc.on('log-out', () => {
