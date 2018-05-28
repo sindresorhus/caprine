@@ -329,22 +329,19 @@ function closePreferences() {
 async function sendConversationList() {
 	const sidebar = document.querySelector('[role=navigation]');
 
-	const conversations = [];
-	for (const el of sidebar.querySelectorAll('._1ht1')) {
-		conversations.push({
-			label: el.querySelector('._1ht6').textContent,
-			selected: el.classList.contains('_1ht2'),
-			unread: el.classList.contains('_1ht3'),
-			icon: await getDataUrlFromImg( // eslint-disable-line no-await-in-loop
-				el.querySelector('._55lt img'),
-				el.classList.contains('_1ht3')
-			)
-		});
-
-		if (conversations.length >= 10) {
-			break;
-		}
-	}
+	const conversations = await Promise.all(
+		Array.from(sidebar.querySelectorAll('._1ht1'))
+			.splice(0, 10)
+			.map(async (el) => ({
+				label: el.querySelector('._1ht6').textContent,
+				selected: el.classList.contains('_1ht2'),
+				unread: el.classList.contains('_1ht3'),
+				icon: await getDataUrlFromImg(
+					el.querySelector('._55lt img'),
+					el.classList.contains('_1ht3')
+				)
+			}))
+	)
 
 	ipc.send('conversations', conversations);
 }
