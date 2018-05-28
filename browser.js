@@ -330,9 +330,9 @@ async function sendConversationList() {
 	const sidebar = document.querySelector('[role=navigation]');
 
 	const conversations = await Promise.all(
-		Array.from(sidebar.querySelectorAll('._1ht1'))
+		[...sidebar.querySelectorAll('._1ht1')]
 			.splice(0, 10)
-			.map(async (el) => ({
+			.map(async el => ({
 				label: el.querySelector('._1ht6').textContent,
 				selected: el.classList.contains('_1ht2'),
 				unread: el.classList.contains('_1ht3'),
@@ -341,7 +341,7 @@ async function sendConversationList() {
 					el.classList.contains('_1ht3')
 				)
 			}))
-	)
+	);
 
 	ipc.send('conversations', conversations);
 }
