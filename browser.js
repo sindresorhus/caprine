@@ -348,7 +348,6 @@ async function sendConversationList() {
 
 	ipc.send('conversations', conversations);
 }
-window.s = ipc.send;
 
 // Return canvas with rounded image
 function urlToCanvas(url, size) {
