@@ -326,41 +326,24 @@ function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
-
-function initTouchBar() {
+async function sendConversationList() {
 	const sidebar = document.querySelector('[role=navigation]');
 
-	const sendTouchBar = async () => {
-		const conversations = [];
-		for (const el of sidebar.querySelectorAll('._1ht1')) {
-			conversations.push({
+	const conversations = await Promise.all(
+		[...sidebar.querySelectorAll('._1ht1')]
+			.splice(0, 10)
+			.map(async el => ({
 				label: el.querySelector('._1ht6').textContent,
 				selected: el.classList.contains('_1ht2'),
-				icon: await getDataUrlFromImg( // eslint-disable-line no-await-in-loop
+				unread: el.classList.contains('_1ht3'),
+				icon: await getDataUrlFromImg(
 					el.querySelector('._55lt img'),
 					el.classList.contains('_1ht3')
 				)
-			});
+			}))
+	);
 
-			if (conversations.length >= 15) {
-				break;
-			}
-		}
-
-		if (conversations.length > 0) {
-			ipc.send('touch-bar', conversations);
-		}
-	};
-
-	sendTouchBar();
-
-	const conversationListObserver = new MutationObserver(sendTouchBar);
-	conversationListObserver.observe(sidebar, {
-		subtree: true,
-		childList: true,
-		attributes: true,
-		attributeFilter: ['class']
-	});
+	ipc.send('conversations', conversations);
 }
 
 // Return canvas with rounded image
@@ -457,7 +440,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-	initTouchBar();
+	const sidebar = document.querySelector('[role=navigation]');
+
+	sendConversationList();
+
+	const conversationListObserver = new MutationObserver(sendConversationList);
+	conversationListObserver.observe(sidebar, {
+		subtree: true,
+		childList: true,
+		attributes: true,
+		attributeFilter: ['class']
+	});
 });
 
 // It's not possible to add multiple accelerators
