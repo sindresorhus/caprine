@@ -165,6 +165,7 @@ html.sidebar-hidden ._1enh {
 		display: none !important;
 	}
 	
+	/* Fix the overlapping `New Conversation` button on the  window control panel */
 	._36ic._5l-3 {
 		margin-top: 30px;
 	}
