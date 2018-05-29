@@ -166,7 +166,7 @@ html.sidebar-hidden ._1enh {
 	}
 	
 	/* Fix the `New Conversation` button overlapping the traffic light controls on macOS */
-	._36ic._5l-3 {
+	html.os-darwin ._36ic._5l-3 {
 		margin-top: 30px;
 	}
 }
