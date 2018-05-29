@@ -164,6 +164,10 @@ html.sidebar-hidden ._1enh {
 	._4_j5 {
 		display: none !important;
 	}
+	
+	._36ic._5l-3 {
+		margin-top: 30px;
+	}
 }
 
 /* Don't show outline on clickable elements except in the delete/mute modal so that we know what we are selecting */
