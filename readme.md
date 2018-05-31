@@ -172,7 +172,7 @@ $ npm install && npm start
 
 ### Build
 
-See the [`electron-builder` docs](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build).
+See the [`electron-builder` docs](https://www.electron.build/multi-platform-build).
 
 ### Publish
 
