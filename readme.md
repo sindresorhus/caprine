@@ -176,13 +176,11 @@ See the [`electron-builder` docs](https://www.electron.build/multi-platform-buil
 
 ### Publish
 
-Use [`np`](https://github.com/sindresorhus/np) and for example run:
-
 ```
-$ np minor --no-publish
+$ npm run release
 ```
 
-Then edit the automatically created GitHub Releases draft, remove the `.pkg` file, and publish.
+Then edit the automatically created GitHub Releases draft and publish.
 
 
 ## Maintainers

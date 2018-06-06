@@ -15,7 +15,8 @@
 		"test": "xo",
 		"start": "electron .",
 		"pack": "electron-builder --dir",
-		"dist": "electron-builder --mac --linux --win"
+		"dist": "electron-builder --mac --linux --win",
+		"release": "np --no-publish"
 	},
 	"dependencies": {
 		"electron-context-menu": "^0.9.1",
@@ -32,6 +33,7 @@
 	"devDependencies": {
 		"electron": "^2.0.1",
 		"electron-builder": "^20.10.0",
+		"np": "^3.0.4",
 		"xo": "*"
 	},
 	"xo": {
