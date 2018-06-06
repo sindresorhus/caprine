@@ -132,7 +132,7 @@ html.sidebar-hidden ._1enh {
 }
 
 /* Message box: hide bottom white line */
-.fbNubFlyoutAttachments {
+.chatAttachmentShelf:empty {
 	display: none !important;
 }
 
