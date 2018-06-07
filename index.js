@@ -249,7 +249,6 @@ app.on('ready', () => {
 				return;
 			}
 
-			mainWindow.show();
 			const items = conversations.map(({label, icon}, index) => {
 				return {
 					label: `${label}`,
