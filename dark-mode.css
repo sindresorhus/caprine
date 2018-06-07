@@ -14,6 +14,7 @@
 	--conversation-bg: rgb(25, 38, 51);
 	--list-header-color: #202C3A;
 	--blue: #0084ff;
+	--unread-bg: #365899;
 }
 
 html.dark-mode body {
@@ -289,6 +290,11 @@ html.dark-mode ._225b {
 /* Contact list: searching text */
 html.dark-mode ._4g0h {
 	color: var(--base-fourty);
+}
+
+/* Contact list: unread */
+html.dark-mode ._1ht3 {
+	background: var(--unread-bg) !important;
 }
 
 /* Right sidebar */
