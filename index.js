@@ -254,6 +254,7 @@ app.on('ready', () => {
 					label: `${label}`,
 					icon: nativeImage.createFromDataURL(icon),
 					click: () => {
+						mainWindow.show();
 						sendAction('jump-to-conversation', index + 1);
 					}
 				};
