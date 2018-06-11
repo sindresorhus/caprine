@@ -249,12 +249,12 @@ app.on('ready', () => {
 				return;
 			}
 
-			mainWindow.show();
 			const items = conversations.map(({label, icon}, index) => {
 				return {
 					label: `${label}`,
 					icon: nativeImage.createFromDataURL(icon),
 					click: () => {
+						mainWindow.show();
 						sendAction('jump-to-conversation', index + 1);
 					}
 				};
