@@ -584,7 +584,7 @@ html.dark-mode ._55r1._5f0v._43di {
 }
 
 /* Login button */
-html.dark-mode button {
+html.dark-mode button:not(._5upp) {
 	background: var(--container-color) !important;
 }
 
