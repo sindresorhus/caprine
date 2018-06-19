@@ -664,9 +664,9 @@ html.dark-mode .chatAttachmentShelf .__6l {
 	color: inherit;
 }
 
-/* Fixed appearance of attached files */
+/* Fixes appearance of attached files */
 html.dark-mode ._2zl5 {
-	border-color: rgba(255, 255, 255, .10);
+	border-color: rgba(255, 255, 255, 0.10);
 }
 
 html.dark-mode ._2-x5 ,
