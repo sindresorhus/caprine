@@ -296,6 +296,9 @@ html.dark-mode ._4g0h {
 html.dark-mode ._1ht3 {
 	background: var(--unread-bg) !important;
 }
+html.dark-mode ._1ht3 ._1ht7.timestamp {
+	color: var(--base-twenty);
+}
 
 /* Right sidebar */
 html.dark-mode ._4_j5 {
