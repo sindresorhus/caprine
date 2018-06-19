@@ -587,7 +587,7 @@ html.dark-mode ._55r1._5f0v._43di {
 }
 
 /* Login button */
-html.dark-mode button {
+html.dark-mode button:not(._5upp) {
 	background: var(--container-color) !important;
 }
 
@@ -665,4 +665,16 @@ html.dark-mode .chatAttachmentShelf {
 html.dark-mode .chatAttachmentShelf .__6k,
 html.dark-mode .chatAttachmentShelf .__6l {
 	color: inherit;
+}
+
+/* Fixes appearance of attached files */
+html.dark-mode ._2zl5 {
+	border-color: rgba(255, 255, 255, 0.10);
+}
+
+html.dark-mode ._2-x5 ,
+html.dark-mode .__6k,
+html.dark-mode .__6l {
+	color: var(--base-seventy);
+	background: var(--container-color);
 }
