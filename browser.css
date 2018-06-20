@@ -256,10 +256,14 @@ a,
 	cursor: default !important;
 }
 
-/* Fix story color*/
+/* Fix story color */
 ._1sk6 {
 	background: inherit !important;
 }
 ._1suk {
 	color: inherit !important;
+}
+/* Hide Messenger icon when story is open */
+._7yz {
+	background: none !important;
 }
