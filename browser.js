@@ -105,13 +105,11 @@ function setSidebarVisibility() {
 }
 
 ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
-	const wasPreferencesOpen = isPreferencesOpen();
-
-	if (!wasPreferencesOpen) {
+	if (!isPreferencesOpen()) {
 		await openPreferences();
 	}
 
-	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._55sg._4ng2._kv1 input');
+	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._4ng2 input');
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
@@ -121,7 +119,7 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 
 	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
 
-	if (!wasPreferencesOpen) {
+	if (isPreferencesOpen()) {
 		closePreferences();
 	}
 });

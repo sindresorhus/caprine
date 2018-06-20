@@ -513,6 +513,11 @@ html.dark-mode ._2c9g {
 	background: var(--container-color) !important;
 }
 
+/* Dialog: preferences text */
+html.dark-mode ._374b ._374d ._4ng2 {
+	color: var(--base-seventy);
+}
+
 /* Dialog: title and names */
 html.dark-mode ._374c,
 html.dark-mode ._4ebz,
