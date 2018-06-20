@@ -105,7 +105,8 @@ function setSidebarVisibility() {
 }
 
 ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
-	if (!isPreferencesOpen()) {
+	const preferencesAreOpen = isPreferencesOpen();
+	if (!preferencesAreOpen) {
 		await openPreferences();
 	}
 
@@ -119,7 +120,7 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 
 	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
 
-	if (isPreferencesOpen()) {
+	if (!preferencesAreOpen) {
 		closePreferences();
 	}
 });
