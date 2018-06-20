@@ -319,7 +319,7 @@ async function openPreferences() {
 }
 
 function isPreferencesOpen() {
-	return document.querySelector('._3quh._30yy._2t_._5ixy');
+	return !!document.querySelector('._3quh._30yy._2t_._5ixy');
 }
 
 function closePreferences() {
