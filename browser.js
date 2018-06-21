@@ -489,20 +489,19 @@ ipc.on('send-notification', () => {
 			lastMessages.set(id, messageBody);
 
 			if (!config.get('notificationsMuted')) {
-
 				const name = message.querySelector('._1ht6').textContent;
 				const image = message.querySelector('._55lt img').getAttribute('src');
 
-				let notification = new Notification(name, {
+				const notification = new Notification(name, {
 					body: messageBody,
 					icon: image,
 					data: id,
 					silent: true
 				});
 
-				notification.onclick = e => {
+				notification.addEventListener('click', e => {
 					document.querySelector(`[id="${e.target.data}"] a`).click();
-				};
+				});
 			}
 		}
 	});
@@ -510,7 +509,7 @@ ipc.on('send-notification', () => {
 
 function messageWithEmojis(node) {
 	let message = '';
-	let span = node.querySelector('span');
+	const span = node.querySelector('span');
 	if (span) {
 		node = span;
 	}
@@ -518,11 +517,10 @@ function messageWithEmojis(node) {
 		if (n.nodeType === 3) {
 			message += n.textContent;
 		} else if (
-			n.nodeName === 'SPAN'
-			&& n.querySelector('img')
-			&& n.querySelector('img').getAttribute('alt') === '<U+F0000>'
+			n.nodeName === 'SPAN' && n.querySelector('img') &&
+			n.querySelector('img').getAttribute('alt') === '<U+F0000>'
 		) {
-			// facebook thumb up
+			// Facebook thumb up
 			message += '👍';
 		} else if (n.nodeName === 'IMG' && n.classList.contains('_1ift')) {
 			const alt = n.getAttribute('alt');
