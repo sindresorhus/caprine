@@ -164,7 +164,7 @@ html.sidebar-hidden ._1enh {
 	._4_j5 {
 		display: none !important;
 	}
-	
+
 	/* Fix the `New Conversation` button overlapping the traffic light controls on macOS */
 	html.os-darwin ._36ic._5l-3 {
 		margin-top: 30px;
@@ -254,4 +254,16 @@ a,
 
 [role='navigation'] a {
 	cursor: default !important;
+}
+
+/* Fix story color */
+._1sk6 {
+	background: inherit !important;
+}
+._1suk {
+	color: inherit !important;
+}
+/* Hide Messenger icon when story is open */
+._7yz {
+	background: none !important;
 }
