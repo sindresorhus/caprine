@@ -9,6 +9,8 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 
+let lastMessages = null;
+
 function showSettingsMenu() {
 	document.querySelector('._30yy._2fug._p').click();
 }
@@ -472,3 +474,60 @@ document.addEventListener('keydown', event => {
 		jumpToConversation(num);
 	}
 });
+
+ipc.on('send-notification', () => {
+	if (!lastMessages) {
+		lastMessages = new Map();
+	}
+
+	document.querySelectorAll('._1ht3').forEach(message => {
+		const id = message.firstChild.getAttribute('id');
+		const messageElement = message.querySelector('._1htf');
+		const messageBody = messageWithEmojis(messageElement);
+
+		if (lastMessages.get(id) !== messageBody) {
+			lastMessages.set(id, messageBody);
+
+			if (!config.get('notificationsMuted')) {
+
+				const name = message.querySelector('._1ht6').textContent;
+				const image = message.querySelector('._55lt img').getAttribute('src');
+
+				let notification = new Notification(name, {
+					body: messageBody,
+					icon: image,
+					data: id,
+					silent: true
+				});
+
+				notification.onclick = e => {
+					document.querySelector(`[id="${e.target.data}"] a`).click();
+				};
+			}
+		}
+	});
+});
+
+function messageWithEmojis(node) {
+	let message = '';
+	let span = node.querySelector('span');
+	if (span) {
+		node = span;
+	}
+	node.childNodes.forEach(n => {
+		if (n.nodeType === 3) {
+			message += n.textContent;
+		} else if (
+			n.nodeName === 'SPAN'
+			&& n.querySelector('img')
+			&& n.querySelector('img').getAttribute('alt') === '<U+F0000>'
+		) {
+			// facebook thumb up
+			message += '👍';
+		} else if (n.nodeName === 'IMG' && n.classList.contains('_1ift')) {
+			const alt = n.getAttribute('alt');
+			message += alt;
+		}
+	});
+	return message;
+}
