@@ -331,7 +331,8 @@ app.on('ready', () => {
 
 	webContents.on('will-navigate', (event, url) => {
 		const {hostname} = new URL(url);
-		if (hostname === 'www.messenger.com') {
+		const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
+		if (hostname === 'www.messenger.com' || url.startsWith(twoFactorAuthURL)) {
 			return;
 		}
 
