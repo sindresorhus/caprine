@@ -267,3 +267,18 @@ a,
 ._7yz {
 	background: none !important;
 }
+
+.textcomplete-dropdown {
+	background: #fff;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+	list-style: none;
+  }
+  
+  .textcomplete-item {
+	padding: 10px;
+  }
+  
+  .textcomplete-item:not(:last-child) {
+	border-bottom: 1px solid #ccc
+  }

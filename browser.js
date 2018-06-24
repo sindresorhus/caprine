@@ -2,6 +2,7 @@
 const electron = require('electron');
 const elementReady = require('element-ready');
 const config = require('./config');
+const emoji = require('./emoji');
 
 const {ipcRenderer: ipc} = electron;
 
@@ -182,6 +183,30 @@ ipc.on('toggle-dark-mode', () => {
 	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
 });
+
+var delay = (function(){
+	var timer = 0;
+	return function(callback, ms){
+	  clearTimeout (timer);
+	  timer = setTimeout(callback, ms);
+	};
+  })();
+
+function setEmojiSearch(){
+	var textInput = document.querySelector('._5rpu');
+	emoji.load();
+
+	if(!textInput){
+		return;
+	}
+	
+	textInput.onkeyup = function(){
+		delay(function(){
+			var lastword = textInput.textContent.split(" ").pop();
+			emoji.parse(lastword, textInput);
+		}, 800);	
+	};
+};
 
 // Disabled because of https://github.com/electron/electron/issues/10886
 // and other vibrancy bugs with Electron v2
@@ -424,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Hide sidebar if it was hidden before quitting
 	setSidebarVisibility();
-
+	
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
 
@@ -450,13 +475,14 @@ window.addEventListener('load', () => {
 		attributes: true,
 		attributeFilter: ['class']
 	});
+
+	setEmojiSearch();
 });
 
 // It's not possible to add multiple accelerators
 // so this needs to be done the old-school way
 document.addEventListener('keydown', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
-
 	if (!combineKey) {
 		return;
 	}
