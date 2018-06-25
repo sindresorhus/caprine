@@ -10,12 +10,12 @@ body {
 
 /* Login: Remove white top bar */
 ._4b21 {
-	display: none
+	display: none;
 }
 
 /* Login: Remove Facebook links */
-#pageFooter  {
-	display: none
+#pageFooter {
+	display: none;
 }
 
 /* Login: Vertically center login box */
