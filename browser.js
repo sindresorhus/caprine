@@ -1,6 +1,7 @@
 'use strict';
 const electron = require('electron');
 const elementReady = require('element-ready');
+const debounce = require('lodash.debounce');
 const config = require('./config');
 const emoji = require('./emoji');
 
@@ -184,29 +185,19 @@ ipc.on('toggle-dark-mode', () => {
 	setDarkMode();
 });
 
-var delay = (function(){
-	var timer = 0;
-	return function(callback, ms){
-	  clearTimeout (timer);
-	  timer = setTimeout(callback, ms);
-	};
-  })();
-
-function setEmojiSearch(){
-	var textInput = document.querySelector('._5rpu');
+function setEmojiSearch() {
+	const textInput = document.querySelector('._5rpu');
 	emoji.load();
 
-	if(!textInput){
+	if (!textInput) {
 		return;
 	}
-	
-	textInput.onkeyup = function(){
-		delay(function(){
-			var lastword = textInput.textContent.split(" ").pop();
-			emoji.parse(lastword, textInput);
-		}, 800);	
-	};
-};
+
+	textInput.addEventListener('keyup', debounce(() => {
+		const lastword = textInput.textContent.split(' ').pop();
+		emoji.parse(lastword, textInput);
+	}, 800, false));
+}
 
 // Disabled because of https://github.com/electron/electron/issues/10886
 // and other vibrancy bugs with Electron v2
@@ -449,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Hide sidebar if it was hidden before quitting
 	setSidebarVisibility();
-	
+
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
 

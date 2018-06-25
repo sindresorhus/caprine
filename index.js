@@ -304,7 +304,7 @@ app.on('ready', () => {
 		} else {
 			mainWindow.show();
 		}
-		
+
 		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 		mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 	});
