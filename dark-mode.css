@@ -1,5 +1,5 @@
 :root {
-	--base: black;
+	--base: #000;
 	--base-ninety: rgba(255, 255, 255, 0.9);
 	--base-seventy-five: rgba(255, 255, 255, 0.75);
 	--base-seventy: rgba(255, 255, 255, 0.7);
@@ -12,7 +12,7 @@
 	--base-nine: rgba(255, 255, 255, 0.09);
 	--container-color: #192633;
 	--conversation-bg: rgb(25, 38, 51);
-	--list-header-color: #202C3A;
+	--list-header-color: #202c3a;
 	--blue: #0084ff;
 	--unread-bg: #365899;
 }
@@ -420,7 +420,7 @@ html.dark-mode ._33p7 {
 html.dark-mode ._33p7 ._b-u,
 html.dark-mode ._33p7 ._b-v {
 	background-color: transparent !important;
-	background-image: url(https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/CV3cVGSAcf3.png) !important;
+	background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/CV3cVGSAcf3.png') !important;
 	background-repeat: no-repeat !important;
 	background-size: auto !important;
 }
@@ -435,7 +435,6 @@ html.dark-mode ._33p7 input {
 	background-color: var(--base-five);
 }
 html.dark-mode ._33p7 ._5iwn ._58ak::before {
-	-webkit-filter: invert();
 	filter: invert();
 }
 
@@ -454,12 +453,12 @@ html.dark-mode ._1mq_ ._1mq- {
 	color: var(--base-fourty);
 }
 /* Check box colors */
-html.dark-mode ._2m5p[aria-checked="false"][role="checkbox"] {
+html.dark-mode ._2m5p[aria-checked='false'][role='checkbox'] {
 	border: 1px solid var(--base-ten);
 }
 /* New option text box */
 html.dark-mode ._58al {
-	color: white;
+	color: #fff;
 }
 /* Poll results bar graph colors */
 html.dark-mode ._3b4h {
@@ -493,7 +492,7 @@ html.dark-mode ._3u69 {
 
 /* Bot quick-reply button border */
 html.dark-mode ._36wf {
-    border: 1px solid var(--base-five) !important;
+	border: 1px solid var(--base-five) !important;
 }
 
 /* Bot card title */
@@ -502,7 +501,9 @@ html.dark-mode ._3cn0 {
 }
 
 /* Bot card content */
-html.dark-mode ._3cnl, ._3cnn a, ._3cnj {
+html.dark-mode ._3cnl,
+._3cnn a,
+._3cnj {
 	color: var(--base-fourty);
 }
 
@@ -556,13 +557,13 @@ html.dark-mode ._53io {
 }
 
 /* Gif and sticker dialog: style the bottom of the list */
-html.dark-mode .uiScrollableArea.contentAfter:after {
-	background: linear-gradient(rgba(25, 38, 51, .05), var(--container-color));
+html.dark-mode .uiScrollableArea.contentAfter::after {
+	background: linear-gradient(rgba(25, 38, 51, 0.05), var(--container-color));
 }
 
 /* Sticker dialog: selected header */
 html.dark-mode ._5r8a._5r8b,
-html.dark-mode ._eb3:before {
+html.dark-mode ._eb3::before {
 	background-color: var(--base-five);
 }
 
@@ -648,14 +649,14 @@ html.dark-mode ._38wl {
 /* Plan dialog input fields */
 html.dark-mode ._2mes._3smo ._3smp,
 html.dark-mode ._5pw9,
-html.dark-mode ._5pw6{
+html.dark-mode ._5pw6 {
 	background-color: transparent !important;
 	color: var(--base-fourty) !important;
 }
 
 /* Plan dialog time selector active highlight */
 html.dark-mode ._5pw1 {
-    background: var(--base-nine);
+	background: var(--base-nine);
 }
 
 /* Rich media integration text */
@@ -668,7 +669,7 @@ html.dark-mode .chatAttachmentShelf {
 	color: var(--base-seventy);
 }
 html.dark-mode .chatAttachmentShelf {
-	border-top: 1px solid rgba(255, 255, 255, .10);
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 html.dark-mode .chatAttachmentShelf .__6k,
 html.dark-mode .chatAttachmentShelf .__6l {
@@ -677,10 +678,10 @@ html.dark-mode .chatAttachmentShelf .__6l {
 
 /* Fixes appearance of attached files */
 html.dark-mode ._2zl5 {
-	border-color: rgba(255, 255, 255, 0.10);
+	border-color: rgba(255, 255, 255, 0.1);
 }
 
-html.dark-mode ._2-x5 ,
+html.dark-mode ._2-x5,
 html.dark-mode .__6k,
 html.dark-mode .__6l {
 	color: var(--base-seventy);
