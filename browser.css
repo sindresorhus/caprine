@@ -332,7 +332,7 @@ a,
 }
 
 .textcomplete-dropdown {
-	background: #fff;
+	background: rgb(211, 209, 209);
 	border-radius: 3px;
 	border: 1px solid #ccc;
 	list-style: none;
