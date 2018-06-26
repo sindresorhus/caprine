@@ -78,8 +78,8 @@ function buildDropdown(array, currentText) {
 
 		li.addEventListener('click', function () {
 			const text = document.querySelectorAll('[data-text="true"]')[0];
-			var emojiChar = this.getElementsByClassName('emoji')[0].innerHTML; 
-			text.innerHTML = text.innerHTML.replace(currentText, emojiChar);			
+			const emojiChar = this.getElementsByClassName('emoji')[0].innerHTML;
+			text.innerHTML = text.innerHTML.replace(currentText, emojiChar);
 
 			document.getElementById('emoji-options').remove();
 			return true;
