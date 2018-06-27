@@ -1,8 +1,7 @@
-// Emoji datasource
 const emoji = require('emojilib');
+const debounce = require('lodash.debounce');
 // Regex expression chosen to identify the string as emoji label
 const regexExpression = /(:[\w\-+]+)/g;
-// Emoji array
 let emojis = null;
 
 // Function to load all the emojis from the data source
@@ -43,6 +42,20 @@ function exist(emojiId) {
 	});
 }
 
+// Function to add parse event to the text editor
+function addSearchEvent(textInput) {
+	if (!textInput) {
+		return;
+	}
+
+	load();
+
+	textInput.addEventListener('keyup', debounce(() => {
+		const lastword = textInput.textContent.split(' ').pop();
+		parse(lastword, textInput);
+	}, 400, false));
+}
+
 // Function responsible for parsing the text
 // from the message into the emoji label and search the emoji datasource
 function parse(text, element) {
@@ -66,30 +79,39 @@ function parse(text, element) {
 
 // Function to construct the emoji dropdown resultant from the search
 function buildDropdown(array, currentText) {
-	const list = document.createElement('ul');
-	list.className = 'textcomplete-dropdown';
-	list.id = 'emoji-options';
+	const menu = document.createElement('div');
+	menu.className = 'emoji-menu';
 
-	for (let i = 0; i < array.length; i++) {
-		const opt = array[i];
+	const header = document.createElement('div');
+	header.className = 'emoji-info';
+	menu.appendChild(header);
 
-		const li = document.createElement('li');
-		li.innerHTML = `<li class="textcomplete-item">${opt[0]} <span class="emoji">${opt[1].char}</span></li>`;
+	const iconList = document.createElement('div');
+	iconList.className = 'emoji-icons';
 
-		li.addEventListener('click', function () {
-			const text = document.querySelectorAll('[data-text="true"]')[0];
-			const emojiChar = this.getElementsByClassName('emoji')[0].innerHTML;
-			text.innerHTML = text.innerHTML.replace(currentText, emojiChar);
+	for (const opt of array) {
+		const icon = document.createElement('div');
+		if (iconList.innerHTML === '') {
+			icon.className = 'active';
+		}
 
-			document.getElementById('emoji-options').remove();
+		icon.innerHTML = `<span class="emoji">${opt[1].char}</span> :${opt[0]}:`;
+		// Li.innerHTML = `<li class="emoji-icon"></li>`;
+		// Check if is first
+		icon.addEventListener('click', function () {
+			const text = document.querySelector('[data-text="true"]');
+			const emojiChar = this.querySelector('.emoji').innerHTML;
+
+			text.innerHTML = text.innerHTML.replace(currentText, '<span>' + emojiChar + '</span>');
+
+			menu.remove();
 			return true;
 		});
 
-		list.appendChild(li);
+		iconList.appendChild(icon);
 	}
-
-	return list;
+	menu.appendChild(iconList);
+	return menu;
 }
 
-exports.load = load;
-exports.parse = parse;
+exports.addSearchEvent = addSearchEvent;

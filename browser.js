@@ -1,7 +1,6 @@
 'use strict';
 const electron = require('electron');
 const elementReady = require('element-ready');
-const debounce = require('lodash.debounce');
 const config = require('./config');
 const emoji = require('./emoji');
 
@@ -187,16 +186,7 @@ ipc.on('toggle-dark-mode', () => {
 
 function setEmojiSearch() {
 	const textInput = document.querySelector('._5rpu');
-	emoji.load();
-
-	if (!textInput) {
-		return;
-	}
-
-	textInput.addEventListener('keyup', debounce(() => {
-		const lastword = textInput.textContent.split(' ').pop();
-		emoji.parse(lastword, textInput);
-	}, 800, false));
+	emoji.addSearchEvent(textInput);
 }
 
 // Disabled because of https://github.com/electron/electron/issues/10886

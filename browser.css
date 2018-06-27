@@ -331,17 +331,58 @@ a,
 	background: none !important;
 }
 
-.textcomplete-dropdown {
-	background: rgb(211, 209, 209);
+.emoji-menu {	
+	text-align: center;
 	border-radius: 3px;
 	border: 1px solid #ccc;
-	list-style: none;
-  }
-  
-  .textcomplete-item {
-	padding: 10px;
-  }
-  
-  .textcomplete-item:not(:last-child) {
-	border-bottom: 1px solid #ccc
-  }
+	width: 100%;
+	bottom: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.emoji-info {
+	background-color: #0084ff;
+	border-color: #0084ff;
+	bottom: 100%;
+	position: relative;
+	z-index: 1;
+	height: 20px;
+	width: 100%;
+	margin-top: 20px;
+	padding: 3px 10px 0 10px;
+	color: white;
+	border: 1px solid rgba(143, 193, 228, .6);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.emoji-icons {
+	bottom: 100%;
+	position: relative;
+	z-index: 1;
+	overflow: auto;
+	max-height: 250px;
+	padding: 5px;
+	padding-bottom: 0;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+.emoji-icons > div {
+	font-size: 15px;
+	float: left;
+	border-radius: 1.3em;
+	margin: 0 3px;
+	margin-bottom: 5px;
+	padding: 5px;
+	cursor: pointer;
+	color: #a0a0a0;
+}
+
+.emoji-icons > div.active,
+.emoji-icons > div:hover,
+.emoji-icons > div:active,
+.emoji-icons > div:focus {
+	background-color: #0084ff;
+}

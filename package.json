@@ -30,8 +30,8 @@
 		"electron-updater": "^2.21.8",
 		"element-ready": "^2.2.0",
 		"emojilib": "^2.2.12",
-    "facebook-locales": "^1.0.464",
-    "lodash.debounce": "^4.0.8"
+		"facebook-locales": "^1.0.464",
+		"lodash.debounce": "^4.0.8"
 	},
 	"devDependencies": {
 		"electron": "2.0.2",
