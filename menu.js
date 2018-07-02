@@ -48,10 +48,13 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Toggle Dark Mode',
+		label: 'Enable Dark Mode',
+		type: 'checkbox',
+		checked: config.get('darkMode'),
 		position: 'endof=toggle',
 		accelerator: 'CmdOrCtrl+D',
 		click() {
+			config.set('darkMode', !config.get('darkMode'));
 			sendAction('toggle-dark-mode');
 		}
 	},

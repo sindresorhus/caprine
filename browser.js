@@ -179,7 +179,6 @@ ipc.on('toggle-sidebar', () => {
 });
 
 ipc.on('toggle-dark-mode', () => {
-	config.set('darkMode', !config.get('darkMode'));
 	setDarkMode();
 });
 
