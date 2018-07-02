@@ -48,7 +48,7 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Enable Dark Mode',
+		label: 'Dark Mode',
 		type: 'checkbox',
 		checked: config.get('darkMode'),
 		position: 'endof=toggle',
