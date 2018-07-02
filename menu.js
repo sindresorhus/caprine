@@ -55,7 +55,7 @@ const viewSubmenu = [
 		accelerator: 'CmdOrCtrl+D',
 		click() {
 			config.set('darkMode', !config.get('darkMode'));
-			sendAction('toggle-dark-mode');
+			sendAction('set-dark-mode');
 		}
 	},
 	{
