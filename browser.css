@@ -2,9 +2,29 @@ html {
 	overflow: hidden;
 }
 
-/* bind the toolbar as the window's draggable region */
+/* Add OS-specific fonts */
+body {
+	font-family:
+		-apple-system,
+		BlinkMacSystemFont,
+		'Segoe UI',
+		Roboto,
+		Oxygen-Sans,
+		Ubuntu,
+		Cantarell,
+		'Helvetica Neue',
+		sans-serif,
+		'Apple Color Emoji',
+		'Segoe UI Emoji',
+		'Segoe UI Symbol' !important;
+	text-rendering: optimizeLegibility !important;
+	font-feature-settings: 'liga', 'clig', 'kern';
+}
+
+/* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
-._5742 {
+._5742,
+._673w {
 	-webkit-app-region: drag;
 }
 
@@ -13,17 +33,35 @@ html {
 	overflow-y: initial;
 }
 
-/* window wrapper */
-._4sp8 {
-	min-width: 0;
+/* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
+._36ic._5l-3 ._30yy,
+._5742 ._30yy,
+._673w ._30yy {
+	-webkit-app-region: no-drag;
+	-webkit-user-drag: none;
 }
 
-/* hide footer at login view */
+/* Window wrapper */
+._4sp8 {
+	min-width: 0 !important;
+}
+
+/* The width of the popup should not exceed the width of the window */
+._59s7 {
+	max-width: 100% !important;
+}
+
+/* Hide sidebar (optionally) */
+html.sidebar-hidden ._1enh {
+	display: none;
+}
+
+/* Hide footer at login view */
 ._210n {
 	display: none;
 }
 
-/* first time user popup */
+/* First time user popup */
 ._s15 {
 	display: none;
 }
@@ -33,36 +71,47 @@ html {
 	display: none !important;
 }
 
-/* right-column */
+/* Right column */
 ._1q5- {
-	border-left: 1px solid rgba(0, 0, 0, .10) !important;
+	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
-/* hide settings menu */
+/* Hide settings menu */
 .uiContextualLayerBelowLeft ._5v-0._53il {
 	display: none !important;
 }
 
-/* hide settings icon */
+/* Hide settings icon */
 ._30yy._2fug._p {
 	display: none !important;
 }
 
-/* hide title */
+/* Hide title */
 ._1tqi {
 	display: none;
 }
 
-/* narrower titlebar */
+/* Center names in titlebar */
+._5742,
+._673w {
+	text-align: center !important;
+}
+
+/* Narrower titlebar */
 ._36ic,
-._5742 {
+._5742,
+._673w {
 	height: 40px !important;
 	padding: 4px !important;
 }
+/* Vertically center chat options */
 ._fl2 {
-	padding: 3px 8px !important;
+	padding: 0 !important;
+	top: 4px !important;
+	right: 6px !important;
 }
-/* adjust `To` field for narrower titlebar */
+
+/* Adjust `To` field for narrower titlebar */
 ._2y8y {
 	min-height: 40px !important;
 	padding: 8px !important;
@@ -73,13 +122,38 @@ html {
 	display: none;
 }
 
-/* move the contextual back button so it's not obstructed by the native traffic lights */
-._30yy._2oc9 {
+/* Message box: fix video width */
+._3zvs._5z-5 {
+	width: 100% !important;
+}
+._2poz._52mr._ui9._2n8h._2n8i._5fk1 {
+	width: 100% !important;
+}
+._ccq._4tsk._3o67._52mr._4-od {
+	width: 100% !important;
+}
+._1c_u {
+	width: 100% !important;
+}
+._53j5 {
+	width: 100% !important;
+}
+._ox1._21y0 {
+	width: 100% !important;
+}
+
+/* Message box: hide bottom white line */
+.chatAttachmentShelf:empty {
+	display: none !important;
+}
+
+/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
+.os-darwin ._30yy._2oc9 {
 	margin-left: 65px !important;
 }
 
 @media all and (max-width: 700px) {
-	/* make right-column flexible in compact mode */
+	/* Make right column flexible in compact mode */
 	._1q5- {
 		position: absolute !important;
 		right: 0 !important;
@@ -87,15 +161,177 @@ html {
 		height: 100% !important;
 	}
 
+	/* Fix for left space in compact mode */
+	html.sidebar-hidden ._1q5- {
+		left: 0 !important;
+	}
+
 	/* `New Conversation` icon */
 	._30yy[href='/new'] {
 		display: none !important;
 	}
+
+	/* Fix the `New Conversation` button overlapping the traffic light controls on macOS */
+	html.os-darwin ._36ic._5l-3 {
+		margin-top: 30px;
+	}
 }
 
-/* don't show outline on clickable elements
- * except in the delete/mute modal so that we know what we are selecting */
+/* Don't show outline on clickable elements except in the delete/mute modal so that we know what we are selecting */
 a,
-*[role="button"] {
+*[role='button'] {
 	outline: none !important;
+}
+
+/* Remove white background in Preferences */
+._1u5d {
+	background-color: transparent !important;
+}
+
+/* Fix incorrect border radius in Preferences */
+._4eby {
+	border-radius: 2px !important;
+}
+
+/* Contact list: latest message, under contact name */
+._1ht1 ._1htf {
+	color: rgba(0, 0, 0, 0.7);
+}
+
+/* Allow scrolling of "Edit Nicknames" dialog */
+._4h9n ._4h9o {
+	max-height: 100% !important;
+	height: 280px;
+}
+
+/* Tomorrow light theme for code blocks */
+._wu0 {
+	--code-block-base: #1d1f21;
+	--code-block-background: #fff;
+	--code-block-border: #b9b9b9;
+	--code-block-primary: #de935f;
+	--code-block-meta: #969896;
+	--code-block-tag: #a3685a;
+	--code-block-quoted: #b5bd68;
+	--code-block-variable: #c66;
+	--code-block-special: #8abeb7;
+	--code-block-attr-value: #139543;
+	--code-block-keyword: #b294bb;
+	--code-block-function: #81a2be;
+	background-color: var(--code-block-background) !important;
+	border: 1px solid var(--code-block-border) !important;
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.punctuation {
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.property {
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.operator {
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.boolean {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.number {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.constant {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.selector {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.bold {
+	color: var(--code-block-primary) !important;
+	font-weight: bold;
+}
+._wu0 .token.comment {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.prolog {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.doctype {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.cdata {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.tag {
+	color: var(--code-block-tag) !important;
+}
+._wu0 .token.symbol {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.string {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.char {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.inserted {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.attr-name {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.url {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.entity {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.variable {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.deleted {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.builtin {
+	color: var(--code-block-special) !important;
+}
+._wu0 .token.hexcode {
+	color: var(--code-block-special) !important;
+}
+._wu0 .token.regex {
+	color: var(--code-block-special) !important;
+}
+._wu0 .token.attr-value {
+	color: var(--code-block-attr-value) !important;
+}
+._wu0 .token.keyword {
+	color: var(--code-block-keyword) !important;
+}
+._wu0 .token.important {
+	color: var(--code-block-keyword) !important;
+}
+._wu0 .token.italic {
+	color: var(--code-block-keyword) !important;
+	font-style: italic;
+}
+._wu0 .token.function {
+	color: var(--code-block-function) !important;
+}
+
+/* Hide hidden accessibility elements so they're not included in copy-pasting of chat logs */
+.accessible_elem {
+	display: none !important;
+}
+
+[role='navigation'] a {
+	cursor: default !important;
+}
+
+/* Fix story color */
+._1sk6 {
+	background: inherit !important;
+}
+._1suk {
+	color: inherit !important;
+}
+/* Hide Messenger icon when story is open */
+._7yz {
+	background: none !important;
 }

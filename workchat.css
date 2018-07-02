@@ -1,0 +1,87 @@
+/* Main: Hide header */
+#pagelet_bluebar {
+	display: none;
+}
+
+/* Login: Remove vertical scrollbar */
+body {
+	overflow: hidden !important;
+}
+
+/* Login: Remove white top bar */
+._4b21 {
+	display: none;
+}
+
+/* Login: Remove Facebook links */
+#pageFooter {
+	display: none;
+}
+
+/* Login: Vertically center login box */
+html {
+	height: 100%;
+}
+body {
+	height: 100%;
+}
+.UIPage_LoggedOut ._li {
+	height: 100%;
+}
+#globalContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 100%;
+}
+._5rw2 {
+	min-height: 0 !important;
+	padding: 0 !important;
+}
+
+/**
+ * Dark Mode
+ */
+
+/* Login: Background */
+html.dark-mode ._5rw0 {
+	color: var(--base-seventy);
+	background-color: transparent !important;
+}
+
+/* Login: Fix background color in vibrancy mode */
+html.vibrancy ._5rw0 {
+	background-color: transparent !important;
+}
+html.vibrancy:not(.dark-mode) ._5rw2 {
+	color: #242424 !important;
+}
+
+/* Login: Login button */
+html.dark-mode.vibrancy button {
+	background: var(--container-color) !important;
+}
+
+/* Login: Remove login button border */
+html.dark-mode button {
+	border-color: var(--container-color) !important;
+}
+
+/* Login: Email confirmation screen */
+html.dark-mode ._5rwd {
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
+}
+
+/* Contact List: Search results */
+html.dark-mode ._4p-s {
+	background: var(--base-ten) !important;
+}
+
+html.dark-mode ._aou {
+	background: var(--base) !important;
+}
+
+html.dark-mode ._4kf5 {
+	background: var(--base) !important;
+}

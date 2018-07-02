@@ -1,19 +1,38 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
+const {URL} = require('url');
 const electron = require('electron');
+// -const electronLocalShortcut = require('electron-localshortcut');
+const log = require('electron-log');
+const {autoUpdater} = require('electron-updater');
+const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+const {sendAction} = require('./util');
 
-const app = electron.app;
+require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
-require('electron-debug')();
+require('electron-debug')({enabled: true});
 require('electron-dl')();
 require('electron-context-menu')();
 
+const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
+const {app, ipcMain, Menu, nativeImage} = electron;
+
+app.setAppUserModelId('com.sindresorhus.caprine');
+
+if (!isDev) {
+	autoUpdater.logger = log;
+	autoUpdater.logger.transports.file.level = 'info';
+	autoUpdater.checkForUpdates();
+}
+
 let mainWindow;
 let isQuitting = false;
+let prevMessageCount = 0;
+let dockMenu;
 
 const isAlreadyRunning = app.makeSingleInstance(() => {
 	if (mainWindow) {
@@ -29,27 +48,122 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title) {
+function updateBadge(title, titlePrefix) {
 	// ignore `Sindre messaged you` blinking
-	if (title.indexOf('Messenger') === -1) {
+	if (title.indexOf(titlePrefix) === -1) {
 		return;
 	}
 
-	let messageCount = (/\(([0-9]+)\)/).exec(title);
+	let messageCount = (/\((\d+)\)/).exec(title);
 	messageCount = messageCount ? Number(messageCount[1]) : 0;
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
-		app.setBadgeCount(messageCount);
+		if (config.get('showUnreadBadge')) {
+			app.setBadgeCount(messageCount);
+		}
+		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
+			app.dock.bounce('informational');
+			prevMessageCount = messageCount;
+		}
 	}
 
-	if (process.platform === 'linux' || process.platform === 'win32') {
+	if ((process.platform === 'linux' || process.platform === 'win32') && config.get('showUnreadBadge')) {
 		tray.setBadge(messageCount);
+	}
+
+	if (process.platform === 'win32') {
+		if (config.get('showUnreadBadge')) {
+			if (messageCount === 0) {
+				mainWindow.setOverlayIcon(null, '');
+			} else {
+				// Delegate drawing of overlay icon to renderer process
+				mainWindow.webContents.send('render-overlay-icon', messageCount);
+			}
+		}
+
+		if (config.get('flashWindowOnMessage')) {
+			mainWindow.flashFrame(messageCount !== 0);
+		}
+	}
+}
+
+ipcMain.on('update-overlay-icon', (event, data, text) => {
+	const img = electron.nativeImage.createFromDataURL(data);
+	mainWindow.setOverlayIcon(img, text);
+});
+
+function enableHiresResources() {
+	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
+	if (scaleFactor === 1) {
+		return;
+	}
+
+	const filter = {urls: [`*://*.${domain}/`]};
+	electron.session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
+		let cookie = details.requestHeaders.Cookie;
+
+		if (cookie && details.method === 'GET') {
+			if (/(; )?dpr=\d/.test(cookie)) {
+				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
+			} else {
+				cookie = `${cookie}; dpr=${scaleFactor}`;
+			}
+
+			details.requestHeaders.Cookie = cookie;
+		}
+
+		callback({
+			cancel: false,
+			requestHeaders: details.requestHeaders
+		});
+	});
+}
+
+function setUpPrivacyBlocking() {
+	const ses = electron.session.defaultSession;
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
+	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
+		let blocking = false;
+		if (details.url.includes('typ.php')) {
+			blocking = config.get('block.typingIndicator');
+		} else {
+			blocking = config.get('block.chatSeen');
+		}
+		callback({cancel: blocking});
+	});
+}
+
+function setUserLocale() {
+	const facebookLocales = require('facebook-locales');
+	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
+	const cookie = {
+		url: 'https://www.messenger.com/',
+		name: 'locale',
+		value: userLocale
+	};
+	electron.session.defaultSession.cookies.set(cookie, () => {});
+}
+
+function setNotificationsMute(status) {
+	const label = 'Mute Notifications';
+	const muteMenuItem = Menu.getApplicationMenu().items[0].submenu.items
+		.find(x => x.label === label);
+
+	config.set('notificationsMuted', status);
+	muteMenuItem.checked = status;
+
+	if (process.platform === 'darwin') {
+		const item = dockMenu.items.find(x => x.label === label);
+		item.checked = status;
 	}
 }
 
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
+	// Messenger or Work Chat
+	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
+	const titlePrefix = config.get('useWorkChat') ? 'Workplace Chat' : 'Messenger';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -62,10 +176,10 @@ function createMainWindow() {
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
-		titleBarStyle: 'hidden-inset',
-		autoHideMenuBar: true,
+		// Temp workaround for macOS High Sierra, see #295
+		titleBarStyle: 'hiddenInset',
+		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
-		backgroundColor: isDarkMode ? '#192633' : '#fff',
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -73,15 +187,21 @@ function createMainWindow() {
 		}
 	});
 
+	setUserLocale();
+	setUpPrivacyBlocking();
+
 	if (process.platform === 'darwin') {
 		win.setSheetOffset(40);
 	}
 
-	win.loadURL('https://www.messenger.com/login/');
+	win.loadURL(mainURL);
 
 	win.on('close', e => {
 		if (!isQuitting) {
 			e.preventDefault();
+
+			// Workaround for electron/electron#10023
+			win.blur();
 
 			if (process.platform === 'darwin') {
 				app.hide();
@@ -93,36 +213,144 @@ function createMainWindow() {
 
 	win.on('page-title-updated', (e, title) => {
 		e.preventDefault();
-		updateBadge(title);
+		updateBadge(title, titlePrefix);
+	});
+
+	win.on('focus', () => {
+		if (config.get('flashWindowOnMessage')) {
+			// This is a security in the case where messageCount is not reset by page title update
+			win.flashFrame(false);
+		}
 	});
 
 	return win;
 }
 
 app.on('ready', () => {
+	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
-	const page = mainWindow.webContents;
+	if (process.platform === 'darwin') {
+		const firstItem = {
+			label: 'Mute Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationsMuted'),
+			click() {
+				mainWindow.webContents.send('toggle-mute-notifications');
+			}
+		};
+		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
+		app.dock.setMenu(dockMenu);
 
-	const argv = require('minimist')(process.argv.slice(1));
+		ipcMain.on('conversations', (event, conversations) => {
+			if (conversations.length === 0) {
+				return;
+			}
 
-	page.on('dom-ready', () => {
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
-		page.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+			const items = conversations.map(({label, icon}, index) => {
+				return {
+					label: `${label}`,
+					icon: nativeImage.createFromDataURL(icon),
+					click: () => {
+						mainWindow.show();
+						sendAction('jump-to-conversation', index + 1);
+					}
+				};
+			});
+			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
+		});
+	}
 
-		if (argv.minimize) {
-			mainWindow.minimize();
+	enableHiresResources();
+
+	const {webContents} = mainWindow;
+
+	// Disabled because of #258
+	// electronLocalShortcut.register(mainWindow, 'CmdOrCtrl+V', () => {
+	// 	const clipboardHasImage = electron.clipboard.availableFormats().some(type => type.includes('image'));
+
+	// 	if (clipboardHasImage && config.get('confirmImagePaste')) {
+	// 		electron.dialog.showMessageBox(mainWindow, {
+	// 			type: 'info',
+	// 			buttons: ['Send', 'Cancel'],
+	// 			message: 'Are you sure you want to send the image in the clipboard?',
+	// 			icon: electron.clipboard.readImage(),
+	// 			checkboxLabel: 'Don\'t ask me again',
+	// 			checkboxChecked: false
+	// 		}, (resp, checkboxChecked) => {
+	// 			if (resp === 0) {
+	// 				// User selected send
+	// 				webContents.paste();
+	// 				config.set('confirmImagePaste', !checkboxChecked);
+	// 			}
+	// 		});
+	// 	} else {
+	// 		webContents.paste();
+	// 	}
+	// });
+
+	webContents.on('dom-ready', () => {
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+		if (config.get('useWorkChat')) {
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
+		}
+
+		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
+			mainWindow.hide();
 		} else {
 			mainWindow.show();
 		}
+
+		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 	});
 
-	page.on('new-window', (e, url) => {
-		e.preventDefault();
+	webContents.on('new-window', (event, url, frameName, disposition, options) => {
+		event.preventDefault();
+
+		if (url === 'about:blank') {
+			if (frameName !== 'about:blank') { // Voice/video call popup
+				options.show = true;
+				options.titleBarStyle = 'default';
+				options.webPreferences.nodeIntegration = false;
+				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
+				event.newGuest = new electron.BrowserWindow(options);
+			}
+		} else {
+			if (url.startsWith(trackingUrlPrefix)) {
+				url = new URL(url).searchParams.get('u');
+			}
+
+			electron.shell.openExternal(url);
+		}
+	});
+
+	webContents.on('will-navigate', (event, url) => {
+		const {hostname} = new URL(url);
+		const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
+		if (hostname === 'www.messenger.com' || url.startsWith(twoFactorAuthURL)) {
+			return;
+		}
+
+		event.preventDefault();
 		electron.shell.openExternal(url);
 	});
+});
+
+ipcMain.on('set-vibrancy', () => {
+	if (config.get('vibrancy')) {
+		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
+	} else {
+		mainWindow.setVibrancy(null);
+	}
+});
+
+ipcMain.on('mute-notifications-toggled', (event, status) => {
+	setNotificationsMute(status);
 });
 
 app.on('activate', () => {

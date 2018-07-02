@@ -1,349 +1,689 @@
+:root {
+	--base: #000;
+	--base-ninety: rgba(255, 255, 255, 0.9);
+	--base-seventy-five: rgba(255, 255, 255, 0.75);
+	--base-seventy: rgba(255, 255, 255, 0.7);
+	--base-fifty: rgba(255, 255, 255, 0.5);
+	--base-fourty: rgba(255, 255, 255, 0.4);
+	--base-thiry: rgba(255, 255, 255, 0.3);
+	--base-twenty: rgba(255, 255, 255, 0.2);
+	--base-five: rgba(255, 255, 255, 0.05);
+	--base-ten: rgba(255, 255, 255, 0.1);
+	--base-nine: rgba(255, 255, 255, 0.09);
+	--container-color: #192633;
+	--conversation-bg: rgb(25, 38, 51);
+	--list-header-color: #202c3a;
+	--blue: #0084ff;
+	--unread-bg: #365899;
+}
+
 html.dark-mode body {
-	color: rgba(255, 255, 255, 0.7);
-	background: #192633 !important;
+	color: var(--base-seventy);
+	background: var(--container-color) !important;
 }
 
-/* main container? */
+/* Main container? */
 html.dark-mode ._4sp8 {
-	background: #192633 !important;
+	background: var(--container-color) !important;
 }
 
-/* main content */
+/* Main content */
 html.dark-mode ._1q5- {
-	background: #192633 !important;
-	border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+	background: var(--container-color) !important;
+	border-left: 1px solid var(--base-five) !important;
 }
 
-/* message list: your message bubble */
+/* Message list: your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 {
-	background: rgba(255, 255, 255, 0.1);
-	color: rgba(255, 255, 255, 0.7);
+	background: var(--base-ten);
+	color: var(--base-seventy);
 }
 
-/* fix dark mode overriding colors for code snippets */
+/* Message list: remove background if emoji */
+html.dark-mode ._hh7._2f5r {
+	background: none !important;
+}
+
+/* Message list: remove border from messages */
+._hh7._aol {
+	border-color: transparent !important;
+}
+
+/* Fix dark mode overriding colors for code snippets */
 html.dark-mode ._wu0 {
-	color: black;
+	color: var(--base);
 }
 
 /* message list: link in your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 a {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
-/* message list: link in message bubble */
+/* Message list: link in message bubble */
 html.dark-mode ._hh7 a:hover {
 	background: transparent !important;
 }
 
-/* message list: link in incoming message bubble */
+/* Message list: link in incoming message bubble */
 html.dark-mode ._o46._nd_ ._hh7 {
-	color: rgba(255, 255, 255, 0.9);
+	color: var(--base-ninety);
 }
 
-/* message list: link preview */
+/* Message list: link preview */
 html.dark-mode ._5i_d {
-	border: solid 1px rgba(255, 255, 255, 0.05);
+	border: solid 1px var(--base-five);
 }
 
-/* message list: link preview text */
+/* Message list: link preview text */
 html.dark-mode ._5i_d .__6k,
 html.dark-mode ._5i_d .__6l {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 html.dark-mode ._5i_d .__6m {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* message list: input bar */
+/* Message list: input bar */
 html.dark-mode ._4rv3 {
 	background: transparent !important;
-	border-top: solid 1px rgba(255, 255, 255, 0.05);
-	color: rgba(255, 255, 255, 0.7);
+	border-top: solid 1px var(--base-five);
+	color: var(--base-seventy);
 }
 
-/* message list: timestamp */
+/* Message list: input bar on block */
+html.dark-mode ._2wy4 {
+	color: var(--base-twenty);
+}
+
+/* Message list: timestamp */
 html.dark-mode ._497p {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* message list: header above */
-html.dark-mode ._5742 {
-	background: #202C3A !important;
+/* Message list: header above */
+html.dark-mode ._5742,
+html.dark-mode ._673w {
+	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
-/* message list: header above (invitation) */
+
+/* Message list: header above (event) */
+html.dark-mode ._3nta {
+	background: var(--container-color) !important;
+	border-bottom: 1px solid var(--base-five);
+}
+
+/* Message list: header above (event) */
+html.dark-mode ._2n3t {
+	background-color: var(--conversation-bg);
+}
+
+/* Message list: header above (event) */
+html.dark-mode ._2n3u {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7m {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x79 {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (event menu small text) */
+html.dark-mode ._4x7b {
+	color: var(--base-thiry);
+}
+
+/* Message list: header above (invitation) */
 html.dark-mode ._2y8z,
 html.dark-mode ._14-7 ._58ah ._58al::-webkit-input-placeholder,
 html.dark-mode ._58-3 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* message list: header above (invitation) (typed text) */
+/* Message list: header above (invitation) (typed text) */
 html.dark-mode ._14-7 ._58ah ._58al {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
-/* messages list: user info (is in contacts) */
+/* Message list: sender (group chat) */
+html.dark-mode ._ih3 {
+	color: var(--base-fourty);
+}
+
+/* Messages list: user info (is in contacts) */
 html.dark-mode ._36zg-e {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
-/* messages list: user info */
+/* Messages list: user info */
 html.dark-mode ._1n-e {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* messages list: text header above the messages */
+/* Messages list: event box (event name) */
+html.dark-mode ._618l {
+	color: var(--base-seventy);
+}
+
+/* Messages list: event box (event icon) */
+html.dark-mode ._618m {
+	width: 28px;
+}
+
+/* Messages list: event box (event description) */
+html.dark-mode ._618n {
+	color: var(--base-thiry);
+}
+
+/* Messages list: event box (line) */
+html.dark-mode ._618k div hr {
+	background: var(--container-color) !important;
+	border-top: 1px solid var(--base-five);
+}
+
+/* Messages list: text header above the messages */
 html.dark-mode ._17w2,
 html.dark-mode ._ih3 ._3oh-,
 html.dark-mode ._llq ._3oh- {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
 html.dark-mode ._2v6o {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* contact list: header above */
+/* Messages list: typing indicator dots */
+html.dark-mode ._5pd7 {
+	background: var(--base-seventy) !important;
+}
+
+/* Contact list: header above */
 html.dark-mode ._36ic {
-	background: #202C3A !important;
+	background: var(--list-header-color) !important;
 	border-bottom: none;
 }
 
-/* contact list: search input */
+/* Contact list: search input */
 html.dark-mode ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.1) !important;
-	color: rgba(255, 255, 255, 0.9);
+	background: var(--base-ten) !important;
+	color: var(--base-ninety);
 }
 
 html.dark-mode ._5iwm ._58al::-webkit-input-placeholder {
-	color: rgba(255, 255, 255, 0.3);
+	color: var(--base-thirty);
 }
 
-/* contact list: background */
+/* Contact list: background */
 html.dark-mode ._1enh {
 	background: transparent !important;
 }
 
-/* contact list: person */
+/* Contact list: person */
 html.dark-mode ._1ht1 {
 	background: transparent !important;
 }
 
-/* contact list: person (selected) */
+/* Contact list: person (selected) */
 html.dark-mode ._1ht1._1ht2 {
-	background: rgba(255, 255, 255, 0.03) !important;
+	background: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* contact list: person container */
+/* Contact list: person container */
 html.dark-mode ._1qt4 {
-	border-top: solid 1px rgba(255, 255, 255, 0.05);
+	border-top: solid 1px var(--base-five) !important;
 }
 
 /* contact list: person name */
 html.dark-mode ._1ht6 {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
-/* contact list: message blurb */
-html.dark-mode ._1htf {
-	color: rgba(255, 255, 255, 0.4);
+/* Contact list: message blurb */
+html.dark-mode ._1htf,
+/* Contact list: (for format) person: message blurb */
+html.dark-mode ._1htf ._4qba {
+	color: var(--base-fourty);
 }
 
-/* contact list: timestamp */
+/* Contact list: timestamp */
 html.dark-mode ._1ht7 {
-	color: rgba(255, 255, 255, 0.2);
+	color: var(--base-twenty);
 }
-
-/* contact list: timestamp (unread) */
+/* Contact list: timestamp (selected) */
+html.dark-mode ._1ht2 ._1ht7 {
+	color: var(--base-fifty);
+}
+/* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
-	color: rgba(0, 132, 255, 0.7)
+	color: rgba(0, 132, 255, 0.7);
 }
 
 /* contact list: search results */
 html.dark-mode ._5t4c,
 html.dark-mode ._5t4c ._5l37 {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
-/* contact list: search results name */
+/* Contact list: search results name */
 html.dark-mode ._3q34,
 html.dark-mode ._364g {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
-/* contact list: search results subname */
+/* Contact list: search results subname */
 html.dark-mode ._3q35 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* contact list: search result label type */
+/* Contact list: search result label type */
 html.dark-mode ._3xcx,
 html.dark-mode ._225b {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* contact list: searching text */
+/* Contact list: searching text */
 html.dark-mode ._4g0h {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* right sidebar */
+/* Contact list: unread */
+html.dark-mode ._1ht3 {
+	background: var(--unread-bg) !important;
+}
+html.dark-mode ._1ht3 ._1ht7.timestamp {
+	color: var(--base-twenty);
+}
+
+/* Right sidebar */
 html.dark-mode ._4_j5 {
 	background: transparent;
-	border-left: solid 1px rgba(255, 255, 255, 0.05);
+	border-left: solid 1px var(--base-five);
 }
 
-/* right sidebar: headings */
+/* Right sidebar: menus background */
+html.dark-mode ._54ng {
+	background: var(--conversation-bg);
+}
+
+/* Right sidebar: menus text color */
+html.dark-mode ._2i-c ._54nf ._54nh {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: menus selected text color */
+html.dark-mode ._2i-c ._54nf .selected ._54nh {
+	color: rgb(255, 255, 255);
+}
+
+/* Right sidebar: headings */
 html.dark-mode ._1lj0 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* right sidebar: section spacer */
+/* Right sidebar: section spacer */
 html.dark-mode ._1li- {
-	border-top: solid 1px rgba(255, 255, 255, 0.05);
+	border-top: solid 1px var(--base-five);
 }
 
-/* right sidebar: group chat names */
-html.dark-mode ._2jnv {
-	color: rgba(255, 255, 255, 0.7);
+/* Right sidebar: group chat names */
+html.dark-mode ._2jnv,
+html.dark-mode ._5rpu {
+	color: var(--base-seventy);
 }
 
-/* right sidebar: messenger type info under name */
+/* Right sidebar: group chat names admin label */
+html.dark-mode ._5qsj {
+	color: var(--base-fourty);
+}
+
+/* Right sidebar: messenger type info under name */
 html.dark-mode ._3eus {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* right sidebar: mute notification label */
+/* Right sidebar: mute notification label */
 html.dark-mode ._3szq {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
-/* right sidebar: mute notification time */
+/* Right sidebar: mute notification time */
 html.dark-mode ._3x6v {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 }
 
-/* right sidebar: people list */
+/* Right sidebar: people list */
 html.dark-mode ._4_j5 ._5l37 {
-	color: rgba(255, 255, 255, 0.4);
+	color: var(--base-fourty);
 	background: transparent;
 }
 
-/* right sidebar: people list (add people) */
+/* Right sidebar: people list (add people) */
 html.dark-mode ._4rph ._4rpj {
-	border-top: solid 1px rgba(255, 255, 255, 0.1);
+	border-top: solid 1px var(--base-ten) !important;
 }
 
-/* right sidebar: people list item (name) */
+/* Invite friends popup */
+html.dark-mode ._4jgu {
+	background-color: var(--conversation-bg);
+}
+
+html.dark-mode ._5rh4 {
+	color: var(--base-seventy);
+}
+
+/* Right sidebar: people list item (name) */
 html.dark-mode ._364g,
 html.dark-mode ._3x6u,
 html.dark-mode ._4rph ._4rpj {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
 }
 
-/* new conversation contact list: popup */
+/* Photos info color */
+html.dark-mode ._2zn2 {
+	color: var(--base-seventy);
+}
+
+html.dark-mode ._2zn6 {
+	color: var(--base-fourty);
+}
+
+/* New conversation contact list: popup */
 html.dark-mode ._2y8_ {
-	background: transparent;
-	border: solid 1px rgba(255, 255, 255, 0.05);
+	background-color: var(--container-color);
+	border: solid 1px var(--base-five);
 }
 
-/* new conversation contact list: popup hr */
+/* New conversation contact list: popup hr */
 html.dark-mode ._5l38 {
-	border-top: 1px solid rgba(255, 255, 255, 0.10);
+	border-top: 1px solid var(--base-ten);
 }
 
-/* new conversation contact list: popup hover */
+/* New conversation contact list: popup hover */
 html.dark-mode ._1k1p ._5l38 {
 	border-top: none;
 }
 html.dark-mode ._5l37:active,
 html.dark-mode ._1k1p {
-	background-color: rgba(255, 255, 255, 0.05) !important;
+	background-color: var(--base-five) !important;
 }
 
-/* conversation search */
+/* Conversation search */
 html.dark-mode ._33p7 {
-	background-color: rgb(25, 38, 51);
+	background-color: var(--conversation-bg);
 }
 html.dark-mode ._33p7 ._b-u,
 html.dark-mode ._33p7 ._b-v {
 	background-color: transparent !important;
-	background-image: url(/rsrc.php/v3/yb/r/TF9SFeEl2Ka.png) !important;
+	background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/CV3cVGSAcf3.png') !important;
 	background-repeat: no-repeat !important;
 	background-size: auto !important;
 }
 html.dark-mode ._33p7 ._b-u {
-	background-position: 0px -66px !important;
+	background-position: 0 -42px !important;
 }
 html.dark-mode ._33p7 ._b-v {
 	background-position: 0 0 !important;
 }
 html.dark-mode ._33p7 input {
-	color: rgba(255, 255, 255, 0.7);
-	background-color: rgba(255, 255, 255, 0.05);
+	color: var(--base-seventy);
+	background-color: var(--base-five);
 }
 html.dark-mode ._33p7 ._5iwn ._58ak::before {
-	-webkit-filter: invert();
 	filter: invert();
 }
 
-/* dialogs */
+/* Poll */
+/* Border */
+html.dark-mode ._3b4t {
+	border-color: var(--base-nine);
+}
+/* "Poll" header text */
+html.dark-mode ._4qba {
+	color: var(--base-seventy);
+}
+/* Voting options text */
+html.dark-mode ._1mr_,
+html.dark-mode ._1mq_ ._1mq- {
+	color: var(--base-fourty);
+}
+/* Check box colors */
+html.dark-mode ._2m5p[aria-checked='false'][role='checkbox'] {
+	border: 1px solid var(--base-ten);
+}
+/* New option text box */
+html.dark-mode ._58al {
+	color: #fff;
+}
+/* Poll results bar graph colors */
+html.dark-mode ._3b4h {
+	background-color: var(--base-nine);
+}
+/* Poll results profile pictures */
+html.dark-mode ._4mnq {
+	border-color: var(--container-color);
+}
+html.dark-mode ._34n6 {
+	color: var(--base-fourty);
+	background-color: var(--base-nine);
+}
+
+/* Message reaction buttons */
+html.dark-mode ._aou,
+html.dark-mode ._4kf5 {
+	background-color: var(--conversation-bg);
+}
+
+/* Message action buttons */
+html.dark-mode ._3erg ._hh7 a._2q1l,
+html.dark-mode ._2f5n {
+	background-color: var(--container-color);
+}
+
+/* Bot quick-reply buttons */
+html.dark-mode ._3u69 {
+	background: var(--container-color) !important;
+}
+
+/* Bot quick-reply button border */
+html.dark-mode ._36wf {
+	border: 1px solid var(--base-five) !important;
+}
+
+/* Bot card title */
+html.dark-mode ._3cn0 {
+	color: var(--base-seventy);
+}
+
+/* Bot card content */
+html.dark-mode ._3cnl,
+._3cnn a,
+._3cnj {
+	color: var(--base-fourty);
+}
+
+/* Dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
 html.dark-mode ._2c9g {
-	background: #192633 !important;
+	background: var(--container-color) !important;
 }
 
-/* dialog: title and names */
+/* Dialog: preferences text */
+html.dark-mode ._374b ._374d ._4ng2 {
+	color: var(--base-seventy);
+}
+html.dark-mode ._374b ._374d ._6cs7 {
+	color: var(--base-fourty);
+}
+
+/* Dialog: title and names */
 html.dark-mode ._374c,
 html.dark-mode ._4ebz,
 html.dark-mode ._2c9i ._19jt,
 html.dark-mode .uiInputLabelLabel {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-seventy) !important;
 }
 
-/* gif and sticker dialog: hide white triangle */
+/* Send cash dialog background */
+html.dark-mode ._49no,
+html.dark-mode ._2z8r {
+	background-color: transparent !important;
+}
+
+/* Send cash dialog disabled */
+html.dark-mode ._3org {
+	background-color: var(--base-twenty) !important;
+}
+
+/* Send cash dialog primary text */
+html.dark-mode ._39r6 {
+	color: var(--base-seventy) !important;
+}
+
+/* Send cash dialog secondary text */
+html.dark-mode ._39r7 {
+	color: var(--base-fourty) !important;
+}
+
+/* Gif and sticker dialog: hide white triangle */
 html.dark-mode ._53io {
 	visibility: hidden;
 }
 
-/* gif and sticker dialog: style the bottom of the list */
-html.dark-mode .uiScrollableArea.contentAfter:after {
-	background: linear-gradient(rgba(25, 38, 51, .05), #192633);
+/* Gif and sticker dialog: style the bottom of the list */
+html.dark-mode .uiScrollableArea.contentAfter::after {
+	background: linear-gradient(rgba(25, 38, 51, 0.05), var(--container-color));
 }
 
-/* sticker dialog: selected header */
+/* Sticker dialog: selected header */
 html.dark-mode ._5r8a._5r8b,
-html.dark-mode ._eb3:before {
-	background-color: rgba(255, 255, 255, 0.05);
+html.dark-mode ._eb3::before {
+	background-color: var(--base-five);
 }
 
-/* sticker dialog: header borders */
+/* Sticker dialog: header borders */
 html.dark-mode ._5r8e,
 html.dark-mode ._5r86 {
-	border-color: rgba(255, 255, 255, 0.05);
+	border-color: var(--base-five);
 }
 
-/* record dialog: time */
+/* Record dialog: time */
 html.dark-mode ._3z53 {
-	color: rgba(255, 255, 255, 0.7);
+	color: var(--base-seventy);
+}
+
+/* Delete popover */
+html.dark-mode ._hw2 ._53ij {
+	background-color: var(--base-seventy) !important;
 }
 
 /* Login tile and names */
 html.dark-mode ._5hy4,
 html.dark-mode ._3403 {
-	color: rgba(255, 255, 255, 0.7) !important;
+	color: var(--base-fourty) !important;
 }
 
 /* Login inputs */
 html.dark-mode ._55r1._5f0v._43di {
-	background: rgba(255, 255, 255, 0.1) !important;
-	color: rgba(255, 255, 255, 0.75);
+	background: var(--base-ten) !important;
+	color: var(--base-seventy-five);
 }
 
 /* Login button */
-html.dark-mode button {
-	background: #192633 !important;
+html.dark-mode button:not(._5upp) {
+	background: var(--container-color) !important;
+}
+
+/* Fix the Sticker and Gaming buttons */
+html.dark-mode ._4rv6,
+html.dark-mode ._4ce_ {
+	filter: invert() !important;
+	opacity: 0.6 !important;
+}
+
+/* Fix the @name-popover in the chat input box */
+html.dark-mode ._13iv {
+	background: var(--container-color) !important;
+}
+
+/* Gaming popover */
+/* Gaming popover header text */
+html.dark-mode ._4lh7 {
+	color: var(--base-seventy);
+}
+
+/* Gaming popover header */
+html.dark-mode ._53ij ._3rh0 {
+	background: var(--list-header-color) !important;
+}
+
+/* Gaming popover content */
+html.dark-mode ._53ij ._4lh2 {
+	background: var(--container-color) !important;
+}
+
+/* Gaming popover "PLAY" text color */
+html.dark-mode ._30vt ._4qba {
+	color: var(--blue);
+}
+
+/* Tomorrow dark theme for code blocks */
+html.dark-mode ._wu0 {
+	--code-block-base: #c5c8c6;
+	--code-block-background: #1d1f21;
+	--code-block-border: #0a0c14;
+}
+
+/* Plan dialog primary text */
+html.dark-mode ._4dx5,
+html.dark-mode ._38wl {
+	color: var(--base-seventy) !important;
+}
+
+/* Plan dialog input fields */
+html.dark-mode ._2mes._3smo ._3smp,
+html.dark-mode ._5pw9,
+html.dark-mode ._5pw6 {
+	background-color: transparent !important;
+	color: var(--base-fourty) !important;
+}
+
+/* Plan dialog time selector active highlight */
+html.dark-mode ._5pw1 {
+	background: var(--base-nine);
+}
+
+/* Rich media integration text */
+html.dark-mode ._29ey {
+	color: var(--base-fourty) !important;
+}
+html.dark-mode .fbNubFlyoutAttachments,
+html.dark-mode .chatAttachmentShelf {
+	background: var(--container-color) !important;
+	color: var(--base-seventy);
+}
+html.dark-mode .chatAttachmentShelf {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+html.dark-mode .chatAttachmentShelf .__6k,
+html.dark-mode .chatAttachmentShelf .__6l {
+	color: inherit;
+}
+
+/* Fixes appearance of attached files */
+html.dark-mode ._2zl5 {
+	border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark-mode ._2-x5,
+html.dark-mode .__6k,
+html.dark-mode .__6l {
+	color: var(--base-seventy);
+	background: var(--container-color);
 }

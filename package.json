@@ -1,52 +1,90 @@
 {
-  "name": "caprine",
-  "productName": "Caprine",
-  "version": "1.7.0",
-  "description": "Unofficial Facebook Messenger app",
-  "license": "MIT",
-  "repository": "sindresorhus/caprine",
-  "author": {
-    "name": "Sindre Sorhus",
-    "email": "sindresorhus@gmail.com",
-    "url": "sindresorhus.com"
-  },
-  "maintainers": [
-    {
-      "name": "Oskar Krawczyk",
-      "email": "oskar.krawczyk@gmail.com",
-      "url": "krawczyk.io"
-    },
-    {
-      "name": "Daniel Pham",
-      "email": "pham.dany@gmail.com",
-      "url": "danhp.github.io"
-    }
-  ],
-  "scripts": {
-    "test": "xo",
-    "start": "electron .",
-    "build": "npm run build:macos && npm run build:linux && npm run build:windows",
-    "build:macos": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=darwin --arch=x64 --icon=static/Icon.icns --app-bundle-id=com.sindresorhus.caprine --sign='Developer ID Application: Sindre Sorhus (YG56YK5RN5)' --app-version=$npm_package_version && cd dist/Caprine-darwin-x64 && zip -ryXq9 ../Caprine-osx-${npm_package_version}.zip Caprine.app",
-    "build:linux": "electron-packager . --overwrite --out=dist --ignore='^media$' --prune --platform=linux --arch=x64 --app-bundle-id=com.sindresorhus.caprine --app-version=$npm_package_version && cd dist/Caprine-linux-x64/ && zip -ryq9 ../Caprine-linux-${npm_package_version}.zip *",
-    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=win32 --arch=ia32 --icon=static/Icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version && cd dist/Caprine-win32-ia32 && zip -ryq9 ../Caprine-windows-${npm_package_version}.zip *"
-  },
-  "dependencies": {
-    "electron-config": "^0.2.1",
-    "electron-context-menu": "^0.6.0",
-    "electron-debug": "^1.0.0",
-    "electron-dl": "^1.0.0",
-    "minimist": "^1.2.0"
-  },
-  "devDependencies": {
-    "electron": "^1.4.10",
-    "electron-packager": "^8.0.0",
-    "xo": "*"
-  },
-  "xo": {
-    "esnext": true,
-    "envs": [
-      "node",
-      "browser"
-    ]
-  }
+	"name": "caprine",
+	"productName": "Caprine",
+	"version": "2.15.0",
+	"description": "Elegant Facebook Messenger desktop app",
+	"license": "MIT",
+	"repository": "sindresorhus/caprine",
+	"author": {
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "sindresorhus.com"
+	},
+	"scripts": {
+		"postinstall": "electron-builder install-app-deps",
+		"lint": "xo && stylelint '*.css'",
+		"test": "npm run lint",
+		"start": "electron .",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder --mac --linux --win",
+		"release": "np --no-publish"
+	},
+	"dependencies": {
+		"electron-context-menu": "^0.9.1",
+		"electron-debug": "^1.4.0",
+		"electron-dl": "^1.0.0",
+		"electron-is-dev": "^0.3.0",
+		"electron-localshortcut": "^2.0.0",
+		"electron-log": "^2.0.2",
+		"electron-store": "^1.1.0",
+		"electron-updater": "^2.21.8",
+		"element-ready": "^2.2.0",
+		"facebook-locales": "^1.0.464"
+	},
+	"devDependencies": {
+		"electron": "2.0.2",
+		"electron-builder": "20.13.4",
+		"np": "^3.0.4",
+		"stylelint": "^9.3.0",
+		"stylelint-config-xo": "^0.9.0",
+		"xo": "*"
+	},
+	"xo": {
+		"envs": [
+			"node",
+			"browser"
+		]
+	},
+	"stylelint": {
+		"extends": "stylelint-config-xo",
+		"rules": {
+			"declaration-no-important": null,
+			"selector-class-pattern": null,
+			"selector-id-pattern": null,
+			"no-duplicate-selectors": null,
+			"rule-empty-line-before": null
+		}
+	},
+	"build": {
+		"files": [
+			"**/*",
+			"!media${/*}"
+		],
+		"appId": "com.sindresorhus.caprine",
+		"mac": {
+			"category": "public.app-category.social-networking",
+			"electronUpdaterCompatibility": ">=2.15.0"
+		},
+		"dmg": {
+			"iconSize": 160,
+			"contents": [
+				{
+					"x": 180,
+					"y": 170
+				},
+				{
+					"x": 480,
+					"y": 170,
+					"type": "link",
+					"path": "/Applications"
+				}
+			]
+		},
+		"linux": {
+			"target": [
+				"AppImage",
+				"deb"
+			]
+		}
+	}
 }
