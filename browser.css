@@ -8,8 +8,7 @@ html {
 	-webkit-app-region: drag;
 }
 
-/* fix broken scroll arrows on input on Windows */
-
+/* Fix broken scroll arrows on mesage input on Windows */
 ._kmc {
 	overflow-y: initial;
 }
