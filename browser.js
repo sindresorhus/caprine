@@ -185,9 +185,9 @@ ipc.on('toggle-dark-mode', () => {
 });
 
 function setEmojiSearch() {
-	const textInput = document.querySelector('._5rpu');
+	const textInput = document.querySelector('._4_j4');
 	emoji.addSearchEvent(textInput);
-}
+}// ._4_j4  ._4u-c._1wfr._9hq
 
 // Disabled because of https://github.com/electron/electron/issues/10886
 // and other vibrancy bugs with Electron v2

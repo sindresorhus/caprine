@@ -43,17 +43,77 @@ function exist(emojiId) {
 }
 
 // Function to add parse event to the text editor
-function addSearchEvent(textInput) {
+function addSearchEvent(bindElement) {
+	const textInput = document.querySelector('._5rpu');
 	if (!textInput) {
 		return;
 	}
 
 	load();
 
-	textInput.addEventListener('keyup', debounce(() => {
+	textInput.addEventListener('keyup', debounce(e => {
+		if (e.keyCode === 27 || e.keyCode === 13 ||
+			e.keyCode === 39 || e.keyCode === 37) {
+			return;
+		}
+
 		const lastword = textInput.textContent.split(' ').pop();
-		parse(lastword, textInput);
+		parse(lastword, bindElement);
 	}, 400, false));
+
+	document.addEventListener('keyup', e => {
+		const picker = document.querySelector('.emoji-menu');
+		if (picker !== undefined) {
+			e.stopImmediatePropagation();
+			e.stopPropagation();
+			e.preventDefault();
+
+			switch (e.keyCode) {
+				// Escape key maps to keycode `27`
+				case (27): {
+					picker.remove();
+					break;
+				}
+				// Enter key maps to keycode '13'
+				case (13): {
+					const lastword = textInput.textContent.split(' ').pop();
+					const emoji = picker.querySelector('.active > .emoji').innerText;
+
+					const text = document.querySelector('[data-text="true"]');
+
+					text.innerHTML = text.innerHTML.replace(lastword, '<span>' + emoji + '</span>');
+
+					picker.remove();
+					break;
+				}
+				// Rigth arrow key maps to keycode '39'
+				case (39): {
+					const emojiSpanNext = picker.querySelector('.active');
+					const nextEmoji = emojiSpanNext.nextSibling;
+
+					if (nextEmoji !== undefined) {
+						emojiSpanNext.className = '';
+						nextEmoji.className = 'active';
+					}
+					break;
+				}
+				// Left arrow key maps to keycode '37'
+				case (37): {
+					const emojiSpanPrev = picker.querySelector('.active');
+					const prevEmoji = emojiSpanPrev.previousSibling;
+
+					if (prevEmoji !== undefined) {
+						emojiSpanPrev.className = '';
+						prevEmoji.className = 'active';
+					}
+					break;
+				}
+				default: {
+					break;
+				}
+			}
+		}
+	});
 }
 
 // Function responsible for parsing the text
@@ -72,19 +132,27 @@ function parse(text, element) {
 
 		const icons = getChars(name);
 
-		const list = buildDropdown(icons, text);
-		element.appendChild(list);
+		buildMenu(icons, text, element);
 	});
 }
 
 // Function to construct the emoji dropdown resultant from the search
-function buildDropdown(array, currentText) {
-	const menu = document.createElement('div');
-	menu.className = 'emoji-menu';
+function buildMenu(array, currentText, element) {
+	let menu = null;
+	menu = document.querySelector('.emoji-menu');
 
-	const header = document.createElement('div');
-	header.className = 'emoji-info';
-	menu.appendChild(header);
+	if (menu === undefined) {
+		menu = document.createElement('div');
+		menu.className = 'emoji-menu';
+
+		const header = document.createElement('div');
+		header.className = 'emoji-info';
+		menu.appendChild(header);
+
+		element.appendChild(menu);
+	} else {
+		menu.querySelector('.emoji-icons').remove();
+	}
 
 	const iconList = document.createElement('div');
 	iconList.className = 'emoji-icons';
@@ -96,13 +164,12 @@ function buildDropdown(array, currentText) {
 		}
 
 		icon.innerHTML = `<span class="emoji">${opt[1].char}</span> :${opt[0]}:`;
-		// Li.innerHTML = `<li class="emoji-icon"></li>`;
-		// Check if is first
+
 		icon.addEventListener('click', function () {
 			const text = document.querySelector('[data-text="true"]');
 			const emojiChar = this.querySelector('.emoji').innerHTML;
 
-			text.innerHTML = text.innerHTML.replace(currentText, '<span>' + emojiChar + '</span>');
+			text.innerHTML = text.innerHTML.replace(currentText, emojiChar + ' ');
 
 			menu.remove();
 			return true;
@@ -111,7 +178,6 @@ function buildDropdown(array, currentText) {
 		iconList.appendChild(icon);
 	}
 	menu.appendChild(iconList);
-	return menu;
 }
 
 exports.addSearchEvent = addSearchEvent;
