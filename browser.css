@@ -38,7 +38,7 @@ body {
 
 /* Window wrapper */
 ._4sp8 {
-	min-width: 0;
+	min-width: 0 !important;
 }
 
 /* Hide sidebar (optionally) */
