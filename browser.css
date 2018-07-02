@@ -166,11 +166,6 @@ html.sidebar-hidden ._1enh {
 		display: none !important;
 	}
 
-	/* Hide right sidebar in compact mode */
-	._4_j5 {
-		display: none !important;
-	}
-
 	/* Fix the `New Conversation` button overlapping the traffic light controls on macOS */
 	html.os-darwin ._36ic._5l-3 {
 		margin-top: 30px;
