@@ -91,10 +91,9 @@ html.sidebar-hidden ._1enh {
 	display: none;
 }
 
-/* Center names in titlebar */
-._5742,
-._673w {
-	text-align: center !important;
+/* Moves text to the left when window width < 473px */
+._673w ._17w2{
+	display: block !important;
 }
 
 /* Narrower titlebar */
