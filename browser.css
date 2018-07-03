@@ -33,6 +33,11 @@ body {
 	overflow-y: initial;
 }
 
+/* The message buttons are always in one row */
+._4rv4 > div {
+	display: flex;
+}
+
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
 ._36ic._5l-3 ._30yy,
 ._5742 ._30yy,
