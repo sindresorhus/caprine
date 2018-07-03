@@ -110,7 +110,7 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 		await openPreferences();
 	}
 
-	const notificationCheckbox = document.querySelector('._374b:nth-of-type(3) ._4ng2 input');
+	const notificationCheckbox = document.querySelector('._374b:nth-of-type(4) ._4ng2 input');
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
