@@ -10,10 +10,7 @@ function load() {
 		return emojis;
 	}
 
-	const result = emoji.lib;
-	emojis = Object.keys(result).map(key => {
-		return [key, result[key]];
-	});
+	emojis = Object.entries(emoji.lib);
 }
 
 // Function to retrieve all the emojis that match with the search string
@@ -38,7 +35,7 @@ function exist(emojiId) {
 	}
 
 	return emojiMap.some(k => {
-		return k[0].indexOf(emojiId) !== -1;
+		return k[0].includes(emojiId);
 	});
 }
 
@@ -52,8 +49,8 @@ function addSearchEvent(bindElement) {
 	load();
 
 	textInput.addEventListener('keyup', debounce(e => {
-		if (e.keyCode === 27 || e.keyCode === 13 ||
-			e.keyCode === 39 || e.keyCode === 37) {
+		if (e.key === 'Enter' || e.key === 'Escape' ||
+			e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
 			return;
 		}
 
@@ -61,21 +58,26 @@ function addSearchEvent(bindElement) {
 		parse(lastword, bindElement);
 	}, 400, false));
 
-	document.addEventListener('keyup', e => {
-		const picker = document.querySelector('.emoji-menu');
-		if (picker !== undefined) {
-			e.stopImmediatePropagation();
-			e.stopPropagation();
-			e.preventDefault();
+	// Document.addEventListener('keydown', e => {
+	// 	const picker = document.querySelector('.emoji-menu');
+	// 	if (picker !== null && e.key === 'Enter') {
+	// 		e.stopImmediatePropagation();
+	// 		e.stopPropagation();
+	// 		e.preventDefault();
+	// 	}
+	// });
 
-			switch (e.keyCode) {
-				// Escape key maps to keycode `27`
-				case (27): {
+	document.addEventListener('keydown', e => {
+		const picker = document.querySelector('.emoji-menu');
+		if (picker !== null) {
+			switch (e.key) {
+				case ('Escape'): {
+					e.preventDefault();
 					picker.remove();
 					break;
 				}
-				// Enter key maps to keycode '13'
-				case (13): {
+				case ('Enter'): {
+					e.preventDefault();
 					const lastword = textInput.textContent.split(' ').pop();
 					const emoji = picker.querySelector('.active > .emoji').innerText;
 
@@ -84,10 +86,11 @@ function addSearchEvent(bindElement) {
 					text.innerHTML = text.innerHTML.replace(lastword, '<span>' + emoji + '</span>');
 
 					picker.remove();
+
 					break;
 				}
-				// Rigth arrow key maps to keycode '39'
-				case (39): {
+				case ('ArrowRight'): {
+					e.preventDefault();
 					const emojiSpanNext = picker.querySelector('.active');
 					const nextEmoji = emojiSpanNext.nextSibling;
 
@@ -97,8 +100,8 @@ function addSearchEvent(bindElement) {
 					}
 					break;
 				}
-				// Left arrow key maps to keycode '37'
-				case (37): {
+				case ('ArrowLeft'): {
+					e.preventDefault();
 					const emojiSpanPrev = picker.querySelector('.active');
 					const prevEmoji = emojiSpanPrev.previousSibling;
 
@@ -138,10 +141,9 @@ function parse(text, element) {
 
 // Function to construct the emoji dropdown resultant from the search
 function buildMenu(array, currentText, element) {
-	let menu = null;
-	menu = document.querySelector('.emoji-menu');
+	let menu = document.querySelector('.emoji-menu');
 
-	if (menu === undefined) {
+	if (menu === null) {
 		menu = document.createElement('div');
 		menu.className = 'emoji-menu';
 
@@ -150,12 +152,18 @@ function buildMenu(array, currentText, element) {
 		menu.appendChild(header);
 
 		element.appendChild(menu);
-	} else {
-		menu.querySelector('.emoji-icons').remove();
 	}
 
-	const iconList = document.createElement('div');
-	iconList.className = 'emoji-icons';
+	let iconList = menu.querySelector('.emoji-icons');
+
+	if (iconList === null) {
+		iconList = document.createElement('div');
+		iconList.className = 'emoji-icons';
+	} else {
+		while (iconList.hasChildNodes()) {
+			iconList.removeChild(iconList.lastChild);
+		}
+	}
 
 	for (const opt of array) {
 		const icon = document.createElement('div');

@@ -331,12 +331,12 @@ a,
 	background: none !important;
 }
 
-.emoji-menu {	
+.emoji-menu {
+	display: inline-block;
 	text-align: center;
 	border-radius: 3px;
-	border: 1px solid #ccc;	
+	border: 1px solid #ccc;
 	width: 100%;
-	/* bottom: 84px; */
 	position: relative;
 	box-sizing: border-box;
 }
@@ -348,8 +348,8 @@ a,
 	z-index: 1;
 	height: 20px;
 	width: 100%;
-	padding: 3px 10px 0 10px;
-	color: white;
+	padding: 3px 10px 0;
+	color: #fff;
 	border: 1px solid rgba(143, 193, 228, .6);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -360,9 +360,8 @@ a,
 	position: absolute;
 	border-color: #0084ff;
 	border: 1px solid rgba(143, 193, 228, .6);
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
 	bottom: 84px;
+	/* bottom: 100%; */
 	z-index: 1;
 	overflow: auto;
 	max-height: 250px;
