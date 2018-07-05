@@ -179,10 +179,7 @@ ipc.on('toggle-sidebar', () => {
 	setSidebarVisibility();
 });
 
-ipc.on('toggle-dark-mode', () => {
-	config.set('darkMode', !config.get('darkMode'));
-	setDarkMode();
-});
+ipc.on('set-dark-mode', setDarkMode);
 
 function setEmojiSearch() {
 	const textInput = document.querySelector('._4_j4');

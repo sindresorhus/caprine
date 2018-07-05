@@ -28,6 +28,11 @@ body {
 	-webkit-app-region: drag;
 }
 
+/* Fix broken scroll arrows on mesage input on Windows */
+._kmc {
+	overflow-y: initial;
+}
+
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
 ._36ic._5l-3 ._30yy,
 ._5742 ._30yy,
@@ -38,7 +43,12 @@ body {
 
 /* Window wrapper */
 ._4sp8 {
-	min-width: 0;
+	min-width: 0 !important;
+}
+
+/* The width of the popup should not exceed the width of the window */
+._59s7 {
+	max-width: 100% !important;
 }
 
 /* Hide sidebar (optionally) */
@@ -158,11 +168,6 @@ html.sidebar-hidden ._1enh {
 
 	/* `New Conversation` icon */
 	._30yy[href='/new'] {
-		display: none !important;
-	}
-
-	/* Hide right sidebar in compact mode */
-	._4_j5 {
 		display: none !important;
 	}
 
