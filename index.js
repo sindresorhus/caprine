@@ -26,7 +26,8 @@ app.setAppUserModelId('com.sindresorhus.caprine');
 if (!isDev) {
 	autoUpdater.logger = log;
 	autoUpdater.logger.transports.file.level = 'info';
-	autoUpdater.checkForUpdates();
+	const updateInterval = 60 * 60 * 1000 * 4; // 4 hours
+	setInterval(autoUpdater.checkForUpdates(), updateInterval);
 }
 
 let mainWindow;
