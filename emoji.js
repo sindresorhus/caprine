@@ -56,16 +56,16 @@ function addSearchEvent(bindElement) {
 
 		const lastword = textInput.textContent.split(' ').pop();
 		parse(lastword, bindElement);
+		textInput.focus();
 	}, 400, false));
 
-	// Document.addEventListener('keydown', e => {
-	// 	const picker = document.querySelector('.emoji-menu');
-	// 	if (picker !== null && e.key === 'Enter') {
-	// 		e.stopImmediatePropagation();
-	// 		e.stopPropagation();
-	// 		e.preventDefault();
-	// 	}
-	// });
+	document.addEventListener('keyup', e => {
+		const picker = document.querySelector('.emoji-menu');
+		if (picker !== null && e.key === 'Enter') {
+			e.preventDefault();
+			picker.remove();
+		}
+	});
 
 	document.addEventListener('keydown', e => {
 		const picker = document.querySelector('.emoji-menu');
@@ -84,8 +84,6 @@ function addSearchEvent(bindElement) {
 					const text = document.querySelector('[data-text="true"]');
 
 					text.innerHTML = text.innerHTML.replace(lastword, '<span>' + emoji + '</span>');
-
-					picker.remove();
 
 					break;
 				}

@@ -355,7 +355,7 @@ a,
 	width: 100%;
 	padding: 3px 10px 0;
 	color: #fff;
-	border: 1px solid rgba(143, 193, 228, .6);
+	border: 1px solid rgba(143, 193, 228, 0.6);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
@@ -364,8 +364,8 @@ a,
 	margin-top: 20px;
 	position: absolute;
 	border-color: #0084ff;
-	border: 1px solid rgba(143, 193, 228, .6);
-	bottom: 84px;
+	border: 1px solid rgba(143, 193, 228, 0.6);
+	bottom: 100px;
 	/* bottom: 100%; */
 	z-index: 1;
 	overflow: auto;
@@ -378,8 +378,8 @@ a,
 
 .emoji-icons > div {
 	font-size: 15px;
-	float: left;
 	border-radius: 1.3em;
+	display: inline-block;
 	margin: 0 3px;
 	margin-bottom: 5px;
 	padding: 5px;
