@@ -331,9 +331,39 @@ app.on('ready', () => {
 	});
 
 	webContents.on('will-navigate', (event, url) => {
-		const {hostname} = new URL(url);
-		const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
-		if (hostname === 'www.messenger.com' || url.startsWith(twoFactorAuthURL)) {
+		const isMessengerDotCom = url => {
+			const {hostname} = new URL(url);
+			return hostname === 'www.messenger.com';
+		};
+
+		const isTwoFactorAuth = url => {
+			const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
+			return url.startsWith(twoFactorAuthURL);
+		};
+
+		const isWorkChat = url => {
+			const {hostname, pathname} = new URL(url);
+
+			if (hostname === 'work.facebook.com') {
+				return true;
+			}
+
+			if (
+				// Example: https://company-name.facebook.com/login
+				hostname.endsWith('.facebook.com') &&
+				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
+			) {
+				return true;
+			}
+
+			return false;
+		};
+
+		if (
+			isMessengerDotCom(url) ||
+			isTwoFactorAuth(url) ||
+			isWorkChat(url)
+		) {
 			return;
 		}
 
