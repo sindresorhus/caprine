@@ -14,7 +14,10 @@ const {sendAction} = require('./util');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
-require('electron-debug')({enabled: true});
+require('electron-debug')({
+	enabled: true, // TODO: This is only enabled to allow CMD+R because messenger sometimes gets stuck after computer waking up
+	showDevTools: false
+});
 require('electron-dl')();
 require('electron-context-menu')();
 
@@ -177,7 +180,6 @@ function createMainWindow() {
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
-		// Temp workaround for macOS High Sierra, see #295
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
@@ -331,9 +333,39 @@ app.on('ready', () => {
 	});
 
 	webContents.on('will-navigate', (event, url) => {
-		const {hostname} = new URL(url);
-		const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
-		if (hostname === 'www.messenger.com' || url.startsWith(twoFactorAuthURL)) {
+		const isMessengerDotCom = url => {
+			const {hostname} = new URL(url);
+			return hostname === 'www.messenger.com';
+		};
+
+		const isTwoFactorAuth = url => {
+			const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
+			return url.startsWith(twoFactorAuthURL);
+		};
+
+		const isWorkChat = url => {
+			const {hostname, pathname} = new URL(url);
+
+			if (hostname === 'work.facebook.com') {
+				return true;
+			}
+
+			if (
+				// Example: https://company-name.facebook.com/login
+				hostname.endsWith('.facebook.com') &&
+				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
+			) {
+				return true;
+			}
+
+			return false;
+		};
+
+		if (
+			isMessengerDotCom(url) ||
+			isTwoFactorAuth(url) ||
+			isWorkChat(url)
+		) {
 			return;
 		}
 

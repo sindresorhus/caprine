@@ -499,7 +499,6 @@ const otherTpl = [
 			{
 				type: 'checkbox',
 				label: 'Flash Window on Message',
-				visible: process.platform === 'win32',
 				checked: config.get('flashWindowOnMessage'),
 				click(item) {
 					config.set('flashWindowOnMessage', item.checked);
