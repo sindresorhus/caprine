@@ -14,7 +14,10 @@ const {sendAction} = require('./util');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
-require('electron-debug')({enabled: true});
+require('electron-debug')({
+	enabled: true, // TODO: This is only enabled to allow CMD+R because messenger sometimes gets stuck after computer waking up
+	showDevTools: false
+});
 require('electron-dl')();
 require('electron-context-menu')();
 
@@ -177,7 +180,6 @@ function createMainWindow() {
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
-		// Temp workaround for macOS High Sierra, see #295
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
