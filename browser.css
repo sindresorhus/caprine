@@ -30,7 +30,7 @@ body {
 
 /* Fix broken scroll arrows on mesage input on Windows */
 ._kmc {
-	overflow-y: initial;
+	overflow-y: hidden !important;
 }
 
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
