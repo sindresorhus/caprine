@@ -466,7 +466,7 @@ document.addEventListener('keydown', event => {
 		previousConversation();
 	}
 
-	const num = parseInt(event.key, 10);
+	const num = parseInt(event.code.slice(-1), 10);
 
 	if (num >= 1 && num <= 9) {
 		jumpToConversation(num);
