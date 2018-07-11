@@ -52,14 +52,13 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title, titlePrefix) {
+function updateBadge(conversations) {
 	// ignore `Sindre messaged you` blinking
-	if (title.indexOf(titlePrefix) === -1) {
+	if (!Array.isArray(conversations)) {
 		return;
 	}
-
-	let messageCount = (/\((\d+)\)/).exec(title);
-	messageCount = messageCount ? Number(messageCount[1]) : 0;
+	
+	let messageCount = conversations.filter(({unread}) => unread).length
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		if (config.get('showUnreadBadge')) {
@@ -214,11 +213,6 @@ function createMainWindow() {
 		}
 	});
 
-	win.on('page-title-updated', (e, title) => {
-		e.preventDefault();
-		updateBadge(title, titlePrefix);
-	});
-
 	win.on('focus', () => {
 		if (config.get('flashWindowOnMessage')) {
 			// This is a security in the case where messageCount is not reset by page title update
@@ -264,6 +258,10 @@ app.on('ready', () => {
 			});
 			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
+
+		// Update bage on conversations change
+		ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
+		
 	}
 
 	enableHiresResources();
