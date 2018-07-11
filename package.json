@@ -72,12 +72,10 @@
 				"AppImage",
 				"deb",
 				"snap"
-			]
-		},
-		"snap": {
+			],
 			"synopsis": "Elegant Facebook Messenger desktop app",
 			"description": "Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.",
-			"category": "Chat"
+			"category": "Network;Chat"
 		}
 	}
 }
