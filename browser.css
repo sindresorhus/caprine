@@ -33,6 +33,11 @@ body {
 	overflow-y: hidden !important;
 }
 
+/* The message buttons are always in one row */
+._4rv4 > div {
+	display: flex;
+}
+
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
 ._36ic._5l-3 ._30yy,
 ._5742 ._30yy,
@@ -91,10 +96,9 @@ html.sidebar-hidden ._1enh {
 	display: none;
 }
 
-/* Center names in titlebar */
-._5742,
-._673w {
-	text-align: center !important;
+/* Moves text to the left when window width < 473px */
+._673w ._17w2 {
+	display: block !important;
 }
 
 /* Narrower titlebar */
