@@ -57,8 +57,8 @@ function updateBadge(conversations) {
 	if (!Array.isArray(conversations)) {
 		return;
 	}
-	
-	let messageCount = conversations.filter(({unread}) => unread).length
+
+	const messageCount = conversations.filter(({unread}) => unread).length;
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		if (config.get('showUnreadBadge')) {
@@ -166,7 +166,6 @@ function createMainWindow() {
 	const isDarkMode = config.get('darkMode');
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
-	const titlePrefix = config.get('useWorkChat') ? 'Workplace Chat' : 'Messenger';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -261,7 +260,6 @@ app.on('ready', () => {
 
 		// Update bage on conversations change
 		ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
-		
 	}
 
 	enableHiresResources();
