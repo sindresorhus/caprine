@@ -258,7 +258,7 @@ app.on('ready', () => {
 			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
 
-		// Update bage on conversations change
+		// Update badge on conversations change
 		ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
 	}
 
