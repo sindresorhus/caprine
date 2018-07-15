@@ -28,15 +28,10 @@
 		"electron-log": "^2.0.2",
 		"electron-store": "^2.0.0",
 		"electron-updater": "^2.21.8",
-<<<<<<< HEAD
-		"element-ready": "^2.2.0",
 		"emojilib": "^2.2.12",
 		"facebook-locales": "^1.0.464",
-		"lodash.debounce": "^4.0.8"
-=======
-		"element-ready": "^3.0.0",
-		"facebook-locales": "^1.0.464"
->>>>>>> 28d0c38a6de010a259daeb1e9a169461a9ffd56e
+		"lodash.debounce": "^4.0.8",
+		"element-ready": "^3.0.0"
 	},
 	"devDependencies": {
 		"electron": "2.0.4",
