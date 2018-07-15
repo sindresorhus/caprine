@@ -340,6 +340,11 @@ a,
 	background: none !important;
 }
 
+/* Title centered */
+._6f6l {
+	display: block !important;
+}
+
 .emoji-menu {
 	display: inline-block;
 	text-align: center;
