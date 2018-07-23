@@ -30,7 +30,7 @@ body {
 
 /* Fix broken scroll arrows on mesage input on Windows */
 ._kmc {
-	overflow-y: hidden !important;
+	overflow: hidden;
 }
 
 /* The message buttons are always in one row */
