@@ -52,14 +52,13 @@ if (isAlreadyRunning) {
 	app.quit();
 }
 
-function updateBadge(title, titlePrefix) {
+function updateBadge(conversations) {
 	// ignore `Sindre messaged you` blinking
-	if (title.indexOf(titlePrefix) === -1) {
+	if (!Array.isArray(conversations)) {
 		return;
 	}
 
-	let messageCount = (/\((\d+)\)/).exec(title);
-	messageCount = messageCount ? Number(messageCount[1]) : 0;
+	const messageCount = conversations.filter(({unread}) => unread).length;
 
 	if (process.platform === 'darwin' || process.platform === 'linux') {
 		if (config.get('showUnreadBadge')) {
@@ -167,7 +166,6 @@ function createMainWindow() {
 	const isDarkMode = config.get('darkMode');
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
-	const titlePrefix = config.get('useWorkChat') ? 'Workplace Chat' : 'Messenger';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -212,11 +210,6 @@ function createMainWindow() {
 				win.hide();
 			}
 		}
-	});
-
-	win.on('page-title-updated', (e, title) => {
-		e.preventDefault();
-		updateBadge(title, titlePrefix);
 	});
 
 	win.on('focus', () => {
@@ -264,6 +257,9 @@ app.on('ready', () => {
 			});
 			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
+
+		// Update badge on conversations change
+		ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
 	}
 
 	enableHiresResources();
