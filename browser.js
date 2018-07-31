@@ -451,7 +451,7 @@ window.addEventListener('load', () => {
 
 // It's not possible to add multiple accelerators
 // so this needs to be done the old-school way
-document.addEventListener('keydown', event => {
+document.addEventListener('keyup', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
 
 	if (!combineKey) {
@@ -464,6 +464,14 @@ document.addEventListener('keydown', event => {
 
 	if (event.key === '[') {
 		previousConversation();
+	}
+
+	// If the workaround is not needed anymore for the below bug, don't trigger it.
+	if(event.code != "AltRight"){
+		if(event.code.startsWith("Digit") && process.platform == "win32" && !event.shiftKey){
+			// Workaround: require shift on win32 due to upstream Electron bug which was reported as a Caprine bug: https://github.com/sindresorhus/caprine/issues/539
+			return;
+		}
 	}
 
 	const num = parseInt(event.code.slice(-1), 10);
