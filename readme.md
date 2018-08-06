@@ -48,6 +48,8 @@ Or with [Homebrew-Cask](https://caskroom.github.io): `$ brew cask install caprin
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
 
+Also available as a [snap](https://snapcraft.io/caprine).
+
 *The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
 
 ### Windows
