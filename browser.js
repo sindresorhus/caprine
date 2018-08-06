@@ -379,6 +379,7 @@ function urlToCanvas(url, size) {
 
 // Return data url for user avatar
 function getDataUrlFromImg(img, unread) {
+	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		if (!unread) {
 			if (img.dataUrl) {
