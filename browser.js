@@ -322,6 +322,7 @@ function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
+
 async function sendConversationList() {
 	const sidebar = document.querySelector('[role=navigation]');
 

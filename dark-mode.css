@@ -246,7 +246,7 @@ html.dark-mode ._1ht6 {
 
 /* Contact list: message blurb */
 html.dark-mode ._1htf,
-/* Contact list: (for format) person: message blurb */
+	/* Contact list: (for format) person: message blurb */
 html.dark-mode ._1htf ._4qba {
 	color: var(--base-fourty);
 }
@@ -255,10 +255,12 @@ html.dark-mode ._1htf ._4qba {
 html.dark-mode ._1ht7 {
 	color: var(--base-twenty);
 }
+
 /* Contact list: timestamp (selected) */
 html.dark-mode ._1ht2 ._1ht7 {
 	color: var(--base-fifty);
 }
+
 /* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
 	color: rgba(0, 132, 255, 0.7);
@@ -296,6 +298,7 @@ html.dark-mode ._4g0h {
 html.dark-mode ._1ht3 {
 	background: var(--unread-bg) !important;
 }
+
 html.dark-mode ._1ht3 ._1ht7.timestamp {
 	color: var(--base-twenty);
 }
@@ -408,6 +411,7 @@ html.dark-mode ._5l38 {
 html.dark-mode ._1k1p ._5l38 {
 	border-top: none;
 }
+
 html.dark-mode ._5l37:active,
 html.dark-mode ._1k1p {
 	background-color: var(--base-five) !important;
@@ -417,6 +421,7 @@ html.dark-mode ._1k1p {
 html.dark-mode ._33p7 {
 	background-color: var(--conversation-bg);
 }
+
 html.dark-mode ._33p7 ._b-u,
 html.dark-mode ._33p7 ._b-v {
 	background-color: transparent !important;
@@ -424,16 +429,20 @@ html.dark-mode ._33p7 ._b-v {
 	background-repeat: no-repeat !important;
 	background-size: auto !important;
 }
+
 html.dark-mode ._33p7 ._b-u {
 	background-position: 0 -42px !important;
 }
+
 html.dark-mode ._33p7 ._b-v {
 	background-position: 0 0 !important;
 }
+
 html.dark-mode ._33p7 input {
 	color: var(--base-seventy);
 	background-color: var(--base-five);
 }
+
 html.dark-mode ._33p7 ._5iwn ._58ak::before {
 	filter: invert();
 }
@@ -443,31 +452,38 @@ html.dark-mode ._33p7 ._5iwn ._58ak::before {
 html.dark-mode ._3b4t {
 	border-color: var(--base-nine);
 }
+
 /* "Poll" header text */
 html.dark-mode ._4qba {
 	color: var(--base-seventy);
 }
+
 /* Voting options text */
 html.dark-mode ._1mr_,
 html.dark-mode ._1mq_ ._1mq- {
 	color: var(--base-fourty);
 }
+
 /* Check box colors */
 html.dark-mode ._2m5p[aria-checked='false'][role='checkbox'] {
 	border: 1px solid var(--base-ten);
 }
+
 /* New option text box */
 html.dark-mode ._58al {
 	color: #fff;
 }
+
 /* Poll results bar graph colors */
 html.dark-mode ._3b4h {
 	background-color: var(--base-nine);
 }
+
 /* Poll results profile pictures */
 html.dark-mode ._4mnq {
 	border-color: var(--container-color);
 }
+
 html.dark-mode ._34n6 {
 	color: var(--base-fourty);
 	background-color: var(--base-nine);
@@ -518,6 +534,7 @@ html.dark-mode ._2c9g {
 html.dark-mode ._374b ._374d ._4ng2 {
 	color: var(--base-seventy);
 }
+
 html.dark-mode ._374b ._374d ._6cs7 {
 	color: var(--base-fourty);
 }
@@ -663,14 +680,17 @@ html.dark-mode ._5pw1 {
 html.dark-mode ._29ey {
 	color: var(--base-fourty) !important;
 }
+
 html.dark-mode .fbNubFlyoutAttachments,
 html.dark-mode .chatAttachmentShelf {
 	background: var(--container-color) !important;
 	color: var(--base-seventy);
 }
+
 html.dark-mode .chatAttachmentShelf {
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 html.dark-mode .chatAttachmentShelf .__6k,
 html.dark-mode .chatAttachmentShelf .__6l {
 	color: inherit;

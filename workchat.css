@@ -22,18 +22,22 @@ body {
 html {
 	height: 100%;
 }
+
 body {
 	height: 100%;
 }
+
 .UIPage_LoggedOut ._li {
 	height: 100%;
 }
+
 #globalContainer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	height: 100%;
 }
+
 ._5rw2 {
 	min-height: 0 !important;
 	padding: 0 !important;
@@ -53,6 +57,7 @@ html.dark-mode ._5rw0 {
 html.vibrancy ._5rw0 {
 	background-color: transparent !important;
 }
+
 html.vibrancy:not(.dark-mode) ._5rw2 {
 	color: #242424 !important;
 }

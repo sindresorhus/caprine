@@ -4,19 +4,18 @@ html {
 
 /* Add OS-specific fonts */
 body {
-	font-family:
-		-apple-system,
-		BlinkMacSystemFont,
-		'Segoe UI',
-		Roboto,
-		Oxygen-Sans,
-		Ubuntu,
-		Cantarell,
-		'Helvetica Neue',
-		sans-serif,
-		'Apple Color Emoji',
-		'Segoe UI Emoji',
-		'Segoe UI Symbol' !important;
+	font-family: -apple-system,
+	BlinkMacSystemFont,
+	'Segoe UI',
+	Roboto,
+	Oxygen-Sans,
+	Ubuntu,
+	Cantarell,
+	'Helvetica Neue',
+	sans-serif,
+	'Apple Color Emoji',
+	'Segoe UI Emoji',
+	'Segoe UI Symbol' !important;
 	text-rendering: optimizeLegibility !important;
 	font-feature-settings: 'liga', 'clig', 'kern';
 }
@@ -108,6 +107,7 @@ html.sidebar-hidden ._1enh {
 	height: 40px !important;
 	padding: 4px !important;
 }
+
 /* Vertically center chat options */
 ._fl2 {
 	padding: 0 !important;
@@ -130,18 +130,23 @@ html.sidebar-hidden ._1enh {
 ._3zvs._5z-5 {
 	width: 100% !important;
 }
+
 ._2poz._52mr._ui9._2n8h._2n8i._5fk1 {
 	width: 100% !important;
 }
+
 ._ccq._4tsk._3o67._52mr._4-od {
 	width: 100% !important;
 }
+
 ._1c_u {
 	width: 100% !important;
 }
+
 ._53j5 {
 	width: 100% !important;
 }
+
 ._ox1._21y0 {
 	width: 100% !important;
 }
@@ -231,95 +236,125 @@ a,
 	border: 1px solid var(--code-block-border) !important;
 	color: var(--code-block-base) !important;
 }
+
 ._wu0 .token.punctuation {
 	color: var(--code-block-base) !important;
 }
+
 ._wu0 .token.property {
 	color: var(--code-block-base) !important;
 }
+
 ._wu0 .token.operator {
 	color: var(--code-block-base) !important;
 }
+
 ._wu0 .token.boolean {
 	color: var(--code-block-primary) !important;
 }
+
 ._wu0 .token.number {
 	color: var(--code-block-primary) !important;
 }
+
 ._wu0 .token.constant {
 	color: var(--code-block-primary) !important;
 }
+
 ._wu0 .token.selector {
 	color: var(--code-block-primary) !important;
 }
+
 ._wu0 .token.bold {
 	color: var(--code-block-primary) !important;
 	font-weight: bold;
 }
+
 ._wu0 .token.comment {
 	color: var(--code-block-meta) !important;
 }
+
 ._wu0 .token.prolog {
 	color: var(--code-block-meta) !important;
 }
+
 ._wu0 .token.doctype {
 	color: var(--code-block-meta) !important;
 }
+
 ._wu0 .token.cdata {
 	color: var(--code-block-meta) !important;
 }
+
 ._wu0 .token.tag {
 	color: var(--code-block-tag) !important;
 }
+
 ._wu0 .token.symbol {
 	color: var(--code-block-quoted) !important;
 }
+
 ._wu0 .token.string {
 	color: var(--code-block-quoted) !important;
 }
+
 ._wu0 .token.char {
 	color: var(--code-block-quoted) !important;
 }
+
 ._wu0 .token.inserted {
 	color: var(--code-block-quoted) !important;
 }
+
 ._wu0 .token.attr-name {
 	color: var(--code-block-variable) !important;
 }
+
 ._wu0 .token.url {
 	color: var(--code-block-variable) !important;
 }
+
 ._wu0 .token.entity {
 	color: var(--code-block-variable) !important;
 }
+
 ._wu0 .token.variable {
 	color: var(--code-block-variable) !important;
 }
+
 ._wu0 .token.deleted {
 	color: var(--code-block-variable) !important;
 }
+
 ._wu0 .token.builtin {
 	color: var(--code-block-special) !important;
 }
+
 ._wu0 .token.hexcode {
 	color: var(--code-block-special) !important;
 }
+
 ._wu0 .token.regex {
 	color: var(--code-block-special) !important;
 }
+
 ._wu0 .token.attr-value {
 	color: var(--code-block-attr-value) !important;
 }
+
 ._wu0 .token.keyword {
 	color: var(--code-block-keyword) !important;
 }
+
 ._wu0 .token.important {
 	color: var(--code-block-keyword) !important;
 }
+
 ._wu0 .token.italic {
 	color: var(--code-block-keyword) !important;
 	font-style: italic;
 }
+
 ._wu0 .token.function {
 	color: var(--code-block-function) !important;
 }
@@ -337,13 +372,16 @@ a,
 ._1sk6 {
 	background: inherit !important;
 }
+
 ._1suk {
 	color: inherit !important;
 }
+
 /* Hide Messenger icon when story is open */
 ._7yz {
 	background: none !important;
 }
+
 /* Title centered */
 ._6f6l {
 	display: block !important;

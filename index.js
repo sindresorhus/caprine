@@ -144,7 +144,8 @@ function setUserLocale() {
 		name: 'locale',
 		value: userLocale
 	};
-	electron.session.defaultSession.cookies.set(cookie, () => {});
+	electron.session.defaultSession.cookies.set(cookie, () => {
+	});
 }
 
 function setNotificationsMute(status) {
