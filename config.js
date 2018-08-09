@@ -21,7 +21,7 @@ module.exports = new Store({
 			typingIndicator: false
 		},
 		confirmImagePaste: true,
-		useWorkChat: false,
+		useWorkChat: true,
 		sidebarHidden: false,
 		autoHideMenuBar: false,
 		notificationsMuted: false
