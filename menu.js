@@ -223,6 +223,7 @@ const macosTpl = [
 			},
 			{
 				label: 'Switch to Work Chat…',
+				accelerator: 'Cmd+2',
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -232,6 +233,7 @@ const macosTpl = [
 			},
 			{
 				label: 'Switch to Messenger…',
+				accelerator: 'Cmd+1',
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
