@@ -232,6 +232,21 @@ function jumpToConversation(key) {
 	selectConversation(index);
 }
 
+function selectFirstOption(inputField) {
+	if (!inputField || !inputField.placeholder) { return }
+	if (inputField.placeholder.includes('GIF')) {
+		let firstGif = document.querySelector('._358')
+		if (firstGif) {
+			firstGif.click()
+		}
+	} else if (inputField.placeholder.includes('Messenger')) {
+		let firstSearchResult = document.querySelector('._4ld- > img')
+		if (firstSearchResult) {
+			firstSearchResult.click()
+		}
+	}
+}
+
 // Focus on the conversation with the given index
 function selectConversation(index) {
 	document.querySelector(listSelector).children[index].firstChild.firstChild.click();
@@ -454,6 +469,10 @@ window.addEventListener('load', () => {
 // so this needs to be done the old-school way
 document.addEventListener('keydown', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
+
+	if (event.key === 'Enter' && document.activeElement && document.activeElement.className === '_58al') {
+		selectFirstOption(document.activeElement);
+	}
 
 	if (!combineKey) {
 		return;
