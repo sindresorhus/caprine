@@ -451,9 +451,9 @@ window.addEventListener('load', () => {
 		});
 	}
 
-	const isKeepMeSignedInChecked = document.getElementById('u_0_0').checked;
-	if (!isKeepMeSignedInChecked) {
-		document.getElementById('u_0_0').checked = true;
+	const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
+	if (!keepMeSignedInCheckbox.checked) {
+		keepMeSignedInCheckbox.checked = true;
 	}
 });
 
