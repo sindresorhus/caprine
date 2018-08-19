@@ -233,16 +233,18 @@ function jumpToConversation(key) {
 }
 
 function selectFirstOption(inputField) {
-	if (!inputField || !inputField.placeholder) { return }
+	if (!inputField || !inputField.placeholder) {
+		return;
+	}
 	if (inputField.placeholder.includes('GIF')) {
-		let firstGif = document.querySelector('._358')
+		const firstGif = document.querySelector('._358');
 		if (firstGif) {
-			firstGif.click()
+			firstGif.click();
 		}
 	} else if (inputField.placeholder.includes('Messenger')) {
-		let firstSearchResult = document.querySelector('._4ld- > img')
+		const firstSearchResult = document.querySelector('._4ld- > img');
 		if (firstSearchResult) {
-			firstSearchResult.click()
+			firstSearchResult.click();
 		}
 	}
 }
