@@ -439,15 +439,22 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
 	const sidebar = document.querySelector('[role=navigation]');
 
-	sendConversationList();
+	if (sidebar) {
+		sendConversationList();
 
-	const conversationListObserver = new MutationObserver(sendConversationList);
-	conversationListObserver.observe(sidebar, {
-		subtree: true,
-		childList: true,
-		attributes: true,
-		attributeFilter: ['class']
-	});
+		const conversationListObserver = new MutationObserver(sendConversationList);
+		conversationListObserver.observe(sidebar, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['class']
+		});
+	}
+
+	const isKeepMeSignedInChecked = document.getElementById('u_0_0').checked;
+	if (!isKeepMeSignedInChecked) {
+		document.getElementById('u_0_0').checked = true;
+	}
 });
 
 // It's not possible to add multiple accelerators
