@@ -472,7 +472,8 @@ window.addEventListener('load', () => {
 document.addEventListener('keydown', event => {
 	const combineKey = process.platform === 'darwin' ? event.metaKey : event.ctrlKey;
 
-	if (event.key === 'Enter' && document.activeElement && document.activeElement.className === '_58al') {
+	const searchInputField = '_58al'
+	if (event.key === 'Enter' && document.activeElement && document.activeElement.className === searchInputField) {
 		selectFirstOption(document.activeElement);
 	}
 
