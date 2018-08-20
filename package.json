@@ -24,7 +24,6 @@
 		"electron-debug": "^2.0.0",
 		"electron-dl": "^1.0.0",
 		"electron-is-dev": "^0.3.0",
-		"electron-localshortcut": "^2.0.0",
 		"electron-log": "^2.0.2",
 		"electron-store": "^2.0.0",
 		"electron-updater": "^3.0.3",
