@@ -151,6 +151,11 @@ html.sidebar-hidden ._1enh {
 	display: none !important;
 }
 
+/* Message box: emoji picker selected tab */
+._1uwz._1uwx {
+	border-radius: 4pt;
+}
+
 /* Preferences dialog: hide unnecessary options */
 ._374b:nth-child(5) {
 	display: none !important;

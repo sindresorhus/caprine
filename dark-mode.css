@@ -96,6 +96,12 @@ html.dark-mode ._2wy4 {
 	color: var(--base-twenty);
 }
 
+/* Message list: emoji picker selected tab */
+html.dark-mode ._1uwz._1uwx {
+	background: var(--base-ten);
+	border-radius: 4pt;
+}
+
 /* Message list: timestamp */
 html.dark-mode ._497p {
 	color: var(--base-fourty);
