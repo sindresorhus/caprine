@@ -156,7 +156,8 @@ Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
 Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
-Switch between Messenger and Workchat  | <kbd>Cmd/Ctrl Shift 1 or 2</kbd>
+Switch to Messenger    | <kbd>Cmd/Ctrl Shift 1</kbd>
+Switch to Workchat     | <kbd>Cmd/Ctrl Shift 2</kbd>
 Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
 
 
