@@ -31,7 +31,7 @@
 		"facebook-locales": "^1.0.464"
 	},
 	"devDependencies": {
-		"electron": "2.0.5",
+		"electron": "2.0.8",
 		"electron-builder": "20.26.0",
 		"np": "^3.0.4",
 		"stylelint": "^9.4.0",
