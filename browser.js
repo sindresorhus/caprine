@@ -451,8 +451,8 @@ window.addEventListener('load', () => {
 		});
 	}
 
-	const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
-	if (!keepMeSignedInCheckbox.checked) {
+	if (location.pathname.startsWith('/login')) {
+		const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
 		keepMeSignedInCheckbox.checked = true;
 	}
 });
