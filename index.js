@@ -329,6 +329,10 @@ app.on('ready', () => {
 				return true;
 			}
 
+			if (hostname === 'login.microsoftonline.com') {
+				return true;
+			}
+
 			return false;
 		};
 
