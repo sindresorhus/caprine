@@ -89,19 +89,19 @@ const viewSubmenu = [
 
 const helpSubmenu = [
 	{
-		label: `Website`,
+		label: 'Website',
 		click() {
 			shell.openExternal('https://sindresorhus.com/caprine');
 		}
 	},
 	{
-		label: `Source Code`,
+		label: 'Source Code',
 		click() {
 			shell.openExternal('https://github.com/sindresorhus/caprine');
 		}
 	},
 	{
-		label: `Donate…`,
+		label: 'Donate…',
 		click() {
 			shell.openExternal('https://sindresorhus.com/donate');
 		}
