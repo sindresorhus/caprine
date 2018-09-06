@@ -16,8 +16,9 @@
 		"test": "npm run lint",
 		"start": "electron .",
 		"pack": "electron-builder --dir",
-		"dist": "electron-builder --mac --linux --win",
-		"release": "np --no-publish"
+		"dist": "electron-builder --linux",
+		"release": "np --no-publish",
+		"publish-snap": "snapcraft push --release=stable dist/*.snap"
 	},
 	"dependencies": {
 		"electron-context-menu": "^0.10.0",
