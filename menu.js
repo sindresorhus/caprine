@@ -223,6 +223,7 @@ const macosTpl = [
 			},
 			{
 				label: 'Switch to Work Chat…',
+				accelerator: 'Cmd+Shift+2',
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -232,6 +233,7 @@ const macosTpl = [
 			},
 			{
 				label: 'Switch to Messenger…',
+				accelerator: 'Cmd+Shift+1',
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
@@ -559,6 +561,7 @@ const otherTpl = [
 			},
 			{
 				label: 'Switch to Work Chat…',
+				accelerator: 'Ctrl+Shift+2',
 				visible: !config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', true);
@@ -568,6 +571,7 @@ const otherTpl = [
 			},
 			{
 				label: 'Switch to Messenger…',
+				accelerator: 'Ctrl+Shift+1',
 				visible: config.get('useWorkChat'),
 				click() {
 					config.set('useWorkChat', false);
