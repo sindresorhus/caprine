@@ -18,7 +18,7 @@
 		"pack": "electron-builder --dir",
 		"dist": "electron-builder --mac --linux --win",
 		"release": "np --no-publish",
-		"publish-snap": "snapcraft push --release=stable dist/*.snap"
+		"publish-snap": "del dist && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
 	},
 	"dependencies": {
 		"electron-context-menu": "^0.10.0",
@@ -32,6 +32,7 @@
 		"facebook-locales": "^1.0.464"
 	},
 	"devDependencies": {
+		"del-cli": "^1.1.0",
 		"electron": "2.0.8",
 		"electron-builder": "20.26.0",
 		"np": "^3.0.4",
