@@ -256,10 +256,10 @@ app.on('ready', () => {
 			});
 			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
-
-		// Update badge on conversations change
-		ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
 	}
+
+	// Update badge on conversations change
+	ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
 
 	enableHiresResources();
 
