@@ -333,8 +333,9 @@ async function sendConversationList() {
 				selected: el.classList.contains('_1ht2'),
 				unread: el.classList.contains('_1ht3'),
 				icon: await getDataUrlFromImg(
-					el.querySelector('._55lt img'),
-					el.classList.contains('_1ht3')
+					el.querySelector('._55lt img') ? el.querySelector('._55lt img') : el.querySelector('._4ld- div'),
+					el.classList.contains('_1ht3'),
+					Boolean(el.querySelector('._55lt img'))
 				)
 			}))
 	);
@@ -378,7 +379,7 @@ function urlToCanvas(url, size) {
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img, unread) {
+function getDataUrlFromImg(img, unread, isImg) {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		if (!unread) {
@@ -389,6 +390,9 @@ function getDataUrlFromImg(img, unread) {
 			return resolve(img.dataUnreadUrl);
 		}
 
+		if (!isImg) {
+			img.src = img.style.backgroundImage.substring(5, img.style.backgroundImage.length - 2);
+		}
 		const canvas = await urlToCanvas(img.src, 30);
 		const ctx = canvas.getContext('2d');
 		img.dataUrl = canvas.toDataURL();
