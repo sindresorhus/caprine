@@ -10,6 +10,9 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "sindresorhus.com"
 	},
+	"engines": {
+		"node": ">=10"
+	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"lint": "xo && stylelint '*.css'",
@@ -24,7 +27,7 @@
 		"electron-context-menu": "^0.10.0",
 		"electron-debug": "^2.0.0",
 		"electron-dl": "^1.0.0",
-		"electron-is-dev": "^0.3.0",
+		"electron-is-dev": "^1.0.0",
 		"electron-log": "^2.0.2",
 		"electron-store": "^2.0.0",
 		"electron-updater": "^3.0.3",
@@ -33,12 +36,12 @@
 	},
 	"devDependencies": {
 		"del-cli": "^1.1.0",
-		"electron": "2.0.8",
-		"electron-builder": "20.26.0",
+		"electron": "3.0.0",
+		"electron-builder": "20.28.4",
 		"np": "^3.0.4",
 		"stylelint": "^9.4.0",
 		"stylelint-config-xo": "^0.10.0",
-		"xo": "*"
+		"xo": "^0.23.0"
 	},
 	"xo": {
 		"envs": [

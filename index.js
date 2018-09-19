@@ -37,7 +37,11 @@ let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu;
 
-const isAlreadyRunning = app.makeSingleInstance(() => {
+if (!app.requestSingleInstanceLock()) {
+	app.quit();
+}
+
+app.on('second-instance', () => {
 	if (mainWindow) {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
@@ -46,10 +50,6 @@ const isAlreadyRunning = app.makeSingleInstance(() => {
 		mainWindow.show();
 	}
 });
-
-if (isAlreadyRunning) {
-	app.quit();
-}
 
 function updateBadge(conversations) {
 	// ignore `Sindre messaged you` blinking
