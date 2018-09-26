@@ -480,3 +480,28 @@ document.addEventListener('keydown', event => {
 		jumpToConversation(num);
 	}
 });
+
+window.Notification = (function (notification) {
+	const customNotification = function (title, options) {
+		let {body, icon, silent} = options;
+		body = body.props ? body.props.content[0] : body;
+
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.src = icon;
+
+		img.addEventListener('load', () => {
+			const canvas = document.createElement('canvas');
+			const ctx = canvas.getContext('2d');
+
+			canvas.width = img.width;
+			canvas.height = img.height;
+
+			ctx.drawImage(img, 0, 0, img.width, img.height);
+
+			ipc.send('notifications', title, body, canvas.toDataURL(), silent);
+		});
+		return false;
+	};
+	return Object.assign(customNotification, notification);
+})(window.Notification);
