@@ -609,7 +609,7 @@ html.dark-mode button:not(._5upp) {
 /* Fix the Sticker and Gaming buttons */
 html.dark-mode ._4rv6,
 html.dark-mode ._4ce_ {
-	filter: invert() !important;
+	filter: invert(1) !important;
 	opacity: 0.6 !important;
 }
 
