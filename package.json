@@ -36,7 +36,7 @@
 	},
 	"devDependencies": {
 		"del-cli": "^1.1.0",
-		"electron": "3.0.0",
+		"electron": "3.0.2",
 		"electron-builder": "20.28.4",
 		"np": "^3.0.4",
 		"stylelint": "^9.4.0",
