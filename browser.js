@@ -232,6 +232,23 @@ function jumpToConversation(key) {
 	selectConversation(index);
 }
 
+function selectFirstOption(inputField) {
+	if (!inputField || !inputField.placeholder) {
+		return;
+	}
+	if (inputField.placeholder.includes('GIF')) {
+		const firstGif = document.querySelector('._358');
+		if (firstGif) {
+			firstGif.click();
+		}
+	} else if (inputField.placeholder.includes('Messenger')) {
+		const firstSearchResult = document.querySelector('._4ld- > img');
+		if (firstSearchResult) {
+			firstSearchResult.click();
+		}
+	}
+}
+
 // Focus on the conversation with the given index
 function selectConversation(index) {
 	document.querySelector(listSelector).children[index].firstChild.firstChild.click();
@@ -462,6 +479,11 @@ window.addEventListener('load', () => {
 document.addEventListener('keydown', event => {
 	// The `!event.altKey` part is a workaround for https://github.com/electron/electron/issues/13895
 	const combineKey = process.platform === 'darwin' ? event.metaKey : (event.ctrlKey && !event.altKey);
+
+	const searchInputField = '_58al'
+	if (event.key === 'Enter' && document.activeElement && document.activeElement.className === searchInputField) {
+		selectFirstOption(document.activeElement);
+	}
 
 	if (!combineKey) {
 		return;
