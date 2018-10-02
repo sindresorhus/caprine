@@ -209,6 +209,12 @@ html.dark-mode ._5pd7 {
 	background: var(--base-seventy) !important;
 }
 
+/* Messages list: more people read (group chat) */
+html.dark-mode ._jf4 ._jf3 {
+	background-color: var(--base-five) !important;
+	color: var(--base-fourty) !important;
+}
+
 /* Contact list: header above */
 html.dark-mode ._36ic {
 	background: var(--list-header-color) !important;
@@ -609,7 +615,7 @@ html.dark-mode button:not(._5upp) {
 /* Fix the Sticker and Gaming buttons */
 html.dark-mode ._4rv6,
 html.dark-mode ._4ce_ {
-	filter: invert() !important;
+	filter: invert(1) !important;
 	opacity: 0.6 !important;
 }
 
