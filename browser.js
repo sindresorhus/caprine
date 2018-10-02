@@ -460,6 +460,7 @@ window.addEventListener('load', () => {
 // It's not possible to add multiple accelerators
 // so this needs to be done the old-school way
 document.addEventListener('keydown', event => {
+	// The `!event.altKey` part is a workaround for https://github.com/electron/electron/issues/13895
 	const combineKey = process.platform === 'darwin' ? event.metaKey : (event.ctrlKey && !event.altKey);
 
 	if (!combineKey) {
