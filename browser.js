@@ -328,16 +328,26 @@ async function sendConversationList() {
 	const conversations = await Promise.all(
 		[...sidebar.querySelectorAll('._1ht1')]
 			.splice(0, 10)
-			.map(async el => ({
-				label: el.querySelector('._1ht6').textContent,
-				selected: el.classList.contains('_1ht2'),
-				unread: el.classList.contains('_1ht3'),
-				icon: await getDataUrlFromImg(
-					el.querySelector('._55lt img') ? el.querySelector('._55lt img') : el.querySelector('._4ld- div'),
-					el.classList.contains('_1ht3'),
-					Boolean(el.querySelector('._55lt img'))
-				)
-			}))
+			.map(async el => {
+				const profilePic = el.querySelector('._55lt img');
+				const groupPic = el.querySelector('._4ld- div');
+
+				// This is only for group chats
+				if (groupPic) {
+					// Slice image soruce from background-image style property of div
+					groupPic.src = groupPic.style.backgroundImage.slice(5, groupPic.style.backgroundImage.length - 2);
+				}
+
+				return {
+					label: el.querySelector('._1ht6').textContent,
+					selected: el.classList.contains('_1ht2'),
+					unread: el.classList.contains('_1ht3'),
+					icon: await getDataUrlFromImg(
+						profilePic ? profilePic : groupPic,
+						el.classList.contains('_1ht3')
+					)
+				};
+			})
 	);
 
 	ipc.send('conversations', conversations);
@@ -379,7 +389,7 @@ function urlToCanvas(url, size) {
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img, unread, isImg) {
+function getDataUrlFromImg(img, unread) {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		if (!unread) {
@@ -390,9 +400,6 @@ function getDataUrlFromImg(img, unread, isImg) {
 			return resolve(img.dataUnreadUrl);
 		}
 
-		if (!isImg) {
-			img.src = img.style.backgroundImage.substring(5, img.style.backgroundImage.length - 2);
-		}
 		const canvas = await urlToCanvas(img.src, 30);
 		const ctx = canvas.getContext('2d');
 		img.dataUrl = canvas.toDataURL();
