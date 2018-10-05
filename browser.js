@@ -328,15 +328,26 @@ async function sendConversationList() {
 	const conversations = await Promise.all(
 		[...sidebar.querySelectorAll('._1ht1')]
 			.splice(0, 10)
-			.map(async el => ({
-				label: el.querySelector('._1ht6').textContent,
-				selected: el.classList.contains('_1ht2'),
-				unread: el.classList.contains('_1ht3'),
-				icon: await getDataUrlFromImg(
-					el.querySelector('._55lt img'),
-					el.classList.contains('_1ht3')
-				)
-			}))
+			.map(async el => {
+				const profilePic = el.querySelector('._55lt img');
+				const groupPic = el.querySelector('._4ld- div');
+
+				// This is only for group chats
+				if (groupPic) {
+					// Slice image soruce from background-image style property of div
+					groupPic.src = groupPic.style.backgroundImage.slice(5, groupPic.style.backgroundImage.length - 2);
+				}
+
+				return {
+					label: el.querySelector('._1ht6').textContent,
+					selected: el.classList.contains('_1ht2'),
+					unread: el.classList.contains('_1ht3'),
+					icon: await getDataUrlFromImg(
+						profilePic ? profilePic : groupPic,
+						el.classList.contains('_1ht3')
+					)
+				};
+			})
 	);
 
 	ipc.send('conversations', conversations);
