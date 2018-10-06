@@ -482,7 +482,7 @@ document.addEventListener('keydown', event => {
 	}
 });
 
-window.Notification = (function (notification) {
+window.Notification = (notification => {
 	const customNotification = function (title, options) {
 		let {body, icon, silent} = options;
 		body = body.props ? body.props.content[0] : body;
@@ -500,9 +500,11 @@ window.Notification = (function (notification) {
 
 			ctx.drawImage(img, 0, 0, img.width, img.height);
 
-			ipc.send('notifications', title, body, canvas.toDataURL(), silent);
+			ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent});
 		});
+
 		return false;
 	};
+
 	return Object.assign(customNotification, notification);
 })(window.Notification);

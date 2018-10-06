@@ -373,7 +373,7 @@ app.on('before-quit', () => {
 	}
 });
 
-ipcMain.on('notifications', (event, title, body, icon, silent) => {
+ipcMain.on('notification', (event, {title, body, icon, silent}) => {
 	const notification = new Notification({
 		title,
 		body,
