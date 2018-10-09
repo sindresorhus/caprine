@@ -373,7 +373,7 @@ app.on('before-quit', () => {
 	}
 });
 
-ipcMain.on('notification', (event, {title, body, icon, silent}) => {
+ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
 	const notification = new Notification({
 		title,
 		body,
@@ -381,4 +381,8 @@ ipcMain.on('notification', (event, {title, body, icon, silent}) => {
 		silent
 	});
 	notification.show();
+	notification.on('click', () => {
+		mainWindow.show();
+		sendAction('jump-to-conversation-by-img', fileName);
+	});
 });

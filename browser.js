@@ -500,7 +500,9 @@ window.Notification = (notification => {
 
 			ctx.drawImage(img, 0, 0, img.width, img.height);
 
-			ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent});
+			const fileName = icon.substring(icon.lastIndexOf('/') + 1, icon.indexOf('?'));
+
+			ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent, fileName});
 		});
 
 		return false;
@@ -508,3 +510,12 @@ window.Notification = (notification => {
 
 	return Object.assign(customNotification, notification);
 })(window.Notification);
+
+ipc.on('jump-to-conversation-by-img', (event, fileName) => {
+	selectConversationByImg(fileName);
+});
+
+function selectConversationByImg(fileName) {
+	const selector = `${listSelector} img[src*="${fileName}"]`;
+	document.querySelector(selector).click();
+}
