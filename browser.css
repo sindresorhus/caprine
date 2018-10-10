@@ -5,8 +5,8 @@ html {
 /* Add OS-specific fonts */
 body {
 	font-family:
-		apple-system,
-		-BlinkMacSystemFont,
+		-apple-system,
+		BlinkMacSystemFont,
 		'Segoe UI',
 		Roboto,
 		Oxygen-Sans,
