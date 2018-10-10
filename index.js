@@ -30,6 +30,7 @@ if (!isDev) {
 	autoUpdater.logger.transports.file.level = 'info';
 	const FOUR_HOURS = 1000 * 60 * 60 * 4;
 	setInterval(() => autoUpdater.checkForUpdates(), FOUR_HOURS);
+	autoUpdater.checkForUpdates();
 }
 
 let mainWindow;
