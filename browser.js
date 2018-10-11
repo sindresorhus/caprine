@@ -492,3 +492,41 @@ document.addEventListener('keydown', event => {
 		jumpToConversation(num);
 	}
 });
+
+window.Notification = (notification => {
+	const customNotification = function (title, options) {
+		let {body, icon, silent} = options;
+		body = body.props ? body.props.content[0] : body;
+
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.src = icon;
+
+		img.addEventListener('load', () => {
+			const canvas = document.createElement('canvas');
+			const ctx = canvas.getContext('2d');
+
+			canvas.width = img.width;
+			canvas.height = img.height;
+
+			ctx.drawImage(img, 0, 0, img.width, img.height);
+
+			const fileName = icon.substring(icon.lastIndexOf('/') + 1, icon.indexOf('?'));
+
+			ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent, fileName});
+		});
+
+		return false;
+	};
+
+	return Object.assign(customNotification, notification);
+})(window.Notification);
+
+ipc.on('jump-to-conversation-by-img', (event, fileName) => {
+	selectConversationByImg(fileName);
+});
+
+function selectConversationByImg(fileName) {
+	const selector = `${listSelector} img[src*="${fileName}"]`;
+	document.querySelector(selector).click();
+}
