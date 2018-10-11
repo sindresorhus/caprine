@@ -703,7 +703,7 @@ html.dark-mode .__6l {
 html.dark-mode ._4gd0 {
 	background: transparent;
 }
-
+/* Fix color on links */
 html.dark-mode .__6j._43kk {
 	border-color: rgba(255, 255, 255, 0.1) !important;
 }
