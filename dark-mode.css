@@ -700,6 +700,10 @@ html.dark-mode .__6l {
 	background: var(--container-color);
 }
 
+html.dark-mode ._4gd0 {
+	background: transparent;
+}
+
 html.dark-mode .__6j._43kk {
 	border-color: rgba(255, 255, 255, 0.1) !important;
 }
