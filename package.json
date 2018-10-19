@@ -36,11 +36,11 @@
 	},
 	"devDependencies": {
 		"del-cli": "^1.1.0",
-		"electron": "3.0.2",
+		"electron": "3.0.5",
 		"electron-builder": "20.28.4",
 		"np": "^3.0.4",
 		"stylelint": "^9.4.0",
-		"stylelint-config-xo": "^0.10.0",
+		"stylelint-config-xo": "^0.11.0",
 		"xo": "^0.23.0"
 	},
 	"xo": {
