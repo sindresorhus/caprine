@@ -207,12 +207,7 @@ function createMainWindow() {
 
 			// Workaround for electron/electron#10023
 			win.blur();
-
-			if (process.platform === 'darwin') {
-				app.hide();
-			} else {
-				win.hide();
-			}
+			win.hide();
 		}
 	});
 
