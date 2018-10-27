@@ -3,7 +3,6 @@ const Store = require('electron-store');
 
 module.exports = new Store({
 	defaults: {
-		hardwareAcceleration: true,
 		darkMode: false,
 		vibrancy: false,
 		zoomFactor: 1,
@@ -25,6 +24,7 @@ module.exports = new Store({
 		useWorkChat: false,
 		sidebarHidden: false,
 		autoHideMenuBar: false,
-		notificationsMuted: false
+		notificationsMuted: false,
+		hardwareAcceleration: true
 	}
 });
