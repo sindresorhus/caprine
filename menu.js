@@ -212,6 +212,14 @@ const macosTpl = [
 				}
 			},
 			{
+				label: 'Hardware Acceleration (requires restart)',
+				type: 'checkbox',
+				checked: config.get('hardwareAcceleration'),
+				click() {
+					config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
+				}
+			},
+			{
 				label: 'Preferences…',
 				accelerator: 'Cmd+,',
 				click() {
