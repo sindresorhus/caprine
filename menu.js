@@ -212,7 +212,7 @@ const macosTpl = [
 				}
 			},
 			{
-				label: 'Hardware Acceleration (after restart)',
+				label: 'Hardware Acceleration (requires restart)',
 				type: 'checkbox',
 				checked: config.get('hardwareAcceleration'),
 				click() {
