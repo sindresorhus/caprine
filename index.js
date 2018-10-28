@@ -201,6 +201,10 @@ function createMainWindow() {
 	win.loadURL(mainURL);
 
 	win.on('close', e => {
+		if (config.get('exitOnClose')) {
+			app.quit();
+		}
+
 		if (!isQuitting) {
 			e.preventDefault();
 

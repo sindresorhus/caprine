@@ -25,6 +25,7 @@ module.exports = new Store({
 		sidebarHidden: false,
 		autoHideMenuBar: false,
 		notificationsMuted: false,
-		hardwareAcceleration: true
+		hardwareAcceleration: true,
+		exitOnClose: false
 	}
 });

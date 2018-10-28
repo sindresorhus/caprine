@@ -134,6 +134,14 @@ const preferencesSubmenu = [
 		click() {
 			config.set('launchMinimized', !config.get('launchMinimized'));
 		}
+	},
+	{
+		label: 'Exit on close',
+		type: 'checkbox',
+		checked: config.get('exitOnClose'),
+		click () {
+			config.set('exitOnClose', !config.get('exitOnClose'));
+		}
 	}
 ];
 
