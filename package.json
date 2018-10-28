@@ -69,7 +69,7 @@
 			"category": "public.app-category.social-networking",
 			"electronUpdaterCompatibility": ">=2.15.0",
 			"extendInfo": {
-				"NSUserNotificationAlertStyle": "alert"
+				"NSUserNotificationAlertStyle": "banner"
 			}
 		},
 		"dmg": {
