@@ -136,11 +136,11 @@ const preferencesSubmenu = [
 		}
 	},
 	{
-		label: 'Exit on close',
+		label: 'Quit on close',
 		type: 'checkbox',
-		checked: config.get('exitOnClose'),
+		checked: config.get('quitOnClose'),
 		click () {
-			config.set('exitOnClose', !config.get('exitOnClose'));
+			config.set('quitOnClose', !config.get('quitOnClose'));
 		}
 	}
 ];
