@@ -136,7 +136,7 @@ const preferencesSubmenu = [
 		}
 	},
 	{
-		label: 'Quit on close',
+		label: 'Quit on Window Close',
 		type: 'checkbox',
 		checked: config.get('quitOnClose'),
 		click () {
