@@ -312,6 +312,11 @@ html.dark-mode ._1ht3 ._1ht7.timestamp {
 	color: var(--base-twenty);
 }
 
+/* Contact list: message request (decline button) */
+html.dark-mode ._3quh._30yy._17u4._3yvh._1d-z {
+	color: #f03d25;
+}
+
 /* Right sidebar */
 html.dark-mode ._4_j5 {
 	background: transparent;
