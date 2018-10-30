@@ -10,9 +10,8 @@
 	--base-five: rgba(255, 255, 255, 0.05);
 	--base-ten: rgba(255, 255, 255, 0.1);
 	--base-nine: rgba(255, 255, 255, 0.09);
-	--container-color: #192633;
-	--conversation-bg: rgb(25, 38, 51);
-	--list-header-color: #202c3a;
+	--container-color: #1e1e1e;
+	--list-header-color: #222;
 	--blue: #0084ff;
 	--unread-bg: #365899;
 }
@@ -122,7 +121,7 @@ html.dark-mode ._3nta {
 
 /* Message list: header above (event) */
 html.dark-mode ._2n3t {
-	background-color: var(--conversation-bg);
+	background-color: var(--container-color);
 }
 
 /* Message list: header above (event) */
@@ -325,7 +324,7 @@ html.dark-mode ._4_j5 {
 
 /* Right sidebar: menus background */
 html.dark-mode ._54ng {
-	background: var(--conversation-bg);
+	background: var(--container-color);
 }
 
 /* Right sidebar: menus text color */
@@ -387,7 +386,7 @@ html.dark-mode ._4rph ._4rpj {
 
 /* Invite friends popup */
 html.dark-mode ._4jgu {
-	background-color: var(--conversation-bg);
+	background-color: var(--container-color);
 }
 
 html.dark-mode ._5rh4 {
@@ -432,7 +431,7 @@ html.dark-mode ._1k1p {
 
 /* Conversation search */
 html.dark-mode ._33p7 {
-	background-color: var(--conversation-bg);
+	background-color: var(--container-color);
 }
 html.dark-mode ._33p7 ._b-u,
 html.dark-mode ._33p7 ._b-v {
@@ -493,7 +492,7 @@ html.dark-mode ._34n6 {
 /* Message reaction buttons */
 html.dark-mode ._aou,
 html.dark-mode ._4kf5 {
-	background-color: var(--conversation-bg);
+	background-color: var(--container-color);
 }
 
 /* Message action buttons */
