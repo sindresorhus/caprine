@@ -134,6 +134,14 @@ const preferencesSubmenu = [
 		click() {
 			config.set('launchMinimized', !config.get('launchMinimized'));
 		}
+	},
+	{
+		label: 'Quit on Window Close',
+		type: 'checkbox',
+		checked: config.get('quitOnWindowClose'),
+		click() {
+			config.set('quitOnWindowClose', !config.get('quitOnWindowClose'));
+		}
 	}
 ];
 
