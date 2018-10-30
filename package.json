@@ -20,7 +20,7 @@
 		"start": "electron .",
 		"pack": "electron-builder --dir",
 		"dist": "electron-builder --mac --linux --win",
-		"release": "np --no-publish",
+		"release": "np --no-publish && publish-snap",
 		"publish-snap": "del dist && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
 	},
 	"dependencies": {
