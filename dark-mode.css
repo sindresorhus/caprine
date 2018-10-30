@@ -718,3 +718,9 @@ html.dark-mode ._3-mr ._3-mt,
 html.dark-mode ._3-mr ._3-mu {
 	color: #fff;
 }
+
+/* Fix text color on the "Active Contacts" view */
+html.dark-mode ._6ckd ._6cke,
+html.dark-mode ._6ckd ._6ckf {
+	color: var(--base-ninety);
+}
