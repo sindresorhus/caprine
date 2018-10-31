@@ -2,7 +2,7 @@
 
 > Elegant Facebook Messenger desktop app
 
-Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.
+Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.
 
 **[Website](https://sindresorhus.com/caprine)** &nbsp;&nbsp; **[Discuss it on Product Hunt](https://www.producthunt.com/posts/caprine-2)**
 
@@ -21,7 +21,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 
 - [Dark theme](#dark-mode)
 - [Vibrant theme](#vibrancy)*
-- [Privacy focused](#hide-last-seen--typing-indicator)
+- [Privacy-focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
@@ -58,7 +58,7 @@ Also available as a [snap](https://snapcraft.io/caprine).
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
 
-*For taskbar notification badges to work on Windows 10, you'll need to [enable it in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
+*For taskbar notification badges to work on Windows 10, you'll need to [enable them in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
 
 
 ## Features
@@ -101,7 +101,7 @@ The interface adapts when resized to a small size.
 
 ### Desktop notifications
 
-Desktop notifications can be turned on in Preferences.
+Desktop notifications can be turned on in `Preferences`.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
