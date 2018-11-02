@@ -495,6 +495,7 @@ window.Notification = (notification => {
 	const customNotification = function (title, options) {
 		let {body, icon, silent} = options;
 		body = body.props ? body.props.content[0] : body;
+		title = (typeof title === 'object' && title.props) ? title.props.content[0] : title;
 
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
