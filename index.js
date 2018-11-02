@@ -274,14 +274,13 @@ function createMainWindow() {
 
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
-		try { // Try inserting custom css
-			webContents.insertCSS(fs.readFileSync(path.join(app.getPath('userData'), 'custom-dark-mode.css'), 'utf8'));
-		} catch (err) { // If custom css file was not found, insert default one
-			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
-		}
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
+		}
+		if (fs.existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
+			webContents.insertCSS(fs.readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8'));
 		}
 
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
