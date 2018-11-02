@@ -180,8 +180,6 @@ ipc.on('toggle-sidebar', () => {
 
 ipc.on('set-dark-mode', setDarkMode);
 
-// Disabled because of https://github.com/electron/electron/issues/10886
-// and other vibrancy bugs with Electron v2
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
