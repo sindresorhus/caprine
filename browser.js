@@ -180,8 +180,6 @@ ipc.on('toggle-sidebar', () => {
 
 ipc.on('set-dark-mode', setDarkMode);
 
-// Disabled because of https://github.com/electron/electron/issues/10886
-// and other vibrancy bugs with Electron v2
 ipc.on('toggle-vibrancy', () => {
 	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
@@ -497,6 +495,7 @@ window.Notification = (notification => {
 	const customNotification = function (title, options) {
 		let {body, icon, silent} = options;
 		body = body.props ? body.props.content[0] : body;
+		title = (typeof title === 'object' && title.props) ? title.props.content[0] : title;
 
 		const img = new Image();
 		img.crossOrigin = 'anonymous';

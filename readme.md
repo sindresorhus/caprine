@@ -2,7 +2,7 @@
 
 > Elegant Facebook Messenger desktop app
 
-Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.
+Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.
 
 **[Website](https://sindresorhus.com/caprine)** &nbsp;&nbsp; **[Discuss it on Product Hunt](https://www.producthunt.com/posts/caprine-2)**
 
@@ -21,7 +21,7 @@ Caprine is an unofficial and privacy focused Facebook Messenger app with many us
 
 - [Dark theme](#dark-mode)
 - [Vibrant theme](#vibrancy)*
-- [Privacy focused](#hide-last-seen--typing-indicator)
+- [Privacy-focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
@@ -58,7 +58,7 @@ Also available as a [snap](https://snapcraft.io/caprine).
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
 
-*For taskbar notification badges to work on Windows 10, you'll need to [enable it in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
+*For taskbar notification badges to work on Windows 10, you'll need to [enable them in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
 
 
 ## Features
@@ -101,7 +101,7 @@ The interface adapts when resized to a small size.
 
 ### Desktop notifications
 
-Desktop notifications can be turned on in Preferences.
+Desktop notifications can be turned on in `Preferences`.
 
 <div align="center"><img src="media/screenshot-notification.png" width="358"></div>
 
@@ -128,7 +128,9 @@ You can send code blocks by using [Markdown syntax](https://github.com/adam-p/ma
 
 ### Background behavior
 
-When closing the window, the app will continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
+When closing the window, the app will by default continue running in the background, in the dock on macOS and the tray on Linux/Windows. Right-click the dock/tray icon and choose `Quit` to completely quit the app. On macOS, click the dock icon to show the window. On Linux, right-click the tray icon and choose `Toggle` to toggle the window. On Windows, click the tray icon to toggle the window.
+
+Note that you can change the behavior of Caprine so that the app closes when the window is closed. For this, you'll need to go to the settings and click on `Quit on Window Close`.
 
 ### Quick access to conversations from the Dock menu *(macOS only)*
 
