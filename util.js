@@ -1,5 +1,6 @@
 'use strict';
 const {BrowserWindow} = require('electron');
+const {is} = require('electron-util');
 
 function getWindow() {
 	const [win] = BrowserWindow.getAllWindows();
@@ -8,7 +9,7 @@ function getWindow() {
 
 function sendAction(action, ...args) {
 	const win = getWindow();
-	if (process.platform === 'darwin') {
+	if (is.macos) {
 		win.restore();
 	}
 

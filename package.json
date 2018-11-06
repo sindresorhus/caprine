@@ -31,6 +31,7 @@
 		"electron-log": "^2.0.2",
 		"electron-store": "^2.0.0",
 		"electron-updater": "^3.1.5",
+		"electron-util": "^0.10.2",
 		"element-ready": "^3.0.0",
 		"facebook-locales": "^1.0.587"
 	},
