@@ -75,22 +75,6 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 <img src="media/screenshot-vibrancy.jpg" width="1165">
 
-### Custom styles
-
-You can also create custom styles using `custom.css` file. Just write styles that you want to add/override there and install them.
-
-#### macOS
-
-Put `custom.css` into `~/Library/Application Support/Caprine`.
-
-#### Windows
-
-Put `custom.css` into `%APPDATA%\Caprine`.
-
-#### Linux
-
-Put `custom.css` into `$XDG_CONFIG_HOME/Caprine` or if it doesn't exist into `~/.config/Caprine`
-
 ### Hide last seen / typing indicator
 
 <img src="media/screenshot-block-typing-indicator.png" width="626">
