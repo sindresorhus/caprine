@@ -21,6 +21,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 
 - [Dark theme](#dark-mode)
 - [Vibrant theme](#vibrancy)*
+- [Custom styles](#custom-styles)
 - [Privacy-focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
@@ -74,6 +75,10 @@ You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 <img src="media/screenshot-vibrancy.jpg" width="1165">
+
+### Custom styles
+
+You can also add custom styles to Caprine. Open config in menu with `Custom Styles` option and edit the css file. Once you're done just save the file in and restart Caprine. Your changes will be applied.
 
 ### Hide last seen / typing indicator
 
