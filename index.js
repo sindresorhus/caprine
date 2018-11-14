@@ -385,7 +385,8 @@ ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
 		title,
 		body,
 		icon: nativeImage.createFromDataURL(icon),
-		silent
+		silent,
+		sound: path.join(__dirname, 'static/notification.mp3')
 	});
 	notification.show();
 	notification.on('click', () => {
