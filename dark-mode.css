@@ -13,7 +13,6 @@
 	--container-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
-	--unread-bg: #365899;
 }
 
 html.dark-mode body {
@@ -53,7 +52,7 @@ html.dark-mode ._wu0 {
 	color: var(--base);
 }
 
-/* message list: link in your message bubble */
+/* Message list: link in your message bubble */
 html.dark-mode ._o46:not(._nd_) ._hh7 a {
 	color: var(--base-seventy);
 }
@@ -235,16 +234,6 @@ html.dark-mode ._1enh {
 	background: transparent !important;
 }
 
-/* Contact list: person */
-html.dark-mode ._1ht1 {
-	background: transparent !important;
-}
-
-/* Contact list: person (selected) */
-html.dark-mode ._1ht1._1ht2 {
-	background: rgba(0, 0, 0, 0.1) !important;
-}
-
 /* Contact list: person container */
 html.dark-mode ._1qt4 {
 	border-top: solid 1px var(--base-five) !important;
@@ -304,9 +293,6 @@ html.dark-mode ._4g0h {
 }
 
 /* Contact list: unread */
-html.dark-mode ._1ht3 {
-	background: var(--unread-bg) !important;
-}
 html.dark-mode ._1ht3 ._1ht7.timestamp {
 	color: var(--base-twenty);
 }
