@@ -387,9 +387,13 @@ ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
 		icon: nativeImage.createFromDataURL(icon),
 		silent
 	});
-	notification.show();
 	notification.on('click', () => {
 		mainWindow.show();
 		sendAction('jump-to-conversation-by-img', fileName);
 	});
+	notification.show();
+});
+
+autoUpdater.on('update-downloaded', () => {
+	autoUpdater.quitAndInstall();
 });
