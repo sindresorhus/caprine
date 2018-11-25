@@ -1,3 +1,7 @@
+:root {
+	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
+}
+
 html {
 	overflow: hidden;
 }
@@ -358,4 +362,30 @@ a,
 .__6j._43kk {
 	border-width: 1px !important;
 	border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Contact list: unread */
+._1ht1 a,
+._1ht3 a {
+	padding-left: 14px !important;
+}
+._1ht3::before {
+	content: ' ';
+	display: block;
+	position: absolute;
+	left: 3px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 8px;
+	height: 8px;
+	background-color: var(--blue);
+	border-radius: 8px;
+}
+
+/* Contact list: person (selected) */
+._1ht1._1ht2 {
+	background: var(--selected-conversation-background) !important;
+}
+._1ht1._1ht2 * {
+	color: rgba(255, 255, 255, 0.8);
 }

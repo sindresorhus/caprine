@@ -1,7 +1,7 @@
 {
 	"name": "caprine",
 	"productName": "Caprine",
-	"version": "2.21.0",
+	"version": "2.22.1",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "sindresorhus/caprine",
@@ -30,16 +30,17 @@
 		"electron-is-dev": "^1.0.0",
 		"electron-log": "^2.0.2",
 		"electron-store": "^2.0.0",
-		"electron-updater": "^3.1.5",
+		"electron-updater": "^4.0.4",
+		"electron-util": "^0.10.2",
 		"element-ready": "^3.0.0",
 		"facebook-locales": "^1.0.587"
 	},
 	"devDependencies": {
 		"del-cli": "^1.1.0",
-		"electron": "3.0.6",
-		"electron-builder": "20.30.0",
+		"electron": "3.0.9",
+		"electron-builder": "20.36.2",
 		"np": "^3.0.4",
-		"stylelint": "^9.7.0",
+		"stylelint": "^9.8.0",
 		"stylelint-config-xo": "^0.11.0",
 		"xo": "^0.23.0"
 	},

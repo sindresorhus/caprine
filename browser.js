@@ -1,5 +1,6 @@
 'use strict';
 const electron = require('electron');
+const {is} = require('electron-util');
 const elementReady = require('element-ready');
 const config = require('./config');
 
@@ -438,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
 	if (config.get('darkMode') && !config.get('vibrancy')) {
-		document.documentElement.style.backgroundColor = '#192633';
+		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 
 	// Activate vibrancy effect if it was set before quitting
@@ -470,7 +471,7 @@ window.addEventListener('load', () => {
 // so this needs to be done the old-school way
 document.addEventListener('keydown', event => {
 	// The `!event.altKey` part is a workaround for https://github.com/electron/electron/issues/13895
-	const combineKey = process.platform === 'darwin' ? event.metaKey : (event.ctrlKey && !event.altKey);
+	const combineKey = is.macos ? event.metaKey : (event.ctrlKey && !event.altKey);
 
 	if (!combineKey) {
 		return;

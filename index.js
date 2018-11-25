@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const {URL} = require('url');
 const electron = require('electron');
+const {is} = require('electron-util');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
@@ -14,7 +15,7 @@ const {sendAction} = require('./util');
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
 require('electron-debug')({
-	enabled: true, // TODO: This is only enabled to allow CMD+R because messenger sometimes gets stuck after computer waking up
+	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
 	showDevTools: false
 });
 require('electron-dl')();
@@ -64,21 +65,21 @@ function updateBadge(conversations) {
 
 	const messageCount = conversations.filter(({unread}) => unread).length;
 
-	if (process.platform === 'darwin' || process.platform === 'linux') {
+	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge')) {
 			app.setBadgeCount(messageCount);
 		}
-		if (process.platform === 'darwin' && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
+		if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
 		}
 	}
 
-	if ((process.platform === 'linux' || process.platform === 'win32') && config.get('showUnreadBadge')) {
+	if ((is.linux || is.windows) && config.get('showUnreadBadge')) {
 		tray.setBadge(messageCount);
 	}
 
-	if (process.platform === 'win32') {
+	if (is.windows) {
 		if (config.get('showUnreadBadge')) {
 			if (messageCount === 0) {
 				mainWindow.setOverlayIcon(null, '');
@@ -158,7 +159,7 @@ function setNotificationsMute(status) {
 	config.set('notificationsMuted', status);
 	muteMenuItem.checked = status;
 
-	if (process.platform === 'darwin') {
+	if (is.macos) {
 		const item = dockMenu.items.find(x => x.label === label);
 		item.checked = status;
 	}
@@ -167,6 +168,7 @@ function setNotificationsMute(status) {
 function createMainWindow() {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
+
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
 
@@ -177,7 +179,7 @@ function createMainWindow() {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: process.platform === 'linux' && path.join(__dirname, 'static/Icon.png'),
+		icon: is.linux && path.join(__dirname, 'static/Icon.png'),
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
@@ -194,7 +196,7 @@ function createMainWindow() {
 	setUserLocale();
 	setUpPrivacyBlocking();
 
-	if (process.platform === 'darwin') {
+	if (is.macos) {
 		win.setSheetOffset(40);
 	}
 
@@ -225,13 +227,15 @@ function createMainWindow() {
 	return win;
 }
 
-app.on('ready', () => {
+(async () => {
+	await app.whenReady();
+
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 	electron.Menu.setApplicationMenu(appMenu);
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
-	if (process.platform === 'darwin') {
+	if (is.macos) {
 		const firstItem = {
 			label: 'Mute Notifications',
 			type: 'checkbox',
@@ -350,7 +354,7 @@ app.on('ready', () => {
 		event.preventDefault();
 		electron.shell.openExternal(url);
 	});
-});
+})();
 
 ipcMain.on('set-vibrancy', () => {
 	if (config.get('vibrancy')) {

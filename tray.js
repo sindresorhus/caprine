@@ -1,12 +1,13 @@
 'use strict';
 const path = require('path');
 const electron = require('electron');
+const {is} = require('electron-util');
 
 const {app} = electron;
 let tray = null;
 
 exports.create = win => {
-	if (process.platform === 'darwin' || tray) {
+	if (is.macos || tray) {
 		return;
 	}
 
@@ -42,7 +43,7 @@ exports.create = win => {
 };
 
 exports.setBadge = shouldDisplayUnread => {
-	if (process.platform === 'darwin' || !tray) {
+	if (is.macos || !tray) {
 		return;
 	}
 

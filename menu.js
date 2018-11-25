@@ -1,12 +1,18 @@
 'use strict';
-const os = require('os');
 const path = require('path');
 const electron = require('electron');
+const {
+	is,
+	appMenu,
+	openUrlMenuItem,
+	aboutMenuItem,
+	openNewGitHubIssue,
+	debugInfo
+} = require('electron-util');
 const config = require('./config');
 const {sendAction} = require('./util');
 
-const {app, shell} = electron;
-const appName = app.getName();
+const {app} = electron;
 
 const newConversationItem = {
 	label: 'New Conversation',
@@ -48,7 +54,7 @@ const switchItems = [
 const preferencesSubmenu = [
 	{
 		label: 'Bounce Dock on Message',
-		visible: process.platform === 'darwin',
+		visible: is.macos,
 		type: 'checkbox',
 		checked: config.get('bounceDockOnMessage'),
 		click() {
@@ -108,7 +114,7 @@ const preferencesSubmenu = [
 	},
 	{
 		label: 'Auto Hide Menu Bar',
-		visible: process.platform !== 'darwin',
+		visible: !is.macos,
 		type: 'checkbox',
 		checked: config.get('autoHideMenuBar'),
 		click(item, focusedWindow) {
@@ -119,7 +125,7 @@ const preferencesSubmenu = [
 	},
 	{
 		label: 'Flash Window on Message',
-		visible: process.platform !== 'darwin',
+		visible: !is.macos,
 		type: 'checkbox',
 		checked: config.get('flashWindowOnMessage'),
 		click(item) {
@@ -128,7 +134,7 @@ const preferencesSubmenu = [
 	},
 	{
 		label: 'Launch Minimized',
-		visible: process.platform !== 'darwin',
+		visible: !is.macos,
 		type: 'checkbox',
 		checked: config.get('launchMinimized'),
 		click() {
@@ -183,7 +189,7 @@ const viewSubmenu = [
 	{
 		label: 'Vibrancy',
 		type: 'checkbox',
-		visible: process.platform === 'darwin',
+		visible: is.macos,
 		checked: config.get('vibrancy'),
 		click() {
 			sendAction('toggle-vibrancy');
@@ -322,24 +328,18 @@ const conversationSubmenu = [
 ];
 
 const helpSubmenu = [
-	{
+	openUrlMenuItem({
 		label: 'Website',
-		click() {
-			shell.openExternal('https://sindresorhus.com/caprine');
-		}
-	},
-	{
+		url: 'https://sindresorhus.com/caprine'
+	}),
+	openUrlMenuItem({
 		label: 'Source Code',
-		click() {
-			shell.openExternal('https://github.com/sindresorhus/caprine');
-		}
-	},
-	{
+		url: 'https://github.com/sindresorhus/caprine'
+	}),
+	openUrlMenuItem({
 		label: 'Donate…',
-		click() {
-			shell.openExternal('https://sindresorhus.com/donate');
-		}
-	},
+		url: 'https://sindresorhus.com/donate'
+	}),
 	{
 		label: 'Report an Issue…',
 		click() {
@@ -349,86 +349,47 @@ const helpSubmenu = [
 
 ---
 
-${app.getName()} ${app.getVersion()}
-Electron ${process.versions.electron}
-${process.platform} ${process.arch} ${os.release()}`;
+${debugInfo()}`;
 
-			shell.openExternal(`https://github.com/sindresorhus/caprine/issues/new?body=${encodeURIComponent(body)}`);
+			openNewGitHubIssue({
+				user: 'sindresorhus',
+				repo: 'caprine',
+				body
+			});
 		}
 	}
 ];
 
-if (process.platform !== 'darwin') {
+if (!is.macos) {
 	helpSubmenu.push(
 		{
 			type: 'separator'
 		},
-		{
-			role: 'about',
-			click() {
-				electron.dialog.showMessageBox({
-					title: `About ${appName}`,
-					message: `${appName} ${app.getVersion()}`,
-					detail: 'Created by Sindre Sorhus',
-					icon: path.join(__dirname, 'static/Icon.png')
-				});
-			}
-		}
+		aboutMenuItem({
+			icon: path.join(__dirname, 'static/Icon.png'),
+			text: 'Created by Sindre Sorhus'
+		})
 	);
 }
 
 const macosTemplate = [
-	{
-		label: appName,
-		submenu: [
-			{
-				role: 'about'
-			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Caprine Preferences',
-				submenu: preferencesSubmenu
-			},
-			{
-				label: 'Messenger Preferences…',
-				accelerator: 'Command+,',
-				click() {
-					sendAction('show-preferences');
-				}
-			},
-			{
-				type: 'separator'
-			},
-			...switchItems,
-			{
-				type: 'separator'
-			},
-			{
-				role: 'services',
-				submenu: []
-			},
-			{
-				type: 'separator'
-			},
-			{
-				role: 'hide'
-			},
-			{
-				role: 'hideothers'
-			},
-			{
-				role: 'unhide'
-			},
-			{
-				type: 'separator'
-			},
-			{
-				role: 'quit'
+	appMenu([
+		{
+			label: 'Caprine Preferences',
+			submenu: preferencesSubmenu
+		},
+		{
+			label: 'Messenger Preferences…',
+			accelerator: 'Command+,',
+			click() {
+				sendAction('show-preferences');
 			}
-		]
-	},
+		},
+		{
+			type: 'separator'
+		},
+		...switchItems
+	]),
 	{
 		label: 'File',
 		submenu: [
@@ -503,6 +464,6 @@ const linuxWindowsTemplate = [
 	}
 ];
 
-const template = process.platform === 'darwin' ? macosTemplate : linuxWindowsTemplate;
+const template = is.macos ? macosTemplate : linuxWindowsTemplate;
 
 module.exports = electron.Menu.buildFromTemplate(template);
