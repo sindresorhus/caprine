@@ -69,7 +69,7 @@ ipc.on('find', () => {
 });
 
 ipc.on('search', () => {
-	document.querySelector('._3szn:nth-of-type(1)').click();
+	document.querySelector('._3szo:nth-of-type(1)').click();
 });
 
 ipc.on('insert-gif', () => {
