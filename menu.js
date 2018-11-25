@@ -295,7 +295,7 @@ const conversationSubmenu = [
 		}
 	},
 	{
-		label: 'Search Conversation',
+		label: 'Search in Conversation',
 		accelerator: 'CommandOrControl+F',
 		click() {
 			sendAction('search');
