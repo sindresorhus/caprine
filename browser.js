@@ -340,7 +340,7 @@ async function sendConversationList() {
 				return {
 					label: el.querySelector('._1ht6').textContent,
 					selected: el.classList.contains('_1ht2'),
-					unread: el.classList.contains('_1ht3'),
+					unread: el.classList.contains('_1ht3') && !el.classList.contains('_569x'),
 					icon: await getDataUrlFromImg(
 						profilePic ? profilePic : groupPic,
 						el.classList.contains('_1ht3')
