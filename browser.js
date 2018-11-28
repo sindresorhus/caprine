@@ -3,6 +3,7 @@ const electron = require('electron');
 const {is} = require('electron-util');
 const elementReady = require('element-ready');
 const config = require('./config');
+const vibrancyConfig = require('./vibrancy-config');
 
 const {ipcRenderer: ipc} = electron;
 
@@ -153,7 +154,10 @@ function setDarkMode() {
 }
 
 function setVibrancy() {
-	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
+	const vibrancyName = config.get('vibrancy');
+	vibrancyConfig.forEach(vconf => {
+		document.documentElement.classList.toggle(vconf.className, vibrancyName === vconf.name);
+	});
 	ipc.send('set-vibrancy');
 }
 
@@ -181,10 +185,8 @@ ipc.on('toggle-sidebar', () => {
 
 ipc.on('set-dark-mode', setDarkMode);
 
-ipc.on('toggle-vibrancy', () => {
-	config.set('vibrancy', !config.get('vibrancy'));
+ipc.on('set-vibrancy-mode', () => {
 	setVibrancy();
-
 	document.documentElement.style.backgroundColor = 'transparent';
 });
 
