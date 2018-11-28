@@ -9,6 +9,7 @@ const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
+const vibrancyConfig = require('./vibrancy-config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
 
@@ -275,7 +276,9 @@ function createMainWindow() {
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
-		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+		vibrancyConfig.forEach(vconf => {
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, vconf.src), 'utf8'));
+		});
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
 		}
@@ -357,10 +360,10 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	if (config.get('vibrancy')) {
-		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
-	} else {
+	if (config.get('vibrancy') === 'disabled') {
 		mainWindow.setVibrancy(null);
+	} else {
+		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
 	}
 });
 

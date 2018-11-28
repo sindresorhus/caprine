@@ -10,6 +10,7 @@ const {
 	debugInfo
 } = require('electron-util');
 const config = require('./config');
+const vibrancyConfig = require('./vibrancy-config');
 const {sendAction} = require('./util');
 
 const {app} = electron;
@@ -151,6 +152,32 @@ const preferencesSubmenu = [
 	}
 ];
 
+const vibrancySubmenu = [
+	{
+		label: 'Disabled',
+		type: 'radio',
+		visible: is.macos,
+		checked: config.get('vibrancy') === 'disabled',
+		click() {
+			config.set('vibrancy', 'disabled');
+			sendAction('set-vibrancy-mode');
+		}
+	}
+];
+
+vibrancyConfig.forEach(vconf => {
+	vibrancySubmenu.push({
+		label: vconf.label,
+		type: 'radio',
+		visible: is.macos,
+		checked: config.get('vibrancy') === vconf.name,
+		click() {
+			config.set('vibrancy', vconf.name);
+			sendAction('set-vibrancy-mode');
+		}
+	});
+});
+
 const viewSubmenu = [
 	{
 		label: 'Reset Text Size',
@@ -188,12 +215,7 @@ const viewSubmenu = [
 	},
 	{
 		label: 'Vibrancy',
-		type: 'checkbox',
-		visible: is.macos,
-		checked: config.get('vibrancy'),
-		click() {
-			sendAction('toggle-vibrancy');
-		}
+		submenu: vibrancySubmenu
 	},
 	{
 		type: 'separator'
