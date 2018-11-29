@@ -5,6 +5,7 @@ const vibrancyConfig = [
 		name: 'native-like',
 		label: 'Native-like',
 		className: 'vibrancy-native',
+		vibrancyClassLight: 'sidebar',
 		src: 'vibrancy.css'
 	},
 	{

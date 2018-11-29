@@ -363,7 +363,11 @@ ipcMain.on('set-vibrancy', () => {
 	if (config.get('vibrancy') === 'disabled') {
 		mainWindow.setVibrancy(null);
 	} else {
-		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
+		const vconf = vibrancyConfig.find(v => v.name === config.get('vibrancy')) || {};
+		const vibrancyDark = vconf.vibrancyClassDark ? vconf.vibrancyClassDark : 'ultra-dark';
+		const vibrancyLight = vconf.vibrancyClassLight ? vconf.vibrancyClassLight : 'light';
+
+		mainWindow.setVibrancy(config.get('darkMode') ? vibrancyDark : vibrancyLight);
 	}
 });
 
