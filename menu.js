@@ -52,6 +52,46 @@ const switchItems = [
 	}
 ];
 
+const advancedSubmenu = [
+	{
+		label: 'Custom Styles',
+		click() {
+			const filePath = path.join(app.getPath('userData'), 'custom.css');
+			const defaultCustomStyle = `/*
+	This is the custom styles file where you can add anything you want.
+	The styles here will be injected into Caprine and will override default styles.
+	If you want to disable styles but keep the config, just comment the lines that you don't want to be used.
+
+	Here are some color configs to get you started with.
+*/
+
+:root {
+	--base: #000;
+	--base-ninety: rgba(255, 255, 255, 0.9);
+	--base-seventy-five: rgba(255, 255, 255, 0.75);
+	--base-seventy: rgba(255, 255, 255, 0.7);
+	--base-fifty: rgba(255, 255, 255, 0.5);
+	--base-fourty: rgba(255, 255, 255, 0.4);
+	--base-thiry: rgba(255, 255, 255, 0.3);
+	--base-twenty: rgba(255, 255, 255, 0.2);
+	--base-five: rgba(255, 255, 255, 0.05);
+	--base-ten: rgba(255, 255, 255, 0.1);
+	--base-nine: rgba(255, 255, 255, 0.09);
+	--container-color: #1e1e1e;
+	--list-header-color: #222;
+	--blue: #0084ff;
+	--unread-bg: #365899;
+}
+`;
+
+			if (!fs.existsSync(filePath)) {
+				fs.writeFileSync(filePath, defaultCustomStyle, 'utf8');
+			}
+			shell.openItem(filePath);
+		}
+	}
+];
+
 const preferencesSubmenu = [
 	{
 		label: 'Bounce Dock on Message',
@@ -134,43 +174,6 @@ const preferencesSubmenu = [
 		}
 	},
 	{
-		label: 'Custom Styles',
-		click() {
-			const filePath = path.join(app.getPath('userData'), 'custom.css');
-			const defaultCustomStyle = `/*
-	This is the custom styles file where you can add anything you want.
-	The styles here will be injected into Caprine and will override default styles.
-	If you want to disable styles but keep the config, just comment the lines that you don't want to be used.
-
-	Here are some color configs to get you started with.
-*/
-
-:root {
-	--base: #000;
-	--base-ninety: rgba(255, 255, 255, 0.9);
-	--base-seventy-five: rgba(255, 255, 255, 0.75);
-	--base-seventy: rgba(255, 255, 255, 0.7);
-	--base-fifty: rgba(255, 255, 255, 0.5);
-	--base-fourty: rgba(255, 255, 255, 0.4);
-	--base-thiry: rgba(255, 255, 255, 0.3);
-	--base-twenty: rgba(255, 255, 255, 0.2);
-	--base-five: rgba(255, 255, 255, 0.05);
-	--base-ten: rgba(255, 255, 255, 0.1);
-	--base-nine: rgba(255, 255, 255, 0.09);
-	--container-color: #1e1e1e;
-	--list-header-color: #222;
-	--blue: #0084ff;
-	--unread-bg: #365899;
-}
-`;
-
-			if (!fs.existsSync(filePath)) {
-				fs.writeFileSync(filePath, defaultCustomStyle, 'utf8');
-			}
-			shell.openItem(filePath);
-		}
-	},
-	{
 		label: 'Launch Minimized',
 		visible: !is.macos,
 		type: 'checkbox',
@@ -186,6 +189,13 @@ const preferencesSubmenu = [
 		click() {
 			config.set('quitOnWindowClose', !config.get('quitOnWindowClose'));
 		}
+	},
+	{
+		type: 'separator'
+	},
+	{
+		label: 'Advanced',
+		submenu: advancedSubmenu
 	}
 ];
 
