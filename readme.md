@@ -78,7 +78,7 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 ### Custom styles
 
-You can also add custom styles to Caprine. Open config in menu with `Custom Styles` option and edit the css file. Once you're done just save the file in and restart Caprine. Your changes will be applied.
+You can also add custom styles to Caprine. To open config file click on `Caprine`/`File` -> `Caprine Settings` -> `Advanced` -> `Custom Styles` and your default editor will open up with custom css file. Styles from `custom.css` file are injected when Caprine starts so please restart Caprine to apply changes.
 
 ### Hide last seen / typing indicator
 
