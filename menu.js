@@ -62,10 +62,12 @@ const advancedSubmenu = [
 	The styles here will be injected into Caprine and will override default styles.
 	If you want to disable styles but keep the config, just comment the lines that you don't want to be used.
 
-	Here are some color configs to get you started with.
+	Here are some dark mode color variables to get you started with.
+	Edit them to change color scheme of Caprine.
 */
 
 :root {
+	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
 	--base: #000;
 	--base-ninety: rgba(255, 255, 255, 0.9);
 	--base-seventy-five: rgba(255, 255, 255, 0.75);
@@ -80,7 +82,6 @@ const advancedSubmenu = [
 	--container-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
-	--unread-bg: #365899;
 }
 `;
 
