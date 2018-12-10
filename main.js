@@ -15,12 +15,16 @@ const getLatestRelease = ext =>
 		.then(res => res.json())
 		.then(json => {
 			const asset = json.assets.filter(asset => asset.name.includes(ext));
-			return asset[0].browser_download_url;
+			return {
+				url: asset[0].browser_download_url,
+				version: json.tag_name
+			};
 		});
 
 const updateButtonUrl = () => {
-	getLatestRelease(getExtension()).then(url => {
+	getLatestRelease(getExtension()).then(({url, version}) => {
 		document.getElementById('download-button').href = url;
+		document.getElementById('version-text').innerHTML = version;
 	});
 }
 
