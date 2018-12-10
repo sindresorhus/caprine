@@ -3,7 +3,6 @@ const electron = require('electron');
 const {is} = require('electron-util');
 const elementReady = require('element-ready');
 const config = require('./config');
-const vibrancyConfig = require('./vibrancy-config');
 
 const {ipcRenderer: ipc} = electron;
 
@@ -70,7 +69,7 @@ ipc.on('find', () => {
 });
 
 ipc.on('search', () => {
-	document.querySelector('._3szn:nth-of-type(1)').click();
+	document.querySelector('._3szo:nth-of-type(1)').click();
 });
 
 ipc.on('insert-gif', () => {
@@ -154,10 +153,7 @@ function setDarkMode() {
 }
 
 function setVibrancy() {
-	const vibrancyName = config.get('vibrancy');
-	vibrancyConfig.forEach(vconf => {
-		document.documentElement.classList.toggle(vconf.className, vibrancyName === vconf.name);
-	});
+	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
 	ipc.send('set-vibrancy');
 }
 
@@ -185,8 +181,10 @@ ipc.on('toggle-sidebar', () => {
 
 ipc.on('set-dark-mode', setDarkMode);
 
-ipc.on('set-vibrancy-mode', () => {
+ipc.on('toggle-vibrancy', () => {
+	config.set('vibrancy', !config.get('vibrancy'));
 	setVibrancy();
+
 	document.documentElement.style.backgroundColor = 'transparent';
 });
 
@@ -339,10 +337,12 @@ async function sendConversationList() {
 					groupPic.src = groupPic.style.backgroundImage.slice(5, groupPic.style.backgroundImage.length - 2);
 				}
 
+				const isConversationMuted = el.classList.contains('_569x');
+
 				return {
 					label: el.querySelector('._1ht6').textContent,
 					selected: el.classList.contains('_1ht2'),
-					unread: el.classList.contains('_1ht3'),
+					unread: el.classList.contains('_1ht3') && !isConversationMuted,
 					icon: await getDataUrlFromImg(
 						profilePic ? profilePic : groupPic,
 						el.classList.contains('_1ht3')
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
-	if (config.get('darkMode') && config.get('vibrancy') === 'disabled') {
+	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 

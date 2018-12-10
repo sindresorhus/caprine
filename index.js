@@ -9,7 +9,6 @@ const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
-const vibrancyConfig = require('./vibrancy-config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
 
@@ -276,9 +275,10 @@ function createMainWindow() {
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
-		vibrancyConfig.forEach(vconf => {
-			webContents.insertCSS(fs.readFileSync(path.join(__dirname, vconf.src), 'utf8'));
-		});
+		if (is.macos) {
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy-native.css'), 'utf8'));
+		}
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
 		}
@@ -360,15 +360,7 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	if (config.get('vibrancy') === 'disabled') {
-		mainWindow.setVibrancy(null);
-	} else {
-		const vconf = vibrancyConfig.find(v => v.name === config.get('vibrancy')) || {};
-		const vibrancyDark = vconf.vibrancyClassDark ? vconf.vibrancyClassDark : 'ultra-dark';
-		const vibrancyLight = vconf.vibrancyClassLight ? vconf.vibrancyClassLight : 'light';
-
-		mainWindow.setVibrancy(config.get('darkMode') ? vibrancyDark : vibrancyLight);
-	}
+	mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'sidebar');
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
