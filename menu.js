@@ -187,7 +187,7 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Vibrancy',
+		label: 'Full-screen Vibrancy',
 		type: 'checkbox',
 		visible: is.macos,
 		checked: config.get('vibrancy'),

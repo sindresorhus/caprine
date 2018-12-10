@@ -1,0 +1,95 @@
+html body,
+html ._4sp8 {
+	background: transparent !important;
+}
+
+html.dark-mode body,
+html.dark-mode ._4sp8 {
+	background: transparent !important;
+}
+
+/* Message placeholder text color */
+html ._kmc ._1p1t {
+	color: #999 !important;
+	-webkit-text-fill-color: #999 !important;
+}
+
+/* Contact list: search input */
+html ._5iwm ._58al {
+	background-color: rgba(246, 247, 249, 0.5) !important;
+}
+
+/* Chat title bar (light mode) */
+html ._673w {
+	background-color: #fff !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Chat title bar (dark mode) */
+html.dark-mode ._673w {
+	background-color: #202026 !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Share previews: title and subtitle */
+html .__6k,
+html .__6l {
+	background-color: transparent !important;
+}
+
+/* Contact list: person container */
+html ._1qt4 {
+	border-top: solid 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Styles for vibrancy in dark mode */
+html.dark-mode body {
+	background: rgba(0, 0, 0, 0.26) !important;
+}
+
+/* Main container? */
+html.dark-mode ._4sp8 {
+	background: transparent !important;
+}
+
+/* Message list: header above */
+html.dark-mode ._5742 {
+	background: transparent !important;
+}
+
+/* Contact list: header above */
+html.dark-mode ._36ic {
+	background: transparent !important;
+}
+
+/* Login button */
+html.dark-mode button {
+	background: transparent !important;
+}
+
+/* Message container + right sidebar (light mode) */
+html ._4_j4,
+html ._4_j5 {
+	background: #fff !important;
+}
+
+/* Message container + right sidebar (dark mode) */
+html.dark-mode ._4_j4,
+html.dark-mode ._4_j5 {
+	background: #202026 !important;
+}
+
+/* New conversation name input field */
+html ._2y8y {
+	background: #fff !important;
+}
+
+/* Contact list: search input */
+html.dark-mode ._5iwm ._58al {
+	background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* New conversation name input field */
+html.dark-mode ._2y8y {
+	background: #202026 !important;
+}

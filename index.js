@@ -275,6 +275,9 @@ function createMainWindow() {
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
+		if (is.macos) {
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy-native.css'), 'utf8'));
+		}
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
@@ -357,11 +360,7 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	if (config.get('vibrancy')) {
-		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
-	} else {
-		mainWindow.setVibrancy(null);
-	}
+	mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'sidebar');
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
