@@ -30,6 +30,22 @@ if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
+app.on('ready', function() {
+	const restart = () => {
+		app.relaunch();
+		app.exit(); 
+	};
+	
+	electron.powerMonitor.on('on-battery', () => {
+		config.set('hardwareAcceleration', false);
+		restart();
+	});
+	electron.powerMonitor.on('on-ac', () => {
+		config.set('hardwareAcceleration', true);
+		restart();
+	});
+});
+
 if (!isDev) {
 	autoUpdater.logger = log;
 	autoUpdater.logger.transports.file.level = 'info';
