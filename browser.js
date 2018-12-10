@@ -337,10 +337,12 @@ async function sendConversationList() {
 					groupPic.src = groupPic.style.backgroundImage.slice(5, groupPic.style.backgroundImage.length - 2);
 				}
 
+				const isConversationMuted = el.classList.contains('_569x');
+
 				return {
 					label: el.querySelector('._1ht6').textContent,
 					selected: el.classList.contains('_1ht2'),
-					unread: el.classList.contains('_1ht3'),
+					unread: el.classList.contains('_1ht3') && !isConversationMuted,
 					icon: await getDataUrlFromImg(
 						profilePic ? profilePic : groupPic,
 						el.classList.contains('_1ht3')
