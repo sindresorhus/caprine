@@ -24,7 +24,7 @@ const getLatestRelease = ext =>
 const updateButtonUrl = () => {
 	getLatestRelease(getExtension()).then(({url, version}) => {
 		document.getElementById('download-button').href = url;
-		document.getElementById('version-text').innerHTML = version;
+		document.getElementById('version-text').textContent = version;
 	});
 }
 
