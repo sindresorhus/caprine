@@ -709,3 +709,59 @@ html.dark-mode ._6ckd ._6cke,
 html.dark-mode ._6ckd ._6ckf {
 	color: var(--base-ninety);
 }
+
+/* -- Vibrancy-related styles -- */
+
+html.os-darwin.dark-mode body,
+html.os-darwin.dark-mode ._4sp8 {
+	background: transparent !important;
+}
+
+/* Chat title bar (dark mode) */
+html.os-darwin.dark-mode ._673w {
+	background-color: #202026 !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Styles for vibrancy in dark mode */
+html.os-darwin.dark-mode body {
+	background: rgba(0, 0, 0, 0.26) !important;
+}
+
+/* Main container? */
+html.os-darwin.dark-mode ._4sp8 {
+	background: transparent !important;
+}
+
+/* Message list: header above */
+html.os-darwin.dark-mode ._5742 {
+	background: transparent !important;
+}
+
+/* Contact list: header above */
+html.os-darwin.dark-mode ._36ic {
+	background: transparent !important;
+}
+
+/* Login button */
+html.os-darwin.dark-mode button {
+	background: transparent !important;
+}
+
+/* Message container + right sidebar (dark mode) */
+html.os-darwin.dark-mode ._4_j4,
+html.os-darwin.dark-mode ._4_j5 {
+	background: #202026 !important;
+}
+
+/* Contact list: search input */
+html.os-darwin.dark-mode ._5iwm ._58al {
+	background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* New conversation name input field */
+html.os-darwin.dark-mode ._2y8y {
+	background: #202026 !important;
+}
+
+/* -- End vibrancy-specific styles -- */
