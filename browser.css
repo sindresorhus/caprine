@@ -389,3 +389,8 @@ a,
 ._1ht1._1ht2 * {
 	color: rgba(255, 255, 255, 0.8);
 }
+
+/* Remove top Facebook cookie banner */
+.fbPageBanner {
+	display: none !important;
+}
