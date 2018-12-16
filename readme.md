@@ -21,12 +21,12 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 
 - [Dark theme](#dark-mode)
 - [Vibrant theme](#vibrancy)*
-- [Custom styles](#custom-styles)
 - [Privacy-focused](#hide-last-seen--typing-indicator)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support)
+- [Custom styles](#custom-styles)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -75,10 +75,6 @@ You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 <img src="media/screenshot-vibrancy.jpg" width="1165">
-
-### Custom styles
-
-You can also add custom styles to Caprine. To open config file click on `Caprine`/`File` -> `Caprine Settings` -> `Advanced` -> `Custom Styles` and your default editor will open up with custom css file. Styles from `custom.css` file are injected when Caprine starts so please restart Caprine to apply changes.
 
 ### Hide last seen / typing indicator
 
@@ -144,6 +140,10 @@ Note that you can change the behavior of Caprine so that the app closes when the
 ### Touch Bar support *(macOS only)*
 
 <img src="media/screenshot-touchbar.png" width="1085">
+
+### Custom styles
+
+Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
 
 ### Keyboard shortcuts
 
