@@ -88,6 +88,7 @@ const advancedSubmenu = [
 			if (!fs.existsSync(filePath)) {
 				fs.writeFileSync(filePath, defaultCustomStyle, 'utf8');
 			}
+
 			shell.openItem(filePath);
 		}
 	}
