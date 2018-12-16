@@ -58,16 +58,16 @@ const advancedSubmenu = [
 		click() {
 			const filePath = path.join(app.getPath('userData'), 'custom.css');
 			const defaultCustomStyle = `/*
-	This is the custom styles file where you can add anything you want.
-	The styles here will be injected into Caprine and will override default styles.
-	If you want to disable styles but keep the config, just comment the lines that you don't want to be used.
+This is the custom styles file where you can add anything you want.
+The styles here will be injected into Caprine and will override default styles.
+If you want to disable styles but keep the config, just comment the lines that you don't want to be used.
 
-	Here are some dark mode color variables to get you started with.
-	Edit them to change color scheme of Caprine.
+Here are some dark mode color variables to get you started.
+Edit them to change color scheme of Caprine.
+Press Command/Ctrl+R in Caprine to see your changes.
 */
 
 :root {
-	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
 	--base: #000;
 	--base-ninety: rgba(255, 255, 255, 0.9);
 	--base-seventy-five: rgba(255, 255, 255, 0.75);
@@ -82,6 +82,7 @@ const advancedSubmenu = [
 	--container-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
+	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
 }
 `;
 
