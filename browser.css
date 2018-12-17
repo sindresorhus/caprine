@@ -390,6 +390,10 @@ a,
 	color: rgba(255, 255, 255, 0.8);
 }
 
+.fbPageBanner {
+	display: none !important;
+}
+
 /* -- Vibrancy-specific styles -- */
 
 html.os-darwin body,

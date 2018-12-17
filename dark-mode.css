@@ -712,11 +712,6 @@ html.dark-mode ._6ckd ._6ckf {
 
 /* -- Vibrancy-related styles -- */
 
-html.os-darwin.dark-mode body,
-html.os-darwin.dark-mode ._4sp8 {
-	background: transparent !important;
-}
-
 /* Chat title bar (dark mode) */
 html.os-darwin.dark-mode ._673w {
 	background-color: #202026 !important;
@@ -726,11 +721,6 @@ html.os-darwin.dark-mode ._673w {
 /* Styles for vibrancy in dark mode */
 html.os-darwin.dark-mode body {
 	background: rgba(0, 0, 0, 0.26) !important;
-}
-
-/* Main container? */
-html.os-darwin.dark-mode ._4sp8 {
-	background: transparent !important;
 }
 
 /* Message list: header above */
