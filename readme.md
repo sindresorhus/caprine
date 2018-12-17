@@ -26,6 +26,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support)
+- [Custom styles](#custom-styles)
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -139,6 +140,10 @@ Note that you can change the behavior of Caprine so that the app closes when the
 ### Touch Bar support *(macOS only)*
 
 <img src="media/screenshot-touchbar.png" width="1085">
+
+### Custom styles
+
+Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
 
 ### Keyboard shortcuts
 
