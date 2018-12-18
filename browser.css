@@ -390,6 +390,7 @@ a,
 	color: rgba(255, 255, 255, 0.8);
 }
 
+/* Remove top Facebook cookie banner */
 .fbPageBanner {
 	display: none !important;
 }
