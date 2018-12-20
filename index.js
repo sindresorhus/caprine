@@ -189,6 +189,7 @@ function createMainWindow() {
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
+			contextIsolation: true,
 			plugins: true
 		}
 	});
@@ -379,10 +380,7 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
-	if (!mainWindow.isFullScreen()) {
-		config.set('lastWindowState', mainWindow.getBounds());
-	}
+	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
 ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {

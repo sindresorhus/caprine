@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.body.appendChild(style);
 
 	// Set the zoom factor if it was set before quitting
-	const zoomFactor = config.get('zoomFactor') || 1.0;
+	const zoomFactor = config.get('zoomFactor') || 1;
 	setZoom(zoomFactor);
 
 	// Enable OS specific styles
