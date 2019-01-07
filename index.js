@@ -366,11 +366,7 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	if (config.get('vibrancy')) {
-		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
-	} else {
-		mainWindow.setVibrancy(null);
-	}
+	mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'sidebar');
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
