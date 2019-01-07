@@ -51,11 +51,6 @@ html.dark-mode.vibrancy button {
 	background: transparent !important;
 }
 
-/* Contact list: search input */
-html.dark-mode.vibrancy ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.1) !important;
-}
-
 /* Message container + right sidebar */
 html.vibrancy ._4_j4,
 html.vibrancy ._4_j5,
