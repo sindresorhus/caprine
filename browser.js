@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.body.appendChild(style);
 
 	// Set the zoom factor if it was set before quitting
-	const zoomFactor = config.get('zoomFactor') || 1.0;
+	const zoomFactor = config.get('zoomFactor') || 1;
 	setZoom(zoomFactor);
 
 	// Enable OS specific styles
@@ -440,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
-	if (config.get('darkMode') && !config.get('vibrancy')) {
+	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 

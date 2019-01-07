@@ -15,7 +15,8 @@ html.vibrancy ._5iwm ._58al {
 }
 
 /* Chat title bar */
-html.vibrancy ._673w {
+html.vibrancy ._673w,
+html.vibrancy.dark-mode ._673w {
 	background-color: transparent !important;
 }
 
@@ -63,4 +64,18 @@ html.dark-mode.vibrancy button {
 /* Contact list: search input */
 html.dark-mode.vibrancy ._5iwm ._58al {
 	background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Message container + right sidebar */
+html.vibrancy ._4_j4,
+html.vibrancy ._4_j5,
+html.dark-mode.vibrancy ._4_j4,
+html.dark-mode.vibrancy ._4_j5 {
+	background: transparent !important;
+}
+
+/* New conversation name input field */
+html.vibrancy ._2y8y,
+html.dark-mode.vibrancy ._2y8y {
+	background: transparent !important;
 }

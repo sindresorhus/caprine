@@ -26,6 +26,11 @@ const {app, ipcMain, Menu, nativeImage, Notification} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
+// Disables broken color space correction in Chromium.
+// You can see differing background color on the login screen.
+// https://github.com/electron/electron/issues/9671
+app.commandLine.appendSwitch('disable-color-correct-rendering');
+
 if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
@@ -58,7 +63,7 @@ app.on('second-instance', () => {
 });
 
 function updateBadge(conversations) {
-	// ignore `Sindre messaged you` blinking
+	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
 	}
@@ -69,14 +74,21 @@ function updateBadge(conversations) {
 		if (config.get('showUnreadBadge')) {
 			app.setBadgeCount(messageCount);
 		}
+
 		if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
 		}
 	}
 
-	if ((is.linux || is.windows) && config.get('showUnreadBadge')) {
-		tray.setBadge(messageCount);
+	if (is.linux || is.windows) {
+		if (config.get('showUnreadBadge')) {
+			tray.setBadge(messageCount);
+		}
+
+		if (config.get('flashWindowOnMessage')) {
+			mainWindow.flashFrame(messageCount !== 0);
+		}
 	}
 
 	if (is.windows) {
@@ -87,10 +99,6 @@ function updateBadge(conversations) {
 				// Delegate drawing of overlay icon to renderer process
 				mainWindow.webContents.send('render-overlay-icon', messageCount);
 			}
-		}
-
-		if (config.get('flashWindowOnMessage')) {
-			mainWindow.flashFrame(messageCount !== 0);
 		}
 	}
 }
@@ -189,6 +197,7 @@ function createMainWindow() {
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
+			contextIsolation: true,
 			plugins: true
 		}
 	});
@@ -276,8 +285,13 @@ function createMainWindow() {
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
+		}
+
+		if (fs.existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
+			webContents.insertCSS(fs.readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8'));
 		}
 
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
@@ -357,11 +371,7 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	if (config.get('vibrancy')) {
-		mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'light');
-	} else {
-		mainWindow.setVibrancy(null);
-	}
+	mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'sidebar');
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
@@ -374,10 +384,7 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
-	if (!mainWindow.isFullScreen()) {
-		config.set('lastWindowState', mainWindow.getBounds());
-	}
+	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
 ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
@@ -387,7 +394,9 @@ ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
 		icon: nativeImage.createFromDataURL(icon),
 		silent
 	});
+
 	notification.show();
+
 	notification.on('click', () => {
 		mainWindow.show();
 		sendAction('jump-to-conversation-by-img', fileName);
