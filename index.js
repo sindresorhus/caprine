@@ -47,6 +47,7 @@ let mainWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu;
+let systemPreferencesListenerId;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -160,6 +161,16 @@ function setUserLocale() {
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
+function setUpSystemPreferencesListener(win) {
+	// Listen to system-wide appearance changes (macOS)
+	const id = systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+		console.log('changed', systemPreferences.isDarkMode());
+		win.webContents.send('set-dark-mode');
+	});
+
+	return id;
+}
+
 function setNotificationsMute(status) {
 	const label = 'Mute Notifications';
 	const muteMenuItem = Menu.getApplicationMenu().getMenuItemById('mute-notifications');
@@ -207,6 +218,7 @@ function createMainWindow() {
 
 	if (is.macos) {
 		win.setSheetOffset(40);
+		systemPreferencesListenerId = setUpSystemPreferencesListener(win);
 	}
 
 	win.loadURL(mainURL);
@@ -372,7 +384,11 @@ function createMainWindow() {
 
 ipcMain.on('set-vibrancy', () => {
 	mainWindow.setVibrancy('sidebar');
-	systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
+	if (config.get('followSystemAppearance')) {
+		systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
+	} else {
+		systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
+	}
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
@@ -385,6 +401,11 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
+
+	if (is.macos) {
+		systemPreferences.unsubscribeNotification(systemPreferencesListenerId);
+	}
+
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 

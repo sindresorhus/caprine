@@ -719,7 +719,7 @@ html.os-darwin.dark-mode ._673w {
 }
 
 /* Styles for vibrancy in dark mode */
-html.os-darwin.dark-mode body, 
+html.os-darwin.dark-mode body,
 html.os-darwin.dark-mode ._4sp8 {
 	background: rgba(0, 0, 0, 0.26) !important;
 }

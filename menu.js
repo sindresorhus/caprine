@@ -228,9 +228,23 @@ const viewSubmenu = [
 		type: 'separator'
 	},
 	{
+		label: 'Follow System Appearance',
+		type: 'checkbox',
+		visible: is.macos,
+		checked: config.get('followSystemAppearance'),
+		click() {
+			config.set('followSystemAppearance', !config.get('followSystemAppearance'));
+			sendAction('set-dark-mode');
+			const menuItem = menu.getMenuItemById('darkMode');
+			menuItem.enabled = !config.get('followSystemAppearance');
+		}
+	},
+	{
 		label: 'Dark Mode',
+		id: 'darkMode',
 		type: 'checkbox',
 		checked: config.get('darkMode'),
+		enabled: !config.get('followSystemAppearance'),
 		accelerator: 'CommandOrControl+D',
 		click() {
 			config.set('darkMode', !config.get('darkMode'));
@@ -517,4 +531,6 @@ const linuxWindowsTemplate = [
 
 const template = is.macos ? macosTemplate : linuxWindowsTemplate;
 
-module.exports = electron.Menu.buildFromTemplate(template);
+const menu = electron.Menu.buildFromTemplate(template);
+
+module.exports = menu;
