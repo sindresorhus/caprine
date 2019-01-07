@@ -69,6 +69,7 @@ function updateBadge(conversations) {
 		if (config.get('showUnreadBadge')) {
 			app.setBadgeCount(messageCount);
 		}
+
 		if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
@@ -79,6 +80,7 @@ function updateBadge(conversations) {
 		if (config.get('showUnreadBadge')) {
 			tray.setBadge(messageCount);
 		}
+
 		if (config.get('flashWindowOnMessage')) {
 			mainWindow.flashFrame(messageCount !== 0);
 		}
