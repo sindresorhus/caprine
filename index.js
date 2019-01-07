@@ -22,7 +22,7 @@ require('electron-dl')();
 require('electron-context-menu')();
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
-const {app, ipcMain, Menu, nativeImage, Notification} = electron;
+const {app, ipcMain, Menu, nativeImage, Notification, systemPreferences} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -371,7 +371,8 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'sidebar');
+	mainWindow.setVibrancy('sidebar');
+	systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
