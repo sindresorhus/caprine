@@ -69,14 +69,21 @@ function updateBadge(conversations) {
 		if (config.get('showUnreadBadge')) {
 			app.setBadgeCount(messageCount);
 		}
+
 		if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
 		}
 	}
 
-	if ((is.linux || is.windows) && config.get('showUnreadBadge')) {
-		tray.setBadge(messageCount);
+	if (is.linux || is.windows) {
+		if (config.get('showUnreadBadge')) {
+			tray.setBadge(messageCount);
+		}
+
+		if (config.get('flashWindowOnMessage')) {
+			mainWindow.flashFrame(messageCount !== 0);
+		}
 	}
 
 	if (is.windows) {
@@ -87,10 +94,6 @@ function updateBadge(conversations) {
 				// Delegate drawing of overlay icon to renderer process
 				mainWindow.webContents.send('render-overlay-icon', messageCount);
 			}
-		}
-
-		if (config.get('flashWindowOnMessage')) {
-			mainWindow.flashFrame(messageCount !== 0);
 		}
 	}
 }
