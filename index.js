@@ -26,6 +26,11 @@ const {app, ipcMain, Menu, nativeImage, Notification} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
+// Disables broken color space correction in Chromium.
+// You can see differing background color on the login screen.
+// https://github.com/electron/electron/issues/9671
+app.commandLine.appendSwitch('disable-color-correct-rendering');
+
 if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
@@ -58,7 +63,7 @@ app.on('second-instance', () => {
 });
 
 function updateBadge(conversations) {
-	// ignore `Sindre messaged you` blinking
+	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
 	}
@@ -389,7 +394,9 @@ ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
 		icon: nativeImage.createFromDataURL(icon),
 		silent
 	});
+
 	notification.show();
+
 	notification.on('click', () => {
 		mainWindow.show();
 		sendAction('jump-to-conversation-by-img', fileName);
