@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const {URL} = require('url');
 const electron = require('electron');
-const {is} = require('electron-util');
+const {darkMode, is} = require('electron-util');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
@@ -47,7 +47,7 @@ let mainWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu;
-let systemPreferencesListenerId;
+let darkModeOnChangeUnsubscribe;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -161,16 +161,6 @@ function setUserLocale() {
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
-function setUpSystemPreferencesListener(win) {
-	// Listen to system-wide appearance changes (macOS)
-	const id = systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
-		console.log('changed', systemPreferences.isDarkMode());
-		win.webContents.send('set-dark-mode');
-	});
-
-	return id;
-}
-
 function setNotificationsMute(status) {
 	const label = 'Mute Notifications';
 	const muteMenuItem = Menu.getApplicationMenu().getMenuItemById('mute-notifications');
@@ -216,9 +206,12 @@ function createMainWindow() {
 	setUserLocale();
 	setUpPrivacyBlocking();
 
+	darkModeOnChangeUnsubscribe = darkMode.onChange(() => {
+		win.webContents.send('set-dark-mode');
+	});
+
 	if (is.macos) {
 		win.setSheetOffset(40);
-		systemPreferencesListenerId = setUpSystemPreferencesListener(win);
 	}
 
 	win.loadURL(mainURL);
@@ -402,9 +395,7 @@ app.on('activate', () => {
 app.on('before-quit', () => {
 	isQuitting = true;
 
-	if (is.macos) {
-		systemPreferences.unsubscribeNotification(systemPreferencesListenerId);
-	}
+	darkModeOnChangeUnsubscribe();
 
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
