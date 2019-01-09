@@ -47,7 +47,6 @@ let mainWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu;
-let darkModeOnChangeUnsubscribe;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -206,7 +205,7 @@ function createMainWindow() {
 	setUserLocale();
 	setUpPrivacyBlocking();
 
-	darkModeOnChangeUnsubscribe = darkMode.onChange(() => {
+	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');
 	});
 
@@ -394,8 +393,6 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
-	darkModeOnChangeUnsubscribe();
 
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
