@@ -10,7 +10,8 @@
 	--base-five: rgba(255, 255, 255, 0.05);
 	--base-ten: rgba(255, 255, 255, 0.1);
 	--base-nine: rgba(255, 255, 255, 0.09);
-	--container-color: #1e1e1e;
+	--container-color: #323232;
+	--container-dark-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
 }
@@ -714,14 +715,14 @@ html.dark-mode ._6ckd ._6ckf {
 
 /* Chat title bar (dark mode) */
 html.os-darwin.dark-mode ._673w {
-	background-color: #202026 !important;
+	background-color: var(--container-dark-color) !important;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Styles for vibrancy in dark mode */
 html.os-darwin.dark-mode body,
 html.os-darwin.dark-mode ._4sp8 {
-	background: rgba(0, 0, 0, 0.26) !important;
+	background: transparent !important;
 }
 
 /* Message list: header above */
@@ -742,7 +743,7 @@ html.os-darwin.dark-mode button {
 /* Message container + right sidebar (dark mode) */
 html.os-darwin.dark-mode ._4_j4,
 html.os-darwin.dark-mode ._4_j5 {
-	background: #202026 !important;
+	background: var(--container-dark-color) !important;
 }
 
 /* Contact list: search input */
@@ -752,7 +753,7 @@ html.os-darwin.dark-mode ._5iwm ._58al {
 
 /* New conversation name input field */
 html.os-darwin.dark-mode ._2y8y {
-	background: #202026 !important;
+	background: var(--container-dark-color) !important;
 }
 
 /* -- End vibrancy-specific styles -- */
