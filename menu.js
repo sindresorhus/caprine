@@ -79,7 +79,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 	--base-five: rgba(255, 255, 255, 0.05);
 	--base-ten: rgba(255, 255, 255, 0.1);
 	--base-nine: rgba(255, 255, 255, 0.09);
-	--container-color: #1e1e1e;
+	--container-color: #323232;
+	--container-dark-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
 	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
