@@ -1,6 +1,6 @@
 'use strict';
 const electron = require('electron');
-const {is} = require('electron-util');
+const {api, is} = require('electron-util');
 const elementReady = require('element-ready');
 const config = require('./config');
 
@@ -148,8 +148,12 @@ ipc.on('toggle-unread-threads-view', () => {
 });
 
 function setDarkMode() {
-	document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
-	ipc.send('set-vibrancy');
+	if (config.get('followSystemAppearance')) {
+		document.documentElement.classList.toggle('dark-mode', api.systemPreferences.isDarkMode());
+	} else {
+		document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
+	}
+	setVibrancy();
 }
 
 function setVibrancy() {
@@ -465,7 +469,10 @@ window.addEventListener('load', () => {
 
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
-		keepMeSignedInCheckbox.checked = true;
+		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
+		keepMeSignedInCheckbox.addEventListener('click', () => {
+			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
+		});
 	}
 });
 
