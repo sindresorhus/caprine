@@ -376,7 +376,7 @@ function createMainWindow() {
 
 ipcMain.on('set-vibrancy', () => {
 	mainWindow.setVibrancy('sidebar');
-	if (config.get('followSystemAppearance')) {
+	if (is.macos && config.get('followSystemAppearance')) {
 		systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
 	} else {
 		systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
