@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const {URL} = require('url');
 const electron = require('electron');
-const {is} = require('electron-util');
+const {darkMode, is} = require('electron-util');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
@@ -22,7 +22,7 @@ require('electron-dl')();
 require('electron-context-menu')();
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
-const {app, ipcMain, Menu, nativeImage, Notification} = electron;
+const {app, ipcMain, Menu, nativeImage, Notification, systemPreferences} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -205,6 +205,10 @@ function createMainWindow() {
 	setUserLocale();
 	setUpPrivacyBlocking();
 
+	darkMode.onChange(() => {
+		win.webContents.send('set-dark-mode');
+	});
+
 	if (is.macos) {
 		win.setSheetOffset(40);
 	}
@@ -371,7 +375,12 @@ function createMainWindow() {
 })();
 
 ipcMain.on('set-vibrancy', () => {
-	mainWindow.setVibrancy(config.get('darkMode') ? 'ultra-dark' : 'sidebar');
+	mainWindow.setVibrancy('sidebar');
+	if (config.get('followSystemAppearance')) {
+		systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
+	} else {
+		systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
+	}
 });
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
@@ -384,6 +393,7 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
+
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 

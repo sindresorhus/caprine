@@ -31,16 +31,6 @@ html.vibrancy ._1qt4 {
 	border-top: solid 1px rgba(0, 0, 0, 0.06);
 }
 
-/* Styles for vibrancy in dark mode */
-html.dark-mode.vibrancy body {
-	background: rgba(0, 0, 0, 0.26) !important;
-}
-
-/* Main container? */
-html.dark-mode.vibrancy ._4sp8 {
-	background: transparent !important;
-}
-
 /* Main content */
 html.dark-mode.vibrancy ._1q5- {
 	background: transparent !important;
@@ -59,11 +49,6 @@ html.dark-mode.vibrancy ._36ic {
 /* Login button */
 html.dark-mode.vibrancy button {
 	background: transparent !important;
-}
-
-/* Contact list: search input */
-html.dark-mode.vibrancy ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Message container + right sidebar */
