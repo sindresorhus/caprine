@@ -148,11 +148,12 @@ ipc.on('toggle-unread-threads-view', () => {
 });
 
 function setDarkMode() {
-	if (config.get('followSystemAppearance')) {
+	if (is.macos && config.get('followSystemAppearance')) {
 		document.documentElement.classList.toggle('dark-mode', api.systemPreferences.isDarkMode());
 	} else {
 		document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 	}
+
 	setVibrancy();
 }
 

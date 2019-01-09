@@ -374,14 +374,17 @@ function createMainWindow() {
 	});
 })();
 
-ipcMain.on('set-vibrancy', () => {
-	mainWindow.setVibrancy('sidebar');
-	if (config.get('followSystemAppearance')) {
-		systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
-	} else {
-		systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
-	}
-});
+if (is.macos) {
+	ipcMain.on('set-vibrancy', () => {
+		mainWindow.setVibrancy('sidebar');
+
+		if (config.get('followSystemAppearance')) {
+			systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
+		} else {
+			systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
+		}
+	});
+}
 
 ipcMain.on('mute-notifications-toggled', (event, status) => {
 	setNotificationsMute(status);
