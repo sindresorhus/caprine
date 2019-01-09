@@ -469,7 +469,10 @@ window.addEventListener('load', () => {
 
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
-		keepMeSignedInCheckbox.checked = true;
+		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
+		keepMeSignedInCheckbox.addEventListener('click', () => {
+			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
+		});
 	}
 });
 
