@@ -74,7 +74,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 	--base-seventy: rgba(255, 255, 255, 0.7);
 	--base-fifty: rgba(255, 255, 255, 0.5);
 	--base-fourty: rgba(255, 255, 255, 0.4);
-	--base-thiry: rgba(255, 255, 255, 0.3);
+	--base-thirty: rgba(255, 255, 255, 0.3);
 	--base-twenty: rgba(255, 255, 255, 0.2);
 	--base-five: rgba(255, 255, 255, 0.05);
 	--base-ten: rgba(255, 255, 255, 0.1);

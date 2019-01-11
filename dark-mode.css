@@ -5,7 +5,7 @@
 	--base-seventy: rgba(255, 255, 255, 0.7);
 	--base-fifty: rgba(255, 255, 255, 0.5);
 	--base-fourty: rgba(255, 255, 255, 0.4);
-	--base-thiry: rgba(255, 255, 255, 0.3);
+	--base-thirty: rgba(255, 255, 255, 0.3);
 	--base-twenty: rgba(255, 255, 255, 0.2);
 	--base-five: rgba(255, 255, 255, 0.05);
 	--base-ten: rgba(255, 255, 255, 0.1);
@@ -126,22 +126,22 @@ html.dark-mode ._2n3t {
 
 /* Message list: header above (event) */
 html.dark-mode ._2n3u {
-	color: var(--base-thiry);
+	color: var(--base-thirty);
 }
 
 /* Message list: header above (event menu small text) */
 html.dark-mode ._4x7m {
-	color: var(--base-thiry);
+	color: var(--base-thirty);
 }
 
 /* Message list: header above (event menu small text) */
 html.dark-mode ._4x79 {
-	color: var(--base-thiry);
+	color: var(--base-thirty);
 }
 
 /* Message list: header above (event menu small text) */
 html.dark-mode ._4x7b {
-	color: var(--base-thiry);
+	color: var(--base-thirty);
 }
 
 /* Message list: header above (invitation) */
@@ -183,7 +183,7 @@ html.dark-mode ._618m {
 
 /* Messages list: event box (event description) */
 html.dark-mode ._618n {
-	color: var(--base-thiry);
+	color: var(--base-thirty);
 }
 
 /* Messages list: event box (line) */
