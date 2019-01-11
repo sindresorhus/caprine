@@ -194,6 +194,8 @@ function createMainWindow() {
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
+		transparent: true,
+		backgroundColor: '#00ffffff',
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
