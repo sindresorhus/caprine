@@ -3,6 +3,16 @@ html.vibrancy ._4sp8 {
 	background: transparent !important;
 }
 
+/* Login screen */
+html.vibrancy ._3v_o {
+	background-color: transparent !important;
+}
+
+/* Login button */
+html.vibrancy ._5hy2 ._43dh {
+	background-color: transparent !important;
+}
+
 /* Message placeholder text color */
 html.vibrancy ._kmc ._1p1t {
 	color: #999 !important;

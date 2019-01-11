@@ -711,6 +711,20 @@ html.dark-mode ._6ckd ._6ckf {
 	color: var(--base-ninety);
 }
 
+/* Login screen */
+html.dark-mode ._3v_o {
+	background-color: var(--container-dark-color);
+}
+
+/* Login inputs */
+html.dark-mode ._3v_o ._55r1 {
+	background: rgba(255, 255, 255, 0.05);
+	color: var(--base-seventy);
+}
+html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
+	color: var(--base-thirty) !important;
+}
+
 /* -- Vibrancy-related styles -- */
 
 /* Chat title bar (dark mode) */
