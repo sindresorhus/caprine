@@ -9,6 +9,7 @@ const {ipcRenderer: ipc} = electron;
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
+const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
 function showSettingsMenu() {
 	document.querySelector('._30yy._2fug._p').click();
@@ -108,7 +109,15 @@ function setSidebarVisibility() {
 ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 	const preferencesAreOpen = isPreferencesOpen();
 	if (!preferencesAreOpen) {
+		const style = document.createElement('style');
+		// Hide both the backdrop and the preferences dialog
+		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
+		document.body.appendChild(style);
+
 		await openPreferences();
+
+		// Will clean up itself after the preferences are closed
+		document.querySelector(preferencesSelector).appendChild(style);
 	}
 
 	const notificationCheckbox = document.querySelector('._374b:nth-of-type(4) ._4ng2 input');
