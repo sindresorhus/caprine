@@ -629,8 +629,8 @@ html.dark-mode ._55r1._5f0v._43di {
 }
 
 /* Login button */
-html.dark-mode button:not(._5upp) {
-	background: var(--container-color) !important;
+html.dark-mode ._5hy2 ._43dh {
+	background-color: transparent !important;
 }
 
 /* Fix the Sticker and Gaming buttons */
@@ -762,11 +762,6 @@ html.os-darwin.dark-mode ._5742 {
 
 /* Contact list: header above */
 html.os-darwin.dark-mode ._36ic {
-	background: transparent !important;
-}
-
-/* Login button */
-html.os-darwin.dark-mode button {
 	background: transparent !important;
 }
 
