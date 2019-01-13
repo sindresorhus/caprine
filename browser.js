@@ -502,9 +502,11 @@ document.addEventListener('keydown', event => {
 	}
 });
 
-window.Notification = (notification => {
-	const customNotification = function (title, options) {
-		let {body, icon, silent} = options;
+// Pass events sent via `window.postMessage` on to the main process
+window.addEventListener('message', ({data: {type, data}}) => {
+	if (type === 'notification' && data) {
+		let {title, body, icon, silent} = data;
+
 		body = body.props ? body.props.content[0] : body;
 		title = (typeof title === 'object' && title.props) ? title.props.content[0] : title;
 
@@ -525,12 +527,8 @@ window.Notification = (notification => {
 
 			ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent, fileName});
 		});
-
-		return false;
-	};
-
-	return Object.assign(customNotification, notification);
-})(window.Notification);
+	}
+});
 
 ipc.on('jump-to-conversation-by-img', (event, fileName) => {
 	selectConversationByImg(fileName);

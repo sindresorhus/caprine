@@ -304,8 +304,19 @@ function createMainWindow() {
 			mainWindow.show();
 		}
 
-		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
-		mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+
+		// Overwrite the Notification constructor in the browser process to make
+		// it call the main process via IPC. This enables custom notifications.
+		webContents.executeJavaScript(`window.Notification = Object.assign(${String(function (title, options) {
+			window.postMessage({
+				type: 'notification',
+				data: {title, ...options}
+			}, '*');
+
+			return false;
+		})}, window.Notification);`);
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
