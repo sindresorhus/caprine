@@ -9,6 +9,16 @@ html.vibrancy ._kmc ._1p1t {
 	-webkit-text-fill-color: #999 !important;
 }
 
+/* Messages list: start conversation with a chat bot */
+html.vibrancy ._2xh0 ._3zc8 {
+	background-color: transparent;
+}
+
+/* Messages list: start conversation with a chat bot buttons */
+html.vibrancy ._2xh0 ._2xh4 {
+	background-color: transparent;
+}
+
 /* Contact list: search input */
 html.vibrancy ._5iwm ._58al {
 	background-color: rgba(246, 247, 249, 0.5) !important;

@@ -214,6 +214,18 @@ html.dark-mode ._jf4 ._jf3 {
 	color: var(--base-fourty) !important;
 }
 
+/* Messages list: start conversation with a chat bot */
+html.dark-mode ._2xh0 ._3zc8 {
+	background-color: transparent;
+	color: var(--base-fourty);
+}
+
+/* Messages list: start conversation with a chat bot buttons */
+html.dark-mode ._2xh0 ._2xh4 {
+	background-color: transparent;
+	border-color: var(--base-ten);
+}
+
 /* Contact list: header above */
 html.dark-mode ._36ic {
 	background: var(--list-header-color) !important;
