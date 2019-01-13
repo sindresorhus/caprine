@@ -171,6 +171,11 @@ html.dark-mode ._1n-e {
 	color: var(--base-fourty);
 }
 
+/* Messages list: typical response time */
+html.dark-mode ._7blb {
+	color: var(--base-seventy);
+}
+
 /* Messages list: event box (event name) */
 html.dark-mode ._618l {
 	color: var(--base-seventy);
