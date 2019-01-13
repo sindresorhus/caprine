@@ -421,12 +421,12 @@ html.dark-mode ._2y8_ {
 
 /* New conversation contact list: popup hr */
 html.dark-mode ._5l38 {
-	border-top: 1px solid var(--base-ten);
+	border-top: 1px solid var(--base-ten) !important;
 }
 
 /* New conversation contact list: popup hover */
 html.dark-mode ._1k1p ._5l38 {
-	border-top: none;
+	border-top-color: transparent;
 }
 html.dark-mode ._5l37:active,
 html.dark-mode ._1k1p {
