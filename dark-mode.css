@@ -589,8 +589,16 @@ html.dark-mode ._eb3::before {
 
 /* Sticker dialog: header borders */
 html.dark-mode ._5r8e,
-html.dark-mode ._5r86 {
+html.dark-mode ._5r86,
+html.dark-mode ._37wu,
+html.dark-mode ._37wv {
 	border-color: var(--base-five);
+}
+
+/* Sticker dialog: search input */
+html.dark-mode ._2pgc {
+	background: var(--base-ten);
+	border-color: var(--base-ten);
 }
 
 /* Record dialog: time */
