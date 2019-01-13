@@ -338,7 +338,7 @@ async function sendConversationList() {
 
 				// This is only for group chats
 				if (groupPic) {
-					// Slice image soruce from background-image style property of div
+					// Slice image source from background-image style property of div
 					groupPic.src = groupPic.style.backgroundImage.slice(5, groupPic.style.backgroundImage.length - 2);
 				}
 
