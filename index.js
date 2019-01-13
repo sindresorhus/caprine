@@ -309,14 +309,16 @@ function createMainWindow() {
 
 		// Overwrite the Notification constructor in the browser process to make
 		// it call the main process via IPC. This enables custom notifications.
-		webContents.executeJavaScript(`window.Notification = Object.assign(${String(function (title, options) {
-			window.postMessage({
-				type: 'notification',
-				data: {title, ...options}
-			}, '*');
-
-			return false;
-		})}, window.Notification);`);
+		webContents.executeJavaScript(`window.Notification = Object.assign(${String(
+			class {
+				constructor(title, options) {
+					window.postMessage({
+						type: 'notification',
+						data: {title, ...options}
+					}, '*');
+				}
+			}
+		)}, window.Notification);`);
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
