@@ -504,31 +504,33 @@ document.addEventListener('keydown', event => {
 
 // Pass events sent via `window.postMessage` on to the main process
 window.addEventListener('message', ({data: {type, data}}) => {
-	if (type === 'notification' && data) {
-		let {title, body, icon, silent} = data;
-
-		body = body.props ? body.props.content[0] : body;
-		title = (typeof title === 'object' && title.props) ? title.props.content[0] : title;
-
-		const img = new Image();
-		img.crossOrigin = 'anonymous';
-		img.src = icon;
-
-		img.addEventListener('load', () => {
-			const canvas = document.createElement('canvas');
-			const ctx = canvas.getContext('2d');
-
-			canvas.width = img.width;
-			canvas.height = img.height;
-
-			ctx.drawImage(img, 0, 0, img.width, img.height);
-
-			const fileName = icon.substring(icon.lastIndexOf('/') + 1, icon.indexOf('?'));
-
-			ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent, fileName});
-		});
+	if (type === 'notification') {
+		showNotification(data);
 	}
 });
+
+function showNotification({title, body, icon, silent}) {
+	body = body.props ? body.props.content[0] : body;
+	title = (typeof title === 'object' && title.props) ? title.props.content[0] : title;
+
+	const img = new Image();
+	img.crossOrigin = 'anonymous';
+	img.src = icon;
+
+	img.addEventListener('load', () => {
+		const canvas = document.createElement('canvas');
+		const ctx = canvas.getContext('2d');
+
+		canvas.width = img.width;
+		canvas.height = img.height;
+
+		ctx.drawImage(img, 0, 0, img.width, img.height);
+
+		const fileName = icon.substring(icon.lastIndexOf('/') + 1, icon.indexOf('?'));
+
+		ipc.send('notification', {title, body, icon: canvas.toDataURL(), silent, fileName});
+	});
+}
 
 ipc.on('jump-to-conversation-by-img', (event, fileName) => {
 	selectConversationByImg(fileName);
