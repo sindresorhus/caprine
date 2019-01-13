@@ -327,10 +327,8 @@ function closePreferences() {
 	doneButton.click();
 }
 async function sendConversationList() {
-	const sidebar = document.querySelector('[role=navigation]');
-
 	const conversations = await Promise.all(
-		[...sidebar.querySelectorAll('._1ht1')]
+		[...document.querySelector(listSelector).children]
 			.splice(0, 10)
 			.map(async el => {
 				const profilePic = el.querySelector('._55lt img');
