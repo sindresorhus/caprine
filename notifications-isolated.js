@@ -26,5 +26,8 @@
 
 			window.postMessage({type: 'notification', data: {title, id: this.id, ...options}}, '*');
 		}
+
+		// No-op, but Messenger expects this method to be present
+		close() {}
 	}, window.Notification);
 })(window);
