@@ -598,9 +598,14 @@ html.dark-mode ._3z53 {
 	color: var(--base-seventy);
 }
 
-/* Delete popover */
+/* Message popover */
 html.dark-mode ._hw2 ._53ij {
 	background-color: var(--base-seventy) !important;
+}
+
+/* Message popover text */
+html.dark-mode ._hw2 ._53ij ._hw5 {
+	color: var(--base);
 }
 
 /* Login tile and names */
