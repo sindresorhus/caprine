@@ -1,14 +1,14 @@
 'use strict';
 
 module.exports = {
-	getEmoji: function (emoji) {
-		let pixelRatio = 2;
-		let size = 16;
-		let type = 'z';
-		let fileExt = ".png";
-		let schemaAuth = "https://static.xx.fbcdn.net/images/emoji.php/v7";
-		let path = pixelRatio + '/' + size + '/' + emoji + fileExt;
-		let check = getEmojiChecksum(path);
+	getEmoji (emoji) {
+		const pixelRatio = 2;
+		const size = 16;
+		const type = 'z';
+		const fileExt = '.png';
+		const schemaAuth = 'https://static.xx.fbcdn.net/images/emoji.php/v7';
+		const path = pixelRatio + '/' + size + '/' + emoji + fileExt;
+		const check = getEmojiChecksum(path);
 
 		return schemaAuth + '/' + type + check + '/' + path;
 	}
@@ -21,5 +21,5 @@ function getEmojiChecksum(emoji) {
 		base &= 4294967295;
 	}
 
-	return parseInt((base & 255) + '', 10).toString(16);
+	return parseInt(String (base & 255) + '', 10).toString(16);
 }

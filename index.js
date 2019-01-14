@@ -147,12 +147,11 @@ function setUpPrivacyBlocking() {
 			blocking = config.get('block.chatSeen');
 		}
 
-		// Emoji code
-		if(config.get('oldEmoji')) {
-			let slash = details.url.split('/');
-			let last = slash[slash.length - 1].split('.');
-			let emojiCode = last[0];
-			let oldUrl = emoji.getEmoji(emojiCode);
+		if (config.get('oldEmoji')) {
+			const slash = details.url.split('/');
+			const last = slash[slash.length - 1].split('.');
+			const emojiCode = last[0];
+			const oldUrl = emoji.getEmoji(emojiCode);
 
 			callback({redirectURL: oldUrl});
 			return;
