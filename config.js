@@ -13,7 +13,6 @@ module.exports = new Store({
 		},
 		alwaysOnTop: false,
 		bounceDockOnMessage: false,
-		oldEmoji: false,
 		showUnreadBadge: true,
 		showMessageButtons: true,
 		launchMinimized: false,
@@ -22,6 +21,7 @@ module.exports = new Store({
 			chatSeen: false,
 			typingIndicator: false
 		},
+		emojiStyle: 'f',
 		confirmImagePaste: true,
 		useWorkChat: false,
 		sidebarHidden: false,

@@ -136,28 +136,32 @@ function enableHiresResources() {
 	});
 }
 
-function setUpPrivacyBlocking() {
+function setUpRequestFiltering() {
 	const ses = electron.session.defaultSession;
-	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`, `*://static.xx.fbcdn.net/images/emoji.php/v9/*`]};
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`, `*://static.xx.fbcdn.net/images/emoji.php/v9/*`, `*://*.${domain}/images/emoji.php/v9`]};
 	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
-		let blocking = false;
-		if (details.url.includes('typ.php')) {
-			blocking = config.get('block.typingIndicator');
+		if (config.get('oldEmoji') && details.url.includes('/images/emoji.php/v9/')) { // Only one callback walk around
+			setUpEmoji(details, callback);
 		} else {
-			blocking = config.get('block.chatSeen');
+			setUpPrivacyBlocking(details, callback);
 		}
-
-		if (config.get('oldEmoji')) {
-			const slash = details.url.split('/');
-			const last = slash[slash.length - 1].split('.');
-			const emojiCode = last[0];
-			const oldUrl = emoji.getEmoji(emojiCode);
-
-			callback({redirectURL: oldUrl});
-			return;
-		}
-		callback({cancel: blocking});
 	});
+}
+
+function setUpPrivacyBlocking(details, callback) {
+	let blocking = false;
+	if (details.url.includes('typ.php')) {
+		blocking = config.get('block.typingIndicator');
+	} else {
+		blocking = config.get('block.chatSeen');
+	}
+	callback({cancel: blocking});
+}
+
+function setUpEmoji(details, callback) {
+	const oldUrl = emoji.getEmoji(details.url);
+
+	callback({redirectURL: oldUrl});
 }
 
 function setUserLocale() {
@@ -219,7 +223,7 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	setUpPrivacyBlocking();
+	setUpRequestFiltering();
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');

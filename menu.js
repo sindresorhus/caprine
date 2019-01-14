@@ -23,6 +23,46 @@ const newConversationItem = {
 	}
 };
 
+const emojiSubmenu = [
+	{
+		label: 'F style',
+		type: 'checkbox',
+		checked: (config.get('emojiStyle') === 'f'),
+		click() {
+			handleEmojiClick('f')
+		}
+	},
+
+	{
+		label: 'T style',
+		type: 'checkbox',
+		checked: (config.get('emojiStyle') === 't'),
+		click() {
+			handleEmojiClick('t')
+		}
+	},
+
+	{
+		label: 'Z style',
+		type: 'checkbox',
+		checked: (config.get('emojiStyle') === 'z'),
+		click() {
+			handleEmojiClick('z')
+		}
+	}
+];
+
+function handleEmojiClick(type) {
+	config.set('emojiStyle', type);
+
+	// Update menu
+	emojiSubmenu[0].checked = (config.get('emojiStyle') === 'f');
+	emojiSubmenu[1].checked = (config.get('emojiStyle') === 't');
+	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'z');
+	menu = electron.Menu.buildFromTemplate(template);
+	electron.Menu.setApplicationMenu(menu);
+}
+
 const switchItems = [
 	{
 		label: 'Switch to Work Chat…',
@@ -124,14 +164,6 @@ const preferencesSubmenu = [
 		}
 	},
 	{
-		label: 'Use old emoji (requires restart)',
-		type: 'checkbox',
-		checked: config.get('oldEmoji'),
-		click() {
-			config.set('oldEmoji', !config.get('oldEmoji'));
-		}
-	},
-	{
 		type: 'checkbox',
 		label: 'Block Seen Indicator',
 		checked: config.get('block.chatSeen'),
@@ -201,6 +233,10 @@ const preferencesSubmenu = [
 		click() {
 			config.set('quitOnWindowClose', !config.get('quitOnWindowClose'));
 		}
+	},
+	{
+		label: 'Emoji style (requires restart)',
+		submenu: emojiSubmenu
 	},
 	{
 		type: 'separator'
@@ -540,6 +576,6 @@ const linuxWindowsTemplate = [
 
 const template = is.macos ? macosTemplate : linuxWindowsTemplate;
 
-const menu = electron.Menu.buildFromTemplate(template);
+let menu = electron.Menu.buildFromTemplate(template);
 
 module.exports = menu;
