@@ -13,6 +13,7 @@ module.exports = new Store({
 		},
 		alwaysOnTop: false,
 		bounceDockOnMessage: false,
+		oldEmoji: false,
 		showUnreadBadge: true,
 		showMessageButtons: true,
 		launchMinimized: false,

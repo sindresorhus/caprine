@@ -10,6 +10,7 @@ const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
+const emoji = require('./emoji');
 const {sendAction} = require('./util');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
@@ -137,13 +138,24 @@ function enableHiresResources() {
 
 function setUpPrivacyBlocking() {
 	const ses = electron.session.defaultSession;
-	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`, `*://static.xx.fbcdn.net/images/emoji.php/v9/*`]};
 	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
 		let blocking = false;
 		if (details.url.includes('typ.php')) {
 			blocking = config.get('block.typingIndicator');
 		} else {
 			blocking = config.get('block.chatSeen');
+		}
+
+		// Emoji code
+		if(config.get('oldEmoji')) {
+			let slash = details.url.split('/');
+			let last = slash[slash.length - 1].split('.');
+			let emojiCode = last[0];
+			let oldUrl = emoji.getEmoji(emojiCode);
+
+			callback({redirectURL: oldUrl});
+			return;
 		}
 		callback({cancel: blocking});
 	});

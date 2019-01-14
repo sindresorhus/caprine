@@ -124,6 +124,14 @@ const preferencesSubmenu = [
 		}
 	},
 	{
+		label: 'Use old emoji (requires restart)',
+		type: 'checkbox',
+		checked: config.get('oldEmoji'),
+		click() {
+			config.set('oldEmoji', !config.get('oldEmoji'));
+		}
+	},
+	{
 		type: 'checkbox',
 		label: 'Block Seen Indicator',
 		checked: config.get('block.chatSeen'),
