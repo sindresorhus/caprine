@@ -8,7 +8,7 @@ ipc.on('conversations', (event, conversations) => {
 	const touchBar = new TouchBar(
 		conversations.map(({label, selected, icon}, index) => {
 			return new TouchBarButton({
-				label,
+				label: label.length > 25 ? label.slice(0, 25) + '…' : label,
 				backgroundColor: selected ? '#0084ff' : undefined,
 				icon: nativeImage.createFromDataURL(icon),
 				iconPosition: 'left',
