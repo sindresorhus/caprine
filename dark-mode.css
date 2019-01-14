@@ -171,6 +171,11 @@ html.dark-mode ._1n-e {
 	color: var(--base-fourty);
 }
 
+/* Messages list: typical response time */
+html.dark-mode ._7blb {
+	color: var(--base-seventy);
+}
+
 /* Messages list: event box (event name) */
 html.dark-mode ._618l {
 	color: var(--base-seventy);
@@ -212,6 +217,18 @@ html.dark-mode ._5pd7 {
 html.dark-mode ._jf4 ._jf3 {
 	background-color: var(--base-five) !important;
 	color: var(--base-fourty) !important;
+}
+
+/* Messages list: start conversation with a chat bot */
+html.dark-mode ._2xh0 ._3zc8 {
+	background-color: transparent;
+	color: var(--base-fourty);
+}
+
+/* Messages list: start conversation with a chat bot buttons */
+html.dark-mode ._2xh0 ._2xh4 {
+	background-color: transparent;
+	border-color: var(--base-ten);
 }
 
 /* Contact list: header above */
@@ -404,12 +421,12 @@ html.dark-mode ._2y8_ {
 
 /* New conversation contact list: popup hr */
 html.dark-mode ._5l38 {
-	border-top: 1px solid var(--base-ten);
+	border-top: 1px solid var(--base-ten) !important;
 }
 
 /* New conversation contact list: popup hover */
 html.dark-mode ._1k1p ._5l38 {
-	border-top: none;
+	border-top-color: transparent;
 }
 html.dark-mode ._5l37:active,
 html.dark-mode ._1k1p {
@@ -572,8 +589,16 @@ html.dark-mode ._eb3::before {
 
 /* Sticker dialog: header borders */
 html.dark-mode ._5r8e,
-html.dark-mode ._5r86 {
+html.dark-mode ._5r86,
+html.dark-mode ._37wu,
+html.dark-mode ._37wv {
 	border-color: var(--base-five);
+}
+
+/* Sticker dialog: search input */
+html.dark-mode ._2pgc {
+	background: var(--base-ten);
+	border-color: var(--base-ten);
 }
 
 /* Record dialog: time */
@@ -581,9 +606,14 @@ html.dark-mode ._3z53 {
 	color: var(--base-seventy);
 }
 
-/* Delete popover */
+/* Message popover */
 html.dark-mode ._hw2 ._53ij {
 	background-color: var(--base-seventy) !important;
+}
+
+/* Message popover text */
+html.dark-mode ._hw2 ._53ij ._hw5 {
+	color: var(--base);
 }
 
 /* Login tile and names */
@@ -599,8 +629,8 @@ html.dark-mode ._55r1._5f0v._43di {
 }
 
 /* Login button */
-html.dark-mode button:not(._5upp) {
-	background: var(--container-color) !important;
+html.dark-mode ._5hy2 ._43dh {
+	background-color: transparent !important;
 }
 
 /* Fix the Sticker and Gaming buttons */
@@ -732,11 +762,6 @@ html.os-darwin.dark-mode ._5742 {
 
 /* Contact list: header above */
 html.os-darwin.dark-mode ._36ic {
-	background: transparent !important;
-}
-
-/* Login button */
-html.os-darwin.dark-mode button {
 	background: transparent !important;
 }
 
