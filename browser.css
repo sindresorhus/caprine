@@ -407,6 +407,11 @@ html.os-darwin ._4sp8 {
 	background: transparent !important;
 }
 
+/* Login screen */
+html.os-darwin ._3v_o {
+	background-color: #fff;
+}
+
 /* Message placeholder text color */
 html.os-darwin ._kmc ._1p1t {
 	color: #999 !important;
