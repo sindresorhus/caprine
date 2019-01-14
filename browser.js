@@ -327,10 +327,8 @@ function closePreferences() {
 	doneButton.click();
 }
 async function sendConversationList() {
-	const sidebar = document.querySelector('[role=navigation]');
-
 	const conversations = await Promise.all(
-		[...sidebar.querySelectorAll('._1ht1')]
+		[...document.querySelector(listSelector).children]
 			.splice(0, 10)
 			.map(async el => {
 				const profilePic = el.querySelector('._55lt img');
@@ -338,7 +336,7 @@ async function sendConversationList() {
 
 				// This is only for group chats
 				if (groupPic) {
-					// Slice image soruce from background-image style property of div
+					// Slice image source from background-image style property of div
 					groupPic.src = groupPic.style.backgroundImage.slice(5, groupPic.style.backgroundImage.length - 2);
 				}
 
