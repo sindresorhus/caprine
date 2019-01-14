@@ -200,6 +200,7 @@ Then edit the automatically created GitHub Releases draft and publish.
 
 - [Sindre Sorhus](https://sindresorhus.com)
 - [Aw Young Qingzhuo](https://github.com/veniversum)
+- [Jarek Radosz](https://github.com/CvX)
 
 
 ## Disclaimer
