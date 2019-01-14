@@ -304,8 +304,10 @@ function createMainWindow() {
 			mainWindow.show();
 		}
 
-		mainWindow.webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
-		mainWindow.webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+
+		webContents.executeJavaScript(fs.readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8'));
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
@@ -400,7 +402,7 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
-ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
+ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
 	const notification = new Notification({
 		title,
 		body,
@@ -408,10 +410,14 @@ ipcMain.on('notification', (event, {title, body, icon, silent, fileName}) => {
 		silent
 	});
 
-	notification.show();
-
 	notification.on('click', () => {
 		mainWindow.show();
-		sendAction('jump-to-conversation-by-img', fileName);
+		sendAction('notification-callback', {callbackName: 'onclick', id});
 	});
+
+	notification.on('close', () => {
+		sendAction('notification-callback', {callbackName: 'onclose', id});
+	});
+
+	notification.show();
 });
