@@ -455,9 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
-
-	// Activate vibrancy effect if it was set before quitting
-	setVibrancy();
 });
 
 window.addEventListener('load', () => {
