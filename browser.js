@@ -534,9 +534,9 @@ function showNotification({id, title, body, icon, silent}) {
 	});
 }
 
-function typeReply(message) {
+function typeReply(message, locale) {
 	const event = document.createEvent('TextEvent');
-	event.initTextEvent('textInput', true, true, window, message, 0, 'en-US');
+	event.initTextEvent('textInput', true, true, window, message, 0, locale);
 	const inputField = document.querySelector('[contenteditable="true"]');
 	if (inputField) {
 		inputField.focus();
@@ -558,7 +558,7 @@ ipc.on('notification-reply', (event, data) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 	// Wait for Messenger to go to correct message and then start typing and sending
 	setTimeout(async function() {
-		await typeReply(data.reply);
+		await typeReply(data.reply, data.locale);
 		await sendReply();
 		if (previousConversation) {
 			selectConversation(previousConversation);
