@@ -534,6 +534,34 @@ function showNotification({id, title, body, icon, silent}) {
 	});
 }
 
+function typeReply(message) {
+	const event = document.createEvent('TextEvent');
+	event.initTextEvent('textInput', true, true, window, message, 0, 'en-US');
+	const inputField = document.querySelector('[contenteditable="true"]');
+	if (inputField) {
+		inputField.focus();
+		return inputField.dispatchEvent(event);
+	}
+}
+
+async function sendReply() {
+	(await elementReady('._30yy._38lh._39bl')).click();
+	return true;
+}
+
 ipc.on('notification-callback', (event, data) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
+});
+
+ipc.on('notification-reply', (event, data) => {
+	const previousConversation = getIndex();
+	window.postMessage({type: 'notification-callback', data}, '*');
+	// Wait for Messenger to go to correct message and then start typing and sending
+	setTimeout(async function() {
+		await typeReply(data.reply);
+		await sendReply();
+		if (previousConversation) {
+			selectConversation(previousConversation);
+		}
+	}, 50);
 });

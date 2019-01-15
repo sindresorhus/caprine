@@ -16,5 +16,10 @@ function sendAction(action, ...args) {
 	win.webContents.send(action, ...args);
 }
 
+function sendBackgroundAction(action, ...args) {
+	getWindow().webContents.send(action, ...args);
+}
+
 exports.getWindow = getWindow;
 exports.sendAction = sendAction;
+exports.sendBackgroundAction = sendBackgroundAction;

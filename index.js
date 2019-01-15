@@ -10,7 +10,7 @@ const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
-const {sendAction} = require('./util');
+const {sendAction, sendBackgroundAction} = require('./util');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -411,6 +411,7 @@ ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
 	const notification = new Notification({
 		title,
 		body,
+		hasReply: true,
 		icon: nativeImage.createFromDataURL(icon),
 		silent
 	});
@@ -418,6 +419,11 @@ ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
 	notification.on('click', () => {
 		mainWindow.show();
 		sendAction('notification-callback', {callbackName: 'onclick', id});
+	});
+
+	notification.on('reply', (event, reply) => {
+		// We use onclick event used by messenger to go to the right convo
+		sendBackgroundAction('notification-reply', {callbackName: 'onclick', id, reply});
 	});
 
 	notification.on('close', () => {
