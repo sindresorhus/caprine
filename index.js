@@ -135,38 +135,43 @@ function enableHiresResources() {
 	});
 }
 
-function setUpPrivacyBlocking() {
-	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
+function setUpRequestsFiltering() {
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`, '*://static.xx.fbcdn.net/images/emoji.php/v9/*', '*://facebook.com/images/emoji.php/v9/*']};
 
 	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
-		if (url.includes('typ.php')) {
-			callback({cancel: config.get('block.typingIndicator')});
+		if (url.includes('emoji.php')) {
+			processEmoji(url, callback);
 		} else {
-			callback({cancel: config.get('block.chatSeen')});
+			processPrivacyBlocking(url, callback);
 		}
 	});
 }
 
-function setUpEmoji() {
+function processPrivacyBlocking(url, callback) {
+	if (url.includes('typ.php')) {
+		callback({cancel: config.get('block.typingIndicator')});
+	} else if (url.includes('change_read_status.php')) {
+		callback({cancel: config.get('block.chatSeen')});
+	}
+}
+
+function processEmoji(url, callback) {
 	const exclude = ['f0000.png', '1f6b5_200d_2640.png', '1f6b4_200d_2640.png', '1f3c4_200d_2640.png', '1f3ca_200d_2640.png', '1f6a3_200d_2640.png', '1f469_200d_2764_200d_1f48b_200d_1f469.png', '1f468_200d_2764_200d_1f48b_200d_1f468.png', '1f469_200d_2764_200d_1f469.png', '1f468_200d_2764_200d_1f468.png', '1f486_200d_2640.png', '1f487_200d_2640.png', '1f64d_200d_2640.png', '1f64e_200d_2640.png', '1f64b_200d_2640.png', '1f646_200d_2640.png', '1f645_200d_2640.png', '1f481_200d_2640.png', '1f647_200d_2640.png', '1f46f_200d_2640.png', '1f3c3_200d_2640.png', '1f6b6_200d_2640.png', '1f482_200d_2640.png', '1f477_200d_2640.png', '1f46e_200d_2640.png', '1f473_200d_2640.png', '1f471_200d_2640.png', '1f469_200d_2764_200d_1f48b_200d_1f469.png', '1f468_200d_2764_200d_1f48b_200d_1f468.png', '1f469_200d_2764_200d_1f469.png', '1f468_200d_2764_200d_1f468.png', '1f486_200d_2640.png', '1f487_200d_2640.png', '1f64d_200d_2640.png', '1f64e_200d_2640.png', '1f64b_200d_2640.png', '1f646_200d_2640.png', '1f645_200d_2640.png', '1f481_200d_2640.png', '1f647_200d_2640.png', '1f46f_200d_2640.png', '1f3c3_200d_2640.png', '1f6b6_200d_2640.png', '1f482_200d_2640.png', '1f477_200d_2640.png', '1f46e_200d_2640.png', '1f473_200d_2640.png', '1f471_200d_2640.png'];
-	const filter = {urls: ['*://static.xx.fbcdn.net/images/emoji.php/v9/*', '*://facebook.com/images/emoji.php/v9/*']};
 
-	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
-		const filename = url.split('/')[url.split('/').length - 1];
-		if (!url.includes('#replaced') && filename !== 'f0000.png') {
-			if (config.get('emojiStyle') === 'z' && exclude.includes(filename)) { // Oldest version does not have a lot of emoji. Check exclude list, if exists does not redirect
-				callback({});
-				return;
-			}
-
-			const type = config.get('emojiStyle');
-			const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${type}$3`) + '#replaced';
-
-			callback({redirectURL: newURL});
-		} else {
+	const filename = url.split('/')[url.split('/').length - 1];
+	if (!url.includes('#replaced') && filename !== 'f0000.png') {
+		if (config.get('emojiStyle') === 'z' && exclude.includes(filename)) { // Oldest version does not have a lot of emoji. Check exclude list, if exists does not redirect
 			callback({});
+			return;
 		}
-	});
+
+		const type = config.get('emojiStyle');
+		const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${type}$3`) + '#replaced';
+
+		callback({redirectURL: newURL});
+	} else {
+		callback({});
+	}
 }
 
 function setUserLocale() {
@@ -228,8 +233,7 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	setUpPrivacyBlocking();
-	setUpEmoji();
+	setUpRequestsFiltering();
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');
@@ -419,13 +423,17 @@ ipcMain.on('mute-notifications-toggled', (event, status) => {
 });
 
 app.on('activate', () => {
-	mainWindow.show();
+	if (mainWindow !== undefined) {
+		mainWindow.show();
+	}
 });
 
 app.on('before-quit', () => {
 	isQuitting = true;
 
-	config.set('lastWindowState', mainWindow.getNormalBounds());
+	if (mainWindow !== undefined) {
+		config.set('lastWindowState', mainWindow.getNormalBounds());
+	}
 });
 
 ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
