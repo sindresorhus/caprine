@@ -21,7 +21,7 @@ module.exports = new Store({
 			chatSeen: false,
 			typingIndicator: false
 		},
-		emojiStyle: 'f',
+		emojiStyle: 't',
 		confirmImagePaste: true,
 		useWorkChat: false,
 		sidebarHidden: false,
