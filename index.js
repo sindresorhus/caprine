@@ -412,17 +412,12 @@ ipcMain.on('mute-notifications-toggled', (event, status) => {
 });
 
 app.on('activate', () => {
-	if (mainWindow !== undefined) {
-		mainWindow.show();
-	}
+	mainWindow.show();
 });
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
-	if (mainWindow !== undefined) {
-		config.set('lastWindowState', mainWindow.getNormalBounds());
-	}
+	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
 ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
