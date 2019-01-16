@@ -10,7 +10,6 @@ const isDev = require('electron-is-dev');
 const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
-const emoji = require('./emoji');
 const {sendAction} = require('./util');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
@@ -152,8 +151,12 @@ function setUpEmoji() {
 	const filter = {urls: [`*://static.xx.fbcdn.net/images/emoji.php/v9/*`, `*://*.${domain}/images/emoji.php/v9`]};
 
 	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
-		if (!url.includes('#replaced')) {
-			callback({redirectURL: emoji.getEmoji(url)});
+		// 'Like' emoji in the sidebar is available only in 'z' emoji set
+		if (!url.includes('#replaced') && !url.endsWith('f0000.png')) {
+			const type = config.get('emojiStyle');
+			const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${type}$3`) + '#replaced';
+
+			callback({redirectURL: newURL});
 		} else {
 			callback({});
 		}
