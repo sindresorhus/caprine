@@ -65,8 +65,8 @@ function handleEmojiClick(type) {
 		detail: 'Do you want to restart the app now?',
 		buttons: ['Restart', 'Ignore'],
 		defaultId: 0,
-		cancelId: 1,
-	}, (response) => {
+		cancelId: 1
+	}, response => {
 		if (response === 0) {
 			app.relaunch();
 			app.exit();
@@ -202,8 +202,8 @@ const preferencesSubmenu = [
 				detail: 'Do you want to restart the app now?',
 				buttons: ['Restart', 'Ignore'],
 				defaultId: 0,
-				cancelId: 1,
-			}, (response) => {
+				cancelId: 1
+			}, response => {
 				if (response === 0) {
 					app.relaunch();
 					app.exit();
