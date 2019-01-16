@@ -13,7 +13,7 @@ const {
 const config = require('./config');
 const {sendAction} = require('./util');
 
-const {app, shell} = electron;
+const {app, shell, dialog} = electron;
 
 const newConversationItem = {
 	label: 'New Conversation',
@@ -59,6 +59,19 @@ function handleEmojiClick(type) {
 	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'z');
 	menu = electron.Menu.buildFromTemplate(template);
 	electron.Menu.setApplicationMenu(menu);
+
+	dialog.showMessageBox({
+		message: 'Caprine needs to be restarted to apply emoji changes.',
+		detail: 'Do you want to restart the app now?',
+		buttons: ['Restart', 'Ignore'],
+		defaultId: 0,
+		cancelId: 1,
+	}, (response) => {
+		if (response === 0) {
+			app.relaunch();
+			app.exit();
+		}
+	});
 }
 
 const switchItems = [
