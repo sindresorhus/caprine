@@ -167,7 +167,16 @@ function setDarkMode() {
 }
 
 function setVibrancy() {
-	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
+	const { classList } = document.documentElement;
+
+	classList.remove('sidebar-vibrancy', 'full-vibrancy');
+
+	if (config.get('vibrancy')) {
+		classList.add('full-vibrancy');
+	} else {
+		classList.add('sidebar-vibrancy');
+	}
+
 	ipc.send('set-vibrancy');
 }
 
