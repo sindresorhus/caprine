@@ -52,6 +52,52 @@ const switchItems = [
 	}
 ];
 
+function changeVibrancy(vibrancy) {
+	config.set('vibrancy', vibrancy);
+	sendAction('update-vibrancy');
+
+	for (const option of vibrancySubmenu) {
+		option.checked = isVibrancyTypeChecked(option.vibrancy);
+	}
+
+	menu = electron.Menu.buildFromTemplate(template);
+	electron.Menu.setApplicationMenu(menu);
+}
+
+function isVibrancyTypeChecked(vibrancy) {
+	return config.get('vibrancy') === vibrancy;
+}
+
+const vibrancySubmenu = [
+	{
+		label: 'No Vibrancy',
+		type: 'checkbox',
+		vibrancy: 'none',
+		checked: isVibrancyTypeChecked('none'),
+		click() {
+			changeVibrancy('none');
+		}
+	},
+	{
+		label: 'Sidebar-only Vibrancy',
+		type: 'checkbox',
+		vibrancy: 'sidebar',
+		checked: isVibrancyTypeChecked('sidebar'),
+		click() {
+			changeVibrancy('sidebar');
+		}
+	},
+	{
+		label: 'Full-window Vibrancy',
+		type: 'checkbox',
+		vibrancy: 'full',
+		checked: isVibrancyTypeChecked('full'),
+		click() {
+			changeVibrancy('full');
+		}
+	}
+]
+
 const advancedSubmenu = [
 	{
 		label: 'Custom Styles',
@@ -253,13 +299,9 @@ const viewSubmenu = [
 		}
 	},
 	{
-		label: 'Full-Window Vibrancy',
-		type: 'checkbox',
+		label: 'Vibrancy',
 		visible: is.macos,
-		checked: config.get('vibrancy'),
-		click() {
-			sendAction('toggle-vibrancy');
-		}
+		submenu: vibrancySubmenu
 	},
 	{
 		type: 'separator'
@@ -532,6 +574,6 @@ const linuxWindowsTemplate = [
 
 const template = is.macos ? macosTemplate : linuxWindowsTemplate;
 
-const menu = electron.Menu.buildFromTemplate(template);
+let menu = electron.Menu.buildFromTemplate(template);
 
 module.exports = menu;

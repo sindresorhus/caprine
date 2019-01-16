@@ -5,7 +5,7 @@ module.exports = new Store({
 	defaults: {
 		followSystemAppearance: false,
 		darkMode: false,
-		vibrancy: false,
+		vibrancy: 'none', // Possible values: 'none', 'sidebar', 'full'
 		zoomFactor: 1,
 		lastWindowState: {
 			width: 800,
