@@ -557,7 +557,7 @@ ipc.on('notification-reply', (event, data) => {
 	const previousConversation = getIndex();
 	window.postMessage({type: 'notification-callback', data}, '*');
 	// Wait for Messenger to go to correct message and then start typing and sending
-	setTimeout(async function() {
+	setTimeout(async () => {
 		await typeReply(data.reply, data.locale);
 		await sendReply();
 		if (previousConversation) {
