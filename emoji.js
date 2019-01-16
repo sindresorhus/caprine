@@ -3,10 +3,12 @@ const config = require('./config');
 
 module.exports = {
 	getEmoji(url) {
-		const array = url.split('/');
-		let type = array[6];
+		// 'Like' emoji in the sidebar is available only in 'z' emoji set
+		if (url.endsWith('f0000.png')) {
+			return url + '#replaced';
+		}
 
-		type = (url.endsWith('f0000.png') ? 'z' : config.get('emojiStyle')) + type.substr(1, type.length); // Fix like emoji on sidebar, it's available only i 'z'
-		return url.replace('v9', 'v8').replace(array[6], type);
+		const type = config.get('emojiStyle');
+		return url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${type}$3`) + '#replaced';
 	}
 };

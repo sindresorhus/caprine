@@ -136,32 +136,28 @@ function enableHiresResources() {
 	});
 }
 
-function setUpRequestFiltering() {
-	const ses = electron.session.defaultSession;
-	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`, `*://static.xx.fbcdn.net/images/emoji.php/v9/*`, `*://*.${domain}/images/emoji.php/v9`]};
-	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
-		if (config.get('oldEmoji') && details.url.includes('/images/emoji.php/v9/')) { // Only one callback walk around
-			setUpEmoji(details, callback);
+function setUpPrivacyBlocking() {
+	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
+
+	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+		if (url.includes('typ.php')) {
+			callback({cancel: config.get('block.typingIndicator')});
 		} else {
-			setUpPrivacyBlocking(details, callback);
+			callback({cancel: config.get('block.chatSeen')});
 		}
 	});
 }
 
-function setUpPrivacyBlocking(details, callback) {
-	let blocking = false;
-	if (details.url.includes('typ.php')) {
-		blocking = config.get('block.typingIndicator');
-	} else {
-		blocking = config.get('block.chatSeen');
-	}
-	callback({cancel: blocking});
-}
+function setUpEmoji() {
+	const filter = {urls: [`*://static.xx.fbcdn.net/images/emoji.php/v9/*`, `*://*.${domain}/images/emoji.php/v9`]};
 
-function setUpEmoji(details, callback) {
-	const oldUrl = emoji.getEmoji(details.url);
-
-	callback({redirectURL: oldUrl});
+	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+		if (!url.includes('#replaced')) {
+			callback({redirectURL: emoji.getEmoji(url)});
+		} else {
+			callback({});
+		}
+	});
 }
 
 function setUserLocale() {
@@ -223,7 +219,8 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	setUpRequestFiltering();
+	setUpPrivacyBlocking();
+	setUpEmoji();
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');
