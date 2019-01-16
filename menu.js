@@ -196,6 +196,19 @@ const preferencesSubmenu = [
 		checked: config.get('hardwareAcceleration'),
 		click() {
 			config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
+
+			dialog.showMessageBox({
+				message: 'Caprine needs to be restarted to change hardware acceleration.',
+				detail: 'Do you want to restart the app now?',
+				buttons: ['Restart', 'Ignore'],
+				defaultId: 0,
+				cancelId: 1,
+			}, (response) => {
+				if (response === 0) {
+					app.relaunch();
+					app.exit();
+				}
+			});
 		}
 	},
 	{
