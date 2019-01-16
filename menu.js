@@ -25,29 +25,27 @@ const newConversationItem = {
 
 const emojiSubmenu = [
 	{
-		label: 'F style',
-		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 'f'),
-		click() {
-			handleEmojiClick('f')
-		}
-	},
-
-	{
-		label: 'T style',
+		label: 'Facebook 3.0',
 		type: 'checkbox',
 		checked: (config.get('emojiStyle') === 't'),
 		click() {
 			handleEmojiClick('t')
 		}
 	},
-
 	{
-		label: 'Z style',
+		label: 'Messenger 1.0',
 		type: 'checkbox',
 		checked: (config.get('emojiStyle') === 'z'),
 		click() {
 			handleEmojiClick('z')
+		}
+	},
+	{
+		label: 'Facebook 2.2',
+		type: 'checkbox',
+		checked: (config.get('emojiStyle') === 'f'),
+		click() {
+			handleEmojiClick('f')
 		}
 	}
 ];
