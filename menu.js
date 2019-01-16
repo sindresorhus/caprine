@@ -29,7 +29,7 @@ const emojiSubmenu = [
 		type: 'checkbox',
 		checked: (config.get('emojiStyle') === 't'),
 		click() {
-			handleEmojiClick('t')
+			handleEmojiClick('t');
 		}
 	},
 	{
@@ -37,7 +37,7 @@ const emojiSubmenu = [
 		type: 'checkbox',
 		checked: (config.get('emojiStyle') === 'z'),
 		click() {
-			handleEmojiClick('z')
+			handleEmojiClick('z');
 		}
 	},
 	{
@@ -45,7 +45,7 @@ const emojiSubmenu = [
 		type: 'checkbox',
 		checked: (config.get('emojiStyle') === 'f'),
 		click() {
-			handleEmojiClick('f')
+			handleEmojiClick('f');
 		}
 	}
 ];

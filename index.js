@@ -148,7 +148,7 @@ function setUpPrivacyBlocking() {
 }
 
 function setUpEmoji() {
-	const filter = {urls: [`*://static.xx.fbcdn.net/images/emoji.php/v9/*`, `*://*.${domain}/images/emoji.php/v9`]};
+	const filter = {urls: ['*://static.xx.fbcdn.net/images/emoji.php/v9/*', `*://*.${domain}/images/emoji.php/v9`]};
 
 	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
 		// 'Like' emoji in the sidebar is available only in 'z' emoji set
