@@ -84,7 +84,7 @@ function updateMenu() {
 				updateMenu();
 			}
 		}
-	]
+	];
 
 	const advancedSubmenu = [
 		{

@@ -167,7 +167,7 @@ function setDarkMode() {
 }
 
 function updateVibrancy() {
-	const { classList } = document.documentElement;
+	const {classList} = document.documentElement;
 
 	classList.remove('sidebar-vibrancy', 'full-vibrancy');
 
