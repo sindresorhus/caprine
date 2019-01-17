@@ -29,7 +29,7 @@ function showRestartDialog(message) {
 	}, response => {
 		if (response === 0) {
 			app.relaunch();
-			app.exit();
+			app.quit();
 		}
 	});
 }
