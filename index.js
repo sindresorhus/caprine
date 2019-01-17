@@ -8,7 +8,7 @@ const {darkMode, is} = require('electron-util');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const appMenu = require('./menu');
+const updateAppMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
@@ -203,11 +203,6 @@ function createMainWindow() {
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
-
-		// Workaround for https://github.com/electron/electron/issues/10420
-		transparent: true,
-		backgroundColor: '#00ffffff',
-
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -258,7 +253,8 @@ function createMainWindow() {
 	await app.whenReady();
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
-	electron.Menu.setApplicationMenu(appMenu);
+
+	updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
