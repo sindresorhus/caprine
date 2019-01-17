@@ -194,6 +194,8 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
+const typePrefix = 'emoji.php/v9/';
+
 module.exports = {
 	process: (url, callback) => {
 		const emojiStyle = getCodeType();
@@ -210,7 +212,8 @@ module.exports = {
 			return callback({});
 		}
 
-		const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${emojiStyle}$3`) + '#replaced';
+		const typeIndex = url.indexOf(typePrefix) + typePrefix.length;
+		const newURL = url.slice(0, typeIndex) + emojiStyle + url.slice(typeIndex + 1) + '#replaced';
 
 		callback({redirectURL: newURL});
 	}
