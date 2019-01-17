@@ -19,6 +19,21 @@ function getEmojiIcon(styleName) {
 	return nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${styleName}.png`));
 }
 
+function showRestartDialog(message) {
+	return dialog.showMessageBox({
+		message,
+		detail: 'Do you want to restart the app now?',
+		buttons: ['Restart', 'Ignore'],
+		defaultId: 0,
+		cancelId: 1
+	}, response => {
+		if (response === 0) {
+			app.relaunch();
+			app.exit();
+		}
+	});
+}
+
 const newConversationItem = {
 	label: 'New Conversation',
 	accelerator: 'CommandOrControl+N',
@@ -64,18 +79,7 @@ function handleEmojiClick(type) {
 	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'messenger-1-0');
 	updateMenu();
 
-	dialog.showMessageBox({
-		message: 'Caprine needs to be restarted to apply emoji changes.',
-		detail: 'Do you want to restart the app now?',
-		buttons: ['Restart', 'Ignore'],
-		defaultId: 0,
-		cancelId: 1
-	}, response => {
-		if (response === 0) {
-			app.relaunch();
-			app.exit();
-		}
-	});
+	showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
 }
 
 function updateMenu() {
@@ -205,19 +209,7 @@ const preferencesSubmenu = [
 		checked: config.get('hardwareAcceleration'),
 		click() {
 			config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
-
-			dialog.showMessageBox({
-				message: 'Caprine needs to be restarted to change hardware acceleration.',
-				detail: 'Do you want to restart the app now?',
-				buttons: ['Restart', 'Ignore'],
-				defaultId: 0,
-				cancelId: 1
-			}, response => {
-				if (response === 0) {
-					app.relaunch();
-					app.exit();
-				}
-			});
+			showRestartDialog('Caprine needs to be restarted to change hardware acceleration.');
 		}
 	},
 	{
