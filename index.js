@@ -149,19 +149,13 @@ function initRequestsFiltering() {
 
 	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
 		if (url.includes('emoji.php')) {
-			emoji.process(url, callback);
-		} else {
-			processPrivacyBlocking(url, callback);
+			callback(emoji.process(url));
+		} else if (url.includes('typ.php')) {
+			callback({cancel: config.get('block.typingIndicator')});
+		} else if (url.includes('change_read_status.php')) {
+			callback({cancel: config.get('block.chatSeen')});
 		}
 	});
-}
-
-function processPrivacyBlocking(url, callback) {
-	if (url.includes('typ.php')) {
-		callback({cancel: config.get('block.typingIndicator')});
-	} else if (url.includes('change_read_status.php')) {
-		callback({cancel: config.get('block.chatSeen')});
-	}
 }
 
 function setUserLocale() {

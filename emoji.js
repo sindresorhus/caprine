@@ -197,25 +197,25 @@ const excludedEmoji = new Set([
 const typePrefix = 'emoji.php/v9/';
 
 module.exports = {
-	process: (url, callback) => {
+	process: url => {
 		const emojiStyle = getCodeType();
 		const codeEnd = url.lastIndexOf('.png');
 		const emojiCode = url.substring(url.lastIndexOf('/') + 1, codeEnd);
 
 		if (emojiStyle === 't' || url.includes('#replaced') || codeEnd === -1) {
-			return callback({});
+			return {};
 		}
 
 		// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
 		// Fall back to default style for emoji >= 10.0
 		if (excludedEmoji.has(emojiCode)) {
-			return callback({});
+			return {};
 		}
 
 		const typeIndex = url.indexOf(typePrefix) + typePrefix.length;
 		const newURL = url.slice(0, typeIndex) + emojiStyle + url.slice(typeIndex + 1) + '#replaced';
 
-		callback({redirectURL: newURL});
+		return {redirectURL: newURL};
 	}
 };
 
