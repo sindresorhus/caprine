@@ -140,10 +140,10 @@ function enableHiresResources() {
 function initRequestsFiltering() {
 	const filter = {
 		urls: [
-			`*://*.${domain}/*typ.php*`,
-			`*://*.${domain}/*change_read_status.php*`,
-			'*://static.xx.fbcdn.net/images/emoji.php/v9/*',
-			'*://facebook.com/images/emoji.php/v9/*'
+			`*://*.${domain}/*typ.php*`, // Type indicator blocker
+			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
+			'*://static.xx.fbcdn.net/images/emoji.php/v9/*', // Emoji
+			'*://facebook.com/images/emoji.php/v9/*' // Emoji
 		]
 	};
 

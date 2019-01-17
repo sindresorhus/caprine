@@ -59,7 +59,10 @@ const emojiSubmenu = [
 
 function handleEmojiClick(type) {
 	config.set('emojiStyle', type);
-	updateEmojiMenu();
+	emojiSubmenu[0].checked = (config.get('emojiStyle') === 'facebook-2-2');
+	emojiSubmenu[1].checked = (config.get('emojiStyle') === 'facebook-3-0');
+	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'messenger-1-0');
+	updateMenu();
 
 	dialog.showMessageBox({
 		message: 'Caprine needs to be restarted to apply emoji changes.',
@@ -75,10 +78,7 @@ function handleEmojiClick(type) {
 	});
 }
 
-function updateEmojiMenu() {
-	emojiSubmenu[0].checked = (config.get('emojiStyle') === 'facebook-2-2');
-	emojiSubmenu[1].checked = (config.get('emojiStyle') === 'facebook-3-0');
-	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'messenger-1-0');
+function updateMenu() {
 	menu = electron.Menu.buildFromTemplate(template);
 	electron.Menu.setApplicationMenu(menu);
 }
