@@ -195,26 +195,33 @@ const excludedEmoji = new Set([
 module.exports = {
 	process: (url, callback) => {
 		const emojiStyle = getCodeType();
-	const codeEnd = url.lastIndexOf('.png');
-	const emojiCode = url.substring(url.lastIndexOf('/') + 1, codeEnd);
+		const codeEnd = url.lastIndexOf('.png');
+		const emojiCode = url.substring(url.lastIndexOf('/') + 1, codeEnd);
 
-	if (emojiStyle === 't' || url.includes('#replaced') || codeEnd === -1) {
-		return callback({});
-	}
+		if (emojiStyle === 't' || url.includes('#replaced') || codeEnd === -1) {
+			return callback({});
+		}
 
-	// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
-	// Fall back to default style for emoji >= 10.0
-	if (excludedEmoji.has(emojiCode)) {
-		return callback({});
-	}
+		// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
+		// Fall back to default style for emoji >= 10.0
+		if (excludedEmoji.has(emojiCode)) {
+			return callback({});
+		}
 
-	const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${emojiStyle}$3`) + '#replaced';
+		const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${emojiStyle}$3`) + '#replaced';
 
-	callback({redirectURL: newURL});
+		callback({redirectURL: newURL});
 	}
 };
 
 function getCodeType() {
-	const type = config.get('emojiStyle');
-	return type === 'facebook-3-0' ? 't' : (type === 'facebook-2-2' ? 'f' : 'z')
+	switch (config.get('emojiStyle')) {
+		case 'facebook-2-2':
+			return 'f';
+		case 'messenger-1-0':
+			return 'z';
+		case 'facebook-3-0':
+		default:
+			return 't';
+	}
 }

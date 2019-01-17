@@ -12,7 +12,7 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
-const emoji = require("./emoji");
+const emoji = require('./emoji');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 

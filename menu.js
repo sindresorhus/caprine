@@ -27,7 +27,7 @@ const emojiSubmenu = [
 	{
 		label: 'Facebook 3.0',
 		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 'facebook-3-0'), // t
+		checked: (config.get('emojiStyle') === 'facebook-3-0'), // The 't' emoji set
 		click() {
 			handleEmojiClick('facebook-3-0');
 		}
@@ -35,7 +35,7 @@ const emojiSubmenu = [
 	{
 		label: 'Messenger 1.0',
 		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 'messenger-1-0'), // z
+		checked: (config.get('emojiStyle') === 'messenger-1-0'), // The 'z' emoji set
 		click() {
 			handleEmojiClick('messenger-1-0');
 		}
@@ -43,7 +43,7 @@ const emojiSubmenu = [
 	{
 		label: 'Facebook 2.2',
 		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 'facebook-2-2'), // f
+		checked: (config.get('emojiStyle') === 'facebook-2-2'), // The 'f' emoji set
 		click() {
 			handleEmojiClick('facebook-2-2');
 		}
