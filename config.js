@@ -25,7 +25,7 @@ const defaults = {
 			chatSeen: false,
 			typingIndicator: false
 		},
-		emojiStyle: 't',
+		emojiStyle: 'facebook-3-0',
 		confirmImagePaste: true,
 		useWorkChat: false,
 		sidebarHidden: false,
