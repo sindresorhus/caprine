@@ -1,86 +1,172 @@
-html.vibrancy body,
-html.vibrancy ._4sp8 {
+/* -- BLOCK START: sidebar-only vibrancy -- */
+
+html.sidebar-vibrancy body,
+html.sidebar-vibrancy ._4sp8,
+html.sidebar-vibrancy.dark-mode body,
+html.sidebar-vibrancy.dark-mode ._4sp8 {
 	background: transparent !important;
 }
 
 /* Login screen */
-html.vibrancy ._3v_o {
+html.sidebar-vibrancy ._3v_o {
+	background-color: #fff;
+}
+
+/* Message placeholder text color */
+html.sidebar-vibrancy ._kmc ._1p1t {
+	color: #999 !important;
+	-webkit-text-fill-color: #999 !important;
+}
+
+/* Contact list: header above */
+html.sidebar-vibrancy.dark-mode ._36ic {
+	background: transparent !important;
+}
+
+/* Contact list: search input */
+html.sidebar-vibrancy ._5iwm ._58al {
+	background-color: rgba(246, 247, 249, 0.5) !important;
+}
+html.sidebar-vibrancy.dark-mode ._5iwm ._58al {
+	background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Chat title bar */
+html.sidebar-vibrancy ._673w {
+	background-color: #fff !important;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+html.sidebar-vibrancy.dark-mode ._673w {
+	background-color: var(--container-dark-color) !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Share previews: title and subtitle */
+html.sidebar-vibrancy .__6k,
+html.sidebar-vibrancy .__6l {
+	background-color: transparent !important;
+}
+
+/* Contact list: person container */
+html.sidebar-vibrancy ._1qt4 {
+	border-top: solid 1px rgba(0, 0, 0, 0.06);
+}
+
+/* Message container + right sidebar */
+html.sidebar-vibrancy ._4_j4,
+html.sidebar-vibrancy ._4_j5 {
+	background: #fff !important;
+}
+html.sidebar-vibrancy.dark-mode ._4_j4,
+html.sidebar-vibrancy.dark-mode ._4_j5 {
+	background: var(--container-dark-color) !important;
+}
+
+/* Message list: header above */
+html.sidebar-vibrancy.dark-mode ._5742 {
+	background: transparent !important;
+}
+
+/* New conversation name input field */
+html.sidebar-vibrancy ._2y8y {
+	background: #fff !important;
+}
+html.sidebar-vibrancy.dark-mode ._2y8y {
+	background: var(--container-dark-color) !important;
+}
+
+/* -- BLOCK END: sidebar-only vibrancy -- */
+
+/* -- BLOCK START: full-window vibrancy -- */
+
+html.full-vibrancy body,
+html.full-vibrancy ._4sp8 {
+	background: transparent !important;
+}
+
+/* Login screen */
+html.full-vibrancy ._3v_o {
 	background-color: transparent !important;
 }
 
 /* Login button */
-html.vibrancy ._5hy2 ._43dh {
+html.full-vibrancy ._5hy2 ._43dh {
 	background-color: transparent !important;
 }
 
 /* Message placeholder text color */
-html.vibrancy ._kmc ._1p1t {
+html.full-vibrancy ._kmc ._1p1t {
 	color: #999 !important;
 	-webkit-text-fill-color: #999 !important;
 }
 
 /* Messages list: start conversation with a chat bot */
-html.vibrancy ._2xh0 ._3zc8 {
+html.full-vibrancy ._2xh0 ._3zc8 {
 	background-color: transparent;
 }
 
 /* Messages list: start conversation with a chat bot buttons */
-html.vibrancy ._2xh0 ._2xh4 {
+html.full-vibrancy ._2xh0 ._2xh4 {
 	background-color: transparent;
 }
 
 /* Contact list: search input */
-html.vibrancy ._5iwm ._58al {
+html.full-vibrancy ._5iwm ._58al {
 	background-color: rgba(246, 247, 249, 0.5) !important;
+}
+html.full-vibrancy.dark-mode ._5iwm ._58al {
+	background: rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Chat title bar */
-html.vibrancy ._673w,
-html.vibrancy.dark-mode ._673w {
+html.full-vibrancy ._673w,
+html.full-vibrancy.dark-mode ._673w {
 	background-color: transparent !important;
 }
 
 /* Share previews: title and subtitle */
-html.vibrancy .__6k,
-html.vibrancy .__6l {
+html.full-vibrancy .__6k,
+html.full-vibrancy .__6l {
 	background-color: transparent !important;
 }
 
 /* Contact list: person container */
-html.vibrancy ._1qt4 {
+html.full-vibrancy ._1qt4 {
 	border-top: solid 1px rgba(0, 0, 0, 0.06);
 }
 
 /* Main content */
-html.dark-mode.vibrancy ._1q5- {
+html.full-vibrancy.dark-mode ._1q5- {
 	background: transparent !important;
 }
 
 /* Message list: header above */
-html.dark-mode.vibrancy ._5742 {
+html.full-vibrancy.dark-mode ._5742 {
 	background: transparent !important;
 }
 
 /* Contact list: header above */
-html.dark-mode.vibrancy ._36ic {
+html.full-vibrancy.dark-mode ._36ic {
 	background: transparent !important;
 }
 
 /* Login button */
-html.dark-mode.vibrancy button {
+html.full-vibrancy.dark-mode button {
 	background: transparent !important;
 }
 
 /* Message container + right sidebar */
-html.vibrancy ._4_j4,
-html.vibrancy ._4_j5,
-html.dark-mode.vibrancy ._4_j4,
-html.dark-mode.vibrancy ._4_j5 {
+html.full-vibrancy ._4_j4,
+html.full-vibrancy ._4_j5,
+html.full-vibrancy.dark-mode ._4_j4,
+html.full-vibrancy.dark-mode ._4_j5 {
 	background: transparent !important;
 }
 
 /* New conversation name input field */
-html.vibrancy ._2y8y,
-html.dark-mode.vibrancy ._2y8y {
+html.full-vibrancy ._2y8y,
+html.full-vibrancy.dark-mode ._2y8y {
 	background: transparent !important;
 }
+
+/* -- BLOCK END: full-window vibrancy -- */

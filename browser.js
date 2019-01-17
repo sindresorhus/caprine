@@ -163,11 +163,24 @@ function setDarkMode() {
 		document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
 	}
 
-	setVibrancy();
+	updateVibrancy();
 }
 
-function setVibrancy() {
-	document.documentElement.classList.toggle('vibrancy', config.get('vibrancy'));
+function updateVibrancy() {
+	const {classList} = document.documentElement;
+
+	classList.remove('sidebar-vibrancy', 'full-vibrancy');
+
+	switch (config.get('vibrancy')) {
+		case 'sidebar':
+			classList.add('sidebar-vibrancy');
+			break;
+		case 'full':
+			classList.add('full-vibrancy');
+			break;
+		default:
+	}
+
 	ipc.send('set-vibrancy');
 }
 
@@ -195,11 +208,8 @@ ipc.on('toggle-sidebar', () => {
 
 ipc.on('set-dark-mode', setDarkMode);
 
-ipc.on('toggle-vibrancy', () => {
-	config.set('vibrancy', !config.get('vibrancy'));
-	setVibrancy();
-
-	document.documentElement.style.backgroundColor = 'transparent';
+ipc.on('update-vibrancy', () => {
+	updateVibrancy();
 });
 
 ipc.on('render-overlay-icon', (event, messageCount) => {
