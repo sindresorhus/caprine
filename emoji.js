@@ -1,8 +1,10 @@
 'use strict';
 const config = require('./config');
 
+// The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
+// Based on https://emojipedia.org/facebook/3.0/new/
 const excludedEmoji = new Set([
-	'f0000',
+	'f0000', // Facebook's thumbs-up icon as shown on the contacts list
 	'1f3c3_200d_2640',
 	'1f3c4_200d_2640',
 	'1f3ca_200d_2640',
