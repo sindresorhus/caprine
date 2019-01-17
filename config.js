@@ -1,7 +1,7 @@
 'use strict';
 const Store = require('electron-store');
 
-module.exports = new Store({
+const defaults = {
 	defaults: {
 		followSystemAppearance: false,
 		darkMode: false,
@@ -30,4 +30,23 @@ module.exports = new Store({
 		quitOnWindowClose: false,
 		keepMeSignedIn: true
 	}
-});
+};
+
+function updateVibrancySetting(store) {
+	const vibrancy = store.get('vibrancy');
+
+	if (vibrancy === true) {
+		store.set('vibrancy', 'full');
+	} else if (vibrancy === false) {
+		store.set('vibrancy', 'sidebar');
+	}
+}
+
+function migrate(store) {
+	updateVibrancySetting(store);
+}
+
+const store = new Store(defaults);
+migrate(store);
+
+module.exports = store;
