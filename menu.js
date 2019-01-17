@@ -13,7 +13,11 @@ const {
 const config = require('./config');
 const {sendAction} = require('./util');
 
-const {app, shell, dialog} = electron;
+const {app, shell, dialog, nativeImage} = electron;
+
+function getEmojiIcon(styleName) {
+	return nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${styleName}.png`));
+}
 
 const newConversationItem = {
 	label: 'New Conversation',
@@ -27,6 +31,7 @@ const emojiSubmenu = [
 	{
 		label: 'Facebook 3.0',
 		type: 'checkbox',
+		icon: getEmojiIcon('facebook-3-0'),
 		checked: (config.get('emojiStyle') === 'facebook-3-0'), // The 't' emoji set
 		click() {
 			handleEmojiClick('facebook-3-0');
@@ -35,6 +40,7 @@ const emojiSubmenu = [
 	{
 		label: 'Messenger 1.0',
 		type: 'checkbox',
+		icon: getEmojiIcon('messenger-1-0'),
 		checked: (config.get('emojiStyle') === 'messenger-1-0'), // The 'z' emoji set
 		click() {
 			handleEmojiClick('messenger-1-0');
@@ -43,6 +49,7 @@ const emojiSubmenu = [
 	{
 		label: 'Facebook 2.2',
 		type: 'checkbox',
+		icon: getEmojiIcon('facebook-2-2'),
 		checked: (config.get('emojiStyle') === 'facebook-2-2'), // The 'f' emoji set
 		click() {
 			handleEmojiClick('facebook-2-2');
