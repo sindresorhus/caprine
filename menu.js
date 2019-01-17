@@ -27,38 +27,32 @@ const emojiSubmenu = [
 	{
 		label: 'Facebook 3.0',
 		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 't'),
+		checked: (config.get('emojiStyle') === 'facebook-3-0'), // t
 		click() {
-			handleEmojiClick('t');
+			handleEmojiClick('facebook-3-0');
 		}
 	},
 	{
 		label: 'Messenger 1.0',
 		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 'z'),
+		checked: (config.get('emojiStyle') === 'messenger-1-0'), // z
 		click() {
-			handleEmojiClick('z');
+			handleEmojiClick('messenger-1-0');
 		}
 	},
 	{
 		label: 'Facebook 2.2',
 		type: 'checkbox',
-		checked: (config.get('emojiStyle') === 'f'),
+		checked: (config.get('emojiStyle') === 'facebook-2-2'), // f
 		click() {
-			handleEmojiClick('f');
+			handleEmojiClick('facebook-2-2');
 		}
 	}
 ];
 
 function handleEmojiClick(type) {
 	config.set('emojiStyle', type);
-
-	// Update menu
-	emojiSubmenu[0].checked = (config.get('emojiStyle') === 'f');
-	emojiSubmenu[1].checked = (config.get('emojiStyle') === 't');
-	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'z');
-	menu = electron.Menu.buildFromTemplate(template);
-	electron.Menu.setApplicationMenu(menu);
+	updateEmojiMenu();
 
 	dialog.showMessageBox({
 		message: 'Caprine needs to be restarted to apply emoji changes.',
@@ -72,6 +66,14 @@ function handleEmojiClick(type) {
 			app.exit();
 		}
 	});
+}
+
+function updateEmojiMenu() {
+	emojiSubmenu[0].checked = (config.get('emojiStyle') === 'facebook-2-2');
+	emojiSubmenu[1].checked = (config.get('emojiStyle') === 'facebook-3-0');
+	emojiSubmenu[2].checked = (config.get('emojiStyle') === 'messenger-1-0');
+	menu = electron.Menu.buildFromTemplate(template);
+	electron.Menu.setApplicationMenu(menu);
 }
 
 const switchItems = [
@@ -191,7 +193,7 @@ const preferencesSubmenu = [
 		}
 	},
 	{
-		label: 'Hardware Acceleration (requires restart)',
+		label: 'Hardware Acceleration',
 		type: 'checkbox',
 		checked: config.get('hardwareAcceleration'),
 		click() {
@@ -259,7 +261,7 @@ const preferencesSubmenu = [
 		}
 	},
 	{
-		label: 'Emoji style (requires restart)',
+		label: 'Emoji style',
 		submenu: emojiSubmenu
 	},
 	{

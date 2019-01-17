@@ -1,4 +1,5 @@
 'use strict';
+
 const path = require('path');
 const fs = require('fs');
 const {URL} = require('url');
@@ -11,7 +12,7 @@ const appMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
-const processEmoji = require('./emoji');
+const emoji = require("./emoji");
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -136,7 +137,7 @@ function enableHiresResources() {
 	});
 }
 
-function setUpRequestsFiltering() {
+function initRequestsFiltering() {
 	const filter = {
 		urls: [
 			`*://*.${domain}/*typ.php*`,
@@ -148,7 +149,7 @@ function setUpRequestsFiltering() {
 
 	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
 		if (url.includes('emoji.php')) {
-			processEmoji(url, callback);
+			emoji.process(url, callback);
 		} else {
 			processPrivacyBlocking(url, callback);
 		}
@@ -222,7 +223,7 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	setUpRequestsFiltering();
+	initRequestsFiltering();
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');

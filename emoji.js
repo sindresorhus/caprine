@@ -192,8 +192,9 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
-module.exports = function (url, callback) {
-	const emojiStyle = config.get('emojiStyle');
+module.exports = {
+	process: (url, callback) => {
+		const emojiStyle = getCodeType();
 	const codeEnd = url.lastIndexOf('.png');
 	const emojiCode = url.substring(url.lastIndexOf('/') + 1, codeEnd);
 
@@ -210,4 +211,10 @@ module.exports = function (url, callback) {
 	const newURL = url.replace(/(emoji\.php\/v9\/)(.)(.+\/)/, `$1${emojiStyle}$3`) + '#replaced';
 
 	callback({redirectURL: newURL});
+	}
 };
+
+function getCodeType() {
+	const type = config.get('emojiStyle');
+	return type === 'facebook-3-0' ? 't' : (type === 'facebook-2-2' ? 'f' : 'z')
+}
