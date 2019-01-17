@@ -3,7 +3,7 @@ const Store = require('electron-store');
 
 module.exports = new Store({
 	defaults: {
-		followSystemAppearance: false,
+		followSystemAppearance: true,
 		darkMode: false,
 		vibrancy: false,
 		zoomFactor: 1,
