@@ -5,7 +5,11 @@ const defaults = {
 	defaults: {
 		followSystemAppearance: false,
 		darkMode: false,
+
+		// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
+		// See https://github.com/electron/electron/issues/10420
 		vibrancy: 'none', // Possible values: 'none', 'sidebar', 'full'
+
 		zoomFactor: 1,
 		lastWindowState: {
 			width: 800,
