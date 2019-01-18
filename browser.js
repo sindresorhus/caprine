@@ -97,10 +97,10 @@ ipc.on('delete-conversation', () => {
 	openDeleteModal();
 });
 
-ipc.on('archive-conversation', () => {
+ipc.on('archive-conversation', async () => {
 	const index = getNextIndex(true);
 	openArchiveModal();
-	jumpToConversation(index);
+	await jumpToConversation(index);
 });
 
 function setSidebarVisibility() {
@@ -238,23 +238,23 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', (event, index) => {
-	jumpToConversation(index);
+ipc.on('jump-to-conversation', async (event, index) => {
+	await jumpToConversation(index);
 });
 
-function nextConversation() {
+async function nextConversation() {
 	const index = getNextIndex(true);
-	selectConversation(index);
+	await selectConversation(index);
 }
 
-function previousConversation() {
+async function previousConversation() {
 	const index = getNextIndex(false);
-	selectConversation(index);
+	await selectConversation(index);
 }
 
-function jumpToConversation(key) {
+async function jumpToConversation(key) {
 	const index = key - 1;
-	selectConversation(index);
+	await selectConversation(index);
 }
 
 // Focus on the conversation with the given index
@@ -499,7 +499,7 @@ window.addEventListener('load', () => {
 
 // It's not possible to add multiple accelerators
 // so this needs to be done the old-school way
-document.addEventListener('keydown', event => {
+document.addEventListener('keydown', async event => {
 	// The `!event.altKey` part is a workaround for https://github.com/electron/electron/issues/13895
 	const combineKey = is.macos ? event.metaKey : (event.ctrlKey && !event.altKey);
 
@@ -508,17 +508,17 @@ document.addEventListener('keydown', event => {
 	}
 
 	if (event.key === ']') {
-		nextConversation();
+		await nextConversation();
 	}
 
 	if (event.key === '[') {
-		previousConversation();
+		await previousConversation();
 	}
 
 	const num = parseInt(event.code.slice(-1), 10);
 
 	if (num >= 1 && num <= 9) {
-		jumpToConversation(num);
+		await jumpToConversation(num);
 	}
 });
 
