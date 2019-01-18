@@ -7,10 +7,11 @@ const {darkMode, is} = require('electron-util');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const appMenu = require('./menu');
+const updateAppMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 const {sendAction, sendBackgroundAction} = require('./util');
+const emoji = require('./emoji');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -135,17 +136,24 @@ function enableHiresResources() {
 	});
 }
 
-function setUpPrivacyBlocking() {
-	const ses = electron.session.defaultSession;
-	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
-	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
-		let blocking = false;
-		if (details.url.includes('typ.php')) {
-			blocking = config.get('block.typingIndicator');
-		} else {
-			blocking = config.get('block.chatSeen');
+function initRequestsFiltering() {
+	const filter = {
+		urls: [
+			`*://*.${domain}/*typ.php*`, // Type indicator blocker
+			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
+			'*://static.xx.fbcdn.net/images/emoji.php/v9/*', // Emoji
+			'*://facebook.com/images/emoji.php/v9/*' // Emoji
+		]
+	};
+
+	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+		if (url.includes('emoji.php')) {
+			callback(emoji.process(url));
+		} else if (url.includes('typ.php')) {
+			callback({cancel: config.get('block.typingIndicator')});
+		} else if (url.includes('change_read_status.php')) {
+			callback({cancel: config.get('block.chatSeen')});
 		}
-		callback({cancel: blocking});
 	});
 }
 
@@ -203,11 +211,6 @@ function createMainWindow() {
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
-
-		// Workaround for https://github.com/electron/electron/issues/10420
-		transparent: true,
-		backgroundColor: '#00ffffff',
-
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
@@ -217,7 +220,7 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	setUpPrivacyBlocking();
+	initRequestsFiltering();
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');
@@ -258,7 +261,8 @@ function createMainWindow() {
 	await app.whenReady();
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
-	electron.Menu.setApplicationMenu(appMenu);
+
+	updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
@@ -412,7 +416,6 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 

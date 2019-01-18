@@ -1,11 +1,15 @@
 'use strict';
 const Store = require('electron-store');
 
-module.exports = new Store({
+const defaults = {
 	defaults: {
-		followSystemAppearance: false,
+		followSystemAppearance: true,
 		darkMode: false,
-		vibrancy: false,
+
+		// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
+		// See https://github.com/electron/electron/issues/10420
+		vibrancy: 'none', // Possible values: 'none', 'sidebar', 'full'
+
 		zoomFactor: 1,
 		lastWindowState: {
 			width: 800,
@@ -21,6 +25,7 @@ module.exports = new Store({
 			chatSeen: false,
 			typingIndicator: false
 		},
+		emojiStyle: 'facebook-3-0',
 		confirmImagePaste: true,
 		useWorkChat: false,
 		sidebarHidden: false,
@@ -30,4 +35,23 @@ module.exports = new Store({
 		quitOnWindowClose: false,
 		keepMeSignedIn: true
 	}
-});
+};
+
+function updateVibrancySetting(store) {
+	const vibrancy = store.get('vibrancy');
+
+	if (vibrancy === true) {
+		store.set('vibrancy', 'full');
+	} else if (vibrancy === false) {
+		store.set('vibrancy', 'sidebar');
+	}
+}
+
+function migrate(store) {
+	updateVibrancySetting(store);
+}
+
+const store = new Store(defaults);
+migrate(store);
+
+module.exports = store;
