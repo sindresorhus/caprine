@@ -322,8 +322,10 @@ function openArchiveModal() {
 	}
 
 	// Check if selected conversation is a group
+	// We are checking the type of fifth element in the menu
+	// If it's a separator its private chat and if it's a button it's group chat
 	// In case it is we need to click on 4th element of conversation menu, otherwise 3rd
-	const isGroup = document.querySelector('._54nq._2i-c._150g._558b._2n_z li:nth-child(3) a span span').innerHTML === 'Leave Group';
+	const isGroup = Boolean(document.querySelector('._54nq._2i-c._150g._558b._2n_z li:nth-child(5)[role=presentation]'));
 
 	selectMenuItem(isGroup ? 4 : 3);
 }
