@@ -98,7 +98,9 @@ ipc.on('delete-conversation', () => {
 });
 
 ipc.on('archive-conversation', () => {
+	const index = getNextIndex(true);
 	openArchiveModal();
+	jumpToConversation(index);
 });
 
 function setSidebarVisibility() {
@@ -256,8 +258,8 @@ function jumpToConversation(key) {
 }
 
 // Focus on the conversation with the given index
-function selectConversation(index) {
-	document.querySelector(listSelector).children[index].firstChild.firstChild.click();
+async function selectConversation(index) {
+	(await elementReady(listSelector)).children[index].firstChild.firstChild.click();
 }
 
 // Returns the index of the selected conversation.
@@ -332,7 +334,7 @@ function openDeleteModal() {
 
 async function openPreferences() {
 	// Create the menu for the below
-	(await elementReady('._30yy._2fug._p')).click();
+	showSettingsMenu();
 
 	selectMenuItem(1);
 }
@@ -347,7 +349,7 @@ function closePreferences() {
 }
 async function sendConversationList() {
 	const conversations = await Promise.all(
-		[...document.querySelector(listSelector).children]
+		[...(await elementReady(listSelector)).children]
 			.splice(0, 10)
 			.map(async el => {
 				const profilePic = el.querySelector('._55lt img');
