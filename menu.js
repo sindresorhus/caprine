@@ -235,6 +235,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('hardwareAcceleration'),
 			click() {
 				config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
+				showRestartDialog('Caprine needs to be restarted to change hardware acceleration.');
 			}
 		},
 		{
