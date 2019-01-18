@@ -209,8 +209,17 @@ function codeForEmojiStyle(style) {
 	}
 }
 
-function getEmojiIcon(styleName) {
-	return nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${styleName}.png`));
+const menuIcons = new Map();
+
+function getEmojiIcon(style) {
+	if (menuIcons.has(style)) {
+		return menuIcons.get(style);
+	}
+
+	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
+	menuIcons.set(style, image);
+
+	return image;
 }
 
 module.exports = {
