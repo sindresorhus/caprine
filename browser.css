@@ -25,6 +25,14 @@ body {
 	font-feature-settings: 'liga', 'clig', 'kern';
 }
 
+/* Size and align native emojis */
+.native-emoji {
+	font-size: 1.2em;
+	display: inline-block;
+	top: 0.12em;
+	position: relative;
+}
+
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
 ._5742,

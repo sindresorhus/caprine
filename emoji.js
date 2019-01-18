@@ -4,6 +4,10 @@ const {nativeImage} = require('electron');
 const config = require('./config');
 const {showRestartDialog} = require('./util');
 
+/**
+ * @typedef {'facebook-2-2'|'messenger-1-0'|'facebook-3-0'|'native'} EmojiStyle
+ */
+
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/
 const excludedEmoji = new Set([
@@ -197,6 +201,10 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
+/**
+ * @param {EmojiStyle} style
+ * @return {string}
+ */
 function codeForEmojiStyle(style) {
 	switch (style) {
 		case 'facebook-2-2':
@@ -209,9 +217,17 @@ function codeForEmojiStyle(style) {
 	}
 }
 
+/** @type {Map<EmojiStyle, Electron.NativeImage>} */
 const menuIcons = new Map();
 
+/**
+ * @param {EmojiStyle} style
+ * @return {Electron.NativeImage|undefined} An icon to use for the menu item of this emoji style
+ */
 function getEmojiIcon(style) {
+	if (style === 'native') {
+		return undefined;
+	}
 	if (menuIcons.has(style)) {
 		return menuIcons.get(style);
 	}
@@ -223,10 +239,14 @@ function getEmojiIcon(style) {
 }
 
 module.exports = {
-	// For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
-	// this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
-	// with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
-	// 																								 (see here) ^
+	/**
+	 * For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
+	 * this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
+	 * with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
+	 *                                                 (see here) ^
+	 * @param {string} url
+	 * @return {Electron.Response}
+	 */
 	process(url) {
 		const emojiStyle = config.get('emojiStyle');
 		const emojiSetCode = codeForEmojiStyle(emojiStyle);
@@ -236,6 +256,7 @@ module.exports = {
 		const characterCode = url.substring(url.lastIndexOf('/') + 1, characterCodeEnd);
 
 		if (
+			emojiStyle === 'native' ||
 			// Don't replace emoji from Facebook's latest emoji set
 			emojiSetCode === 't' ||
 			// Don't replace the same URL in a loop
@@ -257,13 +278,26 @@ module.exports = {
 		return {redirectURL: newURL};
 	},
 
+	/**
+	 * @param {() => void} updateMenu
+	 * @return {Electron.MenuItemConstructorOptions[]}
+	 */
 	generateSubmenu(updateMenu) {
+		/**
+		 * @param {string} label
+		 * @param {EmojiStyle} style
+		 * @return {Electron.MenuItemConstructorOptions}
+		 */
 		const emojiMenuOption = (label, style) => ({
 			label,
 			type: 'checkbox',
 			icon: getEmojiIcon(style),
 			checked: config.get('emojiStyle') === style,
 			click() {
+				if (config.get('emojiStyle') === style) {
+					return;
+				}
+
 				config.set('emojiStyle', style);
 
 				updateMenu();
@@ -274,7 +308,8 @@ module.exports = {
 		return [
 			emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
 			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
-			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
+			emojiMenuOption('Facebook 2.2', 'facebook-2-2'),
+			emojiMenuOption('🙂Native', 'native')
 		];
 	}
 };

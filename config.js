@@ -8,7 +8,9 @@ const defaults = {
 
 		// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
 		// See https://github.com/electron/electron/issues/10420
-		vibrancy: 'none', // Possible values: 'none', 'sidebar', 'full'
+		/** @type {'none'|'sidebar'|'full'} */
+		// @ts-ignore
+		vibrancy: 'none',
 
 		zoomFactor: 1,
 		lastWindowState: {
@@ -25,7 +27,11 @@ const defaults = {
 			chatSeen: false,
 			typingIndicator: false
 		},
+
+		/** @type {import('./emoji').EmojiStyle} */
+		// @ts-ignore
 		emojiStyle: 'facebook-3-0',
+
 		confirmImagePaste: true,
 		useWorkChat: false,
 		sidebarHidden: false,

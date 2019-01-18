@@ -499,6 +499,64 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
+
+	// Replace emojis with native system emojis
+	if (config.get('emojiStyle') === 'native') {
+		// The editor uses background-image elements for emojis that have hidden content
+		const editorEmojiStyle = document.createElement('style');
+		editorEmojiStyle.innerHTML = `
+			/* Remove non-native emoji background image */
+			._21wj {
+				background-image: initial !important;
+			}
+
+			/* Make native emoji content visible */
+			._21wk {
+				text-indent: initial;
+				overflow: initial;
+				width: initial;
+			}
+		`;
+		document.body.appendChild(editorEmojiStyle);
+
+		/**
+		 * Replaces all `img` emojis found in the given node with native emojis.
+		 * @param {Node} node
+		 */
+		const replaceEmojis = node => {
+			if (!(node instanceof Element)) {
+				return;
+			}
+			/** @type {HTMLImageElement[]} */
+			// @ts-ignore
+			const emojiImages = node.querySelectorAll('img[src*="emoji.php"]');
+
+			for (const img of emojiImages) {
+				if (!img.alt) {
+					continue;
+				}
+				const span = document.createElement('span');
+				span.className = 'native-emoji';
+				// Emoji in alt text is missing Variation Selector-16:
+				// "An invisible codepoint which specifies that the preceding character
+				// should be displayed with emoji presentation.
+				// Only required if the preceding character defaults to text presentation."
+				span.textContent = img.alt + '\uFE0F';
+				img.replaceWith(span);
+			}
+		};
+
+		// Replace all emojis currently present in the DOM
+		replaceEmojis(document.body);
+
+		// Replace any emojis that get added to the DOM in the future
+		const mutationObserver = new MutationObserver(changes => {
+			for (const change of changes) {
+				change.addedNodes.forEach(replaceEmojis);
+			}
+		});
+		mutationObserver.observe(document.body, {childList: true, subtree: true});
+	}
 });
 
 window.addEventListener('load', () => {
