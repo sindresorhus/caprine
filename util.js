@@ -20,7 +20,10 @@ function showRestartDialog(message) {
 	return dialog.showMessageBox({
 		message,
 		detail: 'Do you want to restart the app now?',
-		buttons: ['Restart', 'Ignore'],
+		buttons: [
+			'Restart',
+			'Ignore'
+		],
 		defaultId: 0,
 		cancelId: 1
 	}, response => {
