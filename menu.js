@@ -11,7 +11,8 @@ const {
 	debugInfo
 } = require('electron-util');
 const config = require('./config');
-const {sendAction} = require('./util');
+const {sendAction, showRestartDialog} = require('./util');
+const emoji = require('./emoji');
 
 const {app, shell} = electron;
 
@@ -179,6 +180,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('hardwareAcceleration'),
 			click() {
 				config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
+				showRestartDialog('Caprine needs to be restarted to change hardware acceleration.');
 			}
 		},
 		{
@@ -227,6 +229,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('quitOnWindowClose', !config.get('quitOnWindowClose'));
 			}
+		},
+		{
+			label: 'Emoji style',
+			submenu: emoji.generateSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'

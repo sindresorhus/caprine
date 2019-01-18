@@ -11,6 +11,7 @@ const updateAppMenu = require('./menu');
 const config = require('./config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
+const emoji = require('./emoji');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -135,17 +136,24 @@ function enableHiresResources() {
 	});
 }
 
-function setUpPrivacyBlocking() {
-	const ses = electron.session.defaultSession;
-	const filter = {urls: [`*://*.${domain}/*typ.php*`, `*://*.${domain}/*change_read_status.php*`]};
-	ses.webRequest.onBeforeRequest(filter, (details, callback) => {
-		let blocking = false;
-		if (details.url.includes('typ.php')) {
-			blocking = config.get('block.typingIndicator');
-		} else {
-			blocking = config.get('block.chatSeen');
+function initRequestsFiltering() {
+	const filter = {
+		urls: [
+			`*://*.${domain}/*typ.php*`, // Type indicator blocker
+			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
+			'*://static.xx.fbcdn.net/images/emoji.php/v9/*', // Emoji
+			'*://facebook.com/images/emoji.php/v9/*' // Emoji
+		]
+	};
+
+	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+		if (url.includes('emoji.php')) {
+			callback(emoji.process(url));
+		} else if (url.includes('typ.php')) {
+			callback({cancel: config.get('block.typingIndicator')});
+		} else if (url.includes('change_read_status.php')) {
+			callback({cancel: config.get('block.chatSeen')});
 		}
-		callback({cancel: blocking});
 	});
 }
 
@@ -203,7 +211,7 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	setUpPrivacyBlocking();
+	initRequestsFiltering();
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');
@@ -399,7 +407,6 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
