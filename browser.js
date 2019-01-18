@@ -340,7 +340,7 @@ function openDeleteModal() {
 
 async function openPreferences() {
 	// Create the menu for the below
-	showSettingsMenu();
+	(await elementReady('._30yy._2fug._p')).click();
 
 	selectMenuItem(1);
 }
