@@ -36,7 +36,7 @@ function showRestartDialog(message) {
 			app.quit();
 		}
 	});
-
+}
 
 exports.getWindow = getWindow;
 exports.sendAction = sendAction;
