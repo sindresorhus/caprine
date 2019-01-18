@@ -321,7 +321,11 @@ function openArchiveModal() {
 		return;
 	}
 
-	selectMenuItem(3);
+	// Check if selected conversation is a group
+	// In case it is we need to click on 4th element of conversation menu, otherwise 3rd
+	const isGroup = document.querySelector('._54nq._2i-c._150g._558b._2n_z li:nth-child(3) a span span').innerHTML === 'Leave Group';
+
+	selectMenuItem(isGroup ? 4 : 3);
 }
 
 function openDeleteModal() {
