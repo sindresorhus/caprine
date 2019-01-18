@@ -1,5 +1,8 @@
 'use strict';
+const path = require('path');
+const {nativeImage} = require('electron');
 const config = require('./config');
+const {showRestartDialog} = require('./util');
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/
@@ -194,33 +197,8 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
-const typePrefix = 'emoji.php/v9/';
-
-module.exports = {
-	process: url => {
-		const emojiStyle = getCodeType();
-		const codeEnd = url.lastIndexOf('.png');
-		const emojiCode = url.substring(url.lastIndexOf('/') + 1, codeEnd);
-
-		if (emojiStyle === 't' || url.includes('#replaced') || codeEnd === -1) {
-			return {};
-		}
-
-		// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
-		// Fall back to default style for emoji >= 10.0
-		if (excludedEmoji.has(emojiCode)) {
-			return {};
-		}
-
-		const typeIndex = url.indexOf(typePrefix) + typePrefix.length;
-		const newURL = url.slice(0, typeIndex) + emojiStyle + url.slice(typeIndex + 1) + '#replaced';
-
-		return {redirectURL: newURL};
-	}
-};
-
-function getCodeType() {
-	switch (config.get('emojiStyle')) {
+function codeForEmojiStyle(style) {
+	switch (style) {
 		case 'facebook-2-2':
 			return 'f';
 		case 'messenger-1-0':
@@ -230,3 +208,63 @@ function getCodeType() {
 			return 't';
 	}
 }
+
+function getEmojiIcon(styleName) {
+	return nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${styleName}.png`));
+}
+
+module.exports = {
+	// For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
+	// this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
+	// with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
+	// 																								 (see here) ^
+	process(url) {
+		const emojiStyle = config.get('emojiStyle');
+		const emojiSetCode = codeForEmojiStyle(emojiStyle);
+
+		// The character code is the filename without the extension.
+		const characterCodeEnd = url.lastIndexOf('.png');
+		const characterCode = url.substring(url.lastIndexOf('/') + 1, characterCodeEnd);
+
+		if (
+			// Don't replace emoji from Facebook's latest emoji set
+			emojiSetCode === 't' ||
+			// Don't replace the same URL in a loop
+			url.includes('#replaced') ||
+			// Ignore non-png files
+			characterCodeEnd === -1 ||
+			// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
+			// Fall back to default style for emoji >= 10.0
+			excludedEmoji.has(characterCode)
+		) {
+			return {};
+		}
+
+		const emojiSetPrefix = 'emoji.php/v9/';
+		const emojiSetIndex = url.indexOf(emojiSetPrefix) + emojiSetPrefix.length;
+		const newURL = url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
+
+		return {redirectURL: newURL};
+	},
+
+	generateSubmenu(updateMenu) {
+		const emojiMenuOption = (label, style) => ({
+			label,
+			type: 'checkbox',
+			icon: getEmojiIcon(style),
+			checked: config.get('emojiStyle') === style,
+			click() {
+				config.set('emojiStyle', style);
+
+				updateMenu();
+				showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
+			}
+		});
+
+		return [
+			emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
+			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
+			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
+		];
+	}
+};

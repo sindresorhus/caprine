@@ -11,28 +11,10 @@ const {
 	debugInfo
 } = require('electron-util');
 const config = require('./config');
-const {sendAction} = require('./util');
+const {sendAction, showRestartDialog} = require('./util');
+const emoji = require('./emoji');
 
-const {app, shell, dialog, nativeImage} = electron;
-
-function getEmojiIcon(styleName) {
-	return nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${styleName}.png`));
-}
-
-function showRestartDialog(message) {
-	return dialog.showMessageBox({
-		message,
-		detail: 'Do you want to restart the app now?',
-		buttons: ['Restart', 'Ignore'],
-		defaultId: 0,
-		cancelId: 1
-	}, response => {
-		if (response === 0) {
-			app.relaunch();
-			app.quit();
-		}
-	});
-}
+const {app, shell} = electron;
 
 function updateMenu() {
 	const newConversationItem = {
@@ -42,43 +24,6 @@ function updateMenu() {
 			sendAction('new-conversation');
 		}
 	};
-
-	const emojiSubmenu = [
-		{
-			label: 'Facebook 3.0',
-			type: 'checkbox',
-			icon: getEmojiIcon('facebook-3-0'),
-			checked: (config.get('emojiStyle') === 'facebook-3-0'), // The 't' emoji set
-			click() {
-				handleEmojiClick('facebook-3-0');
-			}
-		},
-		{
-			label: 'Messenger 1.0',
-			type: 'checkbox',
-			icon: getEmojiIcon('messenger-1-0'),
-			checked: (config.get('emojiStyle') === 'messenger-1-0'), // The 'z' emoji set
-			click() {
-				handleEmojiClick('messenger-1-0');
-			}
-		},
-		{
-			label: 'Facebook 2.2',
-			type: 'checkbox',
-			icon: getEmojiIcon('facebook-2-2'),
-			checked: (config.get('emojiStyle') === 'facebook-2-2'), // The 'f' emoji set
-			click() {
-				handleEmojiClick('facebook-2-2');
-			}
-		}
-	];
-
-	function handleEmojiClick(type) {
-		config.set('emojiStyle', type);
-
-		updateMenu();
-		showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
-	}
 
 	const switchItems = [
 		{
@@ -287,7 +232,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Emoji style',
-			submenu: emojiSubmenu
+			submenu: emoji.generateSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'

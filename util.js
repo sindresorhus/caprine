@@ -1,5 +1,5 @@
 'use strict';
-const {BrowserWindow} = require('electron');
+const {app, BrowserWindow, dialog} = require('electron');
 const {is} = require('electron-util');
 
 function getWindow() {
@@ -16,5 +16,21 @@ function sendAction(action, ...args) {
 	win.webContents.send(action, ...args);
 }
 
+function showRestartDialog(message) {
+	return dialog.showMessageBox({
+		message,
+		detail: 'Do you want to restart the app now?',
+		buttons: ['Restart', 'Ignore'],
+		defaultId: 0,
+		cancelId: 1
+	}, response => {
+		if (response === 0) {
+			app.relaunch();
+			app.quit();
+		}
+	});
+}
+
 exports.getWindow = getWindow;
 exports.sendAction = sendAction;
+exports.showRestartDialog = showRestartDialog;
