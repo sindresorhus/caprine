@@ -11,24 +11,40 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function showSettingsMenu() {
+async function withSettingsMenu(callback) {
+	const {classList} = document.documentElement;
+
+	// Prevent the dropdown menu from displaying
+	classList.add('hide-dropdowns');
+
+	// Click the Settings icon
 	(await elementReady('._30yy._2fug._p')).click();
+
+	// Wait for the menu to close before removing the 'hide-dropdowns' class
+	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const observer = new MutationObserver(() => {
+		if (menuLayer.classList.contains('hidden_elem')) {
+			classList.remove('hide-dropdowns');
+			observer.disconnect();
+		}
+	});
+	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+
+	await callback();
 }
 
 function selectMenuItem(itemNumber) {
-	// Work around for settings menu element always existing
-	const selector = document.querySelectorAll(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
-	selector[selector.length - 1].click();
+	const selector = document.querySelector(`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
+	selector.click();
 }
 
 async function selectOtherListViews(itemNumber) {
 	// In case one of other views is shown
 	clickBackButton();
 
-	// Create the menu for the below
-	await showSettingsMenu();
-
-	selectMenuItem(itemNumber);
+	await withSettingsMenu(() => {
+		selectMenuItem(itemNumber);
+	});
 }
 
 function clickBackButton() {
@@ -60,9 +76,10 @@ ipc.on('log-out', async () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		await showSettingsMenu();
-		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
-		nodes[nodes.length - 1].click();
+		await withSettingsMenu(() => {
+			const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+			nodes[nodes.length - 1].click();
+		});
 	}
 });
 
@@ -296,57 +313,61 @@ function setZoom(zoomFactor) {
 	config.set('zoomFactor', zoomFactor);
 }
 
-function openConversationMenu() {
+async function withConversationMenu(callback) {
 	const index = getIndex();
 	if (index === null) {
-		return false;
+		return;
 	}
+	const {classList} = document.documentElement;
+
+	// Prevent the dropdown menu from displaying
+	classList.add('hide-dropdowns');
 
 	// Open and close the menu for the below
 	const menu = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
 	menu.click();
 
-	return true;
+	// Wait for the menu to close before removing the 'hide-dropdowns' class
+	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const observer = new MutationObserver(() => {
+		if (menuLayer.classList.contains('hidden_elem')) {
+			classList.remove('hide-dropdowns');
+			observer.disconnect();
+		}
+	});
+	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+
+	await callback();
 }
 
 function openMuteModal() {
-	if (!openConversationMenu()) {
-		return;
-	}
-
-	selectMenuItem(1);
+	withConversationMenu(() => {
+		selectMenuItem(1);
+	});
 }
 
 function openArchiveModal() {
-	if (!openConversationMenu()) {
-		return;
-	}
+	withConversationMenu(() => {
+		// Check if selected conversation is a group
+		// We are checking the type of fifth element in the menu
+		// If it's a separator its private chat and if it's a button it's group chat
+		// In case it is we need to click on 4th element of conversation menu, otherwise 3rd
+		const isGroup = Boolean(document.querySelector('.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(5)[role=presentation]'));
 
-	// Check if selected conversation is a group
-	// We are checking the type of fifth element in the menu and getting list of all menus
-	// If it's a separator on the fifth element it's private chat and if it's a button it's group chat
-	// The comparison of menu list lengths is a work around for 'settings menu always exists' issue
-	// In case it is we need to click on 4th element of conversation menu, otherwise 3rd
-	const firstElements = document.querySelectorAll('._54nq._2i-c._150g._558b._2n_z li:first-child');
-	const fifthElements = document.querySelectorAll('._54nq._2i-c._150g._558b._2n_z li:nth-child(5)[role=presentation]');
-	const isGroup = Boolean(firstElements.length === fifthElements.length);
-
-	selectMenuItem(isGroup ? 4 : 3);
+		selectMenuItem(isGroup ? 4 : 3);
+	});
 }
 
 function openDeleteModal() {
-	if (!openConversationMenu()) {
-		return;
-	}
-
-	selectMenuItem(4);
+	withConversationMenu(() => {
+		selectMenuItem(4);
+	});
 }
 
 async function openPreferences() {
-	// Create the menu for the below
-	await showSettingsMenu();
-
-	selectMenuItem(1);
+	await withSettingsMenu(() => {
+		selectMenuItem(1);
+	});
 }
 
 function isPreferencesOpen() {
