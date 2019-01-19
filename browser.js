@@ -121,10 +121,13 @@ ipc.on('delete-conversation', () => {
 
 ipc.on('archive-conversation', async () => {
 	const index = selectedConversationIndex();
-	archiveSelectedConversation();
 
-	const key = index + 1;
-	await jumpToConversation(key);
+	if (index !== -1) {
+		archiveSelectedConversation();
+
+		const key = index + 1;
+		await jumpToConversation(key);
+	}
 });
 
 function setSidebarVisibility() {
@@ -268,12 +271,18 @@ ipc.on('jump-to-conversation', async (event, key) => {
 
 async function nextConversation() {
 	const index = selectedConversationIndex(1);
-	await selectConversation(index);
+
+	if (index !== -1) {
+		await selectConversation(index);
+	}
 }
 
 async function previousConversation() {
 	const index = selectedConversationIndex(-1);
-	await selectConversation(index);
+
+	if (index !== -1) {
+		await selectConversation(index);
+	}
 }
 
 async function jumpToConversation(key) {
@@ -293,10 +302,8 @@ async function selectConversation(index) {
 function selectedConversationIndex(offset = 0) {
 	const selected = document.querySelector(selectedConversationSelector);
 
-	// TODO: return -1 if there are no conversations at all?
 	if (!selected) {
-		// TODO: return -1 in this situation?
-		return 0;
+		return -1;
 	}
 
 	const list = [...selected.parentNode.children];
