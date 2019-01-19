@@ -284,19 +284,6 @@ async function selectConversation(index) {
 	(await elementReady(listSelector)).children[index].firstChild.firstChild.click();
 }
 
-// Returns the index of the selected conversation.
-// If no conversation is selected, returns null.
-function getIndex() {
-	const selected = document.querySelector(selectedConversationSelector);
-	if (!selected) {
-		return null;
-	}
-
-	const list = [...selected.parentNode.children];
-
-	return list.indexOf(selected);
-}
-
 // Return the index for next node if next is true,
 // else returns index for the previous node
 function getNextIndex(next) {
@@ -360,6 +347,7 @@ function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
+
 async function sendConversationList() {
 	const conversations = await Promise.all(
 		[...(await elementReady(listSelector)).children]
