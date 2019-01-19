@@ -332,14 +332,11 @@ function openMuteModal() {
 }
 
 function openArchiveModal() {
-	withConversationMenu(() => {
-		// Check if selected conversation is a group
-		// We are checking the type of fifth element in the menu
-		// If it's a separator its private chat and if it's a button it's group chat
-		// In case it is we need to click on 4th element of conversation menu, otherwise 3rd
-		const isGroup = Boolean(document.querySelector('.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(5)[role=presentation]'));
+	const groupConversationProfilePicture = document.querySelector(`${selectedConversationSelector} ._55lu`);
+	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-		selectMenuItem(isGroup ? 4 : 3);
+	withConversationMenu(() => {
+		selectMenuItem(isGroupConversation ? 4 : 3);
 	});
 }
 
