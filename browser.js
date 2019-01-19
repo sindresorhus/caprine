@@ -260,8 +260,8 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', async (event, index) => {
-	await jumpToConversation(index);
+ipc.on('jump-to-conversation', async (event, key) => {
+	await jumpToConversation(key);
 });
 
 async function nextConversation() {
