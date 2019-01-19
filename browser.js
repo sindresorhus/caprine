@@ -121,7 +121,7 @@ ipc.on('delete-conversation', () => {
 
 ipc.on('archive-conversation', async () => {
 	const index = getNextIndex(true);
-	openArchiveModal();
+	archiveSelectedConversation();
 	await jumpToConversation(index);
 });
 
@@ -318,7 +318,7 @@ function openMuteModal() {
 	});
 }
 
-function openArchiveModal() {
+function archiveSelectedConversation() {
 	const groupConversationProfilePicture = document.querySelector(`${selectedConversationSelector} ._55lu`);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
