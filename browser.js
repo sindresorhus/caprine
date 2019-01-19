@@ -532,16 +532,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			const emojiImages = node.querySelectorAll('img[src*="emoji.php"]');
 
 			for (const img of emojiImages) {
-				if (!img.alt) {
-					continue;
-				}
-				const span = document.createElement('span');
-				span.className = 'native-emoji';
-				// Emoji in alt text is missing Variation Selector-16:
+				// Example src: https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
+				const codePoints = img.src
+					.split('/')
+					.pop()
+					.replace(/\.png$/, '')
+					.split('_')
+					.map(hexCodePoint => parseInt(hexCodePoint, 16));
+
+				// Emoji is missing Variation Selector-16 (\uFE0F):
 				// "An invisible codepoint which specifies that the preceding character
 				// should be displayed with emoji presentation.
 				// Only required if the preceding character defaults to text presentation."
-				span.textContent = img.alt + '\uFE0F';
+				const emoji = String.fromCodePoint(...codePoints) + '\uFE0F';
+				const span = document.createElement('span');
+				span.className = 'native-emoji';
+				span.textContent = emoji;
 				img.replaceWith(span);
 			}
 		};
