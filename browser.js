@@ -11,14 +11,14 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withSettingsMenu(callback) {
+async function withMenu(menuButtonElement, callback) {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
 	classList.add('hide-dropdowns');
 
-	// Click the Settings icon
-	(await elementReady('._30yy._2fug._p')).click();
+	// Click the menu button
+	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
 	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
@@ -31,6 +31,10 @@ async function withSettingsMenu(callback) {
 	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
 
 	await callback();
+}
+
+async function withSettingsMenu(callback) {
+	await withMenu(await elementReady('._30yy._2fug._p'), callback);
 }
 
 function selectMenuItem(itemNumber) {
@@ -318,26 +322,9 @@ async function withConversationMenu(callback) {
 	if (index === null) {
 		return;
 	}
-	const {classList} = document.documentElement;
 
-	// Prevent the dropdown menu from displaying
-	classList.add('hide-dropdowns');
-
-	// Open and close the menu for the below
-	const menu = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
-	menu.click();
-
-	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
-	const observer = new MutationObserver(() => {
-		if (menuLayer.classList.contains('hidden_elem')) {
-			classList.remove('hide-dropdowns');
-			observer.disconnect();
-		}
-	});
-	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
-
-	await callback();
+	const menuButton = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
+	await withMenu(menuButton, callback);
 }
 
 function openMuteModal() {
