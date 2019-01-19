@@ -1,10 +1,9 @@
 'use strict';
 const Store = require('electron-store');
-const {is} = require('electron-util');
 
 const defaults = {
 	defaults: {
-		followSystemAppearance: is.macos,
+		followSystemAppearance: true,
 		darkMode: false,
 
 		// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
