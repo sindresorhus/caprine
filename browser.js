@@ -16,8 +16,9 @@ async function showSettingsMenu() {
 }
 
 function selectMenuItem(itemNumber) {
-	const selector = document.querySelector(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
-	selector.click();
+	// Work around for settings menu element always existing
+	const selector = document.querySelectorAll(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
+	selector[selector.length - 1].click();
 }
 
 async function selectOtherListViews(itemNumber) {
@@ -322,10 +323,13 @@ function openArchiveModal() {
 	}
 
 	// Check if selected conversation is a group
-	// We are checking the type of fifth element in the menu
-	// If it's a separator its private chat and if it's a button it's group chat
+	// We are checking the type of fifth element in the menu and getting list of all menus
+	// If it's a separator on the fifth element it's private chat and if it's a button it's group chat
+	// The comparison of menu list lengths is a work around for 'settings menu always exists' issue
 	// In case it is we need to click on 4th element of conversation menu, otherwise 3rd
-	const isGroup = Boolean(document.querySelector('._54nq._2i-c._150g._558b._2n_z li:nth-child(5)[role=presentation]'));
+	const firstElements = document.querySelectorAll('._54nq._2i-c._150g._558b._2n_z li:first-child');
+	const fifthElements = document.querySelectorAll('._54nq._2i-c._150g._558b._2n_z li:nth-child(5)[role=presentation]');
+	const isGroup = Boolean(firstElements.length === fifthElements.length);
 
 	selectMenuItem(isGroup ? 4 : 3);
 }
