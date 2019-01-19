@@ -318,13 +318,11 @@ function setZoom(zoomFactor) {
 }
 
 async function withConversationMenu(callback) {
-	const index = getIndex();
-	if (index === null) {
-		return;
-	}
+	const menuButton = document.querySelector(`${selectedConversationSelector} ._5blh._4-0h`);
 
-	const menuButton = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
-	await withMenu(menuButton, callback);
+	if (menuButton) {
+		await withMenu(menuButton, callback);
+	}
 }
 
 function openMuteModal() {
