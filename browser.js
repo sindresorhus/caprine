@@ -116,7 +116,7 @@ ipc.on('mute-conversation', () => {
 });
 
 ipc.on('delete-conversation', () => {
-	openDeleteModal();
+	deleteSelectedConversation();
 });
 
 ipc.on('archive-conversation', async () => {
@@ -341,9 +341,12 @@ function archiveSelectedConversation() {
 	});
 }
 
-function openDeleteModal() {
+function deleteSelectedConversation() {
+	const groupConversationProfilePicture = document.querySelector(`${selectedConversationSelector} ._55lu`);
+	const isGroupConversation = Boolean(groupConversationProfilePicture);
+
 	withConversationMenu(() => {
-		selectMenuItem(4);
+		selectMenuItem(isGroupConversation ? 5 : 4);
 	});
 }
 
