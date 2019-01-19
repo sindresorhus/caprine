@@ -135,7 +135,10 @@ function enableHiresResources() {
 	});
 }
 
-function initRequestsFiltering() {
+/**
+ * @param {Electron.WebContents} webContents Web contents object for IPC
+ */
+function initRequestsFiltering(webContents) {
 	const filter = {
 		urls: [
 			`*://*.${domain}/*typ.php*`, // Type indicator blocker
@@ -145,9 +148,9 @@ function initRequestsFiltering() {
 		]
 	};
 
-	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+	electron.session.defaultSession.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
 		if (url.includes('emoji.php')) {
-			callback(emoji.process(url));
+			callback(await emoji.process(url, webContents));
 		} else if (url.includes('typ.php')) {
 			callback({cancel: config.get('block.typingIndicator')});
 		} else if (url.includes('change_read_status.php')) {
@@ -212,7 +215,7 @@ function createMainWindow() {
 	});
 
 	setUserLocale();
-	initRequestsFiltering();
+	initRequestsFiltering(win.webContents);
 
 	darkMode.onChange(() => {
 		win.webContents.send('set-dark-mode');

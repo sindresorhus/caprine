@@ -33,7 +33,8 @@
 		"electron-updater": "^4.0.6",
 		"electron-util": "^0.10.2",
 		"element-ready": "^3.0.0",
-		"facebook-locales": "^1.0.591"
+		"facebook-locales": "^1.0.591",
+		"lodash": "^4.17.11"
 	},
 	"devDependencies": {
 		"del-cli": "^1.1.0",

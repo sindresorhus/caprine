@@ -10,7 +10,6 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
-const largeEmojiClassName = '_1ifu';
 
 async function withMenu(menuButtonElement, callback) {
 	const {classList} = document.documentElement;
@@ -253,6 +252,19 @@ ipc.on('render-overlay-icon', (event, messageCount) => {
 		renderOverlayIcon(messageCount).toDataURL(),
 		String(messageCount)
 	);
+});
+
+ipc.on('render-native-emoji', (event, emoji) => {
+	const canvas = document.createElement('canvas');
+	const context = canvas.getContext('2d');
+	canvas.width = 64;
+	canvas.height = 64;
+	context.font = '60px system-ui';
+	context.textAlign = 'left';
+	context.textBaseline = 'bottom';
+	context.fillText(emoji, 2, 70);
+	const dataUrl = canvas.toDataURL();
+	ipc.send('native-emoji', {emoji, dataUrl});
 });
 
 ipc.on('zoom-reset', () => {
@@ -499,76 +511,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	// TODO: find a CSS-only solution
 	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
-	}
-
-	// Replace emojis with native system emojis
-	if (config.get('emojiStyle') === 'native') {
-		// The editor uses background-image elements for emojis that have hidden content
-		const editorEmojiStyle = document.createElement('style');
-		editorEmojiStyle.innerHTML = `
-			/* Remove non-native emoji background image */
-			._21wj {
-				background-image: initial !important;
-			}
-
-			/* Make native emoji content visible */
-			._21wk {
-				text-indent: initial;
-				overflow: initial;
-				width: initial;
-			}
-		`;
-		document.body.appendChild(editorEmojiStyle);
-
-		/**
-		 * Replaces all `img` emojis found in the given node with native emojis.
-		 * @param {Node} node
-		 */
-		const replaceEmojis = node => {
-			if (!(node instanceof Element)) {
-				return;
-			}
-			/** @type {HTMLImageElement[]} */
-			// @ts-ignore
-			const emojiImages = node.querySelectorAll('img[src*="emoji.php"]');
-
-			for (const img of emojiImages) {
-				// Example src: https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
-				const codePoints = img.src
-					.split('/')
-					.pop()
-					.replace(/\.png$/, '')
-					.split('_')
-					.map(hexCodePoint => parseInt(hexCodePoint, 16));
-
-				// Emoji is missing Variation Selector-16 (\uFE0F):
-				// "An invisible codepoint which specifies that the preceding character
-				// should be displayed with emoji presentation.
-				// Only required if the preceding character defaults to text presentation."
-				const emoji = String.fromCodePoint(...codePoints) + '\uFE0F';
-				const span = document.createElement('span');
-				span.className = 'native-emoji';
-				span.textContent = emoji;
-
-				// Larger emojis through font-size instead of height for messages that contain no text
-				if (img.classList.contains(largeEmojiClassName)) {
-					span.classList.add('native-emoji-large');
-				}
-
-				img.replaceWith(span);
-			}
-		};
-
-		// Replace all emojis currently present in the DOM
-		replaceEmojis(document.body);
-
-		// Replace any emojis that get added to the DOM in the future
-		const mutationObserver = new MutationObserver(changes => {
-			for (const change of changes) {
-				change.addedNodes.forEach(replaceEmojis);
-			}
-		});
-		mutationObserver.observe(document.body, {childList: true, subtree: true});
 	}
 });
 

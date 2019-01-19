@@ -1,6 +1,7 @@
 'use strict';
 const path = require('path');
-const {nativeImage} = require('electron');
+const {nativeImage, ipcMain} = require('electron');
+const {memoize} = require('lodash');
 const config = require('./config');
 const {showRestartDialog} = require('./util');
 
@@ -220,6 +221,49 @@ function codeForEmojiStyle(style) {
 /** @type {Map<EmojiStyle, Electron.NativeImage>} */
 const menuIcons = new Map();
 
+const renderEmoji = memoize(
+	/**
+	 * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
+	 *
+	 * @param {string} emoji
+	 * @param {Electron.WebContents} webContents Web contents object for IPC
+	 * @returns {Promise<string>} Data URL for the native emoji icon
+	 */
+	(emoji, webContents) =>
+		new Promise(resolve => {
+			const listener = (event, arg) => {
+				if (arg.emoji !== emoji) {
+					return;
+				}
+
+				ipcMain.removeListener('native-emoji', listener);
+				resolve(arg.dataUrl);
+			};
+
+			ipcMain.on('native-emoji', listener);
+			webContents.send('render-native-emoji', emoji);
+		})
+);
+
+/**
+ * @param {string} url A Facebook emoji URL like https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
+ * @returns {string}
+ */
+function urlToEmoji(url) {
+	const codePoints = url
+		.split('/')
+		.pop()
+		.replace(/\.png$/, '')
+		.split('_')
+		.map(hexCodePoint => parseInt(hexCodePoint, 16));
+
+	// Emoji is missing Variation Selector-16 (\uFE0F):
+	// "An invisible codepoint which specifies that the preceding character
+	// should be displayed with emoji presentation.
+	// Only required if the preceding character defaults to text presentation."
+	return String.fromCodePoint(...codePoints) + '\uFE0F';
+}
+
 /**
  * @param {EmojiStyle} style
  * @return {Electron.NativeImage|undefined} An icon to use for the menu item of this emoji style
@@ -228,6 +272,7 @@ function getEmojiIcon(style) {
 	if (style === 'native') {
 		return undefined;
 	}
+
 	if (menuIcons.has(style)) {
 		return menuIcons.get(style);
 	}
@@ -245,9 +290,10 @@ module.exports = {
 	 * with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
 	 *                                                 (see here) ^
 	 * @param {string} url
-	 * @return {Electron.Response}
+	 * @param {Electron.WebContents} webContents Web Contents object for IPC
+	 * @return {Promise<Electron.Response>}
 	 */
-	process(url) {
+	async process(url, webContents) {
 		const emojiStyle = config.get('emojiStyle');
 		const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
@@ -255,8 +301,13 @@ module.exports = {
 		const characterCodeEnd = url.lastIndexOf('.png');
 		const characterCode = url.substring(url.lastIndexOf('/') + 1, characterCodeEnd);
 
+		if (emojiStyle === 'native') {
+			const emoji = urlToEmoji(url);
+			const dataUrl = await renderEmoji(emoji, webContents);
+			return {redirectURL: dataUrl};
+		}
+
 		if (
-			emojiStyle === 'native' ||
 			// Don't replace emoji from Facebook's latest emoji set
 			emojiSetCode === 't' ||
 			// Don't replace the same URL in a loop
