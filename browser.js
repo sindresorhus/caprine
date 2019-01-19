@@ -281,7 +281,11 @@ async function jumpToConversation(key) {
 
 // Focus on the conversation with the given index
 async function selectConversation(index) {
-	(await elementReady(listSelector)).children[index].firstChild.firstChild.click();
+	const conversationElement = (await elementReady(listSelector)).children[index];
+
+	if (conversationElement) {
+		conversationElement.firstChild.firstChild.click();
+	}
 }
 
 // Return the index for next node if next is true,
