@@ -120,9 +120,11 @@ ipc.on('delete-conversation', () => {
 });
 
 ipc.on('archive-conversation', async () => {
-	const index = getNextIndex(true);
+	const index = selectedConversationIndex();
 	archiveSelectedConversation();
-	await jumpToConversation(index);
+
+	const key = index + 1;
+	await jumpToConversation(key);
 });
 
 function setSidebarVisibility() {
@@ -265,12 +267,12 @@ ipc.on('jump-to-conversation', async (event, key) => {
 });
 
 async function nextConversation() {
-	const index = getNextIndex(true);
+	const index = selectedConversationIndex(1);
 	await selectConversation(index);
 }
 
 async function previousConversation() {
-	const index = getNextIndex(false);
+	const index = selectedConversationIndex(-1);
 	await selectConversation(index);
 }
 
@@ -288,16 +290,17 @@ async function selectConversation(index) {
 	}
 }
 
-// Return the index for next node if next is true,
-// else returns index for the previous node
-function getNextIndex(next) {
+function selectedConversationIndex(offset = 0) {
 	const selected = document.querySelector(selectedConversationSelector);
+
+	// TODO: return -1 if there are no conversations at all?
 	if (!selected) {
+		// TODO: return -1 in this situation?
 		return 0;
 	}
 
 	const list = [...selected.parentNode.children];
-	const index = list.indexOf(selected) + (next ? 1 : -1);
+	const index = list.indexOf(selected) + offset;
 
 	return ((index % list.length) + list.length) % list.length;
 }
