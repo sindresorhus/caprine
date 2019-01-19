@@ -11,8 +11,8 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-function showSettingsMenu() {
-	document.querySelector('._30yy._2fug._p').click();
+async function showSettingsMenu() {
+	(await elementReady('._30yy._2fug._p')).click();
 }
 
 function selectMenuItem(itemNumber) {
@@ -20,12 +20,12 @@ function selectMenuItem(itemNumber) {
 	selector.click();
 }
 
-function selectOtherListViews(itemNumber) {
+async function selectOtherListViews(itemNumber) {
 	// In case one of other views is shown
 	clickBackButton();
 
 	// Create the menu for the below
-	showSettingsMenu();
+	await showSettingsMenu();
 
 	selectMenuItem(itemNumber);
 }
@@ -49,7 +49,7 @@ ipc.on('new-conversation', () => {
 	document.querySelector('._30yy[data-href$=\'/new\']').click();
 });
 
-ipc.on('log-out', () => {
+ipc.on('log-out', async () => {
 	if (config.get('useWorkChat')) {
 		// Create the menu for the below
 		document.querySelector('._5lxs._3qct._p').click();
@@ -59,7 +59,7 @@ ipc.on('log-out', () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		showSettingsMenu();
+		await showSettingsMenu();
 		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
 		nodes[nodes.length - 1].click();
 	}
@@ -340,7 +340,7 @@ function openDeleteModal() {
 
 async function openPreferences() {
 	// Create the menu for the below
-	(await elementReady('._30yy._2fug._p')).click();
+	await showSettingsMenu();
 
 	selectMenuItem(1);
 }
