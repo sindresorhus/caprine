@@ -50,6 +50,16 @@
 			"node",
 			"browser"
 		],
+		"rules": {
+			"valid-jsdoc": [
+				"warn",
+				{
+					"requireParamDescription": false,
+					"requireReturn": false,
+					"requireReturnDescription": false
+				}
+			]
+		},
 		"prettier": true
 	},
 	"stylelint": {
