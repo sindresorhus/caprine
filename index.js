@@ -328,6 +328,7 @@ function createMainWindow() {
 		);
 	});
 
+	// eslint-disable-next-line max-params
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
 		event.preventDefault();
 
