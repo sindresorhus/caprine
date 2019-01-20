@@ -175,7 +175,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Hardware Acceleration (requires restart)',
+			label: 'Hardware Acceleration',
 			type: 'checkbox',
 			checked: config.get('hardwareAcceleration'),
 			click() {
@@ -276,6 +276,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
 				sendAction('set-dark-mode');
+				updateMenu();
 			}
 		},
 		{
@@ -283,7 +284,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			id: 'darkMode',
 			type: 'checkbox',
 			checked: config.get('darkMode'),
-			enabled: !config.get('followSystemAppearance'),
+			enabled: !is.macos || !config.get('followSystemAppearance'),
 			accelerator: 'CommandOrControl+D',
 			click() {
 				config.set('darkMode', !config.get('darkMode'));
@@ -526,9 +527,7 @@ ${debugInfo()}`;
 		]),
 		{
 			label: 'File',
-			submenu: [
-				newConversationItem
-			]
+			submenu: [newConversationItem]
 		},
 		{
 			role: 'editMenu'

@@ -21,21 +21,21 @@ function sendBackgroundAction(action, ...args) {
 }
 
 function showRestartDialog(message) {
-	return dialog.showMessageBox({
-		message,
-		detail: 'Do you want to restart the app now?',
-		buttons: [
-			'Restart',
-			'Ignore'
-		],
-		defaultId: 0,
-		cancelId: 1
-	}, response => {
-		if (response === 0) {
-			app.relaunch();
-			app.quit();
+	return dialog.showMessageBox(
+		{
+			message,
+			detail: 'Do you want to restart the app now?',
+			buttons: ['Restart', 'Ignore'],
+			defaultId: 0,
+			cancelId: 1
+		},
+		response => {
+			if (response === 0) {
+				app.relaunch();
+				app.quit();
+			}
 		}
-	});
+	);
 }
 
 exports.getWindow = getWindow;
