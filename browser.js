@@ -10,6 +10,7 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
+const largeEmojiClassName = '_1ifu';
 
 async function withMenu(menuButtonElement, callback) {
 	const {classList} = document.documentElement;
@@ -548,6 +549,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				const span = document.createElement('span');
 				span.className = 'native-emoji';
 				span.textContent = emoji;
+
+				// Larger emojis through font-size instead of height for messages that contain no text
+				if (img.classList.contains(largeEmojiClassName)) {
+					span.classList.add('native-emoji-large');
+				}
+
 				img.replaceWith(span);
 			}
 		};

@@ -32,6 +32,10 @@ body {
 	top: 0.12em;
 	position: relative;
 }
+.native-emoji-large {
+	/* Same height as for img emojis */
+	font-size: 32px;
+}
 
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
