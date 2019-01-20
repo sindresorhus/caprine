@@ -526,9 +526,7 @@ ${debugInfo()}`;
 		]),
 		{
 			label: 'File',
-			submenu: [
-				newConversationItem
-			]
+			submenu: [newConversationItem]
 		},
 		{
 			role: 'editMenu'

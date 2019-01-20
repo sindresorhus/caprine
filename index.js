@@ -186,7 +186,9 @@ function createMainWindow() {
 	const isDarkMode = config.get('darkMode');
 
 	// Messenger or Work Chat
-	const mainURL = config.get('useWorkChat') ? 'https://work.facebook.com/chat' : 'https://www.messenger.com/login/';
+	const mainURL = config.get('useWorkChat')
+		? 'https://work.facebook.com/chat'
+		: 'https://www.messenger.com/login/';
 
 	const win = new electron.BrowserWindow({
 		title: app.getName(),
@@ -304,7 +306,9 @@ function createMainWindow() {
 		}
 
 		if (fs.existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
-			webContents.insertCSS(fs.readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8'));
+			webContents.insertCSS(
+				fs.readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8')
+			);
 		}
 
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
@@ -316,14 +320,17 @@ function createMainWindow() {
 		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
-		webContents.executeJavaScript(fs.readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8'));
+		webContents.executeJavaScript(
+			fs.readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
+		);
 	});
 
 	webContents.on('new-window', (event, url, frameName, disposition, options) => {
 		event.preventDefault();
 
 		if (url === 'about:blank') {
-			if (frameName !== 'about:blank') { // Voice/video call popup
+			if (frameName !== 'about:blank') {
+				// Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
@@ -372,11 +379,7 @@ function createMainWindow() {
 			return false;
 		};
 
-		if (
-			isMessengerDotCom(url) ||
-			isTwoFactorAuth(url) ||
-			isWorkChat(url)
-		) {
+		if (isMessengerDotCom(url) || isTwoFactorAuth(url) || isWorkChat(url)) {
 			return;
 		}
 
