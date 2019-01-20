@@ -175,7 +175,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Hardware Acceleration (requires restart)',
+			label: 'Hardware Acceleration',
 			type: 'checkbox',
 			checked: config.get('hardwareAcceleration'),
 			click() {
