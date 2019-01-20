@@ -519,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 
-	// Disable autoplay is set in settings
+	// Disable autoplay if set in settings
 	setAutoplayVideos();
 });
 
