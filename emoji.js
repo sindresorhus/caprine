@@ -357,8 +357,8 @@ module.exports = {
 		});
 
 		return [
-			emojiMenuOption('Native', 'native'),
 			emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
+			emojiMenuOption('Native', 'native'),
 			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
 			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
 		];
