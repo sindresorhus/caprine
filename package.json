@@ -15,7 +15,7 @@
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
-		"lint": "xo && stylelint '*.css'",
+		"lint": "xo --fix && stylelint --fix '*.css'",
 		"test": "npm run lint",
 		"start": "electron .",
 		"pack": "electron-builder --dir",
@@ -48,7 +48,8 @@
 		"envs": [
 			"node",
 			"browser"
-		]
+		],
+		"prettier": true
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo",
@@ -59,6 +60,14 @@
 			"no-duplicate-selectors": null,
 			"rule-empty-line-before": null
 		}
+	},
+	"prettier": {
+		"printWidth": 100,
+		"useTabs": true,
+		"singleQuote": true,
+		"bracketSpacing": false,
+		"proseWrap": "never",
+		"endOfLine": "lf"
 	},
 	"build": {
 		"files": [

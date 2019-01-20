@@ -251,7 +251,8 @@ module.exports = {
 
 		const emojiSetPrefix = 'emoji.php/v9/';
 		const emojiSetIndex = url.indexOf(emojiSetPrefix) + emojiSetPrefix.length;
-		const newURL = url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
+		const newURL =
+			url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
 
 		return {redirectURL: newURL};
 	},

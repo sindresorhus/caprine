@@ -67,7 +67,7 @@ ipc.on('show-preferences', async () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector('._30yy[data-href$=\'/new\']').click();
+	document.querySelector("._30yy[data-href$='/new']").click();
 });
 
 ipc.on('log-out', async () => {
@@ -153,7 +153,10 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
-	} else if ((defaultStatus && notificationCheckbox.checked) || (!defaultStatus && !notificationCheckbox.checked)) {
+	} else if (
+		(defaultStatus && notificationCheckbox.checked) ||
+		(!defaultStatus && !notificationCheckbox.checked)
+	) {
 		notificationCheckbox.click();
 	}
 
@@ -242,7 +245,11 @@ ipc.on('update-vibrancy', () => {
 });
 
 ipc.on('render-overlay-icon', (event, messageCount) => {
-	ipc.send('update-overlay-icon', renderOverlayIcon(messageCount).toDataURL(), String(messageCount));
+	ipc.send(
+		'update-overlay-icon',
+		renderOverlayIcon(messageCount).toDataURL(),
+		String(messageCount)
+	);
 });
 
 ipc.on('zoom-reset', () => {
@@ -417,7 +424,7 @@ function urlToCanvas(url, size) {
 
 			ctx.save();
 			ctx.beginPath();
-			ctx.arc((size / 2) + padding.left, (size / 2) + padding.top, size / 2, 0, Math.PI * 2, true);
+			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.clip();
 
@@ -515,7 +522,7 @@ window.addEventListener('load', () => {
 // so this needs to be done the old-school way
 document.addEventListener('keydown', async event => {
 	// The `!event.altKey` part is a workaround for https://github.com/electron/electron/issues/13895
-	const combineKey = is.macos ? event.metaKey : (event.ctrlKey && !event.altKey);
+	const combineKey = is.macos ? event.metaKey : event.ctrlKey && !event.altKey;
 
 	if (!combineKey) {
 		return;
@@ -545,7 +552,7 @@ window.addEventListener('message', ({data: {type, data}}) => {
 
 function showNotification({id, title, body, icon, silent}) {
 	body = body.props ? body.props.content[0] : body;
-	title = (typeof title === 'object' && title.props) ? title.props.content[0] : title;
+	title = typeof title === 'object' && title.props ? title.props.content[0] : title;
 
 	const img = new Image();
 	img.crossOrigin = 'anonymous';
@@ -560,7 +567,13 @@ function showNotification({id, title, body, icon, silent}) {
 
 		ctx.drawImage(img, 0, 0, img.width, img.height);
 
-		ipc.send('notification', {id, title, body, icon: canvas.toDataURL(), silent});
+		ipc.send('notification', {
+			id,
+			title,
+			body,
+			icon: canvas.toDataURL(),
+			silent
+		});
 	});
 }
 
