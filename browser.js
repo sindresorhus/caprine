@@ -645,12 +645,18 @@ async function disableVideoAutoplay() {
 		playIcon.classList.remove('hidden_elem');
 
 		// Set id so we can easily trigger click-event when reverting changes
-		playIcon.id = 'disabled_autoplay';
+		playIcon.setAttribute('id', 'disabled_autoplay');
 
-		const height = firstParent.style.height;
-		const width = firstParent.style.width;
-		const style = parentWithBackground.currentStyle || window.getComputedStyle(parentWithBackground, false);
-		const backgroundImageSrc = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+		const {
+			style: {
+				width: width,
+				height: height,
+			}
+		} = firstParent;
+
+		const style =
+			parentWithBackground.currentStyle || window.getComputedStyle(parentWithBackground, false);
+		const backgroundImageSrc = style.backgroundImage.slice(4, -1).replace(/"/g, '');
 
 		// Create image to replace video as a placeholder
 		const img = document.createElement('img');
