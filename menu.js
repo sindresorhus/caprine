@@ -276,6 +276,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
 				sendAction('set-dark-mode');
+				updateMenu();
 			}
 		},
 		{
