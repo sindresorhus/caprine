@@ -259,10 +259,16 @@ ipc.on('render-native-emoji', (event, emoji) => {
 	const context = canvas.getContext('2d');
 	canvas.width = 64;
 	canvas.height = 64;
-	context.font = '52px system-ui';
 	context.textAlign = 'center';
 	context.textBaseline = 'middle';
-	context.fillText(emoji, 32, 32);
+	if (process.platform === 'darwin') {
+		context.font = '64px system-ui';
+		context.fillText(emoji, 32, 34);
+	} else {
+		context.font = '52px system-ui';
+		context.fillText(emoji, 32, 32);
+	}
+
 	const dataUrl = canvas.toDataURL();
 	ipc.send('native-emoji', {emoji, dataUrl});
 });
