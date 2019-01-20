@@ -261,7 +261,7 @@ ipc.on('render-native-emoji', (event, emoji) => {
 	canvas.height = 64;
 	context.textAlign = 'center';
 	context.textBaseline = 'middle';
-	if (process.platform === 'darwin') {
+	if (is.macos) {
 		context.font = '64px system-ui';
 		context.fillText(emoji, 32, 34);
 	} else {
