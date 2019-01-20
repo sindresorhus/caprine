@@ -1,7 +1,6 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-const {URL} = require('url');
 const electron = require('electron');
 const {darkMode, is} = require('electron-util');
 const log = require('electron-log');
@@ -289,6 +288,7 @@ function createMainWindow() {
 			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
 	}
+
 	// Update badge on conversations change
 	ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
 

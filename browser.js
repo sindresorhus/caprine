@@ -143,12 +143,12 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 		const style = document.createElement('style');
 		// Hide both the backdrop and the preferences dialog
 		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
-		document.body.appendChild(style);
+		document.body.append(style);
 
 		await openPreferences();
 
 		// Will clean up itself after the preferences are closed
-		document.querySelector(preferencesSelector).appendChild(style);
+		document.querySelector(preferencesSelector).append(style);
 	}
 
 	const notificationCheckbox = document.querySelector('._374b:nth-of-type(4) ._4ng2 input');
@@ -322,7 +322,7 @@ function selectedConversationIndex(offset = 0) {
 }
 
 function setZoom(zoomFactor) {
-	const node = document.getElementById('zoomFactor');
+	const node = document.querySelector('#zoomFactor');
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
@@ -479,7 +479,7 @@ function getDataUrlFromImg(img, unread) {
 document.addEventListener('DOMContentLoaded', () => {
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
-	document.body.appendChild(style);
+	document.body.append(style);
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor') || 1;
