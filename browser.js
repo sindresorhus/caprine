@@ -588,11 +588,11 @@ async function sendReply(message) {
 	const inputField = document.querySelector('[contenteditable="true"]');
 	const previousMessage = inputField.textContent;
 	if (inputField) {
-		// send message
+		// Send message
 		inputField.focus();
 		await insertMessageText(message, inputField);
 		(await elementReady('._30yy._38lh._39bl')).click();
-		// restore (possible) previous message
+		// Restore (possible) previous message
 		if (previousMessage) {
 			insertMessageText(previousMessage, inputField);
 		}
@@ -600,7 +600,7 @@ async function sendReply(message) {
 }
 
 function insertMessageText(text, inputField) {
-	// workaround: insert placeholder value to get execCommand working
+	// Workaround: insert placeholder value to get execCommand working
 	if (!inputField.textContent) {
 		const event = document.createEvent('TextEvent');
 		event.initTextEvent('textInput', true, true, window, '_', 0, null);
@@ -615,7 +615,7 @@ ipc.on('notification-callback', (event, data) => {
 });
 
 ipc.on('notification-reply', (event, data) => {
-	const previousConversation = getIndex();
+	const previousConversation = selectedConversationIndex();
 	window.postMessage({type: 'notification-callback', data}, '*');
 	setTimeout(async () => {
 		await sendReply(data.reply);
