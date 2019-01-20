@@ -218,9 +218,6 @@ function codeForEmojiStyle(style) {
 	}
 }
 
-/** @type {Map<EmojiStyle, Electron.NativeImage>} */
-const menuIcons = new Map();
-
 const renderEmoji = memoize(
 	/**
 	 * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
@@ -264,6 +261,9 @@ function urlToEmoji(url) {
 	return String.fromCodePoint(...codePoints) + '\uFE0F';
 }
 
+/** @type {Map<EmojiStyle, Electron.NativeImage>} */
+const cachedEmojiMenuIcons = new Map();
+
 /**
  * @param {EmojiStyle} style
  * @return {Electron.NativeImage|undefined} An icon to use for the menu item of this emoji style
@@ -273,12 +273,12 @@ function getEmojiIcon(style) {
 		return undefined;
 	}
 
-	if (menuIcons.has(style)) {
-		return menuIcons.get(style);
+	if (cachedEmojiMenuIcons.has(style)) {
+		return cachedEmojiMenuIcons.get(style);
 	}
 
 	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
-	menuIcons.set(style, image);
+	cachedEmojiMenuIcons.set(style, image);
 
 	return image;
 }
