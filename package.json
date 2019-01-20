@@ -29,6 +29,7 @@
 		"electron-dl": "^1.0.0",
 		"electron-is-dev": "^1.0.0",
 		"electron-log": "^2.0.2",
+		"electron-prompt": "^1.3.0",
 		"electron-store": "^2.0.0",
 		"electron-updater": "^4.0.6",
 		"electron-util": "^0.10.2",

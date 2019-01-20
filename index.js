@@ -11,6 +11,7 @@ const config = require('./config');
 const tray = require('./tray');
 const {sendAction} = require('./util');
 const emoji = require('./emoji');
+const colors = require('./colors');
 
 require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
@@ -385,6 +386,12 @@ function createMainWindow() {
 
 		event.preventDefault();
 		electron.shell.openExternal(url);
+	});
+
+	webContents.on('did-start-navigation', (event, url) => {
+		if(url.includes('/t/')) {
+			colors.loadColors(webContents, url); // Chat is opened, process colors
+		}
 	});
 })();
 

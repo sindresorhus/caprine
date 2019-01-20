@@ -2,6 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 const electron = require('electron');
+const prompt = require('electron-prompt');
 const {
 	is,
 	appMenu,
@@ -13,6 +14,7 @@ const {
 const config = require('./config');
 const {sendAction, showRestartDialog} = require('./util');
 const emoji = require('./emoji');
+const colors = require('./colors');
 
 const {app, shell} = electron;
 
@@ -425,7 +427,32 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				sendAction('insert-text');
 			}
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Change color for Caprine users',
+			click() {
+				prompt({
+					title: 'Select color',
+					label: 'Color (HEX): #',
+					value: '123456',
+					inputAttrs: {
+						type: 'text'
+					}
+				}).then((r) => {
+					colors.changeColor(r.replace('#', ''));
+				});
+			}
+		},
+		{
+			label: 'Remove color for Caprine users',
+			click() {
+				colors.removeColor();
+			}
 		}
+
 	];
 
 	const helpSubmenu = [
