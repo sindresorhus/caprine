@@ -70,6 +70,11 @@ html.sidebar-hidden ._1enh {
 	display: none;
 }
 
+/* A utility class for temporarily hiding all dropdown menus */
+html.hide-dropdowns .uiContextualLayerPositioner {
+	visibility: hidden !important;
+}
+
 /* Hide footer at login view */
 ._210n {
 	display: none;
@@ -90,14 +95,9 @@ html.sidebar-hidden ._1enh {
 	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Hide settings menu */
-.uiContextualLayerBelowLeft ._5v-0._53il {
-	display: none !important;
-}
-
 /* Hide settings icon */
 ._30yy._2fug._p {
-	display: none !important;
+	visibility: hidden !important;
 }
 
 /* Hide title */

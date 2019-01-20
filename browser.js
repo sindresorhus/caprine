@@ -11,23 +11,46 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-function showSettingsMenu() {
-	document.querySelector('._30yy._2fug._p').click();
+async function withMenu(menuButtonElement, callback) {
+	const {classList} = document.documentElement;
+
+	// Prevent the dropdown menu from displaying
+	classList.add('hide-dropdowns');
+
+	// Click the menu button
+	menuButtonElement.click();
+
+	// Wait for the menu to close before removing the 'hide-dropdowns' class
+	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const observer = new MutationObserver(() => {
+		if (menuLayer.classList.contains('hidden_elem')) {
+			classList.remove('hide-dropdowns');
+			observer.disconnect();
+		}
+	});
+	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+
+	await callback();
+}
+
+async function withSettingsMenu(callback) {
+	await withMenu(await elementReady('._30yy._2fug._p'), callback);
 }
 
 function selectMenuItem(itemNumber) {
-	const selector = document.querySelector(`._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`);
+	const selector = document.querySelector(
+		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
+	);
 	selector.click();
 }
 
-function selectOtherListViews(itemNumber) {
+async function selectOtherListViews(itemNumber) {
 	// In case one of other views is shown
 	clickBackButton();
 
-	// Create the menu for the below
-	showSettingsMenu();
-
-	selectMenuItem(itemNumber);
+	await withSettingsMenu(() => {
+		selectMenuItem(itemNumber);
+	});
 }
 
 function clickBackButton() {
@@ -49,7 +72,7 @@ ipc.on('new-conversation', () => {
 	document.querySelector("._30yy[data-href$='/new']").click();
 });
 
-ipc.on('log-out', () => {
+ipc.on('log-out', async () => {
 	if (config.get('useWorkChat')) {
 		// Create the menu for the below
 		document.querySelector('._5lxs._3qct._p').click();
@@ -59,9 +82,10 @@ ipc.on('log-out', () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		showSettingsMenu();
-		const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
-		nodes[nodes.length - 1].click();
+		await withSettingsMenu(() => {
+			const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+			nodes[nodes.length - 1].click();
+		});
 	}
 });
 
@@ -94,11 +118,18 @@ ipc.on('mute-conversation', () => {
 });
 
 ipc.on('delete-conversation', () => {
-	openDeleteModal();
+	deleteSelectedConversation();
 });
 
-ipc.on('archive-conversation', () => {
-	openArchiveModal();
+ipc.on('archive-conversation', async () => {
+	const index = selectedConversationIndex();
+
+	if (index !== -1) {
+		archiveSelectedConversation();
+
+		const key = index + 1;
+		await jumpToConversation(key);
+	}
 });
 
 function setSidebarVisibility() {
@@ -243,53 +274,49 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', (event, index) => {
-	jumpToConversation(index);
+ipc.on('jump-to-conversation', async (event, key) => {
+	await jumpToConversation(key);
 });
 
-function nextConversation() {
-	const index = getNextIndex(true);
-	selectConversation(index);
+async function nextConversation() {
+	const index = selectedConversationIndex(1);
+
+	if (index !== -1) {
+		await selectConversation(index);
+	}
 }
 
-function previousConversation() {
-	const index = getNextIndex(false);
-	selectConversation(index);
+async function previousConversation() {
+	const index = selectedConversationIndex(-1);
+
+	if (index !== -1) {
+		await selectConversation(index);
+	}
 }
 
-function jumpToConversation(key) {
+async function jumpToConversation(key) {
 	const index = key - 1;
-	selectConversation(index);
+	await selectConversation(index);
 }
 
 // Focus on the conversation with the given index
-function selectConversation(index) {
-	document.querySelector(listSelector).children[index].firstChild.firstChild.click();
+async function selectConversation(index) {
+	const conversationElement = (await elementReady(listSelector)).children[index];
+
+	if (conversationElement) {
+		conversationElement.firstChild.firstChild.click();
+	}
 }
 
-// Returns the index of the selected conversation.
-// If no conversation is selected, returns null.
-function getIndex() {
+function selectedConversationIndex(offset = 0) {
 	const selected = document.querySelector(selectedConversationSelector);
+
 	if (!selected) {
-		return null;
+		return -1;
 	}
 
 	const list = [...selected.parentNode.children];
-
-	return list.indexOf(selected);
-}
-
-// Return the index for next node if next is true,
-// else returns index for the previous node
-function getNextIndex(next) {
-	const selected = document.querySelector(selectedConversationSelector);
-	if (!selected) {
-		return 0;
-	}
-
-	const list = [...selected.parentNode.children];
-	const index = list.indexOf(selected) + (next ? 1 : -1);
+	const index = list.indexOf(selected) + offset;
 
 	return ((index % list.length) + list.length) % list.length;
 }
@@ -300,48 +327,46 @@ function setZoom(zoomFactor) {
 	config.set('zoomFactor', zoomFactor);
 }
 
-function openConversationMenu() {
-	const index = getIndex();
-	if (index === null) {
-		return false;
+async function withConversationMenu(callback) {
+	const menuButton = document.querySelector(`${selectedConversationSelector} ._5blh._4-0h`);
+
+	if (menuButton) {
+		await withMenu(menuButton, callback);
 	}
-
-	// Open and close the menu for the below
-	const menu = document.querySelectorAll('._2j6._5l-3 ._3d85')[index].firstChild;
-	menu.click();
-
-	return true;
 }
 
 function openMuteModal() {
-	if (!openConversationMenu()) {
-		return;
-	}
-
-	selectMenuItem(1);
+	withConversationMenu(() => {
+		selectMenuItem(1);
+	});
 }
 
-function openArchiveModal() {
-	if (!openConversationMenu()) {
-		return;
-	}
+function archiveSelectedConversation() {
+	const groupConversationProfilePicture = document.querySelector(
+		`${selectedConversationSelector} ._55lu`
+	);
+	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-	selectMenuItem(3);
+	withConversationMenu(() => {
+		selectMenuItem(isGroupConversation ? 4 : 3);
+	});
 }
 
-function openDeleteModal() {
-	if (!openConversationMenu()) {
-		return;
-	}
+function deleteSelectedConversation() {
+	const groupConversationProfilePicture = document.querySelector(
+		`${selectedConversationSelector} ._55lu`
+	);
+	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-	selectMenuItem(4);
+	withConversationMenu(() => {
+		selectMenuItem(isGroupConversation ? 5 : 4);
+	});
 }
 
 async function openPreferences() {
-	// Create the menu for the below
-	(await elementReady('._30yy._2fug._p')).click();
-
-	selectMenuItem(1);
+	await withSettingsMenu(() => {
+		selectMenuItem(1);
+	});
 }
 
 function isPreferencesOpen() {
@@ -352,9 +377,10 @@ function closePreferences() {
 	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
+
 async function sendConversationList() {
 	const conversations = await Promise.all(
-		[...document.querySelector(listSelector).children].splice(0, 10).map(async el => {
+		[...(await elementReady(listSelector)).children].splice(0, 10).map(async el => {
 			const profilePic = el.querySelector('._55lt img');
 			const groupPic = el.querySelector('._4ld- div');
 
@@ -501,7 +527,7 @@ window.addEventListener('load', () => {
 
 // It's not possible to add multiple accelerators
 // so this needs to be done the old-school way
-document.addEventListener('keydown', event => {
+document.addEventListener('keydown', async event => {
 	// The `!event.altKey` part is a workaround for https://github.com/electron/electron/issues/13895
 	const combineKey = is.macos ? event.metaKey : event.ctrlKey && !event.altKey;
 
@@ -510,17 +536,17 @@ document.addEventListener('keydown', event => {
 	}
 
 	if (event.key === ']') {
-		nextConversation();
+		await nextConversation();
 	}
 
 	if (event.key === '[') {
-		previousConversation();
+		await previousConversation();
 	}
 
 	const num = parseInt(event.code.slice(-1), 10);
 
 	if (num >= 1 && num <= 9) {
-		jumpToConversation(num);
+		await jumpToConversation(num);
 	}
 });
 
