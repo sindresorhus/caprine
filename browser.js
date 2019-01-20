@@ -544,19 +544,30 @@ function showNotification({id, title, body, icon, silent}) {
 	});
 }
 
-function typeReply(message, locale) {
-	const event = document.createEvent('TextEvent');
-	event.initTextEvent('textInput', true, true, window, message, 0, locale);
+async function sendReply(message) {
 	const inputField = document.querySelector('[contenteditable="true"]');
+	const previousMessage = inputField.textContent;
 	if (inputField) {
+		// send message
 		inputField.focus();
-		return inputField.dispatchEvent(event);
+		await insertMessageText(message, inputField);
+		(await elementReady('._30yy._38lh._39bl')).click();
+		// restore (possible) previous message
+		if (previousMessage) {
+			insertMessageText(previousMessage, inputField);
+		}
 	}
 }
 
-async function sendReply() {
-	(await elementReady('._30yy._38lh._39bl')).click();
-	return true;
+function insertMessageText(text, inputField) {
+	// workaround: insert placeholder value to get execCommand working
+	if (!inputField.textContent) {
+		const event = document.createEvent('TextEvent');
+		event.initTextEvent('textInput', true, true, window, '_', 0, null);
+		inputField.dispatchEvent(event);
+	}
+	document.execCommand('selectAll', false, null);
+	document.execCommand('insertText', false, text);
 }
 
 ipc.on('notification-callback', (event, data) => {
@@ -566,12 +577,10 @@ ipc.on('notification-callback', (event, data) => {
 ipc.on('notification-reply', (event, data) => {
 	const previousConversation = getIndex();
 	window.postMessage({type: 'notification-callback', data}, '*');
-	// Wait for Messenger to go to correct message and then start typing and sending
 	setTimeout(async () => {
-		await typeReply(data.reply, data.locale);
-		await sendReply();
+		await sendReply(data.reply);
 		if (previousConversation) {
 			selectConversation(previousConversation);
 		}
-	}, 50);
+	}, 100);
 });

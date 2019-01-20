@@ -168,15 +168,6 @@ function setUserLocale() {
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
-function getUserLocale() {
-	electron.session.defaultSession.cookies.get({
-		url: 'https://www.messenger.com/',
-		name: 'locale'
-	}, (_, result) => {
-		return result.value;
-	});
-}
-
 function setNotificationsMute(status) {
 	const label = 'Mute Notifications';
 	const muteMenuItem = Menu.getApplicationMenu().getMenuItemById('mute-notifications');
@@ -434,9 +425,8 @@ ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
 	});
 
 	notification.on('reply', (event, reply) => {
-		const locale = getUserLocale();
 		// We use onclick event used by messenger to go to the right convo
-		sendBackgroundAction('notification-reply', {callbackName: 'onclick', id, reply, locale});
+		sendBackgroundAction('notification-reply', {callbackName: 'onclick', id, reply});
 	});
 
 	notification.on('close', () => {
