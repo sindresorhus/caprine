@@ -330,7 +330,7 @@ module.exports = {
 	},
 
 	/**
-	 * @param {() => void} updateMenu
+	 * @param {function(): void} updateMenu
 	 * @return {Electron.MenuItemConstructorOptions[]}
 	 */
 	generateSubmenu(updateMenu) {
