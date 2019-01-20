@@ -142,6 +142,16 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Disable Video Autoplay',
+			id: 'disable-video-autoplay',
+			type: 'checkbox',
+			checked: config.get('disableVideoAutoplay'),
+			click() {
+				config.set('disableVideoAutoplay', !config.get('disableVideoAutoplay'));
+				sendAction('toggle-disable-video-autoplay');
+			}
+		},
+		{
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',

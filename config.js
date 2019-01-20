@@ -33,7 +33,8 @@ const defaults = {
 		notificationsMuted: false,
 		hardwareAcceleration: true,
 		quitOnWindowClose: false,
-		keepMeSignedIn: true
+		keepMeSignedIn: true,
+		disableVideoAutoplay: false
 	}
 };
 
