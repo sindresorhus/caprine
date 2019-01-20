@@ -283,7 +283,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			id: 'darkMode',
 			type: 'checkbox',
 			checked: config.get('darkMode'),
-			enabled: !config.get('followSystemAppearance'),
+			enabled: !is.macos || !config.get('followSystemAppearance'),
 			accelerator: 'CommandOrControl+D',
 			click() {
 				config.set('darkMode', !config.get('darkMode'));
