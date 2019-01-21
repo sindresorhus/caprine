@@ -40,7 +40,6 @@
     "electron": "^4.0.1",
     "electron-builder": "^20.38.5",
     "husky": "^1.3.1",
-    "lint-staged": "^8.1.0",
     "np": "^3.1.0",
     "stylelint": "^9.10.1",
     "stylelint-config-xo": "^0.12.0",
@@ -108,19 +107,9 @@
       "category": "Network;Chat"
     }
   },
-  "lint-staged": {
-    "*.js": [
-      "xo --fix",
-      "git add"
-    ],
-    "*.css": [
-      "stylelint --fix",
-      "git add"
-    ]
-  },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm test"
     }
   }
 }
