@@ -1,7 +1,6 @@
 'use strict';
 const path = require('path');
 const {nativeImage, ipcMain} = require('electron');
-const {is} = require('electron-util');
 const {memoize} = require('lodash');
 const config = require('./config');
 const {sendBackgroundAction, getWindow, showRestartDialog} = require('./util');
@@ -219,20 +218,6 @@ function codeForEmojiStyle(style) {
 	}
 }
 
-function nativeEmojiLabel() {
-	if (is.macos) {
-		return 'macOS';
-	}
-
-	if (is.windows) {
-		return 'Windows';
-	}
-
-	if (is.linux) {
-		return 'Linux';
-	}
-}
-
 const renderEmoji = memoize(
 	/**
 	 * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
@@ -381,7 +366,7 @@ module.exports = {
 
 		return Promise.all([
 			emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
-			emojiMenuOption(nativeEmojiLabel(), 'native'),
+			emojiMenuOption('Native', 'native'),
 			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
 			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
 		]);
