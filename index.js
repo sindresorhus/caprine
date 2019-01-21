@@ -254,7 +254,7 @@ function createMainWindow() {
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
-	updateAppMenu();
+	await updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
@@ -296,7 +296,9 @@ function createMainWindow() {
 
 	const {webContents} = mainWindow;
 
-	webContents.on('dom-ready', () => {
+	webContents.on('dom-ready', async () => {
+		await updateAppMenu();
+
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));

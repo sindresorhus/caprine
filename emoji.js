@@ -3,7 +3,7 @@ const path = require('path');
 const {nativeImage, ipcMain} = require('electron');
 const {memoize} = require('lodash');
 const config = require('./config');
-const {sendBackgroundAction, showRestartDialog} = require('./util');
+const {sendBackgroundAction, getWindow, showRestartDialog} = require('./util');
 
 /**
  * @typedef {'facebook-2-2'|'messenger-1-0'|'facebook-3-0'|'native'} EmojiStyle
@@ -265,15 +265,25 @@ const cachedEmojiMenuIcons = new Map();
 
 /**
  * @param {EmojiStyle} style
- * @return {Electron.NativeImage|undefined} An icon to use for the menu item of this emoji style
+ * @return {Promise<Electron.NativeImage|undefined>} An icon to use for the menu item of this emoji style
  */
-function getEmojiIcon(style) {
-	if (style === 'native') {
-		return undefined;
-	}
-
+async function getEmojiIcon(style) {
 	if (cachedEmojiMenuIcons.has(style)) {
 		return cachedEmojiMenuIcons.get(style);
+	}
+
+	if (style === 'native') {
+		if (!getWindow()) {
+			return undefined;
+		}
+
+		const dataUrl = await renderEmoji('🙂');
+		const image = nativeImage.createFromDataURL(dataUrl);
+		const resizedImage = image.resize({width: 16, height: 16});
+
+		cachedEmojiMenuIcons.set(style, resizedImage);
+
+		return resizedImage;
 	}
 
 	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
@@ -329,36 +339,36 @@ module.exports = {
 
 	/**
 	 * @param {function(): void} updateMenu
-	 * @return {Electron.MenuItemConstructorOptions[]}
+	 * @return {Promise<Electron.MenuItemConstructorOptions[]>}
 	 */
-	generateSubmenu(updateMenu) {
+	async generateSubmenu(updateMenu) {
 		/**
 		 * @param {string} label
 		 * @param {EmojiStyle} style
 		 * @return {Electron.MenuItemConstructorOptions}
 		 */
-		const emojiMenuOption = (label, style) => ({
+		const emojiMenuOption = async (label, style) => ({
 			label,
 			type: 'checkbox',
-			icon: getEmojiIcon(style),
+			icon: await getEmojiIcon(style),
 			checked: config.get('emojiStyle') === style,
-			click() {
+			async click() {
 				if (config.get('emojiStyle') === style) {
 					return;
 				}
 
 				config.set('emojiStyle', style);
 
-				updateMenu();
+				await updateMenu();
 				showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
 			}
 		});
 
-		return [
+		return Promise.all([
 			emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
 			emojiMenuOption('Native', 'native'),
 			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
 			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
-		];
+		]);
 	}
 };

@@ -16,7 +16,7 @@ const emoji = require('./emoji');
 
 const {app, shell} = electron;
 
-function updateMenu() {
+async function updateMenu() {
 	const newConversationItem = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
@@ -59,30 +59,30 @@ function updateMenu() {
 			label: 'No Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'none',
-			click() {
+			async click() {
 				config.set('vibrancy', 'none');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
 			label: 'Sidebar-only Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'sidebar',
-			click() {
+			async click() {
 				config.set('vibrancy', 'sidebar');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
 			label: 'Full-window Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'full',
-			click() {
+			async click() {
 				config.set('vibrancy', 'full');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		}
 	];
@@ -232,7 +232,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Emoji style',
-			submenu: emoji.generateSubmenu(updateMenu)
+			submenu: await emoji.generateSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'
@@ -273,10 +273,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			visible: is.macos,
 			checked: config.get('followSystemAppearance'),
-			click() {
+			async click() {
 				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
 				sendAction('set-dark-mode');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
