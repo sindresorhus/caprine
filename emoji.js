@@ -366,7 +366,7 @@ module.exports = {
 
 		return Promise.all([
 			emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
-			emojiMenuOption('Native', 'native'),
+			emojiMenuOption('System', 'native'),
 			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
 			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
 		]);
