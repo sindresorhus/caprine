@@ -7,6 +7,10 @@ function getWindow() {
 	return win;
 }
 
+/**
+ * @param {string} action
+ * @param  {...any} args
+ */
 function sendAction(action, ...args) {
 	const win = getWindow();
 	if (is.macos) {
@@ -16,10 +20,17 @@ function sendAction(action, ...args) {
 	win.webContents.send(action, ...args);
 }
 
+/**
+ * @param {string} action
+ * @param  {...any} args
+ */
 function sendBackgroundAction(action, ...args) {
 	getWindow().webContents.send(action, ...args);
 }
 
+/**
+ * @param {string} message
+ */
 function showRestartDialog(message) {
 	return dialog.showMessageBox(
 		{
