@@ -16,6 +16,10 @@ function sendAction(action, ...args) {
 	win.webContents.send(action, ...args);
 }
 
+function sendBackgroundAction(action, ...args) {
+	getWindow().webContents.send(action, ...args);
+}
+
 function showRestartDialog(message) {
 	return dialog.showMessageBox(
 		{
@@ -36,4 +40,5 @@ function showRestartDialog(message) {
 
 exports.getWindow = getWindow;
 exports.sendAction = sendAction;
+exports.sendBackgroundAction = sendBackgroundAction;
 exports.showRestartDialog = showRestartDialog;
