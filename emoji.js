@@ -3,7 +3,7 @@ const path = require('path');
 const {nativeImage, ipcMain} = require('electron');
 const {memoize} = require('lodash');
 const config = require('./config');
-const {showRestartDialog} = require('./util');
+const {sendBackgroundAction, showRestartDialog} = require('./util');
 
 /**
  * @typedef {'facebook-2-2'|'messenger-1-0'|'facebook-3-0'|'native'} EmojiStyle
@@ -223,10 +223,9 @@ const renderEmoji = memoize(
 	 * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
 	 *
 	 * @param {string} emoji
-	 * @param {Electron.WebContents} webContents Web contents object for IPC
 	 * @returns {Promise<string>} Data URL for the native emoji icon
 	 */
-	(emoji, webContents) =>
+	emoji =>
 		new Promise(resolve => {
 			const listener = (event, arg) => {
 				if (arg.emoji !== emoji) {
@@ -238,7 +237,7 @@ const renderEmoji = memoize(
 			};
 
 			ipcMain.on('native-emoji', listener);
-			webContents.send('render-native-emoji', emoji);
+			sendBackgroundAction('render-native-emoji', emoji);
 		})
 );
 
@@ -290,10 +289,9 @@ module.exports = {
 	 * with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
 	 *                                                 (see here) ^
 	 * @param {string} url
-	 * @param {Electron.WebContents} webContents Web Contents object for IPC
 	 * @return {Promise<Electron.Response>}
 	 */
-	async process(url, webContents) {
+	async process(url) {
 		const emojiStyle = config.get('emojiStyle');
 		const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
@@ -303,7 +301,7 @@ module.exports = {
 
 		if (emojiStyle === 'native') {
 			const emoji = urlToEmoji(url);
-			const dataUrl = await renderEmoji(emoji, webContents);
+			const dataUrl = await renderEmoji(emoji);
 			return {redirectURL: dataUrl};
 		}
 
