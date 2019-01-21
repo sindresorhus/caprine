@@ -429,7 +429,7 @@ ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
 
 	notification.on('reply', (event, reply) => {
 		// We use onclick event used by messenger to go to the right convo
-		sendBackgroundAction('notification-reply', {callbackName: 'onclick', id, reply});
+		sendBackgroundAction('notification-reply-callback', {callbackName: 'onclick', id, reply});
 	});
 
 	notification.on('close', () => {

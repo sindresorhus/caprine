@@ -551,9 +551,16 @@ document.addEventListener('keydown', async event => {
 });
 
 // Pass events sent via `window.postMessage` on to the main process
-window.addEventListener('message', ({data: {type, data}}) => {
+window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification') {
 		showNotification(data);
+	}
+
+	if (type === 'notification-reply') {
+		await sendReply(data.reply);
+		if (data.previousConversation) {
+			selectConversation(data.previousConversation);
+		}
 	}
 });
 
@@ -614,13 +621,8 @@ ipc.on('notification-callback', (event, data) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
 
-ipc.on('notification-reply', (event, data) => {
+ipc.on('notification-reply-callback', (event, data) => {
 	const previousConversation = selectedConversationIndex();
-	window.postMessage({type: 'notification-callback', data}, '*');
-	setTimeout(async () => {
-		await sendReply(data.reply);
-		if (previousConversation) {
-			selectConversation(previousConversation);
-		}
-	}, 100);
+	data.previousConversation = previousConversation;
+	window.postMessage({type: 'notification-reply-callback', data}, '*');
 });

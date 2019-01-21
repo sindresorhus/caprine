@@ -15,6 +15,17 @@
 				notifications.delete(id);
 			}
 		}
+
+		if (type === 'notification-reply-callback') {
+			const {callbackName, id, previousConversation, reply} = data;
+			const notification = notifications.get(id);
+
+			if (notification && notification[callbackName]) {
+				notification[callbackName]();
+			}
+			notifications.delete(id);
+			window.postMessage({type: 'notification-reply', data: {previousConversation, reply}}, '*');
+		}
 	});
 
 	let counter = 1;
