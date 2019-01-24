@@ -1,5 +1,5 @@
 import {join} from 'path';
-import { existsSync, writeFileSync } from 'fs';
+import {existsSync, writeFileSync} from 'fs';
 import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
 import {
 	is,

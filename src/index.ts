@@ -1,5 +1,5 @@
 import {join} from 'path';
-import { readFileSync, existsSync } from 'fs';
+import {readFileSync, existsSync} from 'fs';
 import * as electron from 'electron';
 import {darkMode, is} from 'electron-util';
 import log from 'electron-log';
