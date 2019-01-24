@@ -1,6 +1,6 @@
 import {join} from 'path';
 import { existsSync, writeFileSync } from 'fs';
-import {app, shell, Menu} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
 import {
 	is,
 	appMenu,
@@ -13,8 +13,8 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import * as emoji from './emoji';
 
-export default function updateMenu() {
-	const newConversationItem = {
+export default function updateMenu(): Menu {
+	const newConversationItem: MenuItemConstructorOptions = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
 		click() {
@@ -22,7 +22,7 @@ export default function updateMenu() {
 		}
 	};
 
-	const switchItems = [
+	const switchItems: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'Switch to Work Chat…',
 			accelerator: 'CommandOrControl+Shift+2',
@@ -51,7 +51,7 @@ export default function updateMenu() {
 		}
 	];
 
-	const vibrancySubmenu = [
+	const vibrancySubmenu: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'No Vibrancy',
 			type: 'checkbox',
@@ -84,7 +84,7 @@ export default function updateMenu() {
 		}
 	];
 
-	const advancedSubmenu = [
+	const advancedSubmenu: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'Custom Styles',
 			click() {
@@ -128,7 +128,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const preferencesSubmenu = [
+	const preferencesSubmenu: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'Bounce Dock on Message',
 			visible: is.macos,
@@ -240,7 +240,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const viewSubmenu = [
+	const viewSubmenu: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'Reset Text Size',
 			accelerator: 'CommandOrControl+0',
@@ -343,7 +343,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const conversationSubmenu = [
+	const conversationSubmenu: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'Mute Conversation',
 			accelerator: 'CommandOrControl+Shift+M',
@@ -425,7 +425,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const helpSubmenu = [
+	const helpSubmenu: Array<MenuItemConstructorOptions> = [
 		openUrlMenuItem({
 			label: 'Website',
 			url: 'https://sindresorhus.com/caprine'
@@ -470,7 +470,7 @@ ${debugInfo()}`;
 		);
 	}
 
-	const debugSubmenu = [
+	const debugSubmenu: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'Show Settings',
 			click() {
@@ -504,7 +504,7 @@ ${debugInfo()}`;
 		}
 	];
 
-	const macosTemplate = [
+	const macosTemplate: Array<MenuItemConstructorOptions> = [
 		appMenu([
 			{
 				label: 'Caprine Preferences',
@@ -546,7 +546,7 @@ ${debugInfo()}`;
 		}
 	];
 
-	const linuxWindowsTemplate = [
+	const linuxWindowsTemplate: Array<MenuItemConstructorOptions> = [
 		{
 			label: 'File',
 			submenu: [
