@@ -1,4 +1,4 @@
-import * as Store from 'electron-store';
+import Store = require('electron-store');
 
 const defaults = {
 	defaults: {
