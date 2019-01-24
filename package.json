@@ -77,8 +77,8 @@
 	},
 	"build": {
 		"files": [
-			"dist-ts/**/*",
-			"static/**/*"
+			"**/*",
+			"!media${/*}"
 		],
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
