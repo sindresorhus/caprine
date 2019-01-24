@@ -16,7 +16,7 @@ export function sendAction(action, ...args) {
 }
 
 export function showRestartDialog(message) {
-	return dialog.showMessageBox(
+	dialog.showMessageBox(
 		{
 			message,
 			detail: 'Do you want to restart the app now?',
