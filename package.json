@@ -16,7 +16,7 @@
 	"main": "dist-ts/index.js",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
-		"lint": "xo && stylelint '*.css'",
+		"lint": "tsc && xo && stylelint '*.css'",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"pack": "electron-builder --dir",
