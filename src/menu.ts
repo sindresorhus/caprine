@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as electron from 'electron';
+import {app, shell, Menu} from 'electron';
 import {
 	is,
 	appMenu,
@@ -12,8 +12,6 @@ import {
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import * as emoji from './emoji';
-
-const {app, shell} = electron;
 
 export default function updateMenu() {
 	const newConversationItem = {
@@ -605,8 +603,8 @@ ${debugInfo()}`;
 		});
 	}
 
-	const menu = electron.Menu.buildFromTemplate(template);
-	electron.Menu.setApplicationMenu(menu);
+	const menu = Menu.buildFromTemplate(template);
+	Menu.setApplicationMenu(menu);
 
 	return menu;
 }
