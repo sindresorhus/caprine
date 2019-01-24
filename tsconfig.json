@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"target": "ES2017",
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"outDir": "dist-ts"
+	},
+	"include": [
+		"src/**/*"
+	]
+}

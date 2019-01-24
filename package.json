@@ -13,12 +13,12 @@
 	"engines": {
 		"node": ">=10"
 	},
-	"main": "src/index.ts",
+	"main": "dist-ts/index.js",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"lint": "xo && stylelint '*.css'",
 		"test": "npm run lint",
-		"start": "electron .",
+		"start": "tsc && electron .",
 		"pack": "electron-builder --dir",
 		"dist": "electron-builder --macos --linux --windows",
 		"release": "np --no-publish && npm run publish-snap",
@@ -74,8 +74,8 @@
 	},
 	"build": {
 		"files": [
-			"**/*",
-			"!media${/*}"
+			"dist-ts/**/*",
+			"static/**/*"
 		],
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
