@@ -3,7 +3,7 @@ import {sendAction, getWindow} from './util';
 
 const {TouchBarButton} = TouchBar;
 
-ipc.on('conversations', (event, conversations) => {
+ipc.on('conversations', (_event, conversations) => {
 	const touchBar = new TouchBar(
 		conversations.map(({label, selected, icon}, index) => {
 			return new TouchBarButton({
