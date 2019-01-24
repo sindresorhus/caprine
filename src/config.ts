@@ -12,7 +12,9 @@ const defaults = {
 	zoomFactor: 1,
 	lastWindowState: {
 		width: 800,
-		height: 600
+		height: 600,
+		x: undefined as number,
+		y: undefined as number,
 	},
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
