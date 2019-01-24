@@ -19,10 +19,10 @@
 		"lint": "tsc && xo && stylelint '*.css'",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
-		"pack": "electron-builder --dir",
-		"dist": "electron-builder --macos --linux --windows",
+		"pack": "tsc && electron-builder --dir",
+		"dist": "tsc && electron-builder --macos --linux --windows",
 		"release": "np --no-publish && npm run publish-snap",
-		"publish-snap": "del dist && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
+		"publish-snap": "del dist && tsc && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
 	},
 	"dependencies": {
 		"electron-context-menu": "^0.10.1",
