@@ -6,20 +6,24 @@ import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import * as isDev from 'electron-is-dev';
 import {bestFacebookLocaleFor} from 'facebook-locales';
+import * as electronDl from 'electron-dl';
+import * as electronContextMenu from 'electron-context-menu';
+
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
 import {sendAction} from './util';
 import * as emoji from './emoji';
+import './touch-bar';
 
-require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
-
-require('electron-debug')({
+import * as electronDebug from 'electron-debug';
+electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
 	showDevTools: false
 });
-require('electron-dl')();
-require('electron-context-menu')();
+
+electronDl();
+electronContextMenu();
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 const {app, ipcMain, Menu, nativeImage, Notification, systemPreferences} = electron;
