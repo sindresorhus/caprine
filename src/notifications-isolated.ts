@@ -1,5 +1,5 @@
 (window => {
-	const notifications = new Map();
+	const notifications = new Map<number, Notification>();
 
 	// Handle events sent from the browser process
 	window.addEventListener('message', ({data: {type, data}}) => {
@@ -25,7 +25,7 @@
 
 			constructor(title, options) {
 				this.id = counter++;
-				notifications.set(this.id, this);
+				notifications.set(this.id, this as any);
 
 				window.postMessage({type: 'notification', data: {title, id: this.id, ...options}}, '*');
 			}
