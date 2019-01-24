@@ -1,5 +1,5 @@
-import * as path from 'path';
-import * as fs from 'fs';
+import {join} from 'path';
+import { existsSync, writeFileSync } from 'fs';
 import {app, shell, Menu} from 'electron';
 import {
 	is,
@@ -88,7 +88,7 @@ export default function updateMenu() {
 		{
 			label: 'Custom Styles',
 			click() {
-				const filePath = path.join(app.getPath('userData'), 'custom.css');
+				const filePath = join(app.getPath('userData'), 'custom.css');
 				const defaultCustomStyle = `/*
 This is the custom styles file where you can add anything you want.
 The styles here will be injected into Caprine and will override default styles.
@@ -119,8 +119,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 }
 `;
 
-				if (!fs.existsSync(filePath)) {
-					fs.writeFileSync(filePath, defaultCustomStyle, 'utf8');
+				if (!existsSync(filePath)) {
+					writeFileSync(filePath, defaultCustomStyle, 'utf8');
 				}
 
 				shell.openItem(filePath);
@@ -464,7 +464,7 @@ ${debugInfo()}`;
 				type: 'separator'
 			},
 			aboutMenuItem({
-				icon: path.join(__dirname, 'static/Icon.png'),
+				icon: join(__dirname, 'static/Icon.png'),
 				text: 'Created by Sindre Sorhus'
 			})
 		);
