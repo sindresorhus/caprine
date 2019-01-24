@@ -2,7 +2,7 @@ import {join} from 'path';
 import {app, Menu, Tray} from 'electron';
 import {is} from 'electron-util';
 
-let tray = null;
+let tray: Tray = null;
 
 export default {
 	create: win => {
@@ -41,7 +41,7 @@ export default {
 		tray.on('click', toggleWin);
 	},
 
-	setBadge: shouldDisplayUnread => {
+	setBadge: (shouldDisplayUnread: boolean) => {
 		if (is.macos || !tray) {
 			return;
 		}
