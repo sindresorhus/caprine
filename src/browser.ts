@@ -8,7 +8,7 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withMenu(menuButtonElement, callback) {
+async function withMenu(menuButtonElement: HTMLElement, callback: () => void) {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
@@ -18,7 +18,7 @@ async function withMenu(menuButtonElement, callback) {
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const menuLayer = document.querySelector<HTMLElement>('.uiContextualLayerPositioner:not(.hidden_elem)');
 	const observer = new MutationObserver(() => {
 		if (menuLayer.classList.contains('hidden_elem')) {
 			classList.remove('hide-dropdowns');
@@ -41,7 +41,7 @@ function selectMenuItem(itemNumber) {
 	selector.click();
 }
 
-async function selectOtherListViews(itemNumber) {
+async function selectOtherListViews(itemNumber: number) {
 	// In case one of other views is shown
 	clickBackButton();
 
@@ -135,8 +135,9 @@ function setSidebarVisibility() {
 	ipc.send('set-sidebar-visibility');
 }
 
-ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
+ipc.on('toggle-mute-notifications', async (_event, defaultStatus: boolean) => {
 	const preferencesAreOpen = isPreferencesOpen();
+
 	if (!preferencesAreOpen) {
 		const style = document.createElement('style');
 		// Hide both the backdrop and the preferences dialog
@@ -146,7 +147,7 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 		await openPreferences();
 
 		// Will clean up itself after the preferences are closed
-		document.querySelector(preferencesSelector).append(style);
+		document.querySelector<HTMLElement>(preferencesSelector).append(style);
 	}
 
 	const notificationCheckbox = document.querySelector<HTMLInputElement>('._374b:nth-of-type(4) ._4ng2 input');
@@ -216,11 +217,12 @@ function updateVibrancy() {
 	ipc.send('set-vibrancy');
 }
 
-function renderOverlayIcon(messageCount) {
+function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	const canvas = document.createElement('canvas');
 	canvas.height = 128;
 	canvas.width = 128;
 	canvas.style.letterSpacing = '-5px';
+
 	const ctx = canvas.getContext('2d');
 	ctx.fillStyle = '#f42020';
 	ctx.beginPath();
@@ -230,6 +232,7 @@ function renderOverlayIcon(messageCount) {
 	ctx.fillStyle = 'white';
 	ctx.font = '90px sans-serif';
 	ctx.fillText(String(Math.min(99, messageCount)), 64, 96);
+
 	return canvas;
 }
 
@@ -244,7 +247,7 @@ ipc.on('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-ipc.on('render-overlay-icon', (event, messageCount) => {
+ipc.on('render-overlay-icon', (_event, messageCount: number) => {
 	ipc.send(
 		'update-overlay-icon',
 		renderOverlayIcon(messageCount).toDataURL(),
@@ -272,7 +275,7 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', async (event, key) => {
+ipc.on('jump-to-conversation', async (_event, key: number) => {
 	await jumpToConversation(key);
 });
 
@@ -298,16 +301,17 @@ async function jumpToConversation(key) {
 }
 
 // Focus on the conversation with the given index
-async function selectConversation(index) {
+async function selectConversation(index: number) {
 	const conversationElement = (await elementReady(listSelector)).children[index];
 
 	if (conversationElement) {
-		conversationElement.firstChild.firstChild.click();
+		// TODO: [TS] use a querySelector instead? Same for `children` above?
+		(conversationElement.firstChild.firstChild as HTMLElement).click();
 	}
 }
 
-function selectedConversationIndex(offset = 0) {
-	const selected = document.querySelector(selectedConversationSelector);
+function selectedConversationIndex(offset = 0): number {
+	const selected = document.querySelector<HTMLElement>(selectedConversationSelector);
 
 	if (!selected) {
 		return -1;
@@ -319,13 +323,13 @@ function selectedConversationIndex(offset = 0) {
 	return ((index % list.length) + list.length) % list.length;
 }
 
-function setZoom(zoomFactor) {
+function setZoom(zoomFactor: number) {
 	const node = document.querySelector<HTMLElement>('#zoomFactor');
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
-async function withConversationMenu(callback) {
+async function withConversationMenu(callback: () => void) {
 	const menuButton = document.querySelector<HTMLElement>(`${selectedConversationSelector} ._5blh._4-0h`);
 
 	if (menuButton) {
@@ -376,8 +380,16 @@ function closePreferences() {
 	doneButton.click();
 }
 
+// TODO: [TS] extract this interface to be used in index.ts and touch-bar.ts
+interface Conversation {
+	label: string;
+	selected: boolean;
+	unread: boolean;
+	icon: string;
+}
+
 async function sendConversationList() {
-	const conversations = await Promise.all(
+	const conversations: Array<Conversation> = await Promise.all(
 		[...(await elementReady(listSelector)).children].splice(0, 10).map(async (el: HTMLElement) => {
 			const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
 			const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
@@ -444,7 +456,7 @@ function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img: HTMLImageElement, unread: boolean) {
+function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		// TODO: [TS] fix dataUrl and dataUnreadUrl usage
@@ -470,6 +482,7 @@ function getDataUrlFromImg(img: HTMLImageElement, unread: boolean) {
 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
 		img['dataUnreadUrl'] = canvas.toDataURL();
+
 		resolve(img['dataUnreadUrl']);
 	});
 }
@@ -583,6 +596,6 @@ function showNotification({id, title, body, icon, silent}) {
 	});
 }
 
-ipc.on('notification-callback', (event, data) => {
+ipc.on('notification-callback', (_event, data) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
