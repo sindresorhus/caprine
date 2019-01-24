@@ -48,10 +48,10 @@ if (!isDev) {
 	autoUpdater.checkForUpdates();
 }
 
-let mainWindow;
+let mainWindow: Electron.BrowserWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
-let dockMenu;
+let dockMenu: Electron.Menu;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -67,6 +67,7 @@ app.on('second-instance', () => {
 	}
 });
 
+// TODO: [TS] function updateBadge(conversations: Array<Conversation>)
 function updateBadge(conversations) {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
@@ -108,7 +109,7 @@ function updateBadge(conversations) {
 	}
 }
 
-ipcMain.on('update-overlay-icon', (event, data, text) => {
+ipcMain.on('update-overlay-icon', (_event, data: string, text: string) => {
 	const img = electron.nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 });
@@ -171,7 +172,7 @@ function setUserLocale() {
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
-function setNotificationsMute(status) {
+function setNotificationsMute(status: boolean) {
 	const label = 'Mute Notifications';
 	const muteMenuItem = Menu.getApplicationMenu().getMenuItemById('mute-notifications');
 
@@ -275,7 +276,7 @@ function createMainWindow() {
 		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
-		ipcMain.on('conversations', (event, conversations) => {
+		ipcMain.on('conversations', (_event, conversations) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -295,7 +296,7 @@ function createMainWindow() {
 	}
 
 	// Update badge on conversations change
-	ipcMain.on('conversations', (event, conversations) => updateBadge(conversations));
+	ipcMain.on('conversations', (_event, conversations) => updateBadge(conversations));
 
 	enableHiresResources();
 
@@ -330,7 +331,7 @@ function createMainWindow() {
 		);
 	});
 
-	webContents.on('new-window', (event, url, frameName, disposition, options) => {
+	webContents.on('new-window', (event, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
 		if (url === 'about:blank') {
@@ -352,17 +353,17 @@ function createMainWindow() {
 	});
 
 	webContents.on('will-navigate', (event, url) => {
-		const isMessengerDotCom = url => {
+		const isMessengerDotCom = (url: string) => {
 			const {hostname} = new URL(url);
 			return hostname === 'www.messenger.com';
 		};
 
-		const isTwoFactorAuth = url => {
+		const isTwoFactorAuth = (url: string) => {
 			const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
 			return url.startsWith(twoFactorAuthURL);
 		};
 
-		const isWorkChat = url => {
+		const isWorkChat = (url: string) => {
 			const {hostname, pathname} = new URL(url);
 
 			if (hostname === 'work.facebook.com') {
@@ -405,7 +406,7 @@ if (is.macos) {
 	});
 }
 
-ipcMain.on('mute-notifications-toggled', (event, status) => {
+ipcMain.on('mute-notifications-toggled', (_event, status: boolean) => {
 	setNotificationsMute(status);
 });
 
@@ -418,7 +419,7 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
-ipcMain.on('notification', (event, {id, title, body, icon, silent}) => {
+ipcMain.on('notification', (_event, {id, title, body, icon, silent}) => {
 	const notification = new Notification({
 		title,
 		body,
