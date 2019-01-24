@@ -1,13 +1,14 @@
 import {app, BrowserWindow, dialog} from 'electron';
 import {is} from 'electron-util';
 
-export function getWindow() {
+export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
 	return win;
 }
 
-export function sendAction(action, ...args) {
+export function sendAction(action: string, ...args) {
 	const win = getWindow();
+
 	if (is.macos) {
 		win.restore();
 	}
@@ -15,7 +16,7 @@ export function sendAction(action, ...args) {
 	win.webContents.send(action, ...args);
 }
 
-export function showRestartDialog(message) {
+export function showRestartDialog(message: string) {
 	dialog.showMessageBox(
 		{
 			message,
