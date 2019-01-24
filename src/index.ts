@@ -89,7 +89,7 @@ function updateBadge(conversations) {
 
 	if (is.linux || is.windows) {
 		if (config.get('showUnreadBadge')) {
-			tray.setBadge(messageCount);
+			tray.setBadge(messageCount > 0);
 		}
 
 		if (config.get('flashWindowOnMessage')) {
@@ -341,7 +341,7 @@ function createMainWindow() {
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = join(__dirname, 'browser-call.js');
-				event.newGuest = new electron.BrowserWindow(options);
+				event['newGuest'] = new electron.BrowserWindow(options);
 			}
 		} else {
 			if (url.startsWith(trackingUrlPrefix)) {
