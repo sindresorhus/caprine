@@ -1,4 +1,5 @@
 import Store = require('electron-store');
+import {EmojiStyle} from './emoji';
 
 const defaults = {
 	followSystemAppearance: true,
@@ -6,7 +7,7 @@ const defaults = {
 
 	// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
 	// See https://github.com/electron/electron/issues/10420
-	vibrancy: 'none', // Possible values: 'none', 'sidebar', 'full'
+	vibrancy: 'none' as 'none' | 'sidebar' | 'full',
 
 	zoomFactor: 1,
 	lastWindowState: {
@@ -23,7 +24,7 @@ const defaults = {
 		chatSeen: false,
 		typingIndicator: false
 	},
-	emojiStyle: 'facebook-3-0',
+	emojiStyle: 'facebook-3-0' as EmojiStyle,
 	confirmImagePaste: true,
 	useWorkChat: false,
 	sidebarHidden: false,

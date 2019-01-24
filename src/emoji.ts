@@ -1,5 +1,5 @@
 import {join} from 'path';
-import {nativeImage} from 'electron';
+import {nativeImage, MenuItemConstructorOptions} from 'electron';
 import config from './config';
 import {showRestartDialog} from './util';
 
@@ -196,7 +196,10 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
-function codeForEmojiStyle(style) {
+export type EmojiStyle = 'facebook-3-0' | 'messenger-1-0' | 'facebook-2-2';
+type EmojiStyleCode = 't' | 'z' | 'f';
+
+function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 	switch (style) {
 		case 'facebook-2-2':
 			return 'f';
@@ -208,9 +211,9 @@ function codeForEmojiStyle(style) {
 	}
 }
 
-const menuIcons = new Map();
+const menuIcons = new Map<EmojiStyle, Electron.NativeImage>();
 
-function getEmojiIcon(style) {
+function getEmojiIcon(style: EmojiStyle): Electron.NativeImage {
 	if (menuIcons.has(style)) {
 		return menuIcons.get(style);
 	}
@@ -225,7 +228,7 @@ function getEmojiIcon(style) {
 // this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
 // with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
 // 																								 (see here) ^
-export function process(url) {
+export function process(url: string): {redirectURL?: string} {
 	const emojiStyle = config.get('emojiStyle');
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
@@ -255,8 +258,8 @@ export function process(url) {
 	return {redirectURL: newURL};
 }
 
-export function generateSubmenu(updateMenu) {
-	const emojiMenuOption = (label, style) => ({
+export function generateSubmenu(updateMenu: () => any): Array<MenuItemConstructorOptions> {
+	const emojiMenuOption = (label: string, style: EmojiStyle): MenuItemConstructorOptions => ({
 		label,
 		type: 'checkbox',
 		icon: getEmojiIcon(style),
