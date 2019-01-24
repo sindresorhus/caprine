@@ -1,6 +1,6 @@
 import * as electron from 'electron';
 import {api, is} from 'electron-util';
-import * as elementReady from 'element-ready';
+import elementReady = require('element-ready');
 import config from './config';
 
 const {ipcRenderer: ipc} = electron;
