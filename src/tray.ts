@@ -1,4 +1,3 @@
-'use strict';
 const path = require('path');
 const electron = require('electron');
 const {is} = require('electron-util');

@@ -1,4 +1,3 @@
-'use strict';
 const elementReady = require('element-ready');
 
 (async () => {

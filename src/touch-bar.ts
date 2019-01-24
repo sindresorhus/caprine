@@ -1,4 +1,3 @@
-'use strict';
 const {TouchBar, ipcMain: ipc, nativeImage} = require('electron');
 const {sendAction, getWindow} = require('./util.ts');
 

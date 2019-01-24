@@ -1,4 +1,3 @@
-'use strict';
 const {app, BrowserWindow, dialog} = require('electron');
 const {is} = require('electron-util');
 

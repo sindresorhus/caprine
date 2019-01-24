@@ -1,4 +1,3 @@
-'use strict';
 const electron = require('electron');
 const {api, is} = require('electron-util');
 const elementReady = require('element-ready');

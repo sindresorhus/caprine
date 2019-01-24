@@ -1,4 +1,3 @@
-'use strict';
 const path = require('path');
 const {nativeImage} = require('electron');
 const config = require('./config.ts');
