@@ -36,7 +36,7 @@ const defaults = {
 	}
 };
 
-function updateVibrancySetting(store) {
+function updateVibrancySetting(store: Store) {
 	const vibrancy = store.get('vibrancy');
 
 	if (vibrancy === true) {
@@ -46,7 +46,7 @@ function updateVibrancySetting(store) {
 	}
 }
 
-function migrate(store) {
+function migrate(store: Store) {
 	updateVibrancySetting(store);
 }
 
