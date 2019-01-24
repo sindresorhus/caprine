@@ -4,7 +4,7 @@ import * as electron from 'electron';
 import {darkMode, is} from 'electron-util';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
-import * as isDev from 'electron-is-dev';
+import isDev = require('electron-is-dev');
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import * as electronDl from 'electron-dl';
 import * as electronContextMenu from 'electron-context-menu';

@@ -37,6 +37,7 @@
 		"facebook-locales": "^1.0.591"
 	},
 	"devDependencies": {
+		"@types/electron-is-dev": "^0.3.0",
 		"@types/element-ready": "^2.1.0",
 		"del-cli": "^1.1.0",
 		"electron": "^4.0.1",
