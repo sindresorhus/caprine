@@ -1,4 +1,4 @@
-import {join} from 'path';
+import * as path from 'path';
 import {app, Menu, Tray} from 'electron';
 import {is} from 'electron-util';
 
@@ -10,7 +10,7 @@ export default {
 			return;
 		}
 
-		const iconPath = join(__dirname, 'static/IconTray.png');
+		const iconPath = path.join(__dirname, 'static/IconTray.png');
 
 		const toggleWin = () => {
 			if (win.isVisible()) {
@@ -47,7 +47,7 @@ export default {
 		}
 
 		const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-		const iconPath = join(__dirname, `static/${icon}`);
+		const iconPath = path.join(__dirname, `static/${icon}`);
 		tray.setImage(iconPath);
 	}
 };

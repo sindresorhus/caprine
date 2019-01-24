@@ -1,4 +1,4 @@
-import {join} from 'path';
+import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
 import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
 import {
@@ -88,7 +88,7 @@ export default function updateMenu(): Menu {
 		{
 			label: 'Custom Styles',
 			click() {
-				const filePath = join(app.getPath('userData'), 'custom.css');
+				const filePath = path.join(app.getPath('userData'), 'custom.css');
 				const defaultCustomStyle = `/*
 This is the custom styles file where you can add anything you want.
 The styles here will be injected into Caprine and will override default styles.
@@ -464,7 +464,7 @@ ${debugInfo()}`;
 				type: 'separator'
 			},
 			aboutMenuItem({
-				icon: join(__dirname, 'static/Icon.png'),
+				icon: path.join(__dirname, 'static/Icon.png'),
 				text: 'Created by Sindre Sorhus'
 			})
 		);

@@ -1,4 +1,4 @@
-import {join} from 'path';
+import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
 import * as electron from 'electron';
 import {darkMode, is} from 'electron-util';
@@ -201,7 +201,7 @@ function createMainWindow() {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: is.linux && join(__dirname, 'static/Icon.png'),
+		icon: is.linux && path.join(__dirname, 'static/Icon.png'),
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
@@ -209,7 +209,7 @@ function createMainWindow() {
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
-			preload: join(__dirname, 'browser.js'),
+			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
 			contextIsolation: true,
 			plugins: true
@@ -303,17 +303,17 @@ function createMainWindow() {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', () => {
-		webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
-		webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
-		webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
 
 		if (config.get('useWorkChat')) {
-			webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'workchat.css'), 'utf8'));
+			webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8'));
 		}
 
-		if (existsSync(join(app.getPath('userData'), 'custom.css'))) {
+		if (existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
 			webContents.insertCSS(
-				readFileSync(join(app.getPath('userData'), 'custom.css'), 'utf8')
+				readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8')
 			);
 		}
 
@@ -327,7 +327,7 @@ function createMainWindow() {
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
 		webContents.executeJavaScript(
-			readFileSync(join(__dirname, 'notifications-isolated.js'), 'utf8')
+			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
 	});
 
@@ -340,7 +340,7 @@ function createMainWindow() {
 				options.show = true;
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
-				options.webPreferences.preload = join(__dirname, 'browser-call.js');
+				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				event['newGuest'] = new electron.BrowserWindow(options);
 			}
 		} else {

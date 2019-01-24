@@ -1,4 +1,4 @@
-import {join} from 'path';
+import * as path from 'path';
 import {nativeImage, MenuItemConstructorOptions} from 'electron';
 import config from './config';
 import {showRestartDialog} from './util';
@@ -218,7 +218,7 @@ function getEmojiIcon(style: EmojiStyle): Electron.NativeImage {
 		return menuIcons.get(style);
 	}
 
-	const image = nativeImage.createFromPath(join(__dirname, 'static', `emoji-${style}.png`));
+	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
 	menuIcons.set(style, image);
 
 	return image;
