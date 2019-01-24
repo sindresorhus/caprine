@@ -2,7 +2,7 @@
 const electron = require('electron');
 const {api, is} = require('electron-util');
 const elementReady = require('element-ready');
-const config = require('./config');
+const config = require('./config.ts');
 
 const {ipcRenderer: ipc} = electron;
 

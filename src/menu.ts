@@ -10,9 +10,9 @@ const {
 	openNewGitHubIssue,
 	debugInfo
 } = require('electron-util');
-const config = require('./config');
-const {sendAction, showRestartDialog} = require('./util');
-const emoji = require('./emoji');
+const config = require('./config.ts');
+const {sendAction, showRestartDialog} = require('./util.ts');
+const emoji = require('./emoji.ts');
 
 const {app, shell} = electron;
 

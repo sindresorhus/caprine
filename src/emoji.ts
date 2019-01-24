@@ -1,8 +1,8 @@
 'use strict';
 const path = require('path');
 const {nativeImage} = require('electron');
-const config = require('./config');
-const {showRestartDialog} = require('./util');
+const config = require('./config.ts');
+const {showRestartDialog} = require('./util.ts');
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/

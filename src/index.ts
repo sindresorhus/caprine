@@ -6,13 +6,13 @@ const {darkMode, is} = require('electron-util');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
-const updateAppMenu = require('./menu');
-const config = require('./config');
-const tray = require('./tray');
-const {sendAction} = require('./util');
-const emoji = require('./emoji');
+const updateAppMenu = require('./menu.ts');
+const config = require('./config.ts');
+const tray = require('./tray.ts');
+const {sendAction} = require('./util.ts');
+const emoji = require('./emoji.ts');
 
-require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
+require('./touch-bar.ts'); // eslint-disable-line import/no-unassigned-import
 
 require('electron-debug')({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -204,7 +204,7 @@ function createMainWindow() {
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
-			preload: path.join(__dirname, 'browser.js'),
+			preload: path.join(__dirname, 'browser.ts'),
 			nodeIntegration: false,
 			contextIsolation: true,
 			plugins: true
@@ -321,7 +321,7 @@ function createMainWindow() {
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
 		webContents.executeJavaScript(
-			fs.readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
+			fs.readFileSync(path.join(__dirname, 'notifications-isolated.ts'), 'utf8')
 		);
 	});
 
@@ -334,7 +334,7 @@ function createMainWindow() {
 				options.show = true;
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
-				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
+				options.webPreferences.preload = path.join(__dirname, 'browser-call.ts');
 				event.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
