@@ -1,21 +1,21 @@
-const path = require('path');
-const fs = require('fs');
-const electron = require('electron');
-const {
+import * as path from 'path';
+import * as fs from 'fs';
+import * as electron from 'electron';
+import {
 	is,
 	appMenu,
 	openUrlMenuItem,
 	aboutMenuItem,
 	openNewGitHubIssue,
 	debugInfo
-} = require('electron-util');
-const config = require('./config.ts');
-const {sendAction, showRestartDialog} = require('./util.ts');
-const emoji = require('./emoji.ts');
+} from 'electron-util';
+import config from './config';
+import {sendAction, showRestartDialog} from './util';
+import * as emoji from './emoji';
 
 const {app, shell} = electron;
 
-function updateMenu() {
+export default function updateMenu() {
 	const newConversationItem = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
@@ -610,5 +610,3 @@ ${debugInfo()}`;
 
 	return menu;
 }
-
-module.exports = updateMenu;

@@ -1,4 +1,4 @@
-const Store = require('electron-store');
+import * as Store from 'electron-store';
 
 const defaults = {
 	defaults: {
@@ -53,4 +53,4 @@ function migrate(store) {
 const store = new Store(defaults);
 migrate(store);
 
-module.exports = store;
+export default store;

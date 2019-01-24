@@ -1,17 +1,17 @@
-const path = require('path');
-const fs = require('fs');
-const electron = require('electron');
-const {darkMode, is} = require('electron-util');
-const log = require('electron-log');
-const {autoUpdater} = require('electron-updater');
-const isDev = require('electron-is-dev');
-const updateAppMenu = require('./menu.ts');
-const config = require('./config.ts');
-const tray = require('./tray.ts');
-const {sendAction} = require('./util.ts');
-const emoji = require('./emoji.ts');
+import * as path from 'path';
+import * as fs from 'fs';
+import * as electron from 'electron';
+import {darkMode, is} from 'electron-util';
+import log from 'electron-log';
+import {autoUpdater} from 'electron-updater';
+import * as isDev from 'electron-is-dev';
+import updateAppMenu from './menu';
+import config from './config';
+import tray from './tray';
+import {sendAction} from './util';
+import * as emoji from './emoji';
 
-require('./touch-bar.ts'); // eslint-disable-line import/no-unassigned-import
+require('./touch-bar'); // eslint-disable-line import/no-unassigned-import
 
 require('electron-debug')({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -203,7 +203,7 @@ function createMainWindow() {
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
-			preload: path.join(__dirname, 'browser.ts'),
+			preload: path.join(__dirname, 'browser.js'),
 			nodeIntegration: false,
 			contextIsolation: true,
 			plugins: true
@@ -320,7 +320,7 @@ function createMainWindow() {
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
 		webContents.executeJavaScript(
-			fs.readFileSync(path.join(__dirname, 'notifications-isolated.ts'), 'utf8')
+			fs.readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
 	});
 
@@ -333,7 +333,7 @@ function createMainWindow() {
 				options.show = true;
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
-				options.webPreferences.preload = path.join(__dirname, 'browser-call.ts');
+				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				event.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {

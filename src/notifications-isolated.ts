@@ -19,8 +19,10 @@
 
 	let counter = 1;
 
-	window.Notification = Object.assign(
+	window['Notification'] = Object.assign(
 		class {
+			private id: number;
+
 			constructor(title, options) {
 				this.id = counter++;
 				notifications.set(this.id, this);
@@ -31,6 +33,6 @@
 			// No-op, but Messenger expects this method to be present
 			close() {}
 		},
-		window.Notification
+		window['Notification']
 	);
 })(window);

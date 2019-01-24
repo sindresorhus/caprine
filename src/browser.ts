@@ -1,7 +1,7 @@
-const electron = require('electron');
-const {api, is} = require('electron-util');
-const elementReady = require('element-ready');
-const config = require('./config.ts');
+import * as electron from 'electron';
+import {api, is} from 'electron-util';
+import * as elementReady from 'element-ready';
+import config from './config';
 
 const {ipcRenderer: ipc} = electron;
 

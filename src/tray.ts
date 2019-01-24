@@ -1,52 +1,53 @@
-const path = require('path');
-const electron = require('electron');
-const {is} = require('electron-util');
+import {join} from 'path';
+import {app, Menu, Tray} from 'electron';
+import {is} from 'electron-util';
 
-const {app} = electron;
 let tray = null;
 
-exports.create = win => {
-	if (is.macos || tray) {
-		return;
-	}
-
-	const iconPath = path.join(__dirname, 'static/IconTray.png');
-
-	const toggleWin = () => {
-		if (win.isVisible()) {
-			win.hide();
-		} else {
-			win.show();
+export default {
+	create: win => {
+		if (is.macos || tray) {
+			return;
 		}
-	};
 
-	const contextMenu = electron.Menu.buildFromTemplate([
-		{
-			label: 'Toggle',
-			click() {
-				toggleWin();
+		const iconPath = join(__dirname, 'static/IconTray.png');
+
+		const toggleWin = () => {
+			if (win.isVisible()) {
+				win.hide();
+			} else {
+				win.show();
 			}
-		},
-		{
-			type: 'separator'
-		},
-		{
-			role: 'quit'
+		};
+
+		const contextMenu = Menu.buildFromTemplate([
+			{
+				label: 'Toggle',
+				click() {
+					toggleWin();
+				}
+			},
+			{
+				type: 'separator'
+			},
+			{
+				role: 'quit'
+			}
+		]);
+
+		tray = new Tray(iconPath);
+		tray.setToolTip(`${app.getName()}`);
+		tray.setContextMenu(contextMenu);
+		tray.on('click', toggleWin);
+	},
+
+	setBadge: shouldDisplayUnread => {
+		if (is.macos || !tray) {
+			return;
 		}
-	]);
 
-	tray = new electron.Tray(iconPath);
-	tray.setToolTip(`${app.getName()}`);
-	tray.setContextMenu(contextMenu);
-	tray.on('click', toggleWin);
-};
-
-exports.setBadge = shouldDisplayUnread => {
-	if (is.macos || !tray) {
-		return;
+		const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
+		const iconPath = join(__dirname, `static/${icon}`);
+		tray.setImage(iconPath);
 	}
-
-	const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-	const iconPath = path.join(__dirname, `static/${icon}`);
-	tray.setImage(iconPath);
 };

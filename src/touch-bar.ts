@@ -1,5 +1,5 @@
-const {TouchBar, ipcMain: ipc, nativeImage} = require('electron');
-const {sendAction, getWindow} = require('./util.ts');
+import {TouchBar, ipcMain as ipc, nativeImage} from 'electron';
+import {sendAction, getWindow} from './util';
 
 const {TouchBarButton} = TouchBar;
 
