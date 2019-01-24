@@ -1,5 +1,5 @@
 import {join} from 'path';
-import * as fs from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import * as electron from 'electron';
 import {darkMode, is} from 'electron-util';
 import log from 'electron-log';
@@ -302,17 +302,17 @@ function createMainWindow() {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', () => {
-		webContents.insertCSS(fs.readFileSync(join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
-		webContents.insertCSS(fs.readFileSync(join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
-		webContents.insertCSS(fs.readFileSync(join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
 
 		if (config.get('useWorkChat')) {
-			webContents.insertCSS(fs.readFileSync(join(__dirname, '..', 'css', 'workchat.css'), 'utf8'));
+			webContents.insertCSS(readFileSync(join(__dirname, '..', 'css', 'workchat.css'), 'utf8'));
 		}
 
-		if (fs.existsSync(join(app.getPath('userData'), 'custom.css'))) {
+		if (existsSync(join(app.getPath('userData'), 'custom.css'))) {
 			webContents.insertCSS(
-				fs.readFileSync(join(app.getPath('userData'), 'custom.css'), 'utf8')
+				readFileSync(join(app.getPath('userData'), 'custom.css'), 'utf8')
 			);
 		}
 
@@ -326,7 +326,7 @@ function createMainWindow() {
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
 		webContents.executeJavaScript(
-			fs.readFileSync(join(__dirname, 'notifications-isolated.js'), 'utf8')
+			readFileSync(join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
 	});
 
