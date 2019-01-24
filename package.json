@@ -13,6 +13,7 @@
 	"engines": {
 		"node": ">=10"
 	},
+	"main": "src/index.ts",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"lint": "xo && stylelint '*.css'",
