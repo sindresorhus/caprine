@@ -5,6 +5,7 @@ import {darkMode, is} from 'electron-util';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import * as isDev from 'electron-is-dev';
+import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
@@ -157,8 +158,7 @@ function initRequestsFiltering() {
 }
 
 function setUserLocale() {
-	const facebookLocales = require('facebook-locales');
-	const userLocale = facebookLocales.bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
+	const userLocale = bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
 	const cookie = {
 		url: 'https://www.messenger.com/',
 		name: 'locale',
