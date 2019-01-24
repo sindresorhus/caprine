@@ -296,12 +296,12 @@ function createMainWindow() {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', () => {
-		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'browser.css'), 'utf8'));
-		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'dark-mode.css'), 'utf8'));
-		webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'vibrancy.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(fs.readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
 
 		if (config.get('useWorkChat')) {
-			webContents.insertCSS(fs.readFileSync(path.join(__dirname, 'workchat.css'), 'utf8'));
+			webContents.insertCSS(fs.readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8'));
 		}
 
 		if (fs.existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
