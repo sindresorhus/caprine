@@ -37,7 +37,7 @@ async function withSettingsMenu(callback) {
 }
 
 function selectMenuItem(itemNumber) {
-	const selector = document.querySelector(
+	const selector = document.querySelector<HTMLElement>(
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
 	);
 	selector.click();
@@ -53,7 +53,8 @@ async function selectOtherListViews(itemNumber) {
 }
 
 function clickBackButton() {
-	const backButton = document.querySelector('._30yy._2oc9');
+	const backButton = document.querySelector<HTMLElement>('._30yy._2oc9');
+
 	if (backButton) {
 		backButton.click();
 	}
@@ -68,44 +69,44 @@ ipc.on('show-preferences', async () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector("._30yy[data-href$='/new']").click();
+	document.querySelector<HTMLElement>("._30yy[data-href$='/new']").click();
 });
 
 ipc.on('log-out', async () => {
 	if (config.get('useWorkChat')) {
-		// Create the menu for the below
-		document.querySelector('._5lxs._3qct._p').click();
+		document.querySelector<HTMLElement>('._5lxs._3qct._p').click();
+
 		// Menu creation is slow
 		setTimeout(() => {
-			const nodes = document.querySelectorAll('._54nq._9jo._558b._2n_z li:last-child a');
+			const nodes = document.querySelectorAll<HTMLElement>('._54nq._9jo._558b._2n_z li:last-child a');
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
 		await withSettingsMenu(() => {
-			const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+			const nodes = document.querySelectorAll<HTMLElement>('._54nq._2i-c._558b._2n_z li:last-child a');
 			nodes[nodes.length - 1].click();
 		});
 	}
 });
 
 ipc.on('find', () => {
-	document.querySelector('._58al').focus();
+	document.querySelector<HTMLElement>('._58al').focus();
 });
 
 ipc.on('search', () => {
-	document.querySelector('._3szo:nth-of-type(1)').click();
+	document.querySelector<HTMLElement>('._3szo:nth-of-type(1)').click();
 });
 
 ipc.on('insert-gif', () => {
-	document.querySelector('._yht').click();
+	document.querySelector<HTMLElement>('._yht').click();
 });
 
 ipc.on('insert-emoji', () => {
-	document.querySelector('._5s2p').click();
+	document.querySelector<HTMLElement>('._5s2p').click();
 });
 
 ipc.on('insert-text', () => {
-	document.querySelector('._5rpu').focus();
+	document.querySelector<HTMLElement>('._5rpu').focus();
 });
 
 ipc.on('next-conversation', nextConversation);
@@ -150,7 +151,7 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 		document.querySelector(preferencesSelector).append(style);
 	}
 
-	const notificationCheckbox = document.querySelector('._374b:nth-of-type(4) ._4ng2 input');
+	const notificationCheckbox = document.querySelector<HTMLInputElement>('._374b:nth-of-type(4) ._4ng2 input');
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
@@ -321,13 +322,13 @@ function selectedConversationIndex(offset = 0) {
 }
 
 function setZoom(zoomFactor) {
-	const node = document.querySelector('#zoomFactor');
+	const node = document.querySelector<HTMLElement>('#zoomFactor');
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
 async function withConversationMenu(callback) {
-	const menuButton = document.querySelector(`${selectedConversationSelector} ._5blh._4-0h`);
+	const menuButton = document.querySelector<HTMLElement>(`${selectedConversationSelector} ._5blh._4-0h`);
 
 	if (menuButton) {
 		await withMenu(menuButton, callback);
@@ -341,7 +342,7 @@ function openMuteModal() {
 }
 
 function archiveSelectedConversation() {
-	const groupConversationProfilePicture = document.querySelector(
+	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
@@ -352,7 +353,7 @@ function archiveSelectedConversation() {
 }
 
 function deleteSelectedConversation() {
-	const groupConversationProfilePicture = document.querySelector(
+	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
@@ -369,19 +370,19 @@ async function openPreferences() {
 }
 
 function isPreferencesOpen() {
-	return Boolean(document.querySelector('._3quh._30yy._2t_._5ixy'));
+	return Boolean(document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy'));
 }
 
 function closePreferences() {
-	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
+	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
 
 async function sendConversationList() {
 	const conversations = await Promise.all(
-		[...(await elementReady(listSelector)).children].splice(0, 10).map(async el => {
-			const profilePic = el.querySelector('._55lt img');
-			const groupPic = el.querySelector('._4ld- div');
+		[...(await elementReady(listSelector)).children].splice(0, 10).map(async (el: HTMLElement) => {
+			const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
+			const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
 
 			// This is only for group chats
 			if (groupPic) {
@@ -395,7 +396,7 @@ async function sendConversationList() {
 			const isConversationMuted = el.classList.contains('_569x');
 
 			return {
-				label: el.querySelector('._1ht6').textContent,
+				label: el.querySelector<HTMLElement>('._1ht6').textContent,
 				selected: el.classList.contains('_1ht2'),
 				unread: el.classList.contains('_1ht3') && !isConversationMuted,
 				icon: await getDataUrlFromImg(
@@ -410,7 +411,7 @@ async function sendConversationList() {
 }
 
 // Return canvas with rounded image
-function urlToCanvas(url, size) {
+function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 	return new Promise(resolve => {
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
@@ -445,23 +446,24 @@ function urlToCanvas(url, size) {
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img, unread) {
+function getDataUrlFromImg(img: HTMLImageElement, unread: boolean) {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
+		// TODO: [TS] fix dataUrl and dataUnreadUrl usage
 		if (!unread) {
-			if (img.dataUrl) {
-				return resolve(img.dataUrl);
+			if (img['dataUrl']) {
+				return resolve(img['dataUrl']);
 			}
-		} else if (img.dataUnreadUrl) {
-			return resolve(img.dataUnreadUrl);
+		} else if (img['dataUnreadUrl']) {
+			return resolve(img['dataUnreadUrl']);
 		}
 
 		const canvas = await urlToCanvas(img.src, 30);
 		const ctx = canvas.getContext('2d');
-		img.dataUrl = canvas.toDataURL();
+		img['dataUrl'] = canvas.toDataURL();
 
 		if (!unread) {
-			return resolve(img.dataUrl);
+			return resolve(img['dataUrl']);
 		}
 
 		const markerSize = 8;
@@ -469,8 +471,8 @@ function getDataUrlFromImg(img, unread) {
 		ctx.beginPath();
 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
-		img.dataUnreadUrl = canvas.toDataURL();
-		resolve(img.dataUnreadUrl);
+		img['dataUnreadUrl'] = canvas.toDataURL();
+		resolve(img['dataUnreadUrl']);
 	});
 }
 
@@ -501,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-	const sidebar = document.querySelector('[role=navigation]');
+	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
 
 	if (sidebar) {
 		sendConversationList();
@@ -516,7 +518,7 @@ window.addEventListener('load', () => {
 	}
 
 	if (location.pathname.startsWith('/login')) {
-		const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
+		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0');
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
 		keepMeSignedInCheckbox.addEventListener('click', () => {
 			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));

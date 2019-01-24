@@ -35,8 +35,9 @@ if (!config.get('hardwareAcceleration')) {
 }
 
 if (!isDev) {
+	log.transports.file.level = 'info';
 	autoUpdater.logger = log;
-	autoUpdater.logger.transports.file.level = 'info';
+
 	const FOUR_HOURS = 1000 * 60 * 60 * 4;
 	setInterval(() => autoUpdater.checkForUpdates(), FOUR_HOURS);
 	autoUpdater.checkForUpdates();
@@ -258,7 +259,7 @@ function createMainWindow() {
 	tray.create(mainWindow);
 
 	if (is.macos) {
-		const firstItem = {
+		const firstItem: electron.MenuItemConstructorOptions = {
 			label: 'Mute Notifications',
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
@@ -266,6 +267,7 @@ function createMainWindow() {
 				mainWindow.webContents.send('toggle-mute-notifications');
 			}
 		};
+
 		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
