@@ -1,7 +1,5 @@
 import {app, BrowserWindow, dialog} from 'electron';
-
-import electronUtil = require('electron-util');
-const {is} = electronUtil;
+import {is} from 'electron-util';
 
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();

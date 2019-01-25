@@ -1,6 +1,5 @@
+import Store from 'electron-store';
 import {EmojiStyle} from './emoji';
-
-import Store = require('electron-store');
 
 const defaults = {
 	followSystemAppearance: true,

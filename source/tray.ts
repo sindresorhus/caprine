@@ -1,8 +1,6 @@
 import * as path from 'path';
 import {app, Menu, Tray} from 'electron';
-
-import electronUtil = require('electron-util');
-const {is} = electronUtil;
+import {is} from 'electron-util';
 
 let tray: Tray | null = null;
 

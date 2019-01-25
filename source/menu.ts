@@ -1,12 +1,17 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
 import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
+import {
+	is,
+	appMenu,
+	openUrlMenuItem,
+	aboutMenuItem,
+	openNewGitHubIssue,
+	debugInfo
+} from 'electron-util';
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
-import * as emoji from './emoji';
-
-import electronUtil = require('electron-util');
-const {is, appMenu, openUrlMenuItem, aboutMenuItem, openNewGitHubIssue, debugInfo} = electronUtil;
+import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
 export default function updateMenu(): Menu {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -224,7 +229,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Emoji style',
-			submenu: emoji.generateSubmenu(updateMenu)
+			submenu: generateEmojiSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'

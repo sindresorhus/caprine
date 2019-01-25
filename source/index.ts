@@ -1,22 +1,20 @@
 import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
+import electron from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
+import electronDl from 'electron-dl';
+import electronContextMenu from 'electron-context-menu';
+import isDev from 'electron-is-dev';
+import electronDebug from 'electron-debug';
+import {darkMode, is} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
 import {sendAction} from './util';
-import * as emoji from './emoji';
+import {process as processEmojiUrl} from './emoji';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
-
-import electron = require('electron');
-import electronDl = require('electron-dl');
-import electronContextMenu = require('electron-context-menu');
-import isDev = require('electron-is-dev');
-import electronDebug = require('electron-debug');
-import electronUtil = require('electron-util');
-const {darkMode, is} = electronUtil;
 
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -166,7 +164,7 @@ function initRequestsFiltering(): void {
 
 	electron.session.defaultSession!.webRequest.onBeforeRequest(filter, ({url}, callback) => {
 		if (url.includes('emoji.php')) {
-			callback(emoji.process(url));
+			callback(processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
 			callback({cancel: config.get('block.typingIndicator')});
 		} else if (url.includes('change_read_status.php')) {

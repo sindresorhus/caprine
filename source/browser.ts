@@ -1,9 +1,7 @@
 import {ipcRenderer as ipc} from 'electron';
+import elementReady from 'element-ready';
+import {api, is} from 'electron-util';
 import config from './config';
-
-import elementReady = require('element-ready');
-import electronUtil = require('electron-util');
-const {api, is} = electronUtil;
 
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
