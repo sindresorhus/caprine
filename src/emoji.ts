@@ -269,7 +269,7 @@ export function process(url: string): Electron.Response {
 	return {redirectURL: newURL};
 }
 
-export function generateSubmenu(updateMenu: () => any): MenuItemConstructorOptions[] {
+export function generateSubmenu(updateMenu: () => void): MenuItemConstructorOptions[] {
 	const emojiMenuOption = (label: string, style: EmojiStyle): MenuItemConstructorOptions => ({
 		label,
 		type: 'checkbox',
