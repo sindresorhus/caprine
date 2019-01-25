@@ -1,6 +1,8 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
+		"target": "esnext",
+		"module": "commonjs",
 		"lib": [
 			"ESNext",
 			"DOM",
