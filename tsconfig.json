@@ -8,7 +8,6 @@
 			"esnext",
 			"dom",
 			"dom.iterable"
-		],
-		"downlevelIteration": true
+		]
 	}
 }
