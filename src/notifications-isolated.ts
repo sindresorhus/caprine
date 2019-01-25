@@ -28,6 +28,8 @@
 			private _id: number;
 
 			constructor(title: string, options: NotificationOptions) {
+				// According to https://github.com/sindresorhus/caprine/pull/637 the Notification
+				// constructor can be called with non-string title and body
 				let {body} = options;
 				const bodyProps = (body as any).props;
 				body = bodyProps ? bodyProps.content[0] : options.body;
