@@ -309,7 +309,7 @@ function createMainWindow(): Electron.BrowserWindow {
 	}
 
 	// Update badge on conversations change
-	ipcMain.on('conversations', (_event: Electron.Event, conversations: any[]) => {
+	ipcMain.on('conversations', (_event: Electron.Event, conversations: Conversation[]) => {
 		updateBadge(conversations);
 	});
 
