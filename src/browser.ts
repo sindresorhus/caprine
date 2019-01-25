@@ -125,19 +125,19 @@ ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
 
-ipc.on('mute-conversation', () => {
-	openMuteModal();
+ipc.on('mute-conversation', async () => {
+	await openMuteModal();
 });
 
-ipc.on('delete-conversation', () => {
-	deleteSelectedConversation();
+ipc.on('delete-conversation', async () => {
+	await deleteSelectedConversation();
 });
 
 ipc.on('archive-conversation', async () => {
 	const index = selectedConversationIndex();
 
 	if (index !== -1) {
-		archiveSelectedConversation();
+		await archiveSelectedConversation();
 
 		const key = index + 1;
 		await jumpToConversation(key);
@@ -355,30 +355,30 @@ async function withConversationMenu(callback: () => void): Promise<void> {
 	}
 }
 
-function openMuteModal(): void {
-	withConversationMenu(() => {
+async function openMuteModal(): Promise<void> {
+	await withConversationMenu(() => {
 		selectMenuItem(1);
 	});
 }
 
-function archiveSelectedConversation(): void {
+async function archiveSelectedConversation(): Promise<void> {
 	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-	withConversationMenu(() => {
+	await withConversationMenu(() => {
 		selectMenuItem(isGroupConversation ? 4 : 3);
 	});
 }
 
-function deleteSelectedConversation(): void {
+async function deleteSelectedConversation(): Promise<void> {
 	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-	withConversationMenu(() => {
+	await withConversationMenu(() => {
 		selectMenuItem(isGroupConversation ? 5 : 4);
 	});
 }
