@@ -3,8 +3,7 @@ import {sendAction, getWindow} from './util';
 
 const {TouchBarButton} = TouchBar;
 
-// TODO: [TS] Add Conversation type
-ipc.on('conversations', (_event: Electron.Event, conversations: any[]) => {
+ipc.on('conversations', (_event: Electron.Event, conversations: Conversation[]) => {
 	const items = conversations.map(({label, selected, icon}, index: number) => {
 		return new TouchBarButton({
 			label: label.length > 25 ? label.slice(0, 25) + '…' : label,

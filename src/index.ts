@@ -68,8 +68,7 @@ app.on('second-instance', () => {
 	}
 });
 
-// TODO: [TS] function updateBadge(conversations: Array<Conversation>)
-function updateBadge(conversations: any[]): void {
+function updateBadge(conversations: Conversation[]): void {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
@@ -290,8 +289,7 @@ function createMainWindow(): Electron.BrowserWindow {
 		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
-		// TODO: [TS] conversation type
-		ipcMain.on('conversations', (_event: Electron.Event, conversations: any[]) => {
+		ipcMain.on('conversations', (_event: Electron.Event, conversations: Conversation[]) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -436,15 +434,6 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
-interface NotificationEvent {
-	id: number;
-	title: string;
-	body: string;
-	icon: string;
-	silent: boolean;
-}
-
-// TODO: [TS] use NotificationEvent interface on the other side
 ipcMain.on(
 	'notification',
 	(_event: Electron.Event, {id, title, body, icon, silent}: NotificationEvent) => {

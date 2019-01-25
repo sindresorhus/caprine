@@ -321,7 +321,6 @@ async function selectConversation(index: number): Promise<void> {
 	const conversationElement = (await elementReady(listSelector)).children[index];
 
 	if (conversationElement) {
-		// TODO: [TS] use a querySelector instead? Same for `children` above?
 		(conversationElement.firstChild!.firstChild as HTMLElement).click();
 	}
 }
@@ -396,14 +395,6 @@ function isPreferencesOpen(): boolean {
 function closePreferences(): void {
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
 	doneButton.click();
-}
-
-// TODO: [TS] extract this interface to be used in index.ts and touch-bar.ts
-interface Conversation {
-	label: string;
-	selected: boolean;
-	unread: boolean;
-	icon: string;
 }
 
 async function sendConversationList(): Promise<void> {
@@ -592,11 +583,7 @@ window.addEventListener('message', ({data: {type, data}}) => {
 	}
 });
 
-// TODO: [TS] use the type from the other side; do the same above
-function showNotification({id, title, body, icon, silent}: any): void {
-	body = body.props ? body.props.content[0] : body;
-	title = typeof title === 'object' && title.props ? title.props.content[0] : title;
-
+function showNotification({id, title, body, icon, silent}: NotificationEvent): void {
 	const img = new Image();
 	img.crossOrigin = 'anonymous';
 	img.src = icon;

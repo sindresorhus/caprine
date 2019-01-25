@@ -27,11 +27,21 @@
 		class {
 			private _id: number;
 
-			constructor(title: string, options: any) {
+			constructor(title: string, options: NotificationOptions) {
+				let {body} = options;
+				const bodyProps = (body as any).props;
+				body = bodyProps ? bodyProps.content[0] : options.body;
+
+				const titleProps = (title as any).props;
+				title = titleProps ? titleProps.content[0] : title;
+
 				this._id = counter++;
 				notifications.set(this._id, this as any);
 
-				window.postMessage({type: 'notification', data: {title, id: this._id, ...options}}, '*');
+				window.postMessage(
+					{type: 'notification', data: {title, id: this._id, ...options, body}},
+					'*'
+				);
 			}
 
 			// No-op, but Messenger expects this method to be present
