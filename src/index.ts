@@ -277,7 +277,7 @@ function createMainWindow(): Electron.BrowserWindow {
 	tray.create(mainWindow);
 
 	if (is.macos) {
-		const firstItem: electron.MenuItemConstructorOptions = {
+		const firstItem: Electron.MenuItemConstructorOptions = {
 			label: 'Mute Notifications',
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
