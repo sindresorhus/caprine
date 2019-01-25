@@ -4,19 +4,19 @@ import * as electron from 'electron';
 import {darkMode, is} from 'electron-util';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
-import isDev = require('electron-is-dev');
 import {bestFacebookLocaleFor} from 'facebook-locales';
-import * as electronDl from 'electron-dl';
-import * as electronContextMenu from 'electron-context-menu';
-
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
 import {sendAction} from './util';
 import * as emoji from './emoji';
-import './touch-bar';
+import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
-import * as electronDebug from 'electron-debug';
+import electronDl = require('electron-dl');
+import electronContextMenu = require('electron-context-menu');
+import isDev = require('electron-is-dev');
+import electronDebug = require('electron-debug');
+
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
 	showDevTools: false
@@ -68,7 +68,7 @@ app.on('second-instance', () => {
 });
 
 // TODO: [TS] function updateBadge(conversations: Array<Conversation>)
-function updateBadge(conversations) {
+function updateBadge(conversations): void {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
@@ -114,7 +114,7 @@ ipcMain.on('update-overlay-icon', (_event, data: string, text: string) => {
 	mainWindow.setOverlayIcon(img, text);
 });
 
-function enableHiresResources() {
+function enableHiresResources(): void {
 	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
 	if (scaleFactor === 1) {
 		return;
@@ -141,7 +141,7 @@ function enableHiresResources() {
 	});
 }
 
-function initRequestsFiltering() {
+function initRequestsFiltering(): void {
 	const filter = {
 		urls: [
 			`*://*.${domain}/*typ.php*`, // Type indicator blocker
@@ -162,7 +162,7 @@ function initRequestsFiltering() {
 	});
 }
 
-function setUserLocale() {
+function setUserLocale(): void {
 	const userLocale = bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
 	const cookie = {
 		url: 'https://www.messenger.com/',
@@ -172,7 +172,7 @@ function setUserLocale() {
 	electron.session.defaultSession.cookies.set(cookie, () => {});
 }
 
-function setNotificationsMute(status: boolean) {
+function setNotificationsMute(status: boolean): void {
 	const label = 'Mute Notifications';
 	const muteMenuItem = Menu.getApplicationMenu().getMenuItemById('mute-notifications');
 
@@ -185,7 +185,7 @@ function setNotificationsMute(status: boolean) {
 	}
 }
 
-function createMainWindow() {
+function createMainWindow(): Electron.BrowserWindow {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
 
@@ -308,13 +308,13 @@ function createMainWindow() {
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
 
 		if (config.get('useWorkChat')) {
-			webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8'));
+			webContents.insertCSS(
+				readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8')
+			);
 		}
 
 		if (existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
-			webContents.insertCSS(
-				readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8')
-			);
+			webContents.insertCSS(readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8'));
 		}
 
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
@@ -331,7 +331,11 @@ function createMainWindow() {
 		);
 	});
 
-	webContents.on('new-window', (event, url, frameName, _disposition, options) => {
+	interface NewWindowEvent extends Electron.Event {
+		newGuest: Electron.BrowserWindow;
+	}
+
+	webContents.on('new-window', (event: NewWindowEvent, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
 		if (url === 'about:blank') {
@@ -341,7 +345,7 @@ function createMainWindow() {
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
-				event['newGuest'] = new electron.BrowserWindow(options);
+				event.newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
 			if (url.startsWith(trackingUrlPrefix)) {
@@ -353,17 +357,17 @@ function createMainWindow() {
 	});
 
 	webContents.on('will-navigate', (event, url) => {
-		const isMessengerDotCom = (url: string) => {
+		const isMessengerDotCom = (url: string): boolean => {
 			const {hostname} = new URL(url);
 			return hostname === 'www.messenger.com';
 		};
 
-		const isTwoFactorAuth = (url: string) => {
+		const isTwoFactorAuth = (url: string): boolean => {
 			const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
 			return url.startsWith(twoFactorAuthURL);
 		};
 
-		const isWorkChat = (url: string) => {
+		const isWorkChat = (url: string): boolean => {
 			const {hostname, pathname} = new URL(url);
 
 			if (hostname === 'work.facebook.com') {

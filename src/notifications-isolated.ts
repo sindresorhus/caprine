@@ -1,4 +1,4 @@
-(window => {
+((window, Notification) => {
 	const notifications = new Map<number, Notification>();
 
 	// Handle events sent from the browser process
@@ -19,20 +19,22 @@
 
 	let counter = 1;
 
-	window['Notification'] = Object.assign(
+	const AugmentedNotification = Object.assign(
 		class {
-			private id: number;
+			private _id: number;
 
 			constructor(title, options) {
-				this.id = counter++;
-				notifications.set(this.id, this as any);
+				this._id = counter++;
+				notifications.set(this._id, this as any);
 
-				window.postMessage({type: 'notification', data: {title, id: this.id, ...options}}, '*');
+				window.postMessage({type: 'notification', data: {title, id: this._id, ...options}}, '*');
 			}
 
 			// No-op, but Messenger expects this method to be present
-			close() {}
+			close(): void {}
 		},
-		window['Notification']
+		Notification
 	);
-})(window);
+
+	Object.assign(window, {Notification: AugmentedNotification});
+})(window, Notification);

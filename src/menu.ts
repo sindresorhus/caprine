@@ -22,7 +22,7 @@ export default function updateMenu(): Menu {
 		}
 	};
 
-	const switchItems: Array<MenuItemConstructorOptions> = [
+	const switchItems: MenuItemConstructorOptions[] = [
 		{
 			label: 'Switch to Work Chat…',
 			accelerator: 'CommandOrControl+Shift+2',
@@ -51,7 +51,7 @@ export default function updateMenu(): Menu {
 		}
 	];
 
-	const vibrancySubmenu: Array<MenuItemConstructorOptions> = [
+	const vibrancySubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'No Vibrancy',
 			type: 'checkbox',
@@ -84,7 +84,7 @@ export default function updateMenu(): Menu {
 		}
 	];
 
-	const advancedSubmenu: Array<MenuItemConstructorOptions> = [
+	const advancedSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Custom Styles',
 			click() {
@@ -128,7 +128,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const preferencesSubmenu: Array<MenuItemConstructorOptions> = [
+	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Bounce Dock on Message',
 			visible: is.macos,
@@ -240,7 +240,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const viewSubmenu: Array<MenuItemConstructorOptions> = [
+	const viewSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Reset Text Size',
 			accelerator: 'CommandOrControl+0',
@@ -343,7 +343,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const conversationSubmenu: Array<MenuItemConstructorOptions> = [
+	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Mute Conversation',
 			accelerator: 'CommandOrControl+Shift+M',
@@ -425,7 +425,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const helpSubmenu: Array<MenuItemConstructorOptions> = [
+	const helpSubmenu: MenuItemConstructorOptions[] = [
 		openUrlMenuItem({
 			label: 'Website',
 			url: 'https://sindresorhus.com/caprine'
@@ -470,7 +470,7 @@ ${debugInfo()}`;
 		);
 	}
 
-	const debugSubmenu: Array<MenuItemConstructorOptions> = [
+	const debugSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Show Settings',
 			click() {
@@ -504,7 +504,7 @@ ${debugInfo()}`;
 		}
 	];
 
-	const macosTemplate: Array<MenuItemConstructorOptions> = [
+	const macosTemplate: MenuItemConstructorOptions[] = [
 		appMenu([
 			{
 				label: 'Caprine Preferences',
@@ -546,7 +546,7 @@ ${debugInfo()}`;
 		}
 	];
 
-	const linuxWindowsTemplate: Array<MenuItemConstructorOptions> = [
+	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
 			label: 'File',
 			submenu: [

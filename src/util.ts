@@ -6,7 +6,7 @@ export function getWindow(): BrowserWindow {
 	return win;
 }
 
-export function sendAction(action: string, ...args) {
+export function sendAction(action: string, ...args): void {
 	const win = getWindow();
 
 	if (is.macos) {
@@ -16,7 +16,7 @@ export function sendAction(action: string, ...args) {
 	win.webContents.send(action, ...args);
 }
 
-export function showRestartDialog(message: string) {
+export function showRestartDialog(message: string): void {
 	dialog.showMessageBox(
 		{
 			message,

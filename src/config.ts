@@ -1,5 +1,6 @@
-import Store = require('electron-store');
 import {EmojiStyle} from './emoji';
+
+import Store = require('electron-store');
 
 const defaults = {
 	followSystemAppearance: true,
@@ -14,7 +15,7 @@ const defaults = {
 		width: 800,
 		height: 600,
 		x: undefined as number,
-		y: undefined as number,
+		y: undefined as number
 	},
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
@@ -37,7 +38,7 @@ const defaults = {
 	keepMeSignedIn: true
 };
 
-function updateVibrancySetting(store: Store) {
+function updateVibrancySetting(store: Store): void {
 	const vibrancy = store.get('vibrancy');
 
 	if (vibrancy === true) {
@@ -47,7 +48,7 @@ function updateVibrancySetting(store: Store) {
 	}
 }
 
-function migrate(store: Store) {
+function migrate(store: Store): void {
 	updateVibrancySetting(store);
 }
 

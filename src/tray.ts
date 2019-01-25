@@ -12,7 +12,7 @@ export default {
 
 		const iconPath = path.join(__dirname, 'static/IconTray.png');
 
-		const toggleWin = () => {
+		const toggleWin = (): void => {
 			if (win.isVisible()) {
 				win.hide();
 			} else {

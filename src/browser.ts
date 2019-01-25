@@ -1,14 +1,15 @@
 import {ipcRenderer as ipc} from 'electron';
 import {api, is} from 'electron-util';
-import elementReady = require('element-ready');
 import config from './config';
+
+import elementReady = require('element-ready');
 
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withMenu(menuButtonElement: HTMLElement, callback: () => void) {
+async function withMenu(menuButtonElement: HTMLElement, callback: () => void): Promise<void> {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
@@ -18,7 +19,10 @@ async function withMenu(menuButtonElement: HTMLElement, callback: () => void) {
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector<HTMLElement>('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const menuLayer = document.querySelector<HTMLElement>(
+		'.uiContextualLayerPositioner:not(.hidden_elem)'
+	);
+
 	const observer = new MutationObserver(() => {
 		if (menuLayer.classList.contains('hidden_elem')) {
 			classList.remove('hide-dropdowns');
@@ -30,18 +34,18 @@ async function withMenu(menuButtonElement: HTMLElement, callback: () => void) {
 	await callback();
 }
 
-async function withSettingsMenu(callback) {
+async function withSettingsMenu(callback): Promise<void> {
 	await withMenu(await elementReady('._30yy._2fug._p'), callback);
 }
 
-function selectMenuItem(itemNumber) {
+function selectMenuItem(itemNumber): void {
 	const selector = document.querySelector<HTMLElement>(
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
 	);
 	selector.click();
 }
 
-async function selectOtherListViews(itemNumber: number) {
+async function selectOtherListViews(itemNumber: number): Promise<void> {
 	// In case one of other views is shown
 	clickBackButton();
 
@@ -50,7 +54,7 @@ async function selectOtherListViews(itemNumber: number) {
 	});
 }
 
-function clickBackButton() {
+function clickBackButton(): void {
 	const backButton = document.querySelector<HTMLElement>('._30yy._2oc9');
 
 	if (backButton) {
@@ -76,12 +80,18 @@ ipc.on('log-out', async () => {
 
 		// Menu creation is slow
 		setTimeout(() => {
-			const nodes = document.querySelectorAll<HTMLElement>('._54nq._9jo._558b._2n_z li:last-child a');
+			const nodes = document.querySelectorAll<HTMLElement>(
+				'._54nq._9jo._558b._2n_z li:last-child a'
+			);
+
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
 		await withSettingsMenu(() => {
-			const nodes = document.querySelectorAll<HTMLElement>('._54nq._2i-c._558b._2n_z li:last-child a');
+			const nodes = document.querySelectorAll<HTMLElement>(
+				'._54nq._2i-c._558b._2n_z li:last-child a'
+			);
+
 			nodes[nodes.length - 1].click();
 		});
 	}
@@ -130,7 +140,7 @@ ipc.on('archive-conversation', async () => {
 	}
 });
 
-function setSidebarVisibility() {
+function setSidebarVisibility(): void {
 	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
 	ipc.send('set-sidebar-visibility');
 }
@@ -150,7 +160,9 @@ ipc.on('toggle-mute-notifications', async (_event, defaultStatus: boolean) => {
 		document.querySelector<HTMLElement>(preferencesSelector).append(style);
 	}
 
-	const notificationCheckbox = document.querySelector<HTMLInputElement>('._374b:nth-of-type(4) ._4ng2 input');
+	const notificationCheckbox = document.querySelector<HTMLInputElement>(
+		'._374b:nth-of-type(4) ._4ng2 input'
+	);
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
@@ -189,7 +201,7 @@ ipc.on('toggle-unread-threads-view', () => {
 	selectOtherListViews(6);
 });
 
-function setDarkMode() {
+function setDarkMode(): void {
 	if (is.macos && config.get('followSystemAppearance')) {
 		document.documentElement.classList.toggle('dark-mode', api.systemPreferences.isDarkMode());
 	} else {
@@ -199,7 +211,7 @@ function setDarkMode() {
 	updateVibrancy();
 }
 
-function updateVibrancy() {
+function updateVibrancy(): void {
 	const {classList} = document.documentElement;
 
 	classList.remove('sidebar-vibrancy', 'full-vibrancy');
@@ -279,7 +291,7 @@ ipc.on('jump-to-conversation', async (_event, key: number) => {
 	await jumpToConversation(key);
 });
 
-async function nextConversation() {
+async function nextConversation(): Promise<void> {
 	const index = selectedConversationIndex(1);
 
 	if (index !== -1) {
@@ -287,7 +299,7 @@ async function nextConversation() {
 	}
 }
 
-async function previousConversation() {
+async function previousConversation(): Promise<void> {
 	const index = selectedConversationIndex(-1);
 
 	if (index !== -1) {
@@ -295,13 +307,13 @@ async function previousConversation() {
 	}
 }
 
-async function jumpToConversation(key) {
+async function jumpToConversation(key): Promise<void> {
 	const index = key - 1;
 	await selectConversation(index);
 }
 
 // Focus on the conversation with the given index
-async function selectConversation(index: number) {
+async function selectConversation(index: number): Promise<void> {
 	const conversationElement = (await elementReady(listSelector)).children[index];
 
 	if (conversationElement) {
@@ -323,27 +335,29 @@ function selectedConversationIndex(offset = 0): number {
 	return ((index % list.length) + list.length) % list.length;
 }
 
-function setZoom(zoomFactor: number) {
+function setZoom(zoomFactor: number): void {
 	const node = document.querySelector<HTMLElement>('#zoomFactor');
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
-async function withConversationMenu(callback: () => void) {
-	const menuButton = document.querySelector<HTMLElement>(`${selectedConversationSelector} ._5blh._4-0h`);
+async function withConversationMenu(callback: () => void): Promise<void> {
+	const menuButton = document.querySelector<HTMLElement>(
+		`${selectedConversationSelector} ._5blh._4-0h`
+	);
 
 	if (menuButton) {
 		await withMenu(menuButton, callback);
 	}
 }
 
-function openMuteModal() {
+function openMuteModal(): void {
 	withConversationMenu(() => {
 		selectMenuItem(1);
 	});
 }
 
-function archiveSelectedConversation() {
+function archiveSelectedConversation(): void {
 	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
@@ -354,7 +368,7 @@ function archiveSelectedConversation() {
 	});
 }
 
-function deleteSelectedConversation() {
+function deleteSelectedConversation(): void {
 	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
@@ -365,17 +379,17 @@ function deleteSelectedConversation() {
 	});
 }
 
-async function openPreferences() {
+async function openPreferences(): Promise<void> {
 	await withSettingsMenu(() => {
 		selectMenuItem(1);
 	});
 }
 
-function isPreferencesOpen() {
+function isPreferencesOpen(): boolean {
 	return Boolean(document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy'));
 }
 
-function closePreferences() {
+function closePreferences(): void {
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy');
 	doneButton.click();
 }
@@ -388,8 +402,8 @@ interface Conversation {
 	icon: string;
 }
 
-async function sendConversationList() {
-	const conversations: Array<Conversation> = await Promise.all(
+async function sendConversationList(): Promise<void> {
+	const conversations: Conversation[] = await Promise.all(
 		[...(await elementReady(listSelector)).children].splice(0, 10).map(async (el: HTMLElement) => {
 			const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
 			const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
@@ -461,19 +475,20 @@ function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<stri
 	return new Promise(async resolve => {
 		// TODO: [TS] fix dataUrl and dataUnreadUrl usage
 		if (!unread) {
-			if (img['dataUrl']) {
-				return resolve(img['dataUrl']);
+			if (img.hasAttribute('dataUrl')) {
+				return resolve(img.getAttribute('dataUrl'));
 			}
-		} else if (img['dataUnreadUrl']) {
-			return resolve(img['dataUnreadUrl']);
+		} else if (img.hasAttribute('dataUnreadUrl')) {
+			return resolve(img.getAttribute('dataUnreadUrl'));
 		}
 
 		const canvas = await urlToCanvas(img.src, 30);
 		const ctx = canvas.getContext('2d');
-		img['dataUrl'] = canvas.toDataURL();
+		const dataUrl = canvas.toDataURL();
+		img.setAttribute('dataUrl', dataUrl);
 
 		if (!unread) {
-			return resolve(img['dataUrl']);
+			return resolve(dataUrl);
 		}
 
 		const markerSize = 8;
@@ -481,9 +496,10 @@ function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<stri
 		ctx.beginPath();
 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
-		img['dataUnreadUrl'] = canvas.toDataURL();
+		const dataUnreadUrl = canvas.toDataURL();
+		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
 
-		resolve(img['dataUnreadUrl']);
+		resolve(dataUnreadUrl);
 	});
 }
 
@@ -569,7 +585,7 @@ window.addEventListener('message', ({data: {type, data}}) => {
 	}
 });
 
-function showNotification({id, title, body, icon, silent}) {
+function showNotification({id, title, body, icon, silent}): void {
 	body = body.props ? body.props.content[0] : body;
 	title = typeof title === 'object' && title.props ? title.props.content[0] : title;
 

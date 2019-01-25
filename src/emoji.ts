@@ -196,18 +196,27 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
-export type EmojiStyle = 'facebook-3-0' | 'messenger-1-0' | 'facebook-2-2';
-type EmojiStyleCode = 't' | 'z' | 'f';
+export enum EmojiStyle {
+	Facebook30 = 'facebook-3-0',
+	Messenger10 = 'messenger-1-0',
+	Facebook22 = 'facebook-2-2'
+}
+
+enum EmojiStyleCode {
+	Facebook30 = 't',
+	Messenger10 = 'z',
+	Facebook22 = 'f'
+}
 
 function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 	switch (style) {
 		case 'facebook-2-2':
-			return 'f';
+			return EmojiStyleCode.Facebook22;
 		case 'messenger-1-0':
-			return 'z';
+			return EmojiStyleCode.Messenger10;
 		case 'facebook-3-0':
 		default:
-			return 't';
+			return EmojiStyleCode.Facebook30;
 	}
 }
 
@@ -228,7 +237,7 @@ function getEmojiIcon(style: EmojiStyle): Electron.NativeImage {
 // this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
 // with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
 // 																								 (see here) ^
-export function process(url: string): {redirectURL?: string} {
+export function process(url: string): Electron.Response {
 	const emojiStyle = config.get('emojiStyle');
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
@@ -258,7 +267,7 @@ export function process(url: string): {redirectURL?: string} {
 	return {redirectURL: newURL};
 }
 
-export function generateSubmenu(updateMenu: () => any): Array<MenuItemConstructorOptions> {
+export function generateSubmenu(updateMenu: () => any): MenuItemConstructorOptions[] {
 	const emojiMenuOption = (label: string, style: EmojiStyle): MenuItemConstructorOptions => ({
 		label,
 		type: 'checkbox',
@@ -273,8 +282,8 @@ export function generateSubmenu(updateMenu: () => any): Array<MenuItemConstructo
 	});
 
 	return [
-		emojiMenuOption('Facebook 3.0', 'facebook-3-0'),
-		emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
-		emojiMenuOption('Facebook 2.2', 'facebook-2-2')
+		emojiMenuOption('Facebook 3.0', EmojiStyle.Facebook30),
+		emojiMenuOption('Messenger 1.0', EmojiStyle.Messenger10),
+		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22)
 	];
 }
