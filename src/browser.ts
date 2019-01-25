@@ -607,6 +607,6 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 	});
 }
 
-ipc.on('notification-callback', (_event: Electron.Event, data: any) => {
+ipc.on('notification-callback', (_event: Electron.Event, data: unknown) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
