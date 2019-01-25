@@ -110,10 +110,13 @@ function updateBadge(conversations: any[]): void {
 }
 
 // TODO: [TS] _event type
-ipcMain.on('update-overlay-icon', (_event: Electron.IpcMessageEvent, data: string, text: string) => {
-	const img = electron.nativeImage.createFromDataURL(data);
-	mainWindow.setOverlayIcon(img, text);
-});
+ipcMain.on(
+	'update-overlay-icon',
+	(_event: Electron.IpcMessageEvent, data: string, text: string) => {
+		const img = electron.nativeImage.createFromDataURL(data);
+		mainWindow.setOverlayIcon(img, text);
+	}
+);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
@@ -129,24 +132,30 @@ function enableHiresResources(): void {
 
 	const filter = {urls: [`*://*.${domain}/`]};
 
-	electron.session.defaultSession!.webRequest.onBeforeSendHeaders(filter, (details: Electron.OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
-		let cookie = (details.requestHeaders as any).Cookie;
+	electron.session.defaultSession!.webRequest.onBeforeSendHeaders(
+		filter,
+		(
+			details: Electron.OnSendHeadersDetails,
+			callback: (response: BeforeSendHeadersResponse) => void
+		) => {
+			let cookie = (details.requestHeaders as any).Cookie;
 
-		if (cookie && details.method === 'GET') {
-			if (/(; )?dpr=\d/.test(cookie)) {
-				cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
-			} else {
-				cookie = `${cookie}; dpr=${scaleFactor}`;
+			if (cookie && details.method === 'GET') {
+				if (/(; )?dpr=\d/.test(cookie)) {
+					cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
+				} else {
+					cookie = `${cookie}; dpr=${scaleFactor}`;
+				}
+
+				(details.requestHeaders as any).Cookie = cookie;
 			}
 
-			(details.requestHeaders as any).Cookie = cookie;
+			callback({
+				cancel: false,
+				requestHeaders: details.requestHeaders
+			});
 		}
-
-		callback({
-			cancel: false,
-			requestHeaders: details.requestHeaders
-		});
-	});
+	);
 }
 
 function initRequestsFiltering(): void {
@@ -306,7 +315,9 @@ function createMainWindow(): Electron.BrowserWindow {
 
 	// Update badge on conversations change
 	// TODO: [TS] event type, conversation type
-	ipcMain.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) => updateBadge(conversations));
+	ipcMain.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) =>
+		updateBadge(conversations)
+	);
 
 	enableHiresResources();
 
@@ -439,22 +450,25 @@ interface NotificationEvent {
 }
 
 // TODO: [TS] event type, use NotificationEvent interface on the other side
-ipcMain.on('notification', (_event: Electron.IpcMessageEvent, {id, title, body, icon, silent}: NotificationEvent) => {
-	const notification = new Notification({
-		title,
-		body,
-		icon: nativeImage.createFromDataURL(icon),
-		silent
-	});
+ipcMain.on(
+	'notification',
+	(_event: Electron.IpcMessageEvent, {id, title, body, icon, silent}: NotificationEvent) => {
+		const notification = new Notification({
+			title,
+			body,
+			icon: nativeImage.createFromDataURL(icon),
+			silent
+		});
 
-	notification.on('click', () => {
-		mainWindow.show();
-		sendAction('notification-callback', {callbackName: 'onclick', id});
-	});
+		notification.on('click', () => {
+			mainWindow.show();
+			sendAction('notification-callback', {callbackName: 'onclick', id});
+		});
 
-	notification.on('close', () => {
-		sendAction('notification-callback', {callbackName: 'onclose', id});
-	});
+		notification.on('close', () => {
+			sendAction('notification-callback', {callbackName: 'onclose', id});
+		});
 
-	notification.show();
-});
+		notification.show();
+	}
+);

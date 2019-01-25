@@ -9,7 +9,10 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withMenu(menuButtonElement: HTMLElement, callback: () => Promise<void> | void): Promise<void> {
+async function withMenu(
+	menuButtonElement: HTMLElement,
+	callback: () => Promise<void> | void
+): Promise<void> {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
@@ -146,40 +149,43 @@ function setSidebarVisibility(): void {
 }
 
 // TODO: [TS] event type
-ipc.on('toggle-mute-notifications', async (_event: Electron.IpcMessageEvent, defaultStatus: boolean) => {
-	const preferencesAreOpen = isPreferencesOpen();
+ipc.on(
+	'toggle-mute-notifications',
+	async (_event: Electron.IpcMessageEvent, defaultStatus: boolean) => {
+		const preferencesAreOpen = isPreferencesOpen();
 
-	if (!preferencesAreOpen) {
-		const style = document.createElement('style');
-		// Hide both the backdrop and the preferences dialog
-		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
-		document.body.append(style);
+		if (!preferencesAreOpen) {
+			const style = document.createElement('style');
+			// Hide both the backdrop and the preferences dialog
+			style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
+			document.body.append(style);
 
-		await openPreferences();
+			await openPreferences();
 
-		// Will clean up itself after the preferences are closed
-		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
+			// Will clean up itself after the preferences are closed
+			document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
+		}
+
+		const notificationCheckbox = document.querySelector<HTMLInputElement>(
+			'._374b:nth-of-type(4) ._4ng2 input'
+		)!;
+
+		if (defaultStatus === undefined) {
+			notificationCheckbox.click();
+		} else if (
+			(defaultStatus && notificationCheckbox.checked) ||
+			(!defaultStatus && !notificationCheckbox.checked)
+		) {
+			notificationCheckbox.click();
+		}
+
+		ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+
+		if (!preferencesAreOpen) {
+			closePreferences();
+		}
 	}
-
-	const notificationCheckbox = document.querySelector<HTMLInputElement>(
-		'._374b:nth-of-type(4) ._4ng2 input'
-	)!;
-
-	if (defaultStatus === undefined) {
-		notificationCheckbox.click();
-	} else if (
-		(defaultStatus && notificationCheckbox.checked) ||
-		(!defaultStatus && !notificationCheckbox.checked)
-	) {
-		notificationCheckbox.click();
-	}
-
-	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
-
-	if (!preferencesAreOpen) {
-		closePreferences();
-	}
-});
+);
 
 ipc.on('toggle-message-buttons', async () => {
 	const messageButtons = await elementReady('._39bj');
@@ -407,29 +413,31 @@ interface Conversation {
 
 async function sendConversationList(): Promise<void> {
 	const conversations: Conversation[] = await Promise.all(
-		([...(await elementReady(listSelector)).children] as HTMLElement[]).splice(0, 10).map(async (el: HTMLElement) => {
-			const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
-			const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
+		([...(await elementReady(listSelector)).children] as HTMLElement[])
+			.splice(0, 10)
+			.map(async (el: HTMLElement) => {
+				const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
+				const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
 
-			// This is only for group chats
-			if (groupPic) {
-				// Slice image source from background-image style property of div
-				const bgImage = groupPic.style.backgroundImage!;
-				groupPic.src = bgImage!.slice(5, bgImage.length - 2);
-			}
+				// This is only for group chats
+				if (groupPic) {
+					// Slice image source from background-image style property of div
+					const bgImage = groupPic.style.backgroundImage!;
+					groupPic.src = bgImage!.slice(5, bgImage.length - 2);
+				}
 
-			const isConversationMuted = el.classList.contains('_569x');
+				const isConversationMuted = el.classList.contains('_569x');
 
-			return {
-				label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
-				selected: el.classList.contains('_1ht2'),
-				unread: el.classList.contains('_1ht3') && !isConversationMuted,
-				icon: await getDataUrlFromImg(
-					profilePic ? profilePic! : groupPic!,
-					el.classList.contains('_1ht3')
-				)
-			};
-		})
+				return {
+					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
+					selected: el.classList.contains('_1ht2'),
+					unread: el.classList.contains('_1ht3') && !isConversationMuted,
+					icon: await getDataUrlFromImg(
+						profilePic ? profilePic! : groupPic!,
+						el.classList.contains('_1ht3')
+					)
+				};
+			})
 	);
 
 	ipc.send('conversations', conversations);
