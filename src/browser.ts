@@ -1,8 +1,9 @@
 import {ipcRenderer as ipc} from 'electron';
-import {api, is} from 'electron-util';
 import config from './config';
 
 import elementReady = require('element-ready');
+import electronUtil = require('electron-util');
+const {api, is} = electronUtil;
 
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
@@ -148,44 +149,40 @@ function setSidebarVisibility(): void {
 	ipc.send('set-sidebar-visibility');
 }
 
-// TODO: [TS] event type
-ipc.on(
-	'toggle-mute-notifications',
-	async (_event: Electron.IpcMessageEvent, defaultStatus: boolean) => {
-		const preferencesAreOpen = isPreferencesOpen();
+ipc.on('toggle-mute-notifications', async (_event: Electron.Event, defaultStatus: boolean) => {
+	const preferencesAreOpen = isPreferencesOpen();
 
-		if (!preferencesAreOpen) {
-			const style = document.createElement('style');
-			// Hide both the backdrop and the preferences dialog
-			style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
-			document.body.append(style);
+	if (!preferencesAreOpen) {
+		const style = document.createElement('style');
+		// Hide both the backdrop and the preferences dialog
+		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
+		document.body.append(style);
 
-			await openPreferences();
+		await openPreferences();
 
-			// Will clean up itself after the preferences are closed
-			document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
-		}
-
-		const notificationCheckbox = document.querySelector<HTMLInputElement>(
-			'._374b:nth-of-type(4) ._4ng2 input'
-		)!;
-
-		if (defaultStatus === undefined) {
-			notificationCheckbox.click();
-		} else if (
-			(defaultStatus && notificationCheckbox.checked) ||
-			(!defaultStatus && !notificationCheckbox.checked)
-		) {
-			notificationCheckbox.click();
-		}
-
-		ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
-
-		if (!preferencesAreOpen) {
-			closePreferences();
-		}
+		// Will clean up itself after the preferences are closed
+		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
 	}
-);
+
+	const notificationCheckbox = document.querySelector<HTMLInputElement>(
+		'._374b:nth-of-type(4) ._4ng2 input'
+	)!;
+
+	if (defaultStatus === undefined) {
+		notificationCheckbox.click();
+	} else if (
+		(defaultStatus && notificationCheckbox.checked) ||
+		(!defaultStatus && !notificationCheckbox.checked)
+	) {
+		notificationCheckbox.click();
+	}
+
+	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+
+	if (!preferencesAreOpen) {
+		closePreferences();
+	}
+});
 
 ipc.on('toggle-message-buttons', async () => {
 	const messageButtons = await elementReady('._39bj');
@@ -266,8 +263,7 @@ ipc.on('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-// TODO: [TS] event type
-ipc.on('render-overlay-icon', (_event: Electron.IpcMessageEvent, messageCount: number) => {
+ipc.on('render-overlay-icon', (_event: Electron.Event, messageCount: number) => {
 	ipc.send(
 		'update-overlay-icon',
 		renderOverlayIcon(messageCount).toDataURL(),
@@ -295,8 +291,7 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-// TODO: [TS] event type, conversation type
-ipc.on('jump-to-conversation', async (_event: Electron.IpcMessageEvent, key: number) => {
+ipc.on('jump-to-conversation', async (_event: Electron.Event, key: number) => {
 	await jumpToConversation(key);
 });
 
@@ -625,7 +620,6 @@ function showNotification({id, title, body, icon, silent}: any): void {
 	});
 }
 
-// TODO: [TS] event type
-ipc.on('notification-callback', (_event: Electron.IpcMessageEvent, data: any) => {
+ipc.on('notification-callback', (_event: Electron.Event, data: any) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });

@@ -3,8 +3,8 @@ import {sendAction, getWindow} from './util';
 
 const {TouchBarButton} = TouchBar;
 
-// TODO: [TS] is it IpcMessageEvent or just Event? Add Conversation type
-ipc.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) => {
+// TODO: [TS] Add Conversation type
+ipc.on('conversations', (_event: Electron.Event, conversations: any[]) => {
 	const items = conversations.map(({label, selected, icon}, index: number) => {
 		return new TouchBarButton({
 			label: label.length > 25 ? label.slice(0, 25) + '…' : label,

@@ -1,7 +1,5 @@
 import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
-import * as electron from 'electron';
-import {darkMode, is} from 'electron-util';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import {bestFacebookLocaleFor} from 'facebook-locales';
@@ -12,10 +10,13 @@ import {sendAction} from './util';
 import * as emoji from './emoji';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
+import electron = require('electron');
 import electronDl = require('electron-dl');
 import electronContextMenu = require('electron-context-menu');
 import isDev = require('electron-is-dev');
 import electronDebug = require('electron-debug');
+import electronUtil = require('electron-util');
+const {darkMode, is} = electronUtil;
 
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -109,14 +110,10 @@ function updateBadge(conversations: any[]): void {
 	}
 }
 
-// TODO: [TS] _event type
-ipcMain.on(
-	'update-overlay-icon',
-	(_event: Electron.IpcMessageEvent, data: string, text: string) => {
-		const img = electron.nativeImage.createFromDataURL(data);
-		mainWindow.setOverlayIcon(img, text);
-	}
-);
+ipcMain.on('update-overlay-icon', (_event: Electron.Event, data: string, text: string) => {
+	const img = electron.nativeImage.createFromDataURL(data);
+	mainWindow.setOverlayIcon(img, text);
+});
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
@@ -293,8 +290,8 @@ function createMainWindow(): Electron.BrowserWindow {
 		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
-		// TODO: [TS] event type, conversation type
-		ipcMain.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) => {
+		// TODO: [TS] conversation type
+		ipcMain.on('conversations', (_event: Electron.Event, conversations: any[]) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -314,10 +311,9 @@ function createMainWindow(): Electron.BrowserWindow {
 	}
 
 	// Update badge on conversations change
-	// TODO: [TS] event type, conversation type
-	ipcMain.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) =>
-		updateBadge(conversations)
-	);
+	ipcMain.on('conversations', (_event: Electron.Event, conversations: any[]) => {
+		updateBadge(conversations);
+	});
 
 	enableHiresResources();
 
@@ -427,8 +423,7 @@ if (is.macos) {
 	});
 }
 
-// TODO: [TS] event type
-ipcMain.on('mute-notifications-toggled', (_event: Electron.IpcMessageEvent, status: boolean) => {
+ipcMain.on('mute-notifications-toggled', (_event: Electron.Event, status: boolean) => {
 	setNotificationsMute(status);
 });
 
@@ -449,10 +444,10 @@ interface NotificationEvent {
 	silent: boolean;
 }
 
-// TODO: [TS] event type, use NotificationEvent interface on the other side
+// TODO: [TS] use NotificationEvent interface on the other side
 ipcMain.on(
 	'notification',
-	(_event: Electron.IpcMessageEvent, {id, title, body, icon, silent}: NotificationEvent) => {
+	(_event: Electron.Event, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
 			body,
