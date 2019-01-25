@@ -9,7 +9,7 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withMenu(menuButtonElement: HTMLElement, callback: () => void): Promise<void> {
+async function withMenu(menuButtonElement: HTMLElement, callback: () => Promise<void> | void): Promise<void> {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
@@ -21,7 +21,7 @@ async function withMenu(menuButtonElement: HTMLElement, callback: () => void): P
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
 	const menuLayer = document.querySelector<HTMLElement>(
 		'.uiContextualLayerPositioner:not(.hidden_elem)'
-	);
+	)!;
 
 	const observer = new MutationObserver(() => {
 		if (menuLayer.classList.contains('hidden_elem')) {
@@ -34,14 +34,14 @@ async function withMenu(menuButtonElement: HTMLElement, callback: () => void): P
 	await callback();
 }
 
-async function withSettingsMenu(callback): Promise<void> {
+async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	await withMenu(await elementReady('._30yy._2fug._p'), callback);
 }
 
-function selectMenuItem(itemNumber): void {
+function selectMenuItem(itemNumber: number): void {
 	const selector = document.querySelector<HTMLElement>(
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
-	);
+	)!;
 	selector.click();
 }
 
@@ -71,12 +71,12 @@ ipc.on('show-preferences', async () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector<HTMLElement>("._30yy[data-href$='/new']").click();
+	document.querySelector<HTMLElement>("._30yy[data-href$='/new']")!.click();
 });
 
 ipc.on('log-out', async () => {
 	if (config.get('useWorkChat')) {
-		document.querySelector<HTMLElement>('._5lxs._3qct._p').click();
+		document.querySelector<HTMLElement>('._5lxs._3qct._p')!.click();
 
 		// Menu creation is slow
 		setTimeout(() => {
@@ -98,23 +98,23 @@ ipc.on('log-out', async () => {
 });
 
 ipc.on('find', () => {
-	document.querySelector<HTMLElement>('._58al').focus();
+	document.querySelector<HTMLElement>('._58al')!.focus();
 });
 
 ipc.on('search', () => {
-	document.querySelector<HTMLElement>('._3szo:nth-of-type(1)').click();
+	document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
 });
 
 ipc.on('insert-gif', () => {
-	document.querySelector<HTMLElement>('._yht').click();
+	document.querySelector<HTMLElement>('._yht')!.click();
 });
 
 ipc.on('insert-emoji', () => {
-	document.querySelector<HTMLElement>('._5s2p').click();
+	document.querySelector<HTMLElement>('._5s2p')!.click();
 });
 
 ipc.on('insert-text', () => {
-	document.querySelector<HTMLElement>('._5rpu').focus();
+	document.querySelector<HTMLElement>('._5rpu')!.focus();
 });
 
 ipc.on('next-conversation', nextConversation);
@@ -145,7 +145,8 @@ function setSidebarVisibility(): void {
 	ipc.send('set-sidebar-visibility');
 }
 
-ipc.on('toggle-mute-notifications', async (_event, defaultStatus: boolean) => {
+// TODO: [TS] event type
+ipc.on('toggle-mute-notifications', async (_event: Electron.IpcMessageEvent, defaultStatus: boolean) => {
 	const preferencesAreOpen = isPreferencesOpen();
 
 	if (!preferencesAreOpen) {
@@ -157,12 +158,12 @@ ipc.on('toggle-mute-notifications', async (_event, defaultStatus: boolean) => {
 		await openPreferences();
 
 		// Will clean up itself after the preferences are closed
-		document.querySelector<HTMLElement>(preferencesSelector).append(style);
+		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
 	}
 
 	const notificationCheckbox = document.querySelector<HTMLInputElement>(
 		'._374b:nth-of-type(4) ._4ng2 input'
-	);
+	)!;
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
@@ -235,7 +236,7 @@ function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	canvas.width = 128;
 	canvas.style.letterSpacing = '-5px';
 
-	const ctx = canvas.getContext('2d');
+	const ctx = canvas.getContext('2d')!;
 	ctx.fillStyle = '#f42020';
 	ctx.beginPath();
 	ctx.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI);
@@ -259,7 +260,8 @@ ipc.on('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-ipc.on('render-overlay-icon', (_event, messageCount: number) => {
+// TODO: [TS] event type
+ipc.on('render-overlay-icon', (_event: Electron.IpcMessageEvent, messageCount: number) => {
 	ipc.send(
 		'update-overlay-icon',
 		renderOverlayIcon(messageCount).toDataURL(),
@@ -287,7 +289,8 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', async (_event, key: number) => {
+// TODO: [TS] event type, conversation type
+ipc.on('jump-to-conversation', async (_event: Electron.IpcMessageEvent, key: number) => {
 	await jumpToConversation(key);
 });
 
@@ -307,7 +310,7 @@ async function previousConversation(): Promise<void> {
 	}
 }
 
-async function jumpToConversation(key): Promise<void> {
+async function jumpToConversation(key: number): Promise<void> {
 	const index = key - 1;
 	await selectConversation(index);
 }
@@ -318,7 +321,7 @@ async function selectConversation(index: number): Promise<void> {
 
 	if (conversationElement) {
 		// TODO: [TS] use a querySelector instead? Same for `children` above?
-		(conversationElement.firstChild.firstChild as HTMLElement).click();
+		(conversationElement.firstChild!.firstChild as HTMLElement).click();
 	}
 }
 
@@ -329,14 +332,14 @@ function selectedConversationIndex(offset = 0): number {
 		return -1;
 	}
 
-	const list = [...selected.parentNode.children];
+	const list = [...selected.parentNode!.children];
 	const index = list.indexOf(selected) + offset;
 
 	return ((index % list.length) + list.length) % list.length;
 }
 
 function setZoom(zoomFactor: number): void {
-	const node = document.querySelector<HTMLElement>('#zoomFactor');
+	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
@@ -390,7 +393,7 @@ function isPreferencesOpen(): boolean {
 }
 
 function closePreferences(): void {
-	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy');
+	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
 	doneButton.click();
 }
 
@@ -404,27 +407,25 @@ interface Conversation {
 
 async function sendConversationList(): Promise<void> {
 	const conversations: Conversation[] = await Promise.all(
-		[...(await elementReady(listSelector)).children].splice(0, 10).map(async (el: HTMLElement) => {
+		([...(await elementReady(listSelector)).children] as HTMLElement[]).splice(0, 10).map(async (el: HTMLElement) => {
 			const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
 			const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
 
 			// This is only for group chats
 			if (groupPic) {
 				// Slice image source from background-image style property of div
-				groupPic.src = groupPic.style.backgroundImage.slice(
-					5,
-					groupPic.style.backgroundImage.length - 2
-				);
+				const bgImage = groupPic.style.backgroundImage!;
+				groupPic.src = bgImage!.slice(5, bgImage.length - 2);
 			}
 
 			const isConversationMuted = el.classList.contains('_569x');
 
 			return {
-				label: el.querySelector<HTMLElement>('._1ht6').textContent,
+				label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
 				selected: el.classList.contains('_1ht2'),
 				unread: el.classList.contains('_1ht3') && !isConversationMuted,
 				icon: await getDataUrlFromImg(
-					profilePic ? profilePic : groupPic,
+					profilePic ? profilePic! : groupPic!,
 					el.classList.contains('_1ht3')
 				)
 			};
@@ -451,20 +452,18 @@ function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 			canvas.width = size + padding.left + padding.right;
 			canvas.height = size + padding.top + padding.bottom;
 
-			const ctx = canvas.getContext('2d');
-
+			const ctx = canvas.getContext('2d')!;
 			ctx.save();
 			ctx.beginPath();
 			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.clip();
-
 			ctx.drawImage(img, padding.left, padding.top, size, size);
-
 			ctx.restore();
 
 			resolve(canvas);
 		});
+
 		img.src = url;
 	});
 }
@@ -473,17 +472,22 @@ function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
-		// TODO: [TS] fix dataUrl and dataUnreadUrl usage
-		if (!unread) {
-			if (img.hasAttribute('dataUrl')) {
-				return resolve(img.getAttribute('dataUrl'));
+		if (unread) {
+			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
+
+			if (dataUnreadUrl) {
+				return resolve(dataUnreadUrl);
 			}
-		} else if (img.hasAttribute('dataUnreadUrl')) {
-			return resolve(img.getAttribute('dataUnreadUrl'));
+		} else {
+			const dataUrl = img.getAttribute('dataUrl');
+
+			if (dataUrl) {
+				return resolve(dataUrl);
+			}
 		}
 
 		const canvas = await urlToCanvas(img.src, 30);
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext('2d')!;
 		const dataUrl = canvas.toDataURL();
 		img.setAttribute('dataUrl', dataUrl);
 
@@ -545,7 +549,7 @@ window.addEventListener('load', () => {
 	}
 
 	if (location.pathname.startsWith('/login')) {
-		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0');
+		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
 		keepMeSignedInCheckbox.addEventListener('click', () => {
 			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
@@ -585,7 +589,8 @@ window.addEventListener('message', ({data: {type, data}}) => {
 	}
 });
 
-function showNotification({id, title, body, icon, silent}): void {
+// TODO: [TS] use the type from the other side; do the same above
+function showNotification({id, title, body, icon, silent}: any): void {
 	body = body.props ? body.props.content[0] : body;
 	title = typeof title === 'object' && title.props ? title.props.content[0] : title;
 
@@ -595,7 +600,7 @@ function showNotification({id, title, body, icon, silent}): void {
 
 	img.addEventListener('load', () => {
 		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext('2d')!;
 
 		canvas.width = img.width;
 		canvas.height = img.height;
@@ -612,6 +617,7 @@ function showNotification({id, title, body, icon, silent}): void {
 	});
 }
 
-ipc.on('notification-callback', (_event, data) => {
+// TODO: [TS] event type
+ipc.on('notification-callback', (_event: Electron.IpcMessageEvent, data: any) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });

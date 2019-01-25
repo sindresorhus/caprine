@@ -68,7 +68,7 @@ app.on('second-instance', () => {
 });
 
 // TODO: [TS] function updateBadge(conversations: Array<Conversation>)
-function updateBadge(conversations): void {
+function updateBadge(conversations: any[]): void {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
@@ -109,20 +109,28 @@ function updateBadge(conversations): void {
 	}
 }
 
-ipcMain.on('update-overlay-icon', (_event, data: string, text: string) => {
+// TODO: [TS] _event type
+ipcMain.on('update-overlay-icon', (_event: Electron.IpcMessageEvent, data: string, text: string) => {
 	const img = electron.nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 });
 
+interface BeforeSendHeadersResponse {
+	cancel?: boolean;
+	requestHeaders?: Electron.RequestHeaders;
+}
+
 function enableHiresResources(): void {
 	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
+
 	if (scaleFactor === 1) {
 		return;
 	}
 
 	const filter = {urls: [`*://*.${domain}/`]};
-	electron.session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
-		let cookie = details.requestHeaders.Cookie;
+
+	electron.session.defaultSession!.webRequest.onBeforeSendHeaders(filter, (details: Electron.OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
+		let cookie = (details.requestHeaders as any).Cookie;
 
 		if (cookie && details.method === 'GET') {
 			if (/(; )?dpr=\d/.test(cookie)) {
@@ -131,7 +139,7 @@ function enableHiresResources(): void {
 				cookie = `${cookie}; dpr=${scaleFactor}`;
 			}
 
-			details.requestHeaders.Cookie = cookie;
+			(details.requestHeaders as any).Cookie = cookie;
 		}
 
 		callback({
@@ -151,7 +159,7 @@ function initRequestsFiltering(): void {
 		]
 	};
 
-	electron.session.defaultSession.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+	electron.session.defaultSession!.webRequest.onBeforeRequest(filter, ({url}, callback) => {
 		if (url.includes('emoji.php')) {
 			callback(emoji.process(url));
 		} else if (url.includes('typ.php')) {
@@ -169,19 +177,19 @@ function setUserLocale(): void {
 		name: 'locale',
 		value: userLocale
 	};
-	electron.session.defaultSession.cookies.set(cookie, () => {});
+	electron.session.defaultSession!.cookies.set(cookie, () => {});
 }
 
 function setNotificationsMute(status: boolean): void {
 	const label = 'Mute Notifications';
-	const muteMenuItem = Menu.getApplicationMenu().getMenuItemById('mute-notifications');
+	const muteMenuItem = Menu.getApplicationMenu()!.getMenuItemById('mute-notifications');
 
 	config.set('notificationsMuted', status);
 	muteMenuItem.checked = status;
 
 	if (is.macos) {
 		const item = dockMenu.items.find(x => x.label === label);
-		item.checked = status;
+		item!.checked = status;
 	}
 }
 
@@ -276,7 +284,8 @@ function createMainWindow(): Electron.BrowserWindow {
 		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
-		ipcMain.on('conversations', (_event, conversations) => {
+		// TODO: [TS] event type, conversation type
+		ipcMain.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -296,7 +305,8 @@ function createMainWindow(): Electron.BrowserWindow {
 	}
 
 	// Update badge on conversations change
-	ipcMain.on('conversations', (_event, conversations) => updateBadge(conversations));
+	// TODO: [TS] event type, conversation type
+	ipcMain.on('conversations', (_event: Electron.IpcMessageEvent, conversations: any[]) => updateBadge(conversations));
 
 	enableHiresResources();
 
@@ -331,11 +341,7 @@ function createMainWindow(): Electron.BrowserWindow {
 		);
 	});
 
-	interface NewWindowEvent extends Electron.Event {
-		newGuest: Electron.BrowserWindow;
-	}
-
-	webContents.on('new-window', (event: NewWindowEvent, url, frameName, _disposition, options) => {
+	webContents.on('new-window', (event: Event, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
 		if (url === 'about:blank') {
@@ -345,11 +351,11 @@ function createMainWindow(): Electron.BrowserWindow {
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
-				event.newGuest = new electron.BrowserWindow(options);
+				(event as any).newGuest = new electron.BrowserWindow(options);
 			}
 		} else {
 			if (url.startsWith(trackingUrlPrefix)) {
-				url = new URL(url).searchParams.get('u');
+				url = new URL(url).searchParams.get('u')!;
 			}
 
 			electron.shell.openExternal(url);
@@ -410,7 +416,8 @@ if (is.macos) {
 	});
 }
 
-ipcMain.on('mute-notifications-toggled', (_event, status: boolean) => {
+// TODO: [TS] event type
+ipcMain.on('mute-notifications-toggled', (_event: Electron.IpcMessageEvent, status: boolean) => {
 	setNotificationsMute(status);
 });
 
@@ -423,7 +430,16 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
-ipcMain.on('notification', (_event, {id, title, body, icon, silent}) => {
+interface NotificationEvent {
+	id: number;
+	title: string;
+	body: string;
+	icon: string;
+	silent: boolean;
+}
+
+// TODO: [TS] event type, use NotificationEvent interface on the other side
+ipcMain.on('notification', (_event: Electron.IpcMessageEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 	const notification = new Notification({
 		title,
 		body,

@@ -7,8 +7,12 @@
 			const {callbackName, id} = data;
 			const notification = notifications.get(id);
 
-			if (notification && notification[callbackName]) {
-				notification[callbackName]();
+			if (!notification) {
+				return;
+			}
+
+			if ((notification as any)[callbackName]) {
+				(notification as any)[callbackName]();
 			}
 
 			if (callbackName === 'onclose') {
@@ -23,7 +27,7 @@
 		class {
 			private _id: number;
 
-			constructor(title, options) {
+			constructor(title: string, options: any) {
 				this._id = counter++;
 				notifications.set(this._id, this as any);
 

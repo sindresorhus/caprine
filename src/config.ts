@@ -14,8 +14,8 @@ const defaults = {
 	lastWindowState: {
 		width: 800,
 		height: 600,
-		x: undefined as number,
-		y: undefined as number
+		x: undefined as number | undefined,
+		y: undefined as number | undefined
 	},
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,

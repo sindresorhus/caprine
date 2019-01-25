@@ -6,7 +6,7 @@ export function getWindow(): BrowserWindow {
 	return win;
 }
 
-export function sendAction(action: string, ...args): void {
+export function sendAction(action: string, ...args: any[]): void {
 	const win = getWindow();
 
 	if (is.macos) {

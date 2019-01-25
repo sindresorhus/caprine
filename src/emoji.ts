@@ -223,8 +223,10 @@ function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 const menuIcons = new Map<EmojiStyle, Electron.NativeImage>();
 
 function getEmojiIcon(style: EmojiStyle): Electron.NativeImage {
-	if (menuIcons.has(style)) {
-		return menuIcons.get(style);
+	const cachedIcon = menuIcons.get(style);
+
+	if (cachedIcon) {
+		return cachedIcon;
 	}
 
 	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
