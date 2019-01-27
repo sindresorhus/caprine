@@ -25,7 +25,7 @@
 		"publish-snap": "del dist && tsc && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
 	},
 	"dependencies": {
-		"electron-context-menu": "^0.10.1",
+		"electron-context-menu": "^0.11.0",
 		"electron-debug": "^2.0.0",
 		"electron-dl": "^1.13.0",
 		"electron-is-dev": "^1.0.0",
