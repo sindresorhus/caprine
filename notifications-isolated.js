@@ -23,6 +23,7 @@
 			if (notification && notification[callbackName]) {
 				notification[callbackName]();
 			}
+
 			notifications.delete(id);
 			window.postMessage({type: 'notification-reply', data: {previousConversation, reply}}, '*');
 		}

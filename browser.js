@@ -613,6 +613,7 @@ function insertMessageText(text, inputField) {
 		event.initTextEvent('textInput', true, true, window, '_', 0, null);
 		inputField.dispatchEvent(event);
 	}
+
 	document.execCommand('selectAll', false, null);
 	document.execCommand('insertText', false, text);
 }
