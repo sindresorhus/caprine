@@ -212,7 +212,7 @@ function createMainWindow(): Electron.BrowserWindow {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: is.linux && path.join(__dirname, 'static/Icon.png'),
+		icon: is.linux ? path.join(__dirname, 'static/Icon.png') : undefined,
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
