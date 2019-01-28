@@ -10,10 +10,10 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "sindresorhus.com"
 	},
+	"main": "dist-js",
 	"engines": {
 		"node": ">=10"
 	},
-	"main": "dist-js",
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
 		"lint": "tsc && xo && stylelint '*.css'",
