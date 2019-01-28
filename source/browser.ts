@@ -1,4 +1,4 @@
-import {ipcRenderer as ipc} from 'electron';
+import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
 import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
 import config from './config';
@@ -147,7 +147,7 @@ function setSidebarVisibility(): void {
 	ipc.send('set-sidebar-visibility');
 }
 
-ipc.on('toggle-mute-notifications', async (_event: Electron.Event, defaultStatus: boolean) => {
+ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus: boolean) => {
 	const preferencesAreOpen = isPreferencesOpen();
 
 	if (!preferencesAreOpen) {
@@ -261,7 +261,7 @@ ipc.on('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-ipc.on('render-overlay-icon', (_event: Electron.Event, messageCount: number) => {
+ipc.on('render-overlay-icon', (_event: ElectronEvent, messageCount: number) => {
 	ipc.send(
 		'update-overlay-icon',
 		renderOverlayIcon(messageCount).toDataURL(),
@@ -289,7 +289,7 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', async (_event: Electron.Event, key: number) => {
+ipc.on('jump-to-conversation', async (_event: ElectronEvent, key: number) => {
 	await jumpToConversation(key);
 });
 
@@ -605,6 +605,6 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 	});
 }
 
-ipc.on('notification-callback', (_event: Electron.Event, data: unknown) => {
+ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });

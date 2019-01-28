@@ -1,6 +1,18 @@
 import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
-import electron from 'electron';
+import electron, {
+	app,
+	ipcMain,
+	Menu,
+	nativeImage,
+	Notification,
+	systemPreferences,
+	BrowserWindow,
+	MenuItemConstructorOptions,
+	Event as ElectronEvent,
+	RequestHeaders,
+	OnSendHeadersDetails
+} from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
@@ -25,7 +37,6 @@ electronDl();
 electronContextMenu();
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
-const {app, ipcMain, Menu, nativeImage, Notification, systemPreferences} = electron;
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -47,10 +58,10 @@ if (!isDev) {
 	autoUpdater.checkForUpdates();
 }
 
-let mainWindow: Electron.BrowserWindow;
+let mainWindow: BrowserWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
-let dockMenu: Electron.Menu;
+let dockMenu: Menu;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -107,14 +118,14 @@ function updateBadge(conversations: Conversation[]): void {
 	}
 }
 
-ipcMain.on('update-overlay-icon', (_event: Electron.Event, data: string, text: string) => {
+ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: string) => {
 	const img = electron.nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 });
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
-	requestHeaders?: Electron.RequestHeaders;
+	requestHeaders?: RequestHeaders;
 }
 
 function enableHiresResources(): void {
@@ -128,10 +139,7 @@ function enableHiresResources(): void {
 
 	electron.session.defaultSession!.webRequest.onBeforeSendHeaders(
 		filter,
-		(
-			details: Electron.OnSendHeadersDetails,
-			callback: (response: BeforeSendHeadersResponse) => void
-		) => {
+		(details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
 			let cookie = (details.requestHeaders as any).Cookie;
 
 			if (cookie && details.method === 'GET') {
@@ -196,7 +204,7 @@ function setNotificationsMute(status: boolean): void {
 	}
 }
 
-function createMainWindow(): Electron.BrowserWindow {
+function createMainWindow(): BrowserWindow {
 	const lastWindowState = config.get('lastWindowState');
 	const isDarkMode = config.get('darkMode');
 
@@ -205,7 +213,7 @@ function createMainWindow(): Electron.BrowserWindow {
 		? 'https://work.facebook.com/chat'
 		: 'https://www.messenger.com/login/';
 
-	const win = new electron.BrowserWindow({
+	const win = new BrowserWindow({
 		title: app.getName(),
 		show: false,
 		x: lastWindowState.x,
@@ -275,7 +283,7 @@ function createMainWindow(): Electron.BrowserWindow {
 	tray.create(mainWindow);
 
 	if (is.macos) {
-		const firstItem: Electron.MenuItemConstructorOptions = {
+		const firstItem: MenuItemConstructorOptions = {
 			label: 'Mute Notifications',
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
@@ -284,10 +292,10 @@ function createMainWindow(): Electron.BrowserWindow {
 			}
 		};
 
-		dockMenu = electron.Menu.buildFromTemplate([firstItem]);
+		dockMenu = Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
-		ipcMain.on('conversations', (_event: Electron.Event, conversations: Conversation[]) => {
+		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -302,12 +310,12 @@ function createMainWindow(): Electron.BrowserWindow {
 					}
 				};
 			});
-			app.dock.setMenu(electron.Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
+			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
 	}
 
 	// Update badge on conversations change
-	ipcMain.on('conversations', (_event: Electron.Event, conversations: Conversation[]) => {
+	ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 		updateBadge(conversations);
 	});
 
@@ -354,7 +362,7 @@ function createMainWindow(): Electron.BrowserWindow {
 				options.titleBarStyle = 'default';
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
-				(event as any).newGuest = new electron.BrowserWindow(options);
+				(event as any).newGuest = new BrowserWindow(options);
 			}
 		} else {
 			if (url.startsWith(trackingUrlPrefix)) {
@@ -419,7 +427,7 @@ if (is.macos) {
 	});
 }
 
-ipcMain.on('mute-notifications-toggled', (_event: Electron.Event, status: boolean) => {
+ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean) => {
 	setNotificationsMute(status);
 });
 
@@ -434,7 +442,7 @@ app.on('before-quit', () => {
 
 ipcMain.on(
 	'notification',
-	(_event: Electron.Event, {id, title, body, icon, silent}: NotificationEvent) => {
+	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
 			body,

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {nativeImage, MenuItemConstructorOptions} from 'electron';
+import {nativeImage, NativeImage, MenuItemConstructorOptions, Response} from 'electron';
 import config from './config';
 import {showRestartDialog} from './util';
 
@@ -220,9 +220,9 @@ function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 	}
 }
 
-const menuIcons = new Map<EmojiStyle, Electron.NativeImage>();
+const menuIcons = new Map<EmojiStyle, NativeImage>();
 
-function getEmojiIcon(style: EmojiStyle): Electron.NativeImage {
+function getEmojiIcon(style: EmojiStyle): NativeImage {
 	const cachedIcon = menuIcons.get(style);
 
 	if (cachedIcon) {
@@ -239,7 +239,7 @@ function getEmojiIcon(style: EmojiStyle): Electron.NativeImage {
 // this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
 // with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
 // 																								 (see here) ^
-export function process(url: string): Electron.Response {
+export function process(url: string): Response {
 	const emojiStyle = config.get('emojiStyle');
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 

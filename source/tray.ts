@@ -1,11 +1,11 @@
 import * as path from 'path';
-import {app, Menu, Tray} from 'electron';
+import {app, Menu, Tray, BrowserWindow} from 'electron';
 import {is} from 'electron-util';
 
 let tray: Tray | null = null;
 
 export default {
-	create: (win: Electron.BrowserWindow) => {
+	create: (win: BrowserWindow) => {
 		if (is.macos || tray) {
 			return;
 		}
