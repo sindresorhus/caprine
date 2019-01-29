@@ -1,13 +1,16 @@
 import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
-import electron, {
+import {
 	app,
 	ipcMain,
-	Menu,
 	nativeImage,
-	Notification,
 	systemPreferences,
+	screen as electronScreen,
+	session,
+	shell,
 	BrowserWindow,
+	Menu,
+	Notification,
 	MenuItemConstructorOptions,
 	Event as ElectronEvent,
 	RequestHeaders,
@@ -119,7 +122,7 @@ function updateBadge(conversations: Conversation[]): void {
 }
 
 ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: string) => {
-	const img = electron.nativeImage.createFromDataURL(data);
+	const img = nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 });
 
@@ -129,7 +132,7 @@ interface BeforeSendHeadersResponse {
 }
 
 function enableHiresResources(): void {
-	const scaleFactor = Math.max(...electron.screen.getAllDisplays().map(x => x.scaleFactor));
+	const scaleFactor = Math.max(...electronScreen.getAllDisplays().map(x => x.scaleFactor));
 
 	if (scaleFactor === 1) {
 		return;
@@ -137,7 +140,7 @@ function enableHiresResources(): void {
 
 	const filter = {urls: [`*://*.${domain}/`]};
 
-	electron.session.defaultSession!.webRequest.onBeforeSendHeaders(
+	session.defaultSession!.webRequest.onBeforeSendHeaders(
 		filter,
 		(details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
 			let cookie = (details.requestHeaders as any).Cookie;
@@ -170,7 +173,7 @@ function initRequestsFiltering(): void {
 		]
 	};
 
-	electron.session.defaultSession!.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+	session.defaultSession!.webRequest.onBeforeRequest(filter, ({url}, callback) => {
 		if (url.includes('emoji.php')) {
 			callback(processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
@@ -188,7 +191,7 @@ function setUserLocale(): void {
 		name: 'locale',
 		value: userLocale
 	};
-	electron.session.defaultSession!.cookies.set(cookie, () => {});
+	session.defaultSession!.cookies.set(cookie, () => {});
 }
 
 function setNotificationsMute(status: boolean): void {
@@ -369,7 +372,7 @@ function createMainWindow(): BrowserWindow {
 				url = new URL(url).searchParams.get('u')!;
 			}
 
-			electron.shell.openExternal(url);
+			shell.openExternal(url);
 		}
 	});
 
@@ -411,7 +414,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		event.preventDefault();
-		electron.shell.openExternal(url);
+		shell.openExternal(url);
 	});
 })();
 
