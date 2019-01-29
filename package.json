@@ -26,7 +26,7 @@
 	},
 	"dependencies": {
 		"electron-context-menu": "^0.11.0",
-		"electron-debug": "^2.0.0",
+		"electron-debug": "^2.1.0",
 		"electron-dl": "^1.13.0",
 		"electron-is-dev": "^1.0.0",
 		"electron-log": "^2.0.2",
