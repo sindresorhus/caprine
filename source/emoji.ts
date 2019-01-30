@@ -1,13 +1,15 @@
-'use strict';
-const path = require('path');
-const {nativeImage, ipcMain} = require('electron');
-const {memoize} = require('lodash');
-const config = require('./config');
-const {sendBackgroundAction, getWindow, showRestartDialog} = require('./util');
-
-/**
- * @typedef {'facebook-2-2'|'messenger-1-0'|'facebook-3-0'|'native'} EmojiStyle
- */
+import * as path from 'path';
+import {
+	nativeImage,
+	NativeImage,
+	MenuItemConstructorOptions,
+	Response,
+	ipcMain,
+	Event as ElectronEvent
+} from 'electron';
+import {memoize} from 'lodash';
+import config from './config';
+import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/
@@ -202,32 +204,38 @@ const excludedEmoji = new Set([
 	'267e'
 ]);
 
-/**
- * @param {EmojiStyle} style
- * @return {string}
- */
-function codeForEmojiStyle(style) {
+export enum EmojiStyle {
+	Native = 'native',
+	Facebook30 = 'facebook-3-0',
+	Messenger10 = 'messenger-1-0',
+	Facebook22 = 'facebook-2-2'
+}
+
+enum EmojiStyleCode {
+	Facebook30 = 't',
+	Messenger10 = 'z',
+	Facebook22 = 'f'
+}
+
+function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 	switch (style) {
 		case 'facebook-2-2':
-			return 'f';
+			return EmojiStyleCode.Facebook22;
 		case 'messenger-1-0':
-			return 'z';
+			return EmojiStyleCode.Messenger10;
 		case 'facebook-3-0':
 		default:
-			return 't';
+			return EmojiStyleCode.Facebook30;
 	}
 }
 
+/**
+ * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
+ */
 const renderEmoji = memoize(
-	/**
-	 * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
-	 *
-	 * @param {string} emoji
-	 * @returns {Promise<string>} Data URL for the native emoji icon
-	 */
-	emoji =>
+	(emoji: string): Promise<string> =>
 		new Promise(resolve => {
-			const listener = (event, arg) => {
+			const listener = (_event: ElectronEvent, arg: {emoji: string; dataUrl: string}): void => {
 				if (arg.emoji !== emoji) {
 					return;
 				}
@@ -242,13 +250,12 @@ const renderEmoji = memoize(
 );
 
 /**
- * @param {string} url A Facebook emoji URL like https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
- * @returns {string}
+ * @param url A Facebook emoji URL like https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
  */
-function urlToEmoji(url) {
+function urlToEmoji(url: string): string {
 	const codePoints = url
 		.split('/')
-		.pop()
+		.pop()!
 		.replace(/\.png$/, '')
 		.split('_')
 		.map(hexCodePoint => parseInt(hexCodePoint, 16));
@@ -260,16 +267,16 @@ function urlToEmoji(url) {
 	return String.fromCodePoint(...codePoints) + '\uFE0F';
 }
 
-/** @type {Map<EmojiStyle, Electron.NativeImage>} */
-const cachedEmojiMenuIcons = new Map();
+const cachedEmojiMenuIcons = new Map<EmojiStyle, NativeImage>();
 
 /**
- * @param {EmojiStyle} style
- * @return {Promise<Electron.NativeImage|undefined>} An icon to use for the menu item of this emoji style
+ * @return An icon to use for the menu item of this emoji style
  */
-async function getEmojiIcon(style) {
-	if (cachedEmojiMenuIcons.has(style)) {
-		return cachedEmojiMenuIcons.get(style);
+async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined> {
+	const cachedIcon = cachedEmojiMenuIcons.get(style);
+
+	if (cachedIcon) {
+		return cachedIcon;
 	}
 
 	if (style === 'native') {
@@ -292,84 +299,76 @@ async function getEmojiIcon(style) {
 	return image;
 }
 
-module.exports = {
-	/**
-	 * For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
-	 * this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
-	 * with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
-	 *                                                 (see here) ^
-	 * @param {string} url
-	 * @return {Promise<Electron.Response>}
-	 */
-	async process(url) {
-		const emojiStyle = config.get('emojiStyle');
-		const emojiSetCode = codeForEmojiStyle(emojiStyle);
+/**
+ * For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
+ * this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
+ * with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
+ *                                                 (see here) ^
+ */
+export async function process(url: string): Promise<Response> {
+	const emojiStyle = config.get('emojiStyle');
+	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
-		// The character code is the filename without the extension.
-		const characterCodeEnd = url.lastIndexOf('.png');
-		const characterCode = url.substring(url.lastIndexOf('/') + 1, characterCodeEnd);
+	// The character code is the filename without the extension.
+	const characterCodeEnd = url.lastIndexOf('.png');
+	const characterCode = url.substring(url.lastIndexOf('/') + 1, characterCodeEnd);
 
-		if (emojiStyle === 'native') {
-			const emoji = urlToEmoji(url);
-			const dataUrl = await renderEmoji(emoji);
-			return {redirectURL: dataUrl};
-		}
-
-		if (
-			// Don't replace emoji from Facebook's latest emoji set
-			emojiSetCode === 't' ||
-			// Don't replace the same URL in a loop
-			url.includes('#replaced') ||
-			// Ignore non-png files
-			characterCodeEnd === -1 ||
-			// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
-			// Fall back to default style for emoji >= 10.0
-			excludedEmoji.has(characterCode)
-		) {
-			return {};
-		}
-
-		const emojiSetPrefix = 'emoji.php/v9/';
-		const emojiSetIndex = url.indexOf(emojiSetPrefix) + emojiSetPrefix.length;
-		const newURL =
-			url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
-
-		return {redirectURL: newURL};
-	},
-
-	/**
-	 * @param {function(): void} updateMenu
-	 * @return {Promise<Electron.MenuItemConstructorOptions[]>}
-	 */
-	async generateSubmenu(updateMenu) {
-		/**
-		 * @param {string} label
-		 * @param {EmojiStyle} style
-		 * @return {Electron.MenuItemConstructorOptions}
-		 */
-		const emojiMenuOption = async (label, style) => ({
-			label,
-			type: 'checkbox',
-			icon: await getEmojiIcon(style),
-			checked: config.get('emojiStyle') === style,
-			async click() {
-				if (config.get('emojiStyle') === style) {
-					return;
-				}
-
-				config.set('emojiStyle', style);
-
-				await updateMenu();
-				showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
-			}
-		});
-
-		return Promise.all([
-			emojiMenuOption('System', 'native'),
-			{type: 'separator'},
-			emojiMenuOption('Facebook 3.0 (default)', 'facebook-3-0'),
-			emojiMenuOption('Messenger 1.0', 'messenger-1-0'),
-			emojiMenuOption('Facebook 2.2', 'facebook-2-2')
-		]);
+	if (emojiStyle === EmojiStyle.Native) {
+		const emoji = urlToEmoji(url);
+		const dataUrl = await renderEmoji(emoji);
+		return {redirectURL: dataUrl};
 	}
-};
+
+	if (
+		// Don't replace emoji from Facebook's latest emoji set
+		emojiSetCode === 't' ||
+		// Don't replace the same URL in a loop
+		url.includes('#replaced') ||
+		// Ignore non-png files
+		characterCodeEnd === -1 ||
+		// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
+		// Fall back to default style for emoji >= 10.0
+		excludedEmoji.has(characterCode)
+	) {
+		return {};
+	}
+
+	const emojiSetPrefix = 'emoji.php/v9/';
+	const emojiSetIndex = url.indexOf(emojiSetPrefix) + emojiSetPrefix.length;
+	const newURL =
+		url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
+
+	return {redirectURL: newURL};
+}
+
+export async function generateSubmenu(
+	updateMenu: () => void
+): Promise<MenuItemConstructorOptions[]> {
+	const emojiMenuOption = async (
+		label: string,
+		style: EmojiStyle
+	): Promise<MenuItemConstructorOptions> => ({
+		label,
+		type: 'checkbox',
+		icon: await getEmojiIcon(style),
+		checked: config.get('emojiStyle') === style,
+		async click() {
+			if (config.get('emojiStyle') === style) {
+				return;
+			}
+
+			config.set('emojiStyle', style);
+
+			await updateMenu();
+			showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
+		}
+	});
+
+	return Promise.all([
+		emojiMenuOption('System', EmojiStyle.Native),
+		{type: 'separator' as 'separator'},
+		emojiMenuOption('Facebook 3.0', EmojiStyle.Facebook30),
+		emojiMenuOption('Messenger 1.0', EmojiStyle.Messenger10),
+		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22)
+	]);
+}
