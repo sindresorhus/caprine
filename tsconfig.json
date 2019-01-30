@@ -1,0 +1,13 @@
+{
+	"extends": "@sindresorhus/tsconfig",
+	"compilerOptions": {
+		"outDir": "dist-js",
+		"target": "esnext",
+		"module": "commonjs",
+		"lib": [
+			"esnext",
+			"dom",
+			"dom.iterable"
+		]
+	}
+}
