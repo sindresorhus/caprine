@@ -464,7 +464,7 @@ ${debugInfo()}`;
 				type: 'separator'
 			},
 			aboutMenuItem({
-				icon: path.join(__dirname, 'static/Icon.png'),
+				icon: path.join(__dirname, '..', 'static', 'Icon.png'),
 				text: 'Created by Sindre Sorhus'
 			})
 		);

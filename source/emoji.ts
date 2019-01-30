@@ -229,7 +229,10 @@ function getEmojiIcon(style: EmojiStyle): NativeImage {
 		return cachedIcon;
 	}
 
-	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
+	const image = nativeImage.createFromPath(
+		path.join(__dirname, '..', 'static', `emoji-${style}.png`)
+	);
+
 	menuIcons.set(style, image);
 
 	return image;

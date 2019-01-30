@@ -10,7 +10,7 @@ export default {
 			return;
 		}
 
-		const iconPath = path.join(__dirname, 'static/IconTray.png');
+		const iconPath = path.join(__dirname, '..', 'static', 'IconTray.png');
 
 		const toggleWin = (): void => {
 			if (win.isVisible()) {
@@ -47,7 +47,7 @@ export default {
 		}
 
 		const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-		const iconPath = path.join(__dirname, `static/${icon}`);
+		const iconPath = path.join(__dirname, '..', 'static', icon);
 		tray.setImage(iconPath);
 	}
 };
