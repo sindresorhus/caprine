@@ -37,10 +37,10 @@
 	},
 	"devDependencies": {
 		"del-cli": "^1.1.0",
-		"electron": "^4.0.1",
+		"electron": "^4.0.3",
 		"electron-builder": "^20.38.5",
 		"husky": "^1.3.1",
-		"np": "^3.1.0",
+		"np": "^4.0.2",
 		"stylelint": "^9.10.1",
 		"stylelint-config-xo": "^0.12.0",
 		"xo": "^0.24.0"
