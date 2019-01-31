@@ -443,6 +443,8 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
+const notifications = new Map();
+
 ipcMain.on(
 	'notification',
 	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
@@ -454,18 +456,26 @@ ipcMain.on(
 			silent
 		});
 
+		notifications.set(id, notification);
+
 		notification.on('click', () => {
 			mainWindow.show();
 			sendAction('notification-callback', {callbackName: 'onclick', id});
+
+			notifications.delete(id);
 		});
 
 		notification.on('reply', (_event, reply: string) => {
 			// We use onclick event used by messenger to go to the right convo
 			sendBackgroundAction('notification-reply-callback', {callbackName: 'onclick', id, reply});
+
+			notifications.delete(id);
 		});
 
 		notification.on('close', () => {
 			sendAction('notification-callback', {callbackName: 'onclose', id});
+
+			notifications.delete(id);
 		});
 
 		notification.show();
