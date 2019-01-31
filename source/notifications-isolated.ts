@@ -31,6 +31,7 @@
 			if ((notification as any)[callbackName]) {
 				(notification as any)[callbackName]();
 			}
+
 			notifications.delete(id);
 			window.postMessage({type: 'notification-reply', data: {previousConversation, reply}}, '*');
 		}

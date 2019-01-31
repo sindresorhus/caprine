@@ -612,8 +612,8 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 	});
 }
 
-async function sendReply(message) {
-	const inputField = document.querySelector('[contenteditable="true"]');
+async function sendReply(message: string): Promise<void> {
+	const inputField = document.querySelector('[contenteditable="true"]') as HTMLElement;
 	const previousMessage = inputField.textContent;
 	if (inputField) {
 		// Send message
@@ -627,22 +627,23 @@ async function sendReply(message) {
 	}
 }
 
-function insertMessageText(text, inputField) {
+function insertMessageText(text: string, inputField: HTMLElement): void {
 	// Workaround: insert placeholder value to get execCommand working
 	if (!inputField.textContent) {
 		const event = document.createEvent('TextEvent');
-		event.initTextEvent('textInput', true, true, window, '_', 0, null);
+		event.initTextEvent('textInput', true, true, window, '_', 0, '');
 		inputField.dispatchEvent(event);
 	}
 
-	document.execCommand('selectAll', false, null);
+	document.execCommand('selectAll', false, undefined);
 	document.execCommand('insertText', false, text);
 }
+
 ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
 
-ipc.on('notification-reply-callback', (event, data) => {
+ipc.on('notification-reply-callback', (_event: ElectronEvent, data: any) => {
 	const previousConversation = selectedConversationIndex();
 	data.previousConversation = previousConversation;
 	window.postMessage({type: 'notification-reply-callback', data}, '*');
