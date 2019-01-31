@@ -1,23 +1,20 @@
-'use strict';
-const path = require('path');
-const fs = require('fs');
-const electron = require('electron');
-const {
+import * as path from 'path';
+import {existsSync, writeFileSync} from 'fs';
+import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
+import {
 	is,
 	appMenu,
 	openUrlMenuItem,
 	aboutMenuItem,
 	openNewGitHubIssue,
 	debugInfo
-} = require('electron-util');
-const config = require('./config');
-const {sendAction, showRestartDialog} = require('./util');
-const emoji = require('./emoji');
+} from 'electron-util';
+import config from './config';
+import {sendAction, showRestartDialog} from './util';
+import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
-const {app, shell} = electron;
-
-function updateMenu() {
-	const newConversationItem = {
+export default function updateMenu(): Menu {
+	const newConversationItem: MenuItemConstructorOptions = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
 		click() {
@@ -25,7 +22,7 @@ function updateMenu() {
 		}
 	};
 
-	const switchItems = [
+	const switchItems: MenuItemConstructorOptions[] = [
 		{
 			label: 'Switch to Work Chat…',
 			accelerator: 'CommandOrControl+Shift+2',
@@ -54,7 +51,7 @@ function updateMenu() {
 		}
 	];
 
-	const vibrancySubmenu = [
+	const vibrancySubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'No Vibrancy',
 			type: 'checkbox',
@@ -87,7 +84,7 @@ function updateMenu() {
 		}
 	];
 
-	const advancedSubmenu = [
+	const advancedSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Custom Styles',
 			click() {
@@ -122,8 +119,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 }
 `;
 
-				if (!fs.existsSync(filePath)) {
-					fs.writeFileSync(filePath, defaultCustomStyle, 'utf8');
+				if (!existsSync(filePath)) {
+					writeFileSync(filePath, defaultCustomStyle, 'utf8');
 				}
 
 				shell.openItem(filePath);
@@ -131,7 +128,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const preferencesSubmenu = [
+	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Bounce Dock on Message',
 			visible: is.macos,
@@ -232,7 +229,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Emoji style',
-			submenu: emoji.generateSubmenu(updateMenu)
+			submenu: generateEmojiSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'
@@ -243,7 +240,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const viewSubmenu = [
+	const viewSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Reset Text Size',
 			accelerator: 'CommandOrControl+0',
@@ -346,7 +343,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const conversationSubmenu = [
+	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Mute Conversation',
 			accelerator: 'CommandOrControl+Shift+M',
@@ -428,7 +425,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const helpSubmenu = [
+	const helpSubmenu: MenuItemConstructorOptions[] = [
 		openUrlMenuItem({
 			label: 'Website',
 			url: 'https://sindresorhus.com/caprine'
@@ -467,13 +464,13 @@ ${debugInfo()}`;
 				type: 'separator'
 			},
 			aboutMenuItem({
-				icon: path.join(__dirname, 'static/Icon.png'),
+				icon: path.join(__dirname, '..', 'static', 'Icon.png'),
 				text: 'Created by Sindre Sorhus'
 			})
 		);
 	}
 
-	const debugSubmenu = [
+	const debugSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Show Settings',
 			click() {
@@ -507,7 +504,7 @@ ${debugInfo()}`;
 		}
 	];
 
-	const macosTemplate = [
+	const macosTemplate: MenuItemConstructorOptions[] = [
 		appMenu([
 			{
 				label: 'Caprine Preferences',
@@ -549,7 +546,7 @@ ${debugInfo()}`;
 		}
 	];
 
-	const linuxWindowsTemplate = [
+	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
 			label: 'File',
 			submenu: [
@@ -606,10 +603,8 @@ ${debugInfo()}`;
 		});
 	}
 
-	const menu = electron.Menu.buildFromTemplate(template);
-	electron.Menu.setApplicationMenu(menu);
+	const menu = Menu.buildFromTemplate(template);
+	Menu.setApplicationMenu(menu);
 
 	return menu;
 }
-
-module.exports = updateMenu;
