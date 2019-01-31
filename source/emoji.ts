@@ -260,6 +260,11 @@ function urlToEmoji(url: string): string {
 		.split('_')
 		.map(hexCodePoint => parseInt(hexCodePoint, 16));
 
+	// F0000 (983040 decimal) is Facebook's thumbs-up icon
+	if (codePoints.length === 1 && codePoints[0] === 983040) {
+		return '👍';
+	}
+
 	// Emoji is missing Variation Selector-16 (\uFE0F):
 	// "An invisible codepoint which specifies that the preceding character
 	// should be displayed with emoji presentation.
