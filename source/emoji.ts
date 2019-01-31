@@ -293,7 +293,10 @@ async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined>
 		return resizedImage;
 	}
 
-	const image = nativeImage.createFromPath(path.join(__dirname, 'static', `emoji-${style}.png`));
+	const image = nativeImage.createFromPath(
+		path.join(__dirname, '..', 'static', `emoji-${style}.png`)
+	);
+
 	cachedEmojiMenuIcons.set(style, image);
 
 	return image;
