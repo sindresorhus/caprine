@@ -731,3 +731,8 @@ html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
 html.dark-mode ._2u_d a {
 	filter: invert(1);
 }
+
+/* "Delete message" popup */
+html.dark-mode ._7492 {
+	color: var(--base-fifty);
+}
