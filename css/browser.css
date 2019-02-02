@@ -288,3 +288,10 @@ a,
 .fbPageBanner {
 	display: none !important;
 }
+
+/* Message composer buttons */
+a._4rv6, /* "Choose a sticker" */
+a._4ce_ { /* "Play a game" */
+	opacity: 1 !important;
+	filter: invert(0.66);
+}

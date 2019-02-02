@@ -169,4 +169,12 @@ html.full-vibrancy.dark-mode ._2y8y {
 	background: transparent !important;
 }
 
+/* Message composer buttons */
+html.full-vibrancy ._39bj {
+	filter: brightness(0.8);
+}
+html.full-vibrancy.dark-model ._39bj {
+	filter: brightness(1);
+}
+
 /* -- BLOCK END: full-window vibrancy -- */
