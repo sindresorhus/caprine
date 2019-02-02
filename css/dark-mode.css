@@ -193,6 +193,9 @@ html.dark-mode ._ih3 ._3oh-,
 html.dark-mode ._llq ._3oh- {
 	color: var(--base-seventy);
 }
+html.dark-mode ._llq ._3oh- a {
+	color: var(--blue);
+}
 
 html.dark-mode ._2v6o {
 	color: var(--base-fourty);
@@ -247,7 +250,7 @@ html.dark-mode ._1qt4 {
 	border-top: solid 1px var(--base-five) !important;
 }
 
-/* contact list: person name */
+/* Contact list: person name */
 html.dark-mode ._1ht6 {
 	color: var(--base-seventy);
 }
@@ -272,7 +275,7 @@ html.dark-mode ._1ht3 ._1ht7 {
 	color: rgba(0, 132, 255, 0.7);
 }
 
-/* contact list: search results */
+/* Contact list: search results */
 html.dark-mode ._5t4c,
 html.dark-mode ._5t4c ._5l37 {
 	color: var(--base-seventy) !important;
@@ -314,6 +317,11 @@ html.dark-mode ._3quh._30yy._17u4._3yvh._1d-z {
 html.dark-mode ._4_j5 {
 	background: transparent;
 	border-left: solid 1px var(--base-five);
+}
+
+/* Right sidebar: contact name */
+html.dark-mode ._3eur a {
+  color: var(--blue);
 }
 
 /* Right sidebar: menus background */
@@ -383,6 +391,7 @@ html.dark-mode ._4jgu {
 	background-color: var(--container-color);
 }
 
+/* Invite friends popup: "Added" labels */
 html.dark-mode ._5rh4 {
 	color: var(--base-seventy);
 }
