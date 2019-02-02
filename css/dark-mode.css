@@ -742,3 +742,8 @@ html.dark-mode ._3v_o ._55r1 {
 html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
 	color: var(--base-thirty) !important;
 }
+
+/* Forward message icon */
+html.dark-mode ._2u_d a {
+	filter: invert(1);
+}
