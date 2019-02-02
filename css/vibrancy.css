@@ -28,7 +28,7 @@ html.sidebar-vibrancy ._5iwm ._58al {
 	background-color: rgba(246, 247, 249, 0.5) !important;
 }
 html.sidebar-vibrancy.dark-mode ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.05) !important;
+	background: var(--base-five) !important;
 }
 
 /* Chat title bar */
@@ -38,7 +38,7 @@ html.sidebar-vibrancy ._673w {
 }
 html.sidebar-vibrancy.dark-mode ._673w {
 	background-color: var(--container-dark-color) !important;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+	border-bottom: 1px solid var(--base-five) !important;
 }
 
 /* Share previews: title and subtitle */
@@ -115,7 +115,7 @@ html.full-vibrancy ._5iwm ._58al {
 	background-color: rgba(246, 247, 249, 0.5) !important;
 }
 html.full-vibrancy.dark-mode ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.05) !important;
+	background: var(--base-five) !important;
 }
 
 /* Chat title bar */

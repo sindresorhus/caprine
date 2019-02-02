@@ -7,9 +7,9 @@
 	--base-fourty: rgba(255, 255, 255, 0.4);
 	--base-thirty: rgba(255, 255, 255, 0.3);
 	--base-twenty: rgba(255, 255, 255, 0.2);
-	--base-five: rgba(255, 255, 255, 0.05);
 	--base-ten: rgba(255, 255, 255, 0.1);
 	--base-nine: rgba(255, 255, 255, 0.09);
+	--base-five: rgba(255, 255, 255, 0.05);
 	--container-color: #323232;
 	--container-dark-color: #1e1e1e;
 	--list-header-color: #222;
@@ -702,7 +702,7 @@ html.dark-mode .chatAttachmentShelf {
 	color: var(--base-seventy);
 }
 html.dark-mode .chatAttachmentShelf {
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	border-top: 1px solid var(--base-ten);
 }
 html.dark-mode .chatAttachmentShelf .__6k,
 html.dark-mode .chatAttachmentShelf .__6l {
@@ -711,7 +711,7 @@ html.dark-mode .chatAttachmentShelf .__6l {
 
 /* Fixes appearance of attached files */
 html.dark-mode ._2zl5 {
-	border-color: rgba(255, 255, 255, 0.1);
+	border-color: var(--base-ten);
 }
 
 html.dark-mode ._2-x5,
@@ -726,7 +726,7 @@ html.dark-mode ._4gd0 {
 
 /* Fix color on links */
 html.dark-mode .__6j._43kk {
-	border-color: rgba(255, 255, 255, 0.1) !important;
+	border-color: var(--base-ten) !important;
 }
 
 /* Fixes appearance of "Verify Account" screen text */
@@ -748,7 +748,7 @@ html.dark-mode ._3v_o {
 
 /* Login inputs */
 html.dark-mode ._3v_o ._55r1 {
-	background: rgba(255, 255, 255, 0.05);
+	background: var(--base-five);
 	color: var(--base-seventy);
 }
 html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
