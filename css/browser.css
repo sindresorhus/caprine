@@ -50,11 +50,6 @@ body {
 	-webkit-user-drag: none;
 }
 
-/* Vertically align `Conversation Info` buttons */
-._fl2 ._30yy {
-	vertical-align: middle;
-}
-
 /* Window wrapper */
 ._4sp8 {
 	min-width: 0 !important;
