@@ -436,19 +436,6 @@ html.dark-mode ._1k1p {
 html.dark-mode ._33p7 {
 	background-color: var(--container-color);
 }
-html.dark-mode ._33p7 ._b-u,
-html.dark-mode ._33p7 ._b-v {
-	background-color: transparent !important;
-	background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yG/r/CV3cVGSAcf3.png') !important;
-	background-repeat: no-repeat !important;
-	background-size: auto !important;
-}
-html.dark-mode ._33p7 ._b-u {
-	background-position: 0 -42px !important;
-}
-html.dark-mode ._33p7 ._b-v {
-	background-position: 0 0 !important;
-}
 html.dark-mode ._33p7 input {
 	color: var(--base-seventy);
 	background-color: var(--base-five);
