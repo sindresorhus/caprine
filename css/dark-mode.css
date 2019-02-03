@@ -736,3 +736,11 @@ html.dark-mode ._2u_d a {
 html.dark-mode ._7492 {
 	color: var(--base-fifty);
 }
+
+/* "Message Reactions" popup */
+html.dark-mode ._koh {
+	border-bottom-color: var(--base-five);
+}
+html.dark-mode ._koh li:not(.selected) {
+	color: var(--base-seventy);
+}
