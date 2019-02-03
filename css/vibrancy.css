@@ -181,4 +181,13 @@ html.full-vibrancy.dark-mode ._7301._hh7 {
 	background-color: var(--container-color);
 }
 
+/* Message list: link preview */
+html.full-vibrancy ._5i_d {
+	background-color: #fff;
+	border-color: transparent !important;
+}
+html.full-vibrancy.dark-mode ._5i_d {
+	background-color: var(--container-color);
+}
+
 /* -- BLOCK END: full-window vibrancy -- */
