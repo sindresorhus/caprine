@@ -172,4 +172,13 @@ html.full-vibrancy.dark-model ._39bj {
 	filter: brightness(1);
 }
 
+/* Deleted message */
+html.full-vibrancy ._7301._hh7 {
+	background-color: #fff;
+	border-color: transparent !important;
+}
+html.full-vibrancy.dark-mode ._7301._hh7 {
+	background-color: var(--container-color);
+}
+
 /* -- BLOCK END: full-window vibrancy -- */
