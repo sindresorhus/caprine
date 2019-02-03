@@ -682,8 +682,9 @@ html.dark-mode .chatAttachmentShelf .__6l {
 	color: inherit;
 }
 
-/* Fixes appearance of attached files */
+/* Message composer: attached files */
 html.dark-mode ._2zl5 {
+	background-color: transparent;
 	border-color: var(--base-ten);
 }
 
@@ -691,7 +692,7 @@ html.dark-mode ._2-x5,
 html.dark-mode .__6k,
 html.dark-mode .__6l {
 	color: var(--base-seventy);
-	background: var(--container-color);
+	background: transparent;
 }
 html.dark-mode ._4gd0 {
 	background: transparent;

@@ -190,4 +190,13 @@ html.full-vibrancy.dark-mode ._5i_d {
 	background-color: var(--container-color);
 }
 
+/* Message composer: attached files */
+html.full-vibrancy ._2zl5 {
+	background-color: #fff;
+	border-color: transparent;
+}
+html.full-vibrancy.dark-mode ._2zl5 {
+	background-color: var(--container-color);
+}
+
 /* -- BLOCK END: full-window vibrancy -- */
