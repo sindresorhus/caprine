@@ -1,8 +1,8 @@
 /* Tomorrow light theme for code blocks */
 ._wu0 {
 	--code-block-base: #1d1f21;
-	--code-block-background: #fff;
-	--code-block-border: #b9b9b9;
+	--code-block-background: transparent;
+	--code-block-border: rgba(0, 0, 0, .1);
 	--code-block-primary: #de935f;
 	--code-block-meta: #969896;
 	--code-block-tag: #a3685a;
@@ -113,6 +113,14 @@
 html.dark-mode ._wu0 {
 	color: var(--base);
 	--code-block-base: #c5c8c6;
-	--code-block-background: #1d1f21;
-	--code-block-border: #0a0c14;
+	--code-block-border: var(--base-ten);
+}
+
+/* Full-window vibrancy */
+html.full-vibrancy ._wu0 {
+	--code-block-background: #fff;
+	--code-block-border: transparent;
+}
+html.full-vibrancy.dark-mode ._wu0 {
+	--code-block-background: var(--container-color);
 }
