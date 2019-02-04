@@ -28,7 +28,7 @@ html.sidebar-vibrancy ._5iwm ._58al {
 	background-color: rgba(246, 247, 249, 0.5) !important;
 }
 html.sidebar-vibrancy.dark-mode ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.05) !important;
+	background: var(--base-five) !important;
 }
 
 /* Chat title bar */
@@ -38,7 +38,7 @@ html.sidebar-vibrancy ._673w {
 }
 html.sidebar-vibrancy.dark-mode ._673w {
 	background-color: var(--container-dark-color) !important;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+	border-bottom: 1px solid var(--base-five) !important;
 }
 
 /* Share previews: title and subtitle */
@@ -115,7 +115,7 @@ html.full-vibrancy ._5iwm ._58al {
 	background-color: rgba(246, 247, 249, 0.5) !important;
 }
 html.full-vibrancy.dark-mode ._5iwm ._58al {
-	background: rgba(255, 255, 255, 0.05) !important;
+	background: var(--base-five) !important;
 }
 
 /* Chat title bar */
@@ -150,11 +150,6 @@ html.full-vibrancy.dark-mode ._36ic {
 	background: transparent !important;
 }
 
-/* Login button */
-html.full-vibrancy.dark-mode button {
-	background: transparent !important;
-}
-
 /* Message container + right sidebar */
 html.full-vibrancy ._4_j4,
 html.full-vibrancy ._4_j5,
@@ -167,6 +162,41 @@ html.full-vibrancy.dark-mode ._4_j5 {
 html.full-vibrancy ._2y8y,
 html.full-vibrancy.dark-mode ._2y8y {
 	background: transparent !important;
+}
+
+/* Message composer buttons */
+html.full-vibrancy ._39bj {
+	filter: brightness(0.8);
+}
+html.full-vibrancy.dark-model ._39bj {
+	filter: brightness(1);
+}
+
+/* Deleted message */
+html.full-vibrancy ._7301._hh7 {
+	background-color: #fff;
+	border-color: transparent !important;
+}
+html.full-vibrancy.dark-mode ._7301._hh7 {
+	background-color: var(--container-color);
+}
+
+/* Message list: link preview */
+html.full-vibrancy ._5i_d {
+	background-color: #fff;
+	border-color: transparent !important;
+}
+html.full-vibrancy.dark-mode ._5i_d {
+	background-color: var(--container-color);
+}
+
+/* Message composer: attached files */
+html.full-vibrancy ._2zl5 {
+	background-color: #fff;
+	border-color: transparent;
+}
+html.full-vibrancy.dark-mode ._2zl5 {
+	background-color: var(--container-color);
 }
 
 /* -- BLOCK END: full-window vibrancy -- */
