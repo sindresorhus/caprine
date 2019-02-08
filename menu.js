@@ -142,13 +142,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Disable Video Autoplay',
-			id: 'disable-video-autoplay',
+			label: 'Video Autoplay',
+			id: 'video-autoplay',
 			type: 'checkbox',
-			checked: config.get('disableVideoAutoplay'),
+			checked: config.get('videoAutoplay'),
 			click() {
-				config.set('disableVideoAutoplay', !config.get('disableVideoAutoplay'));
-				sendAction('toggle-disable-video-autoplay');
+				config.set('videoAutoplay', !config.get('videoAutoplay'));
+				sendAction('toggle-video-autoplay');
 			}
 		},
 		{

@@ -11,19 +11,36 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
+const conversationId = 'conversationWindow';
+
+// A way to hold reference to conversation part of document 
+// Used to refresh videoObserver after the conversation reference is lost
+let conversationWindow;
+const conversationDivObserver = new MutationObserver(mutations => {
+
+	// First try to fetch by id as it's easily the fastest selector (querySelector is around 60% slower)
+	let conversation = document.getElementById(conversationId);
+
+	// Fetch it using querySelector if no luck with id
+	if (!conversation)
+		conversation = document.querySelector(conversationSelector);
+
+	// If we have a new reference
+	if (conversation && conversationWindow !== conversation) {
+		// Add id so we can just getElementById
+		conversation.id = conversationId;
+		conversationWindow = conversation;
+		startVideoObserver(conversationWindow);
+	}
+});
 
 // Refence to mutation observer
 // Only active if user has set preference to disable video autoplay
-const videoObserver = new MutationObserver(function (mutations) {
-	mutations.forEach(function (mutation) {
-		if (mutation.addedNodes.length > 0) {
-			// If video was added disable autoplay
-			if (mutation.addedNodes[0].classList) {
-				if (mutation.addedNodes[0].classList[0] === '_1c_u') {
-					disableVideoAutoplay();
-				}
-			}
-		}
+const videoObserver = new MutationObserver(mutations => {
+	const videos = getVideos();
+	// If videos was added disable autoplay
+	if (videos.length > 0)
+		disableVideoAutoplay(videos);
 	});
 });
 
@@ -206,7 +223,7 @@ ipc.on('toggle-unread-threads-view', () => {
 	selectOtherListViews(6);
 });
 
-ipc.on('toggle-disable-video-autoplay', setAutoplayVideos);
+ipc.on('toggle-video-autoplay', setAutoplayVideos);
 
 
 function setDarkMode() {
@@ -610,9 +627,15 @@ ipc.on('notification-callback', (event, data) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
 
+async function startConversationWindowObserver() {
+	conversationDivObserver.observe(document.documentElement, {
+		childList: true,
+		subtree: true,
+	});
+}
 
-async function startVideoObserver() {
-	videoObserver.observe(document.documentElement, {
+async function startVideoObserver(element) {
+	videoObserver.observe(element, {
 		childList: true,
 		subtree: true,
 	});
@@ -622,15 +645,10 @@ async function startVideoObserver() {
 // Enables us to check if video is autoplaying for example when changing conversation
 const playedVideos = [];
 
-async function disableVideoAutoplay() {
-	const messageDiv = await elementReady(conversationSelector);
-	var videos = messageDiv.querySelectorAll('video');
-	for (var i = 0; i < videos.length; i++) {
-		const video = videos[i];
-
-		// Dont disable currently playing videos
+async function disableVideoAutoplay(videos) {
+	for (const video of videos) {
+		// Dont disable currently playing videos and skip already initialized videos
 		if (playedVideos.includes(video)) continue;
-
 		const firstParent = video.parentElement;
 
 		// Video parent element which has a snapshot of video as background-image 
@@ -671,16 +689,16 @@ async function disableVideoAutoplay() {
 
 		// Remove image and new play icon and append the original divs
 		// We can enable autoplay again by triggering this event
-		copyedPlayIcon.addEventListener('onplay', () => {
-			parentWithBackgroundParent.removeChild(img);
-			parentWithBackgroundParent.removeChild(copyedPlayIcon);
+		copyedPlayIcon.addEventListener('play', () => {
+			img.remove()
+			copyedPlayIcon.remove();
 			parentWithBackgroundParent.prepend(parentWithBackground);
 		});
 
 		// Separate handler for click so we know if it was user who played the video
-		copyedPlayIcon.onclick = () => {
+		copyedPlayIcon.addEventListener('click', () => {
 			playedVideos.push(video);
-			var event = new Event('onplay');
+			var event = new Event('play');
 			copyedPlayIcon.dispatchEvent(event);
 			// Sometimes video doesnt start playing even tho we trigger the click event
 			// As a workaround check if video didnt start playing and manually trigger the click event
@@ -689,7 +707,7 @@ async function disableVideoAutoplay() {
 					playIcon.click();
 				}
 			}, 50);
-		};
+		});
 
 		parentWithBackgroundParent.prepend(img);
 		parentWithBackgroundParent.prepend(copyedPlayIcon);
@@ -700,25 +718,31 @@ async function disableVideoAutoplay() {
 // If we previously disabled autoplay on videos trigger copyedPlayIcon click event to revert changes
 function enableVideoAutoplay() {
 	const playIcons = document.querySelectorAll('#disabled_autoplay');
-	playIcons.forEach(icon => {
-		var event = new Event('onplay');
+	for (const icon of playIcons) {
+		var event = new Event('play');
 		icon.dispatchEvent(event);
-});
+	}
 }
 
 
 function setAutoplayVideos() {
-	if (config.get('disableVideoAutoplay')) {
-		// Start the observer
-		startVideoObserver();
-
-		// Disable for existing videos
-		disableVideoAutoplay();
-	} else {
-		// Stop the observer
+	if (config.get('videoAutoplay')) {
+		// Stop the observers
+		conversationDivObserver.disconnect();
 		videoObserver.disconnect();
 
 		// Revert previous changes
 		enableVideoAutoplay();
+	} else {
+		// Start the observer
+		startConversationWindowObserver();
+
+		// Trigger once manually before observers kick in
+		disableVideoAutoplay(getVideos());
 	}
+	}
+
+function getVideos() {
+	return document.getElementsByTagName('video');
 }
+

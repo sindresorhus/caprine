@@ -34,7 +34,7 @@ const defaults = {
 		hardwareAcceleration: true,
 		quitOnWindowClose: false,
 		keepMeSignedIn: true,
-		disableVideoAutoplay: false
+		videoAutoplay: true
 	}
 };
 
