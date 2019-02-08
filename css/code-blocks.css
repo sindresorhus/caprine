@@ -1,0 +1,126 @@
+/* Tomorrow light theme for code blocks */
+._wu0 {
+	--code-block-base: #1d1f21;
+	--code-block-background: transparent;
+	--code-block-border: rgba(0, 0, 0, .1);
+	--code-block-primary: #de935f;
+	--code-block-meta: #969896;
+	--code-block-tag: #a3685a;
+	--code-block-quoted: #b5bd68;
+	--code-block-variable: #c66;
+	--code-block-special: #8abeb7;
+	--code-block-attr-value: #139543;
+	--code-block-keyword: #b294bb;
+	--code-block-function: #81a2be;
+	background-color: var(--code-block-background) !important;
+	border: 1px solid var(--code-block-border) !important;
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.punctuation {
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.property {
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.operator {
+	color: var(--code-block-base) !important;
+}
+._wu0 .token.boolean {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.number {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.constant {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.selector {
+	color: var(--code-block-primary) !important;
+}
+._wu0 .token.bold {
+	color: var(--code-block-primary) !important;
+	font-weight: bold;
+}
+._wu0 .token.comment {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.prolog {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.doctype {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.cdata {
+	color: var(--code-block-meta) !important;
+}
+._wu0 .token.tag {
+	color: var(--code-block-tag) !important;
+}
+._wu0 .token.symbol {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.string {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.char {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.inserted {
+	color: var(--code-block-quoted) !important;
+}
+._wu0 .token.attr-name {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.url {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.entity {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.variable {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.deleted {
+	color: var(--code-block-variable) !important;
+}
+._wu0 .token.builtin {
+	color: var(--code-block-special) !important;
+}
+._wu0 .token.hexcode {
+	color: var(--code-block-special) !important;
+}
+._wu0 .token.regex {
+	color: var(--code-block-special) !important;
+}
+._wu0 .token.attr-value {
+	color: var(--code-block-attr-value) !important;
+}
+._wu0 .token.keyword {
+	color: var(--code-block-keyword) !important;
+}
+._wu0 .token.important {
+	color: var(--code-block-keyword) !important;
+}
+._wu0 .token.italic {
+	color: var(--code-block-keyword) !important;
+	font-style: italic;
+}
+._wu0 .token.function {
+	color: var(--code-block-function) !important;
+}
+
+/* Tomorrow dark theme for code blocks */
+html.dark-mode ._wu0 {
+	color: var(--base);
+	--code-block-base: #c5c8c6;
+	--code-block-border: var(--base-ten);
+}
+
+/* Full-window vibrancy */
+html.full-vibrancy ._wu0 {
+	--code-block-background: #fff;
+	--code-block-border: transparent;
+}
+html.full-vibrancy.dark-mode ._wu0 {
+	--code-block-background: var(--container-color);
+}

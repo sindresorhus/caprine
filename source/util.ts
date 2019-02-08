@@ -1,14 +1,14 @@
-'use strict';
-const {app, BrowserWindow, dialog} = require('electron');
-const {is} = require('electron-util');
+import {app, BrowserWindow, dialog} from 'electron';
+import {is} from 'electron-util';
 
-function getWindow() {
+export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
 	return win;
 }
 
-function sendAction(action, ...args) {
+export function sendAction(action: string, ...args: unknown[]): void {
 	const win = getWindow();
+
 	if (is.macos) {
 		win.restore();
 	}
@@ -16,8 +16,8 @@ function sendAction(action, ...args) {
 	win.webContents.send(action, ...args);
 }
 
-function showRestartDialog(message) {
-	return dialog.showMessageBox(
+export function showRestartDialog(message: string): void {
+	dialog.showMessageBox(
 		{
 			message,
 			detail: 'Do you want to restart the app now?',
@@ -33,7 +33,3 @@ function showRestartDialog(message) {
 		}
 	);
 }
-
-exports.getWindow = getWindow;
-exports.sendAction = sendAction;
-exports.showRestartDialog = showRestartDialog;
