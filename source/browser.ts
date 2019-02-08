@@ -561,7 +561,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Disable autoplay if set in settings
-	// Disable autoplay is set in settings
 	setAutoplayVideos();
 });
 
