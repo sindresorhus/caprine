@@ -1,10 +1,7 @@
-'use strict';
-const electron = require('electron');
-const {api, is} = require('electron-util');
-const elementReady = require('element-ready');
-const config = require('./config');
-
-const {ipcRenderer: ipc} = electron;
+import { ipcRenderer as ipc, Event as ElectronEvent } from 'electron';
+import elementReady from 'element-ready';
+import { api, is } from 'electron-util';
+import config from './config';
 
 const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
@@ -15,8 +12,8 @@ const conversationId = 'conversationWindow';
 
 // A way to hold reference to conversation part of document 
 // Used to refresh videoObserver after the conversation reference is lost
-let conversationWindow;
-const conversationDivObserver = new MutationObserver(mutations => {
+let conversationWindow: HTMLElement;
+const conversationDivObserver = new MutationObserver(_ => {
 
 	// First try to fetch by id as it's easily the fastest selector (querySelector is around 60% slower)
 	let conversation = document.getElementById(conversationId);
@@ -36,16 +33,18 @@ const conversationDivObserver = new MutationObserver(mutations => {
 
 // Refence to mutation observer
 // Only active if user has set preference to disable video autoplay
-const videoObserver = new MutationObserver(mutations => {
+const videoObserver = new MutationObserver(_ => {
 	const videos = getVideos();
 	// If videos was added disable autoplay
 	if (videos.length > 0)
 		disableVideoAutoplay(videos);
-	});
 });
 
-async function withMenu(menuButtonElement, callback) {
-	const {classList} = document.documentElement;
+async function withMenu(
+	menuButtonElement: HTMLElement,
+	callback: () => Promise<void> | void
+): Promise<void> {
+	const { classList } = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
 	classList.add('hide-dropdowns');
@@ -54,30 +53,33 @@ async function withMenu(menuButtonElement, callback) {
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const menuLayer = document.querySelector<HTMLElement>(
+		'.uiContextualLayerPositioner:not(.hidden_elem)'
+	)!;
+
 	const observer = new MutationObserver(() => {
 		if (menuLayer.classList.contains('hidden_elem')) {
 			classList.remove('hide-dropdowns');
 			observer.disconnect();
 		}
 	});
-	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+	observer.observe(menuLayer, { attributes: true, attributeFilter: ['class'] });
 
 	await callback();
 }
 
-async function withSettingsMenu(callback) {
+async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	await withMenu(await elementReady('._30yy._2fug._p'), callback);
 }
 
-function selectMenuItem(itemNumber) {
-	const selector = document.querySelector(
+function selectMenuItem(itemNumber: number): void {
+	const selector = document.querySelector<HTMLElement>(
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
-	);
+	)!;
 	selector.click();
 }
 
-async function selectOtherListViews(itemNumber) {
+async function selectOtherListViews(itemNumber: number): Promise<void> {
 	// In case one of other views is shown
 	clickBackButton();
 
@@ -86,8 +88,9 @@ async function selectOtherListViews(itemNumber) {
 	});
 }
 
-function clickBackButton() {
-	const backButton = document.querySelector('._30yy._2oc9');
+function clickBackButton(): void {
+	const backButton = document.querySelector<HTMLElement>('._30yy._2oc9');
+
 	if (backButton) {
 		backButton.click();
 	}
@@ -102,76 +105,83 @@ ipc.on('show-preferences', async () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector("._30yy[data-href$='/new']").click();
+	document.querySelector<HTMLElement>("._30yy[data-href$='/new']")!.click();
 });
 
 ipc.on('log-out', async () => {
 	if (config.get('useWorkChat')) {
-		// Create the menu for the below
-		document.querySelector('._5lxs._3qct._p').click();
+		document.querySelector<HTMLElement>('._5lxs._3qct._p')!.click();
+
 		// Menu creation is slow
 		setTimeout(() => {
-			const nodes = document.querySelectorAll('._54nq._9jo._558b._2n_z li:last-child a');
+			const nodes = document.querySelectorAll<HTMLElement>(
+				'._54nq._9jo._558b._2n_z li:last-child a'
+			);
+
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
 		await withSettingsMenu(() => {
-			const nodes = document.querySelectorAll('._54nq._2i-c._558b._2n_z li:last-child a');
+			const nodes = document.querySelectorAll<HTMLElement>(
+				'._54nq._2i-c._558b._2n_z li:last-child a'
+			);
+
 			nodes[nodes.length - 1].click();
 		});
 	}
 });
 
 ipc.on('find', () => {
-	document.querySelector('._58al').focus();
+	document.querySelector<HTMLElement>('._58al')!.focus();
 });
 
 ipc.on('search', () => {
-	document.querySelector('._3szo:nth-of-type(1)').click();
+	document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
 });
 
 ipc.on('insert-gif', () => {
-	document.querySelector('._yht').click();
+	document.querySelector<HTMLElement>('._yht')!.click();
 });
 
 ipc.on('insert-emoji', () => {
-	document.querySelector('._5s2p').click();
+	document.querySelector<HTMLElement>('._5s2p')!.click();
 });
 
 ipc.on('insert-text', () => {
-	document.querySelector('._5rpu').focus();
+	document.querySelector<HTMLElement>('._5rpu')!.focus();
 });
 
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
 
-ipc.on('mute-conversation', () => {
-	openMuteModal();
+ipc.on('mute-conversation', async () => {
+	await openMuteModal();
 });
 
-ipc.on('delete-conversation', () => {
-	deleteSelectedConversation();
+ipc.on('delete-conversation', async () => {
+	await deleteSelectedConversation();
 });
 
 ipc.on('archive-conversation', async () => {
 	const index = selectedConversationIndex();
 
 	if (index !== -1) {
-		archiveSelectedConversation();
+		await archiveSelectedConversation();
 
 		const key = index + 1;
 		await jumpToConversation(key);
 	}
 });
 
-function setSidebarVisibility() {
+function setSidebarVisibility(): void {
 	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
 	ipc.send('set-sidebar-visibility');
 }
 
-ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
+ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus: boolean) => {
 	const preferencesAreOpen = isPreferencesOpen();
+
 	if (!preferencesAreOpen) {
 		const style = document.createElement('style');
 		// Hide both the backdrop and the preferences dialog
@@ -181,10 +191,12 @@ ipc.on('toggle-mute-notifications', async (event, defaultStatus) => {
 		await openPreferences();
 
 		// Will clean up itself after the preferences are closed
-		document.querySelector(preferencesSelector).append(style);
+		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
 	}
 
-	const notificationCheckbox = document.querySelector('._374b:nth-of-type(4) ._4ng2 input');
+	const notificationCheckbox = document.querySelector<HTMLInputElement>(
+		'._374b:nth-of-type(4) ._4ng2 input'
+	)!;
 
 	if (defaultStatus === undefined) {
 		notificationCheckbox.click();
@@ -223,10 +235,11 @@ ipc.on('toggle-unread-threads-view', () => {
 	selectOtherListViews(6);
 });
 
-ipc.on('toggle-video-autoplay', setAutoplayVideos);
+ipc.on('toggle-video-autoplay', () => {
+	setAutoplayVideos();
+});
 
-
-function setDarkMode() {
+function setDarkMode(): void {
 	if (is.macos && config.get('followSystemAppearance')) {
 		document.documentElement.classList.toggle('dark-mode', api.systemPreferences.isDarkMode());
 	} else {
@@ -236,8 +249,8 @@ function setDarkMode() {
 	updateVibrancy();
 }
 
-function updateVibrancy() {
-	const {classList} = document.documentElement;
+function updateVibrancy(): void {
+	const { classList } = document.documentElement;
 
 	classList.remove('sidebar-vibrancy', 'full-vibrancy');
 
@@ -254,12 +267,13 @@ function updateVibrancy() {
 	ipc.send('set-vibrancy');
 }
 
-function renderOverlayIcon(messageCount) {
+function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	const canvas = document.createElement('canvas');
 	canvas.height = 128;
 	canvas.width = 128;
 	canvas.style.letterSpacing = '-5px';
-	const ctx = canvas.getContext('2d');
+
+	const ctx = canvas.getContext('2d')!;
 	ctx.fillStyle = '#f42020';
 	ctx.beginPath();
 	ctx.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI);
@@ -268,6 +282,7 @@ function renderOverlayIcon(messageCount) {
 	ctx.fillStyle = 'white';
 	ctx.font = '90px sans-serif';
 	ctx.fillText(String(Math.min(99, messageCount)), 64, 96);
+
 	return canvas;
 }
 
@@ -282,7 +297,7 @@ ipc.on('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-ipc.on('render-overlay-icon', (event, messageCount) => {
+ipc.on('render-overlay-icon', (_event: ElectronEvent, messageCount: number) => {
 	ipc.send(
 		'update-overlay-icon',
 		renderOverlayIcon(messageCount).toDataURL(),
@@ -310,11 +325,11 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', async (event, key) => {
+ipc.on('jump-to-conversation', async (_event: ElectronEvent, key: number) => {
 	await jumpToConversation(key);
 });
 
-async function nextConversation() {
+async function nextConversation(): Promise<void> {
 	const index = selectedConversationIndex(1);
 
 	if (index !== -1) {
@@ -322,7 +337,7 @@ async function nextConversation() {
 	}
 }
 
-async function previousConversation() {
+async function previousConversation(): Promise<void> {
 	const index = selectedConversationIndex(-1);
 
 	if (index !== -1) {
@@ -330,124 +345,126 @@ async function previousConversation() {
 	}
 }
 
-async function jumpToConversation(key) {
+async function jumpToConversation(key: number): Promise<void> {
 	const index = key - 1;
 	await selectConversation(index);
 }
 
 // Focus on the conversation with the given index
-async function selectConversation(index) {
+async function selectConversation(index: number): Promise<void> {
 	const conversationElement = (await elementReady(listSelector)).children[index];
 
 	if (conversationElement) {
-		conversationElement.firstChild.firstChild.click();
+		(conversationElement.firstChild!.firstChild as HTMLElement).click();
 	}
 }
 
-function selectedConversationIndex(offset = 0) {
-	const selected = document.querySelector(selectedConversationSelector);
+function selectedConversationIndex(offset = 0): number {
+	const selected = document.querySelector<HTMLElement>(selectedConversationSelector);
 
 	if (!selected) {
 		return -1;
 	}
 
-	const list = [...selected.parentNode.children];
+	const list = [...selected.parentNode!.children];
 	const index = list.indexOf(selected) + offset;
 
 	return ((index % list.length) + list.length) % list.length;
 }
 
-function setZoom(zoomFactor) {
-	const node = document.querySelector('#zoomFactor');
+function setZoom(zoomFactor: number): void {
+	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
 	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
-async function withConversationMenu(callback) {
-	const menuButton = document.querySelector(`${selectedConversationSelector} ._5blh._4-0h`);
+async function withConversationMenu(callback: () => void): Promise<void> {
+	const menuButton = document.querySelector<HTMLElement>(
+		`${selectedConversationSelector} ._5blh._4-0h`
+	);
 
 	if (menuButton) {
 		await withMenu(menuButton, callback);
 	}
 }
 
-function openMuteModal() {
-	withConversationMenu(() => {
+async function openMuteModal(): Promise<void> {
+	await withConversationMenu(() => {
 		selectMenuItem(1);
 	});
 }
 
-function archiveSelectedConversation() {
-	const groupConversationProfilePicture = document.querySelector(
+async function archiveSelectedConversation(): Promise<void> {
+	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-	withConversationMenu(() => {
+	await withConversationMenu(() => {
 		selectMenuItem(isGroupConversation ? 4 : 3);
 	});
 }
 
-function deleteSelectedConversation() {
-	const groupConversationProfilePicture = document.querySelector(
+async function deleteSelectedConversation(): Promise<void> {
+	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
 	const isGroupConversation = Boolean(groupConversationProfilePicture);
 
-	withConversationMenu(() => {
+	await withConversationMenu(() => {
 		selectMenuItem(isGroupConversation ? 5 : 4);
 	});
 }
 
-async function openPreferences() {
+async function openPreferences(): Promise<void> {
 	await withSettingsMenu(() => {
 		selectMenuItem(1);
 	});
 }
 
-function isPreferencesOpen() {
-	return Boolean(document.querySelector('._3quh._30yy._2t_._5ixy'));
+function isPreferencesOpen(): boolean {
+	return Boolean(document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy'));
 }
 
-function closePreferences() {
-	const doneButton = document.querySelector('._3quh._30yy._2t_._5ixy');
+function closePreferences(): void {
+	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
 	doneButton.click();
 }
 
-async function sendConversationList() {
-	const conversations = await Promise.all(
-		[...(await elementReady(listSelector)).children].splice(0, 10).map(async el => {
-			const profilePic = el.querySelector('._55lt img');
-			const groupPic = el.querySelector('._4ld- div');
+async function sendConversationList(): Promise<void> {
+	const conversations: Conversation[] = await Promise.all(
+		([...(await elementReady(listSelector)).children] as HTMLElement[])
+			.splice(0, 10)
+			.map(async (el: HTMLElement) => {
+				const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
+				const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
 
-			// This is only for group chats
-			if (groupPic) {
-				// Slice image source from background-image style property of div
-				groupPic.src = groupPic.style.backgroundImage.slice(
-					5,
-					groupPic.style.backgroundImage.length - 2
-				);
-			}
+				// This is only for group chats
+				if (groupPic) {
+					// Slice image source from background-image style property of div
+					const bgImage = groupPic.style.backgroundImage!;
+					groupPic.src = bgImage!.slice(5, bgImage.length - 2);
+				}
 
-			const isConversationMuted = el.classList.contains('_569x');
+				const isConversationMuted = el.classList.contains('_569x');
 
-			return {
-				label: el.querySelector('._1ht6').textContent,
-				selected: el.classList.contains('_1ht2'),
-				unread: el.classList.contains('_1ht3') && !isConversationMuted,
-				icon: await getDataUrlFromImg(
-					profilePic ? profilePic : groupPic,
-					el.classList.contains('_1ht3')
-				)
-			};
-		})
+				return {
+					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
+					selected: el.classList.contains('_1ht2'),
+					unread: el.classList.contains('_1ht3') && !isConversationMuted,
+					icon: await getDataUrlFromImg(
+						profilePic ? profilePic! : groupPic!,
+						el.classList.contains('_1ht3')
+					)
+				};
+			})
 	);
 
 	ipc.send('conversations', conversations);
 }
 
 // Return canvas with rounded image
-function urlToCanvas(url, size) {
+function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 	return new Promise(resolve => {
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
@@ -463,42 +480,47 @@ function urlToCanvas(url, size) {
 			canvas.width = size + padding.left + padding.right;
 			canvas.height = size + padding.top + padding.bottom;
 
-			const ctx = canvas.getContext('2d');
-
+			const ctx = canvas.getContext('2d')!;
 			ctx.save();
 			ctx.beginPath();
 			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
 			ctx.closePath();
 			ctx.clip();
-
 			ctx.drawImage(img, padding.left, padding.top, size, size);
-
 			ctx.restore();
 
 			resolve(canvas);
 		});
+
 		img.src = url;
 	});
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img, unread) {
+function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
-		if (!unread) {
-			if (img.dataUrl) {
-				return resolve(img.dataUrl);
+		if (unread) {
+			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
+
+			if (dataUnreadUrl) {
+				return resolve(dataUnreadUrl);
 			}
-		} else if (img.dataUnreadUrl) {
-			return resolve(img.dataUnreadUrl);
+		} else {
+			const dataUrl = img.getAttribute('dataUrl');
+
+			if (dataUrl) {
+				return resolve(dataUrl);
+			}
 		}
 
 		const canvas = await urlToCanvas(img.src, 30);
-		const ctx = canvas.getContext('2d');
-		img.dataUrl = canvas.toDataURL();
+		const ctx = canvas.getContext('2d')!;
+		const dataUrl = canvas.toDataURL();
+		img.setAttribute('dataUrl', dataUrl);
 
 		if (!unread) {
-			return resolve(img.dataUrl);
+			return resolve(dataUrl);
 		}
 
 		const markerSize = 8;
@@ -506,8 +528,10 @@ function getDataUrlFromImg(img, unread) {
 		ctx.beginPath();
 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
-		img.dataUnreadUrl = canvas.toDataURL();
-		resolve(img.dataUnreadUrl);
+		const dataUnreadUrl = canvas.toDataURL();
+		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
+
+		resolve(dataUnreadUrl);
 	});
 }
 
@@ -537,11 +561,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Disable autoplay if set in settings
+	// Disable autoplay is set in settings
 	setAutoplayVideos();
 });
 
 window.addEventListener('load', () => {
-	const sidebar = document.querySelector('[role=navigation]');
+	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
 
 	if (sidebar) {
 		sendConversationList();
@@ -556,9 +581,9 @@ window.addEventListener('load', () => {
 	}
 
 	if (location.pathname.startsWith('/login')) {
-		const keepMeSignedInCheckbox = document.querySelector('#u_0_0');
+		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
-		keepMeSignedInCheckbox.addEventListener('click', () => {
+		keepMeSignedInCheckbox.addEventListener('change', () => {
 			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
 		});
 	}
@@ -590,23 +615,20 @@ document.addEventListener('keydown', async event => {
 });
 
 // Pass events sent via `window.postMessage` on to the main process
-window.addEventListener('message', ({data: {type, data}}) => {
+window.addEventListener('message', ({ data: { type, data } }) => {
 	if (type === 'notification') {
 		showNotification(data);
 	}
 });
 
-function showNotification({id, title, body, icon, silent}) {
-	body = body.props ? body.props.content[0] : body;
-	title = typeof title === 'object' && title.props ? title.props.content[0] : title;
-
+function showNotification({ id, title, body, icon, silent }: NotificationEvent): void {
 	const img = new Image();
 	img.crossOrigin = 'anonymous';
 	img.src = icon;
 
 	img.addEventListener('load', () => {
 		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext('2d')!;
 
 		canvas.width = img.width;
 		canvas.height = img.height;
@@ -623,18 +645,18 @@ function showNotification({id, title, body, icon, silent}) {
 	});
 }
 
-ipc.on('notification-callback', (event, data) => {
-	window.postMessage({type: 'notification-callback', data}, '*');
+ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
+	window.postMessage({ type: 'notification-callback', data }, '*');
 });
 
-async function startConversationWindowObserver() {
+function startConversationWindowObserver(): void {
 	conversationDivObserver.observe(document.documentElement, {
 		childList: true,
 		subtree: true,
 	});
 }
 
-async function startVideoObserver(element) {
+function startVideoObserver(element: HTMLElement): void {
 	videoObserver.observe(element, {
 		childList: true,
 		subtree: true,
@@ -643,22 +665,22 @@ async function startVideoObserver(element) {
 
 // Hold reference to videos user has started playing
 // Enables us to check if video is autoplaying for example when changing conversation
-const playedVideos = [];
+const playedVideos: HTMLVideoElement[] = [];
 
-async function disableVideoAutoplay(videos) {
+function disableVideoAutoplay(videos: HTMLCollectionOf<HTMLVideoElement>): void {
 	for (const video of videos) {
 		// Dont disable currently playing videos and skip already initialized videos
 		if (playedVideos.includes(video)) continue;
-		const firstParent = video.parentElement;
+		const firstParent = video.parentElement!;
 
 		// Video parent element which has a snapshot of video as background-image 
-		const parentWithBackground = video.parentElement.parentElement.parentElement;
+		const parentWithBackground = video.parentElement!.parentElement!.parentElement!;
 
 		// Hold reference to background parent so we can revert our changes
-		const parentWithBackgroundParent = parentWithBackground.parentElement;
+		const parentWithBackgroundParent = parentWithBackground.parentElement!;
 
 		// Reference to original play icon on top of the video
-		const playIcon = video.nextElementSibling.nextElementSibling;
+		const playIcon = video.nextElementSibling!.nextElementSibling! as HTMLElement;
 		// If video is playing the icon is hidden
 		playIcon.classList.remove('hidden_elem');
 
@@ -673,19 +695,19 @@ async function disableVideoAutoplay(videos) {
 		} = firstParent;
 
 		const style =
-			parentWithBackground.currentStyle || window.getComputedStyle(parentWithBackground, false);
-		const backgroundImageSrc = style.backgroundImage.slice(4, -1).replace(/"/g, '');
+			parentWithBackground.style || window.getComputedStyle(parentWithBackground);
+		const backgroundImageSrc = style.backgroundImage!.slice(4, -1).replace(/"/g, '');
 
 		// Create image to replace video as a placeholder
 		const img = document.createElement('img');
 		img.setAttribute('src', backgroundImageSrc);
-		img.setAttribute('height', height);
-		img.setAttribute('width', width);
+		img.setAttribute('height', height!);
+		img.setAttribute('width', width!);
 
 		// Create seperate instance of the play icon
 		// Clone the existing icon to get original events
 		// Without creating a new icon Messenger autohides the icon when scrolled to video
-		const copyedPlayIcon = playIcon.cloneNode(true);
+		const copyedPlayIcon = playIcon.cloneNode(true) as HTMLElement;
 
 		// Remove image and new play icon and append the original divs
 		// We can enable autoplay again by triggering this event
@@ -716,7 +738,7 @@ async function disableVideoAutoplay(videos) {
 }
 
 // If we previously disabled autoplay on videos trigger copyedPlayIcon click event to revert changes
-function enableVideoAutoplay() {
+function enableVideoAutoplay(): void {
 	const playIcons = document.querySelectorAll('#disabled_autoplay');
 	for (const icon of playIcons) {
 		var event = new Event('play');
@@ -725,7 +747,7 @@ function enableVideoAutoplay() {
 }
 
 
-function setAutoplayVideos() {
+function setAutoplayVideos(): void {
 	if (config.get('videoAutoplay')) {
 		// Stop the observers
 		conversationDivObserver.disconnect();
@@ -740,9 +762,8 @@ function setAutoplayVideos() {
 		// Trigger once manually before observers kick in
 		disableVideoAutoplay(getVideos());
 	}
-	}
-
-function getVideos() {
-	return document.getElementsByTagName('video');
 }
 
+function getVideos(): HTMLCollectionOf<HTMLVideoElement> {
+	return document.getElementsByTagName('video');
+}
