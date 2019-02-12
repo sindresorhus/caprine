@@ -43,7 +43,7 @@
 		"@types/element-ready": "^2.1.0",
 		"@typescript-eslint/eslint-plugin": "^1.1.1",
 		"del-cli": "^1.1.0",
-		"electron": "^4.0.3",
+		"electron": "^4.0.4",
 		"electron-builder": "^20.38.5",
 		"eslint-config-xo-typescript": "^0.6.0",
 		"husky": "^1.3.1",
