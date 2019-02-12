@@ -13,6 +13,20 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
+function setLoginSettings(): void {
+	const appFolder = path.dirname(process.execPath);
+	const updateExe = path.resolve(appFolder, '..', 'Update.exe');
+
+	const openAtLogin = config.get('openAtLogin');
+	const openAsHidden = config.get('openAsHidden');
+
+	app.setLoginItemSettings({
+		openAtLogin,
+		openAsHidden,
+		path: updateExe
+	});
+}
+
 export default function updateMenu(): Menu {
 	const newConversationItem: MenuItemConstructorOptions = {
 		label: 'New Conversation',
@@ -188,6 +202,26 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click(item, focusedWindow) {
 				config.set('alwaysOnTop', item.checked);
 				focusedWindow.setAlwaysOnTop(item.checked);
+			}
+		},
+		{
+			type: 'checkbox',
+			label: 'Launch at login',
+			checked: config.get('openAtLogin'),
+			click(item) {
+				config.set('openAtLogin', item.checked);
+				setLoginSettings();
+				updateMenu();
+			}
+		},
+		{
+			type: 'checkbox',
+			label: 'Launch as hidden',
+			checked: config.get('openAsHidden'),
+			enabled: config.get('openAtLogin'),
+			click(item) {
+				config.set('openAsHidden', item.checked);
+				setLoginSettings();
 			}
 		},
 		{

@@ -48,6 +48,16 @@ app.setAppUserModelId('com.sindresorhus.caprine');
 // https://github.com/electron/electron/issues/9671
 app.commandLine.appendSwitch('disable-color-correct-rendering');
 
+const appFolder = path.dirname(process.execPath);
+const updateExe = path.resolve(appFolder, '..', 'Update.exe');
+
+const {openAtLogin, openAsHidden, wasOpenedAsHidden} = app.getLoginItemSettings({
+	path: updateExe
+});
+
+config.set('openAtLogin', openAtLogin);
+config.set('openAsHidden', openAsHidden || wasOpenedAsHidden);
+
 if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
