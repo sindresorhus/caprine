@@ -105,26 +105,6 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	display: block !important;
 }
 
-/* Narrower titlebar */
-._36ic,
-._5742,
-._673w {
-	height: 40px !important;
-	padding: 4px !important;
-}
-/* Vertically center chat options */
-._fl2 {
-	padding: 0 !important;
-	top: 4px !important;
-	right: 6px !important;
-}
-
-/* Adjust `To` field for narrower titlebar */
-._2y8y {
-	min-height: 40px !important;
-	padding: 8px !important;
-}
-
 /* `New messages` popup */
 ._2xhi._5vn4 ._2xhj {
 	display: none;
