@@ -1,5 +1,8 @@
 :root {
-	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
+	--selected-conversation-background: linear-gradient(
+		hsla(209, 110%, 45%, 0.9),
+		hsla(209, 110%, 42%, 0.9)
+	);
 }
 
 html {
@@ -8,19 +11,8 @@ html {
 
 /* Add OS-specific fonts */
 body {
-	font-family:
-		-apple-system,
-		BlinkMacSystemFont,
-		'Segoe UI',
-		Roboto,
-		Oxygen-Sans,
-		Ubuntu,
-		Cantarell,
-		'Helvetica Neue',
-		sans-serif,
-		'Apple Color Emoji',
-		'Segoe UI Emoji',
-		'Segoe UI Symbol' !important;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+		'Helvetica Neue', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
 	text-rendering: optimizeLegibility !important;
 	font-feature-settings: 'liga', 'clig', 'kern';
 }
@@ -266,7 +258,8 @@ a,
 
 /* Message composer buttons */
 a._4rv6, /* "Choose a sticker" */
-a._4ce_ { /* "Play a game" */
+a._4ce_ {
+	/* "Play a game" */
 	opacity: 1 !important;
 	filter: invert(0.66);
 }
