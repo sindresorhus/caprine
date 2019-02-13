@@ -16,6 +16,7 @@ import {
 	RequestHeaders,
 	OnSendHeadersDetails
 } from 'electron';
+import isOnline from 'is-online';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
@@ -276,6 +277,13 @@ function createMainWindow(): BrowserWindow {
 	return win;
 }
 
+const networkConnectivity = async (): Promise<boolean> => {
+	/* eslint-disable no-await-in-loop */
+	while (!(await isOnline()));
+	/* eslint-enable no-await-in-loop */
+	return true;
+};
+
 (async () => {
 	await app.whenReady();
 
@@ -284,6 +292,12 @@ function createMainWindow(): BrowserWindow {
 	updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
+
+	const shouldReload = !(await isOnline());
+
+	if (shouldReload && (await networkConnectivity())) {
+		mainWindow.reload();
+	}
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {
