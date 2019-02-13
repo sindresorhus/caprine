@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, LoginItemSettings} from 'electron';
 import {
 	is,
 	appMenu,
@@ -13,21 +13,12 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
-const appFolder = path.dirname(process.execPath);
-const updateExe = path.resolve(appFolder, '..', 'Update.exe');
-
-function setLoginSettings({openAtLogin, openAsHidden}: AppLoginSettings): void {
-	app.setLoginItemSettings({
-		openAtLogin,
-		openAsHidden,
-		path: updateExe
-	});
+function setLoginSettings(settings: LoginItemSettings): void {
+	app.setLoginItemSettings(settings);
 }
 
-function getLoginSettings(): AppLoginSettings {
-	return app.getLoginItemSettings({
-		path: updateExe
-	});
+function getLoginSettings(): LoginItemSettings {
+	return app.getLoginItemSettings();
 }
 
 export default function updateMenu(): Menu {
@@ -145,7 +136,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const {openAtLogin, openAsHidden} = getLoginSettings();
+	const settings: LoginItemSettings = getLoginSettings();
 
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
@@ -210,21 +201,11 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Launch at Login',
 			type: 'checkbox',
-			label: 'Launch at login',
-			checked: openAtLogin,
+			checked: settings.openAtLogin,
 			click(item) {
-				setLoginSettings({openAtLogin: item.checked, openAsHidden});
-				updateMenu();
-			}
-		},
-		{
-			type: 'checkbox',
-			label: 'Launch as hidden',
-			checked: openAsHidden,
-			enabled: openAtLogin,
-			click(item) {
-				setLoginSettings({openAtLogin, openAsHidden: item.checked});
+				setLoginSettings({...settings, openAtLogin: item.checked, openAsHidden: item.checked});
 			}
 		},
 		{
