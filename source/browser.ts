@@ -7,7 +7,7 @@ const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
-
+window.onload=function(){
 async function withMenu(
 	menuButtonElement: HTMLElement,
 	callback: () => Promise<void> | void
@@ -35,7 +35,7 @@ async function withMenu(
 
 	await callback();
 }
-
+}
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	await withMenu(await elementReady('._30yy._2fug._p'), callback);
 }
