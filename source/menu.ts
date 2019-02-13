@@ -13,16 +13,19 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
-function setLoginSettings(): void {
-	const appFolder = path.dirname(process.execPath);
-	const updateExe = path.resolve(appFolder, '..', 'Update.exe');
+const appFolder = path.dirname(process.execPath);
+const updateExe = path.resolve(appFolder, '..', 'Update.exe');
 
-	const openAtLogin = config.get('openAtLogin');
-	const openAsHidden = config.get('openAsHidden');
-
+function setLoginSettings({openAtLogin, openAsHidden}: AppLoginSettings): void {
 	app.setLoginItemSettings({
 		openAtLogin,
 		openAsHidden,
+		path: updateExe
+	});
+}
+
+function getLoginSettings(): AppLoginSettings {
+	return app.getLoginItemSettings({
 		path: updateExe
 	});
 }
@@ -142,6 +145,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
+	const {openAtLogin, openAsHidden} = getLoginSettings();
+
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Bounce Dock on Message',
@@ -207,21 +212,19 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			type: 'checkbox',
 			label: 'Launch at login',
-			checked: config.get('openAtLogin'),
+			checked: openAtLogin,
 			click(item) {
-				config.set('openAtLogin', item.checked);
-				setLoginSettings();
+				setLoginSettings({openAtLogin: item.checked, openAsHidden});
 				updateMenu();
 			}
 		},
 		{
 			type: 'checkbox',
 			label: 'Launch as hidden',
-			checked: config.get('openAsHidden'),
-			enabled: config.get('openAtLogin'),
+			checked: openAsHidden,
+			enabled: openAtLogin,
 			click(item) {
-				config.set('openAsHidden', item.checked);
-				setLoginSettings();
+				setLoginSettings({openAtLogin, openAsHidden: item.checked});
 			}
 		},
 		{
