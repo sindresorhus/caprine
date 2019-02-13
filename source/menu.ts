@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions, LoginItemSettings} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
 import {
 	is,
 	appMenu,
@@ -12,14 +12,6 @@ import {
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
-
-function setLoginSettings(settings: LoginItemSettings): void {
-	app.setLoginItemSettings(settings);
-}
-
-function getLoginSettings(): LoginItemSettings {
-	return app.getLoginItemSettings();
-}
 
 export default function updateMenu(): Menu {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -136,8 +128,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
-	const settings: LoginItemSettings = getLoginSettings();
-
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Bounce Dock on Message',
@@ -203,9 +193,9 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			label: 'Launch at Login',
 			type: 'checkbox',
-			checked: settings.openAtLogin,
+			checked: app.getLoginItemSettings().openAtLogin,
 			click(item) {
-				setLoginSettings({...settings, openAtLogin: item.checked, openAsHidden: item.checked});
+				app.setLoginItemSettings({openAtLogin: item.checked, openAsHidden: item.checked});
 			}
 		},
 		{
