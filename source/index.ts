@@ -168,8 +168,8 @@ function initRequestsFiltering(): void {
 		urls: [
 			`*://*.${domain}/*typ.php*`, // Type indicator blocker
 			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
-			'*://static.xx.fbcdn.net/images/emoji.php/v9/*', // Emoji
-			'*://facebook.com/images/emoji.php/v9/*' // Emoji
+			'*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
+			'*://*.facebook.com/images/emoji.php/v9/*' // Emoji
 		]
 	};
 
@@ -330,6 +330,9 @@ function createMainWindow(): BrowserWindow {
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
+		webContents.insertCSS(
+			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
+		);
 
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(
