@@ -125,6 +125,11 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	padding: 8px !important;
 }
 
+/* Adjust `Last Seen/Active` subheading for narrower titlebar */
+._2v6o {
+	margin-top: 0 !important;
+}
+
 /* `New messages` popup */
 ._2xhi._5vn4 ._2xhj {
 	display: none;
