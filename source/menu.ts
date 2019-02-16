@@ -289,6 +289,17 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Private Mode',
+			id: 'privateMode',
+			type: 'checkbox',
+			checked: config.get('privateMode'),
+			accelerator: 'CommandOrControl+N',
+			click() {
+				config.set('privateMode', !config.get('privateMode'));
+				sendAction('set-private-mode');
+			}
+		},
+		{
 			label: 'Vibrancy',
 			visible: is.macos,
 			submenu: vibrancySubmenu
