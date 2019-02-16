@@ -288,7 +288,7 @@ function createMainWindow(): BrowserWindow {
 	tray.create(mainWindow);
 
 	// TODO: Reload mainWindow instead as soon as #712 is fixed
-	if (!(await isOnline()) && (await pWaitFor(() => isOnline()), {interval: 1000})) {
+	if (!(await isOnline()) && (await pWaitFor(isOnline), {interval: 1000})) {
 		app.relaunch();
 		app.quit();
 	}
