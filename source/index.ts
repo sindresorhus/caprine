@@ -17,6 +17,7 @@ import {
 	OnSendHeadersDetails
 } from 'electron';
 import isOnline from 'is-online';
+import pWaitFor from 'p-wait-for';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
@@ -277,13 +278,6 @@ function createMainWindow(): BrowserWindow {
 	return win;
 }
 
-const networkConnectivity = async (): Promise<boolean> => {
-	/* eslint-disable no-await-in-loop */
-	while (!(await isOnline()));
-	/* eslint-enable no-await-in-loop */
-	return true;
-};
-
 (async () => {
 	await app.whenReady();
 
@@ -293,12 +287,10 @@ const networkConnectivity = async (): Promise<boolean> => {
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
-	const shouldReload = !(await isOnline());
-
 	// TODO: Reload mainWindow instead as soon as #712 is fixed
-	if (shouldReload && (await networkConnectivity())) {
-		app.quit();
+	if (!(await isOnline()) && (await pWaitFor(() => isOnline()), {interval: 1000})) {
 		app.relaunch();
+		app.quit();
 	}
 
 	if (is.macos) {
