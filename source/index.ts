@@ -295,6 +295,7 @@ const networkConnectivity = async (): Promise<boolean> => {
 
 	const shouldReload = !(await isOnline());
 
+	// TODO: Reload mainWindow instead as soon as #712 is fixed
 	if (shouldReload && (await networkConnectivity())) {
 		app.quit();
 		app.relaunch();
