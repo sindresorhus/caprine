@@ -296,7 +296,8 @@ const networkConnectivity = async (): Promise<boolean> => {
 	const shouldReload = !(await isOnline());
 
 	if (shouldReload && (await networkConnectivity())) {
-		mainWindow.reload();
+		app.quit();
+		app.relaunch();
 	}
 
 	if (is.macos) {
