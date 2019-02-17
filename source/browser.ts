@@ -618,8 +618,9 @@ async function sendReply(message: string): Promise<void> {
 	if (inputField) {
 		// Send message
 		inputField.focus();
-		await insertMessageText(message, inputField);
+		insertMessageText(message, inputField);
 		(await elementReady('._30yy._38lh')).click();
+
 		// Restore (possible) previous message
 		if (previousMessage) {
 			insertMessageText(previousMessage, inputField);
