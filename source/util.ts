@@ -33,3 +33,22 @@ export function showRestartDialog(message: string): void {
 		}
 	);
 }
+
+export function showRetryDialog(message: string): void {
+	dialog.showMessageBox(
+		{
+			message,
+			detail: `Do you want to retry?`,
+			buttons: ['Try again', 'Quit'],
+			defaultId: 0,
+			cancelId: 1
+		},
+		response => {
+			if (response === 0) {
+				app.relaunch();
+			}
+
+			app.quit();
+		}
+	);
+}

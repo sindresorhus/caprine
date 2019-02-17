@@ -29,7 +29,7 @@ import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
-import {sendAction} from './util';
+import {sendAction, showRetryDialog} from './util';
 import {process as processEmojiUrl} from './emoji';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
@@ -289,7 +289,11 @@ function createMainWindow(): BrowserWindow {
 
 	// TODO: Reload mainWindow instead as soon as #712 is fixed
 	if (!(await isOnline())) {
+		const connectivityTimeout = setTimeout(() => {
+			showRetryDialog(`It appears that you're offline`);
+		}, 20000);
 		await pWaitFor(isOnline, {interval: 1000});
+		clearTimeout(connectivityTimeout);
 		app.relaunch();
 		app.quit();
 	}
