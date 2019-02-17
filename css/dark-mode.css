@@ -795,3 +795,8 @@ html.dark-mode ._1nc6 ._pye,
 html.dark-mode ._hh7 ._pye {
 	color: var(--base-fifty) !important;
 }
+
+/* Music widget title */
+html.dark-mode ._44ju ._44jz {
+	color: #fff;
+}
