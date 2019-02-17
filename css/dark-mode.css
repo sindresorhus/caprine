@@ -774,9 +774,14 @@ html.dark-mode ._koh li:not(.selected) {
 	color: var(--base-seventy);
 }
 
-/* "Missed call" timestamp */
+/* "Missed call" dialog timestamp */
 html.dark-mode ._2r2v {
 	color: var(--base-fourty) !important;
+}
+
+/* "Missed call" dialog buttons separator */
+html.dark-mode ._4eb_ ._30vt:not(:last-child):after {
+	border-left-color: var(--base-ten);
 }
 
 /* "Incoming call" subheading */
