@@ -21,17 +21,20 @@ async function withMenu(
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector<HTMLElement>(
-		'.uiContextualLayerPositioner:not(.hidden_elem)'
-	)!;
+	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
 
-	const observer = new MutationObserver(() => {
-		if (menuLayer.classList.contains('hidden_elem')) {
-			classList.remove('hide-dropdowns');
-			observer.disconnect();
-		}
-	});
-	observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+	if (menuLayer) {
+		const observer = new MutationObserver(() => {
+			if (menuLayer.classList.contains('hidden_elem')) {
+				classList.remove('hide-dropdowns');
+				observer.disconnect();
+			}
+		});
+		observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+	} else {
+		// Fallback in case .uiContextualLayerPositioner is missing
+		classList.remove('hide-dropdowns');
+	}
 
 	await callback();
 }
