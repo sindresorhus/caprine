@@ -578,9 +578,16 @@ document.addEventListener('keydown', async event => {
 });
 
 // Pass events sent via `window.postMessage` on to the main process
-window.addEventListener('message', ({data: {type, data}}) => {
+window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification') {
 		showNotification(data);
+	}
+
+	if (type === 'notification-reply') {
+		await sendReply(data.reply);
+		if (data.previousConversation) {
+			selectConversation(data.previousConversation);
+		}
 	}
 });
 
@@ -608,6 +615,40 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 	});
 }
 
+async function sendReply(message: string): Promise<void> {
+	const inputField = document.querySelector('[contenteditable="true"]') as HTMLElement;
+	const previousMessage = inputField.textContent;
+	if (inputField) {
+		// Send message
+		inputField.focus();
+		insertMessageText(message, inputField);
+		(await elementReady('._30yy._38lh')).click();
+
+		// Restore (possible) previous message
+		if (previousMessage) {
+			insertMessageText(previousMessage, inputField);
+		}
+	}
+}
+
+function insertMessageText(text: string, inputField: HTMLElement): void {
+	// Workaround: insert placeholder value to get execCommand working
+	if (!inputField.textContent) {
+		const event = document.createEvent('TextEvent');
+		event.initTextEvent('textInput', true, true, window, '_', 0, '');
+		inputField.dispatchEvent(event);
+	}
+
+	document.execCommand('selectAll', false, undefined);
+	document.execCommand('insertText', false, text);
+}
+
 ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
+});
+
+ipc.on('notification-reply-callback', (_event: ElectronEvent, data: any) => {
+	const previousConversation = selectedConversationIndex();
+	data.previousConversation = previousConversation;
+	window.postMessage({type: 'notification-reply-callback', data}, '*');
 });
