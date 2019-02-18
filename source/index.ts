@@ -16,8 +16,6 @@ import {
 	RequestHeaders,
 	OnSendHeadersDetails
 } from 'electron';
-import isOnline from 'is-online';
-import pWaitFor from 'p-wait-for';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
@@ -29,9 +27,10 @@ import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
-import {sendAction, showRetryDialog} from './util';
+import {sendAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
+import {ensureOnline} from './ensure-online';
 
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -279,16 +278,7 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
-	if (!(await isOnline())) {
-		const connectivityTimeout = setTimeout(() => {
-			showRetryDialog(`You appear to be offline. Caprine requires a working internet connection.`);
-		}, 15000);
-
-		await pWaitFor(isOnline, {interval: 1000});
-		clearTimeout(connectivityTimeout);
-	}
-
-	await app.whenReady();
+	await Promise.all([ensureOnline(), app.whenReady()]);
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
