@@ -279,6 +279,15 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
+	if (!(await isOnline())) {
+		const connectivityTimeout = setTimeout(() => {
+			showRetryDialog(`You appear to be offline. Caprine requires a working internet connection.`);
+		}, 20000);
+
+		await pWaitFor(isOnline, {interval: 1000});
+		clearTimeout(connectivityTimeout);
+	}
+
 	await app.whenReady();
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
@@ -286,17 +295,6 @@ function createMainWindow(): BrowserWindow {
 	updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
-
-	// TODO: Reload mainWindow instead as soon as #712 is fixed
-	if (!(await isOnline())) {
-		const connectivityTimeout = setTimeout(() => {
-			showRetryDialog(`You appear to be offline. Caprine requires a working internet connection.`);
-		}, 20000);
-		await pWaitFor(isOnline, {interval: 1000});
-		clearTimeout(connectivityTimeout);
-		app.relaunch();
-		app.quit();
-	}
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {
