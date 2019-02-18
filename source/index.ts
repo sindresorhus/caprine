@@ -278,10 +278,7 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
-	await Promise.all([
-		ensureOnline(),
-		app.whenReady()
-	]);
+	await Promise.all([ensureOnline(), app.whenReady()]);
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
