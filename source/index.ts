@@ -282,7 +282,7 @@ function createMainWindow(): BrowserWindow {
 	if (!(await isOnline())) {
 		const connectivityTimeout = setTimeout(() => {
 			showRetryDialog(`You appear to be offline. Caprine requires a working internet connection.`);
-		}, 20000);
+		}, 15000);
 
 		await pWaitFor(isOnline, {interval: 1000});
 		clearTimeout(connectivityTimeout);
