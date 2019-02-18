@@ -449,7 +449,9 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
-	mainWindow.show();
+	if (mainWindow) {
+		mainWindow.show();
+	}
 });
 
 app.on('before-quit', () => {
