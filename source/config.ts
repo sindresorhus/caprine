@@ -1,4 +1,5 @@
 import Store from 'electron-store';
+import {is} from 'electron-util';
 import {EmojiStyle} from './emoji';
 
 const defaults = {
@@ -40,7 +41,9 @@ const defaults = {
 function updateVibrancySetting(store: Store): void {
 	const vibrancy = store.get('vibrancy');
 
-	if (vibrancy === true) {
+	if (!is.macos) {
+		store.set('vibrancy', 'none');
+	} else if (vibrancy === true) {
 		store.set('vibrancy', 'full');
 	} else if (vibrancy === false) {
 		store.set('vibrancy', 'sidebar');

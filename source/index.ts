@@ -27,8 +27,9 @@ import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
-import {sendAction} from './util';
+import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
+import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
 electronDebug({
@@ -277,7 +278,7 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
-	await app.whenReady();
+	await Promise.all([ensureOnline(), app.whenReady()]);
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
@@ -332,6 +333,9 @@ function createMainWindow(): BrowserWindow {
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
+		webContents.insertCSS(
+			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
+		);
 
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(
@@ -437,7 +441,9 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
-	mainWindow.show();
+	if (mainWindow) {
+		mainWindow.show();
+	}
 });
 
 app.on('before-quit', () => {
@@ -445,23 +451,39 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
+const notifications = new Map();
+
 ipcMain.on(
 	'notification',
 	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
 			body,
+			hasReply: true,
 			icon: nativeImage.createFromDataURL(icon),
 			silent
 		});
 
+		notifications.set(id, notification);
+
 		notification.on('click', () => {
 			mainWindow.show();
 			sendAction('notification-callback', {callbackName: 'onclick', id});
+
+			notifications.delete(id);
+		});
+
+		notification.on('reply', (_event, reply: string) => {
+			// We use onclick event used by messenger to go to the right convo
+			sendBackgroundAction('notification-reply-callback', {callbackName: 'onclick', id, reply});
+
+			notifications.delete(id);
 		});
 
 		notification.on('close', () => {
 			sendAction('notification-callback', {callbackName: 'onclose', id});
+
+			notifications.delete(id);
 		});
 
 		notification.show();
