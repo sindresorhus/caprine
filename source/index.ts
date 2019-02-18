@@ -29,6 +29,7 @@ import config from './config';
 import tray from './tray';
 import {sendAction} from './util';
 import {process as processEmojiUrl} from './emoji';
+import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
 electronDebug({
@@ -277,7 +278,7 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
-	await app.whenReady();
+	await Promise.all([ensureOnline(), app.whenReady()]);
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
@@ -438,7 +439,9 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
-	mainWindow.show();
+	if (mainWindow) {
+		mainWindow.show();
+	}
 });
 
 app.on('before-quit', () => {
