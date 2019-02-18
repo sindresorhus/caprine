@@ -2,10 +2,10 @@ import {app, dialog} from 'electron';
 import isOnline from 'is-online';
 import pWaitFor from 'p-wait-for';
 
-function showRetryDialog(message: string): void {
+function showWaitDialog(): void {
 	dialog.showMessageBox(
 		{
-			message,
+			message: 'You appear to be offline. Caprine requires a working internet connection.',
 			detail: 'Do you want to wait?',
 			buttons: ['Wait', 'Quit'],
 			defaultId: 0,
@@ -21,9 +21,7 @@ function showRetryDialog(message: string): void {
 
 export const ensureOnline = async (): Promise<void> => {
 	if (!(await isOnline())) {
-		const connectivityTimeout = setTimeout(() => {
-			showRetryDialog('You appear to be offline. Caprine requires a working internet connection.');
-		}, 15000);
+		const connectivityTimeout = setTimeout(showWaitDialog, 15000);
 
 		await pWaitFor(isOnline, {interval: 1000});
 		clearTimeout(connectivityTimeout);
