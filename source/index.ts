@@ -281,7 +281,7 @@ function createMainWindow(): BrowserWindow {
 (async () => {
 	if (!(await isOnline())) {
 		const connectivityTimeout = setTimeout(() => {
-			showRetryDialog(`You appear to be offline. Caprine requires a working internet connection.`);
+			showRetryDialog('You appear to be offline. Caprine requires a working internet connection.');
 		}, 15000);
 
 		await pWaitFor(isOnline, {interval: 1000});
