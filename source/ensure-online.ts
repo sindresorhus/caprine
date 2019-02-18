@@ -7,7 +7,10 @@ function showWaitDialog(): void {
 		{
 			message: 'You appear to be offline. Caprine requires a working internet connection.',
 			detail: 'Do you want to wait?',
-			buttons: ['Wait', 'Quit'],
+			buttons: [
+				'Wait',
+				'Quit'
+			],
 			defaultId: 0,
 			cancelId: 1
 		},
