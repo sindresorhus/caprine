@@ -29,8 +29,8 @@ import config from './config';
 import tray from './tray';
 import {sendAction} from './util';
 import {process as processEmojiUrl} from './emoji';
+import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
-import {ensureOnline} from './ensure-online';
 
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -278,7 +278,10 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
-	await Promise.all([ensureOnline(), app.whenReady()]);
+	await Promise.all([
+		ensureOnline(),
+		app.whenReady()
+	]);
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
