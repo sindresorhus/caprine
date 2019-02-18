@@ -32,7 +32,7 @@ body {
 	-webkit-app-region: drag;
 }
 
-/* Fix broken scroll arrows on mesage input on Windows */
+/* Fix broken scroll arrows on message input on Windows */
 ._kmc {
 	overflow-y: hidden !important;
 }
