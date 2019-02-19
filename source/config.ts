@@ -25,7 +25,8 @@ const defaults = {
 	flashWindowOnMessage: true,
 	block: {
 		chatSeen: false,
-		typingIndicator: false
+		typingIndicator: false,
+		deliveryReceipt: false
 	},
 	emojiStyle: 'facebook-3-0' as EmojiStyle,
 	confirmImagePaste: true,

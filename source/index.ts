@@ -169,6 +169,8 @@ function initRequestsFiltering(): void {
 		urls: [
 			`*://*.${domain}/*typ.php*`, // Type indicator blocker
 			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
+			`*://*.${domain}/*delivery_receipts*`, // Delivery receipts indicator blocker
+			`*://*.${domain}/*unread_threads*`, // Delivery receipts indicator blocker
 			'*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
 			'*://*.facebook.com/images/emoji.php/v9/*' // Emoji
 		]
@@ -181,6 +183,8 @@ function initRequestsFiltering(): void {
 			callback({cancel: config.get('block.typingIndicator')});
 		} else if (url.includes('change_read_status.php')) {
 			callback({cancel: config.get('block.chatSeen')});
+		} else if (url.includes('delivery_receipts') || url.includes('unread_threads')) {
+			callback({cancel: config.get('block.deliveryReceipt')});
 		}
 	});
 }
