@@ -172,6 +172,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			type: 'checkbox',
+			label: 'Block Delivery Receipts',
+			checked: config.get('block.deliveryReceipt'),
+			click(item) {
+				config.set('block.deliveryReceipt', item.checked);
+			}
+		},
+		{
 			label: 'Hardware Acceleration',
 			type: 'checkbox',
 			checked: config.get('hardwareAcceleration'),
