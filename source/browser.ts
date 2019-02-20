@@ -272,6 +272,25 @@ ipc.on('render-overlay-icon', (_event: ElectronEvent, messageCount: number) => {
 	);
 });
 
+ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
+	const canvas = document.createElement('canvas');
+	const context = canvas.getContext('2d')!;
+	canvas.width = 256;
+	canvas.height = 256;
+	context.textAlign = 'center';
+	context.textBaseline = 'middle';
+	if (is.macos) {
+		context.font = '256px system-ui';
+		context.fillText(emoji, 128, 140);
+	} else {
+		context.font = '225px system-ui';
+		context.fillText(emoji, 128, 115);
+	}
+
+	const dataUrl = canvas.toDataURL();
+	ipc.send('native-emoji', {emoji, dataUrl});
+});
+
 ipc.on('zoom-reset', () => {
 	setZoom(1.0);
 });

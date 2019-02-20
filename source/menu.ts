@@ -13,7 +13,7 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
-export default function updateMenu(): Menu {
+export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
@@ -56,30 +56,30 @@ export default function updateMenu(): Menu {
 			label: 'No Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'none',
-			click() {
+			async click() {
 				config.set('vibrancy', 'none');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
 			label: 'Sidebar-only Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'sidebar',
-			click() {
+			async click() {
 				config.set('vibrancy', 'sidebar');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
 			label: 'Full-window Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'full',
-			click() {
+			async click() {
 				config.set('vibrancy', 'full');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		}
 	];
@@ -237,7 +237,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Emoji style',
-			submenu: generateEmojiSubmenu(updateMenu)
+			submenu: await generateEmojiSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'
@@ -278,10 +278,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			visible: is.macos,
 			checked: config.get('followSystemAppearance'),
-			click() {
+			async click() {
 				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
 				sendAction('set-dark-mode');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{

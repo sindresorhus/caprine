@@ -32,6 +32,8 @@ import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
+ipcMain.setMaxListeners(100);
+
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
 	showDevTools: false
@@ -176,9 +178,9 @@ function initRequestsFiltering(): void {
 		]
 	};
 
-	session.defaultSession!.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+	session.defaultSession!.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
 		if (url.includes('emoji.php')) {
-			callback(processEmojiUrl(url));
+			callback(await processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
 			callback({cancel: config.get('block.typingIndicator')});
 		} else if (url.includes('change_read_status.php')) {
@@ -286,7 +288,7 @@ function createMainWindow(): BrowserWindow {
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
-	updateAppMenu();
+	await updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
@@ -331,7 +333,9 @@ function createMainWindow(): BrowserWindow {
 
 	const {webContents} = mainWindow;
 
-	webContents.on('dom-ready', () => {
+	webContents.on('dom-ready', async () => {
+		await updateAppMenu();
+
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
