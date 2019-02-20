@@ -7,7 +7,7 @@ import {
 	ipcMain,
 	Event as ElectronEvent
 } from 'electron';
-import {memoize} from 'lodash';
+import memoize from 'lodash.memoize';
 import config from './config';
 import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
 
