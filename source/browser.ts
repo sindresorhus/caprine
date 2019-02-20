@@ -636,8 +636,8 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 
 async function sendReply(message: string): Promise<void> {
 	const inputField = document.querySelector('[contenteditable="true"]') as HTMLElement;
-	const previousMessage = inputField.textContent;
 	if (inputField) {
+		const previousMessage = inputField.textContent;
 		// Send message
 		inputField.focus();
 		insertMessageText(message, inputField);
