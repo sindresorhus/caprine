@@ -161,7 +161,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			submenu: privacySubmenu
 		},
 		{
-			label: 'Emoji style',
+			label: 'Emoji Style',
 			submenu: await generateEmojiSubmenu(updateMenu)
 		},
 		{
