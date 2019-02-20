@@ -16,6 +16,10 @@ export function sendAction(action: string, ...args: unknown[]): void {
 	win.webContents.send(action, ...args);
 }
 
+export function sendBackgroundAction(action: string, ...args: unknown[]): void {
+	getWindow().webContents.send(action, ...args);
+}
+
 export function showRestartDialog(message: string): void {
 	dialog.showMessageBox(
 		{

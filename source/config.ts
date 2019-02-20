@@ -1,4 +1,5 @@
 import Store from 'electron-store';
+import {is} from 'electron-util';
 import {EmojiStyle} from './emoji';
 
 const defaults = {
@@ -24,7 +25,8 @@ const defaults = {
 	flashWindowOnMessage: true,
 	block: {
 		chatSeen: false,
-		typingIndicator: false
+		typingIndicator: false,
+		deliveryReceipt: false
 	},
 	emojiStyle: 'facebook-3-0' as EmojiStyle,
 	confirmImagePaste: true,
@@ -41,7 +43,9 @@ const defaults = {
 function updateVibrancySetting(store: Store): void {
 	const vibrancy = store.get('vibrancy');
 
-	if (vibrancy === true) {
+	if (!is.macos) {
+		store.set('vibrancy', 'none');
+	} else if (vibrancy === true) {
 		store.set('vibrancy', 'full');
 	} else if (vibrancy === false) {
 		store.set('vibrancy', 'sidebar');

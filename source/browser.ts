@@ -53,17 +53,20 @@ async function withMenu(
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector<HTMLElement>(
-		'.uiContextualLayerPositioner:not(.hidden_elem)'
-	)!;
+	const menuLayer = document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
 
-	const observer = new MutationObserver(() => {
-		if (menuLayer.classList.contains('hidden_elem')) {
-			classList.remove('hide-dropdowns');
-			observer.disconnect();
-		}
-	});
-	observer.observe(menuLayer, { attributes: true, attributeFilter: ['class'] });
+	if (menuLayer) {
+		const observer = new MutationObserver(() => {
+			if (menuLayer.classList.contains('hidden_elem')) {
+				classList.remove('hide-dropdowns');
+				observer.disconnect();
+			}
+		});
+		observer.observe(menuLayer, {attributes: true, attributeFilter: ['class']});
+	} else {
+		// Fallback in case .uiContextualLayerPositioner is missing
+		classList.remove('hide-dropdowns');
+	}
 
 	await callback();
 }
@@ -305,6 +308,25 @@ ipc.on('render-overlay-icon', (_event: ElectronEvent, messageCount: number) => {
 	);
 });
 
+ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
+	const canvas = document.createElement('canvas');
+	const context = canvas.getContext('2d')!;
+	canvas.width = 256;
+	canvas.height = 256;
+	context.textAlign = 'center';
+	context.textBaseline = 'middle';
+	if (is.macos) {
+		context.font = '256px system-ui';
+		context.fillText(emoji, 128, 140);
+	} else {
+		context.font = '225px system-ui';
+		context.fillText(emoji, 128, 115);
+	}
+
+	const dataUrl = canvas.toDataURL();
+	ipc.send('native-emoji', {emoji, dataUrl});
+});
+
 ipc.on('zoom-reset', () => {
 	setZoom(1.0);
 });
@@ -443,7 +465,7 @@ async function sendConversationList(): Promise<void> {
 				if (groupPic) {
 					// Slice image source from background-image style property of div
 					const bgImage = groupPic.style.backgroundImage!;
-					groupPic.src = bgImage!.slice(5, bgImage.length - 2);
+					groupPic.src = bgImage.slice(5, bgImage.length - 2);
 				}
 
 				const isConversationMuted = el.classList.contains('_569x');
@@ -453,7 +475,7 @@ async function sendConversationList(): Promise<void> {
 					selected: el.classList.contains('_1ht2'),
 					unread: el.classList.contains('_1ht3') && !isConversationMuted,
 					icon: await getDataUrlFromImg(
-						profilePic ? profilePic! : groupPic!,
+						profilePic ? profilePic : groupPic!,
 						el.classList.contains('_1ht3')
 					)
 				};
@@ -464,7 +486,7 @@ async function sendConversationList(): Promise<void> {
 }
 
 // Return canvas with rounded image
-function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
+async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 	return new Promise(resolve => {
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
@@ -497,7 +519,7 @@ function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
+async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		if (unread) {
@@ -614,9 +636,16 @@ document.addEventListener('keydown', async event => {
 });
 
 // Pass events sent via `window.postMessage` on to the main process
-window.addEventListener('message', ({ data: { type, data } }) => {
+window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification') {
 		showNotification(data);
+	}
+
+	if (type === 'notification-reply') {
+		await sendReply(data.reply);
+		if (data.previousConversation) {
+			selectConversation(data.previousConversation);
+		}
 	}
 });
 
@@ -642,6 +671,34 @@ function showNotification({ id, title, body, icon, silent }: NotificationEvent):
 			silent
 		});
 	});
+}
+
+async function sendReply(message: string): Promise<void> {
+	const inputField = document.querySelector('[contenteditable="true"]') as HTMLElement;
+	const previousMessage = inputField.textContent;
+	if (inputField) {
+		// Send message
+		inputField.focus();
+		insertMessageText(message, inputField);
+		(await elementReady('._30yy._38lh')).click();
+
+		// Restore (possible) previous message
+		if (previousMessage) {
+			insertMessageText(previousMessage, inputField);
+		}
+	}
+}
+
+function insertMessageText(text: string, inputField: HTMLElement): void {
+	// Workaround: insert placeholder value to get execCommand working
+	if (!inputField.textContent) {
+		const event = document.createEvent('TextEvent');
+		event.initTextEvent('textInput', true, true, window, '_', 0, '');
+		inputField.dispatchEvent(event);
+	}
+
+	document.execCommand('selectAll', false, undefined);
+	document.execCommand('insertText', false, text);
 }
 
 ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
@@ -766,3 +823,8 @@ function setAutoplayVideos(): void {
 function getVideos(): HTMLCollectionOf<HTMLVideoElement> {
 	return document.getElementsByTagName('video');
 }
+ipc.on('notification-reply-callback', (_event: ElectronEvent, data: any) => {
+	const previousConversation = selectedConversationIndex();
+	data.previousConversation = previousConversation;
+	window.postMessage({type: 'notification-reply-callback', data}, '*');
+});

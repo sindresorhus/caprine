@@ -16,12 +16,11 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
 </a>
 
-
 ## Highlights
 
 - [Dark theme](#dark-mode)
-- [Vibrant theme](#vibrancy)*
-- [Privacy-focused](#hide-last-seen--typing-indicator)
+- [Vibrant theme](#vibrancy)\*
+- [Privacy-focused](#privacy)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
@@ -30,6 +29,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - Cross-platform
 - Silent auto-updates
 - Custom text size
+- Emoji style setting
 
 \*macOS only
 
@@ -76,11 +76,11 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 <img src="media/screenshot-vibrancy.jpg" width="1165">
 
-### Hide last seen / typing indicator
+### Privacy
 
 <img src="media/screenshot-block-typing-indicator.png" width="626">
 
-You can choose to prevent people from knowing when you've seen a message or are currently typing. Both options are available under the `Caprine`/`File` menu.
+You can choose to prevent people from knowing when you have seen a message and when you are currently typing. These settings are available under the `Caprine`/`File` menu.
 
 ### Mute desktop notifications
 
@@ -195,23 +195,19 @@ $ npm run release
 
 Then edit the automatically created GitHub Releases draft and publish.
 
-
 ## Maintainers
 
 - [Sindre Sorhus](https://sindresorhus.com)
 - [Aw Young Qingzhuo](https://github.com/veniversum)
 - [Jarek Radosz](https://github.com/CvX)
 
-
 ## Links
 
 - [Product Hunt post](https://www.producthunt.com/posts/caprine-2)
 
-
 ## Disclaimer
 
 Caprine is a third-party app and is not affiliated with Facebook.
-
 
 ## License
 

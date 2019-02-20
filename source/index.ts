@@ -27,9 +27,12 @@ import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
-import {sendAction} from './util';
+import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
+import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
+
+ipcMain.setMaxListeners(100);
 
 electronDebug({
 	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
@@ -57,7 +60,10 @@ if (!isDev) {
 	autoUpdater.logger = log;
 
 	const FOUR_HOURS = 1000 * 60 * 60 * 4;
-	setInterval(() => autoUpdater.checkForUpdates(), FOUR_HOURS);
+	setInterval(() => {
+		autoUpdater.checkForUpdates();
+	}, FOUR_HOURS);
+
 	autoUpdater.checkForUpdates();
 }
 
@@ -168,18 +174,22 @@ function initRequestsFiltering(): void {
 		urls: [
 			`*://*.${domain}/*typ.php*`, // Type indicator blocker
 			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
+			`*://*.${domain}/*delivery_receipts*`, // Delivery receipts indicator blocker
+			`*://*.${domain}/*unread_threads*`, // Delivery receipts indicator blocker
 			'*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
 			'*://*.facebook.com/images/emoji.php/v9/*' // Emoji
 		]
 	};
 
-	session.defaultSession!.webRequest.onBeforeRequest(filter, ({url}, callback) => {
+	session.defaultSession!.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
 		if (url.includes('emoji.php')) {
-			callback(processEmojiUrl(url));
+			callback(await processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
 			callback({cancel: config.get('block.typingIndicator')});
 		} else if (url.includes('change_read_status.php')) {
 			callback({cancel: config.get('block.chatSeen')});
+		} else if (url.includes('delivery_receipts') || url.includes('unread_threads')) {
+			callback({cancel: config.get('block.deliveryReceipt')});
 		}
 	});
 }
@@ -277,11 +287,11 @@ function createMainWindow(): BrowserWindow {
 }
 
 (async () => {
-	await app.whenReady();
+	await Promise.all([ensureOnline(), app.whenReady()]);
 
 	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
-	updateAppMenu();
+	await updateAppMenu();
 	mainWindow = createMainWindow();
 	tray.create(mainWindow);
 
@@ -326,7 +336,9 @@ function createMainWindow(): BrowserWindow {
 
 	const {webContents} = mainWindow;
 
-	webContents.on('dom-ready', () => {
+	webContents.on('dom-ready', async () => {
+		await updateAppMenu();
+
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
@@ -438,7 +450,9 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
-	mainWindow.show();
+	if (mainWindow) {
+		mainWindow.show();
+	}
 });
 
 app.on('before-quit', () => {
@@ -446,23 +460,39 @@ app.on('before-quit', () => {
 	config.set('lastWindowState', mainWindow.getNormalBounds());
 });
 
+const notifications = new Map();
+
 ipcMain.on(
 	'notification',
 	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
 			body,
+			hasReply: true,
 			icon: nativeImage.createFromDataURL(icon),
 			silent
 		});
 
+		notifications.set(id, notification);
+
 		notification.on('click', () => {
 			mainWindow.show();
 			sendAction('notification-callback', {callbackName: 'onclick', id});
+
+			notifications.delete(id);
+		});
+
+		notification.on('reply', (_event, reply: string) => {
+			// We use onclick event used by messenger to go to the right convo
+			sendBackgroundAction('notification-reply-callback', {callbackName: 'onclick', id, reply});
+
+			notifications.delete(id);
 		});
 
 		notification.on('close', () => {
 			sendAction('notification-callback', {callbackName: 'onclose', id});
+
+			notifications.delete(id);
 		});
 
 		notification.show();

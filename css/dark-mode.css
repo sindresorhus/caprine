@@ -763,3 +763,13 @@ html.dark-mode ._koh {
 html.dark-mode ._koh li:not(.selected) {
 	color: var(--base-seventy);
 }
+
+/* "Missed call" timestamp */
+html.dark-mode ._2r2v {
+	color: var(--base-fourty) !important;
+}
+
+/* "Incoming call" subheading */
+html.dark-mode ._2n1t {
+	color: var(--base-fourty) !important;
+}

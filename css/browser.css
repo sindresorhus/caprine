@@ -32,7 +32,7 @@ body {
 	-webkit-app-region: drag;
 }
 
-/* Fix broken scroll arrows on mesage input on Windows */
+/* Fix broken scroll arrows on message input on Windows */
 ._kmc {
 	overflow-y: hidden !important;
 }
@@ -123,6 +123,11 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 ._2y8y {
 	min-height: 40px !important;
 	padding: 8px !important;
+}
+
+/* Adjust `Last Seen/Active` subheading for narrower titlebar */
+._2v6o {
+	margin-top: 0 !important;
 }
 
 /* `New messages` popup */
