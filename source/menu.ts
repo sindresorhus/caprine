@@ -192,6 +192,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Launch at Login',
+			visible: is.macos || is.windows,
 			type: 'checkbox',
 			checked: app.getLoginItemSettings().openAtLogin,
 			click(item) {
