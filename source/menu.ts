@@ -194,8 +194,11 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Launch at Login',
 			type: 'checkbox',
 			checked: app.getLoginItemSettings().openAtLogin,
-			click(item) {
-				app.setLoginItemSettings({openAtLogin: item.checked, openAsHidden: item.checked});
+			click(menuItem) {
+				app.setLoginItemSettings({
+					openAtLogin: menuItem.checked,
+					openAsHidden: menuItem.checked
+				});
 			}
 		},
 		{
