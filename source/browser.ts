@@ -1,6 +1,6 @@
-import { ipcRenderer as ipc, Event as ElectronEvent } from 'electron';
+import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
 import elementReady from 'element-ready';
-import { api, is } from 'electron-util';
+import {api, is} from 'electron-util';
 import config from './config';
 
 const listSelector = 'div[role="navigation"] > div > ul';
@@ -10,21 +10,18 @@ const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
 const conversationId = 'conversationWindow';
 
-// A way to hold reference to conversation part of document 
+// A way to hold reference to conversation part of document
 // Used to refresh videoObserver after the conversation reference is lost
-let conversationWindow: HTMLElement;
+let conversationWindow: Element;
 const conversationDivObserver = new MutationObserver(_ => {
-
-	// First try to fetch by id as it's easily the fastest selector (querySelector is around 60% slower)
-	let conversation = document.getElementById(conversationId);
+	let conversation = document.querySelector('#' + conversationId);
 
 	// Fetch it using querySelector if no luck with id
-	if (!conversation)
-		conversation = document.querySelector(conversationSelector);
+	if (!conversation) conversation = document.querySelector(conversationSelector);
 
 	// If we have a new reference
 	if (conversation && conversationWindow !== conversation) {
-		// Add id so we can just getElementById
+		// Add id so we know when we've lost reference to conversationWindow and we can restart the video observer
 		conversation.id = conversationId;
 		conversationWindow = conversation;
 		startVideoObserver(conversationWindow);
@@ -34,17 +31,17 @@ const conversationDivObserver = new MutationObserver(_ => {
 // Refence to mutation observer
 // Only active if user has set preference to disable video autoplay
 const videoObserver = new MutationObserver(_ => {
+	// Select by tag instead of iterating over mutations which is highly more performant
 	const videos = getVideos();
 	// If videos was added disable autoplay
-	if (videos.length > 0)
-		disableVideoAutoplay(videos);
+	if (videos.length > 0) disableVideoAutoplay(videos);
 });
 
 async function withMenu(
 	menuButtonElement: HTMLElement,
 	callback: () => Promise<void> | void
 ): Promise<void> {
-	const { classList } = document.documentElement;
+	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
 	classList.add('hide-dropdowns');
@@ -253,7 +250,7 @@ function setDarkMode(): void {
 }
 
 function updateVibrancy(): void {
-	const { classList } = document.documentElement;
+	const {classList} = document.documentElement;
 
 	classList.remove('sidebar-vibrancy', 'full-vibrancy');
 
@@ -649,7 +646,7 @@ window.addEventListener('message', async ({data: {type, data}}) => {
 	}
 });
 
-function showNotification({ id, title, body, icon, silent }: NotificationEvent): void {
+function showNotification({id, title, body, icon, silent}: NotificationEvent): void {
 	const img = new Image();
 	img.crossOrigin = 'anonymous';
 	img.src = icon;
@@ -702,20 +699,20 @@ function insertMessageText(text: string, inputField: HTMLElement): void {
 }
 
 ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
-	window.postMessage({ type: 'notification-callback', data }, '*');
+	window.postMessage({type: 'notification-callback', data}, '*');
 });
 
 function startConversationWindowObserver(): void {
 	conversationDivObserver.observe(document.documentElement, {
 		childList: true,
-		subtree: true,
+		subtree: true
 	});
 }
 
-function startVideoObserver(element: HTMLElement): void {
+function startVideoObserver(element: Element): void {
 	videoObserver.observe(element, {
 		childList: true,
-		subtree: true,
+		subtree: true
 	});
 }
 
@@ -723,13 +720,13 @@ function startVideoObserver(element: HTMLElement): void {
 // Enables us to check if video is autoplaying for example when changing conversation
 const playedVideos: HTMLVideoElement[] = [];
 
-function disableVideoAutoplay(videos: HTMLCollectionOf<HTMLVideoElement>): void {
+function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 	for (const video of videos) {
 		// Dont disable currently playing videos and skip already initialized videos
 		if (playedVideos.includes(video)) continue;
 		const firstParent = video.parentElement!;
 
-		// Video parent element which has a snapshot of video as background-image 
+		// Video parent element which has a snapshot of video as background-image
 		const parentWithBackground = video.parentElement!.parentElement!.parentElement!;
 
 		// Hold reference to background parent so we can revert our changes
@@ -744,14 +741,10 @@ function disableVideoAutoplay(videos: HTMLCollectionOf<HTMLVideoElement>): void 
 		playIcon.setAttribute('id', 'disabled_autoplay');
 
 		const {
-			style: {
-				width: width,
-				height: height,
-			}
+			style: {width, height}
 		} = firstParent;
 
-		const style =
-			parentWithBackground.style || window.getComputedStyle(parentWithBackground);
+		const style = parentWithBackground.style || window.getComputedStyle(parentWithBackground);
 		const backgroundImageSrc = style.backgroundImage!.slice(4, -1).replace(/"/g, '');
 
 		// Create image to replace video as a placeholder
@@ -768,7 +761,7 @@ function disableVideoAutoplay(videos: HTMLCollectionOf<HTMLVideoElement>): void 
 		// Remove image and new play icon and append the original divs
 		// We can enable autoplay again by triggering this event
 		copyedPlayIcon.addEventListener('play', () => {
-			img.remove()
+			img.remove();
 			copyedPlayIcon.remove();
 			parentWithBackgroundParent.prepend(parentWithBackground);
 		});
@@ -776,7 +769,7 @@ function disableVideoAutoplay(videos: HTMLCollectionOf<HTMLVideoElement>): void 
 		// Separate handler for click so we know if it was user who played the video
 		copyedPlayIcon.addEventListener('click', () => {
 			playedVideos.push(video);
-			var event = new Event('play');
+			const event = new Event('play');
 			copyedPlayIcon.dispatchEvent(event);
 			// Sometimes video doesnt start playing even tho we trigger the click event
 			// As a workaround check if video didnt start playing and manually trigger the click event
@@ -797,11 +790,10 @@ function disableVideoAutoplay(videos: HTMLCollectionOf<HTMLVideoElement>): void 
 function enableVideoAutoplay(): void {
 	const playIcons = document.querySelectorAll('#disabled_autoplay');
 	for (const icon of playIcons) {
-		var event = new Event('play');
+		const event = new Event('play');
 		icon.dispatchEvent(event);
 	}
 }
-
 
 function setAutoplayVideos(): void {
 	if (config.get('videoAutoplay')) {
@@ -820,9 +812,10 @@ function setAutoplayVideos(): void {
 	}
 }
 
-function getVideos(): HTMLCollectionOf<HTMLVideoElement> {
-	return document.getElementsByTagName('video');
+function getVideos(): NodeListOf<HTMLVideoElement> {
+	return document.querySelectorAll('video');
 }
+
 ipc.on('notification-reply-callback', (_event: ElectronEvent, data: any) => {
 	const previousConversation = selectedConversationIndex();
 	data.previousConversation = previousConversation;
