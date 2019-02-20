@@ -233,7 +233,7 @@ function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
  * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
  */
 const renderEmoji = memoize(
-	(emoji: string): Promise<string> =>
+	async (emoji: string): Promise<string> =>
 		new Promise(resolve => {
 			const listener = (_event: ElectronEvent, arg: {emoji: string; dataUrl: string}): void => {
 				if (arg.emoji !== emoji) {
@@ -250,7 +250,7 @@ const renderEmoji = memoize(
 );
 
 /**
- * @param url A Facebook emoji URL like https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
+ * @param url - A Facebook emoji URL like https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
  */
 function urlToEmoji(url: string): string {
 	const codePoints = url
@@ -275,7 +275,7 @@ function urlToEmoji(url: string): string {
 const cachedEmojiMenuIcons = new Map<EmojiStyle, NativeImage>();
 
 /**
- * @return An icon to use for the menu item of this emoji style
+ * @return An icon to use for the menu item of this emoji style.
  */
 async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined> {
 	const cachedIcon = cachedEmojiMenuIcons.get(style);

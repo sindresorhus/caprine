@@ -60,7 +60,10 @@ if (!isDev) {
 	autoUpdater.logger = log;
 
 	const FOUR_HOURS = 1000 * 60 * 60 * 4;
-	setInterval(() => autoUpdater.checkForUpdates(), FOUR_HOURS);
+	setInterval(() => {
+		autoUpdater.checkForUpdates();
+	}, FOUR_HOURS);
+
 	autoUpdater.checkForUpdates();
 }
 

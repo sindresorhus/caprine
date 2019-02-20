@@ -429,7 +429,7 @@ async function sendConversationList(): Promise<void> {
 				if (groupPic) {
 					// Slice image source from background-image style property of div
 					const bgImage = groupPic.style.backgroundImage!;
-					groupPic.src = bgImage!.slice(5, bgImage.length - 2);
+					groupPic.src = bgImage.slice(5, bgImage.length - 2);
 				}
 
 				const isConversationMuted = el.classList.contains('_569x');
@@ -439,7 +439,7 @@ async function sendConversationList(): Promise<void> {
 					selected: el.classList.contains('_1ht2'),
 					unread: el.classList.contains('_1ht3') && !isConversationMuted,
 					icon: await getDataUrlFromImg(
-						profilePic ? profilePic! : groupPic!,
+						profilePic ? profilePic : groupPic!,
 						el.classList.contains('_1ht3')
 					)
 				};
@@ -450,7 +450,7 @@ async function sendConversationList(): Promise<void> {
 }
 
 // Return canvas with rounded image
-function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
+async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 	return new Promise(resolve => {
 		const img = new Image();
 		img.crossOrigin = 'anonymous';
@@ -483,7 +483,7 @@ function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
 }
 
 // Return data url for user avatar
-function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
+async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async resolve => {
 		if (unread) {

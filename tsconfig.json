@@ -4,10 +4,6 @@
 		"outDir": "dist-js",
 		"target": "esnext",
 		"module": "commonjs",
-		"lib": [
-			"esnext",
-			"dom",
-			"dom.iterable"
-		]
+		"lib": ["esnext", "dom", "dom.iterable"]
 	}
 }
