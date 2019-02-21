@@ -625,14 +625,12 @@ html.dark-mode ._5hy2 ._43dh {
 
 /* Message composer buttons */
 html.dark-mode a._4rv6, /* "Choose a sticker" */
-html.dark-mode a._4ce_ {
-	/* "Play a game" */
+html.dark-mode a._4ce_ { /* "Play a game" */
 	filter: invert(1) !important;
 	opacity: 0.6 !important;
 }
 html.dark-mode ._4rv3 ._4rv4 ._5vn8, /* "Add files" */
-html.dark-mode a._39bk {
-	/* Other icons */
+html.dark-mode a._39bk { /* Other icons */
 	opacity: 0.6;
 	filter: brightness(1.6);
 }
