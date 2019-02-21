@@ -327,7 +327,7 @@ html.dark-mode ._4_j5 {
 
 /* Right sidebar: contact name */
 html.dark-mode ._3eur a {
-  color: var(--blue);
+	color: var(--blue);
 }
 
 /* Right sidebar: menus background */
@@ -512,6 +512,11 @@ html.dark-mode ._3cn0 {
 	color: var(--base-seventy);
 }
 
+/* Bot card description */
+html.dark-mode ._3cnl {
+	color: inherit;
+}
+
 /* Dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
@@ -620,12 +625,14 @@ html.dark-mode ._5hy2 ._43dh {
 
 /* Message composer buttons */
 html.dark-mode a._4rv6, /* "Choose a sticker" */
-html.dark-mode a._4ce_ { /* "Play a game" */
+html.dark-mode a._4ce_ {
+	/* "Play a game" */
 	filter: invert(1) !important;
 	opacity: 0.6 !important;
 }
 html.dark-mode ._4rv3 ._4rv4 ._5vn8, /* "Add files" */
-html.dark-mode a._39bk { /* Other icons */
+html.dark-mode a._39bk {
+	/* Other icons */
 	opacity: 0.6;
 	filter: brightness(1.6);
 }
