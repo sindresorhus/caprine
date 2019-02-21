@@ -327,7 +327,7 @@ html.dark-mode ._4_j5 {
 
 /* Right sidebar: contact name */
 html.dark-mode ._3eur a {
-  color: var(--blue);
+	color: var(--blue);
 }
 
 /* Right sidebar: menus background */
@@ -510,6 +510,11 @@ html.dark-mode ._36wf {
 /* Bot card title */
 html.dark-mode ._3cn0 {
 	color: var(--base-seventy);
+}
+
+/* Bot card description */
+html.dark-mode ._3cnl {
+	color: inherit;
 }
 
 /* Dialogs */
