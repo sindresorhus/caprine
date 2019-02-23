@@ -512,8 +512,7 @@ ipcMain.on(
 		});
 
 		notification.on('close', () => {
-			sendAction('notification-callback', {callbackName: 'onclose', id});
-
+			sendBackgroundAction('notification-callback', {callbackName: 'onclose', id});
 			notifications.delete(id);
 		});
 
