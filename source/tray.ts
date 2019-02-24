@@ -41,6 +41,13 @@ export default {
 		tray.on('click', toggleWin);
 	},
 
+	destroy: () => {
+		if (tray) {
+			tray.destroy();
+			tray = null;
+		}
+	},
+
 	setBadge: (shouldDisplayUnread: boolean) => {
 		if (is.macos || !tray) {
 			return;

@@ -132,6 +132,16 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 	mainWindow.setOverlayIcon(img, text);
 });
 
+function updateTrayIcon() {
+	if (config.get('hideTrayIcon')) {
+		tray.destroy();
+	} else {
+		tray.create(mainWindow);
+	}
+}
+
+ipcMain.on('update-tray-icon', updateTrayIcon);
+
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
 	requestHeaders?: RequestHeaders;
@@ -293,7 +303,10 @@ function createMainWindow(): BrowserWindow {
 
 	await updateAppMenu();
 	mainWindow = createMainWindow();
-	tray.create(mainWindow);
+
+	if (!config.get('hideTrayIcon')) {
+		tray.create(mainWindow);
+	}
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {

@@ -264,6 +264,10 @@ ipc.on('update-vibrancy', () => {
 	updateVibrancy();
 });
 
+ipc.on('toggle-tray-icon', () => {
+	ipc.send('update-tray-icon');
+});
+
 ipc.on('render-overlay-icon', (_event: ElectronEvent, messageCount: number) => {
 	ipc.send(
 		'update-overlay-icon',
