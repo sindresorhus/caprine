@@ -132,7 +132,7 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 	mainWindow.setOverlayIcon(img, text);
 });
 
-function updateTrayIcon() {
+function updateTrayIcon(): void {
 	if (config.get('hideTrayIcon')) {
 		tray.destroy();
 	} else {
