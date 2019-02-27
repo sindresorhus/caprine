@@ -188,6 +188,11 @@ html.dark-mode ._618k div hr {
 	border-top: 1px solid var(--base-five);
 }
 
+/* Messages list: Poll color (title) */
+html.dark-mode ._3b4u {
+	color: var(--base-seventy);
+}
+
 /* Messages list: text header above the messages */
 html.dark-mode ._17w2,
 html.dark-mode ._ih3 ._3oh-,
