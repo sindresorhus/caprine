@@ -14,7 +14,8 @@ import {
 	MenuItemConstructorOptions,
 	Event as ElectronEvent,
 	RequestHeaders,
-	OnSendHeadersDetails
+	OnSendHeadersDetails,
+	globalShortcut
 } from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
@@ -86,13 +87,17 @@ app.on('second-instance', () => {
 	}
 });
 
+function getMessageCount(conversations: Conversation[]): number {
+	return conversations.filter(({unread}) => unread).length;
+}
+
 function updateBadge(conversations: Conversation[]): void {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
 	}
 
-	const messageCount = conversations.filter(({unread}) => unread).length;
+	const messageCount: number = getMessageCount(conversations);
 
 	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge')) {
@@ -115,6 +120,8 @@ function updateBadge(conversations: Conversation[]): void {
 		}
 	}
 
+	tray.update(messageCount);
+
 	if (is.windows) {
 		if (config.get('showUnreadBadge')) {
 			if (messageCount === 0) {
@@ -124,6 +131,28 @@ function updateBadge(conversations: Conversation[]): void {
 				mainWindow.webContents.send('render-overlay-icon', messageCount);
 			}
 		}
+	}
+}
+
+export function toggleMenuBarMode(): void {
+	setMenuBarMode(config.get('menuBarMode'));
+}
+
+function setupMenuBarMode(mainWindow: BrowserWindow): void {
+	if (is.macos) {
+		toggleMenuBarMode();
+
+		mainWindow.on('enter-full-screen', () => {
+			app.dock.show();
+		});
+
+		mainWindow.on('leave-full-screen', () => {
+			if (config.get('menuBarMode')) {
+				app.dock.hide();
+			}
+		});
+	} else {
+		tray.create(mainWindow);
 	}
 }
 
@@ -283,6 +312,12 @@ function createMainWindow(): BrowserWindow {
 		}
 	});
 
+	win.on('blur', () => {
+		if (is.macos && config.get('menuBarMode') && !win.isFullScreen()) {
+			win.hide();
+		}
+	});
+
 	return win;
 }
 
@@ -293,7 +328,9 @@ function createMainWindow(): BrowserWindow {
 
 	await updateAppMenu();
 	mainWindow = createMainWindow();
-	tray.create(mainWindow);
+
+	// Start in Menu Bar mode if enabled, otherwise start normally
+	setupMenuBarMode(mainWindow);
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {
@@ -498,3 +535,50 @@ ipcMain.on(
 		notification.show();
 	}
 );
+
+function setMenuBarMode(enabled: boolean): void {
+	setWindowMenuBarMode(enabled);
+	setAppMenuBarMode(enabled);
+	setGlobalShortcutMenuBarMode(enabled);
+	setTrayMenuBarMode(enabled);
+}
+
+function setWindowMenuBarMode(enabled: boolean): void {
+	mainWindow.setVisibleOnAllWorkspaces(enabled);
+	mainWindow.setAlwaysOnTop(enabled);
+}
+
+function setAppMenuBarMode(enabled: boolean): void {
+	if (enabled) {
+		if (!mainWindow.isFullScreen()) {
+			app.dock.hide();
+		}
+	} else {
+		app.dock.show();
+		mainWindow.show();
+	}
+}
+
+function setGlobalShortcutMenuBarMode(enabled: boolean): void {
+	const key = 'CommandOrControl+Shift+Y';
+
+	if (enabled) {
+		globalShortcut.register(key, () => {
+			if (mainWindow.isVisible()) {
+				mainWindow.hide();
+			} else {
+				mainWindow.show();
+			}
+		});
+	} else {
+		globalShortcut.unregister(key);
+	}
+}
+
+function setTrayMenuBarMode(enabled: boolean): void {
+	if (enabled) {
+		tray.create(mainWindow);
+	} else {
+		tray.destroy();
+	}
+}

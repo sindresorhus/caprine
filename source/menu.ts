@@ -12,6 +12,7 @@ import {
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
+import {toggleMenuBarMode} from '.';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -197,6 +198,16 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
 				showRestartDialog('Caprine needs to be restarted to change hardware acceleration.');
+			}
+		},
+		{
+			label: 'Menu Bar Mode',
+			type: 'checkbox',
+			enabled: is.macos,
+			click() {
+				config.set('menuBarMode', !config.get('menuBarMode'));
+
+				toggleMenuBarMode();
 			}
 		},
 		{
