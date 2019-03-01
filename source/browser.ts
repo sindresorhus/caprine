@@ -186,8 +186,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 });
 
 ipc.on('toggle-message-buttons', async () => {
-	const messageButtons = await elementReady('._39bj');
-	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
+	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
 ipc.on('show-active-contacts-view', () => {
