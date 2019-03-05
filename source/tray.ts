@@ -59,10 +59,13 @@ export default {
 	},
 
 	destroy: () => {
-		if (tray) {
-			tray.destroy();
-			tray = null;
-		}
+		// Workaround for electron#14036
+		setTimeout(() => {
+			if (tray) {
+				tray.destroy();
+				tray = null;
+			}
+		}, 500);
 	},
 
 	update: (messageCount: number) => {

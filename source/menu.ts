@@ -204,6 +204,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Menu Bar Mode',
 			type: 'checkbox',
 			enabled: is.macos,
+			checked: config.get('menuBarMode'),
+			id: 'menuBarMode',
 			click() {
 				config.set('menuBarMode', !config.get('menuBarMode'));
 

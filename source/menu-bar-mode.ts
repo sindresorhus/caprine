@@ -1,4 +1,4 @@
-import {app, globalShortcut, BrowserWindow} from 'electron';
+import {app, globalShortcut, BrowserWindow, Menu} from 'electron';
 import {is} from 'electron-util';
 
 import config from './config';
@@ -8,6 +8,9 @@ const menuBarShortcut = 'CommandOrControl+Shift+Y';
 
 export function toggleMenuBarMode(window: BrowserWindow): void {
 	const enabled = config.get('menuBarMode');
+	const menuItem = Menu.getApplicationMenu()!.getMenuItemById('menuBarMode');
+
+	menuItem.checked = enabled;
 
 	window.setVisibleOnAllWorkspaces(enabled);
 	window.setAlwaysOnTop(enabled);
