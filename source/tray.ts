@@ -2,10 +2,12 @@ import * as path from 'path';
 import {app, Menu, Tray, BrowserWindow} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
-import {toggleMenuBarMode} from '.';
+import {toggleMenuBarMode} from './menu-bar-mode';
 
 let tray: Tray | null = null;
 let previousMessageCount = 0;
+
+let contextMenu: any;
 
 export default {
 	create: (win: BrowserWindow) => {
@@ -21,12 +23,12 @@ export default {
 			}
 		};
 
-		const contextMenu = Menu.buildFromTemplate([
+		contextMenu = Menu.buildFromTemplate([
 			{
 				label: 'Disable Menu Bar Mode',
 				click() {
 					config.set('menuBarMode', false);
-					toggleMenuBarMode();
+					toggleMenuBarMode(win);
 				}
 			},
 			{
@@ -100,16 +102,16 @@ function updateToolTip(counter: number): void {
 
 function getIconPath(hasUnreadMessages: boolean): string {
 	const icon = is.macos
-		? getDarwinIconName(hasUnreadMessages)
-		: getNonDarwinIconName(hasUnreadMessages);
+		? getMacOSIconName(hasUnreadMessages)
+		: getNonMacOSIconName(hasUnreadMessages);
 
 	return path.join(__dirname, '..', `static/${icon}`);
 }
 
-function getNonDarwinIconName(hasUnreadMessages: boolean): string {
+function getNonMacOSIconName(hasUnreadMessages: boolean): string {
 	return hasUnreadMessages ? 'IconTrayUnread.png' : 'IconTray.png';
 }
 
-function getDarwinIconName(hasUnreadMessages: boolean): string {
+function getMacOSIconName(hasUnreadMessages: boolean): string {
 	return hasUnreadMessages ? 'IconMenuBarUnreadTemplate.png' : 'IconMenuBarTemplate.png';
 }

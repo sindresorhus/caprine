@@ -14,8 +14,7 @@ import {
 	MenuItemConstructorOptions,
 	Event as ElectronEvent,
 	RequestHeaders,
-	OnSendHeadersDetails,
-	globalShortcut
+	OnSendHeadersDetails
 } from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
@@ -32,6 +31,7 @@ import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
+import {setupMenuBarMode} from './menu-bar-mode';
 
 ipcMain.setMaxListeners(100);
 
@@ -131,28 +131,6 @@ function updateBadge(conversations: Conversation[]): void {
 				mainWindow.webContents.send('render-overlay-icon', messageCount);
 			}
 		}
-	}
-}
-
-export function toggleMenuBarMode(): void {
-	setMenuBarMode(config.get('menuBarMode'));
-}
-
-function setupMenuBarMode(mainWindow: BrowserWindow): void {
-	if (is.macos) {
-		toggleMenuBarMode();
-
-		mainWindow.on('enter-full-screen', () => {
-			app.dock.show();
-		});
-
-		mainWindow.on('leave-full-screen', () => {
-			if (config.get('menuBarMode')) {
-				app.dock.hide();
-			}
-		});
-	} else {
-		tray.create(mainWindow);
 	}
 }
 
@@ -535,50 +513,3 @@ ipcMain.on(
 		notification.show();
 	}
 );
-
-function setMenuBarMode(enabled: boolean): void {
-	setWindowMenuBarMode(enabled);
-	setAppMenuBarMode(enabled);
-	setGlobalShortcutMenuBarMode(enabled);
-	setTrayMenuBarMode(enabled);
-}
-
-function setWindowMenuBarMode(enabled: boolean): void {
-	mainWindow.setVisibleOnAllWorkspaces(enabled);
-	mainWindow.setAlwaysOnTop(enabled);
-}
-
-function setAppMenuBarMode(enabled: boolean): void {
-	if (enabled) {
-		if (!mainWindow.isFullScreen()) {
-			app.dock.hide();
-		}
-	} else {
-		app.dock.show();
-		mainWindow.show();
-	}
-}
-
-function setGlobalShortcutMenuBarMode(enabled: boolean): void {
-	const key = 'CommandOrControl+Shift+Y';
-
-	if (enabled) {
-		globalShortcut.register(key, () => {
-			if (mainWindow.isVisible()) {
-				mainWindow.hide();
-			} else {
-				mainWindow.show();
-			}
-		});
-	} else {
-		globalShortcut.unregister(key);
-	}
-}
-
-function setTrayMenuBarMode(enabled: boolean): void {
-	if (enabled) {
-		tray.create(mainWindow);
-	} else {
-		tray.destroy();
-	}
-}

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow} from 'electron';
 import {
 	is,
 	appMenu,
@@ -12,7 +12,7 @@ import {
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
-import {toggleMenuBarMode} from '.';
+import {toggleMenuBarMode} from './menu-bar-mode';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -207,7 +207,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('menuBarMode', !config.get('menuBarMode'));
 
-				toggleMenuBarMode();
+				const [win] = BrowserWindow.getAllWindows();
+				toggleMenuBarMode(win);
 			}
 		},
 		{
