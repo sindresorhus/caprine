@@ -457,7 +457,9 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-	config.set('lastWindowState', mainWindow.getNormalBounds());
+	if (mainWindow) {
+		config.set('lastWindowState', mainWindow.getNormalBounds());
+	}
 });
 
 const notifications = new Map();
