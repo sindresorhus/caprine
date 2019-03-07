@@ -131,7 +131,7 @@
 				"default",
 				"camera"
 			]
-		}
+		},
 		"win": {
 			"verifyUpdateCodeSignature": false
 		}
