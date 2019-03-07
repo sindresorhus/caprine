@@ -126,6 +126,12 @@
 			"description": "Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.",
 			"category": "Network;Chat"
 		},
+		"snap": {
+			"plugs": [
+				"default",
+				"camera"
+			]
+		}
 		"win": {
 			"verifyUpdateCodeSignature": false
 		}
