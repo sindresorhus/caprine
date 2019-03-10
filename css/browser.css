@@ -135,6 +135,11 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	display: none;
 }
 
+/* Shared photos: fix video width */
+._4-og ._4-od {
+	width: 100% !important;
+}
+
 /* Message box: hide bottom white line */
 .chatAttachmentShelf:empty {
 	display: none !important;
