@@ -135,23 +135,8 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	display: none;
 }
 
-/* Message box: fix video width */
-._3zvs._5z-5 {
-	width: 100% !important;
-}
-._2poz._52mr._ui9._2n8h._2n8i._5fk1 {
-	width: 100% !important;
-}
-._ccq._4tsk._3o67._52mr._4-od {
-	width: 100% !important;
-}
-._1c_u {
-	width: 100% !important;
-}
-._53j5 {
-	width: 100% !important;
-}
-._ox1._21y0 {
+/* Shared photos: fix video width */
+._4-og ._4-od {
 	width: 100% !important;
 }
 
@@ -294,4 +279,13 @@ a._4rv6, /* "Choose a sticker" */
 a._4ce_ { /* "Play a game" */
 	opacity: 1 !important;
 	filter: invert(0.66);
+}
+
+/* Toggle message buttons */
+body ._4_j4 ._39bj {
+	display: none;
+}
+
+body.show-message-buttons ._4_j4 ._39bj {
+	display: flex;
 }
