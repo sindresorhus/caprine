@@ -59,7 +59,7 @@ export default {
 	},
 
 	destroy: () => {
-		// Workaround for electron#14036
+		// Workaround for https://github.com/electron/electron/issues/14036
 		setTimeout(() => {
 			if (tray) {
 				tray.destroy();
