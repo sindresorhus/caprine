@@ -40,7 +40,7 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	await withMenu(await elementReady('._30yy._2fug._p'), callback);
+	await withMenu(await elementReady<HTMLElement>('._30yy._2fug._p'), callback);
 }
 
 function selectMenuItem(itemNumber: number): void {
@@ -186,8 +186,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 });
 
 ipc.on('toggle-message-buttons', async () => {
-	const messageButtons = await elementReady('._39bj');
-	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
+	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
 ipc.on('show-active-contacts-view', () => {
@@ -639,13 +638,13 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 }
 
 async function sendReply(message: string): Promise<void> {
-	const inputField = document.querySelector('[contenteditable="true"]') as HTMLElement;
+	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"]');
 	if (inputField) {
 		const previousMessage = inputField.textContent;
 		// Send message
 		inputField.focus();
 		insertMessageText(message, inputField);
-		(await elementReady('._30yy._38lh')).click();
+		(await elementReady<HTMLElement>('._30yy._38lh')).click();
 
 		// Restore (possible) previous message
 		if (previousMessage) {
