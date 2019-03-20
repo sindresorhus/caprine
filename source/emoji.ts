@@ -275,7 +275,7 @@ function urlToEmoji(url: string): string {
 const cachedEmojiMenuIcons = new Map<EmojiStyle, NativeImage>();
 
 /**
- * @return An icon to use for the menu item of this emoji style.
+ * @returns An icon to use for the menu item of this emoji style.
  */
 async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined> {
 	const cachedIcon = cachedEmojiMenuIcons.get(style);
