@@ -780,7 +780,7 @@ html.dark-mode ._2r2v {
 }
 
 /* "Missed call" dialog buttons separator */
-html.dark-mode ._4eb_ ._30vt:not(:last-child):after {
+html.dark-mode ._4eb_ ._30vt:not(:last-child)::after {
 	border-left-color: var(--base-ten);
 }
 

@@ -2,7 +2,7 @@
 ._wu0 {
 	--code-block-base: #1d1f21;
 	--code-block-background: transparent;
-	--code-block-border: rgba(0, 0, 0, .1);
+	--code-block-border: rgba(0, 0, 0, 0.1);
 	--code-block-primary: #de935f;
 	--code-block-meta: #969896;
 	--code-block-tag: #a3685a;
@@ -111,9 +111,9 @@
 
 /* Tomorrow dark theme for code blocks */
 html.dark-mode ._wu0 {
-	color: var(--base);
 	--code-block-base: #c5c8c6;
 	--code-block-border: var(--base-ten);
+	color: var(--base);
 }
 
 /* Full-window vibrancy */
