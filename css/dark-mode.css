@@ -800,3 +800,15 @@ html.dark-mode ._hh7 ._pye {
 html.dark-mode ._44ju ._44jz {
 	color: #fff;
 }
+
+/* Close icon in the "New Messenger version is available" banner */
+html.dark-mode ._2cij ._2cik {
+	filter: invert(0.66);
+	left: unset;
+	right: 12px;
+}
+
+/* "New Messenger version is available" banner icon */
+html.dark-mode ._2cij ._2cil {
+	filter: invert(0.66);
+}
