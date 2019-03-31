@@ -801,6 +801,16 @@ html.dark-mode ._67tw {
 	color: var(--base-fifty);
 }
 
+/* Reply tag */
+html.dark-mode ._4k7a {
+	color: var(--base-fifty);
+}
+
+/* Reply tag icon */
+html.dark-mode ._6e38 {
+	filter: invert(0.66);
+}
+
 /* Music widget title */
 html.dark-mode ._44ju ._44jz {
 	color: #fff;

@@ -199,4 +199,9 @@ html.full-vibrancy.dark-mode ._2zl5 {
 	background-color: var(--container-color);
 }
 
+/* Reply tag icon */
+html.full-vibrancy ._6e38 {
+	filter: brightness(0.66);
+}
+
 /* -- BLOCK END: full-window vibrancy -- */
