@@ -49,7 +49,7 @@ html.dark-mode ._o46:not(._nd_) ._hh7 a {
 }
 
 /* Message list: link in message bubble */
-html.dark-mode ._hh7 a:hover {
+html.dark-mode ._hh7 a:not(._2t5t):hover {
 	background: transparent !important;
 }
 
