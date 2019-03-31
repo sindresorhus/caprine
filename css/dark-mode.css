@@ -796,6 +796,11 @@ html.dark-mode ._hh7:not(._43by) ._pye {
 	color: var(--base-fifty) !important;
 }
 
+/* Quoted text in the message composer */
+html.dark-mode ._67tw {
+	color: var(--base-fifty);
+}
+
 /* Music widget title */
 html.dark-mode ._44ju ._44jz {
 	color: #fff;
