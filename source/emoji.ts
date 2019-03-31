@@ -230,8 +230,8 @@ function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 }
 
 /**
- * Renders the given emoji in the renderer process and returns a Promise for a PNG `data:` URL
- */
+Renders the given emoji in the renderer process and returns a PNG `data:` URL.
+*/
 const renderEmoji = memoize(
 	async (emoji: string): Promise<string> =>
 		new Promise(resolve => {
@@ -250,8 +250,8 @@ const renderEmoji = memoize(
 );
 
 /**
- * @param url - A Facebook emoji URL like https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png
- */
+@param url - A Facebook emoji URL like `https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png`.
+*/
 function urlToEmoji(url: string): string {
 	const codePoints = url
 		.split('/')
@@ -275,8 +275,8 @@ function urlToEmoji(url: string): string {
 const cachedEmojiMenuIcons = new Map<EmojiStyle, NativeImage>();
 
 /**
- * @return An icon to use for the menu item of this emoji style.
- */
+@returns An icon to use for the menu item of this emoji style.
+*/
 async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined> {
 	const cachedIcon = cachedEmojiMenuIcons.get(style);
 
@@ -308,11 +308,11 @@ async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined>
 }
 
 /**
- * For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
- * this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
- * with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
- *                                                 (see here) ^
- */
+For example, when 'emojiStyle' setting is set to 'messenger-1-0' it replaces
+this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
+with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
+                                                 (see here) ^
+*/
 export async function process(url: string): Promise<Response> {
 	const emojiStyle = config.get('emojiStyle');
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
@@ -374,7 +374,7 @@ export async function generateSubmenu(
 
 	return Promise.all([
 		emojiMenuOption('System', EmojiStyle.Native),
-		{type: 'separator' as 'separator'},
+		{type: 'separator'} as const,
 		emojiMenuOption('Facebook 3.0', EmojiStyle.Facebook30),
 		emojiMenuOption('Messenger 1.0', EmojiStyle.Messenger10),
 		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22)
