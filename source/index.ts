@@ -138,7 +138,9 @@ interface BeforeSendHeadersResponse {
 }
 
 function enableHiresResources(): void {
-	const scaleFactor = Math.max(...electronScreen.getAllDisplays().map(x => x.scaleFactor));
+	const scaleFactor = Math.max(
+		...electronScreen.getAllDisplays().map(display => display.scaleFactor)
+	);
 
 	if (scaleFactor === 1) {
 		return;
