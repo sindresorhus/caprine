@@ -394,7 +394,7 @@ function createMainWindow(): BrowserWindow {
 	webContents.on('will-navigate', (event, url) => {
 		const isMessengerDotCom = (url: string): boolean => {
 			const {hostname} = new URL(url);
-			return hostname === 'www.messenger.com';
+			return hostname.endsWith('.messenger.com');
 		};
 
 		const isTwoFactorAuth = (url: string): boolean => {
