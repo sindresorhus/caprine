@@ -790,9 +790,9 @@ html.dark-mode ._2n1t {
 }
 
 /* Quoted text in inline replies */
-html.dark-mode ._1nc7 ._pye,
-html.dark-mode ._1nc6 ._pye,
-html.dark-mode ._hh7 ._pye {
+html.dark-mode ._1nc7:not(._43by) ._pye,
+html.dark-mode ._1nc6:not(._43by) ._pye,
+html.dark-mode ._hh7:not(._43by) ._pye {
 	color: var(--base-fifty) !important;
 }
 
