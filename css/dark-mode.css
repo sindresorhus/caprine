@@ -691,7 +691,7 @@ html.dark-mode ._29ey {
 }
 html.dark-mode .fbNubFlyoutAttachments,
 html.dark-mode .chatAttachmentShelf {
-	background: var(--container-color) !important;
+	background: var(--container-color);
 	color: var(--base-seventy);
 }
 html.dark-mode .chatAttachmentShelf {
