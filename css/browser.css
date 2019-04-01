@@ -289,3 +289,8 @@ body ._4_j4 ._39bj {
 body.show-message-buttons ._4_j4 ._39bj {
 	display: flex;
 }
+
+/* Window background, affects vibrant views and Settings open/close transition */
+._2sdm {
+	background-color: transparent !important;
+}
