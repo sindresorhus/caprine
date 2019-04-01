@@ -299,3 +299,9 @@ body.show-message-buttons ._4_j4 ._39bj {
 ._4gd0 {
 	background-color: transparent !important;
 }
+
+/* Typing indicator */
+._4a0v._1x3z {
+	display: flex;
+	justify-content: center;
+}
