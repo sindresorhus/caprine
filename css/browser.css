@@ -91,8 +91,11 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 }
 
 /* Hide settings icon */
-._30yy._2fug._p {
+._4kzu {
 	visibility: hidden !important;
+	display: block !important;
+	width: 0 !important;
+	height: 0 !important;
 }
 
 /* Hide title */
