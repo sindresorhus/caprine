@@ -308,3 +308,9 @@ body.show-message-buttons ._4_j4 ._39bj {
 	display: flex;
 	justify-content: center;
 }
+
+/* Settings dialog */
+._4eby {
+	max-height: 80vh;
+	overflow-y: auto;
+}
