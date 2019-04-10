@@ -91,8 +91,11 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 }
 
 /* Hide settings icon */
-._30yy._2fug._p {
+._4kzu {
 	visibility: hidden !important;
+	display: block !important;
+	width: 0 !important;
+	height: 0 !important;
 }
 
 /* Hide title */
@@ -288,4 +291,26 @@ body ._4_j4 ._39bj {
 
 body.show-message-buttons ._4_j4 ._39bj {
 	display: flex;
+}
+
+/* Window background, affects vibrant views and Settings open/close transition */
+._2sdm {
+	background-color: transparent !important;
+}
+
+/* Background under the typing indicator */
+._4gd0 {
+	background-color: transparent !important;
+}
+
+/* Typing indicator */
+._4a0v._1x3z {
+	display: flex;
+	justify-content: center;
+}
+
+/* Settings dialog */
+._4eby {
+	max-height: 80vh;
+	overflow-y: auto;
 }
