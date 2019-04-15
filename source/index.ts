@@ -407,7 +407,8 @@ function createMainWindow(): BrowserWindow {
 		const isWorkChat = (url: string): boolean => {
 			const {hostname, pathname} = new URL(url);
 
-			if (hostname === 'work.facebook.com') {
+			// Facebook is now redirecting to the workplace domain while tenants are transitioning to the new domain
+			if ((hostname === 'work.facebook.com') || (hostname === 'work.workplace.com')) {
 				return true;
 			}
 
