@@ -408,7 +408,7 @@ function createMainWindow(): BrowserWindow {
 			const {hostname, pathname} = new URL(url);
 
 			// Facebook is now redirecting to the workplace domain while tenants are transitioning to the new domain
-			if ((hostname === 'work.facebook.com') || (hostname === 'work.workplace.com')) {
+			if (hostname === 'work.facebook.com') || hostname === 'work.workplace.com') {
 				return true;
 			}
 
