@@ -407,14 +407,23 @@ function createMainWindow(): BrowserWindow {
 		const isWorkChat = (url: string): boolean => {
 			const {hostname, pathname} = new URL(url);
 
+<<<<<<< HEAD
+			if (hostname === 'work.facebook.com' || hostname === 'work.workplace.com') {
+=======
 			// Facebook is now redirecting to the workplace domain while tenants are transitioning to the new domain
 			if (hostname === 'work.facebook.com') || hostname === 'work.workplace.com') {
+>>>>>>> 1ee1f16ddbdf58272be43509bff0d5ca8e6b1533
 				return true;
 			}
 
 			if (
+<<<<<<< HEAD
+				// Example: https://company-name.facebook.com/login or
+				//   		https://company-name.workplace.com/login
+=======
 				// Example: https://company-name.facebook.com/login
 				// Example: https://company-name.workplace.com/login
+>>>>>>> 1ee1f16ddbdf58272be43509bff0d5ca8e6b1533
 				(hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com')) &&
 				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
 			) {
