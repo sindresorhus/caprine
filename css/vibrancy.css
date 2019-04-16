@@ -199,4 +199,21 @@ html.full-vibrancy.dark-mode ._2zl5 {
 	background-color: var(--container-color);
 }
 
+/* Reply tag icon */
+html.full-vibrancy ._6e38 {
+	filter: brightness(0.66);
+}
+
+/* Message composer: link preview */
+html.full-vibrancy .chatAttachmentShelf,
+html.full-vibrancy .fbNubFlyoutAttachments,
+html.full-vibrancy.dark-mode .chatAttachmentShelf,
+html.full-vibrancy.dark-mode .fbNubFlyoutAttachments {
+	background: transparent !important;
+}
+html.full-vibrancy .chatAttachmentShelf,
+html.full-vibrancy.dark-mode .chatAttachmentShelf {
+	border-top-color: rgba(0, 0, 0, 0.1);
+}
+
 /* -- BLOCK END: full-window vibrancy -- */

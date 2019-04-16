@@ -220,6 +220,18 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Launch at Login',
+			visible: is.macos || is.windows,
+			type: 'checkbox',
+			checked: app.getLoginItemSettings().openAtLogin,
+			click(menuItem) {
+				app.setLoginItemSettings({
+					openAtLogin: menuItem.checked,
+					openAsHidden: menuItem.checked
+				});
+			}
+		},
+		{
 			label: 'Auto Hide Menu Bar',
 			type: 'checkbox',
 			visible: !is.macos,
