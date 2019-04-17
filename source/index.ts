@@ -457,6 +457,9 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
+
+	// Checking whether the window exists to work around an Electron race issue:
+	// https://github.com/sindresorhus/caprine/issues/809
 	if (mainWindow) {
 		config.set('lastWindowState', mainWindow.getNormalBounds());
 	}
