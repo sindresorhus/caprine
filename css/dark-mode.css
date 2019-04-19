@@ -361,8 +361,7 @@ html.dark-mode ._1li- {
 }
 
 /* Right sidebar: group chat names */
-html.dark-mode ._2jnv,
-html.dark-mode ._5rpu {
+html.dark-mode ._2jnu ._2jnv {
 	color: var(--base-seventy);
 }
 
@@ -826,4 +825,9 @@ html.dark-mode ._2cij ._2cik {
 /* "New Messenger version is available" banner icon */
 html.dark-mode ._2cij ._2cil {
 	filter: invert(0.66);
+}
+
+/* "Edit Nickname" dialog input placeholder */
+html.dark-mode ._1p1u ._1p1v {
+	color: var(--base-thirty);
 }
