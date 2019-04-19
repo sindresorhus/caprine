@@ -407,13 +407,14 @@ function createMainWindow(): BrowserWindow {
 		const isWorkChat = (url: string): boolean => {
 			const {hostname, pathname} = new URL(url);
 
-			if (hostname === 'work.facebook.com') {
+			if (hostname === 'work.facebook.com' || hostname === 'work.workplace.com') {
 				return true;
 			}
 
 			if (
-				// Example: https://company-name.facebook.com/login
-				hostname.endsWith('.facebook.com') &&
+				// Example: https://company-name.facebook.com/login or
+				//   		https://company-name.workplace.com/login
+				(hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com')) &&
 				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
 			) {
 				return true;
