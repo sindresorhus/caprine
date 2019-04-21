@@ -264,14 +264,6 @@ a,
 	border-radius: 8px;
 }
 
-/* Contact list: person (selected) */
-._1ht1._1ht2 {
-	background: var(--selected-conversation-background) !important;
-}
-._1ht1._1ht2 * {
-	color: rgba(255, 255, 255, 0.8);
-}
-
 /* Contact list: person (selected) window inactive */
 ._1ht1._1ht2.inactive {
 	background: #D2D2D2 !important;
