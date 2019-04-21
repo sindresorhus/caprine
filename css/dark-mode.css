@@ -266,6 +266,14 @@ html.dark-mode ._1ht6 {
 	color: var(--base-seventy);
 }
 
+/* Contact list: person (selected) window inactive */
+html.dark-mode ._1ht1._1ht2.inactive {
+	background: var(--base-twenty) !important;
+}
+html.dark-mode ._1ht1._1ht2.inactive * {
+	color: var(--base-seventy);
+}
+
 /* Contact list: message blurb */
 html.dark-mode ._1htf,
 /* Contact list: (for format) person: message blurb */
