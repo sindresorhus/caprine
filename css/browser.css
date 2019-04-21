@@ -1,5 +1,7 @@
 :root {
 	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
+	--selected-conversation-background-inactive: #d2d2d2;
+	--black: #000;
 }
 
 html {
@@ -269,8 +271,8 @@ a,
 
 /* Contact list: person (selected) window inactive */
 ._1ht1._1ht2.inactive {
-	background: #D2D2D2 !important;
-	color: #000000 !important;
+	background: var(--selected-conversation-background-inactive) !important;
+	color: var(--black) !important;
 }
 ._1ht1._1ht2.inactive * {
 	color: rgba(0, 0, 0, 0.8);
