@@ -573,13 +573,13 @@ window.addEventListener('load', () => {
 // Toggles the sidebar color to gray when window is inactive
 window.addEventListener('blur', () => {
 	const selected = document.querySelector('._1ht1._1ht2');
-	if(selected !== null) {
+	if (selected !== null) {
 		selected.classList.add('inactive');
 	}
 });
 window.addEventListener('focus', () => {
 	const selected = document.querySelector('._1ht1._1ht2');
-	if(selected !== null) {
+	if (selected !== null) {
 		selected.classList.remove('inactive');
 	}
 });
