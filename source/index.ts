@@ -1,20 +1,22 @@
 import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
 import {
-    app,
-    ipcMain,
-    nativeImage,
-    systemPreferences,
-    screen as electronScreen,
-    session,
-    shell,
-    BrowserWindow,
-    Menu,
-    Notification,
-    MenuItemConstructorOptions,
-    Event as ElectronEvent,
-    RequestHeaders,
-    OnSendHeadersDetails
+	app,
+	ipcMain,
+	nativeImage,
+	systemPreferences,
+	screen as electronScreen,
+	session,
+	shell,
+	BrowserWindow,
+	Menu,
+	Notification,
+	MenuItemConstructorOptions,
+	Event as ElectronEvent,
+	RequestHeaders,
+	OnSendHeadersDetails,
+	Rectangle,
+	BrowserWindowConstructorOptions
 } from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
@@ -30,15 +32,13 @@ import tray from './tray';
 import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
-import './touch-bar';
-import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
-import Rectangle = Electron.Rectangle; // eslint-disable-line import/no-unassigned-import
+import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 
 ipcMain.setMaxListeners(100);
 
 electronDebug({
-    enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
-    showDevTools: false
+	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
+	showDevTools: false
 });
 
 electronDl();
@@ -54,19 +54,19 @@ app.setAppUserModelId('com.sindresorhus.caprine');
 app.commandLine.appendSwitch('disable-color-correct-rendering');
 
 if (!config.get('hardwareAcceleration')) {
-    app.disableHardwareAcceleration();
+	app.disableHardwareAcceleration();
 }
 
 if (!isDev) {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
+	log.transports.file.level = 'info';
+	autoUpdater.logger = log;
 
-    const FOUR_HOURS = 1000 * 60 * 60 * 4;
-    setInterval(() => {
-        autoUpdater.checkForUpdates();
-    }, FOUR_HOURS);
+	const FOUR_HOURS = 1000 * 60 * 60 * 4;
+	setInterval(() => {
+		autoUpdater.checkForUpdates();
+	}, FOUR_HOURS);
 
-    autoUpdater.checkForUpdates();
+	autoUpdater.checkForUpdates();
 }
 
 let mainWindow: BrowserWindow;
@@ -75,481 +75,483 @@ let prevMessageCount = 0;
 let dockMenu: Menu;
 
 if (!app.requestSingleInstanceLock()) {
-    app.quit();
+	app.quit();
 }
 
 app.on('second-instance', () => {
-    if (mainWindow) {
-        if (mainWindow.isMinimized()) {
-            mainWindow.restore();
-        }
+	if (mainWindow) {
+		if (mainWindow.isMinimized()) {
+			mainWindow.restore();
+		}
 
-        mainWindow.show();
-    }
+		mainWindow.show();
+	}
 });
 
 function updateBadge(conversations: Conversation[]): void {
-    // Ignore `Sindre messaged you` blinking
-    if (!Array.isArray(conversations)) {
-        return;
-    }
+	// Ignore `Sindre messaged you` blinking
+	if (!Array.isArray(conversations)) {
+		return;
+	}
 
-    const messageCount = conversations.filter(({unread}) => unread).length;
+	const messageCount = conversations.filter(({unread}) => unread).length;
 
-    if (is.macos || is.linux) {
-        if (config.get('showUnreadBadge')) {
-            app.setBadgeCount(messageCount);
-        }
+	if (is.macos || is.linux) {
+		if (config.get('showUnreadBadge')) {
+			app.setBadgeCount(messageCount);
+		}
 
-        if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
-            app.dock.bounce('informational');
-            prevMessageCount = messageCount;
-        }
-    }
+		if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
+			app.dock.bounce('informational');
+			prevMessageCount = messageCount;
+		}
+	}
 
-    if (is.linux || is.windows) {
-        if (config.get('showUnreadBadge')) {
-            tray.setBadge(messageCount > 0);
-        }
+	if (is.linux || is.windows) {
+		if (config.get('showUnreadBadge')) {
+			tray.setBadge(messageCount > 0);
+		}
 
-        if (config.get('flashWindowOnMessage')) {
-            mainWindow.flashFrame(messageCount !== 0);
-        }
-    }
+		if (config.get('flashWindowOnMessage')) {
+			mainWindow.flashFrame(messageCount !== 0);
+		}
+	}
 
-    if (is.windows) {
-        if (config.get('showUnreadBadge')) {
-            if (messageCount === 0) {
-                mainWindow.setOverlayIcon(null, '');
-            } else {
-                // Delegate drawing of overlay icon to renderer process
-                mainWindow.webContents.send('render-overlay-icon', messageCount);
-            }
-        }
-    }
+	if (is.windows) {
+		if (config.get('showUnreadBadge')) {
+			if (messageCount === 0) {
+				mainWindow.setOverlayIcon(null, '');
+			} else {
+				// Delegate drawing of overlay icon to renderer process
+				mainWindow.webContents.send('render-overlay-icon', messageCount);
+			}
+		}
+	}
 }
 
 ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: string) => {
-    const img = nativeImage.createFromDataURL(data);
-    mainWindow.setOverlayIcon(img, text);
+	const img = nativeImage.createFromDataURL(data);
+	mainWindow.setOverlayIcon(img, text);
 });
 
 interface BeforeSendHeadersResponse {
-    cancel?: boolean;
-    requestHeaders?: RequestHeaders;
+	cancel?: boolean;
+	requestHeaders?: RequestHeaders;
 }
 
 function enableHiresResources(): void {
-    const scaleFactor = Math.max(
-        ...electronScreen.getAllDisplays().map(display => display.scaleFactor)
-    );
+	const scaleFactor = Math.max(
+		...electronScreen.getAllDisplays().map(display => display.scaleFactor)
+	);
 
-    if (scaleFactor === 1) {
-        return;
-    }
+	if (scaleFactor === 1) {
+		return;
+	}
 
-    const filter = {urls: [`*://*.${domain}/`]};
+	const filter = {urls: [`*://*.${domain}/`]};
 
-    session.defaultSession!.webRequest.onBeforeSendHeaders(
-        filter,
-        (details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
-            let cookie = (details.requestHeaders as any).Cookie;
+	session.defaultSession!.webRequest.onBeforeSendHeaders(
+		filter,
+		(details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
+			let cookie = (details.requestHeaders as any).Cookie;
 
-            if (cookie && details.method === 'GET') {
-                if (/(; )?dpr=\d/.test(cookie)) {
-                    cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
-                } else {
-                    cookie = `${cookie}; dpr=${scaleFactor}`;
-                }
+			if (cookie && details.method === 'GET') {
+				if (/(; )?dpr=\d/.test(cookie)) {
+					cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
+				} else {
+					cookie = `${cookie}; dpr=${scaleFactor}`;
+				}
 
-                (details.requestHeaders as any).Cookie = cookie;
-            }
+				(details.requestHeaders as any).Cookie = cookie;
+			}
 
-            callback({
-                cancel: false,
-                requestHeaders: details.requestHeaders
-            });
-        }
-    );
+			callback({
+				cancel: false,
+				requestHeaders: details.requestHeaders
+			});
+		}
+	);
 }
 
 function initRequestsFiltering(): void {
-    const filter = {
-        urls: [
-            `*://*.${domain}/*typ.php*`, // Type indicator blocker
-            `*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
-            `*://*.${domain}/*delivery_receipts*`, // Delivery receipts indicator blocker
-            `*://*.${domain}/*unread_threads*`, // Delivery receipts indicator blocker
-            '*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
-            '*://*.facebook.com/images/emoji.php/v9/*' // Emoji
-        ]
-    };
+	const filter = {
+		urls: [
+			`*://*.${domain}/*typ.php*`, // Type indicator blocker
+			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
+			`*://*.${domain}/*delivery_receipts*`, // Delivery receipts indicator blocker
+			`*://*.${domain}/*unread_threads*`, // Delivery receipts indicator blocker
+			'*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
+			'*://*.facebook.com/images/emoji.php/v9/*' // Emoji
+		]
+	};
 
-    session.defaultSession!.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
-        if (url.includes('emoji.php')) {
-            callback(await processEmojiUrl(url));
-        } else if (url.includes('typ.php')) {
-            callback({cancel: config.get('block.typingIndicator')});
-        } else if (url.includes('change_read_status.php')) {
-            callback({cancel: config.get('block.chatSeen')});
-        } else if (url.includes('delivery_receipts') || url.includes('unread_threads')) {
-            callback({cancel: config.get('block.deliveryReceipt')});
-        }
-    });
+	session.defaultSession!.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
+		if (url.includes('emoji.php')) {
+			callback(await processEmojiUrl(url));
+		} else if (url.includes('typ.php')) {
+			callback({cancel: config.get('block.typingIndicator')});
+		} else if (url.includes('change_read_status.php')) {
+			callback({cancel: config.get('block.chatSeen')});
+		} else if (url.includes('delivery_receipts') || url.includes('unread_threads')) {
+			callback({cancel: config.get('block.deliveryReceipt')});
+		}
+	});
 }
 
 function setUserLocale(): void {
-    const userLocale = bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
-    const cookie = {
-        url: 'https://www.messenger.com/',
-        name: 'locale',
-        value: userLocale
-    };
-    session.defaultSession!.cookies.set(cookie, () => {
-    });
+	const userLocale = bestFacebookLocaleFor(app.getLocale().replace('-', '_'));
+	const cookie = {
+		url: 'https://www.messenger.com/',
+		name: 'locale',
+		value: userLocale
+	};
+	session.defaultSession!.cookies.set(cookie, () => {});
 }
 
 function setNotificationsMute(status: boolean): void {
-    const label = 'Mute Notifications';
-    const muteMenuItem = Menu.getApplicationMenu()!.getMenuItemById('mute-notifications');
+	const label = 'Mute Notifications';
+	const muteMenuItem = Menu.getApplicationMenu()!.getMenuItemById('mute-notifications');
 
-    config.set('notificationsMuted', status);
-    muteMenuItem.checked = status;
+	config.set('notificationsMuted', status);
+	muteMenuItem.checked = status;
 
-    if (is.macos) {
-        const item = dockMenu.items.find(x => x.label === label);
-        item!.checked = status;
-    }
+	if (is.macos) {
+		const item = dockMenu.items.find(x => x.label === label);
+		item!.checked = status;
+	}
 }
 
 function createMainWindow(): BrowserWindow {
-    const lastWindowState = config.get('lastWindowState');
-    const isDarkMode = config.get('darkMode');
+	const lastWindowState = config.get('lastWindowState');
+	const isDarkMode = config.get('darkMode');
 
-    // Messenger or Work Chat
-    const mainURL = config.get('useWorkChat')
-        ? 'https://work.facebook.com/chat'
-        : 'https://www.messenger.com/login/';
+	// Messenger or Work Chat
+	const mainURL = config.get('useWorkChat')
+		? 'https://work.facebook.com/chat'
+		: 'https://www.messenger.com/login/';
 
-    const win = new BrowserWindow({
-        title: app.getName(),
-        show: false,
-        x: lastWindowState.x,
-        y: lastWindowState.y,
-        width: lastWindowState.width,
-        height: lastWindowState.height,
-        icon: is.linux ? path.join(__dirname, '..', 'static', 'Icon.png') : undefined,
-        minWidth: 400,
-        minHeight: 200,
-        alwaysOnTop: config.get('alwaysOnTop'),
-        titleBarStyle: 'hiddenInset',
-        autoHideMenuBar: config.get('autoHideMenuBar'),
-        darkTheme: isDarkMode, // GTK+3
-        webPreferences: {
-            preload: path.join(__dirname, 'browser.js'),
-            nodeIntegration: false,
-            contextIsolation: true,
-            plugins: true
-        }
-    });
+	const win = new BrowserWindow({
+		title: app.getName(),
+		show: false,
+		x: lastWindowState.x,
+		y: lastWindowState.y,
+		width: lastWindowState.width,
+		height: lastWindowState.height,
+		icon: is.linux ? path.join(__dirname, '..', 'static', 'Icon.png') : undefined,
+		minWidth: 400,
+		minHeight: 200,
+		alwaysOnTop: config.get('alwaysOnTop'),
+		titleBarStyle: 'hiddenInset',
+		autoHideMenuBar: config.get('autoHideMenuBar'),
+		darkTheme: isDarkMode, // GTK+3
+		webPreferences: {
+			preload: path.join(__dirname, 'browser.js'),
+			nodeIntegration: false,
+			contextIsolation: true,
+			plugins: true
+		}
+	});
 
-    setUserLocale();
-    initRequestsFiltering();
+	setUserLocale();
+	initRequestsFiltering();
 
-    darkMode.onChange(() => {
-        win.webContents.send('set-dark-mode');
-    });
+	darkMode.onChange(() => {
+		win.webContents.send('set-dark-mode');
+	});
 
-    if (is.macos) {
-        win.setSheetOffset(40);
-    }
+	if (is.macos) {
+		win.setSheetOffset(40);
+	}
 
-    win.loadURL(mainURL);
+	win.loadURL(mainURL);
 
-    win.on('close', e => {
-        if (config.get('quitOnWindowClose')) {
-            app.quit();
-            return;
-        }
+	win.on('close', e => {
+		if (config.get('quitOnWindowClose')) {
+			app.quit();
+			return;
+		}
 
-        if (!isQuitting) {
-            e.preventDefault();
+		if (!isQuitting) {
+			e.preventDefault();
 
-            // Workaround for electron/electron#10023
-            win.blur();
-            win.hide();
-        }
-    });
+			// Workaround for electron/electron#10023
+			win.blur();
+			win.hide();
+		}
+	});
 
-    win.on('focus', () => {
-        if (config.get('flashWindowOnMessage')) {
-            // This is a security in the case where messageCount is not reset by page title update
-            win.flashFrame(false);
-        }
-    });
+	win.on('focus', () => {
+		if (config.get('flashWindowOnMessage')) {
+			// This is a security in the case where messageCount is not reset by page title update
+			win.flashFrame(false);
+		}
+	});
 
-    return win;
+	return win;
 }
 
 function createVideoCallWindow(options: BrowserWindowConstructorOptions): BrowserWindow {
-    // Voice/video call popup
-    options.show = true;
-    options.titleBarStyle = 'default';
-    // Set webPreferences (typescript error: possibly undefined object)
-    if (!options.webPreferences) options.webPreferences = {};
-    options.webPreferences.nodeIntegration = false;
-    options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
+	// Voice/video call popup
+	options.show = true;
+	options.titleBarStyle = 'default';
+	// Set webPreferences (typescript error: possibly undefined object)
+	if (!options.webPreferences) options.webPreferences = {};
+	options.webPreferences.nodeIntegration = false;
+	options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 
-    const callBrowserWindow = new BrowserWindow(options);
+	const callBrowserWindow = new BrowserWindow(options);
 
-    let aspectRatio: number;
-    let previousWidth: number;
+	let aspectRatio: number;
+	let previousWidth: number;
 
-    // MacOS aspect ratio can be handled by Electron, but not on Windows
-    if (!is.macos) {
-        callBrowserWindow.on('will-resize', (_event, newBounds) => {
-            console.log('will-resize', newBounds);
-            previousWidth = callBrowserWindow.getSize()[0];
-        });
+	// MacOS aspect ratio can be handled by Electron, but not on Windows
+	if (!is.macos) {
+		callBrowserWindow.on('will-resize', (_event, newBounds) => {
+			console.log('will-resize', newBounds);
+			previousWidth = callBrowserWindow.getSize()[0];
+		});
 
-        callBrowserWindow.on('resize', (_event: ElectronEvent, newBounds: Rectangle) => {
-            console.log('resize', newBounds);
-            if (callBrowserWindow.isMaximized()) return;
+		callBrowserWindow.on('resize', (_event: ElectronEvent, newBounds: Rectangle) => {
+			console.log('resize', newBounds);
+			if (callBrowserWindow.isMaximized()) return;
 
-            const size = callBrowserWindow.getSize();
-            const widthChanged = previousWidth !== size[0];
+			const size = callBrowserWindow.getSize();
+			const widthChanged = previousWidth !== size[0];
 
-            if (widthChanged) {
-                callBrowserWindow.setSize(size[0], Math.ceil(size[0] / aspectRatio));
-            } else {
-                callBrowserWindow.setSize(Math.ceil(size[1] * aspectRatio), size[1]);
-            }
-        })
-    }
+			if (widthChanged) {
+				callBrowserWindow.setSize(size[0], Math.ceil(size[0] / aspectRatio));
+			} else {
+				callBrowserWindow.setSize(Math.ceil(size[1] * aspectRatio), size[1]);
+			}
+		});
+	}
 
-    ipcMain.on('set-video-call-aspect-ratio', (_event: ElectronEvent, width: number, height: number) => {
-        aspectRatio = width / height;
+	ipcMain.on(
+		'set-video-call-aspect-ratio',
+		(_event: ElectronEvent, width: number, height: number) => {
+			aspectRatio = width / height;
 
-        console.log('data from video call: aspect,w,h', aspectRatio,width,height);
+			console.log('data from video call: aspect,w,h', aspectRatio, width, height);
 
-        // @ts-ignore, because second parameter (size) is optional (from electron docs)
-        if (is.macos) callBrowserWindow.setAspectRatio(aspectRatio);
-    });
+			// @ts-ignore, because second parameter (size) is optional (from electron docs)
+			if (is.macos) callBrowserWindow.setAspectRatio(aspectRatio);
+		}
+	);
 
-    return callBrowserWindow
+	return callBrowserWindow;
 }
 
 (async () => {
-    await Promise.all([ensureOnline(), app.whenReady()]);
+	await Promise.all([ensureOnline(), app.whenReady()]);
 
-    const trackingUrlPrefix = `https://l.${domain}/l.php`;
+	const trackingUrlPrefix = `https://l.${domain}/l.php`;
 
-    await updateAppMenu();
-    mainWindow = createMainWindow();
-    tray.create(mainWindow);
+	await updateAppMenu();
+	mainWindow = createMainWindow();
+	tray.create(mainWindow);
 
-    if (is.macos) {
-        const firstItem: MenuItemConstructorOptions = {
-            label: 'Mute Notifications',
-            type: 'checkbox',
-            checked: config.get('notificationsMuted'),
-            click() {
-                mainWindow.webContents.send('toggle-mute-notifications');
-            }
-        };
+	if (is.macos) {
+		const firstItem: MenuItemConstructorOptions = {
+			label: 'Mute Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationsMuted'),
+			click() {
+				mainWindow.webContents.send('toggle-mute-notifications');
+			}
+		};
 
-        dockMenu = Menu.buildFromTemplate([firstItem]);
-        app.dock.setMenu(dockMenu);
+		dockMenu = Menu.buildFromTemplate([firstItem]);
+		app.dock.setMenu(dockMenu);
 
-        ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
-            if (conversations.length === 0) {
-                return;
-            }
+		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
+			if (conversations.length === 0) {
+				return;
+			}
 
-            const items = conversations.map(({label, icon}, index) => {
-                return {
-                    label: `${label}`,
-                    icon: nativeImage.createFromDataURL(icon),
-                    click: () => {
-                        mainWindow.show();
-                        sendAction('jump-to-conversation', index + 1);
-                    }
-                };
-            });
-            app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
-        });
-    }
+			const items = conversations.map(({label, icon}, index) => {
+				return {
+					label: `${label}`,
+					icon: nativeImage.createFromDataURL(icon),
+					click: () => {
+						mainWindow.show();
+						sendAction('jump-to-conversation', index + 1);
+					}
+				};
+			});
+			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
+		});
+	}
 
-    // Update badge on conversations change
-    ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
-        updateBadge(conversations);
-    });
+	// Update badge on conversations change
+	ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
+		updateBadge(conversations);
+	});
 
-    enableHiresResources();
+	enableHiresResources();
 
-    const {webContents} = mainWindow;
+	const {webContents} = mainWindow;
 
-    webContents.on('dom-ready', async () => {
-        await updateAppMenu();
+	webContents.on('dom-ready', async () => {
+		await updateAppMenu();
 
-        webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
-        webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
-        webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
-        webContents.insertCSS(
-            readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
-        );
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
+		webContents.insertCSS(
+			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
+		);
 
-        if (config.get('useWorkChat')) {
-            webContents.insertCSS(
-                readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8')
-            );
-        }
+		if (config.get('useWorkChat')) {
+			webContents.insertCSS(
+				readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8')
+			);
+		}
 
-        if (existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
-            webContents.insertCSS(readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8'));
-        }
+		if (existsSync(path.join(app.getPath('userData'), 'custom.css'))) {
+			webContents.insertCSS(readFileSync(path.join(app.getPath('userData'), 'custom.css'), 'utf8'));
+		}
 
-        if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
-            mainWindow.hide();
-        } else {
-            mainWindow.show();
-        }
+		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
+			mainWindow.hide();
+		} else {
+			mainWindow.show();
+		}
 
-        webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
-        webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
-        webContents.executeJavaScript(
-            readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
-        );
-    });
+		webContents.executeJavaScript(
+			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
+		);
+	});
 
-    webContents.on('new-window', (event: Event, url, frameName, _disposition, options) => {
-        event.preventDefault();
+	webContents.on('new-window', (event: Event, url, frameName, _disposition, options) => {
+		event.preventDefault();
 
-        if (url === 'about:blank') {
-            if (frameName !== 'about:blank') {
-                const callBrowserWindow = createVideoCallWindow(options);
-                (event as any).newGuest = callBrowserWindow;
-            }
-        } else {
-            if (url.startsWith(trackingUrlPrefix)) {
-                url = new URL(url).searchParams.get('u')!;
-            }
+		if (url === 'about:blank') {
+			if (frameName !== 'about:blank') {
+				const callBrowserWindow = createVideoCallWindow(options);
+				(event as any).newGuest = callBrowserWindow;
+			}
+		} else {
+			if (url.startsWith(trackingUrlPrefix)) {
+				url = new URL(url).searchParams.get('u')!;
+			}
 
-            shell.openExternal(url);
-        }
-    });
+			shell.openExternal(url);
+		}
+	});
 
-    webContents.on('will-navigate', (event, url) => {
-        const isMessengerDotCom = (url: string): boolean => {
-            const {hostname} = new URL(url);
-            return hostname.endsWith('.messenger.com');
-        };
+	webContents.on('will-navigate', (event, url) => {
+		const isMessengerDotCom = (url: string): boolean => {
+			const {hostname} = new URL(url);
+			return hostname.endsWith('.messenger.com');
+		};
 
-        const isTwoFactorAuth = (url: string): boolean => {
-            const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
-            return url.startsWith(twoFactorAuthURL);
-        };
+		const isTwoFactorAuth = (url: string): boolean => {
+			const twoFactorAuthURL = 'https://www.facebook.com/checkpoint/start';
+			return url.startsWith(twoFactorAuthURL);
+		};
 
-        const isWorkChat = (url: string): boolean => {
-            const {hostname, pathname} = new URL(url);
+		const isWorkChat = (url: string): boolean => {
+			const {hostname, pathname} = new URL(url);
 
-            if (hostname === 'work.facebook.com' || hostname === 'work.workplace.com') {
-                return true;
-            }
+			if (hostname === 'work.facebook.com' || hostname === 'work.workplace.com') {
+				return true;
+			}
 
-            if (
-                // Example: https://company-name.facebook.com/login or
-            //   		https://company-name.workplace.com/login
-                (hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com')) &&
-                (pathname.startsWith('/login') || pathname.startsWith('/chat'))
-            ) {
-                return true;
-            }
+			if (
+				// Example: https://company-name.facebook.com/login or
+				//   		https://company-name.workplace.com/login
+				(hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com')) &&
+				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
+			) {
+				return true;
+			}
 
-            if (hostname === 'login.microsoftonline.com') {
-                return true;
-            }
+			if (hostname === 'login.microsoftonline.com') {
+				return true;
+			}
 
-            return false;
-        };
+			return false;
+		};
 
-        if (isMessengerDotCom(url) || isTwoFactorAuth(url) || isWorkChat(url)) {
-            return;
-        }
+		if (isMessengerDotCom(url) || isTwoFactorAuth(url) || isWorkChat(url)) {
+			return;
+		}
 
-        event.preventDefault();
-        shell.openExternal(url);
-    });
+		event.preventDefault();
+		shell.openExternal(url);
+	});
 })();
 
 if (is.macos) {
-    ipcMain.on('set-vibrancy', () => {
-        mainWindow.setVibrancy('sidebar');
+	ipcMain.on('set-vibrancy', () => {
+		mainWindow.setVibrancy('sidebar');
 
-        if (config.get('followSystemAppearance')) {
-            systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
-        } else {
-            systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
-        }
-    });
+		if (config.get('followSystemAppearance')) {
+			systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
+		} else {
+			systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
+		}
+	});
 }
 
 ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean) => {
-    setNotificationsMute(status);
+	setNotificationsMute(status);
 });
 
 app.on('activate', () => {
-    if (mainWindow) {
-        mainWindow.show();
-    }
+	if (mainWindow) {
+		mainWindow.show();
+	}
 });
 
 app.on('before-quit', () => {
-    isQuitting = true;
+	isQuitting = true;
 
-    // Checking whether the window exists to work around an Electron race issue:
-    // https://github.com/sindresorhus/caprine/issues/809
-    if (mainWindow) {
-        config.set('lastWindowState', mainWindow.getNormalBounds());
-    }
+	// Checking whether the window exists to work around an Electron race issue:
+	// https://github.com/sindresorhus/caprine/issues/809
+	if (mainWindow) {
+		config.set('lastWindowState', mainWindow.getNormalBounds());
+	}
 });
 
 const notifications = new Map();
 
 ipcMain.on(
-    'notification',
-    (_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
-        const notification = new Notification({
-            title,
-            body,
-            hasReply: true,
-            icon: nativeImage.createFromDataURL(icon),
-            silent
-        });
+	'notification',
+	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
+		const notification = new Notification({
+			title,
+			body,
+			hasReply: true,
+			icon: nativeImage.createFromDataURL(icon),
+			silent
+		});
 
-        notifications.set(id, notification);
+		notifications.set(id, notification);
 
-        notification.on('click', () => {
-            mainWindow.show();
-            sendAction('notification-callback', {callbackName: 'onclick', id});
+		notification.on('click', () => {
+			mainWindow.show();
+			sendAction('notification-callback', {callbackName: 'onclick', id});
 
-            notifications.delete(id);
-        });
+			notifications.delete(id);
+		});
 
-        notification.on('reply', (_event, reply: string) => {
-            // We use onclick event used by messenger to go to the right convo
-            sendBackgroundAction('notification-reply-callback', {callbackName: 'onclick', id, reply});
+		notification.on('reply', (_event, reply: string) => {
+			// We use onclick event used by messenger to go to the right convo
+			sendBackgroundAction('notification-reply-callback', {callbackName: 'onclick', id, reply});
 
-            notifications.delete(id);
-        });
+			notifications.delete(id);
+		});
 
-        notification.on('close', () => {
-            sendAction('notification-callback', {callbackName: 'onclose', id});
+		notification.on('close', () => {
+			sendAction('notification-callback', {callbackName: 'onclose', id});
 
-            notifications.delete(id);
-        });
+			notifications.delete(id);
+		});
 
-        notification.show();
-    }
+		notification.show();
+	}
 );
