@@ -31,7 +31,8 @@ import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar';
-import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions; // eslint-disable-line import/no-unassigned-import
+import BrowserWindowConstructorOptions = Electron.BrowserWindowConstructorOptions;
+import Rectangle = Electron.Rectangle; // eslint-disable-line import/no-unassigned-import
 
 ipcMain.setMaxListeners(100);
 
@@ -302,17 +303,29 @@ function createVideoCallWindow(options: BrowserWindowConstructorOptions): Browse
     const callBrowserWindow = new BrowserWindow(options);
 
     let isAdjustingAspectRatio: boolean = false;
-    let aspectRatio;
-    let previousSize;
-    let currentSize;
+    let aspectRatio: number;
+    let previousWidth: number;
 
     // MacOS aspect ratio can be handled by Electron, but not on Windows
     if (!is.macos) {
-        callBrowserWindow.on('will-resize', (event, newBounds) => {
-            console.log(event, newBounds);
+        callBrowserWindow.on('will-resize', (_event, _newBounds) => {
+            console.log('will-resize', _newBounds);
+            previousWidth = callBrowserWindow.getSize()[0];
         });
 
-        callBrowserWindow.on('resize', (event: any) => {
+        callBrowserWindow.on('resize', (event: ElectronEvent, newBounds: Rectangle) => {
+            console.log('will-resize', newBounds);
+
+            const size = callBrowserWindow.getSize();
+            const widthChanged = previousWidth !== size[0];
+            const inverseAspectRatio = Math.pow(aspectRatio, -1);
+
+            if (widthChanged) {
+                callBrowserWindow.setSize(size[0], parseInt((size[0] * inverseAspectRatio).toString()));
+            } else {
+                callBrowserWindow.setSize(parseInt((size[1] / inverseAspectRatio).toString()), size[1]);
+            }
+
             if (!isAdjustingAspectRatio) {
                 isAdjustingAspectRatio = true;
                 console.log(event);
@@ -324,7 +337,7 @@ function createVideoCallWindow(options: BrowserWindowConstructorOptions): Browse
     ipcMain.on('set-video-call-aspect-ratio', (_event: ElectronEvent, width: number, height: number) => {
         aspectRatio = width / height;
 
-        console.log('data from video call: aspect,window', aspectRatio, callBrowserWindow);
+        console.log('data from video call: aspect,w,h', aspectRatio,width,height);
 
         // @ts-ignore, because second parameter (size) is optional (from electron docs)
         if (is.macos) callBrowserWindow.setAspectRatio(aspectRatio);
