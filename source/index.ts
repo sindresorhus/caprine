@@ -302,34 +302,27 @@ function createVideoCallWindow(options: BrowserWindowConstructorOptions): Browse
 
     const callBrowserWindow = new BrowserWindow(options);
 
-    let isAdjustingAspectRatio: boolean = false;
     let aspectRatio: number;
     let previousWidth: number;
 
     // MacOS aspect ratio can be handled by Electron, but not on Windows
     if (!is.macos) {
-        callBrowserWindow.on('will-resize', (_event, _newBounds) => {
-            console.log('will-resize', _newBounds);
+        callBrowserWindow.on('will-resize', (_event, newBounds) => {
+            console.log('will-resize', newBounds);
             previousWidth = callBrowserWindow.getSize()[0];
         });
 
-        callBrowserWindow.on('resize', (event: ElectronEvent, newBounds: Rectangle) => {
-            console.log('will-resize', newBounds);
+        callBrowserWindow.on('resize', (_event: ElectronEvent, newBounds: Rectangle) => {
+            console.log('resize', newBounds);
+            if (callBrowserWindow.isMaximized()) return;
 
             const size = callBrowserWindow.getSize();
             const widthChanged = previousWidth !== size[0];
-            const inverseAspectRatio = Math.pow(aspectRatio, -1);
 
             if (widthChanged) {
-                callBrowserWindow.setSize(size[0], parseInt((size[0] * inverseAspectRatio).toString()));
+                callBrowserWindow.setSize(size[0], Math.ceil(size[0] / aspectRatio));
             } else {
-                callBrowserWindow.setSize(parseInt((size[1] / inverseAspectRatio).toString()), size[1]);
-            }
-
-            if (!isAdjustingAspectRatio) {
-                isAdjustingAspectRatio = true;
-                console.log(event);
-                isAdjustingAspectRatio = false;
+                callBrowserWindow.setSize(Math.ceil(size[1] * aspectRatio), size[1]);
             }
         })
     }

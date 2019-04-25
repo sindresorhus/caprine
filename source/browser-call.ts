@@ -11,14 +11,31 @@ const videoSelector = '._chh>video';
 
 (async function withVideoCall() {
     let videoElement: HTMLElement;
+    let previousWidth: number;
+    let previousHeight: number;
 
-    // TODO: video size changes with phone orientation. No way to tell, except by polling or attaching timeupdate event
+    // Video size changes with no way to tell, except by polling or attaching timeupdate event (may impact performance)
+    function onTimeUpdate(e: Event) {
+        const target = <HTMLVideoElement>e.target;
+        checkDimensionsChanged(target)
+    }
+
+    function checkDimensionsChanged(target: HTMLVideoElement) {
+        console.log(target);
+
+        const width = target.videoWidth;
+        const height = target.videoHeight;
+
+        if (width !== previousWidth || height !== previousHeight) {
+            previousWidth = width;
+            previousHeight = height;
+            ipc.send('set-video-call-aspect-ratio', width, height)
+        }
+    }
 
     function onVideoDimensionsLoaded(e: Event) {
         const target = <HTMLVideoElement>e.target;
-        // const aspectRatioData = {height: target.videoHeight, width: target.videoWidth};
-        console.log(target);
-        ipc.send('set-video-call-aspect-ratio', target.videoWidth, target.videoHeight)
+        checkDimensionsChanged(target)
     }
 
     // Old video element was destroyed, wait for new one.
@@ -28,6 +45,7 @@ const videoSelector = '._chh>video';
             videoElement.removeEventListener('playing', onVideoDimensionsLoaded);
             videoElement.removeEventListener('suspend', getVideoElement);
             videoElement.removeEventListener('pause', getVideoElement);
+            videoElement.removeEventListener('timeupdate', onTimeUpdate);
         }
 
         getVideoElement()
@@ -41,6 +59,7 @@ const videoSelector = '._chh>video';
         videoElement.addEventListener('playing', onVideoDimensionsLoaded);
         videoElement.addEventListener('suspend', onVideoSuspended);
         videoElement.addEventListener('pause', onVideoSuspended);
+        videoElement.addEventListener('timeupdate', onTimeUpdate)
     }
 
     await getVideoElement();
