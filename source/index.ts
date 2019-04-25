@@ -203,7 +203,8 @@ function setUserLocale(): void {
 		name: 'locale',
 		value: userLocale
 	};
-	session.defaultSession!.cookies.set(cookie, () => {});
+
+	session.defaultSession!.cookies.set(cookie);
 }
 
 function setNotificationsMute(status: boolean): void {
