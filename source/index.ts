@@ -15,7 +15,6 @@ import {
 	Event as ElectronEvent,
 	RequestHeaders,
 	OnSendHeadersDetails,
-	Rectangle,
 	BrowserWindowConstructorOptions
 } from 'electron';
 import log from 'electron-log';
@@ -306,22 +305,20 @@ function createVideoCallWindow(options: BrowserWindowConstructorOptions): Browse
 
 	// MacOS aspect ratio can be handled by Electron, but not on Windows
 	if (!is.macos) {
-		callBrowserWindow.on('will-resize', (_event, newBounds) => {
-			console.log('will-resize', newBounds);
-			previousWidth = callBrowserWindow.getSize()[0];
+		callBrowserWindow.on('will-resize', () => {
+			previousWidth = callBrowserWindow.getContentSize()[0];
 		});
 
-		callBrowserWindow.on('resize', (_event: ElectronEvent, newBounds: Rectangle) => {
-			console.log('resize', newBounds);
+		callBrowserWindow.on('resize', () => {
 			if (callBrowserWindow.isMaximized()) return;
 
-			const size = callBrowserWindow.getSize();
+			const size = callBrowserWindow.getContentSize();
 			const widthChanged = previousWidth !== size[0];
 
 			if (widthChanged) {
-				callBrowserWindow.setSize(size[0], Math.ceil(size[0] / aspectRatio));
+				callBrowserWindow.setContentSize(size[0], Math.ceil(size[0] / aspectRatio));
 			} else {
-				callBrowserWindow.setSize(Math.ceil(size[1] * aspectRatio), size[1]);
+				callBrowserWindow.setContentSize(Math.ceil(size[1] * aspectRatio), size[1]);
 			}
 		});
 	}
@@ -330,9 +327,6 @@ function createVideoCallWindow(options: BrowserWindowConstructorOptions): Browse
 		'set-video-call-aspect-ratio',
 		(_event: ElectronEvent, width: number, height: number) => {
 			aspectRatio = width / height;
-
-			console.log('data from video call: aspect,w,h', aspectRatio, width, height);
-
 			// @ts-ignore, because second parameter (size) is optional (from electron docs)
 			if (is.macos) callBrowserWindow.setAspectRatio(aspectRatio);
 		}
