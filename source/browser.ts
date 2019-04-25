@@ -280,7 +280,7 @@ ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
 	context.textBaseline = 'middle';
 	if (is.macos) {
 		context.font = '256px system-ui';
-		context.fillText(emoji, 128, 140);
+		context.fillText(emoji, 128, 154);
 	} else {
 		context.font = '225px system-ui';
 		context.fillText(emoji, 128, 115);
