@@ -550,7 +550,8 @@ ${debugInfo()}`;
 			...switchItems
 		]),
 		{
-			label: 'File',
+			// @ts-ignore Buggy Electron types
+			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
 				{
@@ -566,7 +567,8 @@ ${debugInfo()}`;
 			role: 'editMenu'
 		},
 		{
-			label: 'View',
+			// @ts-ignore Buggy Electron types
+			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
 		{
@@ -585,7 +587,8 @@ ${debugInfo()}`;
 
 	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
-			label: 'File',
+			// @ts-ignore Buggy Electron types
+			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
 				{
@@ -619,7 +622,8 @@ ${debugInfo()}`;
 			role: 'editMenu'
 		},
 		{
-			label: 'View',
+			// @ts-ignore Buggy Electron types
+			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
 		{
