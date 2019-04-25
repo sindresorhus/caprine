@@ -20,8 +20,6 @@ const videoSelector = '._chh>video';
 	}
 
 	function checkDimensionsChanged(target: HTMLVideoElement): void {
-		console.log(target);
-
 		const width = target.videoWidth;
 		const height = target.videoHeight;
 
@@ -51,7 +49,6 @@ const videoSelector = '._chh>video';
 	}
 
 	async function getVideoElement(): Promise<void> {
-		console.log('getting video element');
 		videoElement = await elementReady<HTMLElement>(videoSelector);
 
 		videoElement.addEventListener('loadedmetadata', onVideoDimensionsLoaded);
