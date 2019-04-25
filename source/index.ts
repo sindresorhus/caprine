@@ -303,31 +303,45 @@ function createVideoCallWindow(options: BrowserWindowConstructorOptions): Browse
 	let aspectRatio: number;
 	let previousWidth: number;
 
-	// MacOS aspect ratio can be handled by Electron, but not on Windows
-	if (!is.macos) {
+	function resizeWindow(): void {
+		if (callBrowserWindow.isMaximized()) return;
+		console.log('resize');
+
+		const size = callBrowserWindow.getContentSize();
+		const widthChanged = previousWidth !== size[0];
+
+		if (widthChanged) {
+			callBrowserWindow.setContentSize(size[0], Math.ceil(size[0] / aspectRatio));
+		} else {
+			callBrowserWindow.setContentSize(Math.ceil(size[1] * aspectRatio), size[1]);
+		}
+	}
+
+	// Aspect ratio can be handled by Electron on Mac, but not on Windows
+	if (is.macos) {
+		// Remove aspect ratio constraint when full screen on Mac
+		callBrowserWindow.on('resize', () => {
+			// @ts-ignore, because second parameter (size) is optional (from electron docs). same below.
+			if (callBrowserWindow.isFullScreen()) callBrowserWindow.setAspectRatio(0);
+		});
+
+		callBrowserWindow.on('leave-full-screen', () => {
+			// @ts-ignore
+			callBrowserWindow.setAspectRatio(aspectRatio);
+		});
+	} else {
 		callBrowserWindow.on('will-resize', () => {
 			previousWidth = callBrowserWindow.getContentSize()[0];
 		});
 
-		callBrowserWindow.on('resize', () => {
-			if (callBrowserWindow.isMaximized()) return;
-
-			const size = callBrowserWindow.getContentSize();
-			const widthChanged = previousWidth !== size[0];
-
-			if (widthChanged) {
-				callBrowserWindow.setContentSize(size[0], Math.ceil(size[0] / aspectRatio));
-			} else {
-				callBrowserWindow.setContentSize(Math.ceil(size[1] * aspectRatio), size[1]);
-			}
-		});
+		callBrowserWindow.on('resize', resizeWindow);
 	}
 
 	ipcMain.on(
 		'set-video-call-aspect-ratio',
 		(_event: ElectronEvent, width: number, height: number) => {
 			aspectRatio = width / height;
-			// @ts-ignore, because second parameter (size) is optional (from electron docs)
+			// @ts-ignore
 			if (is.macos) callBrowserWindow.setAspectRatio(aspectRatio);
 		}
 	);
