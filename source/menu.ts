@@ -562,6 +562,7 @@ ${debugInfo()}`;
 			]
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
@@ -573,6 +574,7 @@ ${debugInfo()}`;
 			submenu: conversationSubmenu
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'windowMenu'
 		},
 		{
@@ -613,6 +615,7 @@ ${debugInfo()}`;
 			]
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{

@@ -244,7 +244,6 @@ function createMainWindow(): BrowserWindow {
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
-			nodeIntegration: false,
 			contextIsolation: true,
 			plugins: true
 		}
@@ -389,7 +388,7 @@ function createMainWindow(): BrowserWindow {
 				url = new URL(url).searchParams.get('u')!;
 			}
 
-			shell.openExternal(url);
+			shell.openExternalSync(url);
 		}
 	});
 
@@ -432,7 +431,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		event.preventDefault();
-		shell.openExternal(url);
+		shell.openExternalSync(url);
 	});
 })();
 
