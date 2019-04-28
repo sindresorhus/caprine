@@ -270,11 +270,11 @@ a,
 }
 
 /* Contact list: person (selected) window inactive */
-._1ht1._1ht2.inactive {
+html.inactive ._1ht1._1ht2 {
 	background: var(--selected-conversation-background-inactive) !important;
 	color: var(--black) !important;
 }
-._1ht1._1ht2.inactive * {
+html.inactive ._1ht1._1ht2 * {
 	color: rgba(0, 0, 0, 0.8);
 }
 
