@@ -570,18 +570,12 @@ window.addEventListener('load', () => {
 	}
 });
 
-// Toggles the sidebar color to gray when window is inactive
+// Toggles styles for inactive window
 window.addEventListener('blur', () => {
-	const selected = document.documentElement;
-	if (selected !== null) {
-		selected.classList.add('inactive');
-	}
+	document.documentElement.classList.add('is-window-inactive');
 });
 window.addEventListener('focus', () => {
-	const selected = document.documentElement;
-	if (selected !== null) {
-		selected.classList.remove('inactive');
-	}
+	document.documentElement.classList.remove('is-window-inactive');
 });
 
 // It's not possible to add multiple accelerators
