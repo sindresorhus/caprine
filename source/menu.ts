@@ -13,7 +13,7 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 
-export default function updateMenu(): Menu {
+export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
@@ -56,30 +56,57 @@ export default function updateMenu(): Menu {
 			label: 'No Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'none',
-			click() {
+			async click() {
 				config.set('vibrancy', 'none');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
 			label: 'Sidebar-only Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'sidebar',
-			click() {
+			async click() {
 				config.set('vibrancy', 'sidebar');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
 			label: 'Full-window Vibrancy',
 			type: 'checkbox',
 			checked: config.get('vibrancy') === 'full',
-			click() {
+			async click() {
 				config.set('vibrancy', 'full');
 				sendAction('update-vibrancy');
-				updateMenu();
+				await updateMenu();
+			}
+		}
+	];
+
+	const privacySubmenu: MenuItemConstructorOptions[] = [
+		{
+			label: 'Block Seen Indicator',
+			type: 'checkbox',
+			checked: config.get('block.chatSeen'),
+			click(menuItem) {
+				config.set('block.chatSeen', menuItem.checked);
+			}
+		},
+		{
+			label: 'Block Typing Indicator',
+			type: 'checkbox',
+			checked: config.get('block.typingIndicator'),
+			click(menuItem) {
+				config.set('block.typingIndicator', menuItem.checked);
+			}
+		},
+		{
+			label: 'Block Delivery Receipts',
+			type: 'checkbox',
+			checked: config.get('block.deliveryReceipt'),
+			click(menuItem) {
+				config.set('block.deliveryReceipt', menuItem.checked);
 			}
 		}
 	];
@@ -130,9 +157,17 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
+			label: 'Privacy',
+			submenu: privacySubmenu
+		},
+		{
+			label: 'Emoji Style',
+			submenu: await generateEmojiSubmenu(updateMenu)
+		},
+		{
 			label: 'Bounce Dock on Message',
-			visible: is.macos,
 			type: 'checkbox',
+			visible: is.macos,
 			checked: config.get('bounceDockOnMessage'),
 			click() {
 				config.set('bounceDockOnMessage', !config.get('bounceDockOnMessage'));
@@ -156,22 +191,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			type: 'checkbox',
-			label: 'Block Seen Indicator',
-			checked: config.get('block.chatSeen'),
-			click(item) {
-				config.set('block.chatSeen', item.checked);
-			}
-		},
-		{
-			type: 'checkbox',
-			label: 'Block Typing Indicator',
-			checked: config.get('block.typingIndicator'),
-			click(item) {
-				config.set('block.typingIndicator', item.checked);
-			}
-		},
-		{
 			label: 'Hardware Acceleration',
 			type: 'checkbox',
 			checked: config.get('hardwareAcceleration'),
@@ -181,39 +200,51 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			type: 'checkbox',
 			label: 'Always on Top',
+			type: 'checkbox',
 			accelerator: 'CommandOrControl+Shift+T',
 			checked: config.get('alwaysOnTop'),
-			click(item, focusedWindow) {
-				config.set('alwaysOnTop', item.checked);
-				focusedWindow.setAlwaysOnTop(item.checked);
+			click(menuItem, focusedWindow) {
+				config.set('alwaysOnTop', menuItem.checked);
+				focusedWindow.setAlwaysOnTop(menuItem.checked);
+			}
+		},
+		{
+			label: 'Launch at Login',
+			visible: is.macos || is.windows,
+			type: 'checkbox',
+			checked: app.getLoginItemSettings().openAtLogin,
+			click(menuItem) {
+				app.setLoginItemSettings({
+					openAtLogin: menuItem.checked,
+					openAsHidden: menuItem.checked
+				});
 			}
 		},
 		{
 			label: 'Auto Hide Menu Bar',
-			visible: !is.macos,
 			type: 'checkbox',
+			visible: !is.macos,
 			checked: config.get('autoHideMenuBar'),
-			click(item, focusedWindow) {
-				config.set('autoHideMenuBar', item.checked);
-				focusedWindow.setAutoHideMenuBar(item.checked);
-				focusedWindow.setMenuBarVisibility(!item.checked);
+			click(menuItem, focusedWindow) {
+				config.set('autoHideMenuBar', menuItem.checked);
+				focusedWindow.setAutoHideMenuBar(menuItem.checked);
+				focusedWindow.setMenuBarVisibility(!menuItem.checked);
 			}
 		},
 		{
 			label: 'Flash Window on Message',
-			visible: !is.macos,
 			type: 'checkbox',
+			visible: !is.macos,
 			checked: config.get('flashWindowOnMessage'),
-			click(item) {
-				config.set('flashWindowOnMessage', item.checked);
+			click(menuItem) {
+				config.set('flashWindowOnMessage', menuItem.checked);
 			}
 		},
 		{
 			label: 'Launch Minimized',
-			visible: !is.macos,
 			type: 'checkbox',
+			visible: !is.macos,
 			checked: config.get('launchMinimized'),
 			click() {
 				config.set('launchMinimized', !config.get('launchMinimized'));
@@ -226,10 +257,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('quitOnWindowClose', !config.get('quitOnWindowClose'));
 			}
-		},
-		{
-			label: 'Emoji style',
-			submenu: generateEmojiSubmenu(updateMenu)
 		},
 		{
 			type: 'separator'
@@ -270,10 +297,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			visible: is.macos,
 			checked: config.get('followSystemAppearance'),
-			click() {
+			async click() {
 				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
 				sendAction('set-dark-mode');
-				updateMenu();
+				await updateMenu();
 			}
 		},
 		{
@@ -534,14 +561,25 @@ ${debugInfo()}`;
 			...switchItems
 		]),
 		{
-			label: 'File',
-			submenu: [newConversationItem]
+			// @ts-ignore Buggy Electron types
+			role: 'fileMenu',
+			submenu: [
+				newConversationItem,
+				{
+					type: 'separator'
+				},
+				{
+					role: 'close'
+				}
+			]
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
-			label: 'View',
+			// @ts-ignore Buggy Electron types
+			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
 		{
@@ -549,6 +587,7 @@ ${debugInfo()}`;
 			submenu: conversationSubmenu
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'windowMenu'
 		},
 		{
@@ -559,7 +598,8 @@ ${debugInfo()}`;
 
 	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
-			label: 'File',
+			// @ts-ignore Buggy Electron types
+			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
 				{
@@ -589,10 +629,12 @@ ${debugInfo()}`;
 			]
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
-			label: 'View',
+			// @ts-ignore Buggy Electron types
+			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
 		{

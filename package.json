@@ -1,7 +1,7 @@
 {
 	"name": "caprine",
 	"productName": "Caprine",
-	"version": "2.28.0",
+	"version": "2.31.0",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "sindresorhus/caprine",
@@ -16,7 +16,7 @@
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
-		"lint": "tsc && xo && stylelint '*.css'",
+		"lint": "tsc && xo && stylelint 'css/*.css'",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"pack": "tsc && electron-builder --dir",
@@ -25,32 +25,34 @@
 		"publish-snap": "del dist && tsc && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
 	},
 	"dependencies": {
-		"electron-context-menu": "^0.11.0",
-		"electron-debug": "^2.1.0",
-		"electron-dl": "^1.13.0",
-		"electron-is-dev": "^1.0.0",
+		"electron-context-menu": "^0.12.0",
+		"electron-debug": "^2.2.0",
+		"electron-dl": "^1.14.0",
+		"electron-is-dev": "^1.1.0",
 		"electron-log": "^2.0.2",
-		"electron-store": "^2.0.0",
+		"electron-store": "3.0.0",
 		"electron-updater": "^4.0.6",
 		"electron-util": "^0.11.0",
-		"element-ready": "^3.0.0",
-		"facebook-locales": "^1.0.591"
+		"element-ready": "^3.1.0",
+		"facebook-locales": "^1.0.620",
+		"is-online": "^8.2.0",
+		"lodash": "^4.17.11",
+		"p-wait-for": "^3.1.0"
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^0.2.0",
-		"@types/electron-is-dev": "^0.3.0",
-		"@types/electron-store": "^1.3.0",
-		"@types/element-ready": "^2.1.0",
-		"@typescript-eslint/eslint-plugin": "^1.1.1",
+		"@sindresorhus/tsconfig": "^0.3.0",
+		"@types/electron-store": "^1.3.1",
+		"@types/lodash": "^4.14.123",
+		"@typescript-eslint/eslint-plugin": "^1.7.0",
 		"del-cli": "^1.1.0",
-		"electron": "^4.0.4",
-		"electron-builder": "^20.38.5",
-		"eslint-config-xo-typescript": "^0.6.0",
-		"husky": "^1.3.1",
-		"np": "^4.0.2",
-		"stylelint": "^9.10.1",
-		"stylelint-config-xo": "^0.12.0",
-		"typescript": "^3.2.4",
+		"electron": "^5.0.0",
+		"electron-builder": "^20.39.0",
+		"eslint-config-xo-typescript": "^0.10.1",
+		"husky": "^2.1.0",
+		"np": "^5.0.0",
+		"stylelint": "^10.0.1",
+		"stylelint-config-xo": "^0.14.0",
+		"typescript": "^3.4.5",
 		"xo": "^0.24.0"
 	},
 	"xo": {
@@ -63,7 +65,8 @@
 			"browser"
 		],
 		"rules": {
-			"@typescript-eslint/no-non-null-assertion": "off"
+			"valid-jsdoc": "off",
+			"@typescript-eslint/no-object-literal-type-assertion": "off"
 		},
 		"prettier": true
 	},
@@ -120,6 +123,12 @@
 			"synopsis": "Elegant Facebook Messenger desktop app",
 			"description": "Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.",
 			"category": "Network;Chat"
+		},
+		"snap": {
+			"plugs": [
+				"default",
+				"camera"
+			]
 		},
 		"win": {
 			"verifyUpdateCodeSignature": false

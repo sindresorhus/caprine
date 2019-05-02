@@ -19,6 +19,22 @@
 				notifications.delete(id);
 			}
 		}
+
+		if (type === 'notification-reply-callback') {
+			const {callbackName, id, previousConversation, reply} = data;
+			const notification = notifications.get(id);
+
+			if (!notification) {
+				return;
+			}
+
+			if ((notification as any)[callbackName]) {
+				(notification as any)[callbackName]();
+			}
+
+			notifications.delete(id);
+			window.postMessage({type: 'notification-reply', data: {previousConversation, reply}}, '*');
+		}
 	});
 
 	let counter = 1;
@@ -28,8 +44,8 @@
 			private _id: number;
 
 			constructor(title: string, options: NotificationOptions) {
-				// According to https://github.com/sindresorhus/caprine/pull/637 the Notification
-				// constructor can be called with non-string title and body
+				// According to https://github.com/sindresorhus/caprine/pull/637, the Notification
+				// constructor can be called with non-string title and body.
 				let {body} = options;
 				const bodyProps = (body as any).props;
 				body = bodyProps ? bodyProps.content[0] : options.body;
