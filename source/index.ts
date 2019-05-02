@@ -329,7 +329,6 @@ function createMainWindow(): BrowserWindow {
 	webContents.on('dom-ready', () => {
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
-		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'private.css'), 'utf8'));
 		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
 		webContents.insertCSS(
 			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')

@@ -295,3 +295,25 @@ a._4ce_ { /* "Play a game" */
 	opacity: 1 !important;
 	filter: invert(0.66);
 }
+
+/* Private Mode
+/* Contact list: person name */
+html.private-mode ._1ht6 {
+	display: none;
+}
+
+/* Messages list: person name */
+html.private-mode ._17w2 ._3oh-,
+html.private-mode ._41ud ._ih3 {
+	display: none;
+}
+
+/* Person icon */
+html.private-mode ._1ht1 ._1qt3,
+html.private-mode ._1t_q ._4ld- img,
+html.private-mode ._4jzq._jf4 img,
+html.private-mode  ._5bli._2_a2.img,
+html.private-mode ._5743._6y4y {
+	display: none;
+}
+/* Private Mode

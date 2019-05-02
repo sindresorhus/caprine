@@ -293,7 +293,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			id: 'privateMode',
 			type: 'checkbox',
 			checked: config.get('privateMode'),
-			accelerator: 'CommandOrControl+N',
+			accelerator: 'CommandOrControl+Shift+N',
 			click() {
 				config.set('privateMode', !config.get('privateMode'));
 				sendAction('set-private-mode');
