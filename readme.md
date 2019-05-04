@@ -209,6 +209,11 @@ Then edit the automatically created GitHub Releases draft and publish.
 
 - [Product Hunt post](https://www.producthunt.com/posts/caprine-2)
 
+## Press
+
+- [The Essential Windows Apps for 2018 - Lifehacker](https://lifehacker.com/lifehacker-pack-for-windows-our-list-of-the-essential-1828117805)
+- [Caprine review: Customize Facebook Messenger on Windows 10 - Windows Central](https://www.windowscentral.com/caprine-review-customizing-facebook-messenger-windows-10)
+
 ## Disclaimer
 
 Caprine is a third-party app and is not affiliated with Facebook.
