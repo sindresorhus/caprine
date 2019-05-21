@@ -91,11 +91,20 @@
 	"build": {
 		"files": [
 			"**/*",
-			"!media${/*}"
+			"!media/**/*",
+			"!source/**/*"
 		],
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
+			"target": [
+				"dmg",
+				"mas",
+				"zip"
+			],
 			"category": "public.app-category.social-networking",
+			"electronLanguages": [
+				"en"
+			],
 			"electronUpdaterCompatibility": ">=2.15.0",
 			"darkModeSupport": true
 		},
