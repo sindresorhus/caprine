@@ -72,7 +72,9 @@ let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu: Menu;
 
-if (!app.requestSingleInstanceLock()) {
+// TODO: Remove `!is.macAppStore &&` once the following issue is resolved:
+// https://github.com/electron/electron/issues/15958
+if (!is.macAppStore && !app.requestSingleInstanceLock()) {
 	app.quit();
 }
 
