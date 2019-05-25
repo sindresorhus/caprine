@@ -320,3 +320,12 @@ body.show-message-buttons ._4_j4 ._39bj {
 	max-height: 80vh;
 	overflow-y: auto;
 }
+
+/* Hide sidebar heading */
+._6-xo {
+	display: none !important;
+}
+/* Hide profile picture */
+._7sta._7stb._7t0d {
+	display: none !important;
+}

@@ -839,3 +839,9 @@ html.dark-mode ._2cij ._2cil {
 html.dark-mode ._1p1u ._1p1v {
 	color: var(--base-thirty);
 }
+
+/* Invert the top left sidebar buttons */
+html.dark-mode ._30yy._6ymd._2agf,
+html.dark-mode ._30yy._6-xp._6-xq {
+	filter: invert(1);
+}
