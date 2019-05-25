@@ -416,111 +416,109 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
-/// async function sendConversationList(): Promise<void> {
-// 	const conversations: Conversation[] = await Promise.all(
-// 		([...(await elementReady(listSelector)).children] as HTMLElement[])
-// 			.splice(0, 10)
-// 			.map(async (el: HTMLElement) => {
-// 				const profilePic = el.querySelector<HTMLImageElement>('._7t0d img')!;
+async function sendConversationList(): Promise<void> {
+	const conversations: Conversation[] = await Promise.all(
+		([...(await elementReady(listSelector)).children] as HTMLElement[])
+			.splice(0, 10)
+			.map(async (el: HTMLElement) => {
+				const profilePic = el.querySelector<HTMLImageElement>('._7q1k.img');
+				const groupPic = el.querySelector<HTMLImageElement>('._1qt3._6-5k._5l-3 div');
 
-// 				// TODO: This logic is broken in the latest Messenger update.
-// 				// const groupPic = el.querySelector<HTMLImageElement>('._7q1j div');
+				// This is only for group chats
+				if (groupPic) {
+					// Slice image source from background-image style property of div
+					const bgImage = groupPic.style.backgroundImage!;
+					groupPic.src = bgImage.slice(5, bgImage.length - 2);
+				}
 
-// 				// // This is only for group chats
-// 				// if (groupPic) {
-// 				// 	// Slice image source from background-image style property of div
-// 				// 	const bgImage = groupPic.style.backgroundImage!;
-// 				// 	groupPic.src = bgImage.slice(5, bgImage.length - 2);
-// 				// }
+				const isConversationMuted = el.classList.contains('_569x');
 
-// 				const isConversationMuted = el.classList.contains('_569x');
+				return {
+					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
+					selected: el.classList.contains('_1ht2'),
+					unread: el.classList.contains('_1ht3') && !isConversationMuted,
+					icon: await getDataUrlFromImg(
+						profilePic ? profilePic : groupPic!,
+						el.classList.contains('_1ht3')
+					)
+				};
+			})
+	);
 
-// 				return {
-// 					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
-// 					selected: el.classList.contains('_1ht2'),
-// 					unread: el.classList.contains('_1ht3') && !isConversationMuted,
-// 					icon: await getDataUrlFromImg(
-// 						profilePic,
-// 						el.classList.contains('_1ht3')
-// 					)
-// 				};
-// 			})
-// 	);
-
-// 	ipc.send('conversations', conversations);
-// }
+	ipc.send('conversations', conversations);
+}
 
 // Return canvas with rounded image
-// async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
-// 	return new Promise(resolve => {
-// 		const img = new Image();
-// 		img.crossOrigin = 'anonymous';
-// 		img.addEventListener('load', () => {
-// 			const canvas = document.createElement('canvas');
-// 			const padding = {
-// 				top: 3,
-// 				right: 0,
-// 				bottom: 3,
-// 				left: 0
-// 			};
+async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
+	return new Promise(resolve => {
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.addEventListener('load', () => {
+			const canvas = document.createElement('canvas');
+			const padding = {
+				top: 3,
+				right: 0,
+				bottom: 3,
+				left: 0
+			};
 
-// 			canvas.width = size + padding.left + padding.right;
-// 			canvas.height = size + padding.top + padding.bottom;
+			canvas.width = size + padding.left + padding.right;
+			canvas.height = size + padding.top + padding.bottom;
 
-// 			const ctx = canvas.getContext('2d')!;
-// 			ctx.save();
-// 			ctx.beginPath();
-// 			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
-// 			ctx.closePath();
-// 			ctx.clip();
-// 			ctx.drawImage(img, padding.left, padding.top, size, size);
-// 			ctx.restore();
+			const ctx = canvas.getContext('2d')!;
+			ctx.save();
+			ctx.beginPath();
+			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
+			ctx.closePath();
+			ctx.clip();
+			ctx.drawImage(img, padding.left, padding.top, size, size);
+			ctx.restore();
 
-// 			resolve(canvas);
-// 		});
+			resolve(canvas);
+		});
 
-// 		img.src = url;
-// 	});
-// }
+		img.src = url;
+	});
+}
 
 // Return data url for user avatar
-// async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
-// 	// eslint-disable-next-line no-async-promise-executor
-// 	return new Promise(async resolve => {
-// 		if (unread) {
-// 			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
+async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
+	// eslint-disable-next-line no-async-promise-executor
+	return new Promise(async resolve => {
+		if (unread) {
+			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
 
-// 			if (dataUnreadUrl) {
-// 				return resolve(dataUnreadUrl);
-// 			}
-// 		} else {
-// 			const dataUrl = img.getAttribute('dataUrl');
+			if (dataUnreadUrl) {
+				return resolve(dataUnreadUrl);
+			}
+		} else {
+			const dataUrl = img.getAttribute('dataUrl');
 
-// 			if (dataUrl) {
-// 				return resolve(dataUrl);
-// 			}
-// 		}
+			if (dataUrl) {
+				return resolve(dataUrl);
+			}
+		}
 
-// 		const canvas = await urlToCanvas(img.src, 30);
-// 		const ctx = canvas.getContext('2d')!;
-// 		const dataUrl = canvas.toDataURL();
-// 		img.setAttribute('dataUrl', dataUrl);
+		const canvas = await urlToCanvas(img.src, 30);
+		const ctx = canvas.getContext('2d')!;
+		const dataUrl = canvas.toDataURL();
+		img.setAttribute('dataUrl', dataUrl);
 
-// 		if (!unread) {
-// 			return resolve(dataUrl);
-// 		}
+		if (!unread) {
+			return resolve(dataUrl);
+		}
 
-// 		const markerSize = 8;
-// 		ctx.fillStyle = '#f42020';
-// 		ctx.beginPath();
-// 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
-// 		ctx.fill();
-// 		const dataUnreadUrl = canvas.toDataURL();
-// 		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
+		const markerSize = 8;
+		ctx.fillStyle = '#f42020';
+		ctx.beginPath();
+		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
+		ctx.fill();
+		const dataUnreadUrl = canvas.toDataURL();
+		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
 
-// 		resolve(dataUnreadUrl);
-// 	});
-// }
+		resolve(dataUnreadUrl);
+	});
+}
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
@@ -549,20 +547,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-	// TODO: Broken in the latest Messenger update
-	// const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
+	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
 
-	// if (sidebar) {
-	// 	sendConversationList();
+	if (sidebar) {
+		sendConversationList();
 
-	// 	const conversationListObserver = new MutationObserver(sendConversationList);
-	// 	conversationListObserver.observe(sidebar, {
-	// 		subtree: true,
-	// 		childList: true,
-	// 		attributes: true,
-	// 		attributeFilter: ['class']
-	// 	});
-	// }
+		const conversationListObserver = new MutationObserver(sendConversationList);
+		conversationListObserver.observe(sidebar, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['class']
+		});
+	}
 
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
@@ -578,7 +575,9 @@ window.addEventListener('blur', () => {
 	document.documentElement.classList.add('is-window-inactive');
 });
 window.addEventListener('focus', () => {
-	document.documentElement.classList.remove('is-window-inactive');
+	if (document.documentElement) {
+		document.documentElement.classList.remove('is-window-inactive');
+	}
 });
 
 // It's not possible to add multiple accelerators
