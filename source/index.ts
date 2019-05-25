@@ -35,7 +35,7 @@ import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 ipcMain.setMaxListeners(100);
 
 electronDebug({
-	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
+	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
 	showDevTools: false
 });
 
