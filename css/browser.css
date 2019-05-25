@@ -325,7 +325,14 @@ body.show-message-buttons ._4_j4 ._39bj {
 ._6-xo {
 	display: none !important;
 }
+
 /* Hide profile picture */
 ._7sta._7stb._7t0d {
 	display: none !important;
+}
+
+/* Adjust position of sidebar back button */
+._30yy._6-xf._6-xg {
+	position: relative;
+	left: 100px;
 }
