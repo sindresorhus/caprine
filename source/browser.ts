@@ -489,31 +489,38 @@ async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promis
 			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
 
 			if (dataUnreadUrl) {
-				return resolve(dataUnreadUrl);
+				resolve(dataUnreadUrl);
+				return;
 			}
 		} else {
 			const dataUrl = img.getAttribute('dataUrl');
 
 			if (dataUrl) {
-				return resolve(dataUrl);
+				resolve(dataUrl);
+				return;
 			}
 		}
 
 		const canvas = await urlToCanvas(img.src, 30);
 		const ctx = canvas.getContext('2d')!;
 		const dataUrl = canvas.toDataURL();
+
 		img.setAttribute('dataUrl', dataUrl);
 
 		if (!unread) {
-			return resolve(dataUrl);
+			resolve(dataUrl);
+			return;
 		}
 
 		const markerSize = 8;
+
 		ctx.fillStyle = '#f42020';
 		ctx.beginPath();
 		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
 		ctx.fill();
+
 		const dataUnreadUrl = canvas.toDataURL();
+
 		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
 
 		resolve(dataUnreadUrl);
