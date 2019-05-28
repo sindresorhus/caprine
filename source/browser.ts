@@ -3,8 +3,9 @@ import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
 
 import selectors from './browser/selectors';
-import { sendConversationList } from './browser/conversation-list';
 import config from './config';
+
+import './browser/conversation-list'; // eslint-disable-line import/no-unassigned-import
 
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
@@ -445,20 +446,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
-
-	if (sidebar) {
-		sendConversationList();
-
-		const conversationListObserver = new MutationObserver(sendConversationList);
-		conversationListObserver.observe(sidebar, {
-			subtree: true,
-			childList: true,
-			attributes: true,
-			attributeFilter: ['class']
-		});
-	}
-
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');

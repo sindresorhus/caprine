@@ -1,5 +1,5 @@
-import elementReady from 'element-ready';
 import {ipcRenderer as ipc} from 'electron';
+import elementReady from 'element-ready';
 
 import selectors from './selectors';
 
@@ -15,7 +15,7 @@ const padding = {
 	left: 0
 };
 
-function drawIcon(size: number, img?: HTMLImageElement) {
+function drawIcon(size: number, img?: HTMLImageElement): HTMLCanvasElement {
 	const canvas = document.createElement('canvas');
 
 	if (img) {
@@ -88,29 +88,29 @@ async function discoverIcons(el: HTMLElement): Promise<void> {
 		const groupPicBackground = groupPicElement.style.backgroundImage;
 
 		if (groupPicBackground) {
-			return createIcons(el, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'))
+			return createIcons(el, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
 		}
 	}
 
 	console.warn('Could not discover profile picture. Falling back to default image.');
 
-	// fallback to messenger favicon
+	// Fall back to messenger favicon
 	const messengerIcon = document.querySelector('link[rel~="icon"]');
 
 	if (messengerIcon) {
 		return createIcons(el, messengerIcon.getAttribute('href')!);
 	}
 
-	// fallback to facebook favicon
+	// Fall back to facebook favicon
 	return createIcons(el, 'https://facebook.com/favicon.ico');
 }
 
 async function getIcon(el: HTMLElement, unread: boolean): Promise<string> {
 	if (!el.getAttribute(icon.read)) {
-		await discoverIcons(el)
+		await discoverIcons(el);
 	}
 
-	return el.getAttribute(unread ? icon.unread : icon.read)!
+	return el.getAttribute(unread ? icon.unread : icon.read)!;
 }
 
 async function createConversation(el: HTMLElement): Promise<Conversation> {
@@ -128,9 +128,9 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 	return conversation as Conversation;
 }
 
-async function createConversationList() {
+async function createConversationList(): Promise<Conversation[]> {
 	const list: HTMLElement = await elementReady(selectors.conversationList);
-	const items: HTMLElement[] = Array.from(list.children) as HTMLElement[];
+	const items: HTMLElement[] = [...list.children] as HTMLElement[];
 
 	const conversations: Conversation[] = await Promise.all(
 		items.map((el: HTMLElement): Promise<Conversation> => createConversation(el))
@@ -143,6 +143,19 @@ async function sendConversationList(): Promise<void> {
 	ipc.send('conversations', await createConversationList());
 }
 
-export {
-	sendConversationList
-}
+window.addEventListener('load', () => {
+	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
+
+	if (sidebar) {
+		sendConversationList();
+
+		const conversationListObserver = new MutationObserver(sendConversationList);
+
+		conversationListObserver.observe(sidebar, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['class']
+		});
+	}
+});
