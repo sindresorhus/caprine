@@ -1,9 +1,11 @@
 import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
 import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
+
+import selectors from './browser/selectors';
+import { sendConversationList } from './browser/conversation-list';
 import config from './config';
 
-const listSelector = 'div[role="navigation"] > div > ul';
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
@@ -337,7 +339,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const conversationElement = (await elementReady(listSelector)).children[index];
+	const conversationElement = (await elementReady(selectors.conversationList)).children[index];
 
 	if (conversationElement) {
 		(conversationElement.firstChild!.firstChild as HTMLElement).click();
@@ -414,117 +416,6 @@ function isPreferencesOpen(): boolean {
 function closePreferences(): void {
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
 	doneButton.click();
-}
-
-async function sendConversationList(): Promise<void> {
-	const conversations: Conversation[] = await Promise.all(
-		([...(await elementReady(listSelector)).children] as HTMLElement[])
-			.splice(0, 10)
-			.map(async (el: HTMLElement) => {
-				const profilePic = el.querySelector<HTMLImageElement>('._7q1k.img');
-				const groupPic = el.querySelector<HTMLImageElement>('._1qt3._6-5k._5l-3 div');
-
-				// This is only for group chats
-				if (groupPic) {
-					// Slice image source from background-image style property of div
-					const bgImage = groupPic.style.backgroundImage!;
-					groupPic.src = bgImage.slice(5, bgImage.length - 2);
-				}
-
-				const isConversationMuted = el.classList.contains('_569x');
-
-				return {
-					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
-					selected: el.classList.contains('_1ht2'),
-					unread: el.classList.contains('_1ht3') && !isConversationMuted,
-					icon: await getDataUrlFromImg(
-						profilePic ? profilePic : groupPic!,
-						el.classList.contains('_1ht3')
-					)
-				};
-			})
-	);
-
-	ipc.send('conversations', conversations);
-}
-
-// Return canvas with rounded image
-async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
-	return new Promise(resolve => {
-		const img = new Image();
-		img.crossOrigin = 'anonymous';
-		img.addEventListener('load', () => {
-			const canvas = document.createElement('canvas');
-			const padding = {
-				top: 3,
-				right: 0,
-				bottom: 3,
-				left: 0
-			};
-
-			canvas.width = size + padding.left + padding.right;
-			canvas.height = size + padding.top + padding.bottom;
-
-			const ctx = canvas.getContext('2d')!;
-			ctx.save();
-			ctx.beginPath();
-			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.clip();
-			ctx.drawImage(img, padding.left, padding.top, size, size);
-			ctx.restore();
-
-			resolve(canvas);
-		});
-
-		img.src = url;
-	});
-}
-
-// Return data url for user avatar
-async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
-	// eslint-disable-next-line no-async-promise-executor
-	return new Promise(async resolve => {
-		if (unread) {
-			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
-
-			if (dataUnreadUrl) {
-				resolve(dataUnreadUrl);
-				return;
-			}
-		} else {
-			const dataUrl = img.getAttribute('dataUrl');
-
-			if (dataUrl) {
-				resolve(dataUrl);
-				return;
-			}
-		}
-
-		const canvas = await urlToCanvas(img.src, 30);
-		const ctx = canvas.getContext('2d')!;
-		const dataUrl = canvas.toDataURL();
-
-		img.setAttribute('dataUrl', dataUrl);
-
-		if (!unread) {
-			resolve(dataUrl);
-			return;
-		}
-
-		const markerSize = 8;
-
-		ctx.fillStyle = '#f42020';
-		ctx.beginPath();
-		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
-		ctx.fill();
-
-		const dataUnreadUrl = canvas.toDataURL();
-
-		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
-
-		resolve(dataUnreadUrl);
-	});
 }
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
