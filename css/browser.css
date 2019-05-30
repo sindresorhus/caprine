@@ -237,10 +237,6 @@ a,
 }
 
 /* Contact list: unread */
-._1ht1 a,
-._1ht3 a {
-	padding-left: 14px !important;
-}
 ._1ht3::before {
 	content: ' ';
 	display: block;
@@ -255,9 +251,14 @@ a,
 }
 
 /* Contact list: person (selected) */
+._1ht1._1ht2 ._6zkc {
+	background-color: transparent !important;
+}
+
 ._1ht1._1ht2 {
 	background: var(--selected-conversation-background) !important;
 }
+
 ._1ht1._1ht2 * {
 	color: rgba(255, 255, 255, 0.8);
 }
