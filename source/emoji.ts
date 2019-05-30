@@ -5,7 +5,8 @@ import {
 	MenuItemConstructorOptions,
 	Response,
 	ipcMain,
-	Event as ElectronEvent
+	Event as ElectronEvent,
+	Menu
 } from 'electron';
 import {memoize} from 'lodash';
 import config from './config';
@@ -350,7 +351,7 @@ export async function process(url: string): Promise<Response> {
 }
 
 export async function generateSubmenu(
-	updateMenu: () => void
+	updateMenu: () => Promise<Menu>
 ): Promise<MenuItemConstructorOptions[]> {
 	const emojiMenuOption = async (
 		label: string,

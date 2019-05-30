@@ -49,7 +49,7 @@ html.dark-mode ._o46:not(._nd_) ._hh7 a {
 }
 
 /* Message list: link in message bubble */
-html.dark-mode ._hh7 a:hover {
+html.dark-mode ._hh7 a:not(._2t5t):hover {
 	background: transparent !important;
 }
 
@@ -266,6 +266,11 @@ html.dark-mode ._1ht6 {
 	color: var(--base-seventy);
 }
 
+/* Contact list: person (selected) window inactive */
+html.dark-mode.is-window-inactive ._1ht1._1ht2 * {
+	color: var(--base-seventy);
+}
+
 /* Contact list: message blurb */
 html.dark-mode ._1htf,
 /* Contact list: (for format) person: message blurb */
@@ -361,8 +366,7 @@ html.dark-mode ._1li- {
 }
 
 /* Right sidebar: group chat names */
-html.dark-mode ._2jnv,
-html.dark-mode ._5rpu {
+html.dark-mode ._2jnu ._2jnv {
 	color: var(--base-seventy);
 }
 
@@ -691,7 +695,7 @@ html.dark-mode ._29ey {
 }
 html.dark-mode .fbNubFlyoutAttachments,
 html.dark-mode .chatAttachmentShelf {
-	background: var(--container-color) !important;
+	background: var(--container-color);
 	color: var(--base-seventy);
 }
 html.dark-mode .chatAttachmentShelf {
@@ -774,9 +778,14 @@ html.dark-mode ._koh li:not(.selected) {
 	color: var(--base-seventy);
 }
 
-/* "Missed call" timestamp */
+/* "Missed call" dialog timestamp */
 html.dark-mode ._2r2v {
 	color: var(--base-fourty) !important;
+}
+
+/* "Missed call" dialog buttons separator */
+html.dark-mode ._4eb_ ._30vt:not(:last-child)::after {
+	border-left-color: var(--base-ten);
 }
 
 /* "Incoming call" subheading */
@@ -785,8 +794,51 @@ html.dark-mode ._2n1t {
 }
 
 /* Quoted text in inline replies */
-html.dark-mode ._1nc7 ._pye,
-html.dark-mode ._1nc6 ._pye,
-html.dark-mode ._hh7 ._pye {
+html.dark-mode ._1nc7:not(._43by) ._pye,
+html.dark-mode ._1nc6:not(._43by) ._pye,
+html.dark-mode ._hh7:not(._43by) ._pye {
 	color: var(--base-fifty) !important;
+}
+
+/* Quoted text in the message composer */
+html.dark-mode ._67tw {
+	color: var(--base-fifty);
+}
+
+/* Reply tag */
+html.dark-mode ._4k7a {
+	color: var(--base-fifty);
+}
+
+/* Reply tag icon */
+html.dark-mode ._6e38 {
+	filter: invert(0.66);
+}
+
+/* Music widget title */
+html.dark-mode ._44ju ._44jz {
+	color: #fff;
+}
+
+/* Close icon in the "New Messenger version is available" banner */
+html.dark-mode ._2cij ._2cik {
+	filter: invert(0.66);
+	left: unset;
+	right: 12px;
+}
+
+/* "New Messenger version is available" banner icon */
+html.dark-mode ._2cij ._2cil {
+	filter: invert(0.66);
+}
+
+/* "Edit Nickname" dialog input placeholder */
+html.dark-mode ._1p1u ._1p1v {
+	color: var(--base-thirty);
+}
+
+/* Invert the top left sidebar buttons */
+html.dark-mode ._30yy._6ymd._2agf,
+html.dark-mode ._30yy._6-xp._6-xq {
+	filter: invert(1);
 }

@@ -1,7 +1,7 @@
 os: osx
-osx_image: xcode10
+osx_image: xcode10.2
 language: node_js
-node_js: '10'
+node_js: '12'
 script:
   - npm test
   - npm run dist

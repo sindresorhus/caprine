@@ -1,5 +1,7 @@
 :root {
 	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
+	--selected-conversation-background-inactive: #d2d2d2;
+	--black: #000;
 }
 
 html {
@@ -35,11 +37,6 @@ body {
 /* Fix broken scroll arrows on message input on Windows */
 ._kmc {
 	overflow-y: hidden !important;
-}
-
-/* The message buttons are always in one row */
-._4rv4 > div {
-	display: flex;
 }
 
 /* Exclude `New Messages`, `Voice Call`, `Video Call` & `Conversation Info` buttons from the draggable region */
@@ -91,8 +88,11 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 }
 
 /* Hide settings icon */
-._30yy._2fug._p {
+._4kzu {
 	visibility: hidden !important;
+	display: block !important;
+	width: 0 !important;
+	height: 0 !important;
 }
 
 /* Hide title */
@@ -105,13 +105,6 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	display: block !important;
 }
 
-/* Narrower titlebar */
-._36ic,
-._5742,
-._673w {
-	height: 40px !important;
-	padding: 4px !important;
-}
 /* Vertically center chat options */
 ._fl2 {
 	padding: 0 !important;
@@ -269,6 +262,15 @@ a,
 	color: rgba(255, 255, 255, 0.8);
 }
 
+/* Contact list: person (selected) window inactive */
+html.is-window-inactive ._1ht1._1ht2 {
+	background: var(--selected-conversation-background-inactive) !important;
+	color: var(--black) !important;
+}
+html.is-window-inactive ._1ht1._1ht2 * {
+	color: rgba(0, 0, 0, 0.8);
+}
+
 /* Remove top Facebook cookie banner */
 .fbPageBanner {
 	display: none !important;
@@ -288,4 +290,42 @@ body ._4_j4 ._39bj {
 
 body.show-message-buttons ._4_j4 ._39bj {
 	display: flex;
+}
+
+/* Window background, affects vibrant views and Settings open/close transition */
+._2sdm {
+	background-color: transparent !important;
+}
+
+/* Background under the typing indicator */
+._4gd0 {
+	background-color: transparent !important;
+}
+
+/* Typing indicator */
+._4a0v._1x3z {
+	display: flex;
+	justify-content: center;
+}
+
+/* Settings dialog */
+._4eby {
+	max-height: 80vh;
+	overflow-y: auto;
+}
+
+/* Hide sidebar heading */
+._6-xo {
+	display: none !important;
+}
+
+/* Hide profile picture */
+._7sta._7stb._7t0d {
+	display: none !important;
+}
+
+/* Adjust position of sidebar back button */
+._30yy._6-xf._6-xg {
+	position: relative;
+	left: 100px;
 }
