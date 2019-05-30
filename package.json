@@ -89,6 +89,7 @@
 		"endOfLine": "lf"
 	},
 	"build": {
+		"afterSign": "./replace-mas-icon.js",
 		"files": [
 			"**/*",
 			"!media/**/*",
