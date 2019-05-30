@@ -1,12 +1,5 @@
 /* -- BLOCK START: sidebar-only vibrancy -- */
 
-html.sidebar-vibrancy body,
-html.sidebar-vibrancy ._4sp8,
-html.sidebar-vibrancy.dark-mode body,
-html.sidebar-vibrancy.dark-mode ._4sp8 {
-	background: transparent !important;
-}
-
 /* Login screen */
 html.sidebar-vibrancy ._3v_o {
 	background-color: #fff;
@@ -24,9 +17,6 @@ html.sidebar-vibrancy.dark-mode ._36ic {
 }
 
 /* Contact list: search input */
-html.sidebar-vibrancy ._5iwm ._58al {
-	background-color: rgba(246, 247, 249, 0.5) !important;
-}
 html.sidebar-vibrancy.dark-mode ._5iwm ._58al {
 	background: var(--base-five) !important;
 }
