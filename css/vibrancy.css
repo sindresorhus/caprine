@@ -34,8 +34,8 @@ html.sidebar-vibrancy.dark-mode ._5iwm ._58al {
 /* Chat title bar */
 html.sidebar-vibrancy ._673w {
 	background-color: #fff !important;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 html.sidebar-vibrancy.dark-mode ._673w {
 	background-color: var(--container-dark-color) !important;
 	border-bottom: 1px solid var(--base-five) !important;
