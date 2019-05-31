@@ -35,6 +35,13 @@ export default {
 				type: 'separator'
 			},
 			{
+				label: 'Menu',
+				submenu: Menu.getApplicationMenu()!
+			},
+			{
+				type: 'separator'
+			},
+			{
 				role: 'quit'
 			}
 		]);
