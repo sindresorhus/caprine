@@ -11,7 +11,10 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withMenu(menuButtonElement: HTMLElement, callback: () => Promise<void> | void): Promise<void> {
+async function withMenu(
+	menuButtonElement: HTMLElement,
+	callback: () => Promise<void> | void
+): Promise<void> {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
@@ -345,7 +348,7 @@ async function selectConversation(index: number): Promise<void> {
 	const list = await elementReady(selectors.conversationList);
 
 	if (!list) {
-		console.error('Could not find conversations list', selectors.conversationList)
+		console.error('Could not find conversations list', selectors.conversationList);
 		return;
 	}
 
