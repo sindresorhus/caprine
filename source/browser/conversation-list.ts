@@ -129,7 +129,13 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 }
 
 async function createConversationList(): Promise<Conversation[]> {
-	const list: HTMLElement = await elementReady(selectors.conversationList);
+	const list: HTMLElement = await elementReady(selectors.conversationList) as HTMLElement;
+
+	if (!list) {
+		console.error('Could not find conversation list', selectors.conversationList);
+		return [];
+	}
+
 	const items: HTMLElement[] = [...list.children] as HTMLElement[];
 
 	const conversations: Conversation[] = await Promise.all(

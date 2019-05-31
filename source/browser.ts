@@ -11,10 +11,7 @@ const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
-async function withMenu(
-	menuButtonElement: HTMLElement,
-	callback: () => Promise<void> | void
-): Promise<void> {
+async function withMenu(menuButtonElement: HTMLElement, callback: () => Promise<void> | void): Promise<void> {
 	const {classList} = document.documentElement;
 
 	// Prevent the dropdown menu from displaying
@@ -43,7 +40,11 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	await withMenu(await elementReady<HTMLElement>('._30yy._6ymd._2agf'), callback);
+	const settingsMenu = await elementReady<HTMLElement>('._30yy._6ymd._2agf');
+
+	if (settingsMenu) {
+		await withMenu(settingsMenu, callback);
+	}
 }
 
 function selectMenuItem(itemNumber: number): void {
@@ -150,6 +151,7 @@ ipc.on('archive-conversation', async () => {
 
 function setSidebarVisibility(): void {
 	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
+
 	ipc.send('set-sidebar-visibility');
 }
 
@@ -340,11 +342,21 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const conversationElement = (await elementReady(selectors.conversationList)).children[index];
+	const list = await elementReady(selectors.conversationList);
 
-	if (conversationElement) {
-		(conversationElement.firstChild!.firstChild as HTMLElement).click();
+	if (!list) {
+		console.error('Could not find conversations list', selectors.conversationList)
+		return;
 	}
+
+	const conversation = list.children[index];
+
+	if (!conversation) {
+		console.error('Could not find conversation', index);
+		return;
+	}
+
+	(conversation.firstChild!.firstChild as HTMLElement).click();
 }
 
 function selectedConversationIndex(offset = 0): number {
@@ -532,10 +544,19 @@ async function sendReply(message: string): Promise<void> {
 	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"]');
 	if (inputField) {
 		const previousMessage = inputField.textContent;
+
 		// Send message
 		inputField.focus();
 		insertMessageText(message, inputField);
-		(await elementReady<HTMLElement>('._30yy._38lh')).click();
+
+		const sendButton = await elementReady<HTMLElement>('._30yy._38lh');
+
+		if (!sendButton) {
+			console.error('Could not find send button');
+			return;
+		}
+
+		sendButton.click();
 
 		// Restore (possible) previous message
 		if (previousMessage) {
