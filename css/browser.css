@@ -236,20 +236,6 @@ a,
 	border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Contact list: unread */
-._1ht3::before {
-	content: ' ';
-	display: block;
-	position: absolute;
-	left: 3px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 8px;
-	height: 8px;
-	background-color: var(--blue);
-	border-radius: 8px;
-}
-
 /* Contact list: person (selected) */
 ._1ht1._1ht2 ._6zkc {
 	background-color: transparent !important;
