@@ -4,7 +4,7 @@ import {api, is} from 'electron-util';
 
 import selectors from './browser/selectors';
 import config from './config';
-import { toggleVideoAutoplay } from './autoplay';
+import {toggleVideoAutoplay} from './autoplay';
 
 import './browser/conversation-list'; // eslint-disable-line import/no-unassigned-import
 
@@ -566,7 +566,6 @@ function insertMessageText(text: string, inputField: HTMLElement): void {
 ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
-
 
 ipc.on('notification-reply-callback', (_event: ElectronEvent, data: any) => {
 	const previousConversation = selectedConversationIndex();
