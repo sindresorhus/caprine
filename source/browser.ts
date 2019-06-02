@@ -690,7 +690,7 @@ function enableVideoAutoplay(): void {
 }
 
 function setAutoplayVideos(): void {
-	if (config.get('videoAutoplay')) {
+	if (config.get('autoplayVideos')) {
 		// Stop the observers
 		conversationDivObserver.disconnect();
 		videoObserver.disconnect();

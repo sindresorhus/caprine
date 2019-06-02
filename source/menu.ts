@@ -174,12 +174,12 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Video Autoplay',
+			label: 'Autoplay Videos',
 			id: 'video-autoplay',
 			type: 'checkbox',
-			checked: config.get('videoAutoplay'),
+			checked: config.get('autoplayVideos'),
 			click() {
-				config.set('videoAutoplay', !config.get('videoAutoplay'));
+				config.set('autoplayVideos', !config.get('autoplayVideos'));
 				sendAction('toggle-video-autoplay');
 			}
 		},
