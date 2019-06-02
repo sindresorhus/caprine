@@ -644,6 +644,7 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 		// Create image to replace video as a placeholder
 		const img = document.createElement('img');
 		img.setAttribute('src', backgroundImageSrc);
+		img.classList.add('disabledAutoPlay');
 		img.setAttribute('height', height!);
 		img.setAttribute('width', width!);
 
