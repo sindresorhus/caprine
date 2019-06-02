@@ -266,6 +266,14 @@ html.dark-mode ._1ht6 {
 	color: var(--base-seventy);
 }
 
+/* Contact list: person (selected) window inactive */
+html.dark-mode.is-window-inactive ._1ht1._1ht2 {
+	background: var(--base-twenty) !important;
+}
+html.dark-mode.is-window-inactive ._1ht1._1ht2 * {
+	color: var(--base-seventy);
+}
+
 /* Contact list: message blurb */
 html.dark-mode ._1htf,
 /* Contact list: (for format) person: message blurb */
@@ -361,8 +369,7 @@ html.dark-mode ._1li- {
 }
 
 /* Right sidebar: group chat names */
-html.dark-mode ._2jnv,
-html.dark-mode ._5rpu {
+html.dark-mode ._2jnu ._2jnv {
 	color: var(--base-seventy);
 }
 
@@ -826,4 +833,15 @@ html.dark-mode ._2cij ._2cik {
 /* "New Messenger version is available" banner icon */
 html.dark-mode ._2cij ._2cil {
 	filter: invert(0.66);
+}
+
+/* "Edit Nickname" dialog input placeholder */
+html.dark-mode ._1p1u ._1p1v {
+	color: var(--base-thirty);
+}
+
+/* Invert the top left sidebar buttons */
+html.dark-mode ._30yy._6ymd._2agf,
+html.dark-mode ._30yy._6-xp._6-xq {
+	filter: invert(1);
 }
