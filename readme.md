@@ -12,9 +12,6 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 	<img src="media/screenshot.png" width="846">
 </a>
 
-<a href="https://www.patreon.com/sindresorhus">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
 
 ## Highlights
 
@@ -169,6 +166,10 @@ Switch to Messenger    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>1</kbd>
 Switch to Workchat     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>2</kbd>
 Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
 
+###### Tip
+
+On macOS, you can [change these in the System Preferences](https://www.intego.com/mac-security-blog/how-to-make-custom-keyboard-shortcuts-for-any-macos-menu-items-and-to-launch-your-favorite-apps/) and you can even add your own keyboard shortcuts for menu items without a predefined keyboard shortcut.
+
 
 ---
 
@@ -205,10 +206,11 @@ Then edit the automatically created GitHub Releases draft and publish.
 
 - [Product Hunt post](https://www.producthunt.com/posts/caprine-2)
 
+## Press
+
+- [The Essential Windows Apps for 2018 - Lifehacker](https://lifehacker.com/lifehacker-pack-for-windows-our-list-of-the-essential-1828117805)
+- [Caprine review: Customize Facebook Messenger on Windows 10 - Windows Central](https://www.windowscentral.com/caprine-review-customizing-facebook-messenger-windows-10)
+
 ## Disclaimer
 
 Caprine is a third-party app and is not affiliated with Facebook.
-
-## License
-
-MIT

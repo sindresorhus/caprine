@@ -1,9 +1,12 @@
 import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
 import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
+
+import selectors from './browser/selectors';
 import config from './config';
 
-const listSelector = 'div[role="navigation"] > div > ul';
+import './browser/conversation-list'; // eslint-disable-line import/no-unassigned-import
+
 const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
@@ -40,7 +43,7 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	await withMenu(await elementReady('._30yy._2fug._p'), callback);
+	await withMenu(await elementReady<HTMLElement>('._30yy._6ymd._2agf'), callback);
 }
 
 function selectMenuItem(itemNumber: number): void {
@@ -186,8 +189,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 });
 
 ipc.on('toggle-message-buttons', async () => {
-	const messageButtons = await elementReady('._39bj');
-	messageButtons.style.display = config.get('showMessageButtons') ? 'flex' : 'none';
+	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
 ipc.on('show-active-contacts-view', () => {
@@ -285,7 +287,7 @@ ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
 	context.textBaseline = 'middle';
 	if (is.macos) {
 		context.font = '256px system-ui';
-		context.fillText(emoji, 128, 140);
+		context.fillText(emoji, 128, 154);
 	} else {
 		context.font = '225px system-ui';
 		context.fillText(emoji, 128, 115);
@@ -342,7 +344,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const conversationElement = (await elementReady(listSelector)).children[index];
+	const conversationElement = (await elementReady(selectors.conversationList)).children[index];
 
 	if (conversationElement) {
 		(conversationElement.firstChild!.firstChild as HTMLElement).click();
@@ -421,110 +423,6 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
-async function sendConversationList(): Promise<void> {
-	const conversations: Conversation[] = await Promise.all(
-		([...(await elementReady(listSelector)).children] as HTMLElement[])
-			.splice(0, 10)
-			.map(async (el: HTMLElement) => {
-				const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
-				const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
-
-				// This is only for group chats
-				if (groupPic) {
-					// Slice image source from background-image style property of div
-					const bgImage = groupPic.style.backgroundImage!;
-					groupPic.src = bgImage.slice(5, bgImage.length - 2);
-				}
-
-				const isConversationMuted = el.classList.contains('_569x');
-
-				return {
-					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
-					selected: el.classList.contains('_1ht2'),
-					unread: el.classList.contains('_1ht3') && !isConversationMuted,
-					icon: await getDataUrlFromImg(
-						profilePic ? profilePic : groupPic!,
-						el.classList.contains('_1ht3')
-					)
-				};
-			})
-	);
-
-	ipc.send('conversations', conversations);
-}
-
-// Return canvas with rounded image
-async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
-	return new Promise(resolve => {
-		const img = new Image();
-		img.crossOrigin = 'anonymous';
-		img.addEventListener('load', () => {
-			const canvas = document.createElement('canvas');
-			const padding = {
-				top: 3,
-				right: 0,
-				bottom: 3,
-				left: 0
-			};
-
-			canvas.width = size + padding.left + padding.right;
-			canvas.height = size + padding.top + padding.bottom;
-
-			const ctx = canvas.getContext('2d')!;
-			ctx.save();
-			ctx.beginPath();
-			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.clip();
-			ctx.drawImage(img, padding.left, padding.top, size, size);
-			ctx.restore();
-
-			resolve(canvas);
-		});
-
-		img.src = url;
-	});
-}
-
-// Return data url for user avatar
-async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
-	// eslint-disable-next-line no-async-promise-executor
-	return new Promise(async resolve => {
-		if (unread) {
-			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
-
-			if (dataUnreadUrl) {
-				return resolve(dataUnreadUrl);
-			}
-		} else {
-			const dataUrl = img.getAttribute('dataUrl');
-
-			if (dataUrl) {
-				return resolve(dataUrl);
-			}
-		}
-
-		const canvas = await urlToCanvas(img.src, 30);
-		const ctx = canvas.getContext('2d')!;
-		const dataUrl = canvas.toDataURL();
-		img.setAttribute('dataUrl', dataUrl);
-
-		if (!unread) {
-			return resolve(dataUrl);
-		}
-
-		const markerSize = 8;
-		ctx.fillStyle = '#f42020';
-		ctx.beginPath();
-		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
-		ctx.fill();
-		const dataUnreadUrl = canvas.toDataURL();
-		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
-
-		resolve(dataUnreadUrl);
-	});
-}
-
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
 	const style = document.createElement('style');
@@ -552,26 +450,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
-
-	if (sidebar) {
-		sendConversationList();
-
-		const conversationListObserver = new MutationObserver(sendConversationList);
-		conversationListObserver.observe(sidebar, {
-			subtree: true,
-			childList: true,
-			attributes: true,
-			attributeFilter: ['class']
-		});
-	}
-
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
 		keepMeSignedInCheckbox.addEventListener('change', () => {
 			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
 		});
+	}
+});
+
+// Toggles styles for inactive window
+window.addEventListener('blur', () => {
+	document.documentElement.classList.add('is-window-inactive');
+});
+window.addEventListener('focus', () => {
+	if (document.documentElement) {
+		document.documentElement.classList.remove('is-window-inactive');
 	}
 });
 
@@ -639,13 +533,13 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 }
 
 async function sendReply(message: string): Promise<void> {
-	const inputField = document.querySelector('[contenteditable="true"]') as HTMLElement;
+	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"]');
 	if (inputField) {
 		const previousMessage = inputField.textContent;
 		// Send message
 		inputField.focus();
 		insertMessageText(message, inputField);
-		(await elementReady('._30yy._38lh')).click();
+		(await elementReady<HTMLElement>('._30yy._38lh')).click();
 
 		// Restore (possible) previous message
 		if (previousMessage) {

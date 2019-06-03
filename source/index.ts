@@ -35,7 +35,7 @@ import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 ipcMain.setMaxListeners(100);
 
 electronDebug({
-	enabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
+	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
 	showDevTools: false
 });
 
@@ -148,7 +148,9 @@ interface BeforeSendHeadersResponse {
 }
 
 function enableHiresResources(): void {
-	const scaleFactor = Math.max(...electronScreen.getAllDisplays().map(x => x.scaleFactor));
+	const scaleFactor = Math.max(
+		...electronScreen.getAllDisplays().map(display => display.scaleFactor)
+	);
 
 	if (scaleFactor === 1) {
 		return;
@@ -211,7 +213,8 @@ function setUserLocale(): void {
 		name: 'locale',
 		value: userLocale
 	};
-	session.defaultSession!.cookies.set(cookie, () => {});
+
+	session.defaultSession!.cookies.set(cookie);
 }
 
 function setNotificationsMute(status: boolean): void {
@@ -252,7 +255,6 @@ function createMainWindow(): BrowserWindow {
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
-			nodeIntegration: false,
 			contextIsolation: true,
 			plugins: true
 		}
@@ -400,14 +402,14 @@ function createMainWindow(): BrowserWindow {
 				url = new URL(url).searchParams.get('u')!;
 			}
 
-			shell.openExternal(url);
+			shell.openExternalSync(url);
 		}
 	});
 
 	webContents.on('will-navigate', (event, url) => {
 		const isMessengerDotCom = (url: string): boolean => {
 			const {hostname} = new URL(url);
-			return hostname === 'www.messenger.com';
+			return hostname.endsWith('.messenger.com');
 		};
 
 		const isTwoFactorAuth = (url: string): boolean => {
@@ -418,13 +420,14 @@ function createMainWindow(): BrowserWindow {
 		const isWorkChat = (url: string): boolean => {
 			const {hostname, pathname} = new URL(url);
 
-			if (hostname === 'work.facebook.com') {
+			if (hostname === 'work.facebook.com' || hostname === 'work.workplace.com') {
 				return true;
 			}
 
 			if (
-				// Example: https://company-name.facebook.com/login
-				hostname.endsWith('.facebook.com') &&
+				// Example: https://company-name.facebook.com/login or
+				//   		https://company-name.workplace.com/login
+				(hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com')) &&
 				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
 			) {
 				return true;
@@ -442,7 +445,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		event.preventDefault();
-		shell.openExternal(url);
+		shell.openExternalSync(url);
 	});
 })();
 
@@ -470,7 +473,12 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-	config.set('lastWindowState', mainWindow.getNormalBounds());
+
+	// Checking whether the window exists to work around an Electron race issue:
+	// https://github.com/sindresorhus/caprine/issues/809
+	if (mainWindow) {
+		config.set('lastWindowState', mainWindow.getNormalBounds());
+	}
 });
 
 const notifications = new Map();
