@@ -55,7 +55,14 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 		// Create image to replace video as a placeholder
 		const img = document.createElement('img');
 		img.setAttribute('src', backgroundImageSrc);
-		img.classList.add('disabledAutoPlayImg');
+		img.classList.add('disabledAutoPlayImgTopRadius');
+
+		// If it's a video without a source title bar at the bottom, round the bottom
+		// part of the video
+		if (parentWithBackgroundParent.childElementCount === 1) {
+			img.classList.add('disabledAutoPlayImgBottomRadius');
+		}
+
 		img.setAttribute('height', height!);
 		img.setAttribute('width', width!);
 
