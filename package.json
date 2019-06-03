@@ -16,7 +16,7 @@
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
-		"lint": "tsc && xo && stylelint 'css/*.css'",
+		"lint": "tsc && xo && stylelint css/*.css",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"pack": "tsc && electron-builder --dir",
