@@ -46,11 +46,6 @@ const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
-// Disables broken color space correction in Chromium.
-// You can see differing background color on the login screen.
-// https://github.com/electron/electron/issues/9671
-app.commandLine.appendSwitch('disable-color-correct-rendering');
-
 if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
