@@ -20,9 +20,8 @@ import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
 import electronContextMenu from 'electron-context-menu';
-import isDev from 'electron-is-dev';
 import electronDebug from 'electron-debug';
-import {darkMode, is} from 'electron-util';
+import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
@@ -50,7 +49,7 @@ if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
-if (!isDev) {
+if (!is.development) {
 	log.transports.file.level = 'info';
 	autoUpdater.logger = log;
 
