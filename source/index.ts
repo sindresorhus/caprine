@@ -292,12 +292,6 @@ function createMainWindow(): BrowserWindow {
 		}
 	});
 
-	win.on('blur', () => {
-		if (is.macos && config.get('menuBarMode') && !win.isFullScreen()) {
-			win.hide();
-		}
-	});
-
 	return win;
 }
 

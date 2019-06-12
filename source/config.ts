@@ -18,6 +18,7 @@ const defaults = {
 		y: undefined as number | undefined
 	},
 	menuBarMode: false,
+	showDockIcon: true,
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
 	showUnreadBadge: true,

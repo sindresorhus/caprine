@@ -15,14 +15,6 @@ export default {
 			return;
 		}
 
-		const toggleWin = (): void => {
-			if (win.isVisible()) {
-				win.hide();
-			} else {
-				win.show();
-			}
-		};
-
 		contextMenu = Menu.buildFromTemplate([
 			{
 				label: 'Disable Menu Bar Mode',
@@ -52,7 +44,11 @@ export default {
 
 		const trayClickHandler = (): void => {
 			if (!win.isFullScreen()) {
-				toggleWin();
+				if (win.isVisible()) {
+					win.hide();
+				} else {
+					win.show();
+				}
 			}
 		};
 

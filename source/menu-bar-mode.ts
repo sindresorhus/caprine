@@ -13,16 +13,6 @@ export function toggleMenuBarMode(window: BrowserWindow): void {
 	menuItem.checked = enabled;
 
 	window.setVisibleOnAllWorkspaces(enabled);
-	window.setAlwaysOnTop(enabled);
-
-	if (enabled) {
-		if (!window.isFullScreen()) {
-			app.dock.hide();
-		}
-	} else {
-		app.dock.show();
-		window.show();
-	}
 
 	if (enabled) {
 		globalShortcut.register(menuBarShortcut, () => {
@@ -32,14 +22,14 @@ export function toggleMenuBarMode(window: BrowserWindow): void {
 				window.show();
 			}
 		});
-	} else {
-		globalShortcut.unregister(menuBarShortcut);
-	}
 
-	if (enabled) {
 		tray.create(window);
 	} else {
+		globalShortcut.unregister(menuBarShortcut);
+
 		tray.destroy();
+		app.dock.show();
+		window.show();
 	}
 }
 
@@ -47,15 +37,9 @@ export function setupMenuBarMode(window: BrowserWindow): void {
 	if (is.macos) {
 		toggleMenuBarMode(window);
 
-		window.on('enter-full-screen', () => {
-			app.dock.show();
-		});
-
-		window.on('leave-full-screen', () => {
-			if (config.get('menuBarMode')) {
-				app.dock.hide();
-			}
-		});
+		if (config.get('menuBarMode') && !config.get('showDockIcon')) {
+			app.dock.hide();
+		}
 	} else {
 		tray.create(window);
 	}

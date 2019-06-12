@@ -201,7 +201,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Menu Bar Mode',
+			label: 'Show Menu Bar Icon',
 			id: 'menuBarMode',
 			type: 'checkbox',
 			enabled: is.macos,
@@ -211,6 +211,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 				const [win] = BrowserWindow.getAllWindows();
 				toggleMenuBarMode(win);
+			}
+		},
+		{
+			label: 'Show Dock Icon',
+			visible: is.macos,
+			type: 'checkbox',
+			checked: config.get('showDockIcon'),
+			click(menuItem) {
+				config.set('showDockIcon', menuItem.checked);
+
+				if (menuItem.checked) {
+					app.dock.show();
+				} else {
+					app.dock.hide();
+				}
 			}
 		},
 		{
