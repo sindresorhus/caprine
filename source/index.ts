@@ -19,8 +19,8 @@ import {
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
-import electronContextMenu from 'electron-context-menu';
-import electronDebug from 'electron-debug';
+import electronContextMenu = require('electron-context-menu');
+import electronDebug = require('electron-debug');
 import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';

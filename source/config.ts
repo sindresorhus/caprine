@@ -1,4 +1,4 @@
-import Store from 'electron-store';
+import Store = require('electron-store');
 import {is} from 'electron-util';
 import {EmojiStyle} from './emoji';
 
