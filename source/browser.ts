@@ -43,7 +43,7 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	await withMenu(await elementReady<HTMLElement>('._30yy._6ymd._2agf'), callback);
+	await withMenu(await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p'), callback);
 }
 
 function selectMenuItem(itemNumber: number): void {

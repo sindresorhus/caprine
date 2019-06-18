@@ -19,10 +19,9 @@ import {
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
-import electronContextMenu from 'electron-context-menu';
-import isDev from 'electron-is-dev';
-import electronDebug from 'electron-debug';
-import {darkMode, is} from 'electron-util';
+import electronContextMenu = require('electron-context-menu');
+import electronDebug = require('electron-debug');
+import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
@@ -46,16 +45,11 @@ const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
-// Disables broken color space correction in Chromium.
-// You can see differing background color on the login screen.
-// https://github.com/electron/electron/issues/9671
-app.commandLine.appendSwitch('disable-color-correct-rendering');
-
 if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
-if (!isDev) {
+if (!is.development) {
 	log.transports.file.level = 'info';
 	autoUpdater.logger = log;
 
@@ -133,7 +127,7 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 });
 
 function updateTrayIcon(): void {
-	if (config.get('hideTrayIcon')) {
+	if (config.get('hideTrayIcon') || config.get('quitOnWindowClose')) {
 		tray.destroy();
 	} else {
 		tray.create(mainWindow);
@@ -306,7 +300,7 @@ function createMainWindow(): BrowserWindow {
 	await updateAppMenu();
 	mainWindow = createMainWindow();
 
-	if (!config.get('hideTrayIcon')) {
+	if (!config.get('hideTrayIcon') || !config.get('quitOnWindowClose')) {
 		tray.create(mainWindow);
 	}
 

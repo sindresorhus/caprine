@@ -266,6 +266,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('quitOnWindowClose'),
 			click() {
 				config.set('quitOnWindowClose', !config.get('quitOnWindowClose'));
+				sendAction('toggle-tray-icon');
 			}
 		},
 		{
