@@ -30,7 +30,7 @@ import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
-import {setupMenuBarMode} from './menu-bar-mode';
+import {setUpMenuBarMode} from './menu-bar-mode';
 
 ipcMain.setMaxListeners(100);
 
@@ -91,7 +91,7 @@ function updateBadge(conversations: Conversation[]): void {
 		return;
 	}
 
-	const messageCount: number = getMessageCount(conversations);
+	const messageCount = getMessageCount(conversations);
 
 	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge')) {
@@ -298,7 +298,7 @@ function createMainWindow(): BrowserWindow {
 	mainWindow = createMainWindow();
 
 	// Start in Menu Bar mode if enabled, otherwise start normally
-	setupMenuBarMode(mainWindow);
+	setUpMenuBarMode(mainWindow);
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {
@@ -312,6 +312,11 @@ function createMainWindow(): BrowserWindow {
 
 		dockMenu = Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
+
+		/* Dock Icon is hidden initially on macOS */
+		if (!config.get('hideDockIcon')) {
+			app.dock.show();
+		}
 
 		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 			if (conversations.length === 0) {

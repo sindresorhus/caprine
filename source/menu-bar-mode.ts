@@ -4,7 +4,7 @@ import {is} from 'electron-util';
 import config from './config';
 import tray from './tray';
 
-const menuBarShortcut = 'CommandOrControl+Shift+Y';
+const menuBarShortcut = 'Command+Shift+Y';
 
 export function toggleMenuBarMode(window: BrowserWindow): void {
 	const enabled = config.get('menuBarMode');
@@ -33,13 +33,9 @@ export function toggleMenuBarMode(window: BrowserWindow): void {
 	}
 }
 
-export function setupMenuBarMode(window: BrowserWindow): void {
+export function setUpMenuBarMode(window: BrowserWindow): void {
 	if (is.macos) {
 		toggleMenuBarMode(window);
-
-		if (config.get('menuBarMode') && !config.get('showDockIcon')) {
-			app.dock.hide();
-		}
 	} else {
 		tray.create(window);
 	}

@@ -214,21 +214,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Show Dock Icon',
-			visible: is.macos,
-			type: 'checkbox',
-			checked: config.get('showDockIcon'),
-			click(menuItem) {
-				config.set('showDockIcon', menuItem.checked);
-
-				if (menuItem.checked) {
-					app.dock.show();
-				} else {
-					app.dock.hide();
-				}
-			}
-		},
-		{
 			label: 'Always on Top',
 			type: 'checkbox',
 			accelerator: 'CommandOrControl+Shift+T',

@@ -19,7 +19,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - [Vibrant theme](#vibrancy)\*
 - [Privacy-focused](#privacy)
 - [Keyboard shortcuts](#keyboard-shortcuts)
-- [Menu Bar mode](#menu-bar-mode)
+- [Menu Bar mode](#menu-bar-mode)\*
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support)
@@ -144,9 +144,10 @@ Note that you can change the behavior of Caprine so that the app closes when the
 Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
 
 ### Menu Bar Mode *(macOS only)*
+<img src="media/screenshot-menu-bar-mode.png" width="40">
 
-You can remove the app from the dock, create a menu bar icon and have a global shortcut to toggle the window. Caprine will show above any app, even if they are full screen, and it'll hide when is not focused.
-You can enable this in the menu bar options and disable in the options of the menu bar icon (right click on it).
+You can remove the app from the dock, create a menu bar icon and have a global shortcut to toggle the window (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd>). The `Menu` can be found by right clicking the menu bar icon.
+You can enable this in the menu bar options and disable in the options of the menu bar icon by right clicking it.
 
 ### Keyboard shortcuts
 
@@ -167,6 +168,7 @@ Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
+Toggle main window				 | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd> *(macOS only)*
 Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
 Switch to Messenger    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>1</kbd>
 Switch to Workchat     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>2</kbd>

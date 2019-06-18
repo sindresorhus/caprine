@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {app, Menu, Tray, BrowserWindow} from 'electron';
+import {app, Menu, Tray, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
 import {toggleMenuBarMode} from './menu-bar-mode';
@@ -7,7 +7,7 @@ import {toggleMenuBarMode} from './menu-bar-mode';
 let tray: Tray | null = null;
 let previousMessageCount = 0;
 
-let contextMenu: any;
+let contextMenu: Menu;
 
 export default {
 	create: (win: BrowserWindow) => {
@@ -15,21 +15,61 @@ export default {
 			return;
 		}
 
+		function toggleWin(): void {
+			if (win.isVisible()) {
+				win.hide();
+			} else {
+				win.show();
+			}
+		}
+
+		const macosMenuItems: MenuItemConstructorOptions[] = is.macos
+			? [
+					{
+						label: 'Disable Menu Bar Mode',
+						click() {
+							config.set('menuBarMode', false);
+							toggleMenuBarMode(win);
+						}
+					},
+					{
+						label: 'Hide Dock Icon',
+						type: 'checkbox',
+						checked: config.get('hideDockIcon'),
+						click(menuItem) {
+							config.set('hideDockIcon', menuItem.checked);
+
+							if (menuItem.checked) {
+								app.dock.hide();
+							} else {
+								app.dock.show();
+							}
+
+							const dockMenuItem = contextMenu.getMenuItemById('dockMenu');
+							dockMenuItem.visible = menuItem.checked;
+						}
+					},
+					{
+						type: 'separator'
+					},
+					{
+						id: 'dockMenu',
+						label: 'Menu',
+						visible: config.get('hideDockIcon'),
+						submenu: Menu.getApplicationMenu()!
+					}
+			  ]
+			: [];
+
 		contextMenu = Menu.buildFromTemplate([
 			{
-				label: 'Disable Menu Bar Mode',
+				label: 'Toggle',
+				visible: !is.macos,
 				click() {
-					config.set('menuBarMode', false);
-					toggleMenuBarMode(win);
+					toggleWin();
 				}
 			},
-			{
-				type: 'separator'
-			},
-			{
-				label: 'Menu',
-				submenu: Menu.getApplicationMenu()!
-			},
+			...macosMenuItems,
 			{
 				type: 'separator'
 			},
@@ -44,11 +84,7 @@ export default {
 
 		const trayClickHandler = (): void => {
 			if (!win.isFullScreen()) {
-				if (win.isVisible()) {
-					win.hide();
-				} else {
-					win.show();
-				}
+				toggleWin();
 			}
 		};
 
