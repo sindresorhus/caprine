@@ -143,11 +143,13 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
 
-### Menu Bar Mode *(macOS only)*
-<img src="media/screenshot-menu-bar-mode.png" width="40">
+### Menu Bar Mode *(macOS only)* <img src="media/screenshot-menu-bar-mode.png" width="40">
 
-You can remove the app from the dock, create a menu bar icon and have a global shortcut to toggle the window (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd>). The `Menu` can be found by right clicking the menu bar icon.
-You can enable this in the menu bar options and disable in the options of the menu bar icon by right clicking it.
+You can create a menu bar icon and have a global shortcut to toggle the window (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd>).You can also remove the app from the dock by toggling the menu item `Hide Dock Icon` from the menu bar icon.
+This will also make the app `Menu` available as a menu item inside the menu bar icon.
+
+<div align="center">
+<img src="media/screenshot-menu-bar-menu.png" width="200"></div>
 
 ### Keyboard shortcuts
 
