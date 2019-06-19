@@ -108,6 +108,14 @@ export default async function updateMenu(): Promise<Menu> {
 			click(menuItem) {
 				config.set('block.deliveryReceipt', menuItem.checked);
 			}
+		},
+		{
+			label: 'Hide Notification Content',
+			type: 'checkbox',
+			checked: config.get('block.hideNotificationContent'),
+			click(menuItem) {
+				config.set('block.hideNotificationContent', menuItem.checked);
+			}
 		}
 	];
 
