@@ -28,7 +28,8 @@ const defaults = {
 	block: {
 		chatSeen: false,
 		typingIndicator: false,
-		deliveryReceipt: false
+		deliveryReceipt: false,
+		hideNotificationContent: false
 	},
 	emojiStyle: 'facebook-3-0' as EmojiStyle,
 	confirmImagePaste: true,
