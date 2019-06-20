@@ -313,7 +313,7 @@ function createMainWindow(): BrowserWindow {
 		dockMenu = Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
 
-		/* Dock Icon is hidden initially on macOS */
+		// Dock icon is hidden initially on macOS
 		if (!config.get('hideDockIcon')) {
 			app.dock.show();
 		}
