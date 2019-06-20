@@ -20,6 +20,7 @@ import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
 import electronContextMenu = require('electron-context-menu');
+import electronLocalshortcut = require('electron-localshortcut');
 import electronDebug = require('electron-debug');
 import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
@@ -289,6 +290,11 @@ function createMainWindow(): BrowserWindow {
 
 	await updateAppMenu();
 	mainWindow = createMainWindow();
+
+	electronLocalshortcut.register(mainWindow, 'CommandOrControl+=', () => {
+		sendAction('zoom-in');
+	});
+
 	tray.create(mainWindow);
 
 	if (is.macos) {
