@@ -291,6 +291,7 @@ function createMainWindow(): BrowserWindow {
 	await updateAppMenu();
 	mainWindow = createMainWindow();
 
+	// Workaround for https://github.com/electron/electron/issues/5256
 	electronLocalshortcut.register(mainWindow, 'CommandOrControl+=', () => {
 		sendAction('zoom-in');
 	});
