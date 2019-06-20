@@ -297,7 +297,7 @@ function createMainWindow(): BrowserWindow {
 	await updateAppMenu();
 	mainWindow = createMainWindow();
 
-	// Start in Menu Bar mode if enabled, otherwise start normally
+	// Start in menu bar mode if enabled, otherwise start normally
 	setUpMenuBarMode(mainWindow);
 
 	if (is.macos) {

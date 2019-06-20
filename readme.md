@@ -19,7 +19,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - [Vibrant theme](#vibrancy)\*
 - [Privacy-focused](#privacy)
 - [Keyboard shortcuts](#keyboard-shortcuts)
-- [Menu Bar mode](#menu-bar-mode)\*
+- [Menu bar mode](#menu-bar-mode)\*
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support)
@@ -145,11 +145,12 @@ Advanced users can modify the colors/styles of Caprine. Click the menu item `Cap
 
 ### Menu Bar Mode *(macOS only)* <img src="media/screenshot-menu-bar-mode.png" width="40">
 
-You can create a menu bar icon and have a global shortcut to toggle the window (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd>).You can also remove the app from the dock by toggling the menu item `Hide Dock Icon` from the menu bar icon.
+You can enable a menu bar icon and have a global shortcut to toggle the window (<kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd>). You can also remove the app from the dock by toggling the menu item `Hide Dock Icon` from the menu bar icon.
 This will also make the app `Menu` available as a menu item inside the menu bar icon.
 
 <div align="center">
-<img src="media/screenshot-menu-bar-menu.png" width="200"></div>
+	<img src="media/screenshot-menu-bar-menu.png" width="200">
+</div>
 
 ### Keyboard shortcuts
 
