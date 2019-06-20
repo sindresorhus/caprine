@@ -8,6 +8,7 @@ import {
 	screen as electronScreen,
 	session,
 	shell,
+	powerMonitor,
 	BrowserWindow,
 	Menu,
 	Notification,
@@ -331,6 +332,12 @@ function createMainWindow(): BrowserWindow {
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
+
+	powerMonitor.on('resume', async () => {
+		await ensureOnline();
+
+		mainWindow.reload();
+	});
 
 	webContents.on('dom-ready', async () => {
 		await updateAppMenu();
