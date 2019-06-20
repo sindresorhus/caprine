@@ -117,8 +117,10 @@ ipc.on('insert-gif', () => {
 	document.querySelector<HTMLElement>('._yht')!.click();
 });
 
-ipc.on('insert-emoji', () => {
-	document.querySelector<HTMLElement>('._5s2p')!.click();
+ipc.on('insert-emoji', async () => {
+	const emojiEl = await elementReady<HTMLElement>('._5s2p');
+
+	emojiEl.click();
 });
 
 ipc.on('insert-text', () => {
@@ -419,11 +421,22 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
+async function insertionListener(event: AnimationEvent): Promise<void> {
+	if (event.animationName === 'nodeInserted') {
+		const emojiEl = await elementReady<HTMLElement>('._5s2p');
+
+		emojiEl.dispatchEvent(new Event('mouseover', {bubbles: true}));
+	}
+}
+
 // Inject a global style node to maintain custom appearance after conversation change or startup
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.append(style);
+
+	const emojiContainer = await elementReady<HTMLElement>('._1t2u._7sli');
+	emojiContainer.addEventListener('animationstart', insertionListener, false);
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor') || 1;
