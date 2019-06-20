@@ -170,7 +170,7 @@ Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
-Toggle main window				 | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd> *(macOS only)*
+Toggle main window     | <kbd>Cmd</kbd> <kbd>Shift</kbd> <kbd>y</kbd> *(macOS only)*
 Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
 Switch to Messenger    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>1</kbd>
 Switch to Workchat     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>2</kbd>
