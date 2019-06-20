@@ -317,7 +317,7 @@ body.show-message-buttons ._4_j4 ._39bj {
 	left: 100px;
 }
 
-/* Workaround work emoji selector #831 */
+/* Workaround for emoji selector issues/831 */
 @keyframes nodeInserted {
 	from {
 		opacity: 0.99;
