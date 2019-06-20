@@ -91,7 +91,7 @@ export default {
 		tray.on('click', trayClickHandler);
 		tray.on('double-click', trayClickHandler);
 		tray.on('right-click', () => {
-			if (is.macos && tray) {
+			if (tray) {
 				tray.popUpContextMenu(contextMenu);
 			}
 		});
