@@ -39,7 +39,9 @@ electronDebug({
 });
 
 electronDl();
-electronContextMenu();
+electronContextMenu({
+	showCopyImageAddress: true
+});
 
 const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
