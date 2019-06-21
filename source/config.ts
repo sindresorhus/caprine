@@ -38,7 +38,8 @@ const defaults = {
 	notificationsMuted: false,
 	hardwareAcceleration: true,
 	quitOnWindowClose: false,
-	keepMeSignedIn: true
+	keepMeSignedIn: true,
+	autoplayVideos: true
 };
 
 function updateVibrancySetting(store: Store): void {

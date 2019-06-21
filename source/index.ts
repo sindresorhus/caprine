@@ -361,6 +361,7 @@ function createMainWindow(): BrowserWindow {
 		webContents.insertCSS(
 			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
 		);
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'autoplay.css'), 'utf8'));
 
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(

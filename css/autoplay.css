@@ -1,0 +1,9 @@
+.disabledAutoPlayImgTopRadius {
+	border-top-left-radius: 1.3em;
+	border-top-right-radius: 1.3em;
+}
+
+.disabledAutoPlayImgBottomRadius {
+	border-bottom-left-radius: 1.3em;
+	border-bottom-right-radius: 1.3em;
+}

@@ -4,10 +4,10 @@ import {api, is} from 'electron-util';
 
 import selectors from './browser/selectors';
 import config from './config';
+import {toggleVideoAutoplay} from './autoplay';
 
 import './browser/conversation-list'; // eslint-disable-line import/no-unassigned-import
 
-const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
@@ -210,6 +210,10 @@ ipc.on('toggle-unread-threads-view', () => {
 	selectOtherListViews(6);
 });
 
+ipc.on('toggle-video-autoplay', () => {
+	toggleVideoAutoplay();
+});
+
 function setDarkMode(): void {
 	if (is.macos && config.get('followSystemAppearance')) {
 		document.documentElement.classList.toggle('dark-mode', api.systemPreferences.isDarkMode());
@@ -364,7 +368,7 @@ function selectedConversationIndex(offset = 0): number {
 
 function setZoom(zoomFactor: number): void {
 	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
-	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
+	node.textContent = `${selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
@@ -454,6 +458,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
+
+	// Disable autoplay if set in settings
+	toggleVideoAutoplay();
 });
 
 window.addEventListener('load', () => {
