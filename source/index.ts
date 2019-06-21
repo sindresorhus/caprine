@@ -31,6 +31,7 @@ import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
+import {setUpMenuBarMode} from './menu-bar-mode';
 
 ipcMain.setMaxListeners(100);
 
@@ -81,13 +82,17 @@ app.on('second-instance', () => {
 	}
 });
 
+function getMessageCount(conversations: Conversation[]): number {
+	return conversations.filter(({unread}) => unread).length;
+}
+
 function updateBadge(conversations: Conversation[]): void {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
 	}
 
-	const messageCount = conversations.filter(({unread}) => unread).length;
+	const messageCount = getMessageCount(conversations);
 
 	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge')) {
@@ -109,6 +114,8 @@ function updateBadge(conversations: Conversation[]): void {
 			mainWindow.flashFrame(messageCount !== 0);
 		}
 	}
+
+	tray.update(messageCount);
 
 	if (is.windows) {
 		if (config.get('showUnreadBadge')) {
@@ -297,6 +304,8 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	tray.create(mainWindow);
+	// Start in menu bar mode if enabled, otherwise start normally
+	setUpMenuBarMode(mainWindow);
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {
@@ -310,6 +319,11 @@ function createMainWindow(): BrowserWindow {
 
 		dockMenu = Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
+
+		// Dock icon is hidden initially on macOS
+		if (!config.get('hideDockIcon')) {
+			app.dock.show();
+		}
 
 		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 			if (conversations.length === 0) {

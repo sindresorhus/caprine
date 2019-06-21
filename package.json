@@ -69,7 +69,8 @@
 			"valid-jsdoc": "off",
 			"import/first": "off",
 			"import/newline-after-import": "off",
-			"@typescript-eslint/no-object-literal-type-assertion": "off"
+			"@typescript-eslint/no-object-literal-type-assertion": "off",
+			"@typescript-eslint/indent": "off"
 		},
 		"prettier": true
 	},
@@ -104,7 +105,10 @@
 		"mac": {
 			"category": "public.app-category.social-networking",
 			"electronUpdaterCompatibility": ">=2.15.0",
-			"darkModeSupport": true
+			"darkModeSupport": true,
+			"extendInfo": {
+				"LSUIElement": 1
+			}
 		},
 		"dmg": {
 			"iconSize": 160,
