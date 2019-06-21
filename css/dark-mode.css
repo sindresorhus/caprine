@@ -845,3 +845,8 @@ html.dark-mode ._30yy._6ymd._2agf,
 html.dark-mode ._30yy._6-xp._6-xq {
 	filter: invert(1);
 }
+
+/* Message text bar */
+html.dark-mode ._5irm._7mkm {
+	background: var(--container-color);
+}
