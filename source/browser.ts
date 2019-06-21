@@ -4,10 +4,10 @@ import {api, is} from 'electron-util';
 
 import selectors from './browser/selectors';
 import config from './config';
+import {toggleVideoAutoplay} from './autoplay';
 
 import './browser/conversation-list'; // eslint-disable-line import/no-unassigned-import
 
-const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
@@ -43,7 +43,7 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	const settingsMenu = await elementReady<HTMLElement>('._30yy._6ymd._2agf');
+	const settingsMenu = await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p');
 
 	if (settingsMenu) {
 		await withMenu(settingsMenu, callback);
@@ -121,8 +121,10 @@ ipc.on('insert-gif', () => {
 	document.querySelector<HTMLElement>('._yht')!.click();
 });
 
-ipc.on('insert-emoji', () => {
-	document.querySelector<HTMLElement>('._5s2p')!.click();
+ipc.on('insert-emoji', async () => {
+	const emojiElement = await elementReady<HTMLElement>('._5s2p');
+
+	emojiElement.click();
 });
 
 ipc.on('insert-text', () => {
@@ -211,6 +213,10 @@ ipc.on('show-archived-threads-view', () => {
 
 ipc.on('toggle-unread-threads-view', () => {
 	selectOtherListViews(6);
+});
+
+ipc.on('toggle-video-autoplay', () => {
+	toggleVideoAutoplay();
 });
 
 function setDarkMode(): void {
@@ -377,7 +383,7 @@ function selectedConversationIndex(offset = 0): number {
 
 function setZoom(zoomFactor: number): void {
 	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
-	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
+	node.textContent = `${selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
@@ -434,6 +440,15 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
+async function insertionListener(event: AnimationEvent): Promise<void> {
+	if (event.animationName === 'nodeInserted' && event.target) {
+		event.target.dispatchEvent(new Event('mouseover', {bubbles: true}));
+	}
+}
+
+// Listen for emoji element dom insertion
+document.addEventListener('animationstart', insertionListener, false);
+
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
 	const style = document.createElement('style');
@@ -458,6 +473,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
+
+	// Disable autoplay if set in settings
+	toggleVideoAutoplay();
 });
 
 window.addEventListener('load', () => {

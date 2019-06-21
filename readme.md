@@ -19,6 +19,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - [Vibrant theme](#vibrancy)\*
 - [Privacy-focused](#privacy)
 - [Keyboard shortcuts](#keyboard-shortcuts)
+- [Menu bar mode](##menu-bar-mode-macos-only-)\*
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support)
@@ -63,7 +64,7 @@ Also available as a [snap](https://snapcraft.io/caprine).
 
 ### Dark mode
 
-You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> / <kbd>Ctrl</kbd> <kbd>D</kbd>.
+You can toggle dark mode in the `View` menu or with <kbd>Command</kbd> <kbd>d</kbd> / <kbd>Control</kbd> <kbd>d</kbd>.
 
 <img src="media/screenshot-dark.png" width="846">
 
@@ -89,7 +90,7 @@ Links that you click on will not be tracked by Facebook.
 
 ### Jump to conversation hotkey
 
-You can switch conversations similar to how you switch browser tabs: <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
+You can switch conversations similar to how you switch browser tabs: <kbd>Command/Control</kbd> <kbd>n</kbd> (where `n` is `1` through `9`).
 
 ### Compact mode
 
@@ -105,7 +106,7 @@ Desktop notifications can be turned on in `Preferences`.
 
 ### Always on Top
 
-You can toggle whether Caprine stays on top of other windows in the `Window`/`View` menu or with <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
+You can toggle whether Caprine stays on top of other windows in the `Window`/`View` menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
 
 ### Image paste confirmation
 
@@ -142,29 +143,39 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
 
+
+### Menu Bar Mode *(macOS only)* <img src="media/screenshot-menu-bar-mode.png" width="20">
+
+<img src="media/screenshot-menu-bar-menu.png" width="140" align="right">
+
+You can enable `Show Menu Bar Icon` in the `Caprine Preferences` menu to have a Caprine icon in the menu bar. The icon will indicate when you have unread notifications and you can click it to toggle the Caprine window. You can also toggle the Caprine window with the global shortcut <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>y</kbd>.
+
+You can also remove Caprine from the Dock and task switcher by clicking `Hide Dock Icon` menu item from the menu bar icon. There will then no longer be any menus for the window, but you can access those from the `Menu` item in the menu bar icon menu.
+
 ### Keyboard shortcuts
 
 Description            | Keys
 -----------------------| -----------------------
-New conversation       | <kbd>Cmd/Ctrl</kbd> <kbd>n</kbd>
-Search conversations   | <kbd>Cmd/Ctrl</kbd> <kbd>k</kbd>
-Toggle "Dark mode"     | <kbd>Cmd/Ctrl</kbd> <kbd>d</kbd>
-Next conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>]</kbd> or <kbd>Ctrl</kbd> <kbd>Tab</kbd>
-Previous conversation  | <kbd>Cmd/Ctrl</kbd> <kbd>[</kbd> or <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
-Jump to conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>1</kbd>…<kbd>9</kbd>
-Insert GIF             | <kbd>Cmd/Ctrl</kbd> <kbd>g</kbd>
-Insert emoji           | <kbd>Cmd/Ctrl</kbd> <kbd>e</kbd>
-Insert text            | <kbd>Cmd/Ctrl</kbd> <kbd>i</kbd>
-Search in conversation | <kbd>Cmd/Ctrl</kbd> <kbd>f</kbd>
-Mute conversation      | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
-Archive conversation   | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
-Delete conversation    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
-Toggle "Always on Top" | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
+New conversation       | <kbd>Command/Control</kbd> <kbd>n</kbd>
+Search conversations   | <kbd>Command/Control</kbd> <kbd>k</kbd>
+Toggle "Dark mode"     | <kbd>Command/Control</kbd> <kbd>d</kbd>
+Next conversation      | <kbd>Command/Control</kbd> <kbd>]</kbd> or <kbd>Control</kbd> <kbd>Tab</kbd>
+Previous conversation  | <kbd>Command/Control</kbd> <kbd>[</kbd> or <kbd>Control</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
+Jump to conversation   | <kbd>Command/Control</kbd> <kbd>1</kbd>…<kbd>9</kbd>
+Insert GIF             | <kbd>Command/Control</kbd> <kbd>g</kbd>
+Insert emoji           | <kbd>Command/Control</kbd> <kbd>e</kbd>
+Insert text            | <kbd>Command/Control</kbd> <kbd>i</kbd>
+Search in conversation | <kbd>Command/Control</kbd> <kbd>f</kbd>
+Mute conversation      | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>m</kbd>
+Archive conversation   | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
+Delete conversation    | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
+Toggle "Always on Top" | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
 Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
-Toggle sidebar         | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
-Switch to Messenger    | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>1</kbd>
-Switch to Workchat     | <kbd>Cmd/Ctrl</kbd> <kbd>Shift</kbd> <kbd>2</kbd>
-Preferences            | <kbd>Cmd/Ctrl</kbd> <kbd>,</kbd>
+Toggle main window     | <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>y</kbd> *(macOS only)*
+Toggle sidebar         | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
+Switch to Messenger    | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>1</kbd>
+Switch to Workchat     | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>2</kbd>
+Preferences            | <kbd>Command/Control</kbd> <kbd>,</kbd>
 
 ###### Tip
 

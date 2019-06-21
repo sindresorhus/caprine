@@ -1,4 +1,4 @@
-import Store from 'electron-store';
+import Store = require('electron-store');
 import {is} from 'electron-util';
 import {EmojiStyle} from './emoji';
 
@@ -17,6 +17,8 @@ const defaults = {
 		x: undefined as number | undefined,
 		y: undefined as number | undefined
 	},
+	menuBarMode: false,
+	hideDockIcon: false,
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
 	showUnreadBadge: true,
@@ -36,7 +38,8 @@ const defaults = {
 	notificationsMuted: false,
 	hardwareAcceleration: true,
 	quitOnWindowClose: false,
-	keepMeSignedIn: true
+	keepMeSignedIn: true,
+	autoplayVideos: true
 };
 
 function updateVibrancySetting(store: Store): void {

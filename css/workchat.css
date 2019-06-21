@@ -49,6 +49,16 @@ html.dark-mode ._5rw0 {
 	background-color: transparent !important;
 }
 
+/* Login: Logo */
+html.dark-mode .sx_2c5ee7 {
+	filter: brightness(4);
+}
+
+/* Login: Slogan */
+html.dark-mode ._5zi0 {
+	filter: brightness(3);
+}
+
 /* Login: Fix background color in vibrancy mode */
 html.vibrancy ._5rw0 {
 	background-color: transparent !important;

@@ -19,10 +19,10 @@ import {
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
-import electronContextMenu from 'electron-context-menu';
-import isDev from 'electron-is-dev';
-import electronDebug from 'electron-debug';
-import {darkMode, is} from 'electron-util';
+import electronContextMenu = require('electron-context-menu');
+import electronLocalshortcut = require('electron-localshortcut');
+import electronDebug = require('electron-debug');
+import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import updateAppMenu from './menu';
 import config from './config';
@@ -31,6 +31,7 @@ import {sendAction, sendBackgroundAction} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
+import {setUpMenuBarMode} from './menu-bar-mode';
 
 ipcMain.setMaxListeners(100);
 
@@ -46,16 +47,11 @@ const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
-// Disables broken color space correction in Chromium.
-// You can see differing background color on the login screen.
-// https://github.com/electron/electron/issues/9671
-app.commandLine.appendSwitch('disable-color-correct-rendering');
-
 if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
-if (!isDev) {
+if (!is.development) {
 	log.transports.file.level = 'info';
 	autoUpdater.logger = log;
 
@@ -86,13 +82,17 @@ app.on('second-instance', () => {
 	}
 });
 
+function getMessageCount(conversations: Conversation[]): number {
+	return conversations.filter(({unread}) => unread).length;
+}
+
 function updateBadge(conversations: Conversation[]): void {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
 	}
 
-	const messageCount = conversations.filter(({unread}) => unread).length;
+	const messageCount = getMessageCount(conversations);
 
 	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge')) {
@@ -114,6 +114,8 @@ function updateBadge(conversations: Conversation[]): void {
 			mainWindow.flashFrame(messageCount !== 0);
 		}
 	}
+
+	tray.update(messageCount);
 
 	if (is.windows) {
 		if (config.get('showUnreadBadge')) {
@@ -295,7 +297,14 @@ function createMainWindow(): BrowserWindow {
 
 	await updateAppMenu();
 	mainWindow = createMainWindow();
-	tray.create(mainWindow);
+
+	// Workaround for https://github.com/electron/electron/issues/5256
+	electronLocalshortcut.register(mainWindow, 'CommandOrControl+=', () => {
+		sendAction('zoom-in');
+	});
+
+	// Start in menu bar mode if enabled, otherwise start normally
+	setUpMenuBarMode(mainWindow);
 
 	if (is.macos) {
 		const firstItem: MenuItemConstructorOptions = {
@@ -309,6 +318,11 @@ function createMainWindow(): BrowserWindow {
 
 		dockMenu = Menu.buildFromTemplate([firstItem]);
 		app.dock.setMenu(dockMenu);
+
+		// Dock icon is hidden initially on macOS
+		if (!config.get('hideDockIcon')) {
+			app.dock.show();
+		}
 
 		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 			if (conversations.length === 0) {
@@ -347,6 +361,7 @@ function createMainWindow(): BrowserWindow {
 		webContents.insertCSS(
 			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
 		);
+		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'autoplay.css'), 'utf8'));
 
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(

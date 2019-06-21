@@ -236,28 +236,15 @@ a,
 	border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Contact list: unread */
-._1ht1 a,
-._1ht3 a {
-	padding-left: 14px !important;
-}
-._1ht3::before {
-	content: ' ';
-	display: block;
-	position: absolute;
-	left: 3px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 8px;
-	height: 8px;
-	background-color: var(--blue);
-	border-radius: 8px;
+/* Contact list: person (selected) */
+._1ht1._1ht2 ._6zkc {
+	background-color: transparent !important;
 }
 
-/* Contact list: person (selected) */
 ._1ht1._1ht2 {
 	background: var(--selected-conversation-background) !important;
 }
+
 ._1ht1._1ht2 * {
 	color: rgba(255, 255, 255, 0.8);
 }
@@ -328,4 +315,20 @@ body.show-message-buttons ._4_j4 ._39bj {
 ._30yy._6-xf._6-xg {
 	position: relative;
 	left: 100px;
+}
+
+/* Workaround for emoji selector issue #831 */
+@keyframes nodeInserted {
+	from {
+		opacity: 0.99;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+._5s2p {
+	/* stylelint-disable-next-line */
+	animation-duration: 0.001s;
+	animation-name: nodeInserted;
 }
