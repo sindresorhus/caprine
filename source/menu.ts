@@ -463,7 +463,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}),
 		openUrlMenuItem({
 			label: 'Donate…',
-			url: 'https://sindresorhus.com/donate'
+			url: 'https://github.com/sindresorhus/caprine?sponsor=1'
 		}),
 		{
 			label: 'Report an Issue…',
