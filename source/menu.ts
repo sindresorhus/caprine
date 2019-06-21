@@ -109,14 +109,6 @@ export default async function updateMenu(): Promise<Menu> {
 			click(menuItem) {
 				config.set('block.deliveryReceipt', menuItem.checked);
 			}
-		},
-		{
-			label: 'Show Message Preview in Notifications',
-			type: 'checkbox',
-			checked: config.get('notificationMessagePreview'),
-			click(menuItem) {
-				config.set('notificationMessagePreview', menuItem.checked);
-			}
 		}
 	];
 
@@ -190,6 +182,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('autoplayVideos', !config.get('autoplayVideos'));
 				sendAction('toggle-video-autoplay');
+			}
+		},
+		{
+			label: 'Show Message Preview in Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationMessagePreview'),
+			click(menuItem) {
+				config.set('notificationMessagePreview', menuItem.checked);
 			}
 		},
 		{
