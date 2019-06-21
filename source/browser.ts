@@ -422,21 +422,19 @@ function closePreferences(): void {
 }
 
 async function insertionListener(event: AnimationEvent): Promise<void> {
-	if (event.animationName === 'nodeInserted') {
-		const emojiElement = await elementReady<HTMLElement>('._5s2p');
-
-		emojiElement.dispatchEvent(new Event('mouseover', {bubbles: true}));
+	if (event.animationName === 'nodeInserted' && event.target) {
+		event.target.dispatchEvent(new Event('mouseover', {bubbles: true}));
 	}
 }
 
+// Listen for emoji element dom insertion
+document.addEventListener('animationstart', insertionListener, false);
+
 // Inject a global style node to maintain custom appearance after conversation change or startup
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.append(style);
-
-	const emojiContainer = await elementReady<HTMLElement>('._1t2u._7sli');
-	emojiContainer.addEventListener('animationstart', insertionListener, false);
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor') || 1;
