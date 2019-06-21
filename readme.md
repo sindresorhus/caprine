@@ -24,6 +24,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support)
 - [Custom styles](#custom-styles)
+- Disable autoplay for videos
 - Cross-platform
 - Silent auto-updates
 - Custom text size
