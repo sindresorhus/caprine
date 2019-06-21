@@ -316,3 +316,19 @@ body.show-message-buttons ._4_j4 ._39bj {
 	position: relative;
 	left: 100px;
 }
+
+/* Workaround for emoji selector issue #831 */
+@keyframes nodeInserted {
+	from {
+		opacity: 0.99;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+._5s2p {
+	/* stylelint-disable-next-line */
+	animation-duration: 0.001s;
+	animation-name: nodeInserted;
+}

@@ -117,8 +117,10 @@ ipc.on('insert-gif', () => {
 	document.querySelector<HTMLElement>('._yht')!.click();
 });
 
-ipc.on('insert-emoji', () => {
-	document.querySelector<HTMLElement>('._5s2p')!.click();
+ipc.on('insert-emoji', async () => {
+	const emojiElement = await elementReady<HTMLElement>('._5s2p');
+
+	emojiElement.click();
 });
 
 ipc.on('insert-text', () => {
@@ -418,6 +420,15 @@ function closePreferences(): void {
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
 	doneButton.click();
 }
+
+async function insertionListener(event: AnimationEvent): Promise<void> {
+	if (event.animationName === 'nodeInserted' && event.target) {
+		event.target.dispatchEvent(new Event('mouseover', {bubbles: true}));
+	}
+}
+
+// Listen for emoji element dom insertion
+document.addEventListener('animationstart', insertionListener, false);
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
