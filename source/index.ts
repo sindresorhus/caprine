@@ -499,7 +499,6 @@ ipcMain.on(
 		notifications.set(id, notification);
 
 		notification.on('click', () => {
-			mainWindow.show();
 			sendAction('notification-callback', {callbackName: 'onclick', id});
 
 			notifications.delete(id);
@@ -513,8 +512,7 @@ ipcMain.on(
 		});
 
 		notification.on('close', () => {
-			sendAction('notification-callback', {callbackName: 'onclose', id});
-
+			sendBackgroundAction('notification-callback', {callbackName: 'onclose', id});
 			notifications.delete(id);
 		});
 
