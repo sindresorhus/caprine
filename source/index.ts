@@ -498,7 +498,6 @@ ipcMain.on(
 		notifications.set(id, notification);
 
 		notification.on('click', () => {
-			mainWindow.show();
 			sendAction('notification-callback', {callbackName: 'onclick', id});
 
 			notifications.delete(id);
