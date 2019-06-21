@@ -204,7 +204,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Show Menu Bar Icon',
 			id: 'menuBarMode',
 			type: 'checkbox',
-			enabled: is.macos,
+			visible: is.macos,
 			checked: config.get('menuBarMode'),
 			click() {
 				config.set('menuBarMode', !config.get('menuBarMode'));
