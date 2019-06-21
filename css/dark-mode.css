@@ -267,6 +267,9 @@ html.dark-mode ._1ht6 {
 }
 
 /* Contact list: person (selected) window inactive */
+html.dark-mode.is-window-inactive ._1ht1._1ht2 {
+	background: var(--base-twenty) !important;
+}
 html.dark-mode.is-window-inactive ._1ht1._1ht2 * {
 	color: var(--base-seventy);
 }
