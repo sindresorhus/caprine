@@ -118,9 +118,9 @@ ipc.on('insert-gif', () => {
 });
 
 ipc.on('insert-emoji', async () => {
-	const emojiEl = await elementReady<HTMLElement>('._5s2p');
+	const emojiElement = await elementReady<HTMLElement>('._5s2p');
 
-	emojiEl.click();
+	emojiElement.click();
 });
 
 ipc.on('insert-text', () => {
@@ -423,9 +423,9 @@ function closePreferences(): void {
 
 async function insertionListener(event: AnimationEvent): Promise<void> {
 	if (event.animationName === 'nodeInserted') {
-		const emojiEl = await elementReady<HTMLElement>('._5s2p');
+		const emojiElement = await elementReady<HTMLElement>('._5s2p');
 
-		emojiEl.dispatchEvent(new Event('mouseover', {bubbles: true}));
+		emojiElement.dispatchEvent(new Event('mouseover', {bubbles: true}));
 	}
 }
 
