@@ -303,7 +303,6 @@ function createMainWindow(): BrowserWindow {
 		sendAction('zoom-in');
 	});
 
-	tray.create(mainWindow);
 	// Start in menu bar mode if enabled, otherwise start normally
 	setUpMenuBarMode(mainWindow);
 
