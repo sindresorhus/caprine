@@ -18,8 +18,8 @@ const defaults = {
 		y: undefined as number | undefined
 	},
 	menuBarMode: false,
-	hideDockIcon: false,
-	hideTrayIcon: false,
+	showDockIcon: true,
+	showTrayIcon: true,
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
 	showUnreadBadge: true,

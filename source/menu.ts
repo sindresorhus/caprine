@@ -256,12 +256,12 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Hide Tray Icon',
+			label: 'Show Tray Icon',
 			type: 'checkbox',
 			enabled: is.linux || is.windows,
-			checked: config.get('hideTrayIcon'),
+			checked: config.get('showTrayIcon'),
 			click() {
-				config.set('hideTrayIcon', !config.get('hideTrayIcon'));
+				config.set('showTrayIcon', !config.get('showTrayIcon'));
 				sendAction('toggle-tray-icon');
 			}
 		},

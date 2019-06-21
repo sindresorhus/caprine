@@ -135,7 +135,7 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 });
 
 function updateTrayIcon(): void {
-	if (config.get('hideTrayIcon') || config.get('quitOnWindowClose')) {
+	if (!config.get('showTrayIcon') || config.get('quitOnWindowClose')) {
 		tray.destroy();
 	} else {
 		tray.create(mainWindow);
@@ -330,7 +330,7 @@ function createMainWindow(): BrowserWindow {
 		app.dock.setMenu(dockMenu);
 
 		// Dock icon is hidden initially on macOS
-		if (!config.get('hideDockIcon')) {
+		if (config.get('showDockIcon')) {
 			app.dock.show();
 		}
 
