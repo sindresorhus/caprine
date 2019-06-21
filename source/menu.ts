@@ -109,6 +109,14 @@ export default async function updateMenu(): Promise<Menu> {
 			click(menuItem) {
 				config.set('block.deliveryReceipt', menuItem.checked);
 			}
+		},
+		{
+			label: 'Show Message Preview in Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationMessagePreview'),
+			click(menuItem) {
+				config.set('notificationMessagePreview', menuItem.checked);
+			}
 		}
 	];
 

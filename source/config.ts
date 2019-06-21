@@ -25,6 +25,7 @@ const defaults = {
 	showMessageButtons: true,
 	launchMinimized: false,
 	flashWindowOnMessage: true,
+	notificationMessagePreview: true,
 	block: {
 		chatSeen: false,
 		typingIndicator: false,
