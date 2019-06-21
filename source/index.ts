@@ -20,6 +20,7 @@ import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
 import electronContextMenu = require('electron-context-menu');
+import electronLocalshortcut = require('electron-localshortcut');
 import electronDebug = require('electron-debug');
 import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
@@ -296,6 +297,11 @@ function createMainWindow(): BrowserWindow {
 
 	await updateAppMenu();
 	mainWindow = createMainWindow();
+
+	// Workaround for https://github.com/electron/electron/issues/5256
+	electronLocalshortcut.register(mainWindow, 'CommandOrControl+=', () => {
+		sendAction('zoom-in');
+	});
 
 	// Start in menu bar mode if enabled, otherwise start normally
 	setUpMenuBarMode(mainWindow);
