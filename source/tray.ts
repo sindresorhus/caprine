@@ -1,32 +1,75 @@
 import * as path from 'path';
-import {app, Menu, Tray, BrowserWindow} from 'electron';
+import {app, Menu, Tray, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 import {is} from 'electron-util';
+import config from './config';
+import {toggleMenuBarMode} from './menu-bar-mode';
 
 let tray: Tray | null = null;
+let previousMessageCount = 0;
+
+let contextMenu: Menu;
 
 export default {
 	create: (win: BrowserWindow) => {
-		if (is.macos || tray) {
+		if (tray) {
 			return;
 		}
 
-		const iconPath = path.join(__dirname, '..', 'static', 'IconTray.png');
-
-		const toggleWin = (): void => {
+		function toggleWin(): void {
 			if (win.isVisible()) {
 				win.hide();
 			} else {
 				win.show();
 			}
-		};
+		}
 
-		const contextMenu = Menu.buildFromTemplate([
+		const macosMenuItems: MenuItemConstructorOptions[] = is.macos
+			? [
+					{
+						label: 'Disable Menu Bar Mode',
+						click() {
+							config.set('menuBarMode', false);
+							toggleMenuBarMode(win);
+						}
+					},
+					{
+						label: 'Hide Dock Icon',
+						type: 'checkbox',
+						checked: config.get('hideDockIcon'),
+						click(menuItem) {
+							config.set('hideDockIcon', menuItem.checked);
+
+							if (menuItem.checked) {
+								app.dock.hide();
+							} else {
+								app.dock.show();
+							}
+
+							const dockMenuItem = contextMenu.getMenuItemById('dockMenu');
+							dockMenuItem.visible = menuItem.checked;
+						}
+					},
+					{
+						type: 'separator'
+					},
+					{
+						id: 'dockMenu',
+						label: 'Menu',
+						visible: config.get('hideDockIcon'),
+						submenu: Menu.getApplicationMenu()!
+					}
+			  ]
+			: [];
+
+		contextMenu = Menu.buildFromTemplate([
 			{
 				label: 'Toggle',
+				visible: !is.macos,
 				click() {
 					toggleWin();
 				}
 			},
+			...macosMenuItems,
 			{
 				type: 'separator'
 			},
@@ -35,10 +78,43 @@ export default {
 			}
 		]);
 
-		tray = new Tray(iconPath);
-		tray.setToolTip(`${app.getName()}`);
-		tray.setContextMenu(contextMenu);
-		tray.on('click', toggleWin);
+		tray = new Tray(getIconPath(false));
+
+		updateToolTip(0);
+
+		const trayClickHandler = (): void => {
+			if (!win.isFullScreen()) {
+				toggleWin();
+			}
+		};
+
+		tray.on('click', trayClickHandler);
+		tray.on('double-click', trayClickHandler);
+		tray.on('right-click', () => {
+			if (tray) {
+				tray.popUpContextMenu(contextMenu);
+			}
+		});
+	},
+
+	destroy: () => {
+		// Workaround for https://github.com/electron/electron/issues/14036
+		setTimeout(() => {
+			if (tray) {
+				tray.destroy();
+				tray = null;
+			}
+		}, 500);
+	},
+
+	update: (messageCount: number) => {
+		if (!tray || previousMessageCount === messageCount) {
+			return;
+		}
+
+		previousMessageCount = messageCount;
+		tray.setImage(getIconPath(messageCount > 0));
+		updateToolTip(messageCount);
 	},
 
 	setBadge: (shouldDisplayUnread: boolean) => {
@@ -51,3 +127,33 @@ export default {
 		tray.setImage(iconPath);
 	}
 };
+
+function updateToolTip(counter: number): void {
+	if (!tray) {
+		return;
+	}
+
+	let tooltip = app.getName();
+
+	if (counter > 0) {
+		tooltip += `- ${counter} unread ${counter === 1 ? 'message' : 'messages'}`;
+	}
+
+	tray.setToolTip(tooltip);
+}
+
+function getIconPath(hasUnreadMessages: boolean): string {
+	const icon = is.macos
+		? getMacOSIconName(hasUnreadMessages)
+		: getNonMacOSIconName(hasUnreadMessages);
+
+	return path.join(__dirname, '..', `static/${icon}`);
+}
+
+function getNonMacOSIconName(hasUnreadMessages: boolean): string {
+	return hasUnreadMessages ? 'IconTrayUnread.png' : 'IconTray.png';
+}
+
+function getMacOSIconName(hasUnreadMessages: boolean): string {
+	return hasUnreadMessages ? 'IconMenuBarUnreadTemplate.png' : 'IconMenuBarTemplate.png';
+}

@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow} from 'electron';
 import {
 	is,
 	appMenu,
@@ -12,6 +12,7 @@ import {
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
+import {toggleMenuBarMode} from './menu-bar-mode';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -197,6 +198,19 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
 				showRestartDialog('Caprine needs to be restarted to change hardware acceleration.');
+			}
+		},
+		{
+			label: 'Show Menu Bar Icon',
+			id: 'menuBarMode',
+			type: 'checkbox',
+			visible: is.macos,
+			checked: config.get('menuBarMode'),
+			click() {
+				config.set('menuBarMode', !config.get('menuBarMode'));
+
+				const [win] = BrowserWindow.getAllWindows();
+				toggleMenuBarMode(win);
 			}
 		},
 		{
