@@ -19,6 +19,7 @@ const defaults = {
 	},
 	menuBarMode: false,
 	hideDockIcon: false,
+	hideTrayIcon: false,
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
 	showUnreadBadge: true,

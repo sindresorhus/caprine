@@ -256,12 +256,23 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Hide Tray Icon',
+			type: 'checkbox',
+			enabled: is.linux || is.windows,
+			checked: config.get('hideTrayIcon'),
+			click() {
+				config.set('hideTrayIcon', !config.get('hideTrayIcon'));
+				sendAction('toggle-tray-icon');
+			}
+		},
+		{
 			label: 'Launch Minimized',
 			type: 'checkbox',
 			visible: !is.macos,
 			checked: config.get('launchMinimized'),
 			click() {
 				config.set('launchMinimized', !config.get('launchMinimized'));
+				sendAction('toggle-tray-icon');
 			}
 		},
 		{

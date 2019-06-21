@@ -134,6 +134,16 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 	mainWindow.setOverlayIcon(img, text);
 });
 
+function updateTrayIcon(): void {
+	if (config.get('hideTrayIcon') || config.get('quitOnWindowClose')) {
+		tray.destroy();
+	} else {
+		tray.create(mainWindow);
+	}
+}
+
+ipcMain.on('update-tray-icon', updateTrayIcon);
+
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
 	requestHeaders?: RequestHeaders;

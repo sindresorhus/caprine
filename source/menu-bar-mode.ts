@@ -35,7 +35,7 @@ export function toggleMenuBarMode(window: BrowserWindow): void {
 export function setUpMenuBarMode(window: BrowserWindow): void {
 	if (is.macos) {
 		toggleMenuBarMode(window);
-	} else {
+	} else if (!config.get('hideTrayIcon') && !config.get('quitOnWindowClose')) {
 		tray.create(window);
 	}
 }
