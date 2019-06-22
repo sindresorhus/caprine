@@ -70,6 +70,11 @@ html.sidebar-vibrancy.dark-mode ._2y8y {
 	background: var(--container-dark-color) !important;
 }
 
+/* Message text bar */
+html.sidebar-vibrancy.dark-mode ._5irm._7mkm {
+	background: var(--container-dark-color);
+}
+
 /* -- BLOCK END: sidebar-only vibrancy -- */
 
 /* -- BLOCK START: full-window vibrancy -- */
@@ -209,6 +214,11 @@ html.full-vibrancy.dark-mode .fbNubFlyoutAttachments {
 html.full-vibrancy .chatAttachmentShelf,
 html.full-vibrancy.dark-mode .chatAttachmentShelf {
 	border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Message text bar */
+html.full-vibrancy ._5irm._7mkm {
+	background: transparent;
 }
 
 /* -- BLOCK END: full-window vibrancy -- */
