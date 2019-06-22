@@ -3,17 +3,17 @@ import {is} from 'electron-util';
 import config from './config';
 import tray from './tray';
 
-const menuBarShortcut = 'Command+Shift+Y';
+const menuBarShortcut = 'Command+Shift+y';
 
 export function toggleMenuBarMode(window: BrowserWindow): void {
-	const enabled = config.get('menuBarMode');
+	const isEnabled = config.get('menuBarMode');
 	const menuItem = Menu.getApplicationMenu()!.getMenuItemById('menuBarMode');
 
-	menuItem.checked = enabled;
+	menuItem.checked = isEnabled;
 
-	window.setVisibleOnAllWorkspaces(enabled);
+	window.setVisibleOnAllWorkspaces(isEnabled);
 
-	if (enabled) {
+	if (isEnabled) {
 		globalShortcut.register(menuBarShortcut, () => {
 			if (window.isVisible()) {
 				window.hide();
