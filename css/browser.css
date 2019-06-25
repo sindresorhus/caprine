@@ -332,3 +332,8 @@ body.show-message-buttons ._4_j4 ._39bj {
 	animation-duration: 0.001s;
 	animation-name: nodeInserted;
 }
+
+/* Report bug icon on contact list */
+._4_xe {
+	display: none;
+}
