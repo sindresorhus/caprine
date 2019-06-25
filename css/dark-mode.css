@@ -850,3 +850,8 @@ html.dark-mode ._30yy._6-xp._6-xq {
 html.dark-mode ._5irm._7mkm {
 	background: var(--container-color);
 }
+
+/* Additional "plus" bar */
+html.dark-mode ._7mkk._7t1o._7t0e {
+	background: var(--container-color);
+}

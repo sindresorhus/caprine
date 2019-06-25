@@ -221,4 +221,8 @@ html.full-vibrancy ._5irm._7mkm {
 	background: transparent;
 }
 
+/* Additional "plus" bar */
+html.full-vibrancy ._7mkk._7t1o._7t0j {
+	display: none;
+}
 /* -- BLOCK END: full-window vibrancy -- */
