@@ -275,11 +275,15 @@ a._4ce_ { /* "Play a game" */
 }
 
 /* Toggle message buttons */
-body ._4_j4 ._39bj {
+body ._4_j4 ._39bj, /* TODO: Remove selector when new Messenger UI rolls out */
+body ._4_j4 ._7mkh,
+body ._4_j4 ._7mkk {
 	display: none;
 }
 
-body.show-message-buttons ._4_j4 ._39bj {
+body.show-message-buttons ._4_j4 ._39bj, /* TODO: Remove selector when new Messenger UI rolls out */
+body.show-message-buttons ._4_j4 ._7mkh,
+body.show-message-buttons ._4_j4 ._7mkk {
 	display: flex;
 }
 
