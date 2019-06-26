@@ -194,20 +194,20 @@ ipc.on('toggle-message-buttons', async () => {
 	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
-ipc.on('show-active-contacts-view', () => {
-	selectOtherListViews(3);
+ipc.on('show-active-contacts-view', async () => {
+	await selectOtherListViews(3);
 });
 
-ipc.on('show-message-requests-view', () => {
-	selectOtherListViews(4);
+ipc.on('show-message-requests-view', async () => {
+	await selectOtherListViews(4);
 });
 
-ipc.on('show-archived-threads-view', () => {
-	selectOtherListViews(5);
+ipc.on('show-archived-threads-view', async () => {
+	await selectOtherListViews(5);
 });
 
-ipc.on('toggle-unread-threads-view', () => {
-	selectOtherListViews(6);
+ipc.on('toggle-unread-threads-view', async () => {
+	await selectOtherListViews(6);
 });
 
 ipc.on('toggle-video-autoplay', () => {
@@ -517,7 +517,7 @@ window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification-reply') {
 		await sendReply(data.reply);
 		if (data.previousConversation) {
-			selectConversation(data.previousConversation);
+			await selectConversation(data.previousConversation);
 		}
 	}
 });

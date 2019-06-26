@@ -52,15 +52,17 @@ if (!config.get('hardwareAcceleration')) {
 }
 
 if (!is.development) {
-	log.transports.file.level = 'info';
-	autoUpdater.logger = log;
+	(async () => {
+		log.transports.file.level = 'info';
+		autoUpdater.logger = log;
 
-	const FOUR_HOURS = 1000 * 60 * 60 * 4;
-	setInterval(() => {
-		autoUpdater.checkForUpdates();
-	}, FOUR_HOURS);
+		const FOUR_HOURS = 1000 * 60 * 60 * 4;
+		setInterval(async () => {
+			await autoUpdater.checkForUpdates();
+		}, FOUR_HOURS);
 
-	autoUpdater.checkForUpdates();
+		await autoUpdater.checkForUpdates();
+	})();
 }
 
 let mainWindow: BrowserWindow;
@@ -392,7 +394,7 @@ function createMainWindow(): BrowserWindow {
 		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
-		webContents.executeJavaScript(
+		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
 	});
