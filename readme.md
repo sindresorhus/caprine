@@ -93,7 +93,7 @@ You can quickly disable receiving notifications from the `Caprine`/`File` menu o
 
 <div align="center"><img src="media/screenshot-hide-notification-message-after.png" width="400"></div>
 
-You can toggle the `Show Message Preview in Notification` in the `Caprine`/`File` menu.
+You can toggle the `Show Message Preview in Notification` setting in the `Caprine`/`File` menu.
 
 ### Prevents link tracking
 
