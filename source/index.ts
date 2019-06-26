@@ -134,6 +134,16 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 	mainWindow.setOverlayIcon(img, text);
 });
 
+function updateTrayIcon(): void {
+	if (!config.get('showTrayIcon') || config.get('quitOnWindowClose')) {
+		tray.destroy();
+	} else {
+		tray.create(mainWindow);
+	}
+}
+
+ipcMain.on('update-tray-icon', updateTrayIcon);
+
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
 	requestHeaders?: RequestHeaders;
@@ -320,7 +330,7 @@ function createMainWindow(): BrowserWindow {
 		app.dock.setMenu(dockMenu);
 
 		// Dock icon is hidden initially on macOS
-		if (!config.get('hideDockIcon')) {
+		if (config.get('showDockIcon')) {
 			app.dock.show();
 		}
 

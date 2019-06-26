@@ -33,20 +33,20 @@ export default {
 						}
 					},
 					{
-						label: 'Hide Dock Icon',
+						label: 'Show Dock Icon',
 						type: 'checkbox',
-						checked: config.get('hideDockIcon'),
+						checked: config.get('showDockIcon'),
 						click(menuItem) {
-							config.set('hideDockIcon', menuItem.checked);
+							config.set('showDockIcon', menuItem.checked);
 
 							if (menuItem.checked) {
-								app.dock.hide();
-							} else {
 								app.dock.show();
+							} else {
+								app.dock.hide();
 							}
 
 							const dockMenuItem = contextMenu.getMenuItemById('dockMenu');
-							dockMenuItem.visible = menuItem.checked;
+							dockMenuItem.visible = !menuItem.checked;
 						}
 					},
 					{
@@ -55,7 +55,7 @@ export default {
 					{
 						id: 'dockMenu',
 						label: 'Menu',
-						visible: config.get('hideDockIcon'),
+						visible: !config.get('showDockIcon'),
 						submenu: Menu.getApplicationMenu()!
 					}
 			  ]
