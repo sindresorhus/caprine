@@ -490,7 +490,7 @@ ipcMain.on(
 	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
-			body,
+			body: config.get('notificationMessagePreview') ? body : `You have a new message`,
 			hasReply: true,
 			icon: nativeImage.createFromDataURL(icon),
 			silent

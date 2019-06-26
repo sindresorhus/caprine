@@ -185,6 +185,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Show Message Preview in Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationMessagePreview'),
+			click(menuItem) {
+				config.set('notificationMessagePreview', menuItem.checked);
+			}
+		},
+		{
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
