@@ -59,7 +59,11 @@ body {
 
 /* Hide sidebar (optionally) */
 html.sidebar-hidden ._1enh {
-	display: none;
+	visibility: hidden;
+	min-width: 0;
+	max-width: 0;
+	width: 0;
+	height: 0;
 }
 
 /* A utility class for temporarily hiding all dropdown menus */
@@ -105,13 +109,6 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	display: block !important;
 }
 
-/* Narrower titlebar */
-._36ic,
-._5742,
-._673w {
-	height: 40px !important;
-	padding: 4px !important;
-}
 /* Vertically center chat options */
 ._fl2 {
 	padding: 0 !important;
@@ -243,28 +240,15 @@ a,
 	border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Contact list: unread */
-._1ht1 a,
-._1ht3 a {
-	padding-left: 14px !important;
-}
-._1ht3::before {
-	content: ' ';
-	display: block;
-	position: absolute;
-	left: 3px;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 8px;
-	height: 8px;
-	background-color: var(--blue);
-	border-radius: 8px;
+/* Contact list: person (selected) */
+._1ht1._1ht2 ._6zkc {
+	background-color: transparent !important;
 }
 
-/* Contact list: person (selected) */
 ._1ht1._1ht2 {
 	background: var(--selected-conversation-background) !important;
 }
+
 ._1ht1._1ht2 * {
 	color: rgba(255, 255, 255, 0.8);
 }
@@ -291,11 +275,15 @@ a._4ce_ { /* "Play a game" */
 }
 
 /* Toggle message buttons */
-body ._4_j4 ._39bj {
+body ._4_j4 ._39bj, /* TODO: Remove selector when new Messenger UI rolls out */
+body ._4_j4 ._7mkh,
+body ._4_j4 ._7mkk {
 	display: none;
 }
 
-body.show-message-buttons ._4_j4 ._39bj {
+body.show-message-buttons ._4_j4 ._39bj, /* TODO: Remove selector when new Messenger UI rolls out */
+body.show-message-buttons ._4_j4 ._7mkh,
+body.show-message-buttons ._4_j4 ._7mkk {
 	display: flex;
 }
 
@@ -319,6 +307,43 @@ body.show-message-buttons ._4_j4 ._39bj {
 ._4eby {
 	max-height: 80vh;
 	overflow-y: auto;
+}
+
+/* Hide sidebar heading */
+._6-xo {
+	display: none !important;
+}
+
+/* Hide profile picture */
+._7sta._7stb._7t0d {
+	display: none !important;
+}
+
+/* Adjust position of sidebar back button */
+._30yy._6-xf._6-xg {
+	position: relative;
+	left: 100px;
+}
+
+/* Workaround for emoji selector issue #831 */
+@keyframes nodeInserted {
+	from {
+		opacity: 0.99;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+._5s2p {
+	/* stylelint-disable-next-line */
+	animation-duration: 0.001s;
+	animation-name: nodeInserted;
+}
+
+/* Report bug icon on contact list */
+._4_xe {
+	display: none;
 }
 
 /* Private Mode */

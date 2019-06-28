@@ -1,10 +1,13 @@
 import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
 import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
-import config from './config';
 
-const listSelector = 'div[role="navigation"] > div > ul';
-const conversationSelector = '._4u-c._1wfr > ._5f0v.uiScrollableArea';
+import selectors from './browser/selectors';
+import config from './config';
+import {toggleVideoAutoplay} from './autoplay';
+
+import './browser/conversation-list'; // eslint-disable-line import/no-unassigned-import
+
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 
@@ -40,7 +43,7 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	await withMenu(await elementReady<HTMLElement>('._30yy._2fug._p'), callback);
+	await withMenu(await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p'), callback);
 }
 
 function selectMenuItem(itemNumber: number): void {
@@ -114,8 +117,10 @@ ipc.on('insert-gif', () => {
 	document.querySelector<HTMLElement>('._yht')!.click();
 });
 
-ipc.on('insert-emoji', () => {
-	document.querySelector<HTMLElement>('._5s2p')!.click();
+ipc.on('insert-emoji', async () => {
+	const emojiElement = await elementReady<HTMLElement>('._5s2p');
+
+	emojiElement.click();
 });
 
 ipc.on('insert-text', () => {
@@ -189,20 +194,24 @@ ipc.on('toggle-message-buttons', async () => {
 	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
-ipc.on('show-active-contacts-view', () => {
-	selectOtherListViews(3);
+ipc.on('show-active-contacts-view', async () => {
+	await selectOtherListViews(3);
 });
 
-ipc.on('show-message-requests-view', () => {
-	selectOtherListViews(4);
+ipc.on('show-message-requests-view', async () => {
+	await selectOtherListViews(4);
 });
 
-ipc.on('show-archived-threads-view', () => {
-	selectOtherListViews(5);
+ipc.on('show-archived-threads-view', async () => {
+	await selectOtherListViews(5);
 });
 
-ipc.on('toggle-unread-threads-view', () => {
-	selectOtherListViews(6);
+ipc.on('toggle-unread-threads-view', async () => {
+	await selectOtherListViews(6);
+});
+
+ipc.on('toggle-video-autoplay', () => {
+	toggleVideoAutoplay();
 });
 
 function setDarkMode(): void {
@@ -343,7 +352,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const conversationElement = (await elementReady(listSelector)).children[index];
+	const conversationElement = (await elementReady(selectors.conversationList)).children[index];
 
 	if (conversationElement) {
 		(conversationElement.firstChild!.firstChild as HTMLElement).click();
@@ -365,7 +374,7 @@ function selectedConversationIndex(offset = 0): number {
 
 function setZoom(zoomFactor: number): void {
 	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
-	node.textContent = `${conversationSelector} {zoom: ${zoomFactor} !important}`;
+	node.textContent = `${selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
@@ -422,109 +431,14 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
-async function sendConversationList(): Promise<void> {
-	const conversations: Conversation[] = await Promise.all(
-		([...(await elementReady(listSelector)).children] as HTMLElement[])
-			.splice(0, 10)
-			.map(async (el: HTMLElement) => {
-				const profilePic = el.querySelector<HTMLImageElement>('._55lt img');
-				const groupPic = el.querySelector<HTMLImageElement>('._4ld- div');
-
-				// This is only for group chats
-				if (groupPic) {
-					// Slice image source from background-image style property of div
-					const bgImage = groupPic.style.backgroundImage!;
-					groupPic.src = bgImage.slice(5, bgImage.length - 2);
-				}
-
-				const isConversationMuted = el.classList.contains('_569x');
-
-				return {
-					label: el.querySelector<HTMLElement>('._1ht6')!.textContent!,
-					selected: el.classList.contains('_1ht2'),
-					unread: el.classList.contains('_1ht3') && !isConversationMuted,
-					icon: await getDataUrlFromImg(
-						profilePic ? profilePic : groupPic!,
-						el.classList.contains('_1ht3')
-					)
-				};
-			})
-	);
-
-	ipc.send('conversations', conversations);
+async function insertionListener(event: AnimationEvent): Promise<void> {
+	if (event.animationName === 'nodeInserted' && event.target) {
+		event.target.dispatchEvent(new Event('mouseover', {bubbles: true}));
+	}
 }
 
-// Return canvas with rounded image
-async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement> {
-	return new Promise(resolve => {
-		const img = new Image();
-		img.crossOrigin = 'anonymous';
-		img.addEventListener('load', () => {
-			const canvas = document.createElement('canvas');
-			const padding = {
-				top: 3,
-				right: 0,
-				bottom: 3,
-				left: 0
-			};
-
-			canvas.width = size + padding.left + padding.right;
-			canvas.height = size + padding.top + padding.bottom;
-
-			const ctx = canvas.getContext('2d')!;
-			ctx.save();
-			ctx.beginPath();
-			ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
-			ctx.closePath();
-			ctx.clip();
-			ctx.drawImage(img, padding.left, padding.top, size, size);
-			ctx.restore();
-
-			resolve(canvas);
-		});
-
-		img.src = url;
-	});
-}
-
-// Return data url for user avatar
-async function getDataUrlFromImg(img: HTMLImageElement, unread: boolean): Promise<string> {
-	// eslint-disable-next-line no-async-promise-executor
-	return new Promise(async resolve => {
-		if (unread) {
-			const dataUnreadUrl = img.getAttribute('dataUnreadUrl');
-
-			if (dataUnreadUrl) {
-				return resolve(dataUnreadUrl);
-			}
-		} else {
-			const dataUrl = img.getAttribute('dataUrl');
-
-			if (dataUrl) {
-				return resolve(dataUrl);
-			}
-		}
-
-		const canvas = await urlToCanvas(img.src, 30);
-		const ctx = canvas.getContext('2d')!;
-		const dataUrl = canvas.toDataURL();
-		img.setAttribute('dataUrl', dataUrl);
-
-		if (!unread) {
-			return resolve(dataUrl);
-		}
-
-		const markerSize = 8;
-		ctx.fillStyle = '#f42020';
-		ctx.beginPath();
-		ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
-		ctx.fill();
-		const dataUnreadUrl = canvas.toDataURL();
-		img.setAttribute('dataUnreadUrl', dataUnreadUrl);
-
-		resolve(dataUnreadUrl);
-	});
-}
+// Listen for emoji element dom insertion
+document.addEventListener('animationstart', insertionListener, false);
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', () => {
@@ -553,23 +467,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!is.macos && config.get('darkMode')) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
+
+	// Disable autoplay if set in settings
+	toggleVideoAutoplay();
 });
 
 window.addEventListener('load', () => {
-	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
-
-	if (sidebar) {
-		sendConversationList();
-
-		const conversationListObserver = new MutationObserver(sendConversationList);
-		conversationListObserver.observe(sidebar, {
-			subtree: true,
-			childList: true,
-			attributes: true,
-			attributeFilter: ['class']
-		});
-	}
-
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
@@ -584,7 +487,9 @@ window.addEventListener('blur', () => {
 	document.documentElement.classList.add('is-window-inactive');
 });
 window.addEventListener('focus', () => {
-	document.documentElement.classList.remove('is-window-inactive');
+	if (document.documentElement) {
+		document.documentElement.classList.remove('is-window-inactive');
+	}
 });
 
 // It's not possible to add multiple accelerators
@@ -621,7 +526,7 @@ window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification-reply') {
 		await sendReply(data.reply);
 		if (data.previousConversation) {
-			selectConversation(data.previousConversation);
+			await selectConversation(data.previousConversation);
 		}
 	}
 });
