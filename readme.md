@@ -174,6 +174,7 @@ Description            | Keys
 New conversation       | <kbd>Command/Control</kbd> <kbd>n</kbd>
 Search conversations   | <kbd>Command/Control</kbd> <kbd>k</kbd>
 Toggle "Dark mode"     | <kbd>Command/Control</kbd> <kbd>d</kbd>
+Hide Names and Avatars | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>
 Next conversation      | <kbd>Command/Control</kbd> <kbd>]</kbd> or <kbd>Control</kbd> <kbd>Tab</kbd>
 Previous conversation  | <kbd>Command/Control</kbd> <kbd>[</kbd> or <kbd>Control</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Command/Control</kbd> <kbd>1</kbd>…<kbd>9</kbd>
