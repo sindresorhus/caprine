@@ -70,6 +70,10 @@ You can toggle dark mode in the `View` menu or with <kbd>Cmd</kbd> <kbd>D</kbd> 
 
 <img src="media/screenshot-dark.png" width="846">
 
+### Hide Names and Avatars
+
+You can toggle Hide Names and Avatars in the `View` menu or with <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>N</kbd>.
+
 ### Vibrancy
 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.

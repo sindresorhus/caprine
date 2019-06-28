@@ -316,7 +316,15 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Private Mode',
+			label: 'Vibrancy',
+			visible: is.macos,
+			submenu: vibrancySubmenu
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Hide Names and Avatars',
 			id: 'privateMode',
 			type: 'checkbox',
 			checked: config.get('privateMode'),
@@ -325,11 +333,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				config.set('privateMode', !config.get('privateMode'));
 				sendAction('set-private-mode');
 			}
-		},
-		{
-			label: 'Vibrancy',
-			visible: is.macos,
-			submenu: vibrancySubmenu
 		},
 		{
 			type: 'separator'
