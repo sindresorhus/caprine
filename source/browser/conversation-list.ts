@@ -129,7 +129,9 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 }
 
 async function createConversationList(): Promise<Conversation[]> {
-	const list: HTMLElement = (await elementReady(selectors.conversationList, {stopOnDomReady: false})) as HTMLElement;
+	const list: HTMLElement = (await elementReady(selectors.conversationList, {
+		stopOnDomReady: false
+	})) as HTMLElement;
 
 	if (!list) {
 		console.error('Could not find conversation list', selectors.conversationList);

@@ -177,7 +177,9 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
 	}
 
-	const notificationCheckbox = document.querySelector<HTMLInputElement>(selectors.notificationCheckbox)!;
+	const notificationCheckbox = document.querySelector<HTMLInputElement>(
+		selectors.notificationCheckbox
+	)!;
 
 	if (notificationCheckbox) {
 		if (defaultStatus === undefined) {
