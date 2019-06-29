@@ -177,20 +177,20 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
 	}
 
-	const notificationCheckbox = document.querySelector<HTMLInputElement>(
-		'._374b:nth-of-type(4) ._4ng2 input'
-	)!;
+	const notificationCheckbox = document.querySelector<HTMLInputElement>('._374b:nth-of-type(4) ._4ng2 input')!;
 
-	if (defaultStatus === undefined) {
-		notificationCheckbox.click();
-	} else if (
-		(defaultStatus && notificationCheckbox.checked) ||
-		(!defaultStatus && !notificationCheckbox.checked)
-	) {
-		notificationCheckbox.click();
+	if (notificationCheckbox) {
+		if (defaultStatus === undefined) {
+			notificationCheckbox.click();
+		} else if (
+			(defaultStatus && notificationCheckbox.checked) ||
+			(!defaultStatus && !notificationCheckbox.checked)
+		) {
+			notificationCheckbox.click();
+		}
+
+		ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
 	}
-
-	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
 
 	if (!preferencesAreOpen) {
 		closePreferences();
