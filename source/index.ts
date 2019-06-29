@@ -51,7 +51,7 @@ if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
-if (!is.development) {
+if (!is.development && !is.linux) {
 	(async () => {
 		log.transports.file.level = 'info';
 		autoUpdater.logger = log;
