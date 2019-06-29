@@ -177,7 +177,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
 	}
 
-	const notificationCheckbox = document.querySelector<HTMLInputElement>('._374b:nth-of-type(4) ._4ng2 input')!;
+	const notificationCheckbox = document.querySelector<HTMLInputElement>(selectors.notificationCheckbox)!;
 
 	if (notificationCheckbox) {
 		if (defaultStatus === undefined) {
@@ -353,7 +353,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const list = await elementReady(selectors.conversationList, { stopOnDomReady: false });
+	const list = await elementReady(selectors.conversationList, {stopOnDomReady: false});
 
 	if (!list) {
 		console.error('Could not find conversations list', selectors.conversationList);
@@ -432,7 +432,7 @@ async function openPreferences(): Promise<void> {
 		selectMenuItem(1);
 	});
 
-	await elementReady(preferencesSelector, { stopOnDomReady: false });
+	await elementReady(preferencesSelector, {stopOnDomReady: false});
 }
 
 function isPreferencesOpen(): boolean {
