@@ -185,6 +185,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Show Message Preview in Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationMessagePreview'),
+			click(menuItem) {
+				config.set('notificationMessagePreview', menuItem.checked);
+			}
+		},
+		{
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
@@ -266,12 +274,23 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Show Tray Icon',
+			type: 'checkbox',
+			enabled: is.linux || is.windows,
+			checked: config.get('showTrayIcon'),
+			click() {
+				config.set('showTrayIcon', !config.get('showTrayIcon'));
+				sendAction('toggle-tray-icon');
+			}
+		},
+		{
 			label: 'Launch Minimized',
 			type: 'checkbox',
 			visible: !is.macos,
 			checked: config.get('launchMinimized'),
 			click() {
 				config.set('launchMinimized', !config.get('launchMinimized'));
+				sendAction('toggle-tray-icon');
 			}
 		},
 		{

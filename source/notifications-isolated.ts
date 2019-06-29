@@ -63,7 +63,7 @@
 			}
 
 			// No-op, but Messenger expects this method to be present
-			close(): void {}
+			close(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
 		},
 		Notification
 	);

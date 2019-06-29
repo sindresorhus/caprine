@@ -59,7 +59,11 @@ body {
 
 /* Hide sidebar (optionally) */
 html.sidebar-hidden ._1enh {
-	display: none;
+	visibility: hidden;
+	min-width: 0;
+	max-width: 0;
+	width: 0;
+	height: 0;
 }
 
 /* A utility class for temporarily hiding all dropdown menus */
@@ -271,11 +275,15 @@ a._4ce_ { /* "Play a game" */
 }
 
 /* Toggle message buttons */
-body ._4_j4 ._39bj {
+body ._4_j4 ._39bj, /* TODO: Remove selector when new Messenger UI rolls out */
+body ._4_j4 ._7mkh,
+body ._4_j4 ._7mkk {
 	display: none;
 }
 
-body.show-message-buttons ._4_j4 ._39bj {
+body.show-message-buttons ._4_j4 ._39bj, /* TODO: Remove selector when new Messenger UI rolls out */
+body.show-message-buttons ._4_j4 ._7mkh,
+body.show-message-buttons ._4_j4 ._7mkk {
 	display: flex;
 }
 
@@ -331,4 +339,9 @@ body.show-message-buttons ._4_j4 ._39bj {
 	/* stylelint-disable-next-line */
 	animation-duration: 0.001s;
 	animation-name: nodeInserted;
+}
+
+/* Report bug icon on contact list */
+._4_xe {
+	display: none;
 }

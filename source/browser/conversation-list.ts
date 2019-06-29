@@ -139,7 +139,7 @@ async function createConversationList(): Promise<Conversation[]> {
 	const items: HTMLElement[] = [...list.children] as HTMLElement[];
 
 	const conversations: Conversation[] = await Promise.all(
-		items.map((el: HTMLElement): Promise<Conversation> => createConversation(el))
+		items.map(async (element: HTMLElement): Promise<Conversation> => createConversation(element))
 	);
 
 	return conversations;
@@ -149,11 +149,11 @@ async function sendConversationList(): Promise<void> {
 	ipc.send('conversations', await createConversationList());
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
 	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
 
 	if (sidebar) {
-		sendConversationList();
+		await sendConversationList();
 
 		const conversationListObserver = new MutationObserver(sendConversationList);
 

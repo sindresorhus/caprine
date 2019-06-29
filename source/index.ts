@@ -51,16 +51,18 @@ if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
-if (!is.development) {
-	log.transports.file.level = 'info';
-	autoUpdater.logger = log;
+if (!is.development && !is.linux) {
+	(async () => {
+		log.transports.file.level = 'info';
+		autoUpdater.logger = log;
 
-	const FOUR_HOURS = 1000 * 60 * 60 * 4;
-	setInterval(() => {
-		autoUpdater.checkForUpdates();
-	}, FOUR_HOURS);
+		const FOUR_HOURS = 1000 * 60 * 60 * 4;
+		setInterval(async () => {
+			await autoUpdater.checkForUpdates();
+		}, FOUR_HOURS);
 
-	autoUpdater.checkForUpdates();
+		await autoUpdater.checkForUpdates();
+	})();
 }
 
 let mainWindow: BrowserWindow;
@@ -133,6 +135,16 @@ ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: st
 	const img = nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 });
+
+function updateTrayIcon(): void {
+	if (!config.get('showTrayIcon') || config.get('quitOnWindowClose')) {
+		tray.destroy();
+	} else {
+		tray.create(mainWindow);
+	}
+}
+
+ipcMain.on('update-tray-icon', updateTrayIcon);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
@@ -320,7 +332,7 @@ function createMainWindow(): BrowserWindow {
 		app.dock.setMenu(dockMenu);
 
 		// Dock icon is hidden initially on macOS
-		if (!config.get('hideDockIcon')) {
+		if (config.get('showDockIcon')) {
 			app.dock.show();
 		}
 
@@ -382,7 +394,7 @@ function createMainWindow(): BrowserWindow {
 		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
-		webContents.executeJavaScript(
+		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
 	});
@@ -490,7 +502,7 @@ ipcMain.on(
 	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
-			body,
+			body: config.get('notificationMessagePreview') ? body : `You have a new message`,
 			hasReply: true,
 			icon: nativeImage.createFromDataURL(icon),
 			silent

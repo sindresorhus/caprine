@@ -18,13 +18,15 @@ const defaults = {
 		y: undefined as number | undefined
 	},
 	menuBarMode: false,
-	hideDockIcon: false,
+	showDockIcon: true,
+	showTrayIcon: true,
 	alwaysOnTop: false,
 	bounceDockOnMessage: false,
 	showUnreadBadge: true,
 	showMessageButtons: true,
 	launchMinimized: false,
 	flashWindowOnMessage: true,
+	notificationMessagePreview: true,
 	block: {
 		chatSeen: false,
 		typingIndicator: false,

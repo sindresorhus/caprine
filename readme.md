@@ -85,6 +85,16 @@ You can choose to prevent people from knowing when you have seen a message and w
 
 You can quickly disable receiving notifications from the `Caprine`/`File` menu or the Dock on macOS.
 
+### Hide notification message preview
+
+<div align="center"><img src="media/screenshot-hide-notification-message-location.png" width="300"></div>
+
+<div align="center"><img src="media/screenshot-hide-notification-message-before.png" width="400"></div>
+
+<div align="center"><img src="media/screenshot-hide-notification-message-after.png" width="400"></div>
+
+You can toggle the `Show Message Preview in Notification` setting in the `Caprine`/`File` menu.
+
 ### Prevents link tracking
 
 Links that you click on will not be tracked by Facebook.
