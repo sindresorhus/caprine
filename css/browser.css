@@ -99,6 +99,23 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	height: 0 !important;
 }
 
+/* Narrow view */
+@media (max-width: 900px) {
+	/* New conversation and settings icons */
+	a._6-xq,
+	div._6ymu {
+		display: flex !important;
+		margin-top: 28px !important;
+		height: 26px !important;
+		width: 26px !important;
+	}
+
+	._6-xk svg {
+		width: 20px !important;
+		height: 20px !important;
+	}
+}
+
 /* Hide title */
 ._1tqi {
 	display: none;
