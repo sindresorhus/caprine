@@ -353,7 +353,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const list = await elementReady(selectors.conversationList);
+	const list = await elementReady(selectors.conversationList, { stopOnDomReady: false });
 
 	if (!list) {
 		console.error('Could not find conversations list', selectors.conversationList);
@@ -432,7 +432,7 @@ async function openPreferences(): Promise<void> {
 		selectMenuItem(1);
 	});
 
-	await elementReady(preferencesSelector);
+	await elementReady(preferencesSelector, { stopOnDomReady: false });
 }
 
 function isPreferencesOpen(): boolean {
