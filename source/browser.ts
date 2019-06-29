@@ -414,6 +414,8 @@ async function openPreferences(): Promise<void> {
 	await withSettingsMenu(() => {
 		selectMenuItem(1);
 	});
+
+	await elementReady(preferencesSelector);
 }
 
 function isPreferencesOpen(): boolean {
