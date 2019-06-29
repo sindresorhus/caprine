@@ -1,6 +1,6 @@
 import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
-import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
+import elementReady = require('element-ready');
 
 import selectors from './browser/selectors';
 import config from './config';
@@ -124,7 +124,9 @@ ipc.on('insert-gif', () => {
 ipc.on('insert-emoji', async () => {
 	const emojiElement = await elementReady<HTMLElement>('._5s2p');
 
-	emojiElement.click();
+	if (emojiElement) {
+		emojiElement.click();
+	}
 });
 
 ipc.on('insert-text', () => {

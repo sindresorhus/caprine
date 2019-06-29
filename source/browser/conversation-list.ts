@@ -1,5 +1,5 @@
 import {ipcRenderer as ipc} from 'electron';
-import elementReady from 'element-ready';
+import elementReady = require('element-ready');
 
 import selectors from './selectors';
 
