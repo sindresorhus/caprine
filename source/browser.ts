@@ -43,18 +43,19 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	const settingsMenu = await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p');
+	const settingsMenu = (await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {stopOnDomReady: false}))!;
 
-	if (settingsMenu) {
-		await withMenu(settingsMenu, callback);
-	}
+	await withMenu(settingsMenu, callback);
 }
 
 function selectMenuItem(itemNumber: number): void {
 	const selector = document.querySelector<HTMLElement>(
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
 	)!;
-	selector.click();
+
+	if (selector) {
+		selector.click();
+	}
 }
 
 async function selectOtherListViews(itemNumber: number): Promise<void> {
@@ -122,11 +123,9 @@ ipc.on('insert-gif', () => {
 });
 
 ipc.on('insert-emoji', async () => {
-	const emojiElement = await elementReady<HTMLElement>('._5s2p');
+	const emojiElement = (await elementReady<HTMLElement>('._5s2p', {stopOnDomReady: false}))!;
 
-	if (emojiElement) {
-		emojiElement.click();
-	}
+	emojiElement.click();
 });
 
 ipc.on('insert-text', () => {
@@ -355,7 +354,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const list = await elementReady(selectors.conversationList, {stopOnDomReady: false});
+	const list = await elementReady<HTMLElement>(selectors.conversationList, {stopOnDomReady: false});
 
 	if (!list) {
 		console.error('Could not find conversations list', selectors.conversationList);
@@ -434,7 +433,7 @@ async function openPreferences(): Promise<void> {
 		selectMenuItem(1);
 	});
 
-	await elementReady(preferencesSelector, {stopOnDomReady: false});
+	await elementReady<HTMLElement>(preferencesSelector, {stopOnDomReady: false});
 }
 
 function isPreferencesOpen(): boolean {
@@ -576,7 +575,7 @@ async function sendReply(message: string): Promise<void> {
 		inputField.focus();
 		insertMessageText(message, inputField);
 
-		const sendButton = await elementReady<HTMLElement>('._30yy._38lh');
+		const sendButton = await elementReady<HTMLElement>('._30yy._38lh', {stopOnDomReady: false});
 
 		if (!sendButton) {
 			console.error('Could not find send button');
