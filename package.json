@@ -139,7 +139,8 @@
 		"snap": {
 			"plugs": [
 				"default",
-				"camera"
+				"camera",
+				"removable-media"
 			]
 		},
 		"win": {
