@@ -43,7 +43,9 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	const settingsMenu = (await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {stopOnDomReady: false}))!;
+	const settingsMenu = (await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {
+		stopOnDomReady: false
+	}))!;
 
 	await withMenu(settingsMenu, callback);
 }
