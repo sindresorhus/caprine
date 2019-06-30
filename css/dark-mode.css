@@ -886,3 +886,8 @@ html.dark-mode ._7mkk._7t1o._7t0e {
 html.dark-mode ._74ku {
 	color: var(--base-fifty);
 }
+
+/* Sent like emoji background */
+html.dark-mode ._2poz._ui9._576q > svg > rect {
+	fill: var(--container-color) !important;
+}
