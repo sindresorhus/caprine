@@ -92,11 +92,21 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 }
 
 /* Hide settings icon */
-._4kzu {
+._4kzu, /* legacy */
+._6ymu  /* current */ {
 	visibility: hidden !important;
 	display: block !important;
 	width: 0 !important;
 	height: 0 !important;
+}
+
+/* Narrow view */
+@media (max-width: 900px) {
+	/* Icons area */
+	._6-xk {
+		height: auto !important;
+		padding-top: 36px !important;
+	}
 }
 
 /* Hide title */
