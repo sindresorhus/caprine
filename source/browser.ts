@@ -10,6 +10,7 @@ import './browser/conversation-list'; // eslint-disable-line import/no-unassigne
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
+const messengerSoundsSelector = `${preferencesSelector} ._374d input`;
 
 async function withMenu(
 	menuButtonElement: HTMLElement,
@@ -154,6 +155,8 @@ function setSidebarVisibility(): void {
 	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
 	ipc.send('set-sidebar-visibility');
 }
+
+ipc.on('toggle-sounds', toggleSounds);
 
 ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus: boolean) => {
 	const preferencesAreOpen = isPreferencesOpen();
@@ -425,6 +428,20 @@ function isPreferencesOpen(): boolean {
 function closePreferences(): void {
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
 	doneButton.click();
+}
+
+async function toggleSounds(_event: ElectronEvent, checked: boolean): Promise<void> {
+	if (isPreferencesOpen()) {
+		return;
+	}
+
+	await openPreferences();
+	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+	if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
+		soundsCheckbox.click();
+	}
+
+	closePreferences();
 }
 
 async function insertionListener(event: AnimationEvent): Promise<void> {

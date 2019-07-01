@@ -24,6 +24,7 @@ import electronLocalshortcut = require('electron-localshortcut');
 import electronDebug = require('electron-debug');
 import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
+import doNotDisturb = require('@sindresorhus/do-not-disturb');
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
@@ -69,6 +70,7 @@ let mainWindow: BrowserWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu: Menu;
+let isDNDEnabled: boolean;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -101,7 +103,12 @@ function updateBadge(conversations: Conversation[]): void {
 			app.setBadgeCount(messageCount);
 		}
 
-		if (is.macos && config.get('bounceDockOnMessage') && prevMessageCount !== messageCount) {
+		if (
+			is.macos &&
+			!isDNDEnabled &&
+			config.get('bounceDockOnMessage') &&
+			prevMessageCount !== messageCount
+		) {
 			app.dock.bounce('informational');
 			prevMessageCount = messageCount;
 		}
@@ -391,7 +398,22 @@ function createMainWindow(): BrowserWindow {
 			mainWindow.show();
 		}
 
-		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
+		if (is.macos) {
+			doNotDisturb.on('change', (doNotDisturb: boolean) => {
+				isDNDEnabled = doNotDisturb;
+				webContents.send('toggle-sounds', !doNotDisturb);
+				webContents.send(
+					'toggle-mute-notifications',
+					config.get('notificationsMuted') || doNotDisturb
+				);
+			});
+		}
+
+		isDNDEnabled = await doNotDisturb.isEnabled();
+
+		webContents.send('toggle-sounds', !isDNDEnabled);
+		webContents.send('toggle-mute-notifications', config.get('notificationsMuted') || isDNDEnabled);
+
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
