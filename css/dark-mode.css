@@ -881,3 +881,8 @@ html.dark-mode ._5irm._7mkm {
 html.dark-mode ._7mkk._7t1o._7t0e {
 	background: var(--container-color);
 }
+
+/* "If you reply, ... will be able to call and see information..." message */
+html.dark-mode ._74ku {
+	color: var(--base-fifty);
+}
