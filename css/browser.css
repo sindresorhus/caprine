@@ -100,6 +100,15 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	height: 0 !important;
 }
 
+/* Narrow view */
+@media (max-width: 900px) {
+	/* Icons area */
+	._6-xk {
+		height: auto !important;
+		padding-top: 36px !important;
+	}
+}
+
 /* Hide title */
 ._1tqi {
 	display: none;
