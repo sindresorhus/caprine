@@ -384,13 +384,13 @@ html.private-mode ._1ht1 ._1qt3,
 html.private-mode ._5bli._2_a2.img,
 /* Navbar information */
 html.private-mode ._5743._6y4y {
- filter: blur(5px)
+	filter: blur(5px);
 }
 
 /* Message user picture */
 html.private-mode ._1t_q ._4ld- img,
 /* Message read indicator */
 html.private-mode ._4jzq._jf4 img {
-	filter: blur(3px)
+	filter: blur(3px);
 }
 /* Private Mode */
