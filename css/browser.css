@@ -370,21 +370,27 @@ body.show-message-buttons ._4_j4 ._7mkk {
 /* Private Mode */
 /* Contact list: person name */
 html.private-mode ._1ht6 {
-	display: none;
+	visibility: hidden;
 }
 
 /* Messages list: person name */
 html.private-mode ._17w2 ._3oh-,
 html.private-mode ._41ud ._ih3 {
-	display: none;
+	visibility: hidden;
 }
 
-/* Person icon */
+/* Contacts list picture */
 html.private-mode ._1ht1 ._1qt3,
-html.private-mode ._1t_q ._4ld- img,
-html.private-mode ._4jzq._jf4 img,
 html.private-mode ._5bli._2_a2.img,
+/* Navbar information */
 html.private-mode ._5743._6y4y {
-	visibility: hidden;
+ filter: blur(5px)
+}
+
+/* Message user picture */
+html.private-mode ._1t_q ._4ld- img,
+/* Message read indicator */
+html.private-mode ._4jzq._jf4 img {
+	filter: blur(3px)
 }
 /* Private Mode */
