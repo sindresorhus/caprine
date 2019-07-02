@@ -396,5 +396,7 @@ html.private-mode ._5bli._2_a2.img,
 /* Message read indicator */
 html.private-mode ._4jzq._jf4 img {
 	filter: blur(2px);
+	mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><circle r="27%" cx="50%" cy="50%" /></svg>');
+	-webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><circle r="27%" cx="50%" cy="50%" /></svg>');
 }
 /* -- BLOCK END: Private Mode -- */
