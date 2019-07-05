@@ -399,4 +399,12 @@ html.private-mode ._4jzq._jf4 img {
 	mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><circle r="27%" cx="50%" cy="50%" /></svg>');
 	-webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><circle r="27%" cx="50%" cy="50%" /></svg>');
 }
+
+/* Conversation list name */
+html.private-mode ._1htf {
+	visibility: hidden;
+}
+html.private-mode ._1htf > span:first-child {
+	visibility: visible;
+}
 /* -- BLOCK END: Private Mode -- */
