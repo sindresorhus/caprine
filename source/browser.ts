@@ -177,18 +177,21 @@ async function openHiddenPreferences(): Promise<boolean> {
 	return false;
 }
 
-ipc.on('toggle-sounds', async (_event: ElectronEvent, checked: boolean): Promise<void> => {
-	const shouldClosePreferences = await openHiddenPreferences();
+ipc.on(
+	'toggle-sounds',
+	async (_event: ElectronEvent, checked: boolean): Promise<void> => {
+		const shouldClosePreferences = await openHiddenPreferences();
 
-	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
-	if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
-		soundsCheckbox.click();
-	}
+		const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+		if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
+			soundsCheckbox.click();
+		}
 
-	if (shouldClosePreferences) {
-		closePreferences();
+		if (shouldClosePreferences) {
+			closePreferences();
+		}
 	}
-});
+);
 
 ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus: boolean) => {
 	const shouldClosePreferences = await openHiddenPreferences();
