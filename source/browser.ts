@@ -55,9 +55,7 @@ function selectMenuItem(itemNumber: number): void {
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
 	)!;
 
-	if (selector) {
-		selector.click();
-	}
+	selector.click();
 }
 
 async function selectOtherListViews(itemNumber: number): Promise<void> {
@@ -182,18 +180,16 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 		selectors.notificationCheckbox
 	)!;
 
-	if (notificationCheckbox) {
-		if (defaultStatus === undefined) {
-			notificationCheckbox.click();
-		} else if (
-			(defaultStatus && notificationCheckbox.checked) ||
-			(!defaultStatus && !notificationCheckbox.checked)
-		) {
-			notificationCheckbox.click();
-		}
-
-		ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+	if (defaultStatus === undefined) {
+		notificationCheckbox.click();
+	} else if (
+		(defaultStatus && notificationCheckbox.checked) ||
+		(!defaultStatus && !notificationCheckbox.checked)
+	) {
+		notificationCheckbox.click();
 	}
+
+	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
 
 	if (!preferencesAreOpen) {
 		closePreferences();
