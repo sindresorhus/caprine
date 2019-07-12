@@ -57,15 +57,6 @@ body {
 	max-width: 100% !important;
 }
 
-/* Hide sidebar (optionally) */
-html.sidebar-hidden ._1enh {
-	visibility: hidden;
-	min-width: 0;
-	max-width: 0;
-	width: 0;
-	height: 0;
-}
-
 /* A utility class for temporarily hiding all dropdown menus */
 html.hide-dropdowns .uiContextualLayerPositioner {
 	visibility: hidden !important;
@@ -91,6 +82,30 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
+/* ***************************** */
+/* SIDEBAR                       */
+/* ***************************** */
+
+/* Hide sidebar (optionally) */
+html.sidebar-hidden ._1enh {
+	visibility: hidden;
+	min-width: 0;
+	max-width: 0;
+	width: 0;
+	height: 0;
+}
+
+/* Hide sidebar title */
+._1tqi, /* legacy  */
+._6-xo  /* current */ {
+	display: none !important;
+}
+
+/* Hide profile picture */
+._7sta._7stb {
+	display: none !important;
+}
+
 /* Hide settings icon */
 ._4kzu, /* legacy */
 ._6ymu  /* current */ {
@@ -98,6 +113,17 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	display: block !important;
 	width: 0 !important;
 	height: 0 !important;
+}
+
+/* Adjust position of sidebar back button */
+._30yy._6-xf._6-xg {
+	position: relative;
+	left: 100px;
+}
+
+/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
+.os-darwin ._30yy._2oc9 {
+	margin-left: 65px !important;
 }
 
 /* Narrow view */
@@ -109,10 +135,7 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	}
 }
 
-/* Hide title */
-._1tqi {
-	display: none;
-}
+/* ***************************** */
 
 /* Moves text to the left when window width < 473px */
 ._673w ._17w2 {
@@ -160,11 +183,6 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 /* Preferences dialog: hide unnecessary options */
 ._374b:nth-child(5) {
 	display: none !important;
-}
-
-/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
-.os-darwin ._30yy._2oc9 {
-	margin-left: 65px !important;
 }
 
 @media all and (max-width: 700px) {
@@ -317,22 +335,6 @@ body.show-message-buttons ._4_j4 ._7mkk {
 ._4eby {
 	max-height: 80vh;
 	overflow-y: auto;
-}
-
-/* Hide sidebar heading */
-._6-xo {
-	display: none !important;
-}
-
-/* Hide profile picture */
-._7sta._7stb._7t0d {
-	display: none !important;
-}
-
-/* Adjust position of sidebar back button */
-._30yy._6-xf._6-xg {
-	position: relative;
-	left: 100px;
 }
 
 /* Workaround for emoji selector issue #831 */
