@@ -70,7 +70,7 @@ let mainWindow: BrowserWindow;
 let isQuitting = false;
 let prevMessageCount = 0;
 let dockMenu: Menu;
-let isDNDEnabled: boolean;
+let isDNDEnabled = false;
 
 if (!app.requestSingleInstanceLock()) {
 	app.quit();
@@ -407,9 +407,9 @@ function createMainWindow(): BrowserWindow {
 					config.get('notificationsMuted') || doNotDisturb
 				);
 			});
-		}
 
-		isDNDEnabled = await doNotDisturb.isEnabled();
+			isDNDEnabled = await doNotDisturb.isEnabled();
+		}
 
 		webContents.send('toggle-sounds', !isDNDEnabled);
 		webContents.send('toggle-mute-notifications', config.get('notificationsMuted') || isDNDEnabled);
