@@ -193,6 +193,12 @@ Preferences            | <kbd>Command/Control</kbd> <kbd>,</kbd>
 
 On macOS, you can [change these in the System Preferences](https://www.intego.com/mac-security-blog/how-to-make-custom-keyboard-shortcuts-for-any-macos-menu-items-and-to-launch-your-favorite-apps/) and you can even add your own keyboard shortcuts for menu items without a predefined keyboard shortcut.
 
+## FAQ
+
+#### Can I contribute localizations?
+
+The main app interface is already localized by Facebook. The app menus are not localized, and we're not interested in localizing those.
+
 
 ---
 
