@@ -137,6 +137,9 @@
 			"category": "Network;Chat"
 		},
 		"snap": {
+      "environment": {
+        "DISABLE_WAYLAND": 1
+      },
 			"plugs": [
 				"default",
 				"camera",
