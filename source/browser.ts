@@ -153,6 +153,10 @@ ipc.on('insert-sticker', () => {
 	stickerElement!.click();
 });
 
+ipc.on('insert-files', () => {
+	document.querySelector<HTMLElement>('._7oam input[type="file"]')!.click();
+});
+
 ipc.on('focus-text-input', () => {
 	document.querySelector<HTMLElement>('._7kpg ._5rpu')!.focus();
 });

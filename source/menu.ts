@@ -508,6 +508,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Insert Files',
+			accelerator: 'CommandOrControl+T',
+			click() {
+				sendAction('insert-files');
+			}
+		},
+		{
 			label: 'Focus Text Input',
 			accelerator: 'CommandOrControl+I',
 			click() {
