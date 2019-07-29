@@ -154,7 +154,9 @@ ipc.on('insert-sticker', () => {
 });
 
 ipc.on('insert-files', () => {
-	document.querySelector<HTMLElement>('._7oam input[type="file"]')!.click();
+	document
+		.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]')!
+		.click();
 });
 
 ipc.on('focus-text-input', () => {
