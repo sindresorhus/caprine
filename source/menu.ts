@@ -367,6 +367,20 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'separator'
 		},
 		{
+			label: 'Hide Names and Avatars',
+			id: 'privateMode',
+			type: 'checkbox',
+			checked: config.get('privateMode'),
+			accelerator: 'CommandOrControl+Shift+N',
+			click() {
+				config.set('privateMode', !config.get('privateMode'));
+				sendAction('set-private-mode');
+			}
+		},
+		{
+			type: 'separator'
+		},
+		{
 			label: 'Show Sidebar',
 			type: 'checkbox',
 			checked: !config.get('sidebarHidden'),

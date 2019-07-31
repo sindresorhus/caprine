@@ -224,6 +224,10 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
+function setPrivateMode(): void {
+	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
+}
+
 function updateVibrancy(): void {
 	const {classList} = document.documentElement;
 
@@ -267,6 +271,8 @@ ipc.on('toggle-sidebar', () => {
 });
 
 ipc.on('set-dark-mode', setDarkMode);
+
+ipc.on('set-private-mode', setPrivateMode);
 
 ipc.on('update-vibrancy', () => {
 	updateVibrancy();
@@ -454,6 +460,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
+
+	// Activate Private Mode if it was set before quitting
+	setPrivateMode();
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
