@@ -71,7 +71,7 @@ You can toggle dark mode in the `View` menu or with <kbd>Command</kbd> <kbd>d</k
 
 ### Hide Names and Avatars
 
-You can toggle Hide Names and Avatars in the `View` menu or with <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>N</kbd>.
+You can prevent others from looking at who you're chatting with by enabling the “Hide Names and Avatars” feature in the “View” menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>.
 
 ### Vibrancy
 
