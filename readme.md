@@ -69,6 +69,10 @@ You can toggle dark mode in the `View` menu or with <kbd>Command</kbd> <kbd>d</k
 
 <img src="media/screenshot-dark.png" width="846">
 
+### Hide Names and Avatars
+
+You can prevent others from looking at who you're chatting with by enabling the “Hide Names and Avatars” feature in the “View” menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>.
+
 ### Vibrancy
 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
@@ -170,6 +174,7 @@ Description            | Keys
 New conversation       | <kbd>Command/Control</kbd> <kbd>n</kbd>
 Search conversations   | <kbd>Command/Control</kbd> <kbd>k</kbd>
 Toggle "Dark mode"     | <kbd>Command/Control</kbd> <kbd>d</kbd>
+Hide Names and Avatars | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>
 Next conversation      | <kbd>Command/Control</kbd> <kbd>]</kbd> or <kbd>Control</kbd> <kbd>Tab</kbd>
 Previous conversation  | <kbd>Command/Control</kbd> <kbd>[</kbd> or <kbd>Control</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Command/Control</kbd> <kbd>1</kbd>…<kbd>9</kbd>
@@ -191,6 +196,12 @@ Preferences            | <kbd>Command/Control</kbd> <kbd>,</kbd>
 ###### Tip
 
 On macOS, you can [change these in the System Preferences](https://www.intego.com/mac-security-blog/how-to-make-custom-keyboard-shortcuts-for-any-macos-menu-items-and-to-launch-your-favorite-apps/) and you can even add your own keyboard shortcuts for menu items without a predefined keyboard shortcut.
+
+## FAQ
+
+#### Can I contribute localizations?
+
+The main app interface is already localized by Facebook. The app menus are not localized, and we're not interested in localizing those.
 
 
 ---

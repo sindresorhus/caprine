@@ -80,6 +80,8 @@ export default {
 
 		tray = new Tray(getIconPath(false));
 
+		tray.setContextMenu(contextMenu);
+
 		updateToolTip(0);
 
 		const trayClickHandler = (): void => {

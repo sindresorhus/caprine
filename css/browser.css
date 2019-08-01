@@ -57,15 +57,6 @@ body {
 	max-width: 100% !important;
 }
 
-/* Hide sidebar (optionally) */
-html.sidebar-hidden ._1enh {
-	visibility: hidden;
-	min-width: 0;
-	max-width: 0;
-	width: 0;
-	height: 0;
-}
-
 /* A utility class for temporarily hiding all dropdown menus */
 html.hide-dropdowns .uiContextualLayerPositioner {
 	visibility: hidden !important;
@@ -91,18 +82,60 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
+/* ***************************** */
+/* SIDEBAR                       */
+/* ***************************** */
+
+/* Hide sidebar (optionally) */
+html.sidebar-hidden ._1enh {
+	visibility: hidden;
+	min-width: 0;
+	max-width: 0;
+	width: 0;
+	height: 0;
+}
+
+/* Hide sidebar title */
+._1tqi, /* legacy  */
+._6-xo  /* current */ {
+	display: none !important;
+}
+
+/* Hide profile picture */
+._7sta._7stb {
+	display: none !important;
+}
+
 /* Hide settings icon */
-._4kzu {
+._4kzu, /* legacy */
+._6ymu  /* current */ {
 	visibility: hidden !important;
 	display: block !important;
 	width: 0 !important;
 	height: 0 !important;
 }
 
-/* Hide title */
-._1tqi {
-	display: none;
+/* Adjust position of sidebar back button */
+._30yy._6-xf._6-xg {
+	position: relative;
+	left: 100px;
 }
+
+/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
+.os-darwin ._30yy._2oc9 {
+	margin-left: 65px !important;
+}
+
+/* Narrow view */
+@media (max-width: 900px) {
+	/* Icons area */
+	._6-xk {
+		height: auto !important;
+		padding-top: 36px !important;
+	}
+}
+
+/* ***************************** */
 
 /* Moves text to the left when window width < 473px */
 ._673w ._17w2 {
@@ -150,11 +183,6 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 /* Preferences dialog: hide unnecessary options */
 ._374b:nth-child(5) {
 	display: none !important;
-}
-
-/* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
-.os-darwin ._30yy._2oc9 {
-	margin-left: 65px !important;
 }
 
 @media all and (max-width: 700px) {
@@ -309,22 +337,6 @@ body.show-message-buttons ._4_j4 ._7mkk {
 	overflow-y: auto;
 }
 
-/* Hide sidebar heading */
-._6-xo {
-	display: none !important;
-}
-
-/* Hide profile picture */
-._7sta._7stb._7t0d {
-	display: none !important;
-}
-
-/* Adjust position of sidebar back button */
-._30yy._6-xf._6-xg {
-	position: relative;
-	left: 100px;
-}
-
 /* Workaround for emoji selector issue #831 */
 @keyframes nodeInserted {
 	from {
@@ -345,3 +357,62 @@ body.show-message-buttons ._4_j4 ._7mkk {
 ._4_xe {
 	display: none;
 }
+
+/* Facebook logo */
+._4kny {
+	margin-left: 70px;
+}
+
+/* Sent "Thumbs-up" icon in the new Messenger UI */
+._7sli ._2poz._ui9._576q {
+	mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMCwzMCBMNy43NSwzMCBDNi42MjUsMzAgNiwyNy43NTE1MzA2IDYsMjMuMzY3MzQ2OSBDNiwxOC45ODMxNjMzIDYuNjI1LDE2LjczNDY5MzkgNy43NSwxNi43MzQ2OTM5IEwxMCwxNi43MzQ2OTM5IEMxMC41NTIsMTYuNzM0NjkzOSAxMSwxNy4xOTE4MzY3IDExLDE3Ljc1NTEwMiBMMTEsMjguOTc5NTkxOCBDMTEsMjkuNTQyODU3MSAxMC41NTIsMzAgMTAsMzAgTTE3LDYuMDIwNDA4MTYgQzE3LDUuNDQ1NDA4MTYgMTcuNDE5NSw1LjAwMjU1MTAyIDE4LDUgQzE5LjIwMzUsNSAyMiw1Ljc5MDgxNjMzIDIyLDEwLjYxMjI0NDkgQzIyLDEyLjI0NDM4NzggMjEuODAxNSwxMy4xMzAxMDIgMjEuNzE5NSwxMy43MTYzMjY1IEMyMS43MTksMTMuNzE4MzY3MyAyMS43MTksMTMuNzIwNDA4MiAyMS43MTg1LDEzLjcyMjQ0OSBDMjEuNjg2NSwxMy45NTY2MzI3IDIxLjg3MiwxNC4xNjQ3OTU5IDIyLjExMywxNC4xNjQ3OTU5IEMyNi45MDgsMTQuMTY0Nzk1OSAyOS40NjksMTUuNDMzNjczNSAyOS40NjksMTYuNzI5MDgxNiBDMjkuNDY5LDE3LjM2MTIyNDUgMjkuMjExLDE3LjkzMjE0MjkgMjguNzk3NSwxOC4zNTM1NzE0IEMyOS41MTMsMTguNzU5MTgzNyAzMCwxOS41MDkxODM3IDMwLDIwLjM3ODA2MTIgQzMwLDIxLjM2NDI4NTcgMjkuNDI1NSwyMi4yMDQ1OTE4IDI4LjU0NzUsMjIuNTUxNTMwNiBDMjguODIxLDIyLjkzMjY1MzEgMjguOTg0NSwyMy4zOTU0MDgyIDI4Ljk4NDUsMjMuODk2OTM4OCBDMjguOTg0NSwyNC45NzA0MDgyIDI4LjMzOTUsMjUuODY1MzA2MSAyNy4zMzY1LDI2LjE0Mzg3NzYgQzI3LjQyODUsMjYuMzc3NTUxIDI3LjQ4NDUsMjYuNjI5MDgxNiAyNy40ODQ1LDI2Ljg5NDM4NzggQzI3LjQ4NDUsMjguMDQ1OTE4NCAyNS41NDg1LDI4Ljk3OTU5MTggMjEsMjguOTc5NTkxOCBDMTcuNjc1LDI4Ljk3OTU5MTggMTUuMzgxNSwyOC4zODU3MTQzIDE0LjUsMjcuOTU5MTgzNyBDMTMuODUxLDI3LjY0NTQwODIgMTMsMjcuMDc3MDQwOCAxMywyNS40MDgxNjMzIEwxMywxOC43NzU1MTAyIEMxMywxNS4wNDAzMDYxIDE3LjI1LDEzLjc3NjAyMDQgMTcuMjUsMTAuMTAyMDQwOCBDMTcuMjUsNy43ODgyNjUzMSAxNyw2LjgxMzI2NTMxIDE3LDYuMDIwNDA4MTYiIGZpbGw9IiMwMDAiPjwvcGF0aD48L3N2Zz4K');
+	-webkit-mask: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMCwzMCBMNy43NSwzMCBDNi42MjUsMzAgNiwyNy43NTE1MzA2IDYsMjMuMzY3MzQ2OSBDNiwxOC45ODMxNjMzIDYuNjI1LDE2LjczNDY5MzkgNy43NSwxNi43MzQ2OTM5IEwxMCwxNi43MzQ2OTM5IEMxMC41NTIsMTYuNzM0NjkzOSAxMSwxNy4xOTE4MzY3IDExLDE3Ljc1NTEwMiBMMTEsMjguOTc5NTkxOCBDMTEsMjkuNTQyODU3MSAxMC41NTIsMzAgMTAsMzAgTTE3LDYuMDIwNDA4MTYgQzE3LDUuNDQ1NDA4MTYgMTcuNDE5NSw1LjAwMjU1MTAyIDE4LDUgQzE5LjIwMzUsNSAyMiw1Ljc5MDgxNjMzIDIyLDEwLjYxMjI0NDkgQzIyLDEyLjI0NDM4NzggMjEuODAxNSwxMy4xMzAxMDIgMjEuNzE5NSwxMy43MTYzMjY1IEMyMS43MTksMTMuNzE4MzY3MyAyMS43MTksMTMuNzIwNDA4MiAyMS43MTg1LDEzLjcyMjQ0OSBDMjEuNjg2NSwxMy45NTY2MzI3IDIxLjg3MiwxNC4xNjQ3OTU5IDIyLjExMywxNC4xNjQ3OTU5IEMyNi45MDgsMTQuMTY0Nzk1OSAyOS40NjksMTUuNDMzNjczNSAyOS40NjksMTYuNzI5MDgxNiBDMjkuNDY5LDE3LjM2MTIyNDUgMjkuMjExLDE3LjkzMjE0MjkgMjguNzk3NSwxOC4zNTM1NzE0IEMyOS41MTMsMTguNzU5MTgzNyAzMCwxOS41MDkxODM3IDMwLDIwLjM3ODA2MTIgQzMwLDIxLjM2NDI4NTcgMjkuNDI1NSwyMi4yMDQ1OTE4IDI4LjU0NzUsMjIuNTUxNTMwNiBDMjguODIxLDIyLjkzMjY1MzEgMjguOTg0NSwyMy4zOTU0MDgyIDI4Ljk4NDUsMjMuODk2OTM4OCBDMjguOTg0NSwyNC45NzA0MDgyIDI4LjMzOTUsMjUuODY1MzA2MSAyNy4zMzY1LDI2LjE0Mzg3NzYgQzI3LjQyODUsMjYuMzc3NTUxIDI3LjQ4NDUsMjYuNjI5MDgxNiAyNy40ODQ1LDI2Ljg5NDM4NzggQzI3LjQ4NDUsMjguMDQ1OTE4NCAyNS41NDg1LDI4Ljk3OTU5MTggMjEsMjguOTc5NTkxOCBDMTcuNjc1LDI4Ljk3OTU5MTggMTUuMzgxNSwyOC4zODU3MTQzIDE0LjUsMjcuOTU5MTgzNyBDMTMuODUxLDI3LjY0NTQwODIgMTMsMjcuMDc3MDQwOCAxMywyNS40MDgxNjMzIEwxMywxOC43NzU1MTAyIEMxMywxNS4wNDAzMDYxIDE3LjI1LDEzLjc3NjAyMDQgMTcuMjUsMTAuMTAyMDQwOCBDMTcuMjUsNy43ODgyNjUzMSAxNyw2LjgxMzI2NTMxIDE3LDYuMDIwNDA4MTYiIGZpbGw9IiMwMDAiPjwvcGF0aD48L3N2Zz4K');
+}
+
+/* Plus icon */
+._7mki {
+	background: transparent !important;
+}
+
+/* -- BLOCK START: Private Mode -- */
+/* Contact list: person name */
+html.private-mode ._1ht6 {
+	visibility: hidden;
+}
+
+/* Messages list: person name */
+html.private-mode ._17w2 ._3oh-,
+html.private-mode ._41ud ._ih3 {
+	visibility: hidden;
+}
+
+/* Contacts list picture */
+html.private-mode ._1ht1 ._1qt3 img,
+html.private-mode ._1ht1 ._1qt3 div[style*='background-image'],
+/* Navbar information */
+html.private-mode ._5743._6y4y {
+	filter: blur(5px);
+}
+
+/* Message user picture */
+html.private-mode ._1t_q ._4ld- img {
+	filter: blur(3px);
+}
+
+/* Contacts list read indicator */
+html.private-mode ._5bli._2_a2.img,
+/* Message read indicator */
+html.private-mode ._4jzq._jf4 img {
+	filter: blur(2px);
+	mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><circle r="27%" cx="50%" cy="50%" /></svg>');
+	-webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><circle r="27%" cx="50%" cy="50%" /></svg>');
+}
+
+/* Conversation list name */
+html.private-mode ._1htf {
+	visibility: hidden;
+}
+html.private-mode ._1htf > span:first-child {
+	visibility: visible;
+}
+/* -- BLOCK END: Private Mode -- */

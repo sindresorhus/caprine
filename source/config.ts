@@ -5,6 +5,7 @@ import {EmojiStyle} from './emoji';
 const defaults = {
 	followSystemAppearance: true,
 	darkMode: false,
+	privateMode: false,
 
 	// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
 	// See https://github.com/electron/electron/issues/10420
