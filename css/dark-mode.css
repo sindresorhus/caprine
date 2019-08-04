@@ -235,6 +235,12 @@ html.dark-mode ._1wc4 {
 	border-top-color: var(--base-ten);
 }
 
+/* Message composer: placeholder text */
+html.dark-mode ._4rv3 ._1p1v {
+	color: var(--base-thirty);
+	-webkit-text-fill-color: var(--base-thirty);
+}
+
 /* Contact list: header above */
 html.dark-mode ._36ic {
 	background: var(--list-header-color) !important;

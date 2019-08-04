@@ -1,5 +1,5 @@
 import {ipcRenderer as ipc} from 'electron';
-import elementReady from 'element-ready';
+import elementReady = require('element-ready');
 
 import selectors from './selectors';
 
@@ -129,7 +129,15 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 }
 
 async function createConversationList(): Promise<Conversation[]> {
-	const list: HTMLElement = await elementReady(selectors.conversationList);
+	const list: HTMLElement = (await elementReady<HTMLElement>(selectors.conversationList, {
+		stopOnDomReady: false
+	}))!;
+
+	if (!list) {
+		console.error('Could not find conversation list', selectors.conversationList);
+		return [];
+	}
+
 	const items: HTMLElement[] = [...list.children] as HTMLElement[];
 
 	const conversations: Conversation[] = await Promise.all(

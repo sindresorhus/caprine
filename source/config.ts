@@ -11,6 +11,10 @@ const schema: {[key: string]: JSONSchema} = {
 		type: 'boolean',
 		default: false
 	},
+  privateMode: {
+    type: 'boolean',
+    default: false
+  },
 	vibrancy: {
 		type: 'string',
 		enum: ['none', 'sidebar', 'full'],

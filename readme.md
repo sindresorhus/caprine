@@ -69,6 +69,10 @@ You can toggle dark mode in the `View` menu or with <kbd>Command</kbd> <kbd>d</k
 
 <img src="media/screenshot-dark.png" width="846">
 
+### Hide Names and Avatars
+
+You can prevent others from looking at who you're chatting with by enabling the “Hide Names and Avatars” feature in the “View” menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>.
+
 ### Vibrancy
 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
@@ -170,6 +174,7 @@ Description            | Keys
 New conversation       | <kbd>Command/Control</kbd> <kbd>n</kbd>
 Search conversations   | <kbd>Command/Control</kbd> <kbd>k</kbd>
 Toggle "Dark mode"     | <kbd>Command/Control</kbd> <kbd>d</kbd>
+Hide Names and Avatars | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>
 Next conversation      | <kbd>Command/Control</kbd> <kbd>]</kbd> or <kbd>Control</kbd> <kbd>Tab</kbd>
 Previous conversation  | <kbd>Command/Control</kbd> <kbd>[</kbd> or <kbd>Control</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Command/Control</kbd> <kbd>1</kbd>…<kbd>9</kbd>
