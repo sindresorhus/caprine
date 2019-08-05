@@ -419,7 +419,7 @@ html.private-mode ._1htf > span:first-child {
 
 /* -- BLOCK START: Small conversations window -- */
 
-@media all and (max-width: 500px) {
+@media (max-width: 500px) {
 	._20bp {
 		flex-direction: column !important;
 	}
