@@ -1,6 +1,6 @@
 import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
-import elementReady from 'element-ready';
 import {api, is} from 'electron-util';
+import elementReady = require('element-ready');
 
 import selectors from './browser/selectors';
 import config from './config';
@@ -44,7 +44,11 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	await withMenu(await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p'), callback);
+	const settingsMenu = (await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {
+		stopOnDomReady: false
+	}))!;
+
+	await withMenu(settingsMenu, callback);
 }
 
 function selectMenuItem(itemNumber: number): void {
@@ -122,7 +126,7 @@ ipc.on('insert-gif', () => {
 });
 
 ipc.on('insert-emoji', async () => {
-	const emojiElement = await elementReady<HTMLElement>('._5s2p');
+	const emojiElement = (await elementReady<HTMLElement>('._5s2p', {stopOnDomReady: false}))!;
 
 	emojiElement.click();
 });
@@ -156,6 +160,7 @@ ipc.on('archive-conversation', async () => {
 
 function setSidebarVisibility(): void {
 	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
+
 	ipc.send('set-sidebar-visibility');
 }
 
@@ -197,7 +202,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 	const shouldClosePreferences = await openHiddenPreferences();
 
 	const notificationCheckbox = document.querySelector<HTMLInputElement>(
-		'._374b:nth-of-type(4) ._4ng2 input'
+		selectors.notificationCheckbox
 	)!;
 
 	if (defaultStatus === undefined) {
@@ -250,6 +255,10 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
+function setPrivateMode(): void {
+	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
+}
+
 function updateVibrancy(): void {
 	const {classList} = document.documentElement;
 
@@ -293,6 +302,8 @@ ipc.on('toggle-sidebar', () => {
 });
 
 ipc.on('set-dark-mode', setDarkMode);
+
+ipc.on('set-private-mode', setPrivateMode);
 
 ipc.on('update-vibrancy', () => {
 	updateVibrancy();
@@ -372,11 +383,21 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const conversationElement = (await elementReady(selectors.conversationList)).children[index];
+	const list = await elementReady<HTMLElement>(selectors.conversationList, {stopOnDomReady: false});
 
-	if (conversationElement) {
-		(conversationElement.firstChild!.firstChild as HTMLElement).click();
+	if (!list) {
+		console.error('Could not find conversations list', selectors.conversationList);
+		return;
 	}
+
+	const conversation = list.children[index];
+
+	if (!conversation) {
+		console.error('Could not find conversation', index);
+		return;
+	}
+
+	(conversation.firstChild!.firstChild as HTMLElement).click();
 }
 
 function selectedConversationIndex(offset = 0): number {
@@ -441,7 +462,7 @@ async function openPreferences(): Promise<void> {
 		selectMenuItem(1);
 	});
 
-	await elementReady(preferencesSelector);
+	await elementReady<HTMLElement>(preferencesSelector, {stopOnDomReady: false});
 }
 
 function isPreferencesOpen(): boolean {
@@ -480,6 +501,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
+
+	// Activate Private Mode if it was set before quitting
+	setPrivateMode();
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
@@ -578,10 +602,19 @@ async function sendReply(message: string): Promise<void> {
 	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"]');
 	if (inputField) {
 		const previousMessage = inputField.textContent;
+
 		// Send message
 		inputField.focus();
 		insertMessageText(message, inputField);
-		(await elementReady<HTMLElement>('._30yy._38lh')).click();
+
+		const sendButton = await elementReady<HTMLElement>('._30yy._38lh', {stopOnDomReady: false});
+
+		if (!sendButton) {
+			console.error('Could not find send button');
+			return;
+		}
+
+		sendButton.click();
 
 		// Restore (possible) previous message
 		if (previousMessage) {
