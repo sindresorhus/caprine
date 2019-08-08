@@ -123,7 +123,9 @@ ipc.on('insert-gif', () => {
 });
 
 ipc.on('insert-emoji', async () => {
-	const emojiElement = (await elementReady<HTMLElement>('._5s2p', {stopOnDomReady: false}))!;
+	const emojiElement = (await elementReady<HTMLElement>('._5s2p, ._30yy._7odb', {
+		stopOnDomReady: false
+	}))!;
 
 	emojiElement.click();
 });
