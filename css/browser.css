@@ -417,3 +417,18 @@ html.private-mode ._1htf > span:first-child {
 	visibility: visible;
 }
 /* -- BLOCK END: Private Mode -- */
+
+/* -- BLOCK START: Small conversations window -- */
+
+@media (max-width: 500px) {
+	._20bp {
+		flex-direction: column !important;
+	}
+
+	._4u-c._1wfr._9hq {
+		display: flex;
+		flex: 1;
+	}
+}
+
+/* -- BLOCK END: Small conversations window -- */
