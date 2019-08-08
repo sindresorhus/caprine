@@ -318,7 +318,7 @@ ipc.on('zoom-reset', () => {
 });
 
 ipc.on('zoom-in', () => {
-	const zoomFactor = config.get('zoomFactor') + 0.1;
+	const zoomFactor = (config.get('zoomFactor') as number) + 0.1;
 
 	if (zoomFactor < 1.6) {
 		setZoom(zoomFactor);
