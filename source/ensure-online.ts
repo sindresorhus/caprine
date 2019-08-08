@@ -3,20 +3,21 @@ import isOnline from 'is-online';
 import pWaitFor from 'p-wait-for';
 
 function showWaitDialog(): void {
-	dialog.showMessageBox(
+	const buttonIndex = dialog.showMessageBoxSync(
+		// @ts-ignore
+		undefined,
 		{
 			message: 'You appear to be offline. Caprine requires a working internet connection.',
 			detail: 'Do you want to wait?',
 			buttons: ['Wait', 'Quit'],
 			defaultId: 0,
 			cancelId: 1
-		},
-		response => {
-			if (response === 1) {
-				app.quit();
-			}
 		}
 	);
+
+	if (buttonIndex === 1) {
+		app.quit();
+	}
 }
 
 export default async (): Promise<void> => {
