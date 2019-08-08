@@ -30,6 +30,7 @@ body {
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
 ._5742,
+._6-xk,
 ._673w {
 	-webkit-app-region: drag;
 }
@@ -297,7 +298,7 @@ html.is-window-inactive ._1ht1._1ht2 * {
 
 /* Message composer buttons */
 a._4rv6, /* "Choose a sticker" */
-a._4ce_ { /* "Play a game" */
+a._4ce_ /* "Play a game" */ {
 	opacity: 1 !important;
 	filter: invert(0.66);
 }
