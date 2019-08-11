@@ -279,6 +279,17 @@ function updateVibrancy(): void {
 	ipc.send('set-vibrancy');
 }
 
+async function updateDoNotDisturb(): Promise<void> {
+	const shouldClosePreferences = await openHiddenPreferences();
+	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+
+	if (shouldClosePreferences) {
+		closePreferences();
+	}
+
+	ipc.send('update-dnd-mode', soundsCheckbox.checked);
+}
+
 function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	const canvas = document.createElement('canvas');
 	canvas.height = 128;
@@ -486,7 +497,7 @@ async function insertionListener(event: AnimationEvent): Promise<void> {
 document.addEventListener('animationstart', insertionListener, false);
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.append(style);
@@ -506,6 +517,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode();
+
+	// Configure do not disturb
+	if (is.macos) {
+		await updateDoNotDisturb();
+	}
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution

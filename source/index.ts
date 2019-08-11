@@ -99,7 +99,7 @@ function updateBadge(conversations: Conversation[]): void {
 	const messageCount = getMessageCount(conversations);
 
 	if (is.macos || is.linux) {
-		if (config.get('showUnreadBadge')) {
+		if (config.get('showUnreadBadge') && !isDNDEnabled) {
 			app.setBadgeCount(messageCount);
 		}
 
@@ -399,21 +399,19 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		if (is.macos) {
-			doNotDisturb.on('change', (doNotDisturb: boolean) => {
-				isDNDEnabled = doNotDisturb;
-				webContents.send('toggle-sounds', !doNotDisturb);
-				webContents.send(
-					'toggle-mute-notifications',
-					config.get('notificationsMuted') || doNotDisturb
-				);
-			});
+			ipcMain.on('update-dnd-mode', async (_event: ElectronEvent, initialSoundsValue) => {
+				doNotDisturb.on('change', (doNotDisturb: boolean) => {
+					isDNDEnabled = doNotDisturb;
+					webContents.send('toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
+				});
 
-			isDNDEnabled = await doNotDisturb.isEnabled();
+				isDNDEnabled = await doNotDisturb.isEnabled();
+
+				webContents.send('toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
+			});
 		}
 
-		webContents.send('toggle-sounds', !isDNDEnabled);
-		webContents.send('toggle-mute-notifications', config.get('notificationsMuted') || isDNDEnabled);
-
+		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
 		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
