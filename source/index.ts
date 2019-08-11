@@ -299,6 +299,10 @@ function createMainWindow(): BrowserWindow {
 		}
 	});
 
+	win.on('resize', () => {
+		config.set('lastWindowState', win.getNormalBounds());
+	});
+
 	return win;
 }
 
