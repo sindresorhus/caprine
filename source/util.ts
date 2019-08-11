@@ -21,19 +21,20 @@ export function sendBackgroundAction(action: string, ...args: unknown[]): void {
 }
 
 export function showRestartDialog(message: string): void {
-	dialog.showMessageBox(
+	const buttonIndex = dialog.showMessageBoxSync(
+		// @ts-ignore
+		undefined,
 		{
 			message,
 			detail: 'Do you want to restart the app now?',
 			buttons: ['Restart', 'Ignore'],
 			defaultId: 0,
 			cancelId: 1
-		},
-		response => {
-			if (response === 0) {
-				app.relaunch();
-				app.quit();
-			}
 		}
 	);
+
+	if (buttonIndex === 0) {
+		app.relaunch();
+		app.quit();
+	}
 }

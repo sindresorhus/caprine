@@ -30,6 +30,7 @@ body {
 /* Bind the toolbar as the window's draggable region */
 ._36ic._5l-3,
 ._5742,
+._6-xk,
 ._673w {
 	-webkit-app-region: drag;
 }
@@ -297,7 +298,7 @@ html.is-window-inactive ._1ht1._1ht2 * {
 
 /* Message composer buttons */
 a._4rv6, /* "Choose a sticker" */
-a._4ce_ { /* "Play a game" */
+a._4ce_ /* "Play a game" */ {
 	opacity: 1 !important;
 	filter: invert(0.66);
 }
@@ -347,7 +348,8 @@ body.show-message-buttons ._4_j4 ._7mkk {
 	}
 }
 
-._5s2p {
+._5s2p,
+._30yy._7odb {
 	/* stylelint-disable-next-line */
 	animation-duration: 0.001s;
 	animation-name: nodeInserted;
@@ -416,3 +418,18 @@ html.private-mode ._1htf > span:first-child {
 	visibility: visible;
 }
 /* -- BLOCK END: Private Mode -- */
+
+/* -- BLOCK START: Small conversations window -- */
+
+@media (max-width: 500px) {
+	._20bp {
+		flex-direction: column !important;
+	}
+
+	._4u-c._1wfr._9hq {
+		display: flex;
+		flex: 1;
+	}
+}
+
+/* -- BLOCK END: Small conversations window -- */

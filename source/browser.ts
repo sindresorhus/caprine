@@ -126,7 +126,9 @@ ipc.on('insert-gif', () => {
 });
 
 ipc.on('insert-emoji', async () => {
-	const emojiElement = (await elementReady<HTMLElement>('._5s2p', {stopOnDomReady: false}))!;
+	const emojiElement = (await elementReady<HTMLElement>('._5s2p, ._30yy._7odb', {
+		stopOnDomReady: false
+	}))!;
 
 	emojiElement.click();
 });
@@ -341,7 +343,7 @@ ipc.on('zoom-reset', () => {
 });
 
 ipc.on('zoom-in', () => {
-	const zoomFactor = config.get('zoomFactor') + 0.1;
+	const zoomFactor = (config.get('zoomFactor') as number) + 0.1;
 
 	if (zoomFactor < 1.6) {
 		setZoom(zoomFactor);
