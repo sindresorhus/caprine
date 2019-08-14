@@ -30,12 +30,10 @@ const schema: {[key: string]: JSONSchema} = {
 		type: 'object',
 		properties: {
 			width: {
-				type: 'number',
-				default: 800
+				type: 'number'
 			},
 			height: {
-				type: 'number',
-				default: 600
+				type: 'number'
 			},
 			x: {
 				type: 'number'
@@ -43,6 +41,12 @@ const schema: {[key: string]: JSONSchema} = {
 			y: {
 				type: 'number'
 			}
+		},
+		default: {
+			width: 800,
+			height: 600,
+			x: undefined,
+			y: undefined
 		}
 	},
 	menuBarMode: {
@@ -88,17 +92,19 @@ const schema: {[key: string]: JSONSchema} = {
 		type: 'object',
 		properties: {
 			chatSeen: {
-				type: 'boolean',
-				default: false
+				type: 'boolean'
 			},
 			typingIndicator: {
-				type: 'boolean',
-				default: false
+				type: 'boolean'
 			},
 			deliveryReceipt: {
-				type: 'boolean',
-				default: false
+				type: 'boolean'
 			}
+		},
+		default: {
+			chatSeen: false,
+			typingIndicator: false,
+			deliveryReceipt: false
 		}
 	},
 	emojiStyle: {
