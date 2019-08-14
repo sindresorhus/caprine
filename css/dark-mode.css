@@ -646,8 +646,8 @@ html.dark-mode ._55r1._5f0v._43di {
 	color: var(--base-seventy-five);
 }
 
-/* Login button */
-html.dark-mode ._5hy2 ._43dh {
+html.dark-mode ._5hy2 ._43dh, /* Login button */
+html.dark-mode ._3-mr ._3-mv /* Verification "Continue" button */ {
 	background-color: transparent !important;
 }
 
@@ -763,8 +763,9 @@ html.dark-mode ._6ckd ._6ckf {
 	color: var(--base-ninety);
 }
 
-/* Login screen */
-html.dark-mode ._3v_o {
+html.dark-mode ._3v_o, /* Login screen */
+html.dark-mode body.UIPage_LoggedOut ._li, /* 2FA screen */
+html.dark-mode body.UIPage_LoggedOut ._4-u5 /* 2FA screen */ {
 	background-color: var(--container-dark-color);
 }
 
@@ -775,6 +776,35 @@ html.dark-mode ._3v_o ._55r1 {
 }
 html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
 	color: var(--base-thirty) !important;
+}
+
+/* 2FA screen modal */
+html.dark-mode body.UIPage_LoggedOut ._4-u8 {
+	background: var(--container-color);
+	border-color: var(--base-five) !important;
+}
+
+/* 2FA screen modal title */
+html.dark-mode body.UIPage_LoggedOut ._2e9n {
+	border-color: var(--base-five);
+	color: #fff;
+}
+
+/* 2FA screen modal separator */
+html.dark-mode body.UIPage_LoggedOut ._p0k ._5hzs {
+	border-color: var(--base-five);
+}
+
+/* 2FA screen modal separators */
+html.dark-mode body.UIPage_LoggedOut a {
+	color: var(--blue);
+}
+
+/* 2FA screen modal input */
+html.dark-mode body.UIPage_LoggedOut input {
+	background: var(--base-ten);
+	border-color: var(--base-ten);
+	color: var(--base-ninety);
 }
 
 /* Forward message icon */
