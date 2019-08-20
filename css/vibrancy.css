@@ -84,13 +84,9 @@ html.full-vibrancy ._4sp8 {
 	background: transparent !important;
 }
 
-/* Login screen */
-html.full-vibrancy ._3v_o {
-	background-color: transparent !important;
-}
 
-/* Login button */
-html.full-vibrancy ._5hy2 ._43dh {
+html.full-vibrancy ._5hy2 ._43dh, /* Login button */
+html.full-vibrancy ._3-mr ._3-mv /* Verification "Continue" button */ {
 	background-color: transparent !important;
 }
 
