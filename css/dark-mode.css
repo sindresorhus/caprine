@@ -235,6 +235,12 @@ html.dark-mode ._1wc4 {
 	border-top-color: var(--base-ten);
 }
 
+/* Message composer: placeholder text */
+html.dark-mode ._4rv3 ._1p1v {
+	color: var(--base-thirty);
+	-webkit-text-fill-color: var(--base-thirty);
+}
+
 /* Contact list: header above */
 html.dark-mode ._36ic {
 	background: var(--list-header-color) !important;
@@ -266,11 +272,19 @@ html.dark-mode ._1ht6 {
 	color: var(--base-seventy);
 }
 
+/* Contact list: person (selected) window inactive */
+html.dark-mode.is-window-inactive ._1ht1._1ht2 {
+	background: var(--base-twenty) !important;
+}
+html.dark-mode.is-window-inactive ._1ht1._1ht2 * {
+	color: var(--base-seventy);
+}
+
 /* Contact list: message blurb */
 html.dark-mode ._1htf,
 /* Contact list: (for format) person: message blurb */
 html.dark-mode ._1htf ._4qba {
-	color: var(--base-fourty);
+	color: var(--base-fifty);
 }
 
 /* Contact list: timestamp */
@@ -544,6 +558,16 @@ html.dark-mode .uiInputLabelLabel {
 	color: var(--base-seventy) !important;
 }
 
+/* Settings */
+html.dark-mode ._6ct8._6y58 {
+	color: var(--base-seventy) !important;
+}
+
+/* Active status Learn More */
+html.dark-mode ._6ct7._6y57 {
+	filter: invert(1);
+}
+
 /* Send cash dialog background */
 html.dark-mode ._49no,
 html.dark-mode ._2z8r {
@@ -622,8 +646,8 @@ html.dark-mode ._55r1._5f0v._43di {
 	color: var(--base-seventy-five);
 }
 
-/* Login button */
-html.dark-mode ._5hy2 ._43dh {
+html.dark-mode ._5hy2 ._43dh, /* Login button */
+html.dark-mode ._3-mr ._3-mv /* Verification "Continue" button */ {
 	background-color: transparent !important;
 }
 
@@ -653,6 +677,11 @@ html.dark-mode ._4lh7 {
 /* Gaming popover header */
 html.dark-mode ._53ij ._3rh0 {
 	background: var(--list-header-color) !important;
+}
+
+/* Gaming message title */
+html.dark-mode ._79da._2p_c {
+	color: var(--base-seventy);
 }
 
 /* Gaming popover content */
@@ -734,8 +763,9 @@ html.dark-mode ._6ckd ._6ckf {
 	color: var(--base-ninety);
 }
 
-/* Login screen */
-html.dark-mode ._3v_o {
+html.dark-mode ._3v_o, /* Login screen */
+html.dark-mode body.UIPage_LoggedOut ._li, /* 2FA screen */
+html.dark-mode body.UIPage_LoggedOut ._4-u5 /* 2FA screen */ {
 	background-color: var(--container-dark-color);
 }
 
@@ -748,8 +778,47 @@ html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
 	color: var(--base-thirty) !important;
 }
 
+/* 2FA screen modal */
+html.dark-mode body.UIPage_LoggedOut ._4-u8 {
+	background: var(--container-color);
+	border-color: var(--base-five) !important;
+}
+
+/* 2FA screen modal title */
+html.dark-mode body.UIPage_LoggedOut ._2e9n {
+	border-color: var(--base-five);
+	color: #fff;
+}
+
+/* 2FA screen modal separator */
+html.dark-mode body.UIPage_LoggedOut ._p0k ._5hzs {
+	border-color: var(--base-five);
+}
+
+/* 2FA screen modal separators */
+html.dark-mode body.UIPage_LoggedOut a {
+	color: var(--blue);
+}
+
+/* 2FA screen modal input */
+html.dark-mode body.UIPage_LoggedOut input {
+	background: var(--base-ten);
+	border-color: var(--base-ten);
+	color: var(--base-ninety);
+}
+
 /* Forward message icon */
 html.dark-mode ._2u_d a {
+	filter: invert(1);
+}
+
+/* Reply message icon */
+html.dark-mode ._7i2n {
+	filter: invert(1);
+}
+
+/* More message icon */
+html.dark-mode ._7i2l {
 	filter: invert(1);
 }
 
@@ -830,4 +899,26 @@ html.dark-mode ._2cij ._2cil {
 /* "Edit Nickname" dialog input placeholder */
 html.dark-mode ._1p1u ._1p1v {
 	color: var(--base-thirty);
+}
+
+/* Invert the top left sidebar buttons */
+html.dark-mode ._30yy._6ymd._2agf,
+html.dark-mode ._30yy._6-xp._6-xq,
+html.dark-mode ._30yy._6-xf._6-xg {
+	filter: invert(1);
+}
+
+/* Message text bar */
+html.dark-mode ._5irm._7mkm {
+	background: var(--container-color);
+}
+
+/* Additional "plus" bar */
+html.dark-mode ._7mkk._7t1o._7t0e {
+	background: var(--container-color);
+}
+
+/* "If you reply, ... will be able to call and see information..." message */
+html.dark-mode ._74ku {
+	color: var(--base-fifty);
 }

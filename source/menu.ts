@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow} from 'electron';
 import {
 	is,
 	appMenu,
@@ -12,6 +12,7 @@ import {
 import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
+import {toggleMenuBarMode} from './menu-bar-mode';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -174,6 +175,24 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Autoplay Videos',
+			id: 'video-autoplay',
+			type: 'checkbox',
+			checked: config.get('autoplayVideos'),
+			click() {
+				config.set('autoplayVideos', !config.get('autoplayVideos'));
+				sendAction('toggle-video-autoplay');
+			}
+		},
+		{
+			label: 'Show Message Preview in Notifications',
+			type: 'checkbox',
+			checked: config.get('notificationMessagePreview'),
+			click(menuItem) {
+				config.set('notificationMessagePreview', menuItem.checked);
+			}
+		},
+		{
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
@@ -197,6 +216,19 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('hardwareAcceleration', !config.get('hardwareAcceleration'));
 				showRestartDialog('Caprine needs to be restarted to change hardware acceleration.');
+			}
+		},
+		{
+			label: 'Show Menu Bar Icon',
+			id: 'menuBarMode',
+			type: 'checkbox',
+			visible: is.macos,
+			checked: config.get('menuBarMode'),
+			click() {
+				config.set('menuBarMode', !config.get('menuBarMode'));
+
+				const [win] = BrowserWindow.getAllWindows();
+				toggleMenuBarMode(win);
 			}
 		},
 		{
@@ -242,12 +274,23 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Show Tray Icon',
+			type: 'checkbox',
+			enabled: is.linux || is.windows,
+			checked: config.get('showTrayIcon'),
+			click() {
+				config.set('showTrayIcon', !config.get('showTrayIcon'));
+				sendAction('toggle-tray-icon');
+			}
+		},
+		{
 			label: 'Launch Minimized',
 			type: 'checkbox',
 			visible: !is.macos,
 			checked: config.get('launchMinimized'),
 			click() {
 				config.set('launchMinimized', !config.get('launchMinimized'));
+				sendAction('toggle-tray-icon');
 			}
 		},
 		{
@@ -319,6 +362,20 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Vibrancy',
 			visible: is.macos,
 			submenu: vibrancySubmenu
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Hide Names and Avatars',
+			id: 'privateMode',
+			type: 'checkbox',
+			checked: config.get('privateMode'),
+			accelerator: 'CommandOrControl+Shift+N',
+			click() {
+				config.set('privateMode', !config.get('privateMode'));
+				sendAction('set-private-mode');
+			}
 		},
 		{
 			type: 'separator'
@@ -463,7 +520,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}),
 		openUrlMenuItem({
 			label: 'Donate…',
-			url: 'https://sindresorhus.com/donate'
+			url: 'https://github.com/sindresorhus/caprine?sponsor=1'
 		}),
 		{
 			label: 'Report an Issue…',
@@ -550,7 +607,8 @@ ${debugInfo()}`;
 			...switchItems
 		]),
 		{
-			label: 'File',
+			// @ts-ignore Buggy Electron types
+			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
 				{
@@ -562,10 +620,12 @@ ${debugInfo()}`;
 			]
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
-			label: 'View',
+			// @ts-ignore Buggy Electron types
+			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
 		{
@@ -573,6 +633,7 @@ ${debugInfo()}`;
 			submenu: conversationSubmenu
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'windowMenu'
 		},
 		{
@@ -583,7 +644,8 @@ ${debugInfo()}`;
 
 	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
-			label: 'File',
+			// @ts-ignore Buggy Electron types
+			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
 				{
@@ -613,10 +675,12 @@ ${debugInfo()}`;
 			]
 		},
 		{
+			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
-			label: 'View',
+			// @ts-ignore Buggy Electron types
+			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
 		{

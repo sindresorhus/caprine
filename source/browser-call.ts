@@ -1,10 +1,13 @@
 import {ipcRenderer as ipc} from 'electron';
-import elementReady from 'element-ready';
+import elementReady = require('element-ready');
 
 const videoSelector = '._chh>video';
 
 (async () => {
-	const startCallButton = await elementReady<HTMLElement>('._3quh._30yy._2t_');
+	const startCallButton = (await elementReady<HTMLElement>('._3quh._30yy._2t_', {
+		stopOnDomReady: false
+	}))!;
+
 	startCallButton.click();
 })();
 
