@@ -469,6 +469,7 @@ function createMainWindow(): BrowserWindow {
 
 if (is.macos) {
 	ipcMain.on('set-vibrancy', () => {
+		mainWindow.setBackgroundColor('#00000000'); // Transparent
 		mainWindow.setVibrancy('sidebar');
 
 		if (config.get('followSystemAppearance')) {
