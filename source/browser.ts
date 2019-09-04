@@ -119,7 +119,15 @@ ipc.on('search', () => {
 });
 
 ipc.on('insert-gif', () => {
-	document.querySelector<HTMLElement>('._yht')!.click();
+	const gifElement =
+		// Old UI
+		document.querySelector<HTMLElement>('._yht') ||
+		// New UI
+		[...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
+			element.querySelector<HTMLElement>('svg path[d^="M27.002,13.5"]')
+		);
+
+	gifElement!.click();
 });
 
 ipc.on('insert-emoji', async () => {
