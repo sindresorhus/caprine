@@ -494,6 +494,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Insert Sticker',
+			accelerator: 'CommandOrControl+S',
+			click() {
+				sendAction('insert-sticker');
+			}
+		},
+		{
 			label: 'Insert Emoji',
 			accelerator: 'CommandOrControl+E',
 			click() {
