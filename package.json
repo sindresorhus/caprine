@@ -145,7 +145,8 @@
 		},
 		"win": {
 			"verifyUpdateCodeSignature": false
-		}
+		},
+		"publish": "github"
 	},
 	"husky": {
 		"hooks": {
