@@ -305,8 +305,9 @@ ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
 		context.font = '256px system-ui';
 		context.fillText(emoji, 128, 154);
 	} else {
+		context.textBaseline = 'bottom';
 		context.font = '225px system-ui';
-		context.fillText(emoji, 128, 115);
+		context.fillText(emoji, 128, 256);
 	}
 
 	const dataUrl = canvas.toDataURL();
