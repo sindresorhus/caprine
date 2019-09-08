@@ -218,7 +218,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 	}
 });
 
-ipc.on('toggle-message-buttons', async () => {
+ipc.on('toggle-message-buttons', () => {
 	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
@@ -472,7 +472,7 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
-async function insertionListener(event: AnimationEvent): Promise<void> {
+function insertionListener(event: AnimationEvent): void {
 	if (event.animationName === 'nodeInserted' && event.target) {
 		event.target.dispatchEvent(new Event('mouseover', {bubbles: true}));
 	}
