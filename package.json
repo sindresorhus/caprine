@@ -143,12 +143,12 @@
 				"default",
 				"camera",
 				"removable-media"
-			]
+			],
+			"publish": "github"
 		},
 		"win": {
 			"verifyUpdateCodeSignature": false
-		},
-		"publish": "github"
+		}
 	},
 	"husky": {
 		"hooks": {
