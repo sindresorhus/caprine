@@ -138,6 +138,18 @@ ipc.on('insert-emoji', async () => {
 	emojiElement.click();
 });
 
+ipc.on('insert-sticker', () => {
+	const stickerElement =
+		// Old UI
+		document.querySelector<HTMLElement>('._4rv6') ||
+		// New UI
+		[...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
+			element.querySelector<HTMLElement>('svg path[d^="M22.5,18.5 L27.998,18.5"]')
+		);
+
+	stickerElement!.click();
+});
+
 ipc.on('insert-text', () => {
 	document.querySelector<HTMLElement>('._5rpu')!.focus();
 });
