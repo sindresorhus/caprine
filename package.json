@@ -12,7 +12,7 @@
 	},
 	"main": "dist-js",
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
@@ -30,7 +30,7 @@
 		"electron-dl": "^1.14.0",
 		"electron-localshortcut": "^3.1.0",
 		"electron-log": "^3.0.7",
-		"electron-store": "4.0.0",
+		"electron-store": "^5.0.0",
 		"electron-updater": "^4.0.14",
 		"electron-util": "^0.11.0",
 		"element-ready": "^4.1.0",

@@ -89,25 +89,25 @@ export default async function updateMenu(): Promise<Menu> {
 		{
 			label: 'Block Seen Indicator',
 			type: 'checkbox',
-			checked: config.get('block.chatSeen'),
+			checked: config.get('block.chatSeen' as any),
 			click(menuItem) {
-				config.set('block.chatSeen', menuItem.checked);
+				config.set('block.chatSeen' as any, menuItem.checked);
 			}
 		},
 		{
 			label: 'Block Typing Indicator',
 			type: 'checkbox',
-			checked: config.get('block.typingIndicator'),
+			checked: config.get('block.typingIndicator' as any),
 			click(menuItem) {
-				config.set('block.typingIndicator', menuItem.checked);
+				config.set('block.typingIndicator' as any, menuItem.checked);
 			}
 		},
 		{
 			label: 'Block Delivery Receipts',
 			type: 'checkbox',
-			checked: config.get('block.deliveryReceipt'),
+			checked: config.get('block.deliveryReceipt' as any),
 			click(menuItem) {
-				config.set('block.deliveryReceipt', menuItem.checked);
+				config.set('block.deliveryReceipt' as any, menuItem.checked);
 			}
 		}
 	];
