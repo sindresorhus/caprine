@@ -208,11 +208,11 @@ function initRequestsFiltering(): void {
 		if (url.includes('emoji.php')) {
 			callback(await processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
-			callback({cancel: config.get('block.typingIndicator')});
+			callback({cancel: config.get('block.typingIndicator' as any)});
 		} else if (url.includes('change_read_status.php')) {
-			callback({cancel: config.get('block.chatSeen')});
+			callback({cancel: config.get('block.chatSeen' as any)});
 		} else if (url.includes('delivery_receipts') || url.includes('unread_threads')) {
-			callback({cancel: config.get('block.deliveryReceipt')});
+			callback({cancel: config.get('block.deliveryReceipt' as any)});
 		}
 	});
 }
@@ -304,6 +304,10 @@ function createMainWindow(): BrowserWindow {
 			// This is a security in the case where messageCount is not reset by page title update
 			win.flashFrame(false);
 		}
+	});
+
+	win.on('resize', () => {
+		config.set('lastWindowState', win.getNormalBounds());
 	});
 
 	return win;
@@ -485,6 +489,7 @@ function createMainWindow(): BrowserWindow {
 
 if (is.macos) {
 	ipcMain.on('set-vibrancy', () => {
+		mainWindow.setBackgroundColor('#00000000'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
 
 		if (config.get('followSystemAppearance')) {

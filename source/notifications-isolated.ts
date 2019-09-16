@@ -41,7 +41,7 @@
 
 	const AugmentedNotification = Object.assign(
 		class {
-			private _id: number;
+			private readonly _id: number;
 
 			constructor(title: string, options: NotificationOptions) {
 				// According to https://github.com/sindresorhus/caprine/pull/637, the Notification

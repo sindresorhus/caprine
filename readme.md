@@ -180,6 +180,7 @@ Next conversation      | <kbd>Command/Control</kbd> <kbd>]</kbd> or <kbd>Control
 Previous conversation  | <kbd>Command/Control</kbd> <kbd>[</kbd> or <kbd>Control</kbd> <kbd>Shift</kbd> <kbd>Tab</kbd>
 Jump to conversation   | <kbd>Command/Control</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Command/Control</kbd> <kbd>g</kbd>
+Insert sticker         | <kbd>Command/Control</kbd> <kbd>s</kbd>
 Insert emoji           | <kbd>Command/Control</kbd> <kbd>e</kbd>
 Insert text            | <kbd>Command/Control</kbd> <kbd>i</kbd>
 Search in conversation | <kbd>Command/Control</kbd> <kbd>f</kbd>
@@ -187,7 +188,7 @@ Mute conversation      | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>m</kbd
 Archive conversation   | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Delete conversation    | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>d</kbd>
 Toggle "Always on Top" | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>t</kbd>
-Toggle window menu     | <kbd>Alt</kbd> *(Windows only)*
+Toggle window menu     | <kbd>Alt</kbd> *(Windows/Linux only)*
 Toggle main window     | <kbd>Command</kbd> <kbd>Shift</kbd> <kbd>y</kbd> *(macOS only)*
 Toggle sidebar         | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>s</kbd>
 Switch to Messenger    | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>1</kbd>

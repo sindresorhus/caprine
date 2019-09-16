@@ -1,7 +1,7 @@
 {
 	"name": "caprine",
 	"productName": "Caprine",
-	"version": "2.35.0",
+	"version": "2.38.0",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "sindresorhus/caprine",
@@ -12,7 +12,7 @@
 	},
 	"main": "dist-js",
 	"engines": {
-		"node": ">=10"
+		"node": ">=12"
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
@@ -26,16 +26,16 @@
 	},
 	"dependencies": {
 		"@sindresorhus/do-not-disturb": "^1.1.0",
-		"electron-context-menu": "^0.13.0",
+		"electron-context-menu": "^0.15.0",
 		"electron-debug": "^3.0.1",
 		"electron-dl": "^1.14.0",
 		"electron-localshortcut": "^3.1.0",
 		"electron-log": "^3.0.7",
-		"electron-store": "4.0.0",
+		"electron-store": "^5.0.0",
 		"electron-updater": "^4.0.14",
 		"electron-util": "^0.11.0",
 		"element-ready": "^4.1.0",
-		"facebook-locales": "^1.0.684",
+		"facebook-locales": "^1.0.712",
 		"is-online": "^8.2.0",
 		"json-schema-typed": "^7.0.1",
 		"lodash": "^4.17.15",
@@ -44,18 +44,18 @@
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.4.0",
 		"@types/facebook-locales": "^1.0.0",
-		"@types/lodash": "^4.14.136",
-		"@typescript-eslint/eslint-plugin": "^1.13.0",
-		"@typescript-eslint/parser": "^1.13.0",
-		"del-cli": "^2.0.0",
-		"electron": "^6.0.1",
+		"@types/lodash": "^4.14.138",
+		"@typescript-eslint/eslint-plugin": "^2.1.0",
+		"@typescript-eslint/parser": "^2.1.0",
+		"del-cli": "^3.0.0",
+		"electron": "^6.0.7",
 		"electron-builder": "^21.2.0",
-		"eslint-config-xo-typescript": "^0.15.0",
-		"husky": "^3.0.2",
+		"eslint-config-xo-typescript": "^0.17.0",
+		"husky": "^3.0.5",
 		"np": "^5.0.2",
 		"stylelint": "^10.0.1",
 		"stylelint-config-xo": "^0.15.0",
-		"typescript": "^3.5.3",
+		"typescript": "^3.6.2",
 		"xo": "^0.24.0"
 	},
 	"xo": {
@@ -72,7 +72,9 @@
 			"import/first": "off",
 			"import/newline-after-import": "off",
 			"@typescript-eslint/no-object-literal-type-assertion": "off",
-			"@typescript-eslint/indent": "off"
+			"@typescript-eslint/indent": "off",
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-misused-promises": "off"
 		},
 		"prettier": true
 	},
@@ -142,7 +144,8 @@
 				"default",
 				"camera",
 				"removable-media"
-			]
+			],
+			"publish": "github"
 		},
 		"win": {
 			"verifyUpdateCodeSignature": false

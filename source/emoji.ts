@@ -315,7 +315,8 @@ with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
                                                  (see here) ^
 */
 export async function process(url: string): Promise<Response> {
-	const emojiStyle = config.get('emojiStyle');
+	// TODO: Remove the `any` here.
+	const emojiStyle = config.get('emojiStyle') as any;
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
 	// The character code is the filename without the extension.

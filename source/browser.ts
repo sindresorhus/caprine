@@ -122,7 +122,15 @@ ipc.on('search', () => {
 });
 
 ipc.on('insert-gif', () => {
-	document.querySelector<HTMLElement>('._yht')!.click();
+	const gifElement =
+		// Old UI
+		document.querySelector<HTMLElement>('._yht') ||
+		// New UI
+		[...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
+			element.querySelector<HTMLElement>('svg path[d^="M27.002,13.5"]')
+		);
+
+	gifElement!.click();
 });
 
 ipc.on('insert-emoji', async () => {
@@ -131,6 +139,18 @@ ipc.on('insert-emoji', async () => {
 	}))!;
 
 	emojiElement.click();
+});
+
+ipc.on('insert-sticker', () => {
+	const stickerElement =
+		// Old UI
+		document.querySelector<HTMLElement>('._4rv6') ||
+		// New UI
+		[...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
+			element.querySelector<HTMLElement>('svg path[d^="M22.5,18.5 L27.998,18.5"]')
+		);
+
+	stickerElement!.click();
 });
 
 ipc.on('insert-text', () => {
@@ -223,7 +243,7 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 	}
 });
 
-ipc.on('toggle-message-buttons', async () => {
+ipc.on('toggle-message-buttons', () => {
 	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
@@ -341,8 +361,9 @@ ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
 		context.font = '256px system-ui';
 		context.fillText(emoji, 128, 154);
 	} else {
+		context.textBaseline = 'bottom';
 		context.font = '225px system-ui';
-		context.fillText(emoji, 128, 115);
+		context.fillText(emoji, 128, 256);
 	}
 
 	const dataUrl = canvas.toDataURL();
@@ -354,7 +375,7 @@ ipc.on('zoom-reset', () => {
 });
 
 ipc.on('zoom-in', () => {
-	const zoomFactor = (config.get('zoomFactor') as number) + 0.1;
+	const zoomFactor = config.get('zoomFactor') + 0.1;
 
 	if (zoomFactor < 1.6) {
 		setZoom(zoomFactor);
@@ -487,7 +508,7 @@ function closePreferences(): void {
 	doneButton.click();
 }
 
-async function insertionListener(event: AnimationEvent): Promise<void> {
+function insertionListener(event: AnimationEvent): void {
 	if (event.animationName === 'nodeInserted' && event.target) {
 		event.target.dispatchEvent(new Event('mouseover', {bubbles: true}));
 	}

@@ -128,6 +128,7 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 	return conversation as Conversation;
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 async function createConversationList(): Promise<Conversation[]> {
 	const list: HTMLElement = (await elementReady<HTMLElement>(selectors.conversationList, {
 		stopOnDomReady: false

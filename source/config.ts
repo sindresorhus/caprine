@@ -1,8 +1,46 @@
 import Store = require('electron-store');
 import {is} from 'electron-util';
-import {JSONSchema} from 'json-schema-typed';
 
-const schema: {[key: string]: JSONSchema} = {
+type StoreType = {
+	followSystemAppearance: boolean;
+	darkMode: boolean;
+	privateMode: boolean;
+	vibrancy: 'none' | 'sidebar' | 'full';
+	zoomFactor: number;
+	lastWindowState: {
+		x: number;
+		y: number;
+		width: number;
+		height: number;
+	};
+	menuBarMode: boolean;
+	showDockIcon: boolean;
+	showTrayIcon: boolean;
+	alwaysOnTop?: boolean;
+	bounceDockOnMessage: boolean;
+	showUnreadBadge: boolean;
+	showMessageButtons: boolean;
+	launchMinimized: boolean;
+	flashWindowOnMessage: boolean;
+	notificationMessagePreview: boolean;
+	block: {
+		chatSeen: boolean;
+		typingIndicator: boolean;
+		deliveryReceipt: boolean;
+	};
+	emojiStyle: 'native' | 'facebook-3-0' | 'messenger-1-0' | 'facebook-2-2';
+	confirmImagePaste: boolean;
+	useWorkChat: boolean;
+	sidebarHidden: boolean;
+	autoHideMenuBar: boolean;
+	notificationsMuted: boolean;
+	hardwareAcceleration: boolean;
+	quitOnWindowClose: boolean;
+	keepMeSignedIn: boolean;
+	autoplayVideos: boolean;
+};
+
+const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	followSystemAppearance: {
 		type: 'boolean',
 		default: true
@@ -29,20 +67,24 @@ const schema: {[key: string]: JSONSchema} = {
 	lastWindowState: {
 		type: 'object',
 		properties: {
-			width: {
-				type: 'number',
-				default: 800
-			},
-			height: {
-				type: 'number',
-				default: 600
-			},
 			x: {
 				type: 'number'
 			},
 			y: {
 				type: 'number'
+			},
+			width: {
+				type: 'number'
+			},
+			height: {
+				type: 'number'
 			}
+		},
+		default: {
+			x: undefined,
+			y: undefined,
+			width: 800,
+			height: 600
 		}
 	},
 	menuBarMode: {
@@ -88,17 +130,19 @@ const schema: {[key: string]: JSONSchema} = {
 		type: 'object',
 		properties: {
 			chatSeen: {
-				type: 'boolean',
-				default: false
+				type: 'boolean'
 			},
 			typingIndicator: {
-				type: 'boolean',
-				default: false
+				type: 'boolean'
 			},
 			deliveryReceipt: {
-				type: 'boolean',
-				default: false
+				type: 'boolean'
 			}
+		},
+		default: {
+			chatSeen: false,
+			typingIndicator: false,
+			deliveryReceipt: false
 		}
 	},
 	emojiStyle: {
@@ -144,7 +188,7 @@ const schema: {[key: string]: JSONSchema} = {
 	}
 };
 
-function updateVibrancySetting(store: Store<any>): void {
+function updateVibrancySetting(store: Store): void {
 	const vibrancy = store.get('vibrancy');
 
 	if (!is.macos) {
@@ -156,11 +200,11 @@ function updateVibrancySetting(store: Store<any>): void {
 	}
 }
 
-function migrate(store: Store<any>): void {
+function migrate(store: Store): void {
 	updateVibrancySetting(store);
 }
 
-const store: Store<any> = new Store({schema});
+const store = new Store<StoreType>({schema});
 migrate(store);
 
 export default store;
