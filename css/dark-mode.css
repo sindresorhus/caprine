@@ -812,6 +812,11 @@ html.dark-mode ._2u_d a {
 	filter: invert(1);
 }
 
+/* React message icon */
+html.dark-mode ._7i2o {
+	filter: invert(1);
+}
+
 /* Reply message icon */
 html.dark-mode ._7i2n {
 	filter: invert(1);
