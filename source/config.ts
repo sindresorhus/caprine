@@ -191,7 +191,7 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 function updateVibrancySetting(store: Store): void {
 	const vibrancy = store.get('vibrancy');
 
-	if (!is.macos) {
+	if (!is.macos || !vibrancy) {
 		store.set('vibrancy', 'none');
 	} else if (vibrancy === true) {
 		store.set('vibrancy', 'full');
