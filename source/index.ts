@@ -77,6 +77,7 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 app.on('second-instance', () => {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
@@ -175,7 +176,7 @@ function enableHiresResources(): void {
 			let cookie = (details.requestHeaders as any).Cookie;
 
 			if (cookie && details.method === 'GET') {
-				if (/(; )?dpr=\d/.test(cookie)) {
+				if (/(?:; )?dpr=\d/.test(cookie)) {
 					cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
 				} else {
 					cookie = `${cookie}; dpr=${scaleFactor}`;
@@ -505,6 +506,7 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		mainWindow.show();
 	}
@@ -515,6 +517,7 @@ app.on('before-quit', () => {
 
 	// Checking whether the window exists to work around an Electron race issue:
 	// https://github.com/sindresorhus/caprine/issues/809
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		config.set('lastWindowState', mainWindow.getNormalBounds());
 	}
@@ -527,7 +530,7 @@ ipcMain.on(
 	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
 		const notification = new Notification({
 			title,
-			body: config.get('notificationMessagePreview') ? body : `You have a new message`,
+			body: config.get('notificationMessagePreview') ? body : 'You have a new message',
 			hasReply: true,
 			icon: nativeImage.createFromDataURL(icon),
 			silent

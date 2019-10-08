@@ -54,7 +54,7 @@ async function withSettingsMenu(callback: () => Promise<void> | void): Promise<v
 function selectMenuItem(itemNumber: number): void {
 	const selector = document.querySelector<HTMLElement>(
 		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
-	)!;
+	);
 
 	if (selector) {
 		selector.click();
@@ -87,7 +87,7 @@ ipc.on('show-preferences', async () => {
 });
 
 ipc.on('new-conversation', () => {
-	document.querySelector<HTMLElement>("._30yy[data-href$='/new']")!.click();
+	document.querySelector<HTMLElement>('._30yy[data-href$="/new"]')!.click();
 });
 
 ipc.on('log-out', async () => {
@@ -371,7 +371,7 @@ ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
 });
 
 ipc.on('zoom-reset', () => {
-	setZoom(1.0);
+	setZoom(1);
 });
 
 ipc.on('zoom-in', () => {
@@ -426,6 +426,7 @@ async function selectConversation(index: number): Promise<void> {
 
 	const conversation = list.children[index];
 
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!conversation) {
 		console.error('Could not find conversation', index);
 		return;
@@ -524,7 +525,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	document.body.append(style);
 
 	// Set the zoom factor if it was set before quitting
-	const zoomFactor = config.get('zoomFactor') || 1;
+	const zoomFactor = config.get('zoomFactor');
 	setZoom(zoomFactor);
 
 	// Enable OS specific styles
@@ -547,6 +548,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
 	if (!is.macos && config.get('darkMode')) {
+		// eslint-disable-next-line require-atomic-updates
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 
@@ -569,9 +571,7 @@ window.addEventListener('blur', () => {
 	document.documentElement.classList.add('is-window-inactive');
 });
 window.addEventListener('focus', () => {
-	if (document.documentElement) {
-		document.documentElement.classList.remove('is-window-inactive');
-	}
+	document.documentElement.classList.remove('is-window-inactive');
 });
 
 // It's not possible to add multiple accelerators

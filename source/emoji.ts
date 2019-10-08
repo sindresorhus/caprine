@@ -286,6 +286,7 @@ async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined>
 	}
 
 	if (style === 'native') {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!getWindow()) {
 			return undefined;
 		}
@@ -321,7 +322,7 @@ export async function process(url: string): Promise<Response> {
 
 	// The character code is the filename without the extension.
 	const characterCodeEnd = url.lastIndexOf('.png');
-	const characterCode = url.substring(url.lastIndexOf('/') + 1, characterCodeEnd);
+	const characterCode = url.slice(url.lastIndexOf('/') + 1, characterCodeEnd);
 
 	if (emojiStyle === EmojiStyle.Native) {
 		const emoji = urlToEmoji(url);

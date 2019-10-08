@@ -49,6 +49,8 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 			style: {width, height}
 		} = firstParent;
 
+		// TODO: Fix this violation
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		const style = parentWithBackground.style || window.getComputedStyle(parentWithBackground);
 		const backgroundImageSrc = style.backgroundImage!.slice(4, -1).replace(/"/g, '');
 

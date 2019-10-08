@@ -82,12 +82,14 @@ async function discoverIcons(el: HTMLElement): Promise<void> {
 		return createIcons(el, profilePicElement.src);
 	}
 
-	const groupPicElement = el.firstElementChild as HTMLElement;
+	const groupPicElement = el.firstElementChild as (HTMLElement | null);
 
 	if (groupPicElement) {
 		const groupPicBackground = groupPicElement.style.backgroundImage;
 
 		if (groupPicBackground) {
+			// TODO: Fix this lint violation.
+			// eslint-disable-next-line prefer-named-capture-group
 			return createIcons(el, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
 		}
 	}
@@ -128,11 +130,10 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 	return conversation as Conversation;
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 async function createConversationList(): Promise<Conversation[]> {
-	const list: HTMLElement = (await elementReady<HTMLElement>(selectors.conversationList, {
+	const list = await elementReady<HTMLElement>(selectors.conversationList, {
 		stopOnDomReady: false
-	}))!;
+	});
 
 	if (!list) {
 		console.error('Could not find conversation list', selectors.conversationList);
