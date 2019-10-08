@@ -357,6 +357,18 @@ function createMainWindow(): BrowserWindow {
 			});
 			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
+		// Closing the app window when on full screen leaves a black screen
+		// Exit fullscreen before closing
+		electronLocalshortcut.register(mainWindow, 'Command+W', () => {
+			if (mainWindow.isFullScreen()) {
+				mainWindow.once('leave-full-screen', () => {
+					mainWindow.hide();
+				});
+				mainWindow.setFullScreen(false);
+			} else {
+				mainWindow.hide();
+			}
+		});
 	}
 
 	// Update badge on conversations change
@@ -492,7 +504,6 @@ app.on('activate', () => {
 
 app.on('before-quit', () => {
 	isQuitting = true;
-
 	// Checking whether the window exists to work around an Electron race issue:
 	// https://github.com/sindresorhus/caprine/issues/809
 	if (mainWindow) {
