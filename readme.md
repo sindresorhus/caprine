@@ -29,6 +29,7 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - Silent auto-updates
 - Custom text size
 - Emoji style setting
+- Respects Do Not Disturb\*
 
 \*macOS only
 
