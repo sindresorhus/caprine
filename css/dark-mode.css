@@ -833,7 +833,8 @@ html.dark-mode ._7492 {
 }
 
 /* Deleted message */
-html.dark-mode ._7301._hh7 {
+html.dark-mode ._7301._hh7,
+html.dark-mode ._7301._hh7._hh7._6ybn {
 	background-color: transparent;
 	border-color: var(--base-ten) !important;
 	color: var(--base-fourty) !important;
