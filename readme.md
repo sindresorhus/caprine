@@ -182,7 +182,7 @@ Jump to conversation   | <kbd>Command/Control</kbd> <kbd>1</kbd>…<kbd>9</kbd>
 Insert GIF             | <kbd>Command/Control</kbd> <kbd>g</kbd>
 Insert sticker         | <kbd>Command/Control</kbd> <kbd>s</kbd>
 Insert emoji           | <kbd>Command/Control</kbd> <kbd>e</kbd>
-Insert files           | <kbd>Command/Control</kbd> <kbd>t</kbd>
+Attach files           | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>a</kbd>
 Focus text input       | <kbd>Command/Control</kbd> <kbd>i</kbd>
 Search in conversation | <kbd>Command/Control</kbd> <kbd>f</kbd>
 Mute conversation      | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>m</kbd>

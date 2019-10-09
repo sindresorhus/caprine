@@ -153,7 +153,7 @@ ipc.on('insert-sticker', () => {
 	stickerElement!.click();
 });
 
-ipc.on('insert-files', () => {
+ipc.on('attach-files', () => {
 	document
 		.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]')!
 		.click();
