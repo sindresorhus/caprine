@@ -399,11 +399,6 @@ html.dark-mode ._3x6v {
 	color: var(--base-fourty);
 }
 
-/* Right sidebar: require admin approval */ 
-html.dark-mode ._3ihp {
-	color: var(--base-fourty);
-}
-
 /* Right sidebar: people list */
 html.dark-mode ._4_j5 ._5l37 {
 	color: var(--base-fourty);
