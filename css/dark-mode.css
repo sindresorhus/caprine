@@ -538,12 +538,16 @@ html.dark-mode ._3cnl {
 /* Dialogs */
 html.dark-mode ._53ij,
 html.dark-mode ._4eby,
-html.dark-mode ._2c9g {
+html.dark-mode ._3lxv,
+html.dark-mode ._2c9g,
+html.dark-mode ._1rb6 {
 	background: var(--container-color) !important;
 }
 
 /* Dialog: preferences text */
-html.dark-mode ._374b ._374d ._4ng2 {
+html.dark-mode ._374b ._374d ._4ng2,
+html.dark-mode ._5vhe ._3y3p ._3hj6,
+html.dark-mode ._59ry ._3qn7 ._67pz {
 	color: var(--base-seventy);
 }
 html.dark-mode ._374b ._374d ._6cs7 {
@@ -553,10 +557,20 @@ html.dark-mode ._374b ._374d ._6cs7 {
 /* Dialog: title and names */
 html.dark-mode ._374c,
 html.dark-mode ._4ebz,
+html.dark-mode ._3lxv,
+html.dark-mode ._6ued,
 html.dark-mode ._2c9i ._19jt,
 html.dark-mode .uiInputLabelLabel {
 	color: var(--base-seventy) !important;
 }
+
+/* Dialog: fix white borders */
+html.dark-mode ._3lxv,
+html.dark-mode ._59ry,
+html.dark-mode ._4iyh {
+	border-color: var(--base-ten) !important;
+}
+
 
 /* Settings */
 html.dark-mode ._6ct8._6y58 {
