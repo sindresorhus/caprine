@@ -154,7 +154,7 @@ ipc.on('insert-sticker', () => {
 });
 
 ipc.on('insert-text', () => {
-	document.querySelector<HTMLElement>('._5rpu')!.focus();
+	document.querySelector<HTMLElement>('._7kpg ._5rpu')!.focus();
 });
 
 ipc.on('next-conversation', nextConversation);
