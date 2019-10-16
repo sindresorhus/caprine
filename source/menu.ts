@@ -10,7 +10,7 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
-import {sendAction, showRestartDialog} from './util';
+import {sendAction, showRestartDialog, confirmPrivateModeDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 
@@ -372,7 +372,12 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			checked: config.get('privateMode'),
 			accelerator: 'CommandOrControl+Shift+N',
-			click() {
+			click(menuItem, _browserWindow, event) {
+				if (!config.get('privateMode') && event.shiftKey && !confirmPrivateModeDialog()) {
+					menuItem.checked = false;
+					return;
+				}
+
 				config.set('privateMode', !config.get('privateMode'));
 				sendAction('set-private-mode');
 			}
