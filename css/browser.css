@@ -143,6 +143,11 @@ html.sidebar-hidden ._1enh {
 	display: block !important;
 }
 
+/* Makes group avatar visible in small window */
+._6ynm {
+	min-width: 40px !important;
+}
+
 /* Vertically center chat options */
 ._fl2 {
 	padding: 0 !important;
