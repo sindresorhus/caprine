@@ -256,6 +256,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			label: 'Auto Hide Menu Bar',
 			type: 'checkbox',
+			accelerator: 'CommandOrControl+Shift+H',
 			visible: !is.macos,
 			checked: config.get('autoHideMenuBar'),
 			click(menuItem, focusedWindow) {
