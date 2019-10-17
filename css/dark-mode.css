@@ -933,3 +933,8 @@ html.dark-mode ._7mkk._7t1o._7t0e {
 html.dark-mode ._74ku {
 	color: var(--base-fifty);
 }
+
+/* Dot fill color */
+html.dark-mode ._5blh._8102 svg g {
+	fill: var(--base-seventy);
+}
