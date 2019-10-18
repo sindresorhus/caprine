@@ -510,7 +510,8 @@ html.dark-mode ._34n6 {
 
 /* Message reaction buttons */
 html.dark-mode ._aou,
-html.dark-mode ._4kf5 {
+html.dark-mode ._4kf5,
+html.dark-mode ._3s-4 {
 	background-color: var(--container-color);
 }
 
@@ -830,6 +831,36 @@ html.dark-mode ._7i2n {
 /* More message icon */
 html.dark-mode ._7i2l {
 	filter: invert(1);
+}
+
+/* Sidebar > Options: search and nicknames icons */
+html.dark-mode ._6y56,
+html.dark-mode ._6ybv {
+	filter: invert(1);
+}
+
+/* Sidebar > Options: edit group picture hover */
+html.dark-mode ._80co {
+	background: none;
+}
+
+html.dark-mode ._7101:hover ._7q1j {
+	opacity: 0.5;
+}
+
+html.dark-mode ._80co form div a {
+	filter: invert(1);
+}
+
+/* "replied to" message label */
+html.dark-mode ._3egs {
+	background: none;
+}
+
+/* Remove profile picture border */
+html.dark-mode [aria-label='Conversation List'] [aria-hidden='true'] > div > div,
+html.dark-mode [role='main'] > span > div div[style^='border:'] {
+	border-color: transparent !important;
 }
 
 /* "Delete message" popup */
