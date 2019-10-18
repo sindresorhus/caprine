@@ -268,7 +268,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 						'type': 'info',
 						'message': 'Press the Alt key to toggle the menu bar.',
 						'checkboxLabel': 'Don\'t show this message again',
-						'checkboxChecked': true
+						'checkboxChecked': true,
+						'buttons': [ 'OK' ]
 					};
 
 					dialog.showMessageBox(options).then((messageBoxReturnValue) => {
