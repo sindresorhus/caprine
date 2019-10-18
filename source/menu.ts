@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -256,13 +256,25 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			label: 'Auto Hide Menu Bar',
 			type: 'checkbox',
-			accelerator: 'CommandOrControl+Shift+H',
 			visible: !is.macos,
 			checked: config.get('autoHideMenuBar'),
 			click(menuItem, focusedWindow) {
 				config.set('autoHideMenuBar', menuItem.checked);
 				focusedWindow.setAutoHideMenuBar(menuItem.checked);
 				focusedWindow.setMenuBarVisibility(!menuItem.checked);
+
+				if (menuItem.checked && config.get('showAutoHideAlert')) {
+					const options = {
+						'type': 'info',
+						'message': 'Press the Alt key to toggle the menu bar.',
+						'checkboxLabel': 'Don\'t show this message again',
+						'checkboxChecked': true
+					};
+
+					dialog.showMessageBox(options).then((messageBoxReturnValue) => {
+						config.set('showAutoHideAlert', !messageBoxReturnValue.checkboxChecked);
+					});
+				}
 			}
 		},
 		{
