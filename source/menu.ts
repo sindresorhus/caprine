@@ -508,10 +508,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Insert Text',
+			label: 'Focus Text Input',
 			accelerator: 'CommandOrControl+I',
 			click() {
-				sendAction('insert-text');
+				sendAction('focus-text-input');
 			}
 		}
 	];

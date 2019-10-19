@@ -153,8 +153,8 @@ ipc.on('insert-sticker', () => {
 	stickerElement!.click();
 });
 
-ipc.on('insert-text', () => {
-	document.querySelector<HTMLElement>('._5rpu')!.focus();
+ipc.on('focus-text-input', () => {
+	document.querySelector<HTMLElement>('._7kpg ._5rpu')!.focus();
 });
 
 ipc.on('next-conversation', nextConversation);
