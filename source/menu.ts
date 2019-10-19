@@ -258,22 +258,19 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			visible: !is.macos,
 			checked: config.get('autoHideMenuBar'),
-			async click(menuItem, focusedWindow) {
+			click(menuItem, focusedWindow) {
 				config.set('autoHideMenuBar', menuItem.checked);
 				focusedWindow.setAutoHideMenuBar(menuItem.checked);
 				focusedWindow.setMenuBarVisibility(!menuItem.checked);
 
-				if (menuItem.checked && config.get('showAutoHideAlert')) {
+				if (menuItem.checked) {
 					const options = {
 						type: 'info',
 						message: 'Press the Alt key to toggle the menu bar.',
-						checkboxLabel: 'Do not show this message again',
-						checkboxChecked: true,
 						buttons: ['OK']
 					};
 
-					const returnValue = await dialog.showMessageBox(options);
-					config.set('showAutoHideAlert', !returnValue.checkboxChecked);
+					dialog.showMessageBox(options);
 				}
 			}
 		},
