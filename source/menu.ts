@@ -264,13 +264,11 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				focusedWindow.setMenuBarVisibility(!menuItem.checked);
 
 				if (menuItem.checked) {
-					const options = {
+					dialog.showMessageBox({
 						type: 'info',
 						message: 'Press the Alt key to toggle the menu bar.',
 						buttons: ['OK']
-					};
-
-					dialog.showMessageBox(options);
+					});
 				}
 			}
 		},
