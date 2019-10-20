@@ -422,9 +422,9 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Show Archived Threads',
+			label: 'Show Hidden Threads',
 			click() {
-				sendAction('show-archived-threads-view');
+				sendAction('show-hidden-threads-view');
 			}
 		},
 		{
@@ -444,10 +444,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Archive Conversation',
-			accelerator: 'CommandOrControl+Shift+A',
+			label: 'Hide Conversation',
+			accelerator: 'CommandOrControl+Shift+H',
 			click() {
-				sendAction('archive-conversation');
+				sendAction('hide-conversation');
 			}
 		},
 		{
@@ -513,6 +513,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			accelerator: 'CommandOrControl+E',
 			click() {
 				sendAction('insert-emoji');
+			}
+		},
+		{
+			label: 'Attach Files',
+			accelerator: 'CommandOrControl+Shift+A',
+			click() {
+				sendAction('attach-files');
 			}
 		},
 		{

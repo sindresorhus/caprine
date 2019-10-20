@@ -153,6 +153,12 @@ ipc.on('insert-sticker', () => {
 	stickerElement!.click();
 });
 
+ipc.on('attach-files', () => {
+	document
+		.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]')!
+		.click();
+});
+
 ipc.on('focus-text-input', () => {
 	document.querySelector<HTMLElement>('._7kpg ._5rpu')!.focus();
 });
@@ -169,11 +175,11 @@ ipc.on('delete-conversation', async () => {
 	await deleteSelectedConversation();
 });
 
-ipc.on('archive-conversation', async () => {
+ipc.on('hide-conversation', async () => {
 	const index = selectedConversationIndex();
 
 	if (index !== -1) {
-		await archiveSelectedConversation();
+		await hideSelectedConversation();
 
 		const key = index + 1;
 		await jumpToConversation(key);
@@ -255,7 +261,7 @@ ipc.on('show-message-requests-view', async () => {
 	await selectOtherListViews(4);
 });
 
-ipc.on('show-archived-threads-view', async () => {
+ipc.on('show-hidden-threads-view', async () => {
 	await selectOtherListViews(5);
 });
 
@@ -470,7 +476,7 @@ async function openMuteModal(): Promise<void> {
 	});
 }
 
-async function archiveSelectedConversation(): Promise<void> {
+async function hideSelectedConversation(): Promise<void> {
 	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
 		`${selectedConversationSelector} ._55lu`
 	);
