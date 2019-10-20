@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -262,6 +262,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				config.set('autoHideMenuBar', menuItem.checked);
 				focusedWindow.setAutoHideMenuBar(menuItem.checked);
 				focusedWindow.setMenuBarVisibility(!menuItem.checked);
+
+				if (menuItem.checked) {
+					dialog.showMessageBox({
+						type: 'info',
+						message: 'Press the Alt key to toggle the menu bar.',
+						buttons: ['OK']
+					});
+				}
 			}
 		},
 		{
