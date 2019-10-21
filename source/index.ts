@@ -290,6 +290,20 @@ function createMainWindow(): BrowserWindow {
 			return;
 		}
 
+		// Workaround for electron/electron#20263
+		// Closing the app window when on full screen leaves a black screen
+		// Exit fullscreen before closing
+		if (is.macos) {
+			if (mainWindow.isFullScreen()) {
+				mainWindow.once('leave-full-screen', () => {
+					mainWindow.hide();
+				});
+				mainWindow.setFullScreen(false);
+			} else {
+				mainWindow.hide();
+			}
+		}
+
 		if (!isQuitting) {
 			e.preventDefault();
 
@@ -363,18 +377,6 @@ function createMainWindow(): BrowserWindow {
 				};
 			});
 			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
-		});
-		// Closing the app window when on full screen leaves a black screen
-		// Exit fullscreen before closing
-		electronLocalshortcut.register(mainWindow, 'Command+W', () => {
-			if (mainWindow.isFullScreen()) {
-				mainWindow.once('leave-full-screen', () => {
-					mainWindow.hide();
-				});
-				mainWindow.setFullScreen(false);
-			} else {
-				mainWindow.hide();
-			}
 		});
 	}
 
