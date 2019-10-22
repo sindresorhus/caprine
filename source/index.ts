@@ -291,10 +291,24 @@ function createMainWindow(): BrowserWindow {
 			return;
 		}
 
+		// Workaround for https://github.com/electron/electron/issues/20263
+		// Closing the app window when on full screen leaves a black screen
+		// Exit fullscreen before closing
+		if (is.macos) {
+			if (mainWindow.isFullScreen()) {
+				mainWindow.once('leave-full-screen', () => {
+					mainWindow.hide();
+				});
+				mainWindow.setFullScreen(false);
+			} else {
+				mainWindow.hide();
+			}
+		}
+
 		if (!isQuitting) {
 			e.preventDefault();
 
-			// Workaround for electron/electron#10023
+			// Workaround for https://github.com/electron/electron/issues/10023
 			win.blur();
 			win.hide();
 		}
