@@ -38,7 +38,7 @@ export function showRestartDialog(message: string): void {
 export function confirmPrivateModeDialog(): boolean {
 	return (
 		dialog.showMessageBoxSync({
-			message: 'Are you sure you want to hide names and avatars ?',
+			message: 'Are you sure you want to hide names and avatars?',
 			detail: 'You have triggered the function using Ctrl+Shift+N.',
 			buttons: ['Hide', 'Don\'t Hide'],
 			defaultId: 0,
