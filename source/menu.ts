@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -10,7 +10,7 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
-import {sendAction, showRestartDialog, confirmPrivateModeDialog} from './util';
+import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 
@@ -373,9 +373,19 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('privateMode'),
 			accelerator: 'CommandOrControl+Shift+N',
 			click(menuItem, _browserWindow, event) {
-				if (!config.get('privateMode') && event.shiftKey && !confirmPrivateModeDialog()) {
-					menuItem.checked = false;
-					return;
+				if (!config.get('privateMode') && event.shiftKey) {
+					const confirmPrivateMode =
+						dialog.showMessageBoxSync({
+							message: 'Are you sure you want to hide names and avatars?',
+							detail: 'You have triggered the function using Command/Control+Shift+N.',
+							buttons: ['Hide', "Don't Hide"],
+							defaultId: 0,
+							cancelId: 1
+						}) === 0;
+					if (!confirmPrivateMode) {
+						menuItem.checked = false;
+						return;
+					}
 				}
 
 				config.set('privateMode', !config.get('privateMode'));

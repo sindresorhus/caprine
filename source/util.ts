@@ -34,15 +34,3 @@ export function showRestartDialog(message: string): void {
 		app.quit();
 	}
 }
-
-export function confirmPrivateModeDialog(): boolean {
-	return (
-		dialog.showMessageBoxSync({
-			message: 'Are you sure you want to hide names and avatars?',
-			detail: 'You have triggered the function using Ctrl+Shift+N.',
-			buttons: ['Hide', 'Don\'t Hide'],
-			defaultId: 0,
-			cancelId: 1
-		}) === 0
-	);
-}
