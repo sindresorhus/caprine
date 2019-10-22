@@ -40,7 +40,7 @@ export function confirmPrivateModeDialog(): boolean {
 		dialog.showMessageBoxSync({
 			message: 'Are you sure you want to hide names and avatars ?',
 			detail: 'You have triggered the function using Ctrl+Shift+N.',
-			buttons: ['Yes', 'No'],
+			buttons: ['Hide', 'Don\'t Hide'],
 			defaultId: 0,
 			cancelId: 1
 		}) === 0
