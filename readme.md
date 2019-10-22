@@ -124,10 +124,6 @@ Desktop notifications can be turned on in `Preferences`.
 
 You can toggle whether Caprine stays on top of other windows in the `Window`/`View` menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>t</kbd>.
 
-### Image paste confirmation
-
-Confirmation before sending images from the clipboard, to prevent accidental copy-pastes.
-
 ### Work Chat support
 
 Support for Work Chat: Messenger for [Workplace](https://www.facebook.com/workplace). You can switch to it in the `Caprine`/`File` menu.
