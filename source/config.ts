@@ -29,7 +29,6 @@ type StoreType = {
 		deliveryReceipt: boolean;
 	};
 	emojiStyle: 'native' | 'facebook-3-0' | 'messenger-1-0' | 'facebook-2-2';
-	confirmImagePaste: boolean;
 	useWorkChat: boolean;
 	sidebarHidden: boolean;
 	autoHideMenuBar: boolean;
@@ -149,10 +148,6 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 		type: 'string',
 		enum: ['native', 'facebook-3-0', 'messenger-1-0', 'facebook-2-2'],
 		default: 'facebook-3-0'
-	},
-	confirmImagePaste: {
-		type: 'boolean',
-		default: true
 	},
 	useWorkChat: {
 		type: 'boolean',
