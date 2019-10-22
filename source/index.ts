@@ -290,7 +290,7 @@ function createMainWindow(): BrowserWindow {
 			return;
 		}
 
-		// Workaround for electron/electron#20263
+		// Workaround for https://github.com/electron/electron/issues/20263
 		// Closing the app window when on full screen leaves a black screen
 		// Exit fullscreen before closing
 		if (is.macos) {
@@ -307,7 +307,7 @@ function createMainWindow(): BrowserWindow {
 		if (!isQuitting) {
 			e.preventDefault();
 
-			// Workaround for electron/electron#10023
+			// Workaround for https://github.com/electron/electron/issues/10023
 			win.blur();
 			win.hide();
 		}
