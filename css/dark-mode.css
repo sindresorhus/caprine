@@ -389,6 +389,17 @@ html.dark-mode ._3eus {
 	color: var(--base-fourty);
 }
 
+/* Right sidebar icons */
+html.dark-mode ._6ybv,
+html.dark-mode ._6y56,
+html.dark-mode ._7ht_,
+html.dark-mode ._6ybz,
+html.dark-mode ._7hu0,
+html.dark-mode ._7hu1,
+html.dark-mode ._7hty {
+	filter: invert(1) !important;
+}
+
 /* Right sidebar: mute notification label */
 html.dark-mode ._3szq {
 	color: var(--base-seventy);
@@ -843,12 +854,6 @@ html.dark-mode ._7i2n {
 
 /* More message icon */
 html.dark-mode ._7i2l {
-	filter: invert(1);
-}
-
-/* Sidebar > Options: search and nicknames icons */
-html.dark-mode ._6y56,
-html.dark-mode ._6ybv {
 	filter: invert(1);
 }
 
