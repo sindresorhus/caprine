@@ -6,7 +6,7 @@ import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 
-import { createConversationList } from './browser/conversation-list';
+import {createConversationList} from './browser/conversation-list';
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
