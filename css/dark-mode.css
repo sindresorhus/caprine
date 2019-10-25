@@ -14,6 +14,7 @@
 	--container-dark-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
+	--white: #ffffff;
 }
 
 html.dark-mode body {
@@ -346,7 +347,7 @@ html.dark-mode ._4_j5 {
 
 /* Right sidebar: contact name */
 html.dark-mode ._3eur a {
-	color: white;
+	color: var(--white);
 }
 
 /* Right sidebar: menus background */
