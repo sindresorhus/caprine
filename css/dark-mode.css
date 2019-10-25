@@ -349,6 +349,11 @@ html.dark-mode ._3eur a {
 	color: var(--blue);
 }
 
+/* Right sidebar: disabled contact name */
+html.dark-mode ._3eur {
+	color: var(--base-seventy);
+}
+
 /* Right sidebar: menus background */
 html.dark-mode ._54ng {
 	background: var(--container-color);
