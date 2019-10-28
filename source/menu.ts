@@ -233,6 +233,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Always on Top',
+			id: 'always-on-top',
 			type: 'checkbox',
 			accelerator: 'CommandOrControl+Shift+T',
 			checked: config.get('alwaysOnTop'),

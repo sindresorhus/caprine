@@ -20,6 +20,8 @@ export default {
 				win.hide();
 			} else {
 				win.show();
+				const alwaysOnTopMenuItem = Menu.getApplicationMenu()!.getMenuItemById('always-on-top');
+				win.setAlwaysOnTop(alwaysOnTopMenuItem.checked);
 			}
 		}
 
