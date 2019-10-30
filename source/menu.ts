@@ -517,7 +517,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Attach Files',
-			accelerator: 'CommandOrControl+Shift+A',
+			accelerator: 'CommandOrControl+T',
 			click() {
 				sendAction('attach-files');
 			}
