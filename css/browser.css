@@ -406,6 +406,11 @@ html.private-mode ._5743._6y4y {
 	filter: blur(5px);
 }
 
+/* Right sidebar: big user picture */
+html.private-mode ._1jt6._710_ {
+	filter: blur(10px);
+}
+
 /* Message user picture */
 html.private-mode ._1t_q ._4ld- img {
 	filter: blur(3px);
