@@ -874,6 +874,11 @@ html.dark-mode ._7i2l {
 	filter: invert(1);
 }
 
+/* Group chat notification icons */
+html.dark-mode ._497p ._uwa {
+	filter: invert(1);
+}
+
 /* Sidebar > Options: edit group picture hover */
 html.dark-mode ._80co {
 	background: none;
