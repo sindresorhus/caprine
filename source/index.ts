@@ -341,10 +341,8 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		ipcMain.once('conversations', () => {
-			/**
-			 * Messenger sorts the conversations by unread state,
-			 * We select the first conversation from the list
-			 */
+			// Messenger sorts the conversations by unread state.
+			// We select the first conversation from the list.
 			sendAction('jump-to-conversation', 1);
 		});
 
