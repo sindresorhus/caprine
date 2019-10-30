@@ -345,6 +345,11 @@ html.dark-mode ._4_j5 {
 	border-left: solid 1px var(--base-five);
 }
 
+/* Right sidebar: disabled contact name */
+html.dark-mode ._3eur {
+	color: var(--base-seventy);
+}
+
 /* Right sidebar: contact name */
 html.dark-mode ._3eur a {
 	color: var(--white);
