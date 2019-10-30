@@ -426,6 +426,12 @@ html.dark-mode ._4rph ._4rpj {
 	border-top: solid 1px var(--base-ten) !important;
 }
 
+/* Right sidebar: marketplace item */
+html.dark-mode ._3tkv ._2b72,
+html.dark-mode ._6cft ._43za {
+	color: var(--base-seventy);
+}
+
 /* Invite friends popup */
 html.dark-mode ._4jgu {
 	background-color: var(--container-color);
