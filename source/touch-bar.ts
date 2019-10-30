@@ -3,8 +3,9 @@ import {sendAction, getWindow} from './util';
 import {caprineIconPath} from './constants';
 
 const {TouchBarButton} = TouchBar;
+const MAX_VISIBLE_LEN = 25;
 
-function setTouchBar(items: any[]): void {
+function setTouchBar(items: Electron.TouchBarButton[]): void {
 	const touchBar = new TouchBar({items});
 	const win = getWindow();
 	win.setTouchBar(touchBar);
@@ -13,7 +14,7 @@ function setTouchBar(items: any[]): void {
 ipc.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 	const items = conversations.map(({label, selected, icon}, index: number) => {
 		return new TouchBarButton({
-			label: label.length > 25 ? label.slice(0, 25) + '…' : label,
+			label: label.length > MAX_VISIBLE_LEN ? label.slice(0, MAX_VISIBLE_LEN) + '…' : label,
 			backgroundColor: selected ? '#0084ff' : undefined,
 			icon: nativeImage.createFromDataURL(icon),
 			iconPosition: 'left',
