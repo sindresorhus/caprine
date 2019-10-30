@@ -362,6 +362,12 @@ function createMainWindow(): BrowserWindow {
 			app.dock.show();
 		}
 
+		ipcMain.once('conversations', () => {
+			// Messenger sorts the conversations by unread state.
+			// We select the first conversation from the list.
+			sendAction('jump-to-conversation', 1);
+		});
+
 		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
 			if (conversations.length === 0) {
 				return;
