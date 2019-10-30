@@ -879,12 +879,6 @@ html.dark-mode ._497p ._uwa {
 	filter: invert(1);
 }
 
-/* Sidebar > Options: search and nicknames icons */
-html.dark-mode ._6y56,
-html.dark-mode ._6ybv {
-	filter: invert(1);
-}
-
 /* Sidebar > Options: edit group picture hover */
 html.dark-mode ._80co {
 	background: none;
