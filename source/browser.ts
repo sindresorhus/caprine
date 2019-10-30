@@ -285,6 +285,7 @@ function setDarkMode(): void {
 
 async function setPrivateMode(): Promise<void> {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
+
 	if (is.macos) {
 		if (config.get('privateMode')) {
 			ipc.send('hide-touchbar-labels');
