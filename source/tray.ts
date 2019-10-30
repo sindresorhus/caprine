@@ -20,6 +20,8 @@ export default {
 				win.hide();
 			} else {
 				win.show();
+				// Workaround for https://github.com/electron/electron/issues/20858
+				// setAlwaysOnTop stops working after hiding window on KDE Plasma
 				const alwaysOnTopMenuItem = Menu.getApplicationMenu()!.getMenuItemById('always-on-top');
 				win.setAlwaysOnTop(alwaysOnTopMenuItem.checked);
 			}
