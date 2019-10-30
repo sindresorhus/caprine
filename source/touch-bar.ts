@@ -1,6 +1,6 @@
-import * as path from 'path';
 import {TouchBar, ipcMain as ipc, nativeImage, Event as ElectronEvent} from 'electron';
 import {sendAction, getWindow} from './util';
+import {caprineIconPath} from './constants';
 
 const {TouchBarButton} = TouchBar;
 
@@ -29,7 +29,7 @@ ipc.on('hide-touchbar-labels', (_event: ElectronEvent) => {
 	const privateModeLabel = new TouchBarButton({
 		label: 'Private mode enabled',
 		backgroundColor: undefined,
-		icon: nativeImage.createFromPath(path.join(__dirname, '..', 'static', 'Icon.png')),
+		icon: nativeImage.createFromPath(caprineIconPath),
 		iconPosition: 'left',
 		click: undefined
 	});
