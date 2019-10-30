@@ -231,6 +231,11 @@ html.dark-mode ._2xh0 ._2xh4 {
 	border-color: var(--base-ten);
 }
 
+/* Messages list: say hi with a wave */
+html.dark-mode ._4qeu {
+	color: var(--base-fourty);
+}
+
 /* Message composer: chat bot menu popover */
 html.dark-mode ._1wc4 {
 	border-top-color: var(--base-ten);
