@@ -374,17 +374,16 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			accelerator: 'CommandOrControl+Shift+N',
 			click(menuItem, _browserWindow, event) {
 				if (!config.get('privateMode') && event.shiftKey) {
-					const confirmPrivateMode =
-						dialog.showMessageBoxSync({
-							message: 'Are you sure you want to hide names and avatars?',
-							detail: 'You have triggered the function using Command/Control+Shift+N.',
-							buttons: [
-								'Hide',
-								'Don\'t Hide'
-							],
-							defaultId: 0,
-							cancelId: 1
-						}) === 0;
+					const confirmPrivateMode = dialog.showMessageBoxSync({
+						message: 'Are you sure you want to hide names and avatars?',
+						detail: 'You have triggered the function using Command/Control+Shift+N.',
+						buttons: [
+							'Hide',
+							'Don\'t Hide'
+						],
+						defaultId: 0,
+						cancelId: 1
+					}) === 0;
 
 					if (!confirmPrivateMode) {
 						menuItem.checked = false;
