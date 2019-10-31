@@ -376,7 +376,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				if (!config.get('privateMode') && event.shiftKey) {
 					const confirmPrivateMode = dialog.showMessageBoxSync({
 						message: 'Are you sure you want to hide names and avatars?',
-						detail: 'You have triggered the function using Command/Control+Shift+N.',
+						detail: 'This was triggered by Command/Control+Shift+N.',
 						buttons: [
 							'Hide',
 							'Don\'t Hide'
