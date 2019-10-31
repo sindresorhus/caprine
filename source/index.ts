@@ -461,8 +461,10 @@ function createMainWindow(): BrowserWindow {
 				// Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
-				options.webPreferences.nodeIntegration = false;
-				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
+				if (options.webPreferences !== undefined) {
+					options.webPreferences.nodeIntegration = false
+					options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
+				}
 				(event as any).newGuest = new BrowserWindow(options);
 			}
 		} else {
