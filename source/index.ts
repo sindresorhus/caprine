@@ -295,15 +295,11 @@ function createMainWindow(): BrowserWindow {
 		// Workaround for https://github.com/electron/electron/issues/20263
 		// Closing the app window when on full screen leaves a black screen
 		// Exit fullscreen before closing
-		if (is.macos) {
-			if (mainWindow.isFullScreen()) {
-				mainWindow.once('leave-full-screen', () => {
-					mainWindow.hide();
-				});
-				mainWindow.setFullScreen(false);
-			} else {
+		if (is.macos && mainWindow.isFullScreen()) {
+			mainWindow.once('leave-full-screen', () => {
 				mainWindow.hide();
-			}
+			});
+			mainWindow.setFullScreen(false);
 		}
 
 		if (!isQuitting) {
@@ -311,7 +307,12 @@ function createMainWindow(): BrowserWindow {
 
 			// Workaround for https://github.com/electron/electron/issues/10023
 			win.blur();
-			win.hide();
+			if (is.macos) {
+				// On macOS we're using `app.hide()` in order to focus the previous window correctly
+				app.hide();
+			} else {
+				win.hide();
+			}
 		}
 	});
 
