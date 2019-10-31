@@ -76,8 +76,7 @@
 			"@typescript-eslint/no-explicit-any": "off",
 			"@typescript-eslint/no-misused-promises": "off",
 			"@typescript-eslint/strict-boolean-expressions": "off"
-		},
-		"prettier": true
+		}
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo",
@@ -88,14 +87,6 @@
 			"no-duplicate-selectors": null,
 			"rule-empty-line-before": null
 		}
-	},
-	"prettier": {
-		"printWidth": 100,
-		"useTabs": true,
-		"singleQuote": true,
-		"bracketSpacing": false,
-		"proseWrap": "never",
-		"endOfLine": "lf"
 	},
 	"np": {
 		"publish": false,

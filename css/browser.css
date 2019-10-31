@@ -133,6 +133,7 @@ html.sidebar-hidden ._1enh {
 	._6-xk {
 		height: auto !important;
 		padding-top: 36px !important;
+		flex-direction: column;
 	}
 }
 
@@ -404,6 +405,11 @@ html.private-mode ._1ht1 ._1qt3 div[style*='background-image'],
 /* Navbar information */
 html.private-mode ._5743._6y4y {
 	filter: blur(5px);
+}
+
+/* Right sidebar: big user picture */
+html.private-mode ._1jt6._710_ {
+	filter: blur(10px);
 }
 
 /* Message user picture */

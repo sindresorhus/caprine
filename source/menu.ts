@@ -234,6 +234,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Always on Top',
+			id: 'always-on-top',
 			type: 'checkbox',
 			accelerator: 'CommandOrControl+Shift+T',
 			checked: config.get('alwaysOnTop'),
@@ -381,7 +382,25 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			checked: config.get('privateMode'),
 			accelerator: 'CommandOrControl+Shift+N',
-			click() {
+			click(menuItem, _browserWindow, event) {
+				if (!config.get('privateMode') && event.shiftKey) {
+					const confirmPrivateMode = dialog.showMessageBoxSync({
+						message: 'Are you sure you want to hide names and avatars?',
+						detail: 'This was triggered by Command/Control+Shift+N.',
+						buttons: [
+							'Hide',
+							'Don\'t Hide'
+						],
+						defaultId: 0,
+						cancelId: 1
+					}) === 0;
+
+					if (!confirmPrivateMode) {
+						menuItem.checked = false;
+						return;
+					}
+				}
+
 				config.set('privateMode', !config.get('privateMode'));
 				sendAction('set-private-mode');
 			}
@@ -518,7 +537,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Attach Files',
-			accelerator: 'CommandOrControl+Shift+A',
+			accelerator: 'CommandOrControl+T',
 			click() {
 				sendAction('attach-files');
 			}

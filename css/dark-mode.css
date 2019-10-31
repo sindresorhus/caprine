@@ -14,6 +14,7 @@
 	--container-dark-color: #1e1e1e;
 	--list-header-color: #222;
 	--blue: #0084ff;
+	--white: #fff;
 }
 
 html.dark-mode body {
@@ -230,6 +231,11 @@ html.dark-mode ._2xh0 ._2xh4 {
 	border-color: var(--base-ten);
 }
 
+/* Messages list: say hi with a wave */
+html.dark-mode ._4qeu {
+	color: var(--base-fourty);
+}
+
 /* Message composer: chat bot menu popover */
 html.dark-mode ._1wc4 {
 	border-top-color: var(--base-ten);
@@ -344,9 +350,14 @@ html.dark-mode ._4_j5 {
 	border-left: solid 1px var(--base-five);
 }
 
+/* Right sidebar: disabled contact name */
+html.dark-mode ._3eur {
+	color: var(--base-seventy);
+}
+
 /* Right sidebar: contact name */
 html.dark-mode ._3eur a {
-	color: var(--blue);
+	color: var(--white);
 }
 
 /* Right sidebar: menus background */
@@ -389,6 +400,17 @@ html.dark-mode ._3eus {
 	color: var(--base-fourty);
 }
 
+/* Right sidebar icons */
+html.dark-mode ._6ybv,
+html.dark-mode ._6y56,
+html.dark-mode ._7ht_,
+html.dark-mode ._6ybz,
+html.dark-mode ._7hu0,
+html.dark-mode ._7hu1,
+html.dark-mode ._7hty {
+	filter: invert(1) !important;
+}
+
 /* Right sidebar: mute notification label */
 html.dark-mode ._3szq {
 	color: var(--base-seventy);
@@ -413,6 +435,12 @@ html.dark-mode ._4_j5 ._5l37 {
 /* Right sidebar: people list (add people) */
 html.dark-mode ._4rph ._4rpj {
 	border-top: solid 1px var(--base-ten) !important;
+}
+
+/* Right sidebar: marketplace item */
+html.dark-mode ._3tkv ._2b72,
+html.dark-mode ._6cft ._43za {
+	color: var(--base-seventy);
 }
 
 /* Invite friends popup */
@@ -846,9 +874,8 @@ html.dark-mode ._7i2l {
 	filter: invert(1);
 }
 
-/* Sidebar > Options: search and nicknames icons */
-html.dark-mode ._6y56,
-html.dark-mode ._6ybv {
+/* Group chat notification icons */
+html.dark-mode ._497p ._uwa {
 	filter: invert(1);
 }
 
