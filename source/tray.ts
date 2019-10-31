@@ -28,43 +28,42 @@ export default {
 			}
 		}
 
-		const macosMenuItems: MenuItemConstructorOptions[] = is.macos
-			? [
-					{
-						label: 'Disable Menu Bar Mode',
-						click() {
-							config.set('menuBarMode', false);
-							toggleMenuBarMode(win);
-						}
-					},
-					{
-						label: 'Show Dock Icon',
-						type: 'checkbox',
-						checked: config.get('showDockIcon'),
-						click(menuItem) {
-							config.set('showDockIcon', menuItem.checked);
-
-							if (menuItem.checked) {
-								app.dock.show();
-							} else {
-								app.dock.hide();
-							}
-
-							const dockMenuItem = contextMenu.getMenuItemById('dockMenu');
-							dockMenuItem.visible = !menuItem.checked;
-						}
-					},
-					{
-						type: 'separator'
-					},
-					{
-						id: 'dockMenu',
-						label: 'Menu',
-						visible: !config.get('showDockIcon'),
-						submenu: Menu.getApplicationMenu()!
+		const macosMenuItems: MenuItemConstructorOptions[] = is.macos ?
+			[
+				{
+					label: 'Disable Menu Bar Mode',
+					click() {
+						config.set('menuBarMode', false);
+						toggleMenuBarMode(win);
 					}
-			  ]
-			: [];
+				},
+				{
+					label: 'Show Dock Icon',
+					type: 'checkbox',
+					checked: config.get('showDockIcon'),
+					click(menuItem) {
+						config.set('showDockIcon', menuItem.checked);
+
+						if (menuItem.checked) {
+							app.dock.show();
+						} else {
+							app.dock.hide();
+						}
+
+						const dockMenuItem = contextMenu.getMenuItemById('dockMenu');
+						dockMenuItem.visible = !menuItem.checked;
+					}
+				},
+				{
+					type: 'separator'
+				},
+				{
+					id: 'dockMenu',
+					label: 'Menu',
+					visible: !config.get('showDockIcon'),
+					submenu: Menu.getApplicationMenu()!
+				}
+			] : [];
 
 		contextMenu = Menu.buildFromTemplate([
 			{
@@ -150,9 +149,9 @@ function updateToolTip(counter: number): void {
 }
 
 function getIconPath(hasUnreadMessages: boolean): string {
-	const icon = is.macos
-		? getMacOSIconName(hasUnreadMessages)
-		: getNonMacOSIconName(hasUnreadMessages);
+	const icon = is.macos ?
+		getMacOSIconName(hasUnreadMessages) :
+		getNonMacOSIconName(hasUnreadMessages);
 
 	return path.join(__dirname, '..', `static/${icon}`);
 }

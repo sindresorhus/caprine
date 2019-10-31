@@ -28,7 +28,10 @@ const playedVideos: HTMLVideoElement[] = [];
 function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 	for (const video of videos) {
 		// Don't disable currently playing videos
-		if (playedVideos.includes(video)) continue;
+		if (playedVideos.includes(video)) {
+			continue;
+		}
+
 		const firstParent = video.parentElement!;
 
 		// Video parent element which has a snapshot of the video as a background image
@@ -137,7 +140,9 @@ const conversationDivObserver = new MutationObserver(_ => {
 	let conversation = document.querySelector(`#${conversationId}`);
 
 	// Fetch it using `querySelector` if no luck with the `conversationId`
-	if (!conversation) conversation = document.querySelector(selectors.conversationSelector);
+	if (!conversation) {
+		conversation = document.querySelector(selectors.conversationSelector);
+	}
 
 	// If we have a new reference
 	if (conversation && conversationWindow !== conversation) {
@@ -155,5 +160,7 @@ const videoObserver = new MutationObserver(_ => {
 	// Select by tag instead of iterating over mutations which is more performant
 	const videos = getVideos();
 	// If videos were added disable autoplay
-	if (videos.length > 0) disableVideoAutoplay(videos);
+	if (videos.length > 0) {
+		disableVideoAutoplay(videos);
+	}
 });

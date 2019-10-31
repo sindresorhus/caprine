@@ -248,9 +248,9 @@ function createMainWindow(): BrowserWindow {
 	const isDarkMode = config.get('darkMode');
 
 	// Messenger or Work Chat
-	const mainURL = config.get('useWorkChat')
-		? 'https://work.facebook.com/chat'
-		: 'https://www.messenger.com/login/';
+	const mainURL = config.get('useWorkChat') ?
+		'https://work.facebook.com/chat' :
+		'https://www.messenger.com/login/';
 
 	const win = new BrowserWindow({
 		title: app.getName(),
