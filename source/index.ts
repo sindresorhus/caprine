@@ -33,6 +33,7 @@ import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 import {setUpMenuBarMode} from './menu-bar-mode';
+import {caprineIconPath} from './constants';
 
 ipcMain.setMaxListeners(100);
 
@@ -258,7 +259,7 @@ function createMainWindow(): BrowserWindow {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: is.linux ? path.join(__dirname, '..', 'static', 'Icon.png') : undefined,
+		icon: is.linux ? caprineIconPath : undefined,
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),

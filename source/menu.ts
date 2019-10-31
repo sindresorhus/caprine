@@ -13,6 +13,7 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
+import {caprineIconPath} from './constants';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -571,7 +572,7 @@ ${debugInfo()}`;
 				type: 'separator'
 			},
 			aboutMenuItem({
-				icon: path.join(__dirname, '..', 'static', 'Icon.png'),
+				icon: caprineIconPath,
 				text: 'Created by Sindre Sorhus'
 			})
 		);
