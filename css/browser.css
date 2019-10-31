@@ -133,6 +133,7 @@ html.sidebar-hidden ._1enh {
 	._6-xk {
 		height: auto !important;
 		padding-top: 36px !important;
+		flex-direction: column;
 	}
 }
 
