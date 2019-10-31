@@ -16,11 +16,10 @@ import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
 // Issue: https://github.com/electron/electron/issues/20705
 // PR: https://github.com/electron/electron/pull/20712
 declare module 'electron' {
-  class IpcMain {
-    removeListener(event: string, listener: (...args: any[]) => void): this;
-  }
+	class IpcMain {
+		removeListener(event: string, listener: (...args: any[]) => void): this;
+	}
 }
-
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/

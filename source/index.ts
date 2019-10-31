@@ -179,7 +179,7 @@ function enableHiresResources(): void {
 
 	const filter = {urls: [`*://*.${domain}/`]};
 
-	session.defaultSession!.webRequest.onBeforeSendHeaders(
+	session.defaultSession.webRequest.onBeforeSendHeaders(
 		filter,
 		(details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
 			let cookie = details.requestHeaders.Cookie;
@@ -214,7 +214,7 @@ function initRequestsFiltering(): void {
 		]
 	};
 
-	session.defaultSession!.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
+	session.defaultSession.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
 		if (url.includes('emoji.php')) {
 			callback(await processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
@@ -235,7 +235,7 @@ function setUserLocale(): void {
 		value: userLocale
 	};
 
-	session.defaultSession!.cookies.set(cookie);
+	session.defaultSession.cookies.set(cookie);
 }
 
 function setNotificationsMute(status: boolean): void {
@@ -462,9 +462,10 @@ function createMainWindow(): BrowserWindow {
 				options.show = true;
 				options.titleBarStyle = 'default';
 				if (options.webPreferences !== undefined) {
-					options.webPreferences.nodeIntegration = false
+					options.webPreferences.nodeIntegration = false;
 					options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				}
+
 				(event as any).newGuest = new BrowserWindow(options);
 			}
 		} else {
