@@ -13,7 +13,6 @@ import {
 	Notification,
 	MenuItemConstructorOptions,
 	Event as ElectronEvent,
-	RequestHeaders,
 	OnSendHeadersDetails
 } from 'electron';
 import log from 'electron-log';
@@ -156,7 +155,7 @@ ipcMain.on('update-tray-icon', updateTrayIcon);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
-	requestHeaders?: RequestHeaders;
+	requestHeaders?: Record<string, string>;
 }
 
 function enableHiresResources(): void {
