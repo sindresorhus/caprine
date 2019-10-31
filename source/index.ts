@@ -453,7 +453,7 @@ function createMainWindow(): BrowserWindow {
 		);
 	});
 
-	webContents.on('new-window', (event: Event, url, frameName, _disposition, options) => {
+	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
 		if (url === 'about:blank') {
@@ -472,11 +472,11 @@ function createMainWindow(): BrowserWindow {
 				url = new URL(url).searchParams.get('u')!;
 			}
 
-			shell.openExternalSync(url);
+			await shell.openExternal(url);
 		}
 	});
 
-	webContents.on('will-navigate', (event, url) => {
+	webContents.on('will-navigate', async (event, url) => {
 		const isMessengerDotCom = (url: string): boolean => {
 			const {hostname} = new URL(url);
 			return hostname.endsWith('.messenger.com');
@@ -515,7 +515,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		event.preventDefault();
-		shell.openExternalSync(url);
+		await shell.openExternal(url);
 	});
 })();
 
