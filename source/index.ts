@@ -12,8 +12,7 @@ import {
 	Menu,
 	Notification,
 	MenuItemConstructorOptions,
-	Event as ElectronEvent,
-	OnSendHeadersDetails
+	Event as ElectronEvent
 } from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
@@ -156,6 +155,17 @@ ipcMain.on('update-tray-icon', updateTrayIcon);
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
 	requestHeaders?: Record<string, string>;
+}
+
+interface OnSendHeadersDetails {
+	id: number;
+	url: string;
+	method: string;
+	webContentsId?: number;
+	resourceType: string;
+	referrer: string;
+	timestamp: number;
+	requestHeaders: Record<string, string>;
 }
 
 function enableHiresResources(): void {
