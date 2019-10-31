@@ -182,7 +182,7 @@ function enableHiresResources(): void {
 	session.defaultSession!.webRequest.onBeforeSendHeaders(
 		filter,
 		(details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
-			let cookie = (details.requestHeaders as any).Cookie;
+			let cookie = details.requestHeaders.Cookie;
 
 			if (cookie && details.method === 'GET') {
 				if (/(?:; )?dpr=\d/.test(cookie)) {
