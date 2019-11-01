@@ -13,6 +13,7 @@ type StoreType = {
 		width: number;
 		height: number;
 	};
+	maximizedState: boolean;
 	menuBarMode: boolean;
 	showDockIcon: boolean;
 	showTrayIcon: boolean;
@@ -112,6 +113,10 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	showMessageButtons: {
 		type: 'boolean',
 		default: true
+	},
+	maximizedState: {
+		type: 'boolean',
+		default: false
 	},
 	launchMinimized: {
 		type: 'boolean',

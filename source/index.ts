@@ -327,6 +327,14 @@ function createMainWindow(): BrowserWindow {
 		config.set('lastWindowState', win.getNormalBounds());
 	});
 
+	win.on('maximize', () => {
+		config.set('maximizedState', true);
+	});
+
+	win.on('unmaximize', () => {
+		config.set('maximizedState', false);
+	});
+
 	return win;
 }
 
@@ -422,6 +430,10 @@ function createMainWindow(): BrowserWindow {
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
 			mainWindow.hide();
 		} else {
+			if (config.get('maximizedState')) {
+				mainWindow.maximize();
+			}
+
 			mainWindow.show();
 		}
 
