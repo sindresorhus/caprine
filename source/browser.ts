@@ -186,12 +186,6 @@ ipc.on('hide-conversation', async () => {
 	}
 });
 
-function setSidebarVisibility(): void {
-	document.documentElement.classList.toggle('sidebar-hidden', config.get('sidebarHidden'));
-
-	ipc.send('set-sidebar-visibility');
-}
-
 async function openHiddenPreferences(): Promise<boolean> {
 	if (!isPreferencesOpen()) {
 		const style = document.createElement('style');
@@ -314,6 +308,27 @@ function updateVibrancy(): void {
 	ipc.send('set-vibrancy');
 }
 
+function updateSidebar(): void {
+	const {classList} = document.documentElement;
+
+	classList.remove('sidebar-hidden', 'sidebar-force-slim', 'sidebar-force-wide');
+
+	switch (config.get('sidebar')) {
+		case 'hidden':
+			classList.add('sidebar-hidden');
+			break;
+		case 'slim':
+			classList.add('sidebar-force-slim');
+			break;
+		case 'wide':
+			classList.add('sidebar-force-wide');
+			break;
+		default:
+	}
+
+	ipc.send('set-sidebar');
+}
+
 async function updateDoNotDisturb(): Promise<void> {
 	const shouldClosePreferences = await openHiddenPreferences();
 	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
@@ -344,9 +359,8 @@ function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	return canvas;
 }
 
-ipc.on('toggle-sidebar', () => {
-	config.set('sidebarHidden', !config.get('sidebarHidden'));
-	setSidebarVisibility();
+ipc.on('update-sidebar', () => {
+	updateSidebar();
 });
 
 ipc.on('set-dark-mode', setDarkMode);
@@ -546,8 +560,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Enable OS specific styles
 	document.documentElement.classList.add(`os-${process.platform}`);
 
-	// Hide sidebar if it was hidden before quitting
-	setSidebarVisibility();
+	// Restore sidebar view state to what is was set before quitting
+	updateSidebar();
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();

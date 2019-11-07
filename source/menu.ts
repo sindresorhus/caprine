@@ -86,6 +86,51 @@ export default async function updateMenu(): Promise<Menu> {
 		}
 	];
 
+	const sidebarSubmenu: MenuItemConstructorOptions[] = [
+		{
+			label: 'Adaptive Sidebar',
+			type: 'checkbox',
+			checked: config.get('sidebar') === 'default',
+			async click() {
+				config.set('sidebar', 'default');
+				sendAction('update-sidebar');
+				await updateMenu();
+			}
+		},
+		{
+			label: 'Hide Sidebar',
+			type: 'checkbox',
+			checked: config.get('sidebar') === 'hidden',
+			accelerator: 'CommandOrControl+Shift+S',
+			async click() {
+				// Toggle between default and hidden
+				config.set('sidebar', config.get('sidebar') === 'hidden' ? 'default' : 'hidden');
+				sendAction('update-sidebar');
+				await updateMenu();
+			}
+		},
+		{
+			label: 'Slim Sidebar',
+			type: 'checkbox',
+			checked: config.get('sidebar') === 'slim',
+			async click() {
+				config.set('sidebar', 'slim');
+				sendAction('update-sidebar');
+				await updateMenu();
+			}
+		},
+		{
+			label: 'Wide Sidebar',
+			type: 'checkbox',
+			checked: config.get('sidebar') === 'wide',
+			async click() {
+				config.set('sidebar', 'wide');
+				sendAction('update-sidebar');
+				await updateMenu();
+			}
+		}
+	];
+
 	const privacySubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Block Seen Indicator',
@@ -409,13 +454,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'separator'
 		},
 		{
-			label: 'Show Sidebar',
-			type: 'checkbox',
-			checked: !config.get('sidebarHidden'),
-			accelerator: 'CommandOrControl+Shift+S',
-			click() {
-				sendAction('toggle-sidebar');
-			}
+			label: 'Sidebar',
+			submenu: sidebarSubmenu
 		},
 		{
 			label: 'Show Message Buttons',

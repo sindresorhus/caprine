@@ -87,6 +87,16 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 /* SIDEBAR                       */
 /* ***************************** */
 
+/* Narrow view */
+@media (max-width: 900px) {
+	/* Icons area */
+	html:not(.sidebar-force-wide) ._6-xk {
+		height: auto;
+		padding-top: 36px;
+		flex-direction: column;
+	}
+}
+
 /* Hide sidebar (optionally) */
 html.sidebar-hidden ._1enh {
 	visibility: hidden;
@@ -94,6 +104,88 @@ html.sidebar-hidden ._1enh {
 	max-width: 0;
 	width: 0;
 	height: 0;
+}
+html.sidebar-hidden.os-darwin ._6ynl {
+	padding-left: 76px;
+}
+
+/* Forced slim sidebar (copied from @media (max-width: 900px) blocks) */
+
+html.sidebar-force-slim ._1ht5 ._1qt4._7vuo,
+html.sidebar-force-slim ._6-xk ._6-xo,
+html.sidebar-force-slim ._6-xv,
+html.sidebar-force-slim ._6-xl,
+html.sidebar-force-slim ._7sta._87u_,
+html.sidebar-force-slim ._1nq2._7vup,
+html.sidebar-force-slim ._6ymu,
+html.sidebar-force-slim ._1ht1 ._2j6._6zkg {
+	display: none;
+}
+html.sidebar-force-slim ._1enh._7q1s {
+	flex-basis: 74px;
+	min-width: 80px;
+}
+html.sidebar-force-slim ._6-xk {
+	justify-content: center;
+}
+html.sidebar-force-slim ._6-xp {
+	margin-left: 0;
+}
+html.sidebar-force-slim ._6zkc {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+html.sidebar-force-slim ._7t1l {
+	justify-content: center;
+}
+html.sidebar-force-slim ._1ht1 ._1qt3._6-5k {
+	margin-right: 0;
+}
+html.sidebar-force-slim ._1ht3._1ht1._6zk9 {
+	background-color: rgba(0, 132, 255, 0.2);
+	transition: background-color 0.5s;
+}
+html.sidebar-force-slim ._1ht1._6zk9._1ht2 {
+	transition: background-color 0.5s;
+}
+html.sidebar-force-slim ._7vuq {
+	display: block;
+}
+/* Copied from "Narrow view" block above */
+html.sidebar-force-slim ._6-xk {
+	height: auto;
+	padding-top: 36px;
+	flex-direction: column;
+}
+
+/* Forced wide sidebar (restores default styles overwritten by media query) */
+html.sidebar-force-wide ._1nq2._7vup,
+html.sidebar-force-wide ._1ht1 ._2j6._6zkg {
+	display: block;
+}
+html.sidebar-force-wide ._1enh._7q1s {
+	flex-basis: 25%;
+	min-width: 285px;
+}
+html.sidebar-force-wide ._6-xp {
+	margin-left: auto;
+}
+html.sidebar-force-wide ._6zkc {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+html.sidebar-force-wide ._7t1l {
+	justify-content: normal;
+}
+html.sidebar-force-wide ._1ht1 ._1qt3._6-5k {
+	margin-right: 12px;
+}
+html.sidebar-force-wide ._1ht3._1ht1._6zk9 {
+	background: none;
+}
+html.sidebar-force-wide ._1ht5 ._1qt4._7vuo,
+html.sidebar-force-wide ._7vuq {
+	display: flex;
 }
 
 /* Hide sidebar title */
@@ -125,16 +217,6 @@ html.sidebar-hidden ._1enh {
 /* macOS: Move the contextual back button so it's not obstructed by the native traffic lights */
 .os-darwin ._30yy._2oc9 {
 	margin-left: 65px !important;
-}
-
-/* Narrow view */
-@media (max-width: 900px) {
-	/* Icons area */
-	._6-xk {
-		height: auto !important;
-		padding-top: 36px !important;
-		flex-direction: column;
-	}
 }
 
 /* ***************************** */
