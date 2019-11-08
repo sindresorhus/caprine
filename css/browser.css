@@ -387,6 +387,12 @@ body.show-message-buttons ._4_j4 ._7mkk {
 	background: transparent !important;
 }
 
+/* Image preview sizes */
+._4tsk > [style*='width'] {
+	width: auto !important;
+	height: auto !important;
+}
+
 /* -- BLOCK START: Private Mode -- */
 /* Contact list: person name */
 html.private-mode ._1ht6 {
