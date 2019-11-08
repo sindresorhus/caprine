@@ -1,5 +1,6 @@
 import {app, BrowserWindow, dialog} from 'electron';
 import {is} from 'electron-util';
+import config from './config';
 
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
@@ -36,4 +37,15 @@ export function showRestartDialog(message: string): void {
 		app.relaunch();
 		app.quit();
 	}
+}
+
+export const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
+
+export function getUntrackedURL(url: string): string {
+	const trackingUrlPrefix = `https://l.${domain}/l.php`;
+	if (url.startsWith(trackingUrlPrefix)) {
+		url = new URL(url).searchParams.get('u')!;
+	}
+
+	return url;
 }

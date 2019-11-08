@@ -28,7 +28,7 @@ import doNotDisturb = require('@sindresorhus/do-not-disturb');
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
-import {sendAction, sendBackgroundAction} from './util';
+import {sendAction, sendBackgroundAction, domain, getUntrackedURL} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
@@ -47,25 +47,15 @@ electronContextMenu({
 	prepend: defaultActions => {
 		/*
 		TODO: Use menu option or use replacement of options (https://github.com/sindresorhus/electron-context-menu/issues/70)
-		This is a bit hacky, but we cannot import menuTemplate directly to populate the menu.
-		If we use prepend and return a MenuItem, we will get a duplicate menu item.
-		The cast below is because the type definition of Actions has no copyLink.
+		See explanation for this hacky solution here: https://github.com/sindresorhus/caprine/pull/1169
 		*/
-		(defaultActions as any).copyLink({
-			transform: (content: any) => {
-				if (content.startsWith('https://l.messenger.com/l.php')) {
-					content = new URL(content).searchParams.get('u');
-				}
-
-				return content;
-			}
+		defaultActions.copyLink({
+			transform: getUntrackedURL
 		});
 
 		return [];
 	}
 });
-
-const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
 app.setAppUserModelId('com.sindresorhus.caprine');
 
@@ -351,9 +341,6 @@ function createMainWindow(): BrowserWindow {
 
 (async () => {
 	await Promise.all([ensureOnline(), app.whenReady()]);
-
-	const trackingUrlPrefix = `https://l.${domain}/l.php`;
-
 	await updateAppMenu();
 	mainWindow = createMainWindow();
 
@@ -479,10 +466,7 @@ function createMainWindow(): BrowserWindow {
 				(event as any).newGuest = new BrowserWindow(options);
 			}
 		} else {
-			if (url.startsWith(trackingUrlPrefix)) {
-				url = new URL(url).searchParams.get('u')!;
-			}
-
+			url = getUntrackedURL(url);
 			shell.openExternalSync(url);
 		}
 	});
