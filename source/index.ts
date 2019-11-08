@@ -46,11 +46,11 @@ electronDl();
 electronContextMenu({
 	prepend: defaultActions => {
 		/*
-		 * TODO: Use menu option or use replacement of options (https://github.com/sindresorhus/electron-context-menu/issues/70)
-		 * This is a bit hacky, but we cannot import menuTemplate directly to populate the menu.
-		 * If we use prepend and return a MenuItem, we will get a duplicate menu item.
-		 * The cast below is because the type definition of Actions has no copyLink.
-		 */
+		TODO: Use menu option or use replacement of options (https://github.com/sindresorhus/electron-context-menu/issues/70)
+		This is a bit hacky, but we cannot import menuTemplate directly to populate the menu.
+		If we use prepend and return a MenuItem, we will get a duplicate menu item.
+		The cast below is because the type definition of Actions has no copyLink.
+		*/
 		(defaultActions as any).copyLink({
 			transform: (content: any) => {
 				if (content.startsWith('https://l.messenger.com/l.php')) {
