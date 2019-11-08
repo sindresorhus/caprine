@@ -286,7 +286,6 @@ async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined>
 	}
 
 	if (style === 'native') {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!getWindow()) {
 			return undefined;
 		}

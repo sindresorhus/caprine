@@ -1,11 +1,9 @@
 import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
 import {api, is} from 'electron-util';
 import elementReady = require('element-ready');
-
 import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
-
 import {createConversationList} from './browser/conversation-list';
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
@@ -124,7 +122,7 @@ ipc.on('search', () => {
 ipc.on('insert-gif', () => {
 	const gifElement =
 		// Old UI
-		document.querySelector<HTMLElement>('._yht') ||
+		document.querySelector<HTMLElement>('._yht') ??
 		// New UI
 		[...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
 			element.querySelector<HTMLElement>('svg path[d^="M27.002,13.5"]')
@@ -144,7 +142,7 @@ ipc.on('insert-emoji', async () => {
 ipc.on('insert-sticker', () => {
 	const stickerElement =
 		// Old UI
-		document.querySelector<HTMLElement>('._4rv6') ||
+		document.querySelector<HTMLElement>('._4rv6') ??
 		// New UI
 		[...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
 			element.querySelector<HTMLElement>('svg path[d^="M22.5,18.5 L27.998,18.5"]')
@@ -441,7 +439,6 @@ async function selectConversation(index: number): Promise<void> {
 
 	const conversation = list.children[index];
 
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!conversation) {
 		console.error('Could not find conversation', index);
 		return;
@@ -622,6 +619,7 @@ window.addEventListener('message', async ({data: {type, data}}) => {
 
 	if (type === 'notification-reply') {
 		await sendReply(data.reply);
+
 		if (data.previousConversation) {
 			await selectConversation(data.previousConversation);
 		}
@@ -629,18 +627,18 @@ window.addEventListener('message', async ({data: {type, data}}) => {
 });
 
 function showNotification({id, title, body, icon, silent}: NotificationEvent): void {
-	const img = new Image();
-	img.crossOrigin = 'anonymous';
-	img.src = icon;
+	const image = new Image();
+	image.crossOrigin = 'anonymous';
+	image.src = icon;
 
-	img.addEventListener('load', () => {
+	image.addEventListener('load', () => {
 		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d')!;
+		const context = canvas.getContext('2d')!;
 
-		canvas.width = img.width;
-		canvas.height = img.height;
+		canvas.width = image.width;
+		canvas.height = image.height;
 
-		ctx.drawImage(img, 0, 0, img.width, img.height);
+		context.drawImage(image, 0, 0, image.width, image.height);
 
 		ipc.send('notification', {
 			id,
@@ -654,26 +652,27 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 
 async function sendReply(message: string): Promise<void> {
 	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"]');
-	if (inputField) {
-		const previousMessage = inputField.textContent;
+	if (!inputField) {
+		return;
+	}
 
-		// Send message
-		inputField.focus();
-		insertMessageText(message, inputField);
+	const previousMessage = inputField.textContent;
 
-		const sendButton = await elementReady<HTMLElement>('._30yy._38lh', {stopOnDomReady: false});
+	// Send message
+	inputField.focus();
+	insertMessageText(message, inputField);
 
-		if (!sendButton) {
-			console.error('Could not find send button');
-			return;
-		}
+	const sendButton = await elementReady<HTMLElement>('._30yy._38lh', {stopOnDomReady: false});
+	if (!sendButton) {
+		console.error('Could not find send button');
+		return;
+	}
 
-		sendButton.click();
+	sendButton.click();
 
-		// Restore (possible) previous message
-		if (previousMessage) {
-			insertMessageText(previousMessage, inputField);
-		}
+	// Restore (possible) previous message
+	if (previousMessage) {
+		insertMessageText(previousMessage, inputField);
 	}
 }
 

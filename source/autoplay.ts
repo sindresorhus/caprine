@@ -52,10 +52,8 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 			style: {width, height}
 		} = firstParent;
 
-		// TODO: Fix this violation
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		const style = parentWithBackground.style || window.getComputedStyle(parentWithBackground);
-		const backgroundImageSrc = style.backgroundImage!.slice(4, -1).replace(/"/g, '');
+		const backgroundImageSrc = style.backgroundImage.slice(4, -1).replace(/"/g, '');
 
 		// Create the image to replace the video as a placeholder
 		const image = document.createElement('img');
@@ -68,8 +66,8 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 			image.classList.add('disabledAutoPlayImgBottomRadius');
 		}
 
-		image.setAttribute('height', height!);
-		image.setAttribute('width', width!);
+		image.setAttribute('height', height);
+		image.setAttribute('width', width);
 
 		// Create a seperate instance of the play icon
 		// Clone the existing icon to get the original events

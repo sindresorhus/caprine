@@ -38,7 +38,7 @@ import {caprineIconPath} from './constants';
 ipcMain.setMaxListeners(100);
 
 electronDebug({
-	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
+	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger.com sometimes gets stuck after computer waking up
 	showDevTools: false
 });
 
@@ -69,7 +69,7 @@ if (!is.development && !is.linux) {
 
 let mainWindow: BrowserWindow;
 let isQuitting = false;
-let prevMessageCount = 0;
+let previousMessageCount = 0;
 let dockMenu: Menu;
 let isDNDEnabled = false;
 
@@ -78,7 +78,6 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 app.on('second-instance', () => {
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
@@ -109,10 +108,10 @@ function updateBadge(conversations: Conversation[]): void {
 			is.macos &&
 			!isDNDEnabled &&
 			config.get('bounceDockOnMessage') &&
-			prevMessageCount !== messageCount
+			previousMessageCount !== messageCount
 		) {
 			app.dock.bounce('informational');
-			prevMessageCount = messageCount;
+			previousMessageCount = messageCount;
 		}
 	}
 
@@ -286,7 +285,7 @@ function createMainWindow(): BrowserWindow {
 
 	win.loadURL(mainURL);
 
-	win.on('close', e => {
+	win.on('close', event => {
 		if (config.get('quitOnWindowClose')) {
 			app.quit();
 			return;
@@ -303,7 +302,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		if (!isQuitting) {
-			e.preventDefault();
+			event.preventDefault();
 
 			// Workaround for https://github.com/electron/electron/issues/10023
 			win.blur();
@@ -385,6 +384,7 @@ function createMainWindow(): BrowserWindow {
 					}
 				};
 			});
+
 			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
 	}
@@ -528,7 +528,6 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		mainWindow.show();
 	}
@@ -539,7 +538,6 @@ app.on('before-quit', () => {
 
 	// Checking whether the window exists to work around an Electron race issue:
 	// https://github.com/sindresorhus/caprine/issues/809
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		config.set('lastWindowState', mainWindow.getNormalBounds());
 	}
