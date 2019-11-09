@@ -324,15 +324,15 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	win.on('resize', () => {
-		config.set('lastWindowState', win.getNormalBounds());
+		config.set('lastWindowState', win.getNormalBounds() as any);
 	});
 
 	win.on('maximize', () => {
-		config.set('maximizedState', true);
+		config.set('lastWindowState.isMaximized' as any, true);
 	});
 
 	win.on('unmaximize', () => {
-		config.set('maximizedState', false);
+		config.set('lastWindowState.isMaximized' as any, false);
 	});
 
 	return win;
@@ -430,7 +430,7 @@ function createMainWindow(): BrowserWindow {
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
 			mainWindow.hide();
 		} else {
-			if (config.get('maximizedState')) {
+			if (config.get('lastWindowState.isMaximized' as any)) {
 				mainWindow.maximize();
 			}
 
@@ -553,7 +553,9 @@ app.on('before-quit', () => {
 	// https://github.com/sindresorhus/caprine/issues/809
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
-		config.set('lastWindowState', mainWindow.getNormalBounds());
+		const isMaximized = config.get('lastWindowState.isMaximized' as any);
+		config.set('lastWindowState', mainWindow.getNormalBounds() as any);
+		config.set('lastWindowState.isMaximized' as any, isMaximized);
 	}
 });
 

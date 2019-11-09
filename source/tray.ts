@@ -19,8 +19,9 @@ export default {
 			if (win.isVisible()) {
 				win.hide();
 			} else {
-				if (config.get('maximizedState')) {
+				if (config.get('lastWindowState.isMaximized' as any)) {
 					win.maximize();
+					win.focus();
 				} else {
 					win.show();
 				}

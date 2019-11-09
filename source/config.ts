@@ -12,8 +12,8 @@ type StoreType = {
 		y: number;
 		width: number;
 		height: number;
+		isMaximized: boolean;
 	};
-	maximizedState: boolean;
 	menuBarMode: boolean;
 	showDockIcon: boolean;
 	showTrayIcon: boolean;
@@ -78,13 +78,17 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 			},
 			height: {
 				type: 'number'
+			},
+			isMaximized: {
+				type: 'boolean'
 			}
 		},
 		default: {
 			x: undefined,
 			y: undefined,
 			width: 800,
-			height: 600
+			height: 600,
+			isMaximized: false
 		}
 	},
 	menuBarMode: {
@@ -113,10 +117,6 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	showMessageButtons: {
 		type: 'boolean',
 		default: true
-	},
-	maximizedState: {
-		type: 'boolean',
-		default: false
 	},
 	launchMinimized: {
 		type: 'boolean',
