@@ -12,16 +12,6 @@ import {memoize} from 'lodash';
 import config from './config';
 import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
 
-// TODO: removeListener is typed incorrectly in v7.0.0. Remove on later version
-// Issue: https://github.com/electron/electron/issues/20705
-// PR: https://github.com/electron/electron/pull/20712
-declare module 'electron' {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	class IpcMain {
-		removeListener(event: string, listener: (...args: any[]) => void): this;
-	}
-}
-
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/
 const excludedEmoji = new Set([
