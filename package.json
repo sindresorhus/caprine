@@ -49,7 +49,7 @@
 		"@typescript-eslint/eslint-plugin": "^2.6.1",
 		"@typescript-eslint/parser": "^2.6.1",
 		"del-cli": "^3.0.0",
-		"electron": "^6.0.11",
+		"electron": "^7.1.1",
 		"electron-builder": "^22.1.0",
 		"eslint-config-xo-typescript": "^0.21.0",
 		"husky": "^3.0.9",
