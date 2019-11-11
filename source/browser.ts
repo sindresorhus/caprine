@@ -311,14 +311,14 @@ function updateVibrancy(): void {
 function updateSidebar(): void {
 	const {classList} = document.documentElement;
 
-	classList.remove('sidebar-hidden', 'sidebar-force-slim', 'sidebar-force-wide');
+	classList.remove('sidebar-hidden', 'sidebar-force-narrow', 'sidebar-force-wide');
 
 	switch (config.get('sidebar')) {
 		case 'hidden':
 			classList.add('sidebar-hidden');
 			break;
-		case 'slim':
-			classList.add('sidebar-force-slim');
+		case 'narrow':
+			classList.add('sidebar-force-narrow');
 			break;
 		case 'wide':
 			classList.add('sidebar-force-wide');

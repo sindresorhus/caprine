@@ -110,11 +110,11 @@ export default async function updateMenu(): Promise<Menu> {
 			}
 		},
 		{
-			label: 'Slim Sidebar',
+			label: 'Narrow Sidebar',
 			type: 'checkbox',
-			checked: config.get('sidebar') === 'slim',
+			checked: config.get('sidebar') === 'narrow',
 			async click() {
-				config.set('sidebar', 'slim');
+				config.set('sidebar', 'narrow');
 				sendAction('update-sidebar');
 				await updateMenu();
 			}

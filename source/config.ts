@@ -30,7 +30,7 @@ type StoreType = {
 	};
 	emojiStyle: 'native' | 'facebook-3-0' | 'messenger-1-0' | 'facebook-2-2';
 	useWorkChat: boolean;
-	sidebar: 'default' | 'hidden' | 'slim' | 'wide';
+	sidebar: 'default' | 'hidden' | 'narrow' | 'wide';
 	autoHideMenuBar: boolean;
 	notificationsMuted: boolean;
 	hardwareAcceleration: boolean;
@@ -155,7 +155,7 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	},
 	sidebar: {
 		type: 'string',
-		enum: ['default', 'hidden', 'slim', 'wide'],
+		enum: ['default', 'hidden', 'narrow', 'wide'],
 		default: 'default'
 	},
 	autoHideMenuBar: {
@@ -196,8 +196,17 @@ function updateVibrancySetting(store: Store): void {
 	}
 }
 
+function updateSidebarSetting(store: Store): void {
+	if (store.get('sidebarHidden')) {
+		store.set('sidebar', 'hidden');
+	} else {
+		store.set('sidebar', 'default');
+	}
+}
+
 function migrate(store: Store): void {
 	updateVibrancySetting(store);
+	updateSidebarSetting(store);
 }
 
 const store = new Store<StoreType>({schema});

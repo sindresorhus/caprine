@@ -109,50 +109,50 @@ html.sidebar-hidden.os-darwin ._6ynl {
 	padding-left: 76px;
 }
 
-/* Forced slim sidebar (copied from @media (max-width: 900px) blocks) */
+/* Forced narrow sidebar (copied from @media (max-width: 900px) blocks) */
 
-html.sidebar-force-slim ._1ht5 ._1qt4._7vuo,
-html.sidebar-force-slim ._6-xk ._6-xo,
-html.sidebar-force-slim ._6-xv,
-html.sidebar-force-slim ._6-xl,
-html.sidebar-force-slim ._7sta._87u_,
-html.sidebar-force-slim ._1nq2._7vup,
-html.sidebar-force-slim ._6ymu,
-html.sidebar-force-slim ._1ht1 ._2j6._6zkg {
+html.sidebar-force-narrow ._1ht5 ._1qt4._7vuo,
+html.sidebar-force-narrow ._6-xk ._6-xo,
+html.sidebar-force-narrow ._6-xv,
+html.sidebar-force-narrow ._6-xl,
+html.sidebar-force-narrow ._7sta._87u_,
+html.sidebar-force-narrow ._1nq2._7vup,
+html.sidebar-force-narrow ._6ymu,
+html.sidebar-force-narrow ._1ht1 ._2j6._6zkg {
 	display: none;
 }
-html.sidebar-force-slim ._1enh._7q1s {
+html.sidebar-force-narrow ._1enh._7q1s {
 	flex-basis: 74px;
 	min-width: 80px;
 }
-html.sidebar-force-slim ._6-xk {
+html.sidebar-force-narrow ._6-xk {
 	justify-content: center;
 }
-html.sidebar-force-slim ._6-xp {
+html.sidebar-force-narrow ._6-xp {
 	margin-left: 0;
 }
-html.sidebar-force-slim ._6zkc {
+html.sidebar-force-narrow ._6zkc {
 	padding-left: 4px;
 	padding-right: 4px;
 }
-html.sidebar-force-slim ._7t1l {
+html.sidebar-force-narrow ._7t1l {
 	justify-content: center;
 }
-html.sidebar-force-slim ._1ht1 ._1qt3._6-5k {
+html.sidebar-force-narrow ._1ht1 ._1qt3._6-5k {
 	margin-right: 0;
 }
-html.sidebar-force-slim ._1ht3._1ht1._6zk9 {
+html.sidebar-force-narrow ._1ht3._1ht1._6zk9 {
 	background-color: rgba(0, 132, 255, 0.2);
 	transition: background-color 0.5s;
 }
-html.sidebar-force-slim ._1ht1._6zk9._1ht2 {
+html.sidebar-force-narrow ._1ht1._6zk9._1ht2 {
 	transition: background-color 0.5s;
 }
-html.sidebar-force-slim ._7vuq {
+html.sidebar-force-narrow ._7vuq {
 	display: block;
 }
 /* Copied from "Narrow view" block above */
-html.sidebar-force-slim ._6-xk {
+html.sidebar-force-narrow ._6-xk {
 	height: auto;
 	padding-top: 36px;
 	flex-direction: column;
