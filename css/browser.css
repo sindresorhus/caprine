@@ -443,7 +443,35 @@ html.private-mode ._1htf > span:first-child {
 
 /* -- BLOCK START: Small conversations window -- */
 
+/* Restrict media width to viewport */
+._3zvs div[role='presentation'] > div, /* photos and GIFs */
+._53j5 /* videos */ {
+	width: auto !important;
+	height: auto !important;
+}
+
+._53j5 video {
+	width: auto !important;
+	height: auto !important;
+	max-width: 100%;
+}
+
 @media (max-width: 500px) {
+	/* Inline event preview */
+	._51mx > td {
+		display: block;
+	}
+
+	/* Event title description */
+	._2pij {
+		padding-right: 0 !important;
+	}
+
+	/* Event action buttons (Interested) */
+	.hRght {
+		margin-top: 12px;
+	}
+
 	._20bp {
 		flex-direction: column !important;
 	}

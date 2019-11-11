@@ -4,7 +4,6 @@ import {
 	app,
 	ipcMain,
 	nativeImage,
-	systemPreferences,
 	screen as electronScreen,
 	session,
 	shell,
@@ -12,9 +11,7 @@ import {
 	Menu,
 	Notification,
 	MenuItemConstructorOptions,
-	Event as ElectronEvent,
-	RequestHeaders,
-	OnSendHeadersDetails
+	Event as ElectronEvent
 } from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
@@ -111,7 +108,7 @@ function updateBadge(conversations: Conversation[]): void {
 
 	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge') && !isDNDEnabled) {
-			app.setBadgeCount(messageCount);
+			app.badgeCount = messageCount;
 		}
 
 		if (
@@ -166,7 +163,18 @@ ipcMain.on('update-tray-icon', updateTrayIcon);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
-	requestHeaders?: RequestHeaders;
+	requestHeaders?: Record<string, string>;
+}
+
+interface OnSendHeadersDetails {
+	id: number;
+	url: string;
+	method: string;
+	webContentsId?: number;
+	resourceType: string;
+	referrer: string;
+	timestamp: number;
+	requestHeaders: Record<string, string>;
 }
 
 function enableHiresResources(): void {
@@ -180,10 +188,10 @@ function enableHiresResources(): void {
 
 	const filter = {urls: [`*://*.${messengerDomain}/`]};
 
-	session.defaultSession!.webRequest.onBeforeSendHeaders(
+	session.defaultSession.webRequest.onBeforeSendHeaders(
 		filter,
 		(details: OnSendHeadersDetails, callback: (response: BeforeSendHeadersResponse) => void) => {
-			let cookie = (details.requestHeaders as any).Cookie;
+			let cookie = details.requestHeaders.Cookie;
 
 			if (cookie && details.method === 'GET') {
 				if (/(?:; )?dpr=\d/.test(cookie)) {
@@ -215,7 +223,7 @@ function initRequestsFiltering(): void {
 		]
 	};
 
-	session.defaultSession!.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
+	session.defaultSession.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
 		if (url.includes('emoji.php')) {
 			callback(await processEmojiUrl(url));
 		} else if (url.includes('typ.php')) {
@@ -236,7 +244,7 @@ function setUserLocale(): void {
 		value: userLocale
 	};
 
-	session.defaultSession!.cookies.set(cookie);
+	session.defaultSession.cookies.set(cookie);
 }
 
 function setNotificationsMute(status: boolean): void {
@@ -262,7 +270,7 @@ function createMainWindow(): BrowserWindow {
 		'https://www.messenger.com/login/';
 
 	const win = new BrowserWindow({
-		title: app.getName(),
+		title: app.name,
 		show: false,
 		x: lastWindowState.x,
 		y: lastWindowState.y,
@@ -453,7 +461,7 @@ function createMainWindow(): BrowserWindow {
 		);
 	});
 
-	webContents.on('new-window', (event: Event, url, frameName, _disposition, options) => {
+	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
 		if (url === 'about:blank') {
@@ -461,17 +469,18 @@ function createMainWindow(): BrowserWindow {
 				// Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
+				options.webPreferences = options.webPreferences || {};
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				(event as any).newGuest = new BrowserWindow(options);
 			}
 		} else {
 			url = stripTrackingFromUrl(url);
-			shell.openExternalSync(url);
+			await shell.openExternal(url);
 		}
 	});
 
-	webContents.on('will-navigate', (event, url) => {
+	webContents.on('will-navigate', async (event, url) => {
 		const isMessengerDotCom = (url: string): boolean => {
 			const {hostname} = new URL(url);
 			return hostname.endsWith('.messenger.com');
@@ -510,7 +519,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		event.preventDefault();
-		shell.openExternalSync(url);
+		await shell.openExternal(url);
 	});
 })();
 
@@ -518,12 +527,6 @@ if (is.macos) {
 	ipcMain.on('set-vibrancy', () => {
 		mainWindow.setBackgroundColor('#00000000'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
-
-		if (config.get('followSystemAppearance')) {
-			systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
-		} else {
-			systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
-		}
 	});
 }
 
