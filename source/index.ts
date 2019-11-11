@@ -28,7 +28,7 @@ import doNotDisturb = require('@sindresorhus/do-not-disturb');
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
-import {sendAction, sendBackgroundAction, domain, getUntrackedURL} from './util';
+import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
@@ -50,7 +50,7 @@ electronContextMenu({
 		See explanation for this hacky solution here: https://github.com/sindresorhus/caprine/pull/1169
 		*/
 		defaultActions.copyLink({
-			transform: getUntrackedURL
+			transform: stripTrackingFromUrl
 		});
 
 		return [];
@@ -178,7 +178,7 @@ function enableHiresResources(): void {
 		return;
 	}
 
-	const filter = {urls: [`*://*.${domain}/`]};
+	const filter = {urls: [`*://*.${messengerDomain}/`]};
 
 	session.defaultSession!.webRequest.onBeforeSendHeaders(
 		filter,
@@ -206,10 +206,10 @@ function enableHiresResources(): void {
 function initRequestsFiltering(): void {
 	const filter = {
 		urls: [
-			`*://*.${domain}/*typ.php*`, // Type indicator blocker
-			`*://*.${domain}/*change_read_status.php*`, // Seen indicator blocker
-			`*://*.${domain}/*delivery_receipts*`, // Delivery receipts indicator blocker
-			`*://*.${domain}/*unread_threads*`, // Delivery receipts indicator blocker
+			`*://*.${messengerDomain}/*typ.php*`, // Type indicator blocker
+			`*://*.${messengerDomain}/*change_read_status.php*`, // Seen indicator blocker
+			`*://*.${messengerDomain}/*delivery_receipts*`, // Delivery receipts indicator blocker
+			`*://*.${messengerDomain}/*unread_threads*`, // Delivery receipts indicator blocker
 			'*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
 			'*://*.facebook.com/images/emoji.php/v9/*' // Emoji
 		]
@@ -466,7 +466,7 @@ function createMainWindow(): BrowserWindow {
 				(event as any).newGuest = new BrowserWindow(options);
 			}
 		} else {
-			url = getUntrackedURL(url);
+			url = stripTrackingFromUrl(url);
 			shell.openExternalSync(url);
 		}
 	});

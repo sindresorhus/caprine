@@ -39,10 +39,10 @@ export function showRestartDialog(message: string): void {
 	}
 }
 
-export const domain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
+export const messengerDomain = config.get('useWorkChat') ? 'facebook.com' : 'messenger.com';
 
-export function getUntrackedURL(url: string): string {
-	const trackingUrlPrefix = `https://l.${domain}/l.php`;
+export function stripTrackingFromUrl(url: string): string {
+	const trackingUrlPrefix = `https://l.${messengerDomain}/l.php`;
 	if (url.startsWith(trackingUrlPrefix)) {
 		url = new URL(url).searchParams.get('u')!;
 	}
