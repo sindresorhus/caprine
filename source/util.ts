@@ -24,7 +24,10 @@ export function showRestartDialog(message: string): void {
 	const buttonIndex = dialog.showMessageBoxSync({
 		message,
 		detail: 'Do you want to restart the app now?',
-		buttons: ['Restart', 'Ignore'],
+		buttons: [
+			'Restart',
+			'Ignore'
+		],
 		defaultId: 0,
 		cancelId: 1
 	});

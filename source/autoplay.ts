@@ -28,7 +28,10 @@ const playedVideos: HTMLVideoElement[] = [];
 function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 	for (const video of videos) {
 		// Don't disable currently playing videos
-		if (playedVideos.includes(video)) continue;
+		if (playedVideos.includes(video)) {
+			continue;
+		}
+
 		const firstParent = video.parentElement!;
 
 		// Video parent element which has a snapshot of the video as a background image
@@ -49,10 +52,8 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 			style: {width, height}
 		} = firstParent;
 
-		// TODO: Fix this violation
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		const style = parentWithBackground.style || window.getComputedStyle(parentWithBackground);
-		const backgroundImageSrc = style.backgroundImage!.slice(4, -1).replace(/"/g, '');
+		const backgroundImageSrc = style.backgroundImage.slice(4, -1).replace(/"/g, '');
 
 		// Create the image to replace the video as a placeholder
 		const image = document.createElement('img');
@@ -65,8 +66,8 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 			image.classList.add('disabledAutoPlayImgBottomRadius');
 		}
 
-		image.setAttribute('height', height!);
-		image.setAttribute('width', width!);
+		image.setAttribute('height', height);
+		image.setAttribute('width', width);
 
 		// Create a seperate instance of the play icon
 		// Clone the existing icon to get the original events
@@ -137,7 +138,9 @@ const conversationDivObserver = new MutationObserver(_ => {
 	let conversation = document.querySelector(`#${conversationId}`);
 
 	// Fetch it using `querySelector` if no luck with the `conversationId`
-	if (!conversation) conversation = document.querySelector(selectors.conversationSelector);
+	if (!conversation) {
+		conversation = document.querySelector(selectors.conversationSelector);
+	}
 
 	// If we have a new reference
 	if (conversation && conversationWindow !== conversation) {
@@ -155,5 +158,7 @@ const videoObserver = new MutationObserver(_ => {
 	// Select by tag instead of iterating over mutations which is more performant
 	const videos = getVideos();
 	// If videos were added disable autoplay
-	if (videos.length > 0) disableVideoAutoplay(videos);
+	if (videos.length > 0) {
+		disableVideoAutoplay(videos);
+	}
 });

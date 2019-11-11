@@ -57,7 +57,15 @@
 				notifications.set(this._id, this as any);
 
 				window.postMessage(
-					{type: 'notification', data: {title, id: this._id, ...options, body}},
+					{
+						type: 'notification',
+						data: {
+							title,
+							id: this._id,
+							...options,
+							body
+						}
+					},
 					'*'
 				);
 			}

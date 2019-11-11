@@ -31,11 +31,12 @@ import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 import {setUpMenuBarMode} from './menu-bar-mode';
+import {caprineIconPath} from './constants';
 
 ipcMain.setMaxListeners(100);
 
 electronDebug({
-	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger sometimes gets stuck after computer waking up
+	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger.com sometimes gets stuck after computer waking up
 	showDevTools: false
 });
 
@@ -66,7 +67,7 @@ if (!is.development && !is.linux) {
 
 let mainWindow: BrowserWindow;
 let isQuitting = false;
-let prevMessageCount = 0;
+let previousMessageCount = 0;
 let dockMenu: Menu;
 let isDNDEnabled = false;
 
@@ -75,7 +76,6 @@ if (!app.requestSingleInstanceLock()) {
 }
 
 app.on('second-instance', () => {
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		if (mainWindow.isMinimized()) {
 			mainWindow.restore();
@@ -106,10 +106,10 @@ function updateBadge(conversations: Conversation[]): void {
 			is.macos &&
 			!isDNDEnabled &&
 			config.get('bounceDockOnMessage') &&
-			prevMessageCount !== messageCount
+			previousMessageCount !== messageCount
 		) {
 			app.dock.bounce('informational');
-			prevMessageCount = messageCount;
+			previousMessageCount = messageCount;
 		}
 	}
 
@@ -256,9 +256,9 @@ function createMainWindow(): BrowserWindow {
 	const isDarkMode = config.get('darkMode');
 
 	// Messenger or Work Chat
-	const mainURL = config.get('useWorkChat')
-		? 'https://work.facebook.com/chat'
-		: 'https://www.messenger.com/login/';
+	const mainURL = config.get('useWorkChat') ?
+		'https://work.facebook.com/chat' :
+		'https://www.messenger.com/login/';
 
 	const win = new BrowserWindow({
 		title: app.getName(),
@@ -267,7 +267,7 @@ function createMainWindow(): BrowserWindow {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: is.linux ? path.join(__dirname, '..', 'static', 'Icon.png') : undefined,
+		icon: is.linux ? caprineIconPath : undefined,
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
@@ -294,7 +294,7 @@ function createMainWindow(): BrowserWindow {
 
 	win.loadURL(mainURL);
 
-	win.on('close', e => {
+	win.on('close', event => {
 		if (config.get('quitOnWindowClose')) {
 			app.quit();
 			return;
@@ -303,23 +303,24 @@ function createMainWindow(): BrowserWindow {
 		// Workaround for https://github.com/electron/electron/issues/20263
 		// Closing the app window when on full screen leaves a black screen
 		// Exit fullscreen before closing
-		if (is.macos) {
-			if (mainWindow.isFullScreen()) {
-				mainWindow.once('leave-full-screen', () => {
-					mainWindow.hide();
-				});
-				mainWindow.setFullScreen(false);
-			} else {
+		if (is.macos && mainWindow.isFullScreen()) {
+			mainWindow.once('leave-full-screen', () => {
 				mainWindow.hide();
-			}
+			});
+			mainWindow.setFullScreen(false);
 		}
 
 		if (!isQuitting) {
-			e.preventDefault();
+			event.preventDefault();
 
 			// Workaround for https://github.com/electron/electron/issues/10023
 			win.blur();
-			win.hide();
+			if (is.macos) {
+				// On macOS we're using `app.hide()` in order to focus the previous window correctly
+				app.hide();
+			} else {
+				win.hide();
+			}
 		}
 	});
 
@@ -392,6 +393,7 @@ function createMainWindow(): BrowserWindow {
 					}
 				};
 			});
+
 			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
 	}
@@ -538,7 +540,6 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 });
 
 app.on('activate', () => {
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		mainWindow.show();
 	}
@@ -549,7 +550,6 @@ app.on('before-quit', () => {
 
 	// Checking whether the window exists to work around an Electron race issue:
 	// https://github.com/sindresorhus/caprine/issues/809
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (mainWindow) {
 		config.set('lastWindowState', mainWindow.getNormalBounds());
 	}

@@ -13,6 +13,7 @@ import config from './config';
 import {sendAction, showRestartDialog} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
+import {caprineIconPath} from './constants';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -233,6 +234,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Always on Top',
+			id: 'always-on-top',
 			type: 'checkbox',
 			accelerator: 'CommandOrControl+Shift+T',
 			checked: config.get('alwaysOnTop'),
@@ -380,7 +382,25 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			checked: config.get('privateMode'),
 			accelerator: 'CommandOrControl+Shift+N',
-			click() {
+			click(menuItem, _browserWindow, event) {
+				if (!config.get('privateMode') && event.shiftKey) {
+					const confirmPrivateMode = dialog.showMessageBoxSync({
+						message: 'Are you sure you want to hide names and avatars?',
+						detail: 'This was triggered by Command/Control+Shift+N.',
+						buttons: [
+							'Hide',
+							'Don\'t Hide'
+						],
+						defaultId: 0,
+						cancelId: 1
+					}) === 0;
+
+					if (!confirmPrivateMode) {
+						menuItem.checked = false;
+						return;
+					}
+				}
+
 				config.set('privateMode', !config.get('privateMode'));
 				sendAction('set-private-mode');
 			}
@@ -570,7 +590,7 @@ ${debugInfo()}`;
 				type: 'separator'
 			},
 			aboutMenuItem({
-				icon: path.join(__dirname, '..', 'static', 'Icon.png'),
+				icon: caprineIconPath,
 				text: 'Created by Sindre Sorhus'
 			})
 		);
@@ -629,7 +649,6 @@ ${debugInfo()}`;
 			...switchItems
 		]),
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
@@ -642,11 +661,9 @@ ${debugInfo()}`;
 			]
 		},
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'viewMenu',
 			submenu: viewSubmenu
 		},
@@ -655,7 +672,6 @@ ${debugInfo()}`;
 			submenu: conversationSubmenu
 		},
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'windowMenu'
 		},
 		{
@@ -666,7 +682,6 @@ ${debugInfo()}`;
 
 	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
@@ -697,11 +712,9 @@ ${debugInfo()}`;
 			]
 		},
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'editMenu'
 		},
 		{
-			// @ts-ignore Buggy Electron types
 			role: 'viewMenu',
 			submenu: viewSubmenu
 		},

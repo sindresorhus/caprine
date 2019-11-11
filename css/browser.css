@@ -133,6 +133,7 @@ html.sidebar-hidden ._1enh {
 	._6-xk {
 		height: auto !important;
 		padding-top: 36px !important;
+		flex-direction: column;
 	}
 }
 
@@ -384,6 +385,12 @@ body.show-message-buttons ._4_j4 ._7mkk {
 /* GIF search field */
 ._3mtr ._4qcs {
 	background: transparent !important;
+}
+
+/* Image preview sizes */
+._4tsk > [style*='width'] {
+	width: auto !important;
+	height: auto !important;
 }
 
 /* -- BLOCK START: Private Mode -- */

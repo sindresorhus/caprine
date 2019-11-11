@@ -25,7 +25,7 @@ function drawIcon(size: number, img?: HTMLImageElement): HTMLCanvasElement {
 		const ctx = canvas.getContext('2d')!;
 		ctx.save();
 		ctx.beginPath();
-		ctx.arc(size / 2 + padding.left, size / 2 + padding.top, size / 2, 0, Math.PI * 2, true);
+		ctx.arc((size / 2) + padding.left, (size / 2) + padding.top, (size / 2), 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
 
@@ -130,7 +130,7 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 	return conversation as Conversation;
 }
 
-async function createConversationList(): Promise<Conversation[]> {
+export async function createConversationList(): Promise<Conversation[]> {
 	const list = await elementReady<HTMLElement>(selectors.conversationList, {
 		stopOnDomReady: false
 	});
