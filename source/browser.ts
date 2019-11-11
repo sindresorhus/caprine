@@ -272,12 +272,13 @@ ipc.on('toggle-video-autoplay', () => {
 });
 
 function setDarkMode(): void {
-	if (is.macos && config.get('followSystemAppearance')) {
-		document.documentElement.classList.toggle('dark-mode', api.systemPreferences.isDarkMode());
+	if (config.get('followSystemAppearance')) {
+		api.nativeTheme.themeSource = 'system';
 	} else {
-		document.documentElement.classList.toggle('dark-mode', config.get('darkMode'));
+		api.nativeTheme.themeSource = config.get('darkMode') ? 'dark' : 'light';
 	}
 
+	document.documentElement.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
 	updateVibrancy();
 }
 

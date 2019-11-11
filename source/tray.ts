@@ -135,7 +135,7 @@ function updateToolTip(counter: number): void {
 		return;
 	}
 
-	let tooltip = app.getName();
+	let tooltip = app.name;
 
 	if (counter > 0) {
 		tooltip += `- ${counter} unread ${counter === 1 ? 'message' : 'messages'}`;

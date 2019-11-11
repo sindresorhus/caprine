@@ -4,7 +4,6 @@ import {
 	app,
 	ipcMain,
 	nativeImage,
-	systemPreferences,
 	screen as electronScreen,
 	session,
 	shell,
@@ -99,7 +98,7 @@ function updateBadge(conversations: Conversation[]): void {
 
 	if (is.macos || is.linux) {
 		if (config.get('showUnreadBadge') && !isDNDEnabled) {
-			app.setBadgeCount(messageCount);
+			app.badgeCount = messageCount;
 		}
 
 		if (
@@ -261,7 +260,7 @@ function createMainWindow(): BrowserWindow {
 		'https://www.messenger.com/login/';
 
 	const win = new BrowserWindow({
-		title: app.getName(),
+		title: app.name,
 		show: false,
 		x: lastWindowState.x,
 		y: lastWindowState.y,
@@ -524,12 +523,6 @@ if (is.macos) {
 	ipcMain.on('set-vibrancy', () => {
 		mainWindow.setBackgroundColor('#00000000'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
-
-		if (config.get('followSystemAppearance')) {
-			systemPreferences.setAppLevelAppearance(systemPreferences.isDarkMode() ? 'dark' : 'light');
-		} else {
-			systemPreferences.setAppLevelAppearance(config.get('darkMode') ? 'dark' : 'light');
-		}
 	});
 }
 
