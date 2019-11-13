@@ -272,7 +272,7 @@ ipc.on('toggle-video-autoplay', () => {
 });
 
 function setDarkMode(): void {
-	if (config.get('followSystemAppearance')) {
+	if (is.macos && config.get('followSystemAppearance')) {
 		api.nativeTheme.themeSource = 'system';
 	} else {
 		api.nativeTheme.themeSource = config.get('darkMode') ? 'dark' : 'light';
