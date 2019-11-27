@@ -51,7 +51,7 @@ async function withSettingsMenu(callback: () => Promise<void> | void): Promise<v
 
 function selectMenuItem(itemNumber: number): void {
 	const selector = document.querySelector<HTMLElement>(
-		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
+		`.uiLayer:not(.hidden_elem) [role=menu] > li:nth-child(${itemNumber}) a`
 	);
 
 	if (selector) {
@@ -483,7 +483,7 @@ function setZoom(zoomFactor: number): void {
 
 async function withConversationMenu(callback: () => void): Promise<void> {
 	const menuButton = document.querySelector<HTMLElement>(
-		`${selectedConversationSelector} ._5blh._4-0h`
+		`${selectedConversationSelector} [aria-haspopup=true] [role=button]`
 	);
 
 	if (menuButton) {
