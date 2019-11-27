@@ -508,7 +508,7 @@ In other words, you should only use this function within a callback
  makes sure to have the conversation menu open before executing the
  callback and closes the conversation menu afterward.
 */
-function isSelectedConversationGroup(): Boolean {
+function isSelectedConversationGroup(): boolean {
 	const separator = document.querySelector<HTMLElement>(
 		`${conversationMenuSelector} > li:nth-child(6)[role=separator]`
 	);
