@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions, BrowserWindow, dialog} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -10,10 +10,11 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
-import {sendAction, showRestartDialog} from './util';
+import {sendAction, showRestartDialog, getWindow} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
+import tray from './tray';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -272,9 +273,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('menuBarMode'),
 			click() {
 				config.set('menuBarMode', !config.get('menuBarMode'));
-
-				const [win] = BrowserWindow.getAllWindows();
-				toggleMenuBarMode(win);
+				toggleMenuBarMode(getWindow());
 			}
 		},
 		{
@@ -335,7 +334,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('showTrayIcon'),
 			click() {
 				config.set('showTrayIcon', !config.get('showTrayIcon'));
-				sendAction('toggle-tray-icon');
+				config.get('showTrayIcon')? tray.create(getWindow()) : tray.destroy();
 			}
 		},
 		{
