@@ -10,7 +10,7 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
-import {sendAction, showRestartDialog, getWindow, toggleTrayIcon} from './util';
+import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMinimized} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
@@ -327,9 +327,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			id: 'showTrayIcon',
 			label: 'Show Tray Icon',
 			type: 'checkbox',
-			enabled: is.linux || is.windows,
+			enabled: (is.linux || is.windows) && !config.get('launchMinimized'),
 			checked: config.get('showTrayIcon'),
 			click() {
 				toggleTrayIcon();
@@ -341,8 +342,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			visible: !is.macos,
 			checked: config.get('launchMinimized'),
 			click() {
-				config.set('launchMinimized', !config.get('launchMinimized'));
-				sendAction('toggle-tray-icon');
+				toggleLaunchMinimized(menu);
 			}
 		},
 		{

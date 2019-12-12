@@ -1,4 +1,4 @@
-import {app, BrowserWindow, dialog} from 'electron';
+import {app, BrowserWindow, dialog, Menu} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
 import tray from './tray';
@@ -54,4 +54,30 @@ export function stripTrackingFromUrl(url: string): string {
 export const toggleTrayIcon = (): void => {
 	config.set('showTrayIcon', !config.get('showTrayIcon'));
 	config.get('showTrayIcon') ? tray.create(getWindow()) : tray.destroy();
+};
+
+export const toggleLaunchMinimized = (menu: Menu): void => {
+	config.set('launchMinimized', !config.get('launchMinimized'));
+	const showTrayIconItem = menu.getMenuItemById('showTrayIcon');
+
+	if (config.get('launchMinimized')) {
+		if (!config.get('showTrayIcon')) {
+			toggleTrayIcon();
+		}
+
+		disableMenuItem(showTrayIconItem, true);
+
+		dialog.showMessageBox({
+			type: 'info',
+			message: 'Show Tray Icon option has been locked on enabled due to enabled Launch Minimized option.',
+			buttons: ['OK']
+		});
+	} else {
+		showTrayIconItem.enabled = true;
+	}
+};
+
+const disableMenuItem = (menuItem: Electron.MenuItem, checked: boolean): void => {
+		menuItem.enabled = false;
+		menuItem.checked = checked;
 };
