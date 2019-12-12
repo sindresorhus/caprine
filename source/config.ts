@@ -1,7 +1,7 @@
 import Store = require('electron-store');
 import {is} from 'electron-util';
 
-type StoreType = {
+export type StoreType = {
 	followSystemAppearance: boolean;
 	darkMode: boolean;
 	privateMode: boolean;

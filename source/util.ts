@@ -1,6 +1,6 @@
 import {app, BrowserWindow, dialog} from 'electron';
 import {is} from 'electron-util';
-import config from './config';
+import config, {StoreType}  from './config';
 
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
@@ -48,4 +48,13 @@ export function stripTrackingFromUrl(url: string): string {
 	}
 
 	return url;
+}
+
+export function disableMenuItem(
+	{menuItem, configKey, value}:
+	{menuItem: Electron.MenuItem, configKey: keyof StoreType, value: boolean}): void {
+		config.set(configKey, value);
+
+		menuItem.enabled = false;
+		menuItem.checked = value;
 }

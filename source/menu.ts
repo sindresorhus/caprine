@@ -10,7 +10,7 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
-import {sendAction, showRestartDialog} from './util';
+import {sendAction, showRestartDialog, disableMenuItem} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
@@ -329,9 +329,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			id: 'showTrayIcon',
 			label: 'Show Tray Icon',
 			type: 'checkbox',
-			enabled: is.linux || is.windows,
+			enabled: (is.linux || is.windows) && !config.get('launchMinimized'),
 			checked: config.get('showTrayIcon'),
 			click() {
 				config.set('showTrayIcon', !config.get('showTrayIcon'));
@@ -345,7 +346,23 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('launchMinimized'),
 			click() {
 				config.set('launchMinimized', !config.get('launchMinimized'));
-				sendAction('toggle-tray-icon');
+				const showTrayIconItem = menu.getMenuItemById('showTrayIcon');
+
+				if(config.get('launchMinimized')) {
+					disableMenuItem({
+						menuItem: showTrayIconItem,
+						configKey: 'showTrayIcon',
+						value: true
+					});
+
+					dialog.showMessageBox({
+						type: 'info',
+						message: 'Show Tray Icon option has been locked on enabled due to enabled Launch Minimized option.',
+						buttons: ['OK']
+					});
+				} else {
+					showTrayIconItem.enabled = true;
+				}
 			}
 		},
 		{
