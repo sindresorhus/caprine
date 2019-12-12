@@ -436,6 +436,7 @@ function createMainWindow(): BrowserWindow {
 
 		if (config.get('launchMinimized') || app.getLoginItemSettings().wasOpenedAsHidden) {
 			mainWindow.hide();
+			tray.create(mainWindow);
 		} else {
 			mainWindow.show();
 		}
