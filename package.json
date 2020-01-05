@@ -35,6 +35,7 @@
 		"electron-updater": "^4.2.0",
 		"electron-util": "^0.12.2",
 		"element-ready": "^4.1.1",
+		"emojilib": "^2.4.0",
 		"facebook-locales": "^1.0.798",
 		"is-online": "^8.2.1",
 		"json-schema-typed": "^7.0.3",
