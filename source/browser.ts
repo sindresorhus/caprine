@@ -286,7 +286,7 @@ async function setPrivateMode(): Promise<void> {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-			const conversationsToRender: Conversation[] = await createConversationList();
+		const conversationsToRender: Conversation[] = await createConversationList();
 		ipc.send('conversations', conversationsToRender, config.get('privateMode'));
 	}
 }
@@ -668,7 +668,7 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 }
 
 async function sendReply(message: string): Promise<void> {
-	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"]');
+	const inputField = document.querySelector<HTMLElement>('[contenteditable="true"][role="combobox"]');
 	if (!inputField) {
 		return;
 	}
