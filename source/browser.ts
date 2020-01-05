@@ -161,6 +161,12 @@ ipc.on('focus-text-input', () => {
 	document.querySelector<HTMLElement>('._7kpg ._5rpu')!.focus();
 });
 
+ipc.on('add-emoji-from-touchbar', (_event: ElectronEvent, emoji: string) => {
+	var inputField = document.querySelector<HTMLElement>('[contenteditable="true"][role="combobox"]')!;
+	inputField.focus()
+	insertMessageText(inputField.textContent + emoji, inputField)
+});
+
 ipc.on('next-conversation', nextConversation);
 
 ipc.on('previous-conversation', previousConversation);
