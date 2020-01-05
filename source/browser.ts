@@ -280,12 +280,8 @@ async function setPrivateMode(): Promise<void> {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-		if (config.get('privateMode')) {
-			ipc.send('hide-touchbar-labels');
-		} else {
 			const conversationsToRender: Conversation[] = await createConversationList();
-			ipc.send('conversations', conversationsToRender);
-		}
+		ipc.send('conversations', conversationsToRender, config.get('privateMode'));
 	}
 }
 
