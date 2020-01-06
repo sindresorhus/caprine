@@ -36,7 +36,7 @@ const previousConvButton = new TouchBarButton({
 const nextConvButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(nextIconPath),
 	click: () => {
-		if(conversationPage < maxConversationPages - 1) {
+		if (conversationPage < maxConversationPages - 1) {
 			conversationPage++;
 		}
 
@@ -88,7 +88,10 @@ const previousEmojiButton = new TouchBarButton({
 const nextEmojiButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(nextIconPath),
 	click: () => {
-		if(emojiPage < maxEmojiPages - 1) emojiPage++;
+		if (emojiPage < maxEmojiPages - 1) {
+			emojiPage++;
+		}
+
 		refreshEmojiPage();
 	}
 });
@@ -129,9 +132,12 @@ function refreshEmojiPage(): void {
 	emojiSegmentedControl.segments = segments;
 }
 
-function refreshConversationsPage(): void {
+function refreshConversationsPage():void {
 	conversationSegmentedControl.segments = conversations.slice(conversationPage * conversationsPerPage, (conversationPage * conversationsPerPage) + conversationsPerPage).map (({label, selected, icon}) => {
-		if (selected) label = '✅ ' + label;
+		if (selected) {
+			label = '✅ ' + label;
+		}
+		
 		return {
 			label: label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH - 1) + '…' : label,
 			icon: nativeImage.createFromDataURL(icon)
