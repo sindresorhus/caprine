@@ -82,7 +82,6 @@ const previousEmojiButton = new TouchBarButton({
 		if (emojiPage > 0) {
 			emojiPage--;
 		}
-		
 		refreshEmojiPage();
 	}
 });
