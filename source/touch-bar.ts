@@ -29,13 +29,17 @@ const previousConvButton = new TouchBarButton({
 		if (conversationPage > 0) {
 			conversationPage--;
 		}
+
 		refreshConversationsPage();
 	}
 });
 const nextConvButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(nextIconPath),
 	click: () => {
-		if(conversationPage < maxConversationPages - 1) conversationPage++;
+		if(conversationPage < maxConversationPages - 1) {
+			conversationPage++;
+		}
+
 		refreshConversationsPage();
 	}
 });
@@ -102,21 +106,22 @@ function setTouchBar(): void {
 	refreshConversationsPage();
 	refreshEmojiPage();
 
-	const touchBarItems: TouchBarItem[]= [];
+	const touchBarItems: TouchBarItem[] = [];
 	if (privateMode) {
 		touchBarItems.unshift(privateModeLabel);
 	} else {
 		touchBarItems.unshift(conversationsPopover);
 	}
+
 	touchBarItems.push(emojiPopover);
 	const touchBar = new TouchBar({items: touchBarItems});
 	const win = getWindow();
 	win.setTouchBar(touchBar);
 }
 
-function refreshEmojiPage() : void {
+function refreshEmojiPage(): void {
 	const segments: SegmentedControlSegment[] = [];
-	emojikeys.slice(emojiPage * emojisPerPage, emojiPage * emojisPerPage + emojisPerPage).forEach((element: string) => {
+	emojikeys.slice(emojiPage * emojisPerPage, (emojiPage * emojisPerPage) + emojisPerPage).forEach((element: string) => {
 		segments.push({
 			label: emojilib[element].char
 		});
@@ -125,14 +130,13 @@ function refreshEmojiPage() : void {
 }
 
 function refreshConversationsPage(): void {
-	conversationSegmentedControl.segments = conversations.slice(conversationPage * conversationsPerPage, conversationPage * conversationsPerPage + conversationsPerPage).map (({label, selected, icon}) => {
+	conversationSegmentedControl.segments = conversations.slice(conversationPage * conversationsPerPage, (conversationPage * conversationsPerPage) + conversationsPerPage).map (({label, selected, icon}) => {
 		if (selected) label = '✅ ' + label;
-		let lbl = label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH - 1) + '…' : label;
 		return {
-			label: lbl,
+			label: label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH - 1) + '…' : label,
 			icon: nativeImage.createFromDataURL(icon)
 		};
-	})
+	});
 }
 
 ipc.on('conversations', (_event: ElectronEvent, convers: Conversation[], pMode: boolean) => {
