@@ -82,6 +82,7 @@ const previousEmojiButton = new TouchBarButton({
 		if (emojiPage > 0) {
 			emojiPage--;
 		}
+		
 		refreshEmojiPage();
 	}
 });
@@ -132,12 +133,12 @@ function refreshEmojiPage(): void {
 	emojiSegmentedControl.segments = segments;
 }
 
-function refreshConversationsPage():void {
-	conversationSegmentedControl.segments = conversations.slice(conversationPage * conversationsPerPage, (conversationPage * conversationsPerPage) + conversationsPerPage).map (({label, selected, icon}) => {
+function refreshConversationsPage(): void {
+	conversationSegmentedControl.segments = conversations.slice(conversationPage * conversationsPerPage, (conversationPage * conversationsPerPage) + conversationsPerPage).map(({label, selected, icon}) => {
 		if (selected) {
 			label = '✅ ' + label;
 		}
-		
+
 		return {
 			label: label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH - 1) + '…' : label,
 			icon: nativeImage.createFromDataURL(icon)
