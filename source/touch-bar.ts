@@ -1,9 +1,9 @@
-import {TouchBar, TouchBarButton as TouchBarButton_type, TouchBarColorPicker as TouchBarColorPicker_type, TouchBarGroup as TouchBarGroup_type, TouchBarLabel as TouchBarLabel_type, TouchBarPopover as TouchBarPopover_type, TouchBarScrubber as TouchBarScrubber_type, TouchBarSegmentedControl as TouchBarSegmentedControl_type, TouchBarSlider as TouchBarSlider_type, TouchBarSpacer as TouchBarSpacer_type, ipcMain as ipc, nativeImage, Event as ElectronEvent, SegmentedControlSegment} from 'electron';
+import {TouchBar, TouchBarButton as TouchBarButtonType, TouchBarColorPicker as TouchBarColorPickerType, TouchBarGroup as TouchBarGroupType, TouchBarLabel as TouchBarLabelType, TouchBarPopover as TouchBarPopoverType, TouchBarScrubber as TouchBarScrubberType, TouchBarSegmentedControl as TouchBarSegmentedControlType, TouchBarSlider as TouchBarSliderType, TouchBarSpacer as TouchBarSpacerType, ipcMain as ipc, nativeImage, Event as ElectronEvent, SegmentedControlSegment} from 'electron';
 import {sendAction, getWindow} from './util';
 import {caprineIconPath, previousIconPath, nextIconPath} from './constants';
 
 const {TouchBarButton, TouchBarPopover, TouchBarSegmentedControl} = TouchBar;
-type TouchBarItem = (TouchBarButton_type) | (TouchBarColorPicker_type) | (TouchBarGroup_type) | (TouchBarLabel_type) | (TouchBarPopover_type) | (TouchBarScrubber_type) | (TouchBarSegmentedControl_type) | (TouchBarSlider_type) | (TouchBarSpacer_type);
+type TouchBarItem = (TouchBarButtonType) | (TouchBarColorPickerType) | (TouchBarGroupType) | (TouchBarLabelType) | (TouchBarPopoverType) | (TouchBarScrubberType) | (TouchBarSegmentedControlType) | (TouchBarSliderType) | (TouchBarSpacerType);
 
 const emojilib = require('emojilib').lib;
 const emojikeys = require('emojilib').ordered;
@@ -26,15 +26,15 @@ var conversationsPopoverItems : Array<TouchBarItem> = [];
 const previousConvButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(previousIconPath),
 	click: () => {
-		if (conversationPage > 0) conversationPage--
-		refreshConversationsPage()
+		if (conversationPage > 0) conversationPage--;
+		refreshConversationsPage();
 	}
 });
 const nextConvButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(nextIconPath),
 	click: () => {
-		if(conversationPage < maxConversationPages - 1) conversationPage++
-		refreshConversationsPage()
+		if(conversationPage < maxConversationPages - 1) conversationPage++;
+		refreshConversationsPage();
 	}
 });
 
@@ -67,21 +67,21 @@ const emojiSegmentedControl = new TouchBarSegmentedControl({
 	mode: "buttons",
 	segmentStyle : "separated",
 	change: (selectedItem) => {
-		sendAction('add-emoji-from-touchbar',emojiSegmentedControl.segments[selectedItem].label)
+		sendAction('add-emoji-from-touchbar',emojiSegmentedControl.segments[selectedItem].label);
 	}
 });
 const previousEmojiButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(previousIconPath),
 	click: () => {
-		if (emojiPage > 0) emojiPage--
-		refreshEmojiPage()
+		if (emojiPage > 0) emojiPage--;
+		refreshEmojiPage();
 	}
 });
 const nextEmojiButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(nextIconPath),
 	click: () => {
-		if(emojiPage < maxEmojiPages - 1) emojiPage++
-		refreshEmojiPage()
+		if(emojiPage < maxEmojiPages - 1) emojiPage++;
+		refreshEmojiPage();
 	}
 });
 emojiPopoverItems.unshift(previousEmojiButton);
