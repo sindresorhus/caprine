@@ -8,21 +8,21 @@ type TouchBarItem = (TouchBarButtonType) | (TouchBarColorPickerType) | (TouchBar
 const emojilib = require('emojilib').lib;
 const emojikeys = require('emojilib').ordered;
 
-//PRIVATE MODE INIT
-var privateMode = false;
+// PRIVATE MODE INIT
+let privateMode = false;
 const privateModeLabel = new TouchBarButton({
 	label: 'Private mode enabled',
 	icon: nativeImage.createFromPath(caprineIconPath),
 	iconPosition: 'left',
 });
 
-//CONVERSATIONS INIT
+// CONVERSATIONS INIT
 const MAX_VISIBLE_LENGTH = 12;
-var conversationPage = 0;
+let conversationPage = 0;
 const conversationsPerPage = 3;
-var maxConversationPages = 1;
-var conversations : Conversation[];
-var conversationsPopoverItems : Array<TouchBarItem> = [];
+let maxConversationPages = 1;
+let conversations : Conversation[];
+let conversationsPopoverItems : Array<TouchBarItem> = [];
 const previousConvButton = new TouchBarButton({
 	icon: nativeImage.createFromPath(previousIconPath),
 	click: () => {
@@ -40,8 +40,8 @@ const nextConvButton = new TouchBarButton({
 
 const conversationSegmentedControl = new TouchBarSegmentedControl({
 	segments: [],
-	mode: "buttons",
-	segmentStyle : "separated",
+	mode: 'buttons',
+	segmentStyle : 'separated',
 	change: (selectedItem) => {
 		sendAction('jump-to-conversation', selectedItem + (conversationPage * conversationsPerPage) + 1);
 	}
@@ -51,21 +51,21 @@ conversationsPopoverItems.unshift(previousConvButton);
 conversationsPopoverItems.push(conversationSegmentedControl);
 conversationsPopoverItems.push(nextConvButton);
 const conversationsPopover = new TouchBarPopover({
-	label: "Conversations",
+	label: 'Conversations',
 	items : new TouchBar({
 		items: conversationsPopoverItems
 	})
 });
 
-//EMOJIS INIT
-var emojiPage = 0;
+// EMOJIS INIT
+let emojiPage = 0;
 const emojisPerPage = 8;
 const maxEmojiPages = emojikeys.length / emojisPerPage;
 const emojiPopoverItems : Array<TouchBarItem> = [];
 const emojiSegmentedControl = new TouchBarSegmentedControl({
 	segments: [],
-	mode: "buttons",
-	segmentStyle : "separated",
+	mode: 'buttons',
+	segmentStyle: 'separated',
 	change: (selectedItem) => {
 		sendAction('add-emoji-from-touchbar',emojiSegmentedControl.segments[selectedItem].label);
 	}
@@ -88,7 +88,7 @@ emojiPopoverItems.unshift(previousEmojiButton);
 emojiPopoverItems.push(emojiSegmentedControl);
 emojiPopoverItems.push(nextEmojiButton);
 const emojiPopover = new TouchBarPopover({
-	label: "Emoji",
+	label: 'Emoji',
 	items: new TouchBar({
 		items: emojiPopoverItems
 	})
@@ -108,19 +108,19 @@ function setTouchBar(): void {
 };
 
 function refreshEmojiPage() : void {
-	const segments : Array<SegmentedControlSegment> = [];
+	const segments : SegmentedControlSegment[] = [];
 	emojikeys.slice(emojiPage * emojisPerPage, emojiPage * emojisPerPage + emojisPerPage).forEach((element : string) => {
 		segments.push({
-			label: emojilib[element]["char"]
+			label: emojilib[element].char
 		});
 	});
 	emojiSegmentedControl.segments = segments;
-};
+}
 
 function refreshConversationsPage() : void {
 	conversationSegmentedControl.segments = conversations.slice(conversationPage * conversationsPerPage, conversationPage * conversationsPerPage + conversationsPerPage).map (({label, selected, icon}) => {
-		if (selected) label = "✅ " + label;
-		var lbl = label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH - 1) + '…' : label;
+		if (selected) label = '✅ ' + label;
+		let lbl = label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH - 1) + '…' : label;
 		return {
 			label: lbl,
 			icon: nativeImage.createFromDataURL(icon)
