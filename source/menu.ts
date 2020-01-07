@@ -10,11 +10,10 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
-import {sendAction, showRestartDialog, getWindow} from './util';
+import {sendAction, showRestartDialog, getWindow, toggleTrayIcon} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
-import tray from './tray';
 
 export default async function updateMenu(): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
@@ -333,8 +332,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			enabled: is.linux || is.windows,
 			checked: config.get('showTrayIcon'),
 			click() {
-				config.set('showTrayIcon', !config.get('showTrayIcon'));
-				config.get('showTrayIcon')? tray.create(getWindow()) : tray.destroy();
+				toggleTrayIcon();
 			}
 		},
 		{

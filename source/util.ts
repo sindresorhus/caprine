@@ -1,6 +1,7 @@
 import {app, BrowserWindow, dialog} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
+import tray from './tray';
 
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
@@ -49,3 +50,8 @@ export function stripTrackingFromUrl(url: string): string {
 
 	return url;
 }
+
+export const toggleTrayIcon = (): void => {
+	config.set('showTrayIcon', !config.get('showTrayIcon'));
+	config.get('showTrayIcon') ? tray.create(getWindow()) : tray.destroy();
+};
