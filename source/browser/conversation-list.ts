@@ -132,7 +132,7 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 	return conversation as Conversation;
 }
 
-export async function createConversationList(): Promise<Conversation[]> {
+async function createConversationList(): Promise<Conversation[]> {
 	const list = await elementReady<HTMLElement>(selectors.conversationList, {
 		stopOnDomReady: false
 	});
