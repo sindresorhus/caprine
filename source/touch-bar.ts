@@ -1,4 +1,5 @@
-import {TouchBar, ipcMain as ipc, nativeImage, Event as ElectronEvent} from 'electron';
+import {TouchBar, nativeImage} from 'electron';
+import {ipcMain as ipc} from 'electron-better-ipc';
 import {sendAction, getWindow} from './util';
 import {caprineIconPath} from './constants';
 
@@ -11,7 +12,7 @@ function setTouchBar(items: Electron.TouchBarButton[]): void {
 	win.setTouchBar(touchBar);
 }
 
-ipc.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
+ipc.answerRenderer('conversations', (conversations: Conversation[]) => {
 	const items = conversations.map(({label, selected, icon}, index: number) => {
 		return new TouchBarButton({
 			label: label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH) + '…' : label,
@@ -26,7 +27,7 @@ ipc.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) =
 	setTouchBar(items);
 });
 
-ipc.on('hide-touchbar-labels', (_event: ElectronEvent) => {
+ipc.answerRenderer('hide-touchbar-labels', () => {
 	const privateModeLabel = new TouchBarButton({
 		label: 'Private mode enabled',
 		backgroundColor: undefined,

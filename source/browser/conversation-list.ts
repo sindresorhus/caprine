@@ -1,4 +1,4 @@
-import {ipcRenderer as ipc} from 'electron';
+import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
 
 import {is} from 'electron-util';
@@ -153,10 +153,10 @@ export async function createConversationList(): Promise<Conversation[]> {
 
 async function sendConversationList(): Promise<void> {
 	if (is.macos && config.get('privateMode')) {
-		ipc.send('hide-touchbar-labels');
+		ipc.callMain('hide-touchbar-labels');
 	} else {
 		const conversationsToRender: Conversation[] = await createConversationList();
-		ipc.send('conversations', conversationsToRender);
+		ipc.callMain('conversations', conversationsToRender);
 	}
 }
 

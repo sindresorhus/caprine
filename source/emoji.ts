@@ -4,10 +4,9 @@ import {
 	NativeImage,
 	MenuItemConstructorOptions,
 	Response,
-	ipcMain,
-	Event as ElectronEvent,
 	Menu
 } from 'electron';
+import {ipcMain} from 'electron-better-ipc';
 import {memoize} from 'lodash';
 import config from './config';
 import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
@@ -236,7 +235,7 @@ Renders the given emoji in the renderer process and returns a PNG `data:` URL.
 const renderEmoji = memoize(
 	async (emoji: string): Promise<string> =>
 		new Promise(resolve => {
-			const listener = (_event: ElectronEvent, arg: {emoji: string; dataUrl: string}): void => {
+			const listener = (arg: {emoji: string; dataUrl: string}): void => {
 				if (arg.emoji !== emoji) {
 					return;
 				}
@@ -245,7 +244,7 @@ const renderEmoji = memoize(
 				resolve(arg.dataUrl);
 			};
 
-			ipcMain.on('native-emoji', listener);
+			ipcMain.answerRenderer('native-emoji', listener);
 			sendBackgroundAction('render-native-emoji', emoji);
 		})
 );

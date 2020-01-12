@@ -2,7 +2,6 @@ import * as path from 'path';
 import {readFileSync, existsSync} from 'fs';
 import {
 	app,
-	ipcMain,
 	nativeImage,
 	screen as electronScreen,
 	session,
@@ -10,9 +9,9 @@ import {
 	BrowserWindow,
 	Menu,
 	Notification,
-	MenuItemConstructorOptions,
-	Event as ElectronEvent
+	MenuItemConstructorOptions
 } from 'electron';
+import {ipcMain} from 'electron-better-ipc';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
@@ -140,13 +139,13 @@ function updateBadge(conversations: Conversation[]): void {
 				mainWindow.setOverlayIcon(null, '');
 			} else {
 				// Delegate drawing of overlay icon to renderer process
-				mainWindow.webContents.send('render-overlay-icon', messageCount);
+				ipcMain.callRenderer(mainWindow, 'render-overlay-icon', messageCount);
 			}
 		}
 	}
 }
 
-ipcMain.on('update-overlay-icon', (_event: ElectronEvent, data: string, text: string) => {
+ipcMain.answerRenderer('update-overlay-icon', ({data, text}: {data: string; text: string}) => {
 	const img = nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 });
@@ -159,7 +158,7 @@ function updateTrayIcon(): void {
 	}
 }
 
-ipcMain.on('update-tray-icon', updateTrayIcon);
+ipcMain.answerRenderer('update-tray-icon', updateTrayIcon);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
@@ -366,7 +365,7 @@ function createMainWindow(): BrowserWindow {
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
 			click() {
-				mainWindow.webContents.send('toggle-mute-notifications');
+				ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications');
 			}
 		};
 
@@ -384,7 +383,7 @@ function createMainWindow(): BrowserWindow {
 			sendAction('jump-to-conversation', 1);
 		});
 
-		ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
+		ipcMain.answerRenderer('conversations', (conversations: Conversation[]) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -405,7 +404,7 @@ function createMainWindow(): BrowserWindow {
 	}
 
 	// Update badge on conversations change
-	ipcMain.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
+	ipcMain.answerRenderer('conversations', async (conversations: Conversation[]) => {
 		updateBadge(conversations);
 	});
 
@@ -442,20 +441,20 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		if (is.macos) {
-			ipcMain.on('update-dnd-mode', async (_event: ElectronEvent, initialSoundsValue) => {
+			ipcMain.answerRenderer('update-dnd-mode', async (initialSoundsValue: boolean) => {
 				doNotDisturb.on('change', (doNotDisturb: boolean) => {
 					isDNDEnabled = doNotDisturb;
-					webContents.send('toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
+					ipcMain.callRenderer(mainWindow, 'toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
 				});
 
 				isDNDEnabled = await doNotDisturb.isEnabled();
 
-				webContents.send('toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
+				ipcMain.callRenderer(mainWindow, 'toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
 			});
 		}
 
-		webContents.send('toggle-mute-notifications', config.get('notificationsMuted'));
-		webContents.send('toggle-message-buttons', config.get('showMessageButtons'));
+		ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', config.get('notificationsMuted'));
+		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
@@ -525,13 +524,13 @@ function createMainWindow(): BrowserWindow {
 })();
 
 if (is.macos) {
-	ipcMain.on('set-vibrancy', () => {
+	ipcMain.answerRenderer('set-vibrancy', () => {
 		mainWindow.setBackgroundColor('#00000000'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
 	});
 }
 
-ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean) => {
+ipcMain.answerRenderer('mute-notifications-toggled', (status: boolean) => {
 	setNotificationsMute(status);
 });
 
@@ -553,9 +552,9 @@ app.on('before-quit', () => {
 
 const notifications = new Map();
 
-ipcMain.on(
+ipcMain.answerRenderer(
 	'notification',
-	(_event: ElectronEvent, {id, title, body, icon, silent}: NotificationEvent) => {
+	({id, title, body, icon, silent}: {id: number; title: string; body: string; icon: string; silent: boolean}) => {
 		const notification = new Notification({
 			title,
 			body: config.get('notificationMessagePreview') ? body : 'You have a new message',

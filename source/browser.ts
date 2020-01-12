@@ -1,4 +1,4 @@
-import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
+import {ipcRenderer as ipc} from 'electron-better-ipc';
 import {api, is} from 'electron-util';
 import elementReady = require('element-ready');
 import selectors from './browser/selectors';
@@ -76,7 +76,7 @@ function clickBackButton(): void {
 	}
 }
 
-ipc.on('show-preferences', async () => {
+ipc.answerMain('show-preferences', async () => {
 	if (isPreferencesOpen()) {
 		return;
 	}
@@ -84,11 +84,11 @@ ipc.on('show-preferences', async () => {
 	await openPreferences();
 });
 
-ipc.on('new-conversation', () => {
+ipc.answerMain('new-conversation', () => {
 	document.querySelector<HTMLElement>('._30yy[data-href$="/new"]')!.click();
 });
 
-ipc.on('log-out', async () => {
+ipc.answerMain('log-out', async () => {
 	if (config.get('useWorkChat')) {
 		document.querySelector<HTMLElement>('._5lxs._3qct._p')!.click();
 
@@ -111,15 +111,15 @@ ipc.on('log-out', async () => {
 	}
 });
 
-ipc.on('find', () => {
+ipc.answerMain('find', () => {
 	document.querySelector<HTMLElement>('._58al')!.focus();
 });
 
-ipc.on('search', () => {
+ipc.answerMain('search', () => {
 	document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
 });
 
-ipc.on('insert-gif', () => {
+ipc.answerMain('insert-gif', () => {
 	const gifElement =
 		// Old UI
 		document.querySelector<HTMLElement>('._yht') ??
@@ -131,7 +131,7 @@ ipc.on('insert-gif', () => {
 	gifElement!.click();
 });
 
-ipc.on('insert-emoji', async () => {
+ipc.answerMain('insert-emoji', async () => {
 	const emojiElement = (await elementReady<HTMLElement>('._5s2p, ._30yy._7odb', {
 		stopOnDomReady: false
 	}))!;
@@ -139,7 +139,7 @@ ipc.on('insert-emoji', async () => {
 	emojiElement.click();
 });
 
-ipc.on('insert-sticker', () => {
+ipc.answerMain('insert-sticker', () => {
 	const stickerElement =
 		// Old UI
 		document.querySelector<HTMLElement>('._4rv6') ??
@@ -151,29 +151,29 @@ ipc.on('insert-sticker', () => {
 	stickerElement!.click();
 });
 
-ipc.on('attach-files', () => {
+ipc.answerMain('attach-files', () => {
 	document
 		.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]')!
 		.click();
 });
 
-ipc.on('focus-text-input', () => {
+ipc.answerMain('focus-text-input', () => {
 	document.querySelector<HTMLElement>('._7kpg ._5rpu')!.focus();
 });
 
-ipc.on('next-conversation', nextConversation);
+ipc.answerMain('next-conversation', nextConversation);
 
-ipc.on('previous-conversation', previousConversation);
+ipc.answerMain('previous-conversation', previousConversation);
 
-ipc.on('mute-conversation', async () => {
+ipc.answerMain('mute-conversation', async () => {
 	await openMuteModal();
 });
 
-ipc.on('delete-conversation', async () => {
+ipc.answerMain('delete-conversation', async () => {
 	await deleteSelectedConversation();
 });
 
-ipc.on('hide-conversation', async () => {
+ipc.answerMain('hide-conversation', async () => {
 	const index = selectedConversationIndex();
 
 	if (index !== -1) {
@@ -202,9 +202,9 @@ async function openHiddenPreferences(): Promise<boolean> {
 	return false;
 }
 
-ipc.on(
+ipc.answerMain(
 	'toggle-sounds',
-	async (_event: ElectronEvent, checked: boolean): Promise<void> => {
+	async (checked: boolean): Promise<void> => {
 		const shouldClosePreferences = await openHiddenPreferences();
 
 		const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
@@ -218,7 +218,7 @@ ipc.on(
 	}
 );
 
-ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus: boolean) => {
+ipc.answerMain('toggle-mute-notifications', async (defaultStatus: boolean) => {
 	const shouldClosePreferences = await openHiddenPreferences();
 
 	const notificationCheckbox = document.querySelector<HTMLInputElement>(
@@ -234,34 +234,34 @@ ipc.on('toggle-mute-notifications', async (_event: ElectronEvent, defaultStatus:
 		notificationCheckbox.click();
 	}
 
-	ipc.send('mute-notifications-toggled', !notificationCheckbox.checked);
+	ipc.callMain('mute-notifications-toggled', !notificationCheckbox.checked);
 
 	if (shouldClosePreferences) {
 		closePreferences();
 	}
 });
 
-ipc.on('toggle-message-buttons', () => {
+ipc.answerMain('toggle-message-buttons', () => {
 	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
-ipc.on('show-active-contacts-view', async () => {
+ipc.answerMain('show-active-contacts-view', async () => {
 	await selectOtherListViews(3);
 });
 
-ipc.on('show-message-requests-view', async () => {
+ipc.answerMain('show-message-requests-view', async () => {
 	await selectOtherListViews(4);
 });
 
-ipc.on('show-hidden-threads-view', async () => {
+ipc.answerMain('show-hidden-threads-view', async () => {
 	await selectOtherListViews(5);
 });
 
-ipc.on('toggle-unread-threads-view', async () => {
+ipc.answerMain('toggle-unread-threads-view', async () => {
 	await selectOtherListViews(6);
 });
 
-ipc.on('toggle-video-autoplay', () => {
+ipc.answerMain('toggle-video-autoplay', () => {
 	toggleVideoAutoplay();
 });
 
@@ -281,10 +281,10 @@ async function setPrivateMode(): Promise<void> {
 
 	if (is.macos) {
 		if (config.get('privateMode')) {
-			ipc.send('hide-touchbar-labels');
+			ipc.callMain('hide-touchbar-labels');
 		} else {
 			const conversationsToRender: Conversation[] = await createConversationList();
-			ipc.send('conversations', conversationsToRender);
+			ipc.callMain('conversations', conversationsToRender);
 		}
 	}
 }
@@ -304,7 +304,7 @@ function updateVibrancy(): void {
 		default:
 	}
 
-	ipc.send('set-vibrancy');
+	ipc.callMain('set-vibrancy');
 }
 
 function updateSidebar(): void {
@@ -325,7 +325,7 @@ function updateSidebar(): void {
 		default:
 	}
 
-	ipc.send('set-sidebar');
+	ipc.callMain('set-sidebar');
 }
 
 async function updateDoNotDisturb(): Promise<void> {
@@ -336,7 +336,7 @@ async function updateDoNotDisturb(): Promise<void> {
 		closePreferences();
 	}
 
-	ipc.send('update-dnd-mode', soundsCheckbox.checked);
+	ipc.callMain('update-dnd-mode', soundsCheckbox.checked);
 }
 
 function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
@@ -358,27 +358,28 @@ function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	return canvas;
 }
 
-ipc.on('update-sidebar', () => {
+ipc.answerMain('update-sidebar', () => {
 	updateSidebar();
 });
 
-ipc.on('set-dark-mode', setDarkMode);
+ipc.answerMain('set-dark-mode', setDarkMode);
 
-ipc.on('set-private-mode', setPrivateMode);
+ipc.answerMain('set-private-mode', setPrivateMode);
 
-ipc.on('update-vibrancy', () => {
+ipc.answerMain('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-ipc.on('render-overlay-icon', (_event: ElectronEvent, messageCount: number) => {
-	ipc.send(
-		'update-overlay-icon',
-		renderOverlayIcon(messageCount).toDataURL(),
-		String(messageCount)
+ipc.answerMain('render-overlay-icon', (messageCount: number) => {
+	ipc.callMain(
+		'update-overlay-icon', {
+			data: renderOverlayIcon(messageCount).toDataURL(),
+			text: String(messageCount)
+		}
 	);
 });
 
-ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
+ipc.answerMain('render-native-emoji', (emoji: string) => {
 	const canvas = document.createElement('canvas');
 	const context = canvas.getContext('2d')!;
 	canvas.width = 256;
@@ -395,14 +396,14 @@ ipc.on('render-native-emoji', (_event: ElectronEvent, emoji: string) => {
 	}
 
 	const dataUrl = canvas.toDataURL();
-	ipc.send('native-emoji', {emoji, dataUrl});
+	ipc.callMain('native-emoji', {emoji, dataUrl});
 });
 
-ipc.on('zoom-reset', () => {
+ipc.answerMain('zoom-reset', () => {
 	setZoom(1);
 });
 
-ipc.on('zoom-in', () => {
+ipc.answerMain('zoom-in', () => {
 	const zoomFactor = config.get('zoomFactor') + 0.1;
 
 	if (zoomFactor < 1.6) {
@@ -410,7 +411,7 @@ ipc.on('zoom-in', () => {
 	}
 });
 
-ipc.on('zoom-out', () => {
+ipc.answerMain('zoom-out', () => {
 	const zoomFactor = config.get('zoomFactor') - 0.1;
 
 	if (zoomFactor >= 0.8) {
@@ -418,7 +419,7 @@ ipc.on('zoom-out', () => {
 	}
 });
 
-ipc.on('jump-to-conversation', async (_event: ElectronEvent, key: number) => {
+ipc.answerMain('jump-to-conversation', async (key: number) => {
 	await jumpToConversation(key);
 });
 
@@ -575,7 +576,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
 	if (!is.macos && config.get('darkMode')) {
-		// eslint-disable-next-line require-atomic-updates
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 
@@ -655,7 +655,7 @@ function showNotification({id, title, body, icon, silent}: NotificationEvent): v
 
 		context.drawImage(image, 0, 0, image.width, image.height);
 
-		ipc.send('notification', {
+		ipc.callMain('notification', {
 			id,
 			title,
 			body,
@@ -703,11 +703,11 @@ function insertMessageText(text: string, inputField: HTMLElement): void {
 	document.execCommand('insertText', false, text);
 }
 
-ipc.on('notification-callback', (_event: ElectronEvent, data: unknown) => {
+ipc.answerMain('notification-callback', (data: unknown) => {
 	window.postMessage({type: 'notification-callback', data}, '*');
 });
 
-ipc.on('notification-reply-callback', (_event: ElectronEvent, data: any) => {
+ipc.answerMain('notification-reply-callback', (data: any) => {
 	const previousConversation = selectedConversationIndex();
 	data.previousConversation = previousConversation;
 	window.postMessage({type: 'notification-reply-callback', data}, '*');
