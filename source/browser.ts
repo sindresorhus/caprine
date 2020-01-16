@@ -500,13 +500,10 @@ async function openMuteModal(): Promise<void> {
 
 /*
 This function assumes:
- - There is a currently selected conversation.
- - That conversation already has its conversation menu open.
+- There is a selected conversation.
+- That the conversation already has its conversation menu open.
 
-In other words, you should only use this function within a callback
- that is provided to withConversationMenu() because withConversationMenu()
- makes sure to have the conversation menu open before executing the
- callback and closes the conversation menu afterward.
+In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
 function isSelectedConversationGroup(): boolean {
 	const separator = document.querySelector<HTMLElement>(
