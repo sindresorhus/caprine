@@ -12,7 +12,6 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 	<img src="media/screenshot.png" width="846">
 </a>
 
-
 ## Highlights
 
 - [Dark theme](#dark-mode)
@@ -60,7 +59,6 @@ Also available as a [snap](https://snapcraft.io/caprine).
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
 
 *For taskbar notification badges to work on Windows 10, you'll need to [enable them in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
-
 
 ## Features
 
@@ -155,7 +153,6 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
 
-
 ### Menu Bar Mode *(macOS only)* <img src="media/screenshot-menu-bar-mode.png" width="20">
 
 <img src="media/screenshot-menu-bar-menu.png" width="140" align="right">
@@ -202,9 +199,7 @@ On macOS, you can [change these in the System Preferences](https://www.intego.co
 
 The main app interface is already localized by Facebook. The app menus are not localized, and we're not interested in localizing those.
 
-
 ---
-
 
 ## Dev
 

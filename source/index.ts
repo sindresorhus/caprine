@@ -15,7 +15,7 @@ import {
 } from 'electron';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
-import electronDl from 'electron-dl';
+import electronDl = require('electron-dl');
 import electronContextMenu = require('electron-context-menu');
 import electronLocalshortcut = require('electron-localshortcut');
 import electronDebug = require('electron-debug');
@@ -470,7 +470,7 @@ function createMainWindow(): BrowserWindow {
 				// Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
-				options.webPreferences = options.webPreferences || {};
+				options.webPreferences = options.webPreferences ?? {};
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				(event as any).newGuest = new BrowserWindow(options);
