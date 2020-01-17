@@ -69,7 +69,7 @@ export const toggleLaunchMinimized = (menu: Menu): void => {
 
 		dialog.showMessageBox({
 			type: 'info',
-			message: 'Show Tray Icon option has been locked on enabled due to enabled Launch Minimized option.',
+			message: 'The “Show Tray Icon” setting is force-enabled while the “Launch Minimized” setting is enabled.',
 			buttons: ['OK']
 		});
 	} else {
