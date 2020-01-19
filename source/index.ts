@@ -293,8 +293,12 @@ function createMainWindow(): BrowserWindow {
 	setUserLocale();
 	initRequestsFiltering();
 
+	let previousDarkMode = darkMode.isEnabled;
 	darkMode.onChange(() => {
-		win.webContents.send('set-dark-mode');
+		if (darkMode.isEnabled !== previousDarkMode) {
+			previousDarkMode = darkMode.isEnabled;
+			win.webContents.send('set-dark-mode');
+		}
 	});
 
 	if (is.macos) {
