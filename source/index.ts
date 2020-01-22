@@ -530,7 +530,7 @@ function createMainWindow(): BrowserWindow {
 
 if (is.macos) {
 	ipcMain.on('set-vibrancy', () => {
-		mainWindow.setBackgroundColor('#00000000'); // Transparent, workaround for vibrancy issue.
+		mainWindow.setBackgroundColor('#80FFFFFF'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
 	});
 }
