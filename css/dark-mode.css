@@ -189,6 +189,21 @@ html.dark-mode ._618k div hr {
 	border-top: 1px solid var(--base-five);
 }
 
+/* Messages list: embed URL */
+html.dark-mode ._3cnl,
+html.dark-mode ._3cnn a,
+html.dark-mode ._3cnj {
+	color: var(--base-fourty);
+}
+
+/* Messages list: forward button */
+html.dark-mode ._7-_v {
+	background-color: var(--base-five);
+}
+html.dark-mode ._7-_v svg path {
+	fill: var(--base-seventy-five);
+}
+
 /* Messages list: Poll color (title) */
 html.dark-mode ._3b4u {
 	color: var(--base-seventy);
@@ -342,6 +357,11 @@ html.dark-mode ._1ht3 ._1ht7.timestamp {
 /* Contact list: message request (decline button) */
 html.dark-mode ._3quh._30yy._17u4._3yvh._1d-z {
 	color: #f03d25;
+}
+
+/* Contact list: dot before timestamp */
+html.dark-mode ._6zkf {
+	color: var(--base-fourty);
 }
 
 /* Right sidebar */
