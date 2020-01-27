@@ -25,14 +25,12 @@ function drawIcon(size: number, img?: HTMLImageElement): HTMLCanvasElement {
 		canvas.height = size + padding.top + padding.bottom;
 
 		const ctx = canvas.getContext('2d')!;
-		ctx.save();
 		ctx.beginPath();
 		ctx.arc((size / 2) + padding.left, (size / 2) + padding.top, (size / 2), 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
 
 		ctx.drawImage(img, padding.left, padding.top, size, size);
-		ctx.restore();
 	} else {
 		canvas.width = 0;
 		canvas.height = 0;
@@ -46,7 +44,7 @@ async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement
 	return new Promise(resolve => {
 		const img = new Image();
 
-		img.crossOrigin = 'anonymous';
+		img.setAttribute('crossorigin', 'anonymous');
 
 		img.addEventListener('load', () => {
 			resolve(drawIcon(size, img));
@@ -72,6 +70,7 @@ async function createIcons(el: HTMLElement, url: string): Promise<void> {
 	ctx.fillStyle = '#f42020';
 	ctx.beginPath();
 	ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
+	ctx.closePath();
 	ctx.fill();
 
 	el.setAttribute(icon.unread, canvas.toDataURL());
@@ -132,7 +131,7 @@ async function createConversation(el: HTMLElement): Promise<Conversation> {
 	return conversation as Conversation;
 }
 
-export async function createConversationList(): Promise<Conversation[]> {
+async function createConversationList(): Promise<Conversation[]> {
 	const list = await elementReady<HTMLElement>(selectors.conversationList, {
 		stopOnDomReady: false
 	});
@@ -144,15 +143,13 @@ export async function createConversationList(): Promise<Conversation[]> {
 
 	const items: HTMLElement[] = [...list.children] as HTMLElement[];
 
-	const conversations: Conversation[] = await Promise.all(
-		items.map(async (element: HTMLElement): Promise<Conversation> => createConversation(element))
-	);
+	const conversations: Conversation[] = await Promise.all(items.map(createConversation));
 
 	return conversations;
 }
 
-async function sendConversationList(): Promise<void> {
-	if (is.macos && config.get('privateMode')) {
+export async function sendConversationList(): Promise<void> {
+	if (config.get('privateMode')) {
 		ipc.send('hide-touchbar-labels');
 	} else {
 		const conversationsToRender: Conversation[] = await createConversationList();
@@ -163,9 +160,7 @@ async function sendConversationList(): Promise<void> {
 window.addEventListener('load', async () => {
 	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
 
-	if (sidebar) {
-		await sendConversationList();
-
+	if (sidebar && is.macos) {
 		const conversationListObserver = new MutationObserver(sendConversationList);
 
 		conversationListObserver.observe(sidebar, {
