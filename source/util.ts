@@ -52,8 +52,14 @@ export function stripTrackingFromUrl(url: string): string {
 }
 
 export const toggleTrayIcon = (): void => {
-	config.set('showTrayIcon', !config.get('showTrayIcon'));
-	config.get('showTrayIcon') ? tray.create(getWindow()) : tray.destroy();
+	const showTrayIconState = config.get('showTrayIcon');
+	config.set('showTrayIcon', !showTrayIconState);
+
+	if (showTrayIconState) {
+		return tray.destroy();
+	}
+
+	return tray.create(getWindow());
 };
 
 export const toggleLaunchMinimized = (menu: Menu): void => {
