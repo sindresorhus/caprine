@@ -277,11 +277,11 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
-async function setPrivateMode(): Promise<void> {
+function setPrivateMode(): void {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-		await sendConversationList();
+		sendConversationList();
 	}
 }
 
