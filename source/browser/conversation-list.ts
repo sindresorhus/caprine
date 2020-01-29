@@ -1,8 +1,5 @@
 import {ipcRenderer as ipc} from 'electron';
 import elementReady = require('element-ready');
-
-import {is} from 'electron-util';
-import config from '../config';
 import selectors from './selectors';
 
 const icon = {
@@ -152,12 +149,8 @@ export async function createConversationList(): Promise<Conversation[]> {
 }
 
 async function sendConversationList(): Promise<void> {
-	if (is.macos && config.get('privateMode')) {
-		ipc.send('hide-touchbar-labels');
-	} else {
-		const conversationsToRender: Conversation[] = await createConversationList();
-		ipc.send('conversations', conversationsToRender);
-	}
+	const conversationsToRender: Conversation[] = await createConversationList();
+	ipc.send('conversations', conversationsToRender);
 }
 
 window.addEventListener('load', async () => {
