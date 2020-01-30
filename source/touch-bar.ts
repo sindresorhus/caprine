@@ -20,9 +20,18 @@ function setTouchBar(items: Electron.TouchBarButton[]): void {
 	win.setTouchBar(touchBar);
 }
 
+function createLabel(label: string): string {
+	if (label.length > MAX_VISIBLE_LENGTH) {
+		// If the label is too long, we'll render a truncated one with "..." appended
+		return `${label.slice(0, MAX_VISIBLE_LENGTH)}...`;
+	}
+
+	return label;
+}
+
 function createTouchBarButton(label: string, selected: boolean, icon: string, index: number): Electron.TouchBarButton {
 	return new TouchBarButton({
-		label: label.length > MAX_VISIBLE_LENGTH ? label.slice(0, MAX_VISIBLE_LENGTH) + '…' : label,
+		label: createLabel(label),
 		backgroundColor: selected ? '#0084ff' : undefined,
 		icon: nativeImage.createFromDataURL(icon),
 		iconPosition: 'left',
