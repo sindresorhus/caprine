@@ -18,8 +18,8 @@ export function sendAction<T>(action: string, args?: T): void {
 	ipcMain.callRenderer(win, action, args);
 }
 
-export function sendBackgroundAction<T>(action: string, args?: T): void {
-	ipcMain.callRenderer(getWindow(), action, args);
+export async function sendBackgroundAction<T, TReturn>(action: string, args?: T): Promise<TReturn> {
+	return ipcMain.callRenderer<T, TReturn>(getWindow(), action, args);
 }
 
 export function showRestartDialog(message: string): void {

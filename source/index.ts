@@ -97,7 +97,7 @@ function getMessageCount(conversations: Conversation[]): number {
 	return conversations.filter(({unread}) => unread).length;
 }
 
-function updateBadge(conversations: Conversation[]): void {
+async function updateBadge(conversations: Conversation[]): Promise<void> {
 	// Ignore `Sindre messaged you` blinking
 	if (!Array.isArray(conversations)) {
 		return;
@@ -139,16 +139,16 @@ function updateBadge(conversations: Conversation[]): void {
 				mainWindow.setOverlayIcon(null, '');
 			} else {
 				// Delegate drawing of overlay icon to renderer process
-				ipcMain.callRenderer(mainWindow, 'render-overlay-icon', messageCount);
+				updateOverlayIcon(await ipcMain.callRenderer(mainWindow, 'render-overlay-icon', messageCount));
 			}
 		}
 	}
 }
 
-ipcMain.answerRenderer('update-overlay-icon', ({data, text}: {data: string; text: string}) => {
+function updateOverlayIcon({data, text}: {data: string; text: string}): void {
 	const img = nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
-});
+}
 
 function updateTrayIcon(): void {
 	if (!config.get('showTrayIcon') || config.get('quitOnWindowClose')) {
@@ -364,8 +364,8 @@ function createMainWindow(): BrowserWindow {
 			label: 'Mute Notifications',
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
-			click() {
-				ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications');
+			async click() {
+				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications'));
 			}
 		};
 
@@ -449,11 +449,11 @@ function createMainWindow(): BrowserWindow {
 
 				isDNDEnabled = await doNotDisturb.isEnabled();
 
-				ipcMain.callRenderer(mainWindow, 'toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
+				return isDNDEnabled ? false : initialSoundsValue;
 			});
 		}
 
-		ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', config.get('notificationsMuted'));
+		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', config.get('notificationsMuted')));
 		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
@@ -529,10 +529,6 @@ if (is.macos) {
 		mainWindow.setVibrancy('sidebar');
 	});
 }
-
-ipcMain.answerRenderer('mute-notifications-toggled', (status: boolean) => {
-	setNotificationsMute(status);
-});
 
 app.on('activate', () => {
 	if (mainWindow) {

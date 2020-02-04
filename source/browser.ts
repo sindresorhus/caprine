@@ -202,21 +202,20 @@ async function openHiddenPreferences(): Promise<boolean> {
 	return false;
 }
 
-ipc.answerMain(
-	'toggle-sounds',
-	async (checked: boolean): Promise<void> => {
-		const shouldClosePreferences = await openHiddenPreferences();
+async function toggleSounds(checked: boolean): Promise<void> {
+	const shouldClosePreferences = await openHiddenPreferences();
 
-		const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
-		if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
-			soundsCheckbox.click();
-		}
-
-		if (shouldClosePreferences) {
-			closePreferences();
-		}
+	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+	if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
+		soundsCheckbox.click();
 	}
-);
+
+	if (shouldClosePreferences) {
+		closePreferences();
+	}
+}
+
+ipc.answerMain('toggle-sounds', toggleSounds);
 
 ipc.answerMain('toggle-mute-notifications', async (defaultStatus: boolean) => {
 	const shouldClosePreferences = await openHiddenPreferences();
@@ -234,11 +233,11 @@ ipc.answerMain('toggle-mute-notifications', async (defaultStatus: boolean) => {
 		notificationCheckbox.click();
 	}
 
-	ipc.callMain('mute-notifications-toggled', !notificationCheckbox.checked);
-
 	if (shouldClosePreferences) {
 		closePreferences();
 	}
+
+	return !notificationCheckbox.checked;
 });
 
 ipc.answerMain('toggle-message-buttons', () => {
@@ -336,7 +335,7 @@ async function updateDoNotDisturb(): Promise<void> {
 		closePreferences();
 	}
 
-	ipc.callMain('update-dnd-mode', soundsCheckbox.checked);
+	toggleSounds(await ipc.callMain('update-dnd-mode', soundsCheckbox.checked));
 }
 
 function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
@@ -370,16 +369,14 @@ ipc.answerMain('update-vibrancy', () => {
 	updateVibrancy();
 });
 
-ipc.answerMain('render-overlay-icon', (messageCount: number) => {
-	ipc.callMain(
-		'update-overlay-icon', {
-			data: renderOverlayIcon(messageCount).toDataURL(),
-			text: String(messageCount)
-		}
-	);
+ipc.answerMain('render-overlay-icon', (messageCount: number): {data: string; text: string} => {
+	return {
+		data: renderOverlayIcon(messageCount).toDataURL(),
+		text: String(messageCount)
+	};
 });
 
-ipc.answerMain('render-native-emoji', (emoji: string) => {
+ipc.answerMain('render-native-emoji', (emoji: string): {emoji: string; dataUrl: string} => {
 	const canvas = document.createElement('canvas');
 	const context = canvas.getContext('2d')!;
 	canvas.width = 256;
@@ -396,7 +393,7 @@ ipc.answerMain('render-native-emoji', (emoji: string) => {
 	}
 
 	const dataUrl = canvas.toDataURL();
-	ipc.callMain('native-emoji', {emoji, dataUrl});
+	return {emoji, dataUrl};
 });
 
 ipc.answerMain('zoom-reset', () => {

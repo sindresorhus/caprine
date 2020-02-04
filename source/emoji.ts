@@ -234,7 +234,7 @@ Renders the given emoji in the renderer process and returns a PNG `data:` URL.
 */
 const renderEmoji = memoize(
 	async (emoji: string): Promise<string> =>
-		new Promise(resolve => {
+		new Promise(async resolve => {
 			const listener = (arg: {emoji: string; dataUrl: string}): void => {
 				if (arg.emoji !== emoji) {
 					return;
@@ -245,7 +245,7 @@ const renderEmoji = memoize(
 			};
 
 			ipcMain.answerRenderer('native-emoji', listener);
-			sendBackgroundAction('render-native-emoji', emoji);
+			listener(await sendBackgroundAction('render-native-emoji', emoji));
 		})
 );
 
