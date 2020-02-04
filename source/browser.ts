@@ -376,7 +376,7 @@ ipc.answerMain('render-overlay-icon', (messageCount: number): {data: string; tex
 	};
 });
 
-ipc.answerMain('render-native-emoji', (emoji: string): {emoji: string; dataUrl: string} => {
+ipc.answerMain('render-native-emoji', (emoji: string): string => {
 	const canvas = document.createElement('canvas');
 	const context = canvas.getContext('2d')!;
 	canvas.width = 256;
@@ -393,7 +393,7 @@ ipc.answerMain('render-native-emoji', (emoji: string): {emoji: string; dataUrl: 
 	}
 
 	const dataUrl = canvas.toDataURL();
-	return {emoji, dataUrl};
+	return dataUrl;
 });
 
 ipc.answerMain('zoom-reset', () => {
