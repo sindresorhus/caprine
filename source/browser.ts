@@ -4,11 +4,12 @@ import elementReady = require('element-ready');
 import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
-import {createConversationList} from './browser/conversation-list';
+import {sendConversationList} from './browser/conversation-list';
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 const messengerSoundsSelector = `${preferencesSelector} ._374d ._6bkz`;
+const conversationMenuSelector = '.uiLayer:not(.hidden_elem) [role=menu]';
 
 async function withMenu(
 	menuButtonElement: HTMLElement,
@@ -51,7 +52,7 @@ async function withSettingsMenu(callback: () => Promise<void> | void): Promise<v
 
 function selectMenuItem(itemNumber: number): void {
 	const selector = document.querySelector<HTMLElement>(
-		`.uiLayer:not(.hidden_elem) ._54nq._2i-c._558b._2n_z li:nth-child(${itemNumber}) a`
+		`${conversationMenuSelector} > li:nth-child(${itemNumber}) a`
 	);
 
 	if (selector) {
@@ -275,16 +276,11 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
-async function setPrivateMode(): Promise<void> {
+function setPrivateMode(): void {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-		if (config.get('privateMode')) {
-			ipc.callMain('hide-touchbar-labels');
-		} else {
-			const conversationsToRender: Conversation[] = await createConversationList();
-			ipc.callMain('conversations', conversationsToRender);
-		}
+		sendConversationList();
 	}
 }
 
@@ -481,7 +477,7 @@ function setZoom(zoomFactor: number): void {
 
 async function withConversationMenu(callback: () => void): Promise<void> {
 	const menuButton = document.querySelector<HTMLElement>(
-		`${selectedConversationSelector} ._5blh._4-0h`
+		`${selectedConversationSelector} [aria-haspopup=true] [role=button]`
 	);
 
 	if (menuButton) {
@@ -495,25 +491,29 @@ async function openMuteModal(): Promise<void> {
 	});
 }
 
-async function hideSelectedConversation(): Promise<void> {
-	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
-		`${selectedConversationSelector} ._55lu`
-	);
-	const isGroupConversation = Boolean(groupConversationProfilePicture);
+/*
+This function assumes:
+- There is a selected conversation.
+- That the conversation already has its conversation menu open.
 
+In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
+*/
+function isSelectedConversationGroup(): boolean {
+	const separator = document.querySelector<HTMLElement>(
+		`${conversationMenuSelector} > li:nth-child(6)[role=separator]`
+	);
+	return Boolean(separator);
+}
+
+async function hideSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		selectMenuItem(isGroupConversation ? 4 : 3);
+		selectMenuItem(isSelectedConversationGroup() ? 4 : 3);
 	});
 }
 
 async function deleteSelectedConversation(): Promise<void> {
-	const groupConversationProfilePicture = document.querySelector<HTMLElement>(
-		`${selectedConversationSelector} ._55lu`
-	);
-	const isGroupConversation = Boolean(groupConversationProfilePicture);
-
 	await withConversationMenu(() => {
-		selectMenuItem(isGroupConversation ? 5 : 4);
+		selectMenuItem(isSelectedConversationGroup() ? 5 : 4);
 	});
 }
 
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	setDarkMode();
 
 	// Activate Private Mode if it was set before quitting
-	await setPrivateMode();
+	setPrivateMode();
 
 	// Configure do not disturb
 	if (is.macos) {

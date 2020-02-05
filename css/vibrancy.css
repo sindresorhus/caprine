@@ -11,6 +11,9 @@ html.sidebar-vibrancy.dark-mode ._4sp8 {
 html.sidebar-vibrancy ._3v_o {
 	background-color: #fff;
 }
+html.sidebar-vibrancy.dark-mode ._3v_o {
+	background-color: var(--container-dark-color);
+}
 
 /* Message placeholder text color */
 html.sidebar-vibrancy ._kmc ._1p1t {

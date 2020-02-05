@@ -14,7 +14,7 @@ import {
 import {ipcMain} from 'electron-better-ipc';
 import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
-import electronDl from 'electron-dl';
+import electronDl = require('electron-dl');
 import electronContextMenu = require('electron-context-menu');
 import electronLocalshortcut = require('electron-localshortcut');
 import electronDebug = require('electron-debug');
@@ -27,7 +27,6 @@ import tray from './tray';
 import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
-import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 import {setUpMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
 
@@ -292,8 +291,12 @@ function createMainWindow(): BrowserWindow {
 	setUserLocale();
 	initRequestsFiltering();
 
+	let previousDarkMode = darkMode.isEnabled;
 	darkMode.onChange(() => {
-		win.webContents.send('set-dark-mode');
+		if (darkMode.isEnabled !== previousDarkMode) {
+			previousDarkMode = darkMode.isEnabled;
+			win.webContents.send('set-dark-mode');
+		}
 	});
 
 	if (is.macos) {
@@ -459,6 +462,10 @@ function createMainWindow(): BrowserWindow {
 		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
+
+		if (is.macos) {
+			await import('./touch-bar');
+		}
 	});
 
 	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
@@ -469,7 +476,7 @@ function createMainWindow(): BrowserWindow {
 				// Voice/video call popup
 				options.show = true;
 				options.titleBarStyle = 'default';
-				options.webPreferences = options.webPreferences || {};
+				options.webPreferences = options.webPreferences ?? {};
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				(event as any).newGuest = new BrowserWindow(options);
@@ -525,7 +532,7 @@ function createMainWindow(): BrowserWindow {
 
 if (is.macos) {
 	ipcMain.answerRenderer('set-vibrancy', () => {
-		mainWindow.setBackgroundColor('#00000000'); // Transparent, workaround for vibrancy issue.
+		mainWindow.setBackgroundColor('#80FFFFFF'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
 	});
 }
