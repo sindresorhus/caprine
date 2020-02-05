@@ -84,6 +84,6 @@ export const toggleLaunchMinimized = (menu: Menu): void => {
 };
 
 const disableMenuItem = (menuItem: Electron.MenuItem, checked: boolean): void => {
-		menuItem.enabled = false;
-		menuItem.checked = checked;
+	menuItem.enabled = false;
+	menuItem.checked = checked;
 };
