@@ -4,7 +4,7 @@ import elementReady = require('element-ready');
 import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
-import {createConversationList} from './browser/conversation-list';
+import {sendConversationList} from './browser/conversation-list';
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
@@ -277,16 +277,11 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
-async function setPrivateMode(): Promise<void> {
+function setPrivateMode(): void {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-		if (config.get('privateMode')) {
-			ipc.send('hide-touchbar-labels');
-		} else {
-			const conversationsToRender: Conversation[] = await createConversationList();
-			ipc.send('conversations', conversationsToRender);
-		}
+		sendConversationList();
 	}
 }
 
@@ -570,7 +565,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	setDarkMode();
 
 	// Activate Private Mode if it was set before quitting
-	await setPrivateMode();
+	setPrivateMode();
 
 	// Configure do not disturb
 	if (is.macos) {
