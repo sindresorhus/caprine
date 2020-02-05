@@ -28,7 +28,6 @@ import tray from './tray';
 import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
-import './touch-bar'; // eslint-disable-line import/no-unassigned-import
 import {setUpMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
 
@@ -464,6 +463,10 @@ function createMainWindow(): BrowserWindow {
 		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
 		);
+
+		if (is.macos) {
+			await import('./touch-bar');
+		}
 	});
 
 	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
