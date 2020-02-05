@@ -1,5 +1,4 @@
 import {TouchBar, ipcMain as ipc, nativeImage, Event as ElectronEvent} from 'electron';
-import {is} from 'electron-util';
 import config from './config';
 import {sendAction, getWindow} from './util';
 import {caprineIconPath} from './constants';
@@ -8,10 +7,8 @@ const {TouchBarButton} = TouchBar;
 const MAX_VISIBLE_LENGTH = 25;
 const privateModeTouchBarLabel: Electron.TouchBarButton = new TouchBarButton({
 	label: 'Private mode enabled',
-	backgroundColor: undefined,
 	icon: nativeImage.createFromPath(caprineIconPath),
-	iconPosition: 'left',
-	click: undefined
+	iconPosition: 'left'
 });
 
 function setTouchBar(items: Electron.TouchBarButton[]): void {
@@ -22,14 +19,14 @@ function setTouchBar(items: Electron.TouchBarButton[]): void {
 
 function createLabel(label: string): string {
 	if (label.length > MAX_VISIBLE_LENGTH) {
-		// If the label is too long, we'll render a truncated one with "..." appended
-		return `${label.slice(0, MAX_VISIBLE_LENGTH)}...`;
+		// If the label is too long, we'll render a truncated one with "…" appended
+		return `${label.slice(0, MAX_VISIBLE_LENGTH)}…`;
 	}
 
 	return label;
 }
 
-function createTouchBarButton(label: string, selected: boolean, icon: string, index: number): Electron.TouchBarButton {
+function createTouchBarButton({label, selected, icon}: Conversation, index: number): Electron.TouchBarButton {
 	return new TouchBarButton({
 		label: createLabel(label),
 		backgroundColor: selected ? '#0084ff' : undefined,
@@ -42,17 +39,11 @@ function createTouchBarButton(label: string, selected: boolean, icon: string, in
 }
 
 ipc.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
-	const isPrivateModeEnabled: boolean = is.macos && config.get('privateMode');
-	let touchBarItems: Electron.TouchBarButton[];
-	if (isPrivateModeEnabled) {
-		touchBarItems = [privateModeTouchBarLabel];
+	if (config.get('privateMode')) {
+		setTouchBar([privateModeTouchBarLabel]);
 	} else {
-		touchBarItems = conversations.map(({label, selected, icon}, index: number) => {
-			return createTouchBarButton(label, selected, icon, index);
-		});
+		setTouchBar(conversations.map(createTouchBarButton));
 	}
-
-	setTouchBar(touchBarItems);
 });
 
 ipc.on('hide-touchbar-labels', (_event: ElectronEvent) => {
