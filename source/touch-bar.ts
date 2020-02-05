@@ -45,7 +45,3 @@ ipc.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) =
 		setTouchBar(conversations.map(createTouchBarButton));
 	}
 });
-
-ipc.on('hide-touchbar-labels', (_event: ElectronEvent) => {
-	setTouchBar([privateModeTouchBarLabel]);
-});
