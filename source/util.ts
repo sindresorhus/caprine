@@ -2,6 +2,8 @@ import {app, BrowserWindow, dialog} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
 
+app.allowRendererProcessReuse = true;
+
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
 	return win;

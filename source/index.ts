@@ -240,6 +240,7 @@ function setUserLocale(): void {
 	const cookie = {
 		url: 'https://www.messenger.com/',
 		name: 'locale',
+		secure: true,
 		value: userLocale
 	};
 
@@ -285,6 +286,7 @@ function createMainWindow(): BrowserWindow {
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			contextIsolation: true,
+			spellcheck: true,
 			plugins: true
 		}
 	});
