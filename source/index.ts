@@ -344,7 +344,18 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	win.on('resize', () => {
-		config.set('lastWindowState', win.getNormalBounds());
+		const {isMaximized} = config.get('lastWindowState');
+		config.set('lastWindowState', {...win.getNormalBounds(), isMaximized});
+	});
+
+	win.on('maximize', () => {
+		const lastWindowState = config.get('lastWindowState');
+		config.set('lastWindowState', {...lastWindowState, isMaximized: true});
+	});
+
+	win.on('unmaximize', () => {
+		const lastWindowState = config.get('lastWindowState');
+		config.set('lastWindowState', {...lastWindowState, isMaximized: false});
 	});
 
 	return win;
@@ -441,6 +452,10 @@ function createMainWindow(): BrowserWindow {
 			mainWindow.hide();
 			tray.create(mainWindow);
 		} else {
+			if (config.get('lastWindowState').isMaximized) {
+				mainWindow.maximize();
+			}
+
 			mainWindow.show();
 		}
 
@@ -542,6 +557,14 @@ ipcMain.on('mute-notifications-toggled', (_event: ElectronEvent, status: boolean
 	setNotificationsMute(status);
 });
 
+ipcMain.on('toggle-maximized', (_event: ElectronEvent) => {
+	if (mainWindow.isMaximized()) {
+		mainWindow.unmaximize();
+	} else {
+		mainWindow.maximize();
+	}
+});
+
 app.on('activate', () => {
 	if (mainWindow) {
 		mainWindow.show();
@@ -554,7 +577,8 @@ app.on('before-quit', () => {
 	// Checking whether the window exists to work around an Electron race issue:
 	// https://github.com/sindresorhus/caprine/issues/809
 	if (mainWindow) {
-		config.set('lastWindowState', mainWindow.getNormalBounds());
+		const {isMaximized} = config.get('lastWindowState');
+		config.set('lastWindowState', {...mainWindow.getNormalBounds(), isMaximized});
 	}
 });
 

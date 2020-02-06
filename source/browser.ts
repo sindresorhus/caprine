@@ -567,6 +567,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode();
 
+	// Toggle maximized state when double clicking the titleBar
+	window.addEventListener('dblclick', (event: Event) => {
+		const target = event.target as HTMLElement;
+
+		if (target.closest('._6-xk') || target.closest('._673w')) {
+			ipc.send('toggle-maximized');
+		}
+	});
+
 	// Configure do not disturb
 	if (is.macos) {
 		await updateDoNotDisturb();

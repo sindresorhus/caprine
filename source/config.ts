@@ -12,6 +12,7 @@ type StoreType = {
 		y: number;
 		width: number;
 		height: number;
+		isMaximized: boolean;
 	};
 	menuBarMode: boolean;
 	showDockIcon: boolean;
@@ -77,13 +78,17 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 			},
 			height: {
 				type: 'number'
+			},
+			isMaximized: {
+				type: 'boolean'
 			}
 		},
 		default: {
 			x: undefined,
 			y: undefined,
 			width: 800,
-			height: 600
+			height: 600,
+			isMaximized: false
 		}
 	},
 	menuBarMode: {
