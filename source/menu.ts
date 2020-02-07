@@ -248,6 +248,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Mute Ringtone Call',
+			type: 'checkbox',
+			checked: config.get('callRingtoneMuted'),
+			click() {
+				config.set('callRingtoneMuted', !config.get('callRingtoneMuted'));
+			}
+		},
+		{
 			label: 'Show Unread Badge',
 			type: 'checkbox',
 			checked: config.get('showUnreadBadge'),

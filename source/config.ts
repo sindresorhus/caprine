@@ -33,6 +33,7 @@ type StoreType = {
 	sidebar: 'default' | 'hidden' | 'narrow' | 'wide';
 	autoHideMenuBar: boolean;
 	notificationsMuted: boolean;
+	callRingtoneMuted: boolean;
 	hardwareAcceleration: boolean;
 	quitOnWindowClose: boolean;
 	keepMeSignedIn: boolean;
@@ -163,6 +164,10 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 		default: false
 	},
 	notificationsMuted: {
+		type: 'boolean',
+		default: false
+	},
+	callRingtoneMuted: {
 		type: 'boolean',
 		default: false
 	},
