@@ -234,12 +234,17 @@ function initRequestsFiltering(): void {
 		}
 	});
 
-	session.defaultSession.webRequest.onHeadersReceived({ urls: [`*://static.xx.fbcdn.net/rsrc.php/*`] }, ({responseHeaders}, callback) => {
+	session.defaultSession.webRequest.onHeadersReceived({
+		urls: ['*://static.xx.fbcdn.net/rsrc.php/*']
+	}, ({responseHeaders}, callback) => {
 		if (!config.get('callRingtoneMuted') || !responseHeaders) {
 			return callback({});
 		}
-		callback({ cancel: responseHeaders['content-md5'][0] === '2NAu/QVqg211BbktgY5GkA==' });
-  });
+
+		callback({
+			cancel: responseHeaders['content-md5'][0] === '2NAu/QVqg211BbktgY5GkA=='
+		});
+	});
 }
 
 function setUserLocale(): void {
