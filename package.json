@@ -1,7 +1,7 @@
 {
 	"name": "caprine",
 	"productName": "Caprine",
-	"version": "2.43.0",
+	"version": "2.44.0",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "sindresorhus/caprine",
@@ -26,16 +26,16 @@
 	},
 	"dependencies": {
 		"@sindresorhus/do-not-disturb": "^1.1.0",
-		"electron-context-menu": "^0.15.2",
+		"electron-context-menu": "^0.16.0",
 		"electron-debug": "^3.0.1",
 		"electron-dl": "^3.0.0",
 		"electron-localshortcut": "^3.2.1",
-		"electron-log": "^4.0.4",
+		"electron-log": "^4.0.6",
 		"electron-store": "^5.1.0",
 		"electron-updater": "^4.2.0",
 		"electron-util": "^0.13.1",
 		"element-ready": "^4.1.1",
-		"facebook-locales": "^1.0.840",
+		"facebook-locales": "^1.0.851",
 		"is-online": "^8.2.1",
 		"json-schema-typed": "^7.0.3",
 		"lodash": "^4.17.15",
@@ -50,8 +50,8 @@
 		"@typescript-eslint/parser": "^2.19.0",
 		"del-cli": "^3.0.0",
 		"electron": "^8.0.0",
-		"electron-builder": "22.2.0",
-		"eslint-config-xo-typescript": "^0.24.1",
+		"electron-builder": "^22.3.2",
+		"eslint-config-xo-typescript": "^0.26.0",
 		"husky": "^4.2.1",
 		"np": "^5.2.1",
 		"stylelint": "^13.0.0",
@@ -67,17 +67,7 @@
 		"envs": [
 			"node",
 			"browser"
-		],
-		"rules": {
-			"valid-jsdoc": "off",
-			"import/first": "off",
-			"import/newline-after-import": "off",
-			"@typescript-eslint/no-object-literal-type-assertion": "off",
-			"@typescript-eslint/indent": "off",
-			"@typescript-eslint/no-explicit-any": "off",
-			"@typescript-eslint/no-misused-promises": "off",
-			"@typescript-eslint/strict-boolean-expressions": "off"
-		}
+		]
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo",
