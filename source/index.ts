@@ -286,7 +286,6 @@ function createMainWindow(): BrowserWindow {
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			contextIsolation: true,
-			spellcheck: true,
 			plugins: true
 		}
 	});
