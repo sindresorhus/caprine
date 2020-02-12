@@ -4,6 +4,8 @@ import {is} from 'electron-util';
 import config from './config';
 import tray from './tray';
 
+app.allowRendererProcessReuse = true;
+
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
 	return win;

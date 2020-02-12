@@ -239,6 +239,7 @@ function setUserLocale(): void {
 	const cookie = {
 		url: 'https://www.messenger.com/',
 		name: 'locale',
+		secure: true,
 		value: userLocale
 	};
 
