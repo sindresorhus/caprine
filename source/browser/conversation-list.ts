@@ -1,4 +1,4 @@
-import {ipcRenderer as ipc} from 'electron';
+import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
 import selectors from './selectors';
 
@@ -147,7 +147,7 @@ async function createConversationList(): Promise<Conversation[]> {
 
 export async function sendConversationList(): Promise<void> {
 	const conversationsToRender: Conversation[] = await createConversationList();
-	ipc.send('conversations', conversationsToRender);
+	ipc.callMain('conversations', conversationsToRender);
 }
 
 window.addEventListener('load', async () => {
