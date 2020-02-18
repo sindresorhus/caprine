@@ -77,7 +77,7 @@ export default {
 				label: 'Reset Position',
 				visible: !is.macos,
 				click() {
-					win.setPosition(0,0);
+					win.setPosition(0, 0);
 				}
 
 			},
