@@ -68,7 +68,10 @@
 		"envs": [
 			"node",
 			"browser"
-		]
+		],
+		"rules": {
+			"eslint-comments/no-unused-disable": "warn"
+		}
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo",
