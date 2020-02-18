@@ -744,6 +744,7 @@ ${debugInfo()}`;
 					type: 'separator'
 				},
 				{
+					accelerator: 'CommandOrControl+Q',
 					role: 'quit'
 				}
 			]

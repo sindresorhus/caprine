@@ -188,6 +188,7 @@ Toggle sidebar         | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>s</kbd
 Switch to Messenger    | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>1</kbd>
 Switch to Workchat     | <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>2</kbd>
 Preferences            | <kbd>Command/Control</kbd> <kbd>,</kbd>
+Quit                   | <kbd>Command/Control</kbd> <kbd>Q</kbd>
 
 ###### Tip
 
