@@ -5,6 +5,7 @@ type StoreType = {
 	followSystemAppearance: boolean;
 	darkMode: boolean;
 	privateMode: boolean;
+	showPrivateModeModal: boolean;
 	vibrancy: 'none' | 'sidebar' | 'full';
 	zoomFactor: number;
 	lastWindowState: {
@@ -51,6 +52,10 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	privateMode: {
 		type: 'boolean',
 		default: false
+	},
+	showPrivateModeModal: {
+		type: 'boolean',
+		default: true
 	},
 	vibrancy: {
 		type: 'string',
