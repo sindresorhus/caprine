@@ -238,7 +238,8 @@ function initRequestsFiltering(): void {
 		urls: ['*://static.xx.fbcdn.net/rsrc.php/*']
 	}, ({responseHeaders}, callback) => {
 		if (!config.get('callRingtoneMuted') || !responseHeaders) {
-			return callback({});
+			callback({});
+			return;
 		}
 
 		const callRingtoneHash = '2NAu/QVqg211BbktgY5GkA==';
