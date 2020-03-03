@@ -248,7 +248,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Mute Ringtone Call',
+			label: 'Mute Call Ringtone',
 			type: 'checkbox',
 			checked: config.get('callRingtoneMuted'),
 			click() {
