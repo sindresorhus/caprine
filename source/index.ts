@@ -241,8 +241,9 @@ function initRequestsFiltering(): void {
 			return callback({});
 		}
 
+		const callRingtoneHash = '2NAu/QVqg211BbktgY5GkA==';
 		callback({
-			cancel: responseHeaders['content-md5'][0] === '2NAu/QVqg211BbktgY5GkA=='
+			cancel: responseHeaders['content-md5'][0] === callRingtoneHash
 		});
 	});
 }
