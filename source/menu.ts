@@ -255,6 +255,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				config.set('callRingtoneMuted', !config.get('callRingtoneMuted'));
 			}
 		},
+      {
+         label: 'Scroll Down on New Messages',
+         type: 'checkbox',
+         checked: config.get('scrollDownOnMessage'),
+         click(menuItem) {
+            config.set('scrollDownOnMessage', menuItem.checked);
+         }
+      },
 		{
 			label: 'Show Unread Badge',
 			type: 'checkbox',
