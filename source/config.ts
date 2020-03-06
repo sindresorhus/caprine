@@ -34,7 +34,7 @@ type StoreType = {
 	autoHideMenuBar: boolean;
 	notificationsMuted: boolean;
 	callRingtoneMuted: boolean;
-   scrollDownOnMessage: boolean;
+	scrollDownOnMessage: boolean;
 	hardwareAcceleration: boolean;
 	quitOnWindowClose: boolean;
 	keepMeSignedIn: boolean;
@@ -172,7 +172,7 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 		type: 'boolean',
 		default: false
 	},
-   scrollDownOnMessage: {
+	scrollDownOnMessage: {
 		type: 'boolean',
 		default: true
 	},
