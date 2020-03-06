@@ -232,6 +232,20 @@ function initRequestsFiltering(): void {
 			callback({cancel: config.get('block.deliveryReceipt' as any)});
 		}
 	});
+
+	session.defaultSession.webRequest.onHeadersReceived({
+		urls: ['*://static.xx.fbcdn.net/rsrc.php/*']
+	}, ({responseHeaders}, callback) => {
+		if (!config.get('callRingtoneMuted') || !responseHeaders) {
+			callback({});
+			return;
+		}
+
+		const callRingtoneHash = '2NAu/QVqg211BbktgY5GkA==';
+		callback({
+			cancel: responseHeaders['content-md5'][0] === callRingtoneHash
+		});
+	});
 }
 
 function setUserLocale(): void {
