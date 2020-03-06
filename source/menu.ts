@@ -256,7 +256,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
       {
-         label: 'Scroll Down on New Messages',
+         label: 'Autoscroll on New Messages',
          type: 'checkbox',
          checked: config.get('scrollDownOnMessage'),
          click(menuItem) {
