@@ -544,7 +544,9 @@ async function observeAutoscroll(): Promise<void> {
    const mainElement = await elementReady<HTMLElement>('body>div>div>div', {stopOnDomReady: false});
    if(mainElement){
       const hookMessageObserver = async () => {
-         const chatElement = await elementReady<HTMLElement>('[role=presentation] .scrollable > div > div > div > div:nth-child(3)', {stopOnDomReady: false});
+         const chatElement = await elementReady<HTMLElement>(
+            '[role=presentation] .scrollable > div > div > div > div:nth-child(3)', {stopOnDomReady: false}
+         );
          if(chatElement){
             const messageObserver = new MutationObserver((records: MutationRecord[] ) => {
                const newMessages:MutationRecord[] = records.filter((r) => {
