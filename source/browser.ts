@@ -1,4 +1,4 @@
-import {ipcRenderer as ipc, Event as ElectronEvent} from 'electron';
+import {ipcRenderer as ipc, Event as ElectronEvent, remote} from 'electron';
 import {api, is} from 'electron-util';
 import elementReady = require('element-ready');
 import selectors from './browser/selectors';
@@ -572,7 +572,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 		const target = event.target as HTMLElement;
 
 		if (target.closest('._6-xk') || target.closest('._673w')) {
-			ipc.send('toggle-maximized');
+			if (is.macos) {
+				const doubleClickAction = remote.systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
+				const [win] = remote.BrowserWindow.getAllWindows();
+
+				if (doubleClickAction === 'Minimize') {
+					win.minimize();
+				} else if (doubleClickAction === 'Maximize') {
+					ipc.send('toggle-maximized');
+				}
+			} else {
+				ipc.send('toggle-maximized');
+			}
 		}
 	});
 

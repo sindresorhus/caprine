@@ -349,13 +349,13 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	win.on('maximize', () => {
-		const lastWindowState = config.get('lastWindowState');
-		config.set('lastWindowState', {...lastWindowState, isMaximized: true});
+		// @ts-ignore
+		config.set('lastWindowState.isMaximized', true);
 	});
 
 	win.on('unmaximize', () => {
-		const lastWindowState = config.get('lastWindowState');
-		config.set('lastWindowState', {...lastWindowState, isMaximized: false});
+		// @ts-ignore
+		config.set('lastWindowState.isMaximized', false);
 	});
 
 	return win;
