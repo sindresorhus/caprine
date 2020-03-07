@@ -549,20 +549,18 @@ async function observeAutoscroll(): Promise<void> {
 			);
 			if (chatElement) {
 				const messageObserver = new MutationObserver((records: MutationRecord[]) => {
-					if (config.get('scrollDownOnMessage')) {
-						const newMessages: MutationRecord[] = records.filter(r => {
-							// The mutation it's an addition
-							return r.addedNodes.length > 0 &&
-								// ... of a div       (skip the "seen" status change)
-								(r.addedNodes[0] as HTMLElement).tagName === 'DIV' &&
-								// ... on the last child       (skip previous messages added when scrolling up)
-								chatElement.lastChild!.contains(r.target);
-						});
-						if (newMessages.length > 0) {
-							const scrollableElement: HTMLElement|null = document.querySelector('[role=presentation] .scrollable');
-							if (scrollableElement) {
-								scrollableElement.scroll({top: Number.MAX_SAFE_INTEGER, behavior: 'smooth'});
-							}
+					const newMessages: MutationRecord[] = records.filter(r => {
+						// The mutation it's an addition
+						return r.addedNodes.length > 0 &&
+							// ... of a div       (skip the "seen" status change)
+							(r.addedNodes[0] as HTMLElement).tagName === 'DIV' &&
+							// ... on the last child       (skip previous messages added when scrolling up)
+							chatElement.lastChild!.contains(r.target);
+					});
+					if (newMessages.length > 0) {
+						const scrollableElement: HTMLElement|null = document.querySelector('[role=presentation] .scrollable');
+						if (scrollableElement) {
+							scrollableElement.scroll({top: Number.MAX_SAFE_INTEGER, behavior: 'smooth'});
 						}
 					}
 				});
