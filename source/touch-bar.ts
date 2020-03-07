@@ -1,4 +1,5 @@
-import {TouchBar, ipcMain as ipc, nativeImage, Event as ElectronEvent} from 'electron';
+import {TouchBar, nativeImage} from 'electron';
+import {ipcMain as ipc} from 'electron-better-ipc';
 import config from './config';
 import {sendAction, getWindow} from './util';
 import {caprineIconPath} from './constants';
@@ -38,7 +39,7 @@ function createTouchBarButton({label, selected, icon}: Conversation, index: numb
 	});
 }
 
-ipc.on('conversations', (_event: ElectronEvent, conversations: Conversation[]) => {
+ipc.answerRenderer('conversations', (conversations: Conversation[]) => {
 	if (config.get('privateMode')) {
 		setTouchBar([privateModeTouchBarLabel]);
 	} else {

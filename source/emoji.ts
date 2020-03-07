@@ -4,8 +4,6 @@ import {
 	NativeImage,
 	MenuItemConstructorOptions,
 	Response,
-	ipcMain,
-	Event as ElectronEvent,
 	Menu
 } from 'electron';
 import {memoize} from 'lodash';
@@ -233,22 +231,7 @@ function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 /**
 Renders the given emoji in the renderer process and returns a PNG `data:` URL.
 */
-const renderEmoji = memoize(
-	async (emoji: string): Promise<string> =>
-		new Promise(resolve => {
-			const listener = (_event: ElectronEvent, arg: {emoji: string; dataUrl: string}): void => {
-				if (arg.emoji !== emoji) {
-					return;
-				}
-
-				ipcMain.removeListener('native-emoji', listener);
-				resolve(arg.dataUrl);
-			};
-
-			ipcMain.on('native-emoji', listener);
-			sendBackgroundAction('render-native-emoji', emoji);
-		})
-);
+const renderEmoji = memoize(async (emoji: string): Promise<string> => sendBackgroundAction<string, string>('render-native-emoji', emoji));
 
 /**
 @param url - A Facebook emoji URL like `https://static.xx.fbcdn.net/images/emoji.php/v9/tae/2/16/1f471_1f3fb_200d_2640.png`.

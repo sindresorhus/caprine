@@ -1,25 +1,28 @@
 import {app, BrowserWindow, dialog, Menu} from 'electron';
+import {ipcMain} from 'electron-better-ipc';
 import {is} from 'electron-util';
 import config from './config';
 import tray from './tray';
+
+app.allowRendererProcessReuse = true;
 
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
 	return win;
 }
 
-export function sendAction(action: string, ...args: unknown[]): void {
+export function sendAction<T>(action: string, args?: T): void {
 	const win = getWindow();
 
 	if (is.macos) {
 		win.restore();
 	}
 
-	win.webContents.send(action, ...args);
+	ipcMain.callRenderer(win, action, args);
 }
 
-export function sendBackgroundAction(action: string, ...args: unknown[]): void {
-	getWindow().webContents.send(action, ...args);
+export async function sendBackgroundAction<T, TReturn>(action: string, args?: T): Promise<TReturn> {
+	return ipcMain.callRenderer<T, TReturn>(getWindow(), action, args);
 }
 
 export function showRestartDialog(message: string): void {
