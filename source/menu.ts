@@ -254,6 +254,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				config.set('callRingtoneMuted', !config.get('callRingtoneMuted'));
 			}
+		},
 		{
 			label: 'Show Unread Badge',
 			type: 'checkbox',
