@@ -425,8 +425,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('privateMode'),
 			accelerator: 'CommandOrControl+Shift+N',
 			async click(menuItem, _browserWindow, event) {
-				if (!config.get('privateMode') && config.get('showPrivateModeModal') && event.shiftKey) {
-					await dialog.showMessageBox(_browserWindow, {
+				if (!config.get('privateMode') && config.get('showPrivateModePrompt') && event.shiftKey) {
+					const result = await dialog.showMessageBox(_browserWindow, {
 						message: 'Are you sure you want to hide names and avatars?',
 						detail: 'This was triggered by Command/Control+Shift+N.',
 						buttons: [
@@ -436,15 +436,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 						defaultId: 0,
 						cancelId: 1,
 						checkboxLabel: 'Don\'t ask me again'
-					}).then(res => {
-						config.set('showPrivateModeModal', !res.checkboxChecked);
-						if (res.response === 0) {
-							config.set('privateMode', !config.get('privateMode'));
-							sendAction('set-private-mode');
-						} else if (res.response === 1) {
-							menuItem.checked = false;
-						}
 					});
+					config.set('showPrivateModePrompt', !result.checkboxChecked);
+					if (result.response === 0) {
+						config.set('privateMode', !config.get('privateMode'));
+						sendAction('set-private-mode');
+					} else if (result.response === 1) {
+						menuItem.checked = false;
+					}
 				} else {
 					config.set('privateMode', !config.get('privateMode'));
 					sendAction('set-private-mode');
