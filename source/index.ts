@@ -92,11 +92,11 @@ app.on('second-instance', () => {
 	}
 });
 
-// Main window should move to the same position as when it was another screen
+// Main window should move to the same position as it had on another screen
 app.on('ready', () => {
 	electronScreen.on('display-removed', () => {
 		const [x, y] = mainWindow.getPosition();
-		mainWindow.setPosition(oldPosition[0], oldPosition[1]);
+		mainWindow.setPosition(x, y);
 	});
 });
 
