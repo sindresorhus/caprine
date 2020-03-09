@@ -541,38 +541,40 @@ function insertionListener(event: AnimationEvent): void {
 }
 
 async function observeAutoscroll(): Promise<void> {
-	const mainElement = await elementReady<HTMLElement>('body>div>div>div', {stopOnDomReady: false});
-	if (mainElement) {
-		const hookMessageObserver = async (): Promise<void> => {
-			const chatElement = await elementReady<HTMLElement>(
-				'[role=presentation] .scrollable > div > div > div > div:nth-child(3)', {stopOnDomReady: false}
-			);
-			if (chatElement) {
-				const messageObserver = new MutationObserver((records: MutationRecord[]) => {
-					const newMessages: MutationRecord[] = records.filter(r => {
-						// The mutation it's an addition
-						return r.addedNodes.length > 0 &&
-							// ... of a div       (skip the "seen" status change)
-							(r.addedNodes[0] as HTMLElement).tagName === 'DIV' &&
-							// ... on the last child       (skip previous messages added when scrolling up)
-							chatElement.lastChild!.contains(r.target);
-					});
-					if (newMessages.length > 0) {
-						const scrollableElement: HTMLElement|null = document.querySelector('[role=presentation] .scrollable');
-						if (scrollableElement) {
-							scrollableElement.scroll({top: Number.MAX_SAFE_INTEGER, behavior: 'smooth'});
-						}
-					}
-				});
-				messageObserver.observe(chatElement, {childList: true, subtree: true});
-			}
-		};
-
-		hookMessageObserver();
-		// Hook it again if conversation changes
-		const conversationObserver = new MutationObserver(hookMessageObserver);
-		conversationObserver.observe(mainElement, {childList: true});
+	const mainElement = await elementReady<HTMLElement>('._4sp8', {stopOnDomReady: false});
+	if (!mainElement) {
+		return;
 	}
+
+	const hookMessageObserver = async (): Promise<void> => {
+		const chatElement = await elementReady<HTMLElement>(
+			'[role=presentation] .scrollable [role = region] > div[id ^= "js_"]', {stopOnDomReady: false}
+		);
+		if (chatElement) {
+			const messageObserver = new MutationObserver((r: MutationRecord[]) => {
+				const newMessages: MutationRecord[] = r.filter(r => {
+					// The mutation is an addition
+					return r.addedNodes.length > 0 &&
+						// ... of a div       (skip the "seen" status change)
+						(r.addedNodes[0] as HTMLElement).tagName === 'DIV' &&
+						// ... on the last child       (skip previous messages added when scrolling up)
+						chatElement.lastChild!.contains(r.target);
+				});
+				if (newMessages.length > 0) {
+					const scrollableElement: HTMLElement|null = document.querySelector('[role=presentation] .scrollable');
+					if (scrollableElement) {
+						scrollableElement.scroll({top: Number.MAX_SAFE_INTEGER, behavior: 'smooth'});
+					}
+				}
+			});
+			messageObserver.observe(chatElement, {childList: true, subtree: true});
+		}
+	};
+
+	hookMessageObserver();
+	// Hook it again if conversation changes
+	const conversationObserver = new MutationObserver(hookMessageObserver);
+	conversationObserver.observe(mainElement, {childList: true});
 }
 
 // Listen for emoji element dom insertion
@@ -615,7 +617,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Disable autoplay if set in settings
 	toggleVideoAutoplay();
 
-	// Hook auto scroll observer
+	// Hook auto-scroll observer
 	observeAutoscroll();
 });
 
