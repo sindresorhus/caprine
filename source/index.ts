@@ -576,7 +576,7 @@ function toggleMaximized(): void {
 	}
 }
 
-ipcMain.answerRenderer('titlebar-dblclick', () => {
+ipcMain.answerRenderer('titlebar-doubleclick', () => {
 	if (is.macos) {
 		const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
 
