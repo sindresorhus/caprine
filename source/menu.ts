@@ -720,7 +720,6 @@ ${debugInfo()}`;
 	const linuxWindowsTemplate: MenuItemConstructorOptions[] = [
 		{
 			role: 'fileMenu',
-			label: '&File',
 			submenu: [
 				newConversationItem,
 				{
@@ -745,27 +744,22 @@ ${debugInfo()}`;
 					type: 'separator'
 				},
 				{
-					label: 'E&xit',
 					role: 'quit'
 				}
 			]
 		},
 		{
-			role: 'editMenu',
-			label: '&Edit'
+			role: 'editMenu'
 		},
 		{
 			role: 'viewMenu',
-			label: '&View',
 			submenu: viewSubmenu
 		},
 		{
-			label: '&Conversation',
 			submenu: conversationSubmenu
 		},
 		{
 			role: 'help',
-			label: '&Help',
 			submenu: helpSubmenu
 		}
 	];
@@ -774,7 +768,6 @@ ${debugInfo()}`;
 
 	if (is.development) {
 		template.push({
-			label: '&Debug',
 			submenu: debugSubmenu
 		});
 	}
