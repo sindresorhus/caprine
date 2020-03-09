@@ -92,7 +92,7 @@ app.on('second-instance', () => {
 	}
 });
 
-// Main window should move to the same position as it had on another screen
+// Preserves the window position when a display is removed and Caprine is moved to a different screen.
 app.on('ready', () => {
 	electronScreen.on('display-removed', () => {
 		const [x, y] = mainWindow.getPosition();
