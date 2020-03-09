@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	toggleVideoAutoplay();
 });
 
-// Toggle maximized state when double clicking the titleBar
+// Handle title bar double-click.
 window.addEventListener('dblclick', (event: Event) => {
 	const target = event.target as HTMLElement;
 	const titleBar = target.closest('._36ic._5l-3,._5742,._6-xk,._673w');
