@@ -9,7 +9,8 @@ import {
 	BrowserWindow,
 	Menu,
 	Notification,
-	MenuItemConstructorOptions
+	MenuItemConstructorOptions,
+	systemPreferences
 } from 'electron';
 import {ipcMain} from 'electron-better-ipc';
 import log from 'electron-log';
@@ -567,11 +568,25 @@ if (is.macos) {
 	});
 }
 
-ipcMain.answerRenderer('toggle-maximized', () => {
+function toggleMaximized(): void {
 	if (mainWindow.isMaximized()) {
 		mainWindow.unmaximize();
 	} else {
 		mainWindow.maximize();
+	}
+}
+
+ipcMain.answerRenderer('titlebar-dblclick', () => {
+	if (is.macos) {
+		const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
+
+		if (doubleClickAction === 'Minimize') {
+			mainWindow.minimize();
+		} else if (doubleClickAction === 'Maximize') {
+			toggleMaximized();
+		}
+	} else {
+		toggleMaximized();
 	}
 });
 

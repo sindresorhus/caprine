@@ -1,4 +1,3 @@
-import {remote} from 'electron';
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import {api, is} from 'electron-util';
 import elementReady = require('element-ready');
@@ -566,26 +565,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode();
 
-	// Toggle maximized state when double clicking the titleBar
-	window.addEventListener('dblclick', (event: Event) => {
-		const target = event.target as HTMLElement;
-
-		if (target.closest('._6-xk') || target.closest('._673w')) {
-			if (is.macos) {
-				const doubleClickAction = remote.systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
-				const [win] = remote.BrowserWindow.getAllWindows();
-
-				if (doubleClickAction === 'Minimize') {
-					win.minimize();
-				} else if (doubleClickAction === 'Maximize') {
-					ipc.callMain('toggle-maximized');
-				}
-			} else {
-				ipc.callMain('toggle-maximized');
-			}
-		}
-	});
-
 	// Configure do not disturb
 	if (is.macos) {
 		await updateDoNotDisturb();
@@ -600,6 +579,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Disable autoplay if set in settings
 	toggleVideoAutoplay();
+});
+
+// Toggle maximized state when double clicking the titleBar
+window.addEventListener('dblclick', (event: Event) => {
+	const target = event.target as HTMLElement;
+	const dblClickTitleBar = target.closest('._36ic._5l-3,._5742,._6-xk,._673w');
+
+	if (dblClickTitleBar) {
+		ipc.callMain('titlebar-dblclick');
+	}
+}, {
+	passive: true
 });
 
 window.addEventListener('load', () => {
