@@ -756,6 +756,7 @@ ${debugInfo()}`;
 			submenu: viewSubmenu
 		},
 		{
+			label: 'Conversation',
 			submenu: conversationSubmenu
 		},
 		{
@@ -768,6 +769,7 @@ ${debugInfo()}`;
 
 	if (is.development) {
 		template.push({
+			label: 'Debug',
 			submenu: debugSubmenu
 		});
 	}
