@@ -9,7 +9,8 @@ import {
 	BrowserWindow,
 	Menu,
 	Notification,
-	MenuItemConstructorOptions
+	MenuItemConstructorOptions,
+	systemPreferences
 } from 'electron';
 import {ipcMain} from 'electron-better-ipc';
 import log from 'electron-log';
@@ -358,7 +359,18 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	win.on('resize', () => {
-		config.set('lastWindowState', win.getNormalBounds());
+		const {isMaximized} = config.get('lastWindowState');
+		config.set('lastWindowState', {...win.getNormalBounds(), isMaximized});
+	});
+
+	win.on('maximize', () => {
+		// @ts-ignore
+		config.set('lastWindowState.isMaximized', true);
+	});
+
+	win.on('unmaximize', () => {
+		// @ts-ignore
+		config.set('lastWindowState.isMaximized', false);
 	});
 
 	return win;
@@ -455,6 +467,10 @@ function createMainWindow(): BrowserWindow {
 			mainWindow.hide();
 			tray.create(mainWindow);
 		} else {
+			if (config.get('lastWindowState').isMaximized) {
+				mainWindow.maximize();
+			}
+
 			mainWindow.show();
 		}
 
@@ -552,6 +568,28 @@ if (is.macos) {
 	});
 }
 
+function toggleMaximized(): void {
+	if (mainWindow.isMaximized()) {
+		mainWindow.unmaximize();
+	} else {
+		mainWindow.maximize();
+	}
+}
+
+ipcMain.answerRenderer('titlebar-doubleclick', () => {
+	if (is.macos) {
+		const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
+
+		if (doubleClickAction === 'Minimize') {
+			mainWindow.minimize();
+		} else if (doubleClickAction === 'Maximize') {
+			toggleMaximized();
+		}
+	} else {
+		toggleMaximized();
+	}
+});
+
 app.on('activate', () => {
 	if (mainWindow) {
 		mainWindow.show();
@@ -564,7 +602,8 @@ app.on('before-quit', () => {
 	// Checking whether the window exists to work around an Electron race issue:
 	// https://github.com/sindresorhus/caprine/issues/809
 	if (mainWindow) {
-		config.set('lastWindowState', mainWindow.getNormalBounds());
+		const {isMaximized} = config.get('lastWindowState');
+		config.set('lastWindowState', {...mainWindow.getNormalBounds(), isMaximized});
 	}
 });
 

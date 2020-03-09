@@ -19,7 +19,12 @@ export default {
 			if (win.isVisible()) {
 				win.hide();
 			} else {
-				win.show();
+				if (config.get('lastWindowState').isMaximized) {
+					win.maximize();
+					win.focus();
+				} else {
+					win.show();
+				}
 
 				// Workaround for https://github.com/electron/electron/issues/20858
 				// `setAlwaysOnTop` stops working after hiding the window on KDE Plasma.

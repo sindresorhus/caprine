@@ -581,6 +581,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 	toggleVideoAutoplay();
 });
 
+// Handle title bar double-click.
+window.addEventListener('dblclick', (event: Event) => {
+	const target = event.target as HTMLElement;
+	const titleBar = target.closest('._36ic._5l-3,._5742,._6-xk,._673w');
+
+	if (!titleBar) {
+		return;
+	}
+
+	ipc.callMain('titlebar-doubleclick');
+}, {
+	passive: true
+});
+
 window.addEventListener('load', () => {
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
