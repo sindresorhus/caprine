@@ -437,7 +437,9 @@ Press Command/Ctrl+R in Caprine to see your changes.
 						cancelId: 1,
 						checkboxLabel: 'Don\'t ask me again'
 					});
+
 					config.set('showPrivateModePrompt', !result.checkboxChecked);
+
 					if (result.response === 0) {
 						config.set('privateMode', !config.get('privateMode'));
 						sendAction('set-private-mode');
