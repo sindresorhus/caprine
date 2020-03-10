@@ -93,6 +93,14 @@ app.on('second-instance', () => {
 	}
 });
 
+// Preserves the window position when a display is removed and Caprine is moved to a different screen.
+app.on('ready', () => {
+	electronScreen.on('display-removed', () => {
+		const [x, y] = mainWindow.getPosition();
+		mainWindow.setPosition(x, y);
+	});
+});
+
 function getMessageCount(conversations: Conversation[]): number {
 	return conversations.filter(({unread}) => unread).length;
 }
