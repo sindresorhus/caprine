@@ -214,7 +214,8 @@ function updateVibrancySetting(store: Store): void {
 function updateSidebarSetting(store: Store): void {
 	if (store.get('sidebarHidden')) {
 		store.set('sidebar', 'hidden');
-	} else {
+		store.delete('sidebarHidden');
+	} else if (!store.has('sidebar')) {
 		store.set('sidebar', 'default');
 	}
 }

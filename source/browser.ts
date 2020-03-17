@@ -319,8 +319,6 @@ function updateSidebar(): void {
 			break;
 		default:
 	}
-
-	ipc.callMain('set-sidebar');
 }
 
 async function updateDoNotDisturb(): Promise<void> {
