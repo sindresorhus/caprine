@@ -519,6 +519,7 @@ function createMainWindow(): BrowserWindow {
 				options.webPreferences.nodeIntegration = false;
 				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
 				(event as any).newGuest = new BrowserWindow(options);
+				(event as any).newGuest.loadURL('https://www.messenger.com');
 			}
 		} else {
 			url = stripTrackingFromUrl(url);
