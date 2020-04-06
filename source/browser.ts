@@ -550,6 +550,7 @@ async function observeAutoscroll(): Promise<void> {
 		const chatElement = await elementReady<HTMLElement>(
 			'[role=presentation] .scrollable [role = region] > div[id ^= "js_"]', {stopOnDomReady: false}
 		);
+
 		if (chatElement) {
 			const messageObserver = new MutationObserver((r: MutationRecord[]) => {
 				const newMessages: MutationRecord[] = r.filter(r => {
@@ -560,18 +561,24 @@ async function observeAutoscroll(): Promise<void> {
 						// ... on the last child       (skip previous messages added when scrolling up)
 						chatElement.lastChild!.contains(r.target);
 				});
+
 				if (newMessages.length > 0) {
-					const scrollableElement: HTMLElement|null = document.querySelector('[role=presentation] .scrollable');
+					const scrollableElement: HTMLElement | null = document.querySelector('[role=presentation] .scrollable');
 					if (scrollableElement) {
-						scrollableElement.scroll({top: Number.MAX_SAFE_INTEGER, behavior: 'smooth'});
+						scrollableElement.scroll({
+							top: Number.MAX_SAFE_INTEGER,
+							behavior: 'smooth'
+						});
 					}
 				}
 			});
+
 			messageObserver.observe(chatElement, {childList: true, subtree: true});
 		}
 	};
 
 	hookMessageObserver();
+
 	// Hook it again if conversation changes
 	const conversationObserver = new MutationObserver(hookMessageObserver);
 	conversationObserver.observe(mainElement, {childList: true});
