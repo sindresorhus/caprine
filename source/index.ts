@@ -307,6 +307,7 @@ function createMainWindow(): BrowserWindow {
 		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
+			nativeWindowOpen: true,
 			contextIsolation: true,
 			plugins: true
 		}
@@ -510,7 +511,7 @@ function createMainWindow(): BrowserWindow {
 	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
-		if (url === 'about:blank') {
+		if (url === 'about:blank' || url === 'about:blank#blocked') {
 			if (frameName !== 'about:blank') {
 				// Voice/video call popup
 				options.show = true;
