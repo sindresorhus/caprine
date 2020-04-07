@@ -960,6 +960,12 @@ html.dark-mode ._2n1t {
 	color: var(--base-fourty) !important;
 }
 
+/* "X called you."/"You called X" icons */
+html.dark-mode .sp_sbxFxdCZjuj_2x,
+html.dark-mode .sp_sbxFxdCZjuj {
+	filter: invert();
+}
+
 /* Quoted text in inline replies */
 html.dark-mode ._1nc7:not(._43by) ._pye,
 html.dark-mode ._1nc6:not(._43by) ._pye,
