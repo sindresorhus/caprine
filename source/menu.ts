@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
+import {app, session, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -504,6 +504,101 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		}
 	];
+	const languageToCode: any = {
+		// All languages available in electron spellchecker
+		af: 'Afrikaans',
+		bg: 'Bulgarian',
+		ca: 'Catalan; Valencian',
+		cs: 'Czech',
+		cy: 'Welsh',
+		da: 'Danish ',
+		de: 'German',
+		el: 'Greek(Modern)',
+		en: 'English',
+		et: 'Estonian',
+		fa: 'Persian',
+		fo: 'Faroese',
+		fr: 'French',
+		he: 'Hebrew',
+		hi: 'Hindi',
+		hr: 'Croatian',
+		hu: 'Hungarian',
+		hy: 'Armenian',
+		id: 'Indonesian',
+		it: 'Italian',
+		ko: 'Korean',
+		lt: 'Lithuanian',
+		lv: 'Latvian',
+		nb: 'Norwegian',
+		nl: 'Dutch; Flemish',
+		pl: 'Polish',
+		pt: 'Portuguese',
+		ro: 'Romanian; Moldavian; Moldovan',
+		ru: 'Russian',
+		sh: 'Serbo-Croatian',
+		sk: 'Slovak',
+		sl: 'Slovenian',
+		sq: 'Albanian',
+		sr: 'Serbian',
+		sv: 'Swedish',
+		ta: 'Tamil',
+		tg: 'Tajik',
+		tr: 'Turkish',
+		uk: 'Ukrainian',
+		vi: 'Vietnamese'
+	};
+
+	function getLanguages(): MenuItemConstructorOptions[] {
+		const spellCheckLanguages = session.defaultSession.getSpellCheckerLanguages();
+		const availableLanguages = session.defaultSession.availableSpellCheckerLanguages;
+		const languageItem = new Array(spellCheckLanguages.length);
+
+		let languagesChecked = config.get('languagesChecked');
+		for (const language of spellCheckLanguages) {
+			if (availableLanguages.includes(language)) {
+				let display = language;
+
+				if (Object.prototype.hasOwnProperty.call(languageToCode, display.split('-')[0])) {
+					display = languageToCode[display];
+				}
+
+				languageItem.push(
+					{
+						label: language,
+						type: 'checkbox',
+						checked: languagesChecked.includes(language),
+						click() {
+							const index = languagesChecked.indexOf(language);
+							if (index > -1) {
+								// Remove language
+								languagesChecked.splice(index, 1);
+								config.set('languagesChecked', languagesChecked);
+							} else {
+								// Add language
+								languagesChecked = languagesChecked.concat(language);
+								config.set('languagesChecked', languagesChecked);
+							}
+
+							session.defaultSession.setSpellCheckerLanguages(languageItem);
+						}
+					}
+				);
+			}
+		}
+
+		if (languageItem.length === 1) {
+			return [{
+				label: 'System default',
+				type: 'checkbox',
+				checked: true,
+				enabled: false
+			}];
+		}
+
+		return languageItem;
+	}
+
+	const spellCheckerSubmenu: MenuItemConstructorOptions[] = getLanguages();
 
 	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
@@ -598,6 +693,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				sendAction('focus-text-input');
 			}
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Set spell checker language',
+			visible: !is.macos,
+			submenu: spellCheckerSubmenu
 		}
 	];
 

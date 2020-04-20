@@ -40,6 +40,7 @@ type StoreType = {
 	quitOnWindowClose: boolean;
 	keepMeSignedIn: boolean;
 	autoplayVideos: boolean;
+	languagesChecked: string[];
 };
 
 const schema: {[Key in keyof StoreType]: Store.Schema} = {
@@ -196,6 +197,10 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	autoplayVideos: {
 		type: 'boolean',
 		default: true
+	},
+	languagesChecked: {
+		type: 'array',
+		default: []
 	}
 };
 

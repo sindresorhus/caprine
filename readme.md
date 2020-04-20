@@ -149,6 +149,10 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 <img src="media/screenshot-touchbar.png" width="1085">
 
+### Custom languages for spell-check *(Does not support macOS)*
+
+Users can select supported languages from `Conversation` → `Set spell checker language`
+
 ### Custom styles
 
 Advanced users can modify the colors/styles of Caprine. Click the menu item `Caprine`/`File` → `Caprine Settings` → `Advanced` → `Custom Styles` and a CSS file will open up in your default editor.
