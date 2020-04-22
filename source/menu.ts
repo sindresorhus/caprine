@@ -504,67 +504,60 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		}
 	];
-	const languageToCode: any = {
+	const languageToCode = new Map<string, string>([
 		// All languages available in electron spellchecker
-		af: 'Afrikaans',
-		bg: 'Bulgarian',
-		ca: 'Catalan; Valencian',
-		cs: 'Czech',
-		cy: 'Welsh',
-		da: 'Danish ',
-		de: 'German',
-		el: 'Greek(Modern)',
-		en: 'English',
-		et: 'Estonian',
-		fa: 'Persian',
-		fo: 'Faroese',
-		fr: 'French',
-		he: 'Hebrew',
-		hi: 'Hindi',
-		hr: 'Croatian',
-		hu: 'Hungarian',
-		hy: 'Armenian',
-		id: 'Indonesian',
-		it: 'Italian',
-		ko: 'Korean',
-		lt: 'Lithuanian',
-		lv: 'Latvian',
-		nb: 'Norwegian',
-		nl: 'Dutch; Flemish',
-		pl: 'Polish',
-		pt: 'Portuguese',
-		ro: 'Romanian; Moldavian; Moldovan',
-		ru: 'Russian',
-		sh: 'Serbo-Croatian',
-		sk: 'Slovak',
-		sl: 'Slovenian',
-		sq: 'Albanian',
-		sr: 'Serbian',
-		sv: 'Swedish',
-		ta: 'Tamil',
-		tg: 'Tajik',
-		tr: 'Turkish',
-		uk: 'Ukrainian',
-		vi: 'Vietnamese'
-	};
+		['af', 'Afrikaans'],
+		['bg', 'Bulgarian'],
+		['ca', 'Catalan; Valencian'],
+		['cs', 'Czech'],
+		['cy', 'Welsh'],
+		['da', 'Danish '],
+		['de', 'German'],
+		['el', 'Greek(Modern)'],
+		['en', 'English'],
+		['et', 'Estonian'],
+		['fa', 'Persian'],
+		['fo', 'Faroese'],
+		['fr', 'French'],
+		['he', 'Hebrew'],
+		['hi', 'Hindi'],
+		['hr', 'Croatian'],
+		['hu', 'Hungarian'],
+		['hy', 'Armenian'],
+		['id', 'Indonesian'],
+		['it', 'Italian'],
+		['ko', 'Korean'],
+		['lt', 'Lithuanian'],
+		['lv', 'Latvian'],
+		['nb', 'Norwegian'],
+		['nl', 'Dutch; Flemish'],
+		['pl', 'Polish'],
+		['pt', 'Portuguese'],
+		['ro', 'Romanian; Moldavian; Moldovan'],
+		['ru', 'Russian'],
+		['sh', 'Serbo-Croatian'],
+		['sk', 'Slovak'],
+		['sl', 'Slovenian'],
+		['sq', 'Albanian'],
+		['sr', 'Serbian'],
+		['sv', 'Swedish'],
+		['ta', 'Tamil'],
+		['tg', 'Tajik'],
+		['tr', 'Turkish'],
+		['uk', 'Ukrainian'],
+		['vi', 'Vietnamese']
+	]);
 
 	function getLanguages(): MenuItemConstructorOptions[] {
 		const spellCheckLanguages = session.defaultSession.getSpellCheckerLanguages();
 		const availableLanguages = session.defaultSession.availableSpellCheckerLanguages;
 		const languageItem = new Array(spellCheckLanguages.length);
-
 		let languagesChecked = config.get('languagesChecked');
 		for (const language of spellCheckLanguages) {
 			if (availableLanguages.includes(language)) {
-				let display = language;
-
-				if (Object.prototype.hasOwnProperty.call(languageToCode, display.split('-')[0])) {
-					display = languageToCode[display];
-				}
-
 				languageItem.push(
 					{
-						label: language,
+						label: languageToCode.get(String(language.split('-')[0])) ?? language,
 						type: 'checkbox',
 						checked: languagesChecked.includes(language),
 						click() {
@@ -579,7 +572,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 								config.set('languagesChecked', languagesChecked);
 							}
 
-							session.defaultSession.setSpellCheckerLanguages(languageItem);
+							session.defaultSession.setSpellCheckerLanguages(languagesChecked);
 						}
 					}
 				);
