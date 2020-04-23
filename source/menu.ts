@@ -515,6 +515,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		['de', 'German'],
 		['el', 'Greek(Modern)'],
 		['en', 'English'],
+		['en-AU', 'English (Australia)'],
+		['en-CA', 'English (Canada)'],
+		['en-GB', 'English (United Kingdom)'],
+		['en-US', 'English (United States)'],
+		['es-419', 'Spanish (Central and South America)'],
+		['es-AR', 'Spanish (Argentina)'],
+		['es-MX', 'Spanish (Mexico)'],
 		['et', 'Estonian'],
 		['fa', 'Persian'],
 		['fo', 'Faroese'],
@@ -533,6 +540,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		['nl', 'Dutch; Flemish'],
 		['pl', 'Polish'],
 		['pt', 'Portuguese'],
+		['pt-BR', 'Portuguese (Brazil)'],
+		['pt-PT', 'Portuguese'],
 		['ro', 'Romanian; Moldavian; Moldovan'],
 		['ru', 'Russian'],
 		['sh', 'Serbo-Croatian'],
@@ -557,7 +566,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			if (availableLanguages.includes(language)) {
 				languageItem.push(
 					{
-						label: languageToCode.get(String(language.split('-')[0])) ?? language,
+						label: languageToCode.get(language) ?? languageToCode.get(language.split('-')[0]) ?? language,
 						type: 'checkbox',
 						checked: languagesChecked.includes(language),
 						click() {
