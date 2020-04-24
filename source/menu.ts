@@ -519,9 +519,12 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		['en-CA', 'English (Canada)'],
 		['en-GB', 'English (United Kingdom)'],
 		['en-US', 'English (United States)'],
+		['es', 'es: Spanish'],
+		['es-ES', 'es-ES: Spanish'],
 		['es-419', 'Spanish (Central and South America)'],
 		['es-AR', 'Spanish (Argentina)'],
 		['es-MX', 'Spanish (Mexico)'],
+		['es-US', 'Spanish (United States)'],
 		['et', 'Estonian'],
 		['fa', 'Persian'],
 		['fo', 'Faroese'],
@@ -558,34 +561,42 @@ Press Command/Ctrl+R in Caprine to see your changes.
 	]);
 
 	function getLanguages(): MenuItemConstructorOptions[] {
-		const spellCheckLanguages = session.defaultSession.getSpellCheckerLanguages();
 		const availableLanguages = session.defaultSession.availableSpellCheckerLanguages;
-		const languageItem = new Array(spellCheckLanguages.length);
+		const languageItem = new Array(availableLanguages.length);
 		let languagesChecked = config.get('languagesChecked');
-		for (const language of spellCheckLanguages) {
-			if (availableLanguages.includes(language)) {
-				languageItem.push(
-					{
-						label: languageToCode.get(language) ?? languageToCode.get(language.split('-')[0]) ?? language,
-						type: 'checkbox',
-						checked: languagesChecked.includes(language),
-						click() {
-							const index = languagesChecked.indexOf(language);
-							if (index > -1) {
-								// Remove language
-								languagesChecked.splice(index, 1);
-								config.set('languagesChecked', languagesChecked);
-							} else {
-								// Add language
-								languagesChecked = languagesChecked.concat(language);
-								config.set('languagesChecked', languagesChecked);
-							}
 
-							session.defaultSession.setSpellCheckerLanguages(languagesChecked);
-						}
-					}
-				);
+		for (const language of languagesChecked) {
+			const index = availableLanguages.indexOf(language);
+			if (index === -1) {
+				// Not in spell checker dictionary. remove!
+				const removeIndex = languagesChecked.indexOf(language);
+				languagesChecked.splice(removeIndex, 1);
+				config.set('languagesChecked', languagesChecked);
 			}
+		}
+
+		for (const language of availableLanguages) {
+			languageItem.push(
+				{
+					label: languageToCode.get(language) ?? languageToCode.get(language.split('-')[0]) ?? language,
+					type: 'checkbox',
+					checked: languagesChecked.includes(language),
+					click() {
+						const index = languagesChecked.indexOf(language);
+						if (index > -1) {
+							// Remove language
+							languagesChecked.splice(index, 1);
+							config.set('languagesChecked', languagesChecked);
+						} else {
+							// Add language
+							languagesChecked = languagesChecked.concat(language);
+							config.set('languagesChecked', languagesChecked);
+						}
+
+						session.defaultSession.setSpellCheckerLanguages(languagesChecked);
+					}
+				}
+			);
 		}
 
 		if (languageItem.length === 1) {
