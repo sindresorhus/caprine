@@ -4,6 +4,8 @@
 
 Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.
 
+**Caprine is feature complete. However, we welcome contributions for improvements and bug fixes.**
+
 **[Website](https://sindresorhus.com/caprine)**
 
 <br>
