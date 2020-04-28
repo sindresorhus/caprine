@@ -392,7 +392,7 @@ function createMainWindow(): BrowserWindow {
 
 	// Workaround for https://github.com/electron/electron/issues/5256
 	electronLocalshortcut.register(mainWindow, 'CommandOrControl+=', () => {
-		sendAction('zoom-in');
+		sendAction('zoom-in-text');
 	});
 
 	// Start in menu bar mode if enabled, otherwise start normally

@@ -5,7 +5,7 @@ import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
-
+import {webFrame} from 'electron';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 const messengerSoundsSelector = `${preferencesSelector} ._374d ._6bkz`;
@@ -245,6 +245,10 @@ ipc.answerMain('toggle-message-buttons', () => {
 	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
 });
 
+ipc.answerMain('toggle-conversation-sidebar', () => {
+	document.body.classList.toggle('show-conversation-sidebar', config.get('showConversationSidebar'));
+});
+
 ipc.answerMain('show-active-contacts-view', async () => {
 	await selectOtherListViews(3);
 });
@@ -408,6 +412,22 @@ ipc.answerMain('zoom-out', () => {
 	if (zoomFactor >= 0.8) {
 		setZoom(zoomFactor);
 	}
+});
+
+ipc.answerMain('zoom-reset-frame', () => {
+	webFrame.setZoomFactor(1);
+});
+
+ipc.answerMain('zoom-in-frame', () => {
+	const zoomFactor = Number(webFrame.getZoomFactor()) + 0.1;
+	if (zoomFactor <= 2) {
+		webFrame.setZoomFactor(zoomFactor);
+	}
+});
+
+ipc.answerMain('zoom-out-frame', () => {
+	const zoomFactor = Number(webFrame.getZoomFactor()) - 0.1;
+	webFrame.setZoomFactor(zoomFactor);
 });
 
 ipc.answerMain('jump-to-conversation', async (key: number) => {

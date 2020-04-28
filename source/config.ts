@@ -22,6 +22,7 @@ type StoreType = {
 	bounceDockOnMessage: boolean;
 	showUnreadBadge: boolean;
 	showMessageButtons: boolean;
+	showConversationSidebar: boolean;
 	launchMinimized: boolean;
 	flashWindowOnMessage: boolean;
 	notificationMessagePreview: boolean;
@@ -121,6 +122,10 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 		default: true
 	},
 	showMessageButtons: {
+		type: 'boolean',
+		default: true
+	},
+	showConversationSidebar: {
 		type: 'boolean',
 		default: true
 	},

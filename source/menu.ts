@@ -382,14 +382,35 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Increase Text Size',
 			accelerator: 'CommandOrControl+Plus',
 			click() {
-				sendAction('zoom-in');
+				sendAction('zoom-in-text');
 			}
 		},
 		{
 			label: 'Decrease Text Size',
 			accelerator: 'CommandOrControl+-',
 			click() {
-				sendAction('zoom-out');
+				sendAction('zoom-out-text');
+			}
+		},
+		{
+			label: 'Reset Zoom',
+			accelerator: 'CommandOrControl+Del',
+			click() {
+				sendAction('zoom-reset');
+			}
+		},
+		{
+			label: 'Zoom in',
+			accelerator: 'CommandOrControl+Up',
+			click() {
+				sendAction('zoom-in-frame');
+			}
+		},
+		{
+			label: 'Zoom out',
+			accelerator: 'CommandOrControl+Down',
+			click() {
+				sendAction('zoom-out-frame');
 			}
 		},
 		{
@@ -476,6 +497,16 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				sendAction('toggle-message-buttons');
 			}
 		},
+		// TODO:WIP
+		// {
+		// 	label: 'Show Conversation Sidebar',
+		// 	type: 'checkbox',
+		// 	checked: config.get('showConversationSidebar'),
+		// 	click() {
+		// 		config.set('showConversationSidebar', !config.get('showConversationSidebar'));
+		// 		sendAction('toggle-conversation-sidebar');
+		// 	}
+		// },
 		{
 			type: 'separator'
 		},
