@@ -149,9 +149,9 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 <img src="media/screenshot-touchbar.png" width="1085">
 
-### Custom languages for spell-check *(Does not support macOS)*
+### Custom languages for spell-check *(Not for macOS)*
 
-Users can select supported languages from `Conversation` → `Set spell checker language`
+Users can select supported languages from `Conversation` → `Set spell checker language`. MacOS detects the language automatically, hence this option is not needed.
 
 ### Custom styles
 

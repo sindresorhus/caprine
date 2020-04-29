@@ -1,6 +1,6 @@
 import * as path from 'path';
 import {existsSync, writeFileSync} from 'fs';
-import {app, session, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -10,6 +10,7 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
+import getSpellCheckerLanguages from './spell-checker';
 import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMinimized} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
@@ -504,114 +505,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		}
 	];
-	const languageToCode = new Map<string, string>([
-		// All languages available in electron spellchecker
-		['af', 'Afrikaans'],
-		['bg', 'Bulgarian'],
-		['ca', 'Catalan; Valencian'],
-		['cs', 'Czech'],
-		['cy', 'Welsh'],
-		['da', 'Danish '],
-		['de', 'German'],
-		['el', 'Greek(Modern)'],
-		['en', 'English'],
-		['en-AU', 'English (Australia)'],
-		['en-CA', 'English (Canada)'],
-		['en-GB', 'English (United Kingdom)'],
-		['en-US', 'English (United States)'],
-		['es', 'es: Spanish'],
-		['es-ES', 'es-ES: Spanish'],
-		['es-419', 'Spanish (Central and South America)'],
-		['es-AR', 'Spanish (Argentina)'],
-		['es-MX', 'Spanish (Mexico)'],
-		['es-US', 'Spanish (United States)'],
-		['et', 'Estonian'],
-		['fa', 'Persian'],
-		['fo', 'Faroese'],
-		['fr', 'French'],
-		['he', 'Hebrew'],
-		['hi', 'Hindi'],
-		['hr', 'Croatian'],
-		['hu', 'Hungarian'],
-		['hy', 'Armenian'],
-		['id', 'Indonesian'],
-		['it', 'Italian'],
-		['ko', 'Korean'],
-		['lt', 'Lithuanian'],
-		['lv', 'Latvian'],
-		['nb', 'Norwegian'],
-		['nl', 'Dutch; Flemish'],
-		['pl', 'Polish'],
-		['pt', 'Portuguese'],
-		['pt-BR', 'Portuguese (Brazil)'],
-		['pt-PT', 'Portuguese'],
-		['ro', 'Romanian; Moldavian; Moldovan'],
-		['ru', 'Russian'],
-		['sh', 'Serbo-Croatian'],
-		['sk', 'Slovak'],
-		['sl', 'Slovenian'],
-		['sq', 'Albanian'],
-		['sr', 'Serbian'],
-		['sv', 'Swedish'],
-		['ta', 'Tamil'],
-		['tg', 'Tajik'],
-		['tr', 'Turkish'],
-		['uk', 'Ukrainian'],
-		['vi', 'Vietnamese']
-	]);
 
-	function getLanguages(): MenuItemConstructorOptions[] {
-		const availableLanguages = session.defaultSession.availableSpellCheckerLanguages;
-		const languageItem = new Array(availableLanguages.length);
-		let languagesChecked = config.get('languagesChecked');
-
-		for (const language of languagesChecked) {
-			const index = availableLanguages.indexOf(language);
-			if (index === -1) {
-				// Not in spell checker dictionary. remove!
-				const removeIndex = languagesChecked.indexOf(language);
-				languagesChecked.splice(removeIndex, 1);
-				config.set('languagesChecked', languagesChecked);
-			}
-		}
-
-		for (const language of availableLanguages) {
-			languageItem.push(
-				{
-					label: languageToCode.get(language) ?? languageToCode.get(language.split('-')[0]) ?? language,
-					type: 'checkbox',
-					checked: languagesChecked.includes(language),
-					click() {
-						const index = languagesChecked.indexOf(language);
-						if (index > -1) {
-							// Remove language
-							languagesChecked.splice(index, 1);
-							config.set('languagesChecked', languagesChecked);
-						} else {
-							// Add language
-							languagesChecked = languagesChecked.concat(language);
-							config.set('languagesChecked', languagesChecked);
-						}
-
-						session.defaultSession.setSpellCheckerLanguages(languagesChecked);
-					}
-				}
-			);
-		}
-
-		if (languageItem.length === 1) {
-			return [{
-				label: 'System default',
-				type: 'checkbox',
-				checked: true,
-				enabled: false
-			}];
-		}
-
-		return languageItem;
-	}
-
-	const spellCheckerSubmenu: MenuItemConstructorOptions[] = getLanguages();
+	const spellCheckerSubmenu: MenuItemConstructorOptions[] = getSpellCheckerLanguages();
 
 	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
@@ -711,7 +606,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'separator'
 		},
 		{
-			label: 'Set spell checker language',
+			label: 'Spell Checker Language',
 			visible: !is.macos,
 			submenu: spellCheckerSubmenu
 		}
