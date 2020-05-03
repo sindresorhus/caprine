@@ -63,7 +63,7 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 
 	for (const language of languagesChecked) {
 		if (!availableLanguages.includes(language)) {
-			// Not in spell checker dictionary. remove!
+			// Remove it since it's not in the spell checker dictionary.
 			languagesChecked = languagesChecked.filter(currentLang => currentLang !== language);
 			config.set('spellCheckerLanguages', languagesChecked);
 		}
@@ -94,12 +94,14 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 	}
 
 	if (languageItem.length === 1) {
-		return [{
-			label: 'System Default',
-			type: 'checkbox',
-			checked: true,
-			enabled: false
-		}];
+		return [
+			{
+				label: 'System Default',
+				type: 'checkbox',
+				checked: true,
+				enabled: false
+			}
+		];
 	}
 
 	return languageItem;
