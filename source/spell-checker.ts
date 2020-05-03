@@ -16,6 +16,7 @@ const languageToCode = new Map<string, string>([
 	['en-CA', 'English (Canada)'],
 	['en-GB', 'English (United Kingdom)'],
 	['en-US', 'English (United States)'],
+	['es', 'Spanish'],
 	['es-ES', 'Spanish'],
 	['es-419', 'Spanish (Central and South America)'],
 	['es-AR', 'Spanish (Argentina)'],
@@ -36,7 +37,7 @@ const languageToCode = new Map<string, string>([
 	['lt', 'Lithuanian'],
 	['lv', 'Latvian'],
 	['nb', 'Norwegian'],
-	['nl', 'Dutch; Flemish'],
+	['nl', 'Dutch'],
 	['pl', 'Polish'],
 	['pt', 'Portuguese'],
 	['pt-BR', 'Portuguese (Brazil)'],
@@ -63,7 +64,7 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 
 	for (const language of languagesChecked) {
 		if (!availableLanguages.includes(language)) {
-			// Not in spell checker dictionary. remove!
+			// Remove it since it's not in the spell checker dictionary.
 			languagesChecked = languagesChecked.filter(currentLang => currentLang !== language);
 			config.set('spellCheckerLanguages', languagesChecked);
 		}
@@ -94,12 +95,14 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 	}
 
 	if (languageItem.length === 1) {
-		return [{
-			label: 'System Default',
-			type: 'checkbox',
-			checked: true,
-			enabled: false
-		}];
+		return [
+			{
+				label: 'System Default',
+				type: 'checkbox',
+				checked: true,
+				enabled: false
+			}
+		];
 	}
 
 	return languageItem;

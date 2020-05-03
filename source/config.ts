@@ -200,6 +200,9 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	},
 	spellCheckerLanguages: {
 		type: 'array',
+		items: {
+			type: 'string'
+		},
 		default: []
 	}
 };

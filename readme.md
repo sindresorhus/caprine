@@ -151,7 +151,9 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 ### Custom languages for spell-check *(Not for macOS)*
 
-Users can select supported languages from `Conversation` → `Set spell checker language`. MacOS detects the language automatically, hence this option is not needed.
+Users can select supported languages from `Conversation` → `Spell Checker Language`.
+
+MacOS detects the language automatically.
 
 ### Custom styles
 
