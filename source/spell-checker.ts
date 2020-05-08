@@ -2,15 +2,15 @@ import {session, MenuItemConstructorOptions} from 'electron';
 import config from './config';
 
 const languageToCode = new Map<string, string>([
-	// All languages available in electron spellchecker
+	// All languages available in Electron's spellchecker
 	['af', 'Afrikaans'],
 	['bg', 'Bulgarian'],
-	['ca', 'Catalan; Valencian'],
+	['ca', 'Catalan'],
 	['cs', 'Czech'],
 	['cy', 'Welsh'],
 	['da', 'Danish '],
 	['de', 'German'],
-	['el', 'Greek(Modern)'],
+	['el', 'Greek'],
 	['en', 'English'],
 	['en-AU', 'English (Australia)'],
 	['en-CA', 'English (Canada)'],

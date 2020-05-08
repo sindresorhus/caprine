@@ -153,7 +153,7 @@ Note that you can change the behavior of Caprine so that the app closes when the
 
 Users can select supported languages from `Conversation` → `Spell Checker Language`.
 
-MacOS detects language automatically.
+MacOS detects language the automatically.
 
 ### Custom styles
 
