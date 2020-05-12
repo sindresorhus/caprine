@@ -10,6 +10,7 @@ import {
 	debugInfo
 } from 'electron-util';
 import config from './config';
+import getSpellCheckerLanguages from './spell-checker';
 import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMinimized} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
@@ -505,6 +506,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		}
 	];
 
+	const spellCheckerSubmenu: MenuItemConstructorOptions[] = getSpellCheckerLanguages();
+
 	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Mute Conversation',
@@ -598,6 +601,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			click() {
 				sendAction('focus-text-input');
 			}
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Spell Checker Language',
+			visible: !is.macos,
+			submenu: spellCheckerSubmenu
 		}
 	];
 
