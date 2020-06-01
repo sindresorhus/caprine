@@ -265,11 +265,11 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
-			label: 'Enable Spell Checker',
+			label: 'Spell Checker',
 			type: 'checkbox',
-			checked: config.get('enableSpellChecker'),
+			checked: config.get('isSpellCheckerEnabled'),
 			click() {
-				config.set('enableSpellChecker', !config.get('enableSpellChecker'));
+				config.set('isSpellCheckerEnabled', !config.get('isSpellCheckerEnabled'));
 				showRestartDialog('Caprine needs to be restarted to enable or disable the spell checker.');
 			}
 		},
@@ -616,7 +616,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Spell Checker Language',
-			visible: !is.macos && config.get('enableSpellChecker'),
+			visible: !is.macos && config.get('isSpellCheckerEnabled'),
 			submenu: spellCheckerSubmenu
 		}
 	];

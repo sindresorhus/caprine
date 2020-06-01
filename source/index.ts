@@ -309,7 +309,7 @@ function createMainWindow(): BrowserWindow {
 			preload: path.join(__dirname, 'browser.js'),
 			nativeWindowOpen: true,
 			contextIsolation: true,
-			spellcheck: config.get('enableSpellChecker'),
+			spellcheck: config.get('isSpellCheckerEnabled'),
 			plugins: true
 		}
 	});

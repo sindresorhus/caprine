@@ -40,7 +40,7 @@ type StoreType = {
 	quitOnWindowClose: boolean;
 	keepMeSignedIn: boolean;
 	autoplayVideos: boolean;
-	enableSpellChecker: boolean;
+	isSpellCheckerEnabled: boolean;
 	spellCheckerLanguages: string[];
 };
 
@@ -199,7 +199,7 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 		type: 'boolean',
 		default: true
 	},
-	enableSpellChecker: {
+	isSpellCheckerEnabled: {
 		type: 'boolean',
 		default: true
 	},
