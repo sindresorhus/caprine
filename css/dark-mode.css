@@ -1013,7 +1013,8 @@ html.dark-mode ._1p1u ._1p1v {
 /* Invert the top left sidebar buttons */
 html.dark-mode ._30yy._6ymd._2agf,
 html.dark-mode ._30yy._6-xp._6-xq,
-html.dark-mode ._30yy._6-xf._6-xg {
+html.dark-mode ._30yy._6-xf._6-xg,
+html.dark-mode ._30yy._94py a {
 	filter: invert(1);
 }
 
