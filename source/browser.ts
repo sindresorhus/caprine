@@ -265,6 +265,10 @@ ipc.answerMain('toggle-video-autoplay', () => {
 	toggleVideoAutoplay();
 });
 
+ipc.answerMain('reload', () => {
+	location.reload();
+})
+
 function setDarkMode(): void {
 	if (is.macos && config.get('followSystemAppearance')) {
 		api.nativeTheme.themeSource = 'system';

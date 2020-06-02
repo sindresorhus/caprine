@@ -262,6 +262,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('showUnreadBadge'),
 			click() {
 				config.set('showUnreadBadge', !config.get('showUnreadBadge'));
+				sendAction('reload');
 			}
 		},
 		{
