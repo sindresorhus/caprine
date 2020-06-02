@@ -198,7 +198,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 					writeFileSync(filePath, defaultCustomStyle, 'utf8');
 				}
 
-				shell.openItem(filePath);
+				shell.openPath(filePath);
 			}
 		}
 	];
@@ -677,7 +677,7 @@ ${debugInfo()}`;
 		{
 			label: 'Show App Data',
 			click() {
-				shell.openItem(app.getPath('userData'));
+				shell.openPath(app.getPath('userData'));
 			}
 		},
 		{
