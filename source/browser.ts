@@ -554,14 +554,14 @@ async function observeAutoscroll(): Promise<void> {
 		);
 
 		if (chatElement) {
-			const messageObserver = new MutationObserver((r: MutationRecord[]) => {
-				const newMessages: MutationRecord[] = r.filter(r => {
+			const messageObserver = new MutationObserver((record: MutationRecord[]) => {
+				const newMessages: MutationRecord[] = record.filter(record => {
 					// The mutation is an addition
-					return r.addedNodes.length > 0 &&
+					return record.addedNodes.length > 0 &&
 						// ... of a div       (skip the "seen" status change)
-						(r.addedNodes[0] as HTMLElement).tagName === 'DIV' &&
+						(record.addedNodes[0] as HTMLElement).tagName === 'DIV' &&
 						// ... on the last child       (skip previous messages added when scrolling up)
-						chatElement.lastChild!.contains(r.target);
+						chatElement.lastChild!.contains(record.target);
 				});
 
 				if (newMessages.length > 0) {
