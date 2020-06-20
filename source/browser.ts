@@ -548,12 +548,25 @@ async function observeAutoscroll(): Promise<void> {
 		return;
 	}
 
+	const scrollToBottom = (): void => {
+		const scrollableElement: HTMLElement | null = document.querySelector('[role=presentation] .scrollable');
+		if (scrollableElement) {
+			scrollableElement.scroll({
+				top: Number.MAX_SAFE_INTEGER,
+				behavior: 'smooth'
+			});
+		}
+	}
+
 	const hookMessageObserver = async (): Promise<void> => {
 		const chatElement = await elementReady<HTMLElement>(
 			'[role=presentation] .scrollable [role = region] > div[id ^= "js_"]', {stopOnDomReady: false}
 		);
 
 		if (chatElement) {
+			// Scroll to the bottom when opening different conversation
+			scrollToBottom();
+
 			const messageObserver = new MutationObserver((record: MutationRecord[]) => {
 				const newMessages: MutationRecord[] = record.filter(record => {
 					// The mutation is an addition
@@ -565,13 +578,8 @@ async function observeAutoscroll(): Promise<void> {
 				});
 
 				if (newMessages.length > 0) {
-					const scrollableElement: HTMLElement | null = document.querySelector('[role=presentation] .scrollable');
-					if (scrollableElement) {
-						scrollableElement.scroll({
-							top: Number.MAX_SAFE_INTEGER,
-							behavior: 'smooth'
-						});
-					}
+					// Scroll to the bottom when there are new messages
+					scrollToBottom();
 				}
 			});
 
