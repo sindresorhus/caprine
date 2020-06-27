@@ -523,6 +523,9 @@ html.private-mode ._1htf {
 html.private-mode ._1htf > span:first-child {
 	visibility: visible;
 }
+html.private-mode ._4wc- {
+	filter: blur(10px);
+}
 /* -- BLOCK END: Private Mode -- */
 
 /* -- BLOCK START: Small conversations window -- */
