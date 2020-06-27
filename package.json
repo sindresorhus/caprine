@@ -92,7 +92,9 @@
 			"electronUpdaterCompatibility": ">=2.15.0",
 			"darkModeSupport": true,
 			"extendInfo": {
-				"LSUIElement": 1
+				"LSUIElement": 1,
+				"NSCameraUsageDescription": "Caprine needs access to your camera.",
+				"NSMicrophoneUsageDescription": "Caprine needs access to your microphone."
 			}
 		},
 		"dmg": {
