@@ -28,7 +28,7 @@ html.sidebar-vibrancy.dark-mode ._36ic {
 
 /* Contact list: search input */
 html.sidebar-vibrancy ._5iwm ._58al {
-	background-color: rgba(246, 247, 249, 0.5) !important;
+	background-color: rgb(246 247 249 / 50%) !important;
 }
 html.sidebar-vibrancy.dark-mode ._5iwm ._58al {
 	background: var(--base-five) !important;
@@ -111,7 +111,7 @@ html.full-vibrancy ._2xh0 ._2xh4 {
 
 /* Contact list: search input */
 html.full-vibrancy ._5iwm ._58al {
-	background-color: rgba(246, 247, 249, 0.5) !important;
+	background-color: rgb(246 247 249 / 50%) !important;
 }
 html.full-vibrancy.dark-mode ._5iwm ._58al {
 	background: var(--base-five) !important;
@@ -131,7 +131,7 @@ html.full-vibrancy .__6l {
 
 /* Contact list: person container */
 html.full-vibrancy ._1qt4 {
-	border-top: solid 1px rgba(0, 0, 0, 0.06);
+	border-top: solid 1px rgb(0 0 0 / 6%);
 }
 
 /* Main content */
@@ -212,7 +212,7 @@ html.full-vibrancy.dark-mode .fbNubFlyoutAttachments {
 }
 html.full-vibrancy .chatAttachmentShelf,
 html.full-vibrancy.dark-mode .chatAttachmentShelf {
-	border-top-color: rgba(0, 0, 0, 0.1);
+	border-top-color: rgb(0 0 0 / 10%);
 }
 
 /* Message text bar */

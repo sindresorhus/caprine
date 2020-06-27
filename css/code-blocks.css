@@ -2,7 +2,7 @@
 ._wu0 {
 	--code-block-base: #1d1f21;
 	--code-block-background: transparent;
-	--code-block-border: rgba(0, 0, 0, 0.1);
+	--code-block-border: rgb(0 0 0 / 10%);
 	--code-block-primary: #de935f;
 	--code-block-meta: #969896;
 	--code-block-tag: #a3685a;

@@ -1,5 +1,5 @@
 :root {
-	--selected-conversation-background: linear-gradient(hsla(209, 110%, 45%, 0.9), hsla(209, 110%, 42%, 0.9));
+	--selected-conversation-background: linear-gradient(hsla(209deg 110% 45% / 90%), hsla(209deg 110% 42% / 90%));
 	--selected-conversation-background-inactive: #d2d2d2;
 	--black: #000;
 }
@@ -80,7 +80,7 @@ html.hide-dropdowns .uiContextualLayerPositioner {
 
 /* Right column */
 ._1q5- {
-	border-left: 1px solid rgba(0, 0, 0, 0.1) !important;
+	border-left: 1px solid rgb(0 0 0 / 10%) !important;
 }
 
 /* ***************************** */
@@ -142,7 +142,7 @@ html.sidebar-force-narrow ._1ht1 ._1qt3._6-5k {
 	margin-right: 0;
 }
 html.sidebar-force-narrow ._1ht3._1ht1._6zk9 {
-	background-color: rgba(0, 132, 255, 0.2);
+	background-color: rgb(0 132 255 / 20%);
 	transition: background-color 0.5s;
 }
 html.sidebar-force-narrow ._1ht1._6zk9._1ht2 {
@@ -317,7 +317,7 @@ a,
 
 /* Contact list: latest message, under contact name */
 ._1ht1 ._1htf {
-	color: rgba(0, 0, 0, 0.7);
+	color: rgb(0 0 0 / 70%);
 }
 
 /* Allow scrolling of "Edit Nicknames" dialog */
@@ -354,7 +354,7 @@ a,
 /* Fix border width and color on links */
 .__6j._43kk {
 	border-width: 1px !important;
-	border-color: rgba(0, 0, 0, 0.1) !important;
+	border-color: rgb(0 0 0 / 10%) !important;
 }
 
 /* Contact list: person (selected) */
@@ -367,7 +367,7 @@ a,
 }
 
 ._1ht1._1ht2 * {
-	color: rgba(255, 255, 255, 0.8);
+	color: rgb(255 255 255 / 80%);
 }
 
 /* Contact list: person (selected) window inactive */
@@ -376,7 +376,7 @@ html.is-window-inactive ._1ht1._1ht2 {
 	color: var(--black) !important;
 }
 html.is-window-inactive ._1ht1._1ht2 * {
-	color: rgba(0, 0, 0, 0.8);
+	color: rgb(0 0 0 / 80%);
 }
 
 /* Remove top Facebook cookie banner */
@@ -387,7 +387,7 @@ html.is-window-inactive ._1ht1._1ht2 * {
 /* Message composer buttons */
 a._4rv6, /* "Choose a sticker" */
 a._4ce_ /* "Play a game" */ {
-	opacity: 1 !important;
+	opacity: 100% !important;
 	filter: invert(0.66);
 }
 
@@ -429,10 +429,10 @@ body.show-message-buttons ._4_j4 ._7mkk {
 /* Workaround for emoji selector issue #831 */
 @keyframes nodeInserted {
 	from {
-		opacity: 0.99;
+		opacity: 99%;
 	}
 	to {
-		opacity: 1;
+		opacity: 100%;
 	}
 }
 

@@ -267,7 +267,7 @@ ipc.answerMain('toggle-video-autoplay', () => {
 
 ipc.answerMain('reload', () => {
 	location.reload();
-})
+});
 
 function setDarkMode(): void {
 	if (is.macos && config.get('followSystemAppearance')) {
@@ -556,7 +556,7 @@ async function observeAutoscroll(): Promise<void> {
 				behavior: 'smooth'
 			});
 		}
-	}
+	};
 
 	const hookMessageObserver = async (): Promise<void> => {
 		const chatElement = await elementReady<HTMLElement>(
@@ -687,10 +687,10 @@ document.addEventListener('keydown', async event => {
 		await previousConversation();
 	}
 
-	const num = parseInt(event.code.slice(-1), 10);
+	const number = Number.parseInt(event.code.slice(-1), 10);
 
-	if (num >= 1 && num <= 9) {
-		await jumpToConversation(num);
+	if (number >= 1 && number <= 9) {
+		await jumpToConversation(number);
 	}
 });
 

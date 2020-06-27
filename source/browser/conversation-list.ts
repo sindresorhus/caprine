@@ -56,10 +56,10 @@ async function urlToCanvas(url: string, size: number): Promise<HTMLCanvasElement
 	});
 }
 
-async function createIcons(el: HTMLElement, url: string): Promise<void> {
+async function createIcons(element: HTMLElement, url: string): Promise<void> {
 	const canvas = await urlToCanvas(url, 50);
 
-	el.setAttribute(icon.read, canvas.toDataURL());
+	element.setAttribute(icon.read, canvas.toDataURL());
 
 	const markerSize = 8;
 	const ctx = canvas.getContext('2d')!;
@@ -70,25 +70,23 @@ async function createIcons(el: HTMLElement, url: string): Promise<void> {
 	ctx.closePath();
 	ctx.fill();
 
-	el.setAttribute(icon.unread, canvas.toDataURL());
+	element.setAttribute(icon.unread, canvas.toDataURL());
 }
 
-async function discoverIcons(el: HTMLElement): Promise<void> {
-	const profilePicElement = el.querySelector<HTMLImageElement>('img:first-of-type');
+async function discoverIcons(element: HTMLElement): Promise<void> {
+	const profilePicElement = element.querySelector<HTMLImageElement>('img:first-of-type');
 
 	if (profilePicElement) {
-		return createIcons(el, profilePicElement.src);
+		return createIcons(element, profilePicElement.src);
 	}
 
-	const groupPicElement = el.firstElementChild as (HTMLElement | null);
+	const groupPicElement = element.firstElementChild as (HTMLElement | null);
 
 	if (groupPicElement) {
 		const groupPicBackground = groupPicElement.style.backgroundImage;
 
 		if (groupPicBackground) {
-			// TODO: Fix this lint violation.
-			// eslint-disable-next-line prefer-named-capture-group
-			return createIcons(el, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
+			return createIcons(element, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
 		}
 	}
 
@@ -98,29 +96,29 @@ async function discoverIcons(el: HTMLElement): Promise<void> {
 	const messengerIcon = document.querySelector('link[rel~="icon"]');
 
 	if (messengerIcon) {
-		return createIcons(el, messengerIcon.getAttribute('href')!);
+		return createIcons(element, messengerIcon.getAttribute('href')!);
 	}
 
 	// Fall back to facebook favicon
-	return createIcons(el, 'https://facebook.com/favicon.ico');
+	return createIcons(element, 'https://facebook.com/favicon.ico');
 }
 
-async function getIcon(el: HTMLElement, unread: boolean): Promise<string> {
-	if (!el.getAttribute(icon.read)) {
-		await discoverIcons(el);
+async function getIcon(element: HTMLElement, unread: boolean): Promise<string> {
+	if (!element.getAttribute(icon.read)) {
+		await discoverIcons(element);
 	}
 
-	return el.getAttribute(unread ? icon.unread : icon.read)!;
+	return element.getAttribute(unread ? icon.unread : icon.read)!;
 }
 
-async function createConversation(el: HTMLElement): Promise<Conversation> {
+async function createConversation(element: HTMLElement): Promise<Conversation> {
 	const conversation: Partial<Conversation> = {};
-	const muted = el.classList.contains('_569x');
+	const muted = element.classList.contains('_569x');
 
-	conversation.selected = el.classList.contains('_1ht2');
-	conversation.unread = !muted && el.getAttribute('aria-live') !== null;
+	conversation.selected = element.classList.contains('_1ht2');
+	conversation.unread = !muted && element.getAttribute('aria-live') !== null;
 
-	const profileElement = el.querySelector<HTMLElement>('div[data-tooltip-content]')!;
+	const profileElement = element.querySelector<HTMLElement>('div[data-tooltip-content]')!;
 
 	conversation.label = profileElement.getAttribute('data-tooltip-content')!;
 	conversation.icon = await getIcon(profileElement, conversation.unread);
@@ -138,9 +136,9 @@ async function createConversationList(): Promise<Conversation[]> {
 		return [];
 	}
 
-	const items: HTMLElement[] = [...list.children] as HTMLElement[];
+	const elements: HTMLElement[] = [...list.children] as HTMLElement[];
 
-	const conversations: Conversation[] = await Promise.all(items.map(createConversation));
+	const conversations: Conversation[] = await Promise.all(elements.map(async element => createConversation(element)));
 
 	return conversations;
 }

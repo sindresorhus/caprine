@@ -13,7 +13,6 @@ import {
 	systemPreferences
 } from 'electron';
 import {ipcMain} from 'electron-better-ipc';
-import log from 'electron-log';
 import {autoUpdater} from 'electron-updater';
 import electronDl = require('electron-dl');
 import electronContextMenu = require('electron-context-menu');
@@ -61,9 +60,6 @@ if (!config.get('hardwareAcceleration')) {
 
 if (!is.development && !is.linux) {
 	(async () => {
-		log.transports.file.level = 'info';
-		autoUpdater.logger = log;
-
 		const FOUR_HOURS = 1000 * 60 * 60 * 4;
 		setInterval(async () => {
 			await autoUpdater.checkForUpdates();
@@ -372,12 +368,12 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	win.on('maximize', () => {
-		// @ts-ignore
+		// @ts-expect-error
 		config.set('lastWindowState.isMaximized', true);
 	});
 
 	win.on('unmaximize', () => {
-		// @ts-ignore
+		// @ts-expect-error
 		config.set('lastWindowState.isMaximized', false);
 	});
 
@@ -503,6 +499,7 @@ function createMainWindow(): BrowserWindow {
 		);
 
 		if (is.macos) {
+			// eslint-disable-next-line node/no-unsupported-features/es-syntax
 			await import('./touch-bar');
 		}
 	});

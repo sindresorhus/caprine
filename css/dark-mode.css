@@ -1,15 +1,15 @@
 :root {
 	--base: #000;
-	--base-ninety: rgba(255, 255, 255, 0.9);
-	--base-seventy-five: rgba(255, 255, 255, 0.75);
-	--base-seventy: rgba(255, 255, 255, 0.7);
-	--base-fifty: rgba(255, 255, 255, 0.5);
-	--base-fourty: rgba(255, 255, 255, 0.4);
-	--base-thirty: rgba(255, 255, 255, 0.3);
-	--base-twenty: rgba(255, 255, 255, 0.2);
-	--base-ten: rgba(255, 255, 255, 0.1);
-	--base-nine: rgba(255, 255, 255, 0.09);
-	--base-five: rgba(255, 255, 255, 0.05);
+	--base-ninety: rgb(255 255 255 / 90%);
+	--base-seventy-five: rgb(255 255 255 / 75%);
+	--base-seventy: rgb(255 255 255 / 70%);
+	--base-fifty: rgb(255 255 255 / 50%);
+	--base-fourty: rgb(255 255 255 / 40%);
+	--base-thirty: rgb(255 255 255 / 30%);
+	--base-twenty: rgb(255 255 255 / 20%);
+	--base-ten: rgb(255 255 255 / 10%);
+	--base-nine: rgb(255 255 255 / 9%);
+	--base-five: rgb(255 255 255 / 5%);
 	--container-color: #323232;
 	--container-dark-color: #1e1e1e;
 	--list-header-color: #222;
@@ -318,7 +318,7 @@ html.dark-mode ._1ht2 ._1ht7 {
 }
 /* Contact list: timestamp (unread) */
 html.dark-mode ._1ht3 ._1ht7 {
-	color: rgba(0, 132, 255, 0.7);
+	color: rgb(0 132 255 / 70%);
 }
 
 /* Contact list: search results */
@@ -392,7 +392,7 @@ html.dark-mode ._2i-c ._54nf ._54nh {
 
 /* Right sidebar: menus selected text color */
 html.dark-mode ._2i-c ._54nf .selected ._54nh {
-	color: rgb(255, 255, 255);
+	color: rgb(255 255 255);
 }
 
 /* Right sidebar: headings */
@@ -664,7 +664,7 @@ html.dark-mode ._53io {
 
 /* Gif and sticker dialog: style the bottom of the list */
 html.dark-mode .uiScrollableArea.contentAfter::after {
-	background: linear-gradient(rgba(25, 38, 51, 0.05), var(--container-color));
+	background: linear-gradient(rgb(25 38 51 / 5%), var(--container-color));
 }
 
 /* Sticker dialog: selected header */
@@ -723,11 +723,11 @@ html.dark-mode ._3-mr ._3-mv /* Verification "Continue" button */ {
 html.dark-mode a._4rv6, /* "Choose a sticker" */
 html.dark-mode a._4ce_ { /* "Play a game" */
 	filter: invert(1) !important;
-	opacity: 0.6 !important;
+	opacity: 60% !important;
 }
 html.dark-mode ._4rv3 ._4rv4 ._5vn8, /* "Add files" */
 html.dark-mode a._39bk { /* Other icons */
-	opacity: 0.6;
+	opacity: 60%;
 	filter: brightness(1.6);
 }
 
@@ -906,7 +906,7 @@ html.dark-mode ._80co {
 }
 
 html.dark-mode ._7101:hover ._7q1j {
-	opacity: 0.5;
+	opacity: 50%;
 }
 
 html.dark-mode ._80co form div a {

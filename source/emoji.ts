@@ -242,7 +242,7 @@ function urlToEmoji(url: string): string {
 		.pop()!
 		.replace(/\.png$/, '')
 		.split('_')
-		.map(hexCodePoint => parseInt(hexCodePoint, 16));
+		.map(hexCodePoint => Number.parseInt(hexCodePoint, 16));
 
 	// F0000 (983040 decimal) is Facebook's thumbs-up icon
 	if (codePoints.length === 1 && codePoints[0] === 983040) {

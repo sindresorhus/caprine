@@ -302,7 +302,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('alwaysOnTop'),
 			click(menuItem, focusedWindow) {
 				config.set('alwaysOnTop', menuItem.checked);
-				focusedWindow.setAlwaysOnTop(menuItem.checked);
+				focusedWindow?.setAlwaysOnTop(menuItem.checked);
 			}
 		},
 		{
@@ -324,8 +324,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			checked: config.get('autoHideMenuBar'),
 			click(menuItem, focusedWindow) {
 				config.set('autoHideMenuBar', menuItem.checked);
-				focusedWindow.setAutoHideMenuBar(menuItem.checked);
-				focusedWindow.setMenuBarVisibility(!menuItem.checked);
+				focusedWindow?.setAutoHideMenuBar(menuItem.checked);
+				focusedWindow?.setMenuBarVisibility(!menuItem.checked);
 
 				if (menuItem.checked) {
 					dialog.showMessageBox({
@@ -445,7 +445,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			accelerator: 'CommandOrControl+Shift+N',
 			async click(menuItem, _browserWindow, event) {
 				if (!config.get('privateMode') && config.get('showPrivateModePrompt') && event.shiftKey) {
-					const result = await dialog.showMessageBox(_browserWindow, {
+					const result = await dialog.showMessageBox(_browserWindow!, {
 						message: 'Are you sure you want to hide names and avatars?',
 						detail: 'This was triggered by Command/Control+Shift+N.',
 						buttons: [

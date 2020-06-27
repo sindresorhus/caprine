@@ -43,6 +43,6 @@ ipc.answerRenderer('conversations', (conversations: Conversation[]) => {
 	if (config.get('privateMode')) {
 		setTouchBar([privateModeTouchBarLabel]);
 	} else {
-		setTouchBar(conversations.map(createTouchBarButton));
+		setTouchBar(conversations.map((conversation, index) => createTouchBarButton(conversation, index)));
 	}
 });
