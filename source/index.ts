@@ -304,7 +304,8 @@ function createMainWindow(): BrowserWindow {
 			nativeWindowOpen: true,
 			contextIsolation: true,
 			spellcheck: config.get('isSpellCheckerEnabled'),
-			plugins: true
+			plugins: true,
+			enableRemoteModule: true
 		}
 	});
 
@@ -368,12 +369,10 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	win.on('maximize', () => {
-		// @ts-expect-error
 		config.set('lastWindowState.isMaximized', true);
 	});
 
 	win.on('unmaximize', () => {
-		// @ts-expect-error
 		config.set('lastWindowState.isMaximized', false);
 	});
 

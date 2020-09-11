@@ -44,7 +44,7 @@ type StoreType = {
 	spellCheckerLanguages: string[];
 };
 
-const schema: {[Key in keyof StoreType]: Store.Schema} = {
+const schema: Store.Schema<StoreType> = {
 	followSystemAppearance: {
 		type: 'boolean',
 		default: true
@@ -212,28 +212,31 @@ const schema: {[Key in keyof StoreType]: Store.Schema} = {
 	}
 };
 
-function updateVibrancySetting(store: Store): void {
+function updateVibrancySetting(store: Store<StoreType>): void {
 	const vibrancy = store.get('vibrancy');
 
 	if (!is.macos || !vibrancy) {
 		store.set('vibrancy', 'none');
+	// @ts-expect-error
 	} else if (vibrancy === true) {
 		store.set('vibrancy', 'full');
+	// @ts-expect-error
 	} else if (vibrancy === false) {
 		store.set('vibrancy', 'sidebar');
 	}
 }
 
-function updateSidebarSetting(store: Store): void {
+function updateSidebarSetting(store: Store<StoreType>): void {
 	if (store.get('sidebarHidden')) {
 		store.set('sidebar', 'hidden');
+		// @ts-expect-error
 		store.delete('sidebarHidden');
 	} else if (!store.has('sidebar')) {
 		store.set('sidebar', 'default');
 	}
 }
 
-function migrate(store: Store): void {
+function migrate(store: Store<StoreType>): void {
 	updateVibrancySetting(store);
 	updateSidebarSetting(store);
 }
