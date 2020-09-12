@@ -58,7 +58,7 @@ export default async function updateMenu(): Promise<Menu> {
 				app.relaunch();
 				app.quit();
 			}
-		},
+		}
 	];
 
 	const vibrancySubmenu: MenuItemConstructorOptions[] = [
