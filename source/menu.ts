@@ -51,7 +51,14 @@ export default async function updateMenu(): Promise<Menu> {
 			click() {
 				sendAction('log-out');
 			}
-		}
+		},
+		{
+			label: 'Relaunch App',
+			click() {
+				app.relaunch();
+				app.quit();
+			}
+		},
 	];
 
 	const vibrancySubmenu: MenuItemConstructorOptions[] = [
