@@ -51,13 +51,6 @@ export default async function updateMenu(): Promise<Menu> {
 			click() {
 				sendAction('log-out');
 			}
-		},
-		{
-			label: 'Relaunch App',
-			click() {
-				app.relaunch();
-				app.quit();
-			}
 		}
 	];
 
@@ -724,7 +717,17 @@ ${debugInfo()}`;
 			{
 				type: 'separator'
 			},
-			...switchItems
+			...switchItems,
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Relaunch Caprine',
+				click() {
+					app.relaunch();
+					app.quit();
+				}
+			}
 		]),
 		{
 			role: 'fileMenu',
@@ -783,6 +786,13 @@ ${debugInfo()}`;
 				...switchItems,
 				{
 					type: 'separator'
+				},
+				{
+					label: 'Relaunch Caprine',
+					click() {
+						app.relaunch();
+						app.quit();
+					}
 				},
 				{
 					role: 'quit'
