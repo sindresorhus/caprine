@@ -195,11 +195,7 @@ function enableHiresResources(): void {
 			let cookie = details.requestHeaders.Cookie;
 
 			if (cookie && details.method === 'GET') {
-				if (/(?:; )?dpr=\d/.test(cookie)) {
-					cookie = cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`);
-				} else {
-					cookie = `${cookie}; dpr=${scaleFactor}`;
-				}
+				cookie = /(?:; )?dpr=\d/.test(cookie) ? cookie.replace(/dpr=\d/, `dpr=${scaleFactor}`) : `${cookie}; dpr=${scaleFactor}`;
 
 				(details.requestHeaders as any).Cookie = cookie;
 			}
