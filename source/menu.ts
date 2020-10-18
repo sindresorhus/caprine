@@ -717,7 +717,17 @@ ${debugInfo()}`;
 			{
 				type: 'separator'
 			},
-			...switchItems
+			...switchItems,
+			{
+				type: 'separator'
+			},
+			{
+				label: 'Relaunch Caprine',
+				click() {
+					app.relaunch();
+					app.quit();
+				}
+			}
 		]),
 		{
 			role: 'fileMenu',
@@ -776,6 +786,13 @@ ${debugInfo()}`;
 				...switchItems,
 				{
 					type: 'separator'
+				},
+				{
+					label: 'Relaunch Caprine',
+					click() {
+						app.relaunch();
+						app.quit();
+					}
 				},
 				{
 					role: 'quit'
