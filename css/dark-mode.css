@@ -436,6 +436,11 @@ html.dark-mode ._7hty {
 	filter: invert(1) !important;
 }
 
+/* Right sidebar: theme icon color */
+html.dark-mode ._6ymf {
+	background-color: var(--container-color);
+}
+
 /* Right sidebar: mute notification label */
 html.dark-mode ._3szq {
 	color: var(--base-seventy);
