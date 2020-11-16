@@ -1,7 +1,0 @@
-os: osx
-osx_image: xcode11.3
-language: node_js
-node_js: '12'
-script:
-  - npm test
-  - npm run dist
