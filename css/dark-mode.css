@@ -204,6 +204,11 @@ html.dark-mode ._7-_v svg path {
 	fill: var(--base-seventy-five);
 }
 
+/* Message list: forwarded photo label */
+html.dark-mode ._879m {
+	color: var(--base-fifty);
+}
+
 /* Messages list: Poll color (title) */
 html.dark-mode ._3b4u {
 	color: var(--base-seventy);
@@ -429,6 +434,11 @@ html.dark-mode ._7hu0,
 html.dark-mode ._7hu1,
 html.dark-mode ._7hty {
 	filter: invert(1) !important;
+}
+
+/* Right sidebar: theme icon color */
+html.dark-mode ._6ymf {
+	background-color: var(--container-color);
 }
 
 /* Right sidebar: mute notification label */
