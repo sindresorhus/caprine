@@ -133,7 +133,8 @@
 			"publish": "github"
 		},
 		"win": {
-			"verifyUpdateCodeSignature": false
+			"verifyUpdateCodeSignature": false,
+			"icon": "build/icon.png"
 		}
 	},
 	"husky": {
