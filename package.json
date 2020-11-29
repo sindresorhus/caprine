@@ -50,11 +50,11 @@
 		"electron": "^10.1.5",
 		"electron-builder": "^22.9.1",
 		"husky": "^4.3.0",
-		"np": "^6.5.0",
-		"stylelint": "^13.7.2",
+		"np": "^7.0.0",
+		"stylelint": "^13.8.0",
 		"stylelint-config-xo": "^0.20.0",
-		"typescript": "^4.0.5",
-		"xo": "^0.34.2"
+		"typescript": "^4.1.2",
+		"xo": "^0.35.0"
 	},
 	"xo": {
 		"envs": [
