@@ -369,7 +369,7 @@
     --progress-ring-blue-foreground: hsl(214, 100%, 59%);
     --progress-ring-disabled-background: rgba(122,125,130, 0.2);
     --progress-ring-disabled-foreground: #7A7D82;
-    --scroll-thumb: rgba(255, 255, 255, 0.3);
+    --scroll-thumb: rgba(0, 0, 0, 0.3);
     --secondary-button-background: rgba(255,255,255,0.1);
     --secondary-button-background-floating: #4B4C4F;
     --secondary-button-background-on-dark: rgba(255, 255, 255, 0.4);
@@ -402,6 +402,12 @@
     --dataviz-supplementary-2: rgb(241,168,23);
     --dataviz-supplementary-3: rgb(49,162,76);
     --dataviz-supplementary-4: rgb(228,230,235);
+}
+
+:root::-webkit-scrollbar{
+	display:none;
+	height: 0;
+	width: 0;
 }
 html.dark-mode body {
 	color: var(--base-seventy);
