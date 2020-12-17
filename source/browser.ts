@@ -783,5 +783,5 @@ ipc.answerMain('notification-reply-callback', (data: any) => {
 
 ipc.answerMain<undefined, boolean>('check-new-ui', async () => {
 	const element = await elementReady('._9dls');
-	return element != undefined;
+	return element !== undefined;
 });
