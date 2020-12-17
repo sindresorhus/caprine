@@ -1,0 +1,41 @@
+/* -- Private Mode -- */
+/* Right sidebar: big user picture */
+html.private-mode .a8c37x1j.d2edcug0.sn7ne77z.bixrwtb6 {
+	filter: blur(5px);
+}
+/* Right sidebar: user name */
+html.private-mode .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.a5q79mjw.g1cxx5fr.lrazzd5p.oo9gr5id.oqcyycmt {
+	filter: blur(3px);	
+}
+/* Right sidebar: media viewer gallery */
+html.private-mode .j83agx80.btwxx1t3.lhclo0ds.hop8lmos.nkwizq5d.scwd0bx6.roh60bw9 {
+	filter: blur(5px);
+}
+/* Media viewer thumbs */
+html.private-mode .stjgntxs.ni8dbmo4.d2edcug0 {
+	filter: blur(3px);	
+}
+/* Media viewer video */
+html.private-mode video.k4urcfbm.datstx6m.a8c37x1j {
+	filter: blur(20px);	
+}
+/* Media viewer photo */
+html.private-mode [data-pagelet="MessengerMediaViewerPhoto"] {
+	filter: blur(10px);	
+}
+/* Conversation list */
+html.private-mode [data-testid="mwthreadlist-item"] {
+	filter: blur(3px);
+}
+ /* Incoming messages */
+html.private-mode [data-testid="incoming_group"] {
+	filter: blur(5px);
+}
+ /* Outgoing messages */
+html.private-mode [data-testid="outgoing_group"] {
+	filter: blur(5px);
+}
+ /* Chat status messages */
+html.private-mode [data-scope="messages_table"] {
+	filter: blur(2px);
+}
