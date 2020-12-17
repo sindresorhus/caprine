@@ -780,3 +780,8 @@ ipc.answerMain('notification-reply-callback', (data: any) => {
 	data.previousConversation = previousConversation;
 	window.postMessage({type: 'notification-reply-callback', data}, '*');
 });
+
+ipc.answerMain<undefined, boolean>('check-new-ui', async () => {
+	const element = await elementReady('._9dls');
+	return element !== undefined;
+});

@@ -444,17 +444,21 @@ function createMainWindow(): BrowserWindow {
 	webContents.on('dom-ready', async () => {
 		await updateAppMenu();
 
-		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'browser.css'), 'utf8'));
-		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'dark-mode.css'), 'utf8'));
-		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'vibrancy.css'), 'utf8'));
-		webContents.insertCSS(
-			readFileSync(path.join(__dirname, '..', 'css', 'code-blocks.css'), 'utf8')
-		);
-		webContents.insertCSS(readFileSync(path.join(__dirname, '..', 'css', 'autoplay.css'), 'utf8'));
+		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css'];
+
+		const isNewDesign = await ipcMain.callRenderer<undefined, Element>(mainWindow, 'check-new-ui');
+		console.log(isNewDesign);
+		const cssPath = isNewDesign ?
+			path.join(__dirname, '..', 'css', 'new-design') :
+			path.join(__dirname, '..', 'css');
+
+		for (const file of files) {
+			webContents.insertCSS(readFileSync(path.join(cssPath, file), 'utf8'));
+		}
 
 		if (config.get('useWorkChat')) {
 			webContents.insertCSS(
-				readFileSync(path.join(__dirname, '..', 'css', 'workchat.css'), 'utf8')
+				readFileSync(path.join(cssPath, 'workchat.css'), 'utf8')
 			);
 		}
 
