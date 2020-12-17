@@ -419,6 +419,9 @@
     background-color:var(--scroll-thumb);
     border-radius: 16.5px;
 }
+.dark-mode svg.a8c37x1j {
+    fill:var(--primary-icon);
+}
 html.dark-mode body {
 	color: var(--base-seventy);
 	background: var(--container-color) !important;
