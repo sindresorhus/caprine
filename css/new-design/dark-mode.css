@@ -1,0 +1,35 @@
+/* Top bar: App menu button color */
+[aria-label="Settings, help and more"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
+/* Top bar: New message button color */
+[aria-label="New Message"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
+/* Preferences: Icon color */
+[aria-label="Preferences"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
+/* Menu: Icon color in menu */
+[role="menu"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
+/* Right sidebar: Icon color */
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8 .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
+/* Contact list: delivered icon color */
+.aahdfvyu [role="grid"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}

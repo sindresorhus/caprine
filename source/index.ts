@@ -447,7 +447,6 @@ function createMainWindow(): BrowserWindow {
 		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css'];
 
 		const isNewDesign = await ipcMain.callRenderer<undefined, Element>(mainWindow, 'check-new-ui');
-		console.log(isNewDesign);
 		const cssPath = isNewDesign ?
 			path.join(__dirname, '..', 'css', 'new-design') :
 			path.join(__dirname, '..', 'css');

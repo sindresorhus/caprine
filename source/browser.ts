@@ -277,6 +277,8 @@ function setDarkMode(): void {
 	}
 
 	document.documentElement.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
+	document.documentElement.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
+
 	updateVibrancy();
 }
 
