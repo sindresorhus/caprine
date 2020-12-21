@@ -55,7 +55,7 @@ Download the latest version on the [website](https://sindresorhus.com/caprine) o
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.dmg` file.
 
-Or with [Homebrew-Cask](https://caskroom.github.io): `$ brew cask install caprine`
+Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 ### Linux
 
