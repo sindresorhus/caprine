@@ -377,7 +377,7 @@ function createMainWindow(): BrowserWindow {
 
 (async () => {
 	await Promise.all([ensureOnline(), app.whenReady()]);
-	await updateAppMenu();
+	await updateAppMenu({isNewDesign: false});
 	mainWindow = createMainWindow();
 
 	// Workaround for https://github.com/electron/electron/issues/5256
@@ -442,11 +442,12 @@ function createMainWindow(): BrowserWindow {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', async () => {
-		await updateAppMenu();
+		const isNewDesign = Boolean(await ipcMain.callRenderer<undefined, Element>(mainWindow, 'check-new-ui'));
+
+		await updateAppMenu({isNewDesign});
 
 		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css'];
 
-		const isNewDesign = await ipcMain.callRenderer<undefined, Element>(mainWindow, 'check-new-ui');
 		const cssPath = isNewDesign ?
 			path.join(__dirname, '..', 'css', 'new-design') :
 			path.join(__dirname, '..', 'css');
@@ -480,7 +481,7 @@ function createMainWindow(): BrowserWindow {
 			ipcMain.answerRenderer('update-dnd-mode', async (initialSoundsValue: boolean) => {
 				doNotDisturb.on('change', (doNotDisturb: boolean) => {
 					isDNDEnabled = doNotDisturb;
-					ipcMain.callRenderer(mainWindow, 'toggle-sounds', isDNDEnabled ? false : initialSoundsValue);
+					ipcMain.callRenderer(mainWindow, 'toggle-sounds', {isNewDesign, checked: isDNDEnabled ? false : initialSoundsValue});
 				});
 
 				isDNDEnabled = await doNotDisturb.isEnabled();
