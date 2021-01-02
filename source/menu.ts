@@ -525,21 +525,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Mute Conversation',
 			accelerator: 'CommandOrControl+Shift+M',
 			click() {
-				sendAction('mute-conversation');
+				sendAction<INewDesign>('mute-conversation', {isNewDesign});
 			}
 		},
 		{
 			label: 'Hide Conversation',
 			accelerator: 'CommandOrControl+Shift+H',
 			click() {
-				sendAction('hide-conversation');
+				sendAction<INewDesign>('hide-conversation', {isNewDesign});
 			}
 		},
 		{
 			label: 'Delete Conversation',
 			accelerator: 'CommandOrControl+Shift+D',
 			click() {
-				sendAction('delete-conversation');
+				sendAction<INewDesign>('delete-conversation', {isNewDesign});
 			}
 		},
 		{

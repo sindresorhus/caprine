@@ -563,7 +563,7 @@ async function withConversationMenu(isNewDesign: boolean, callback: () => void):
 
 async function openMuteModal(isNewDesign: boolean): Promise<void> {
 	await withConversationMenu(isNewDesign, () => {
-		selectMenuItem(isNewDesign, 1);
+		selectMenuItem(isNewDesign, isNewDesign ? 2 : 1);
 	});
 }
 
