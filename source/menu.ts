@@ -387,21 +387,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Reset Text Size',
 			accelerator: 'CommandOrControl+0',
 			click() {
-				sendAction('zoom-reset');
+				sendAction('zoom-reset', {isNewDesign});
 			}
 		},
 		{
 			label: 'Increase Text Size',
 			accelerator: 'CommandOrControl+Plus',
 			click() {
-				sendAction('zoom-in');
+				sendAction('zoom-in', {isNewDesign});
 			}
 		},
 		{
 			label: 'Decrease Text Size',
 			accelerator: 'CommandOrControl+-',
 			click() {
-				sendAction('zoom-out');
+				sendAction('zoom-out', {isNewDesign});
 			}
 		},
 		{

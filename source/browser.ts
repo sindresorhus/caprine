@@ -450,23 +450,23 @@ ipc.answerMain('render-native-emoji', (emoji: string): string => {
 	return dataUrl;
 });
 
-ipc.answerMain('zoom-reset', () => {
-	setZoom(1);
+ipc.answerMain('zoom-reset', ({isNewDesign}: INewDesign) => {
+	setZoom(isNewDesign, 1);
 });
 
-ipc.answerMain('zoom-in', () => {
+ipc.answerMain('zoom-in', ({isNewDesign}: INewDesign) => {
 	const zoomFactor = config.get('zoomFactor') + 0.1;
 
 	if (zoomFactor < 1.6) {
-		setZoom(zoomFactor);
+		setZoom(isNewDesign, zoomFactor);
 	}
 });
 
-ipc.answerMain('zoom-out', () => {
+ipc.answerMain('zoom-out', ({isNewDesign}: INewDesign) => {
 	const zoomFactor = config.get('zoomFactor') - 0.1;
 
 	if (zoomFactor >= 0.8) {
-		setZoom(zoomFactor);
+		setZoom(isNewDesign, zoomFactor);
 	}
 });
 
@@ -539,9 +539,9 @@ function selectedConversationIndex(isNewDesign: boolean, offset = 0): number {
 	return ((index % list.length) + list.length) % list.length;
 }
 
-function setZoom(zoomFactor: number): void {
+function setZoom(isNewDesign: boolean, zoomFactor: number): void {
 	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
-	node.textContent = `${selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
+	node.textContent = `${isNewDesign ? selectors.conversationSelectorNewDesign : selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
@@ -692,7 +692,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor');
-	setZoom(zoomFactor);
+	setZoom(await isNewDesign(), zoomFactor);
 
 	// Enable OS specific styles
 	document.documentElement.classList.add(`os-${process.platform}`);
