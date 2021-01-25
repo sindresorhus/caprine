@@ -1,0 +1,25 @@
+/* A utility class for temporarily hiding all dropdown menus */
+html.hide-dropdowns [role=menu].l9j0dhe7.swg4t2nn {
+	visibility: hidden !important;
+}
+
+/* Dragable region for macOS */
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how,
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.hv4rvrfc.dati1w0a.f10w8fjw.pybr56ya.b5q2rw42.lq239pai.mysgfdmx.hddg9phg {
+	-webkit-app-region: drag !important;
+}
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how {
+	margin: 0 !important;
+	padding: 12px 16px 0 !important;
+}
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.d2edcug0.hpfvmrgz.kud993qy.buofh1pr {
+	margin-top: 24px !important;
+}
+@media (max-width: 900px) {
+	.rq0escxv.l9j0dhe7.du4w35lb.n851cfcs.aahdfvyu {
+		display: none !important;
+	}
+	.hybvsw6c.cjfnh4rs.j83agx80.cbu4d94t.dp1hu0rb.l9j0dhe7.kr520xx4.iyyx5f41.jyyn76af.ow71b3p4.pnfry9he.so2p5rfc.owhy4gn4.wrtwqps9 {
+		padding-top: 36px !important;
+	}
+}

@@ -9,6 +9,7 @@ import {
 import {memoize} from 'lodash';
 import config from './config';
 import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
+import {INewDesign} from './types';
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/
@@ -335,7 +336,8 @@ export async function process(url: string): Promise<Response> {
 }
 
 export async function generateSubmenu(
-	updateMenu: () => Promise<Menu>
+	newDesign: INewDesign,
+	updateMenu: (newDesign: INewDesign) => Promise<Menu>
 ): Promise<MenuItemConstructorOptions[]> {
 	const emojiMenuOption = async (
 		label: string,
@@ -352,7 +354,7 @@ export async function generateSubmenu(
 
 			config.set('emojiStyle', style);
 
-			await updateMenu();
+			await updateMenu(newDesign);
 			showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
 		}
 	});

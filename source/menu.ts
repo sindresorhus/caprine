@@ -15,8 +15,9 @@ import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMi
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
+import {INewDesign} from './types';
 
-export default async function updateMenu(): Promise<Menu> {
+export default async function updateMenu({isNewDesign}: INewDesign): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {
 		label: 'New Conversation',
 		accelerator: 'CommandOrControl+N',
@@ -62,7 +63,7 @@ export default async function updateMenu(): Promise<Menu> {
 			async click() {
 				config.set('vibrancy', 'none');
 				sendAction('update-vibrancy');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		},
 		{
@@ -72,7 +73,7 @@ export default async function updateMenu(): Promise<Menu> {
 			async click() {
 				config.set('vibrancy', 'sidebar');
 				sendAction('update-vibrancy');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		},
 		{
@@ -82,7 +83,7 @@ export default async function updateMenu(): Promise<Menu> {
 			async click() {
 				config.set('vibrancy', 'full');
 				sendAction('update-vibrancy');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		}
 	];
@@ -95,7 +96,7 @@ export default async function updateMenu(): Promise<Menu> {
 			async click() {
 				config.set('sidebar', 'default');
 				sendAction('update-sidebar');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		},
 		{
@@ -107,7 +108,7 @@ export default async function updateMenu(): Promise<Menu> {
 				// Toggle between default and hidden
 				config.set('sidebar', config.get('sidebar') === 'hidden' ? 'default' : 'hidden');
 				sendAction('update-sidebar');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		},
 		{
@@ -117,7 +118,7 @@ export default async function updateMenu(): Promise<Menu> {
 			async click() {
 				config.set('sidebar', 'narrow');
 				sendAction('update-sidebar');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		},
 		{
@@ -127,7 +128,7 @@ export default async function updateMenu(): Promise<Menu> {
 			async click() {
 				config.set('sidebar', 'wide');
 				sendAction('update-sidebar');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		}
 	];
@@ -210,7 +211,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Emoji Style',
-			submenu: await generateEmojiSubmenu(updateMenu)
+			submenu: await generateEmojiSubmenu({isNewDesign}, updateMenu)
 		},
 		{
 			label: 'Bounce Dock on Message',
@@ -386,21 +387,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Reset Text Size',
 			accelerator: 'CommandOrControl+0',
 			click() {
-				sendAction('zoom-reset');
+				sendAction('zoom-reset', {isNewDesign});
 			}
 		},
 		{
 			label: 'Increase Text Size',
 			accelerator: 'CommandOrControl+Plus',
 			click() {
-				sendAction('zoom-in');
+				sendAction('zoom-in', {isNewDesign});
 			}
 		},
 		{
 			label: 'Decrease Text Size',
 			accelerator: 'CommandOrControl+-',
 			click() {
-				sendAction('zoom-out');
+				sendAction('zoom-out', {isNewDesign});
 			}
 		},
 		{
@@ -414,7 +415,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			async click() {
 				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
 				sendAction('set-dark-mode');
-				await updateMenu();
+				await updateMenu({isNewDesign});
 			}
 		},
 		{
@@ -510,6 +511,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Toggle Unread Threads',
+			visible: !isNewDesign,
 			click() {
 				sendAction('toggle-unread-threads-view');
 			}
@@ -518,26 +520,26 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 	const spellCheckerSubmenu: MenuItemConstructorOptions[] = getSpellCheckerLanguages();
 
-	const conversationSubmenu: MenuItemConstructorOptions[] = [
+	const conversationOptionsSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Mute Conversation',
 			accelerator: 'CommandOrControl+Shift+M',
 			click() {
-				sendAction('mute-conversation');
+				sendAction<INewDesign>('mute-conversation', {isNewDesign});
 			}
 		},
 		{
 			label: 'Hide Conversation',
 			accelerator: 'CommandOrControl+Shift+H',
 			click() {
-				sendAction('hide-conversation');
+				sendAction<INewDesign>('hide-conversation', {isNewDesign});
 			}
 		},
 		{
 			label: 'Delete Conversation',
 			accelerator: 'CommandOrControl+Shift+D',
 			click() {
-				sendAction('delete-conversation');
+				sendAction<INewDesign>('delete-conversation', {isNewDesign});
 			}
 		},
 		{
@@ -559,24 +561,33 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			type: 'separator'
-		},
+		}
+	];
+
+	const conversationSearchOptionsSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Find Conversation',
 			accelerator: 'CommandOrControl+K',
 			click() {
 				sendAction('find');
 			}
-		},
-		{
+		}
+	];
+
+	if (!isNewDesign) {
+		conversationSearchOptionsSubmenu.push({
 			label: 'Search in Conversation',
 			accelerator: 'CommandOrControl+F',
+			visible: isNewDesign,
 			click() {
 				sendAction('search');
 			}
-		},
-		{
-			type: 'separator'
-		},
+		});
+	}
+
+	conversationSearchOptionsSubmenu.push({type: 'separator'});
+
+	const conversationMessageOptionsSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Insert GIF',
 			accelerator: 'CommandOrControl+G',
@@ -620,6 +631,12 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			visible: !is.macos && config.get('isSpellCheckerEnabled'),
 			submenu: spellCheckerSubmenu
 		}
+	];
+
+	const conversationSubmenu: MenuItemConstructorOptions[] = [
+		...conversationOptionsSubmenu,
+		...conversationSearchOptionsSubmenu,
+		...conversationMessageOptionsSubmenu
 	];
 
 	const helpSubmenu: MenuItemConstructorOptions[] = [
