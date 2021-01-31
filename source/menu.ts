@@ -338,6 +338,16 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Use Client-side Decoration',
+			type: 'checkbox',
+			visible: !is.macos,
+			checked: config.get('clientSideDecoration'),
+			click(menuItem) {
+				config.set('clientSideDecoration', menuItem.checked);
+				showRestartDialog('Caprine needs to be restarted to enable or disable client-side decoration.');
+			}
+		},
+		{
 			label: 'Flash Window on Message',
 			type: 'checkbox',
 			visible: !is.macos,

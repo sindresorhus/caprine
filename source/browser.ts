@@ -758,7 +758,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 	observeAutoscroll();
 
 	// Hook buttons observer
-	observeButtons();
+	if (config.get('clientSideDecoration')) {
+		observeButtons();
+	}
 });
 
 // Handle title bar double-click.

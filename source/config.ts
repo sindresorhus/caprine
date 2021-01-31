@@ -34,6 +34,7 @@ type StoreType = {
 	useWorkChat: boolean;
 	sidebar: 'default' | 'hidden' | 'narrow' | 'wide';
 	autoHideMenuBar: boolean;
+	clientSideDecoration: boolean;
 	notificationsMuted: boolean;
 	callRingtoneMuted: boolean;
 	hardwareAcceleration: boolean;
@@ -172,6 +173,10 @@ const schema: Store.Schema<StoreType> = {
 		default: 'default'
 	},
 	autoHideMenuBar: {
+		type: 'boolean',
+		default: false
+	},
+	clientSideDecoration: {
 		type: 'boolean',
 		default: false
 	},

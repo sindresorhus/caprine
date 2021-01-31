@@ -295,7 +295,7 @@ function createMainWindow(): BrowserWindow {
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		darkTheme: isDarkMode, // GTK+3
-		frame: false,
+		frame: !config.get('clientSideDecoration'),
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nativeWindowOpen: true,
