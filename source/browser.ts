@@ -368,12 +368,12 @@ function updateVibrancy(): void {
 }
 
 function updateCloseButton(): void {
-	const closeButton = document.querySelector("#close-button path");
+	const closeButton = document.querySelector('#close-button path');
 	if (closeButton) {
 		if (config.get('darkMode')) {
-			closeButton.setAttribute("fill", "#d1cbc9");
+			closeButton.setAttribute('fill', '#d1cbc9');
 		} else {
-			closeButton.setAttribute("fill", "#2e3436");
+			closeButton.setAttribute('fill', '#2e3436');
 		}
 	}
 }
