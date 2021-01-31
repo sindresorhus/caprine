@@ -23,3 +23,18 @@ html.hide-dropdowns [role=menu].l9j0dhe7.swg4t2nn {
 		padding-top: 36px !important;
 	}
 }
+
+/* Disable drag for info and call buttons on the top right corner */
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.hpfvmrgz.p8fzw8mz.pcp91wgn.iuny7tx3.ipjc6fyt {
+	-webkit-app-region: no-drag !important;
+}
+/* Disable drag for status (below chat name) */
+.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.e9vueds3.j5wam9gi.knj5qynh.m9osqain.oqcyycmt {
+	-webkit-app-region: no-drag !important;
+}
+/* Disable drag for Settings, help and more; Create New Room; and New Message */
+.oajrlxb2.tdjehn4e.qu0x051f.esr5mh6w.e9989ue4.r7d6kgcz.rq0escxv.nhd2j8a9.j83agx80.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.hcukyx3x.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.i1ao9s8h.esuyzwwr.f1sip0of.lzcic4wl.l9j0dhe7.abiwlrkh.p8dawk7l.bp9cbjyn.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv.rt8b4zig.n8ej3o3l.agehan2d.sk4xxmp2.taijpn5t.tv7at329.thwo4zme {
+	-webkit-app-region: no-drag !important;
+}
+
+body::-webkit-scrollbar { width: 0px; }
