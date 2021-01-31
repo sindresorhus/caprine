@@ -640,9 +640,12 @@ function createButton() {
 		const buttons = document.querySelectorAll('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.b5q2rw42.lq239pai.mysgfdmx.hddg9phg')[1] as HTMLElement;
 		if (buttons) {
 			buttons.insertAdjacentHTML('beforeend', '<div id="close-button" class="rq0escxv l9j0dhe7 du4w35lb j83agx80 cbu4d94t pfnyh3mw d2edcug0 hpfvmrgz p8fzw8mz pcp91wgn iuny7tx3 ipjc6fyt bp9cbjyn qu8okrzs taijpn5t eim337gk"><span class="tojvnm2t a6sixzi8 abs2jz4q a8s20v7p t1p8iaqh k5wvi7nf q3lfd5jv pk4s997a bipmatt0 cebpdrjk qowsmv63 owwhemhu dp1hu0rb dhp61c6y iyyx5f41"><div class="oajrlxb2 gs1a9yip g5ia77u1 mtkw9kbi tlpljxtp qensuy8j ppp5ayq2 goun2846 ccm00jje s44p3ltw mk2mc5f4 rt8b4zig n8ej3o3l agehan2d sk4xxmp2 rq0escxv nhd2j8a9 pq6dq46d mg4g778l btwxx1t3 pfnyh3mw p7hjln8o kvgmc6g5 cxmmr5t8 oygrvhab hcukyx3x tgvbjcpo hpfvmrgz jb3vyjys rz4wbd8a qt6c0cv9 a8nywdso l9j0dhe7 i1ao9s8h esuyzwwr f1sip0of du4w35lb lzcic4wl abiwlrkh p8dawk7l" role="button" tabindex="0"><div class="bp9cbjyn pq6dq46d mudddibn taijpn5t l9j0dhe7 ciadx1gn"><div class="j9ispegn pmk7jnqg k4urcfbm datstx6m b5wmifdl kr520xx4 mdpwds66 b2cqd1jy n13yt9zj eh67sqbx" style="background-color: rgb(0, 153, 255);"></div><svg role="presentation" width="16" height="16"><path d="M4 4h1.031c.255.011.51.129.688.313L8 6.592l2.312-2.28c.266-.231.447-.306.688-.313h1v1c0 .286-.034.55-.25.75L9.469 8.031l2.25 2.25c.188.188.281.454.281.719v1h-1c-.265 0-.53-.093-.719-.281L8 9.438l-2.281 2.28A1.015 1.015 0 015 12H4v-1c0-.265.093-.53.281-.719l2.281-2.25-2.28-2.281A.909.909 0 014 5z" style="line-height:normal;-inkscape-font-specification:\'Andale Mono\';text-indent:0;text-align:start;text-decoration-line:none;text-transform:none;marker:none" color="#bebebe" font-weight="400" font-family="Andale Mono" overflow="visible" fill="#2e3436"/></svg></div></div></span></div>');
-			buttons.childNodes[3].addEventListener('click', _event => {
-				win.close();
-			});
+			const closeButton = document.querySelector('#close-button');
+			if (closeButton) {
+				closeButton.addEventListener('click', _event => {
+					win.close();
+				});
+			}
 		}
 	}
 }
