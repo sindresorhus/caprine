@@ -1,3 +1,8 @@
+/* Hide disabled scrollbar on the right side */
+body::-webkit-scrollbar {
+	width: 0;
+}
+
 /* A utility class for temporarily hiding all dropdown menus */
 html.hide-dropdowns [role=menu].l9j0dhe7.swg4t2nn {
 	visibility: hidden !important;
