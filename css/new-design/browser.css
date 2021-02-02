@@ -8,6 +8,11 @@ html.hide-dropdowns [role=menu].l9j0dhe7.swg4t2nn {
 	visibility: hidden !important;
 }
 
+/* A utility class for temporarily hiding right sidebar */
+html.hide-r-sidebar .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls > div:nth-child(2) {
+	display: none;
+}
+
 /* Dragable region for macOS */
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how,
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.hv4rvrfc.dati1w0a.f10w8fjw.pybr56ya.b5q2rw42.lq239pai.mysgfdmx.hddg9phg {

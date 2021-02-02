@@ -520,7 +520,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 	const spellCheckerSubmenu: MenuItemConstructorOptions[] = getSpellCheckerLanguages();
 
-	const conversationOptionsSubmenu: MenuItemConstructorOptions[] = [
+	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Mute Conversation',
 			accelerator: 'CommandOrControl+Shift+M',
@@ -561,33 +561,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			type: 'separator'
-		}
-	];
-
-	const conversationSearchOptionsSubmenu: MenuItemConstructorOptions[] = [
+		},
 		{
 			label: 'Find Conversation',
 			accelerator: 'CommandOrControl+K',
 			click() {
 				sendAction('find');
 			}
-		}
-	];
-
-	if (!isNewDesign) {
-		conversationSearchOptionsSubmenu.push({
+		},
+		{
 			label: 'Search in Conversation',
 			accelerator: 'CommandOrControl+F',
-			visible: isNewDesign,
 			click() {
-				sendAction('search');
+				sendAction('search', isNewDesign);
 			}
-		});
-	}
-
-	conversationSearchOptionsSubmenu.push({type: 'separator'});
-
-	const conversationMessageOptionsSubmenu: MenuItemConstructorOptions[] = [
+		},
 		{
 			label: 'Insert GIF',
 			accelerator: 'CommandOrControl+G',
@@ -631,12 +619,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			visible: !is.macos && config.get('isSpellCheckerEnabled'),
 			submenu: spellCheckerSubmenu
 		}
-	];
-
-	const conversationSubmenu: MenuItemConstructorOptions[] = [
-		...conversationOptionsSubmenu,
-		...conversationSearchOptionsSubmenu,
-		...conversationMessageOptionsSubmenu
 	];
 
 	const helpSubmenu: MenuItemConstructorOptions[] = [
