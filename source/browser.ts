@@ -150,7 +150,7 @@ ipc.answerMain('find', () => {
 	searchBox!.focus();
 });
 
-async function openSearchBoxNewDesign() {
+async function openSearchInConversation() {
 	const mainView = document.querySelector('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls')!;
 	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>('div:only-child'));
 
@@ -189,7 +189,7 @@ async function openSearchBoxNewDesign() {
 
 ipc.answerMain('search', (isNewDesign: boolean) => {
 	if (isNewDesign) {
-		openSearchBoxNewDesign();
+		openSearchInConversation();
 	} else {
 		document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
 	}
