@@ -173,8 +173,8 @@ async function openSearchInConversation() {
 
 		// Observe sidebar so when it's hidden, remove the utility class. This prevents split
 		// display of sidebar.
-		const sidebarObserver = new MutationObserver((records) => {
-			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName == 'DIV');
+		const sidebarObserver = new MutationObserver(records => {
+			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
 
 			// In case there is a div removed, hide utility class and stop observing
 			if (removedRecords.length > 0) {
