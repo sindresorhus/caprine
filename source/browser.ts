@@ -236,14 +236,16 @@ ipc.answerMain('hide-conversation', async ({isNewDesign}: INewDesign) => {
 	}
 });
 
-async function openHiddenPreferences(isNewDesign: boolean): Promise<boolean> {
+async function openHiddenPreferences(isNewDesign: boolean, firstStart = false): Promise<boolean> {
 	if (!isPreferencesOpen(isNewDesign)) {
 		const style = document.createElement('style');
 		// Hide both the backdrop and the preferences dialog
 		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
 		document.body.append(style);
 
-		await openPreferences(isNewDesign);
+		if (!firstStart) {
+			await openPreferences(isNewDesign);
+		}
 
 		// Will clean up itself after the preferences are closed
 		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
@@ -381,8 +383,8 @@ function updateSidebar(): void {
 	}
 }
 
-async function updateDoNotDisturb(isNewDesign: boolean): Promise<void> {
-	const shouldClosePreferences = await openHiddenPreferences(isNewDesign);
+async function updateDoNotDisturb(isNewDesign: boolean, firstStart = false): Promise<void> {
+	const shouldClosePreferences = await openHiddenPreferences(isNewDesign, firstStart);
 	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
 
 	if (shouldClosePreferences) {
@@ -708,7 +710,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Configure do not disturb
 	if (is.macos) {
-		await updateDoNotDisturb(await isNewDesign());
+		await updateDoNotDisturb(await isNewDesign(), true);
 	}
 
 	// Prevent flash of white on startup when in dark mode
