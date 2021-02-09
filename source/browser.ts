@@ -665,8 +665,22 @@ function isPreferencesOpen(isNewDesign: boolean): boolean {
 function closePreferences(isNewDesign: boolean): void {
 	if (isNewDesign) {
 		const closeButton = document.querySelector<HTMLElement>('[aria-label=Preferences] [aria-label=Close]')!;
-		document.documentElement.classList.remove('hide-preferences-window');
-		return closeButton.click();
+		closeButton.click();
+
+		// Wait for the preferences window to be closed, then remove the class from the document
+		const preferencesOverlayObserver = new MutationObserver(records => {
+			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
+
+			// In case there is a div removed, hide utility class and stop observing
+			if (removedRecords.length > 0) {
+				document.documentElement.classList.remove('hide-preferences-window');
+				preferencesOverlayObserver.disconnect();
+			}
+		});
+
+		const preferencesOverlay = document.querySelector('[data-pagelet=root] > div > div:last-child')!;
+
+		return preferencesOverlayObserver.observe(preferencesOverlay, {childList: true, subtree: true});
 	}
 
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
