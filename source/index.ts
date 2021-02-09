@@ -443,7 +443,7 @@ function createMainWindow(): BrowserWindow {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', async () => {
-		const isNewDesign = Boolean(await ipcMain.callRenderer<undefined, Element>(mainWindow, 'check-new-ui'));
+		const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
 
 		await updateAppMenu({isNewDesign});
 
