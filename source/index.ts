@@ -394,7 +394,7 @@ function createMainWindow(): BrowserWindow {
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
 			async click() {
-				const isNewDesign = Boolean(await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui'));
+				const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
 				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {isNewDesign}));
 			}
 		};
