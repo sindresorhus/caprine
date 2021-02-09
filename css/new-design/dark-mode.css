@@ -23,7 +23,14 @@
 }
 
 /* Right sidebar: Icon color */
-.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8 .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8
+[role=button] svg {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+/* Right sidebar: search icon */
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8
+[role=button] svg[role=presentation] path {
 	fill: currentColor;
 	color: var(--primary-text);
 }

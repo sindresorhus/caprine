@@ -150,8 +150,49 @@ ipc.answerMain('find', () => {
 	searchBox!.focus();
 });
 
-ipc.answerMain('search', () => {
-	document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
+async function openSearchInConversation() {
+	const mainView = document.querySelector('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls')!;
+	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>('div:only-child'));
+
+	if (rightSidebarIsClosed) {
+		document.documentElement.classList.add('hide-r-sidebar');
+		document.querySelector<HTMLElement>('[aria-label="Conversation Information"]')?.click();
+	}
+
+	await elementReady<HTMLElement>(selectors.rightSidebarButtons, {stopOnDomReady: false});
+	const buttonList = document.querySelectorAll<HTMLElement>(selectors.rightSidebarButtons);
+	console.log(buttonList);
+
+	if (buttonList.length > 4) {
+		buttonList[4].click();
+	}
+
+	// If right sidebar was closed when shortcut was clicked, then close it back.
+	if (rightSidebarIsClosed) {
+		document.querySelector<HTMLElement>('[aria-label="Conversation Information"]')?.click();
+
+		// Observe sidebar so when it's hidden, remove the utility class. This prevents split
+		// display of sidebar.
+		const sidebarObserver = new MutationObserver(records => {
+			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
+
+			// In case there is a div removed, hide utility class and stop observing
+			if (removedRecords.length > 0) {
+				document.documentElement.classList.remove('hide-r-sidebar');
+				sidebarObserver.disconnect();
+			}
+		});
+
+		sidebarObserver.observe(mainView, {childList: true, subtree: true});
+	}
+}
+
+ipc.answerMain('search', (isNewDesign: boolean) => {
+	if (isNewDesign) {
+		openSearchInConversation();
+	} else {
+		document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
+	}
 });
 
 ipc.answerMain('insert-gif', () => {
