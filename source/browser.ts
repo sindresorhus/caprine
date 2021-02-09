@@ -336,7 +336,7 @@ ipc.answerMain('toggle-mute-notifications', async ({isNewDesign, defaultStatus}:
 		closePreferences(isNewDesign);
 	}
 
-	return !notificationCheckbox.checked;
+	return !isNewDesign && !notificationCheckbox.checked;
 });
 
 ipc.answerMain('toggle-message-buttons', () => {
