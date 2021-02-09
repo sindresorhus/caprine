@@ -377,8 +377,6 @@ function createMainWindow(): BrowserWindow {
 
 (async () => {
 	await Promise.all([ensureOnline(), app.whenReady()]);
-	// ! const isNewDesign = Boolean(await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui'));
-	// This is never resolved, making the app stuck here ☝️
 	await updateAppMenu({isNewDesign: false});
 	mainWindow = createMainWindow();
 
