@@ -8,6 +8,13 @@ html.hide-dropdowns [role=menu].l9j0dhe7.swg4t2nn {
 	visibility: hidden !important;
 }
 
+/* A utility class for temporarily hiding preferences window */
+html.hide-preferences-window [data-pagelet=root] > div > div:last-child {
+	display: none;
+	opacity: 0;
+	visibility: hidden;
+}
+
 /* Dragable region for macOS */
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how,
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.hv4rvrfc.dati1w0a.f10w8fjw.pybr56ya.b5q2rw42.lq239pai.mysgfdmx.hddg9phg {
