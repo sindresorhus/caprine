@@ -383,11 +383,11 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
-function setPrivateMode(): void {
+function setPrivateMode(isNewDesign: boolean): void {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-		sendConversationList();
+		sendConversationList(isNewDesign);
 	}
 }
 
@@ -750,13 +750,15 @@ document.addEventListener('animationstart', insertionListener, false);
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', async () => {
+	const newDesign = await isNewDesign();
+
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.append(style);
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor');
-	setZoom(await isNewDesign(), zoomFactor);
+	setZoom(newDesign, zoomFactor);
 
 	// Enable OS specific styles
 	document.documentElement.classList.add(`os-${process.platform}`);
@@ -768,11 +770,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 	setDarkMode();
 
 	// Activate Private Mode if it was set before quitting
-	setPrivateMode();
+	setPrivateMode(newDesign);
 
 	// Configure do not disturb
 	if (is.macos) {
-		await updateDoNotDisturb(await isNewDesign());
+		await updateDoNotDisturb(newDesign);
 	}
 
 	// Prevent flash of white on startup when in dark mode
@@ -932,7 +934,7 @@ ipc.answerMain('notification-reply-callback', async (data: any) => {
 	window.postMessage({type: 'notification-reply-callback', data}, '*');
 });
 
-async function isNewDesign(): Promise<boolean> {
+export async function isNewDesign(): Promise<boolean> {
 	return Boolean(await elementReady('._9dls', {stopOnDomReady: false}));
 }
 
