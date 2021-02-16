@@ -50,7 +50,7 @@ async function withMenu(
 async function withSettingsMenu(isNewDesign: boolean, callback: () => Promise<void> | void): Promise<void> {
 	// If ui is new, get the new settings menu
 	const settingsMenu = isNewDesign ?
-		(await elementReady<HTMLElement>('[aria-label="Settings, help and more"]', {stopOnDomReady: false}))! :
+		(await elementReady<HTMLElement>('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.hpfvmrgz.aovydwv3.p8cu3f6v.kb5gq1qc.taijpn5t.b0upgy8r .j83agx80.pfnyh3mw .ozuftl9m [role=button]', {stopOnDomReady: false}))! :
 		(await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {stopOnDomReady: false}))!;
 
 	await withMenu(isNewDesign, settingsMenu, callback);
@@ -106,7 +106,7 @@ ipc.answerMain('show-preferences', async () => {
 
 ipc.answerMain('new-conversation', async () => {
 	if (await isNewDesign()) {
-		document.querySelector<HTMLElement>('[aria-label="New Message"]')!.click();
+		document.querySelector<HTMLElement>('[href="/new/"]')!.click();
 	} else {
 		document.querySelector<HTMLElement>('._30yy[data-href$="/new"]')!.click();
 	}
@@ -204,7 +204,7 @@ ipc.answerMain('insert-gif', () => {
 			element.querySelector<HTMLElement>('svg path[d^="M27.002,13.5"]')
 		) ??
 		// Newest UI
-		document.querySelector<HTMLElement>('[aria-label="Choose a gif"][aria-hidden=false]');
+		document.querySelector<HTMLElement>('.tkr6xdv7 .pmk7jnqg.kkf49tns.cgat1ltu.sw24d88r.i09qtzwb.g3zh7qmp.flx89l3n.mb8dcdod.chkx7lpg [aria-hidden=false]');
 
 	gifElement!.click();
 });
@@ -212,7 +212,7 @@ ipc.answerMain('insert-gif', () => {
 ipc.answerMain('insert-emoji', async () => {
 	const newDesign = await isNewDesign();
 	const emojiElement = newDesign ?
-		document.querySelector<HTMLElement>('[aria-label="Choose an emoji"]') :
+		document.querySelector<HTMLElement>('.cxmmr5t8 .tojvnm2t.a6sixzi8.abs2jz4q.a8s20v7p.t1p8iaqh.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.iyyx5f41 [role=button]') :
 		(await elementReady<HTMLElement>('._5s2p, ._30yy._7odb', {
 			stopOnDomReady: false
 		}));
@@ -229,7 +229,7 @@ ipc.answerMain('insert-sticker', () => {
 			element.querySelector<HTMLElement>('svg path[d^="M22.5,18.5 L27.998,18.5"]')
 		) ??
 		// Newest UI
-		document.querySelector<HTMLElement>('[aria-label="Choose a sticker"][aria-hidden=false]');
+		document.querySelector<HTMLElement>('.tkr6xdv7 .pmk7jnqg.kkf49tns.cgat1ltu.sw24d88r.i09qtzwb.g3zh7qmp.flx89l3n.mb8dcdod.tntlmw5q [aria-hidden=false]');
 
 	stickerElement!.click();
 });
@@ -239,7 +239,7 @@ ipc.answerMain('attach-files', () => {
 		// Old UI
 		document.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]') ??
 		// Newest UI
-		document.querySelector<HTMLElement>('[aria-label="Attach a photo or video"][aria-hidden=false]');
+		document.querySelector<HTMLElement>('.tkr6xdv7 .pmk7jnqg.kkf49tns.cgat1ltu.sw24d88r.i09qtzwb.g3zh7qmp.flx89l3n.mb8dcdod.lbhrjshz [aria-hidden=false]');
 
 	filesElement!.click();
 });
