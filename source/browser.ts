@@ -50,7 +50,7 @@ async function withMenu(
 async function withSettingsMenu(isNewDesign: boolean, callback: () => Promise<void> | void): Promise<void> {
 	// If ui is new, get the new settings menu
 	const settingsMenu = isNewDesign ?
-		(await elementReady<HTMLElement>('[aria-label="Settings, help and more"]', {stopOnDomReady: false}))! :
+		(await elementReady<HTMLElement>('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.hpfvmrgz.aovydwv3.p8cu3f6v.kb5gq1qc.taijpn5t.b0upgy8r .j83agx80.pfnyh3mw .ozuftl9m [role=button]', {stopOnDomReady: false}))! :
 		(await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {stopOnDomReady: false}))!;
 
 	await withMenu(isNewDesign, settingsMenu, callback);
