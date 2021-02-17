@@ -8,6 +8,11 @@ html.hide-dropdowns [role=menu].l9j0dhe7.swg4t2nn {
 	visibility: hidden !important;
 }
 
+/* A utility class for temporarily hiding preferences window */
+html.hide-preferences-window [data-pagelet=root] > div > div:last-child {
+	display: none;
+}
+
 /* A utility class for temporarily hiding right sidebar */
 html.hide-r-sidebar .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls > div:nth-child(2) {
 	display: none;

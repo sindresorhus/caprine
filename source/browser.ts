@@ -279,6 +279,8 @@ ipc.answerMain('hide-conversation', async ({isNewDesign}: INewDesign) => {
 
 async function openHiddenPreferences(isNewDesign: boolean): Promise<boolean> {
 	if (!isPreferencesOpen(isNewDesign)) {
+		document.documentElement.classList.add('hide-preferences-window');
+
 		const style = document.createElement('style');
 		// Hide both the backdrop and the preferences dialog
 		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
@@ -286,8 +288,10 @@ async function openHiddenPreferences(isNewDesign: boolean): Promise<boolean> {
 
 		await openPreferences(isNewDesign);
 
-		// Will clean up itself after the preferences are closed
-		document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
+		if (!isNewDesign) {
+			// Will clean up itself after the preferences are closed
+			document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
+		}
 
 		return true;
 	}
@@ -317,20 +321,22 @@ ipc.answerMain('toggle-mute-notifications', async ({isNewDesign, defaultStatus}:
 		selectors.notificationCheckbox
 	)!;
 
-	if (defaultStatus === undefined) {
-		notificationCheckbox.click();
-	} else if (
-		(defaultStatus && notificationCheckbox.checked) ||
-		(!defaultStatus && !notificationCheckbox.checked)
-	) {
-		notificationCheckbox.click();
+	if (!isNewDesign) {
+		if (defaultStatus === undefined) {
+			notificationCheckbox.click();
+		} else if (
+			(defaultStatus && notificationCheckbox.checked) ||
+			(!defaultStatus && !notificationCheckbox.checked)
+		) {
+			notificationCheckbox.click();
+		}
 	}
 
 	if (shouldClosePreferences) {
 		closePreferences(isNewDesign);
 	}
 
-	return !notificationCheckbox.checked;
+	return !isNewDesign && !notificationCheckbox.checked;
 });
 
 ipc.answerMain('toggle-message-buttons', () => {
@@ -424,13 +430,15 @@ function updateSidebar(): void {
 
 async function updateDoNotDisturb(isNewDesign: boolean): Promise<void> {
 	const shouldClosePreferences = await openHiddenPreferences(isNewDesign);
-	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+
+	if (!isNewDesign) {
+		const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+		toggleSounds(await ipc.callMain('update-dnd-mode', soundsCheckbox.checked));
+	}
 
 	if (shouldClosePreferences) {
 		closePreferences(isNewDesign);
 	}
-
-	toggleSounds(await ipc.callMain('update-dnd-mode', soundsCheckbox.checked));
 }
 
 function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
@@ -657,7 +665,22 @@ function isPreferencesOpen(isNewDesign: boolean): boolean {
 function closePreferences(isNewDesign: boolean): void {
 	if (isNewDesign) {
 		const closeButton = document.querySelector<HTMLElement>('[aria-label=Preferences] [aria-label=Close]')!;
-		return closeButton.click();
+		closeButton.click();
+
+		// Wait for the preferences window to be closed, then remove the class from the document
+		const preferencesOverlayObserver = new MutationObserver(records => {
+			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
+
+			// In case there is a div removed, hide utility class and stop observing
+			if (removedRecords.length > 0) {
+				document.documentElement.classList.remove('hide-preferences-window');
+				preferencesOverlayObserver.disconnect();
+			}
+		});
+
+		const preferencesOverlay = document.querySelector('[data-pagelet=root] > div > div:last-child')!;
+
+		return preferencesOverlayObserver.observe(preferencesOverlay, {childList: true, subtree: true});
 	}
 
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;

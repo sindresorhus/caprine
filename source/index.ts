@@ -394,7 +394,8 @@ function createMainWindow(): BrowserWindow {
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
 			async click() {
-				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications'));
+				const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
+				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {isNewDesign}));
 			}
 		};
 
@@ -442,7 +443,7 @@ function createMainWindow(): BrowserWindow {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', async () => {
-		const isNewDesign = Boolean(await ipcMain.callRenderer<undefined, Element>(mainWindow, 'check-new-ui'));
+		const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
 
 		await updateAppMenu({isNewDesign});
 
@@ -490,7 +491,11 @@ function createMainWindow(): BrowserWindow {
 			});
 		}
 
-		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', config.get('notificationsMuted')));
+		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {
+			isNewDesign,
+			defaultStatus: config.get('notificationsMuted')
+		}));
+
 		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
