@@ -13,6 +13,43 @@ html.hide-r-sidebar .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh
 	display: none;
 }
 
+/* -- Private mode -- */
+/* Chat list: profile picture */
+html.private-mode [role=navigation] [role=row] svg[role=img] {
+	filter: blur(5px);
+}
+/* Chat list: name and last message (last message sometimes includes senders name) */
+html.private-mode [role=navigation] [role=row] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.fe6kdd0r.mau55g9w.c8b282yb.hzawbc8m {
+	filter: blur(5px);
+}
+/* Conversation: profile picture */
+html.private-mode [data-pagelet=page] .a8c37x1j.d2edcug0.sn7ne77z.bixrwtb6 {
+	filter: blur(5px);
+}
+/* Conversation: name */
+html.private-mode [data-pagelet=page] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.a5q79mjw.g1cxx5fr.lrazzd5p.oo9gr5id.oqcyycmt {
+	filter: blur(5px);
+}
+/* Message list: sender profile picture */
+html.private-mode [data-pagelet=page] .pfnyh3mw.aovydwv3.j83agx80.h676nmdw.oi9244e8.oygrvhab {
+	filter: blur(5px);
+}
+/* Message list: sender replied to */
+html.private-mode [data-pagelet=page] .j83agx80.bp9cbjyn.gjjqq4r6 .b3onmgus.pipptul6.sq6gx45u.a3bd9o3v {
+	filter: blur(5px);
+}
+/* Message list: group chat sender name */
+html.private-mode [data-pagelet=page] .j83agx80.jwdofwj8.pby63qed .pfnyh3mw.r9r71o1u.m9osqain.fsrhnwul.dkr8dfph {
+	filter: blur(5px);
+}
+/* Message list: person tiny heads */
+html.private-mode [data-pagelet=page] .sf5mxxl7.gab7stmx.i4qgphn6.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv.abpf7j7b.exrn9cbp {
+	filter: blur(5px);
+}
+html.private-mode [data-pagelet=page] .kkf49tns.cgat1ltu.hrs1iv20.abiwlrkh.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv {
+	filter: blur(5px);
+}
+
 /* Dragable region for macOS */
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how,
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.hv4rvrfc.dati1w0a.f10w8fjw.pybr56ya.b5q2rw42.lq239pai.mysgfdmx.hddg9phg {
