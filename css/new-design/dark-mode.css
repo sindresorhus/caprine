@@ -16,6 +16,12 @@
 	color: var(--primary-text);
 }
 
+/* New room: Icon color */
+[aria-label="Create new room"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
 /* Menu: Icon color in menu */
 [role="menu"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
 	fill: currentColor;
