@@ -383,6 +383,24 @@ function setDarkMode(): void {
 	updateVibrancy();
 }
 
+async function observeDarkMode(): Promise<void> {
+	const observer = new MutationObserver((records: MutationRecord[]) => {
+		// Find records that had class attribute changed
+		const classRecords = records.filter(record => record.type === 'attributes' && record.attributeName === 'class');
+		// Check if dark mode classes exists
+		const isDark = classRecords.map(record => {
+			const {classList} = (record.target as HTMLElement);
+			return classList.contains('dark-mode') && classList.contains('__fb-dark-mode');
+		}).includes(true);
+		// If config and class list don't match, update class list
+		if (api.nativeTheme.shouldUseDarkColors !== isDark) {
+			setDarkMode();
+		}
+	});
+
+	observer.observe(document.documentElement, {attributes: true, attributeFilter: ['class']});
+}
+
 function setPrivateMode(isNewDesign: boolean): void {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
@@ -768,6 +786,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
+	// Observe for dark mode changes
+	observeDarkMode();
 
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode(newDesign);
