@@ -1,23 +1,24 @@
 /* Top bar: App menu button color */
-[aria-label="Settings, help and more"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
-	fill: currentColor;
-	color: var(--primary-text);
-}
-
 /* Top bar: New message button color */
-[aria-label="New Message"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+.j83agx80.pfnyh3mw .ozuftl9m .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
 	fill: currentColor;
 	color: var(--primary-text);
 }
 
 /* Preferences: Icon color */
-[aria-label="Preferences"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+[role=dialog] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
 	fill: currentColor;
 	color: var(--primary-text);
 }
 
 /* Menu: Icon color in menu */
 [role="menu"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+	fill: currentColor;
+	color: var(--primary-text);
+}
+
+/* Chat list: Mute icon */
+.bp9cbjyn.j83agx80.btwxx1t3 .dlv3wnog.lupvgy83 .a8c37x1j {
 	fill: currentColor;
 	color: var(--primary-text);
 }
