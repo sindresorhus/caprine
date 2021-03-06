@@ -1,6 +1,7 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
 import selectors from './selectors';
+import {isNewDesign} from '../browser';
 
 const icon = {
 	read: 'data-caprine-icon',
@@ -73,20 +74,26 @@ async function createIcons(element: HTMLElement, url: string): Promise<void> {
 	element.setAttribute(icon.unread, canvas.toDataURL());
 }
 
-async function discoverIcons(element: HTMLElement): Promise<void> {
-	const profilePicElement = element.querySelector<HTMLImageElement>('img:first-of-type');
+async function discoverIcons(isNewDesign: boolean, element: HTMLElement): Promise<void> {
+	if (isNewDesign) {
+		if (element) {
+			return createIcons(element, element.getAttribute('xlink:href')!);
+		}
+	} else {
+		const profilePicElement = element.querySelector<HTMLImageElement>('img:first-of-type');
 
-	if (profilePicElement) {
-		return createIcons(element, profilePicElement.src);
-	}
+		if (profilePicElement) {
+			return createIcons(element, profilePicElement.src);
+		}
 
-	const groupPicElement = element.firstElementChild as (HTMLElement | null);
+		const groupPicElement = element.firstElementChild as (HTMLElement | null);
 
-	if (groupPicElement) {
-		const groupPicBackground = groupPicElement.style.backgroundImage;
+		if (groupPicElement) {
+			const groupPicBackground = groupPicElement.style.backgroundImage;
 
-		if (groupPicBackground) {
-			return createIcons(element, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
+			if (groupPicBackground) {
+				return createIcons(element, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
+			}
 		}
 	}
 
@@ -103,9 +110,9 @@ async function discoverIcons(element: HTMLElement): Promise<void> {
 	return createIcons(element, 'https://facebook.com/favicon.ico');
 }
 
-async function getIcon(element: HTMLElement, unread: boolean): Promise<string> {
+async function getIcon(isNewDesign: boolean, element: HTMLElement, unread: boolean): Promise<string> {
 	if (!element.getAttribute(icon.read)) {
-		await discoverIcons(element);
+		await discoverIcons(isNewDesign, element);
 	}
 
 	return element.getAttribute(unread ? icon.unread : icon.read)!;
@@ -121,38 +128,74 @@ async function createConversation(element: HTMLElement): Promise<Conversation> {
 	const profileElement = element.querySelector<HTMLElement>('div[data-tooltip-content]')!;
 
 	conversation.label = profileElement.getAttribute('data-tooltip-content')!;
-	conversation.icon = await getIcon(profileElement, conversation.unread);
+	conversation.icon = await getIcon(false, profileElement, conversation.unread);
 
 	return conversation as Conversation;
 }
 
-async function createConversationList(): Promise<Conversation[]> {
-	const list = await elementReady<HTMLElement>(selectors.conversationList, {
+async function getLabel(element: HTMLElement): Promise<string> {
+	const emojis: HTMLElement[] = [...element.children] as HTMLElement[];
+	for (const emoji of emojis) {
+		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
+	}
+
+	return element.textContent ?? '';
+}
+
+async function createConversationNewDesign(element: HTMLElement): Promise<Conversation> {
+	const conversation: Partial<Conversation> = {};
+	// TODO: Exclude muted conversations
+	/*
+	const muted = Boolean(element.querySelector(selectors.muteIconNewDesign));
+	*/
+
+	conversation.selected = Boolean(element.querySelector('[role=row] [role=link] > div:only-child'));
+	conversation.unread = Boolean(element.querySelector('[aria-label="Mark as Read"]'));
+
+	const unparsedLabel = element.querySelector<HTMLElement>('.j83agx80.cbu4d94t.ew0dbk1b.irj2b8pg span.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5 > span > span')!;
+	conversation.label = await getLabel(unparsedLabel);
+
+	const iconElement = element.querySelector<HTMLElement>('[role=row] [role=link] [role=img] image')!;
+	conversation.icon = await getIcon(true, iconElement, conversation.unread);
+
+	return conversation as Conversation;
+}
+
+async function createConversationList(isNewDesign: boolean): Promise<Conversation[]> {
+	const conversationListSelector = isNewDesign ? selectors.conversationListNewDesign : selectors.conversationList;
+
+	const list = await elementReady<HTMLElement>(conversationListSelector, {
 		stopOnDomReady: false
 	});
 
 	if (!list) {
-		console.error('Could not find conversation list', selectors.conversationList);
+		console.error('Could not find conversation list', conversationListSelector);
 		return [];
 	}
 
 	const elements: HTMLElement[] = [...list.children] as HTMLElement[];
 
-	const conversations: Conversation[] = await Promise.all(elements.map(async element => createConversation(element)));
+	if (isNewDesign) {
+		// Remove last element from childer list on new design
+		elements.splice(-1, 1);
+	}
+
+	const conversations: Conversation[] = await Promise.all(elements.map(async element => isNewDesign ? createConversationNewDesign(element) : createConversation(element)));
 
 	return conversations;
 }
 
-export async function sendConversationList(): Promise<void> {
-	const conversationsToRender: Conversation[] = await createConversationList();
+export async function sendConversationList(isNewDesign: boolean): Promise<void> {
+	const conversationsToRender: Conversation[] = await createConversationList(isNewDesign);
 	ipc.callMain('conversations', conversationsToRender);
 }
 
 window.addEventListener('load', async () => {
-	const sidebar = document.querySelector<HTMLElement>('[role=navigation]');
+	const sidebar = await elementReady<HTMLElement>('[role=navigation]', {stopOnDomReady: false});
+	const newDesign = await isNewDesign();
 
 	if (sidebar) {
-		const conversationListObserver = new MutationObserver(sendConversationList);
+		const conversationListObserver = new MutationObserver(async () => sendConversationList(newDesign));
 
 		conversationListObserver.observe(sidebar, {
 			subtree: true,

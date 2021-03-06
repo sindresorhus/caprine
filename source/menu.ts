@@ -462,13 +462,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 					if (result.response === 0) {
 						config.set('privateMode', !config.get('privateMode'));
-						sendAction('set-private-mode');
+						sendAction('set-private-mode', isNewDesign);
 					} else if (result.response === 1) {
 						menuItem.checked = false;
 					}
 				} else {
 					config.set('privateMode', !config.get('privateMode'));
-					sendAction('set-private-mode');
+					sendAction('set-private-mode', isNewDesign);
 				}
 			}
 		},
