@@ -308,7 +308,7 @@ async function toggleSounds({isNewDesign, checked}: IToggleSounds): Promise<void
 	}
 
 	if (shouldClosePreferences) {
-		closePreferences(isNewDesign);
+		await closePreferences(isNewDesign);
 	}
 }
 
@@ -333,7 +333,7 @@ ipc.answerMain('toggle-mute-notifications', async ({isNewDesign, defaultStatus}:
 	}
 
 	if (shouldClosePreferences) {
-		closePreferences(isNewDesign);
+		await closePreferences(isNewDesign);
 	}
 
 	return !isNewDesign && !notificationCheckbox.checked;
@@ -455,7 +455,7 @@ async function updateDoNotDisturb(isNewDesign: boolean): Promise<void> {
 	}
 
 	if (shouldClosePreferences) {
-		closePreferences(isNewDesign);
+		await closePreferences(isNewDesign);
 	}
 }
 
@@ -680,10 +680,10 @@ function isPreferencesOpen(isNewDesign: boolean): boolean {
 		Boolean(document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy'));
 }
 
-function closePreferences(isNewDesign: boolean): void {
+async function closePreferences(isNewDesign: boolean): Promise<void> {
 	if (isNewDesign) {
-		const closeButton = document.querySelector<HTMLElement>('[aria-label=Preferences] [aria-label=Close]')!;
-		closeButton.click();
+		const closeButton = await elementReady<HTMLElement>('[aria-label=Preferences] [aria-label=Close]', {stopOnDomReady: false});
+		closeButton?.click();
 
 		// Wait for the preferences window to be closed, then remove the class from the document
 		const preferencesOverlayObserver = new MutationObserver(records => {
