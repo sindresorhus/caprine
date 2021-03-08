@@ -246,7 +246,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
 			click() {
-				sendAction('toggle-mute-notifications');
+				sendAction('toggle-mute-notifications', {isNewDesign});
 			}
 		},
 		{

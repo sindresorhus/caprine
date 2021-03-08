@@ -308,7 +308,7 @@ async function toggleSounds({isNewDesign, checked}: IToggleSounds): Promise<void
 	}
 
 	if (shouldClosePreferences) {
-		closePreferences(isNewDesign);
+		await closePreferences(isNewDesign);
 	}
 }
 
@@ -333,7 +333,7 @@ ipc.answerMain('toggle-mute-notifications', async ({isNewDesign, defaultStatus}:
 	}
 
 	if (shouldClosePreferences) {
-		closePreferences(isNewDesign);
+		await closePreferences(isNewDesign);
 	}
 
 	return !isNewDesign && !notificationCheckbox.checked;
@@ -381,6 +381,24 @@ function setDarkMode(): void {
 	document.documentElement.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
 
 	updateVibrancy();
+}
+
+async function observeDarkMode(): Promise<void> {
+	const observer = new MutationObserver((records: MutationRecord[]) => {
+		// Find records that had class attribute changed
+		const classRecords = records.filter(record => record.type === 'attributes' && record.attributeName === 'class');
+		// Check if dark mode classes exists
+		const isDark = classRecords.map(record => {
+			const {classList} = (record.target as HTMLElement);
+			return classList.contains('dark-mode') && classList.contains('__fb-dark-mode');
+		}).includes(true);
+		// If config and class list don't match, update class list
+		if (api.nativeTheme.shouldUseDarkColors !== isDark) {
+			setDarkMode();
+		}
+	});
+
+	observer.observe(document.documentElement, {attributes: true, attributeFilter: ['class']});
 }
 
 function setPrivateMode(isNewDesign: boolean): void {
@@ -437,7 +455,7 @@ async function updateDoNotDisturb(isNewDesign: boolean): Promise<void> {
 	}
 
 	if (shouldClosePreferences) {
-		closePreferences(isNewDesign);
+		await closePreferences(isNewDesign);
 	}
 }
 
@@ -662,10 +680,10 @@ function isPreferencesOpen(isNewDesign: boolean): boolean {
 		Boolean(document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy'));
 }
 
-function closePreferences(isNewDesign: boolean): void {
+async function closePreferences(isNewDesign: boolean): Promise<void> {
 	if (isNewDesign) {
-		const closeButton = document.querySelector<HTMLElement>('[aria-label=Preferences] [aria-label=Close]')!;
-		closeButton.click();
+		const closeButton = await elementReady<HTMLElement>('[aria-label=Preferences] [aria-label=Close]', {stopOnDomReady: false});
+		closeButton?.click();
 
 		// Wait for the preferences window to be closed, then remove the class from the document
 		const preferencesOverlayObserver = new MutationObserver(records => {
@@ -768,6 +786,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Activate Dark Mode if it was set before quitting
 	setDarkMode();
+	// Observe for dark mode changes
+	observeDarkMode();
 
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode(newDesign);
