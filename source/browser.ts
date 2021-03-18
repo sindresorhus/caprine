@@ -682,7 +682,7 @@ function isPreferencesOpen(isNewDesign: boolean): boolean {
 
 async function closePreferences(isNewDesign: boolean): Promise<void> {
 	if (isNewDesign) {
-		const closeButton = await elementReady<HTMLElement>('[aria-label=Preferences] [aria-label=Close]', {stopOnDomReady: false});
+		const closeButton = await elementReady<HTMLElement>(selectors.closePreferencesButton, {stopOnDomReady: false});
 		closeButton?.click();
 
 		// Wait for the preferences window to be closed, then remove the class from the document
