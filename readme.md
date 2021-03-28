@@ -63,6 +63,12 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 Arch Linux: `pacman -S caprine`
 
+Fedora:
+```
+sudo dnf copr enable dusansimic/caprine
+sudo dnf install caprine
+```
+
 Also available as a [snap](https://snapcraft.io/caprine).
 
 *The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
