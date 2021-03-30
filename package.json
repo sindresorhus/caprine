@@ -39,7 +39,8 @@
 		"is-online": "^8.5.1",
 		"json-schema-typed": "^7.0.3",
 		"lodash": "^4.17.20",
-		"p-wait-for": "^3.1.0"
+		"p-wait-for": "^3.1.0",
+		"webpack": "^5.28.0"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.7.0",

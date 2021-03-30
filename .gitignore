@@ -3,3 +3,5 @@ yarn.lock
 /dist
 /dist-js
 mas.provisionprofile
+package-lock.json
+package.json
