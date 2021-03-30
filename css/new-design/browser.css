@@ -32,9 +32,6 @@ html.private-mode [role=navigation] [role=row] .qzhwtbm6.knvmm38d
 {
 	filter: blur(5px);
 }
-/* html.private-mode [role=navigation] [role=row] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.fe6kdd0r.mau55g9w.c8b282yb.hzawbc8m {
-	filter: blur(5px);
-} */
 /* Conversation: profile picture */
 html.private-mode [data-pagelet=page] .a8c37x1j.d2edcug0.sn7ne77z.bixrwtb6 {
 	filter: blur(5px);
