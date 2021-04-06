@@ -48,7 +48,7 @@ html.private-mode [data-pagelet=page] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.a8c37
 	filter: blur(5px);
 }
 /* Message list: sender profile picture */
-html.private-mode [data-pagelet=page] .pfnyh3mw.aovydwv3.j83agx80.h676nmdw.oi9244e8.oygrvhab {
+html.private-mode [role=main] .pfnyh3mw.aovydwv3.j83agx80 > span {
 	filter: blur(5px);
 }
 /* Message list: sender replied to */
