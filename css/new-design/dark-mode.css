@@ -41,3 +41,15 @@
 	fill: currentColor;
 	color: var(--primary-text);
 }
+
+/* Removing top gap */
+/* TODO: Remove when fixed by fb */
+html.dark-mode .be9z9djy {
+	top: 0;
+}
+html.dark-mode .jgljxmt5 {
+	min-height: 100vh;
+}
+html.dark-mode .gitj76qy {
+	max-height: 100vh;
+}
