@@ -696,9 +696,9 @@ async function closePreferences(isNewDesign: boolean): Promise<void> {
 			}
 		});
 
-		const preferencesOverlay = document.querySelector('[data-pagelet=root] > div > div:last-child')!;
+		const preferencesOverlay = document.querySelector('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div')!;
 
-		return preferencesOverlayObserver.observe(preferencesOverlay, {childList: true, subtree: true});
+		return preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
 	}
 
 	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;

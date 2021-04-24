@@ -9,7 +9,7 @@ html.hide-dropdowns [role='menu'].l9j0dhe7.swg4t2nn {
 }
 
 /* A utility class for temporarily hiding preferences window */
-html.hide-preferences-window [data-pagelet='root'] > div > div:last-child {
+html.hide-preferences-window div[class='rq0escxv l9j0dhe7 du4w35lb'] > div:nth-of-type(3) > div > div {
 	display: none;
 }
 
