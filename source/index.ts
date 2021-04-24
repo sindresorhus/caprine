@@ -508,6 +508,7 @@ function createMainWindow(): BrowserWindow {
 		}
 	});
 
+	// eslint-disable-next-line max-params
 	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
 		event.preventDefault();
 
