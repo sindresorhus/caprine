@@ -74,6 +74,18 @@ html.private-mode [data-pagelet=page] .sf5mxxl7.gab7stmx.i4qgphn6.s45kfl79.emlxl
 html.private-mode [data-pagelet=page] .kkf49tns.cgat1ltu.hrs1iv20.abiwlrkh.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv {
 	filter: blur(5px);
 }
+/* Right sidebar: profile picture */
+html.private-mode [role=main] .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.bp9cbjyn.discj3wi.ihqw7lf3 {
+	filter: blur(5px);
+}
+/* Right sidebar: name */
+html.private-mode [role=main] .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.bp9cbjyn.hv4rvrfc.dati1w0a.jb3vyjys.ihqw7lf3 {
+	filter: blur(5px);
+}
+/* Right sidebar: active status */
+html.private-mode [role=main] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.e9vueds3.j5wam9gi.knj5qynh.m9osqain.oqcyycmt {
+	filter: blur(5px);
+}
 
 /* Dragable region for macOS */
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how,
