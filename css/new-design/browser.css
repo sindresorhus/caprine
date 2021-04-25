@@ -68,10 +68,7 @@ html.private-mode [data-pagelet=page] .j83agx80.jwdofwj8.pby63qed .pfnyh3mw.r9r7
 	filter: blur(5px);
 }
 /* Message list: person tiny heads */
-html.private-mode [data-pagelet=page] .sf5mxxl7.gab7stmx.i4qgphn6.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv.abpf7j7b.exrn9cbp {
-	filter: blur(5px);
-}
-html.private-mode [data-pagelet=page] .kkf49tns.cgat1ltu.hrs1iv20.abiwlrkh.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv {
+html.private-mode [role=row] .j83agx80.btwxx1t3.pfnyh3mw.lhclo0ds.ni8dbmo4.stjgntxs.l9j0dhe7 {
 	filter: blur(5px);
 }
 /* Right sidebar: profile picture */
