@@ -39,8 +39,20 @@ html.private-mode [data-pagelet=page] .a8c37x1j.d2edcug0.sn7ne77z.bixrwtb6 {
 html.private-mode [data-pagelet=page] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.a5q79mjw.g1cxx5fr.lrazzd5p.oo9gr5id.oqcyycmt {
 	filter: blur(5px);
 }
+/* Conversation: name on message in group chat */
+html.private-mode [role=main] .pfnyh3mw.r9r71o1u.m9osqain.fsrhnwul.dkr8dfph {
+	filter: blur(5px);
+}
+/* Conversation: read indicator */
+html.private-mode [role=main] .kkf49tns.cgat1ltu.hrs1iv20.abiwlrkh.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv {
+	filter: blur(5px);
+}
+/* Conversation: final read indicator (groups) */
+html.private-mode [role=main] .pfnyh3mw.j83agx80.aahdfvyu.cgat1ltu.dicw6rsg.hcukyx3x {
+	filter: blur(5px);
+}
 /* Conversation titlebar and sidebar: name */
-html.private-mode [data-pagelet=page] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.a5q79mjw.g1cxx5fr.lrazzd5p.oo9gr5id.oqcyycmt {
+html.private-mode [role=main] .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.d2edcug0.hpfvmrgz.rj1gh0hx.buofh1pr.p8fzw8mz.pcp91wgn.iuny7tx3.ipjc6fyt {
 	filter: blur(5px);
 }
 /* Message list: sender profile picture */
@@ -56,10 +68,19 @@ html.private-mode [data-pagelet=page] .j83agx80.jwdofwj8.pby63qed .pfnyh3mw.r9r7
 	filter: blur(5px);
 }
 /* Message list: person tiny heads */
-html.private-mode [data-pagelet=page] .sf5mxxl7.gab7stmx.i4qgphn6.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv.abpf7j7b.exrn9cbp {
+html.private-mode [role=row] .j83agx80.btwxx1t3.pfnyh3mw.lhclo0ds.ni8dbmo4.stjgntxs.l9j0dhe7 {
 	filter: blur(5px);
 }
-html.private-mode [data-pagelet=page] .kkf49tns.cgat1ltu.hrs1iv20.abiwlrkh.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv {
+/* Right sidebar: profile picture */
+html.private-mode [role=main] .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.bp9cbjyn.discj3wi.ihqw7lf3 {
+	filter: blur(5px);
+}
+/* Right sidebar: name */
+html.private-mode [role=main] .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.pfnyh3mw.d2edcug0.bp9cbjyn.hv4rvrfc.dati1w0a.jb3vyjys.ihqw7lf3 {
+	filter: blur(5px);
+}
+/* Right sidebar: active status */
+html.private-mode [role=main] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.e9vueds3.j5wam9gi.knj5qynh.m9osqain.oqcyycmt {
 	filter: blur(5px);
 }
 
