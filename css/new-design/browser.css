@@ -84,8 +84,13 @@ html.private-mode [role=main] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.a8c3
 	filter: blur(5px);
 }
 
-/* Hide the "Messenger App for Windows" banner */
+/* Hide the "Messenger App for Windows" banner in chat list */
 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.s9xz0pwp.c4m0enpj.rl78xhln.srn514ro.sn0e7ne5.f6rbj1fe.l3ldwz01 {
+	display: none;
+}
+/* Hide the "Messenger for Windows" menu item and separator in Messenger settings */
+.tojvnm2t.a6sixzi8.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.l9j0dhe7.iyyx5f41.a8s20v7p > hr:nth-of-type(4),
+.tojvnm2t.a6sixzi8.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.l9j0dhe7.iyyx5f41.a8s20v7p > a:nth-of-type(6) {
 	display: none;
 }
 
