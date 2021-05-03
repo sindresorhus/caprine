@@ -19,10 +19,8 @@
 		"lint": "tsc && xo && stylelint \"css/*.css\"",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
-		"pack": "tsc && electron-builder --dir",
-		"dist": "tsc && electron-builder --macos --linux --windows --publish=always",
-		"release": "np && npm run publish-snap",
-		"publish-snap": "del dist && tsc && electron-builder --linux && snapcraft push --release=stable dist/*.snap"
+		"build": "tsc",
+		"release": "np"
 	},
 	"dependencies": {
 		"@sindresorhus/do-not-disturb": "^1.1.0",
