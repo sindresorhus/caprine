@@ -6,13 +6,13 @@
 }
 
 /* Preferences: Icon color */
-[role=dialog] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+[role='dialog'] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
 	fill: currentColor;
 	color: var(--primary-text);
 }
 
 /* Menu: Icon color in menu */
-[role="menu"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+[role='menu'] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
 	fill: currentColor;
 	color: var(--primary-text);
 }
@@ -24,20 +24,18 @@
 }
 
 /* Right sidebar: Icon color */
-.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8
-[role=button] svg {
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8 [role='button'] svg {
 	fill: currentColor;
 	color: var(--primary-text);
 }
 /* Right sidebar: search icon */
-.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8
-[role=button] svg[role=presentation] path {
+.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8 [role='button'] svg[role='presentation'] path {
 	fill: currentColor;
 	color: var(--primary-text);
 }
 
 /* Contact list: delivered icon color */
-.aahdfvyu [role="grid"] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
+.aahdfvyu [role='grid'] .a8c37x1j.ms05siws.hwsy1cff.b7h9ocf4 {
 	fill: currentColor;
 	color: var(--primary-text);
 }
