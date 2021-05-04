@@ -16,7 +16,7 @@
 	},
 	"scripts": {
 		"postinstall": "electron-builder install-app-deps",
-		"lint": "tsc && xo && stylelint \"css/*.css\"",
+		"lint": "tsc && xo && stylelint \"css/**/*.css\"",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc",
@@ -71,6 +71,7 @@
 			"declaration-no-important": null,
 			"selector-class-pattern": null,
 			"selector-id-pattern": null,
+			"selector-max-class": null,
 			"no-duplicate-selectors": null,
 			"rule-empty-line-before": null,
 			"no-descending-specificity": null
