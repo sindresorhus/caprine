@@ -409,15 +409,15 @@ async function observeDarkMode(): Promise<void> {
 	/* Added nodes (dialogs, etc.) */
 	const observerNew = new MutationObserver((records: MutationRecord[]) => {
 		const nodeRecords = records.filter(record => record.addedNodes.length > 0);
-		nodeRecords.forEach(nodeRecord => {
-			nodeRecord.addedNodes.forEach(newNode => {
+		for (const nodeRecord of nodeRecords) {
+			for (const newNode of nodeRecord.addedNodes) {
 				const {classList} = (newNode as HTMLElement);
 				const isLight = classList.contains('light-mode') || classList.contains('__fb-light-mode');
 				if (api.nativeTheme.shouldUseDarkColors === isLight) {
 					setDarkModeElement(newNode as HTMLElement);
 				}
-			});
-		});
+			}
+		}
 	});
 
 	observerNew.observe(document, {subtree: true, childList: true, attributes: true, attributeFilter: ['addedNodes']});
