@@ -421,12 +421,13 @@ async function observeDarkMode(): Promise<void> {
 	});
 
 	/* Observe only elements where new nodes may need dark mode */
-	const menuElements = await elementReady<HTMLElement>('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div', {stopOnDomReady: false});
+	const menuElements = await elementReady<HTMLElement>('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-of-type(2) > div', {stopOnDomReady: false});
 	if (menuElements) {
 		observerNew.observe(menuElements, {childList: true});
 	}
 
-	const modalElements = await elementReady<HTMLElement>('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-of-type(2) > div', {stopOnDomReady: false});
+	// Attribute notation needed here to guarantee exact (not partial) match.
+	const modalElements = await elementReady<HTMLElement>('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div', {stopOnDomReady: false});
 	if (modalElements) {
 		observerNew.observe(modalElements, {childList: true});
 	}
