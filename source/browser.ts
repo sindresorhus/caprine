@@ -420,7 +420,16 @@ async function observeDarkMode(): Promise<void> {
 		}
 	});
 
-	observerNew.observe(document, {subtree: true, childList: true, attributes: true, attributeFilter: ['addedNodes']});
+	/* Observe only elements where new nodes may need dark mode */
+	const menuElements = await elementReady<HTMLElement>('html > body > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div', {stopOnDomReady: false});
+	if (menuElements) {
+		observerNew.observe(menuElements, {childList: true});
+	}
+
+	const modalElements = await elementReady<HTMLElement>('html > body > div:nth-of-type(1) > div > div:nth-of-type(1) > div > div:nth-of-type(2) > div > div > div:nth-of-type(2) > div', {stopOnDomReady: false});
+	if (modalElements) {
+		observerNew.observe(modalElements, {childList: true});
+	}
 }
 
 function setPrivateMode(isNewDesign: boolean): void {
