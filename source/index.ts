@@ -454,7 +454,7 @@ function createMainWindow(): BrowserWindow {
 			path.join(__dirname, '..', 'css');
 
 		for (const file of files) {
-			if (existsSync(file)) {
+			if (existsSync(path.join(cssPath, file))) {
 				webContents.insertCSS(readFileSync(path.join(cssPath, file), 'utf8'));
 			}
 		}
