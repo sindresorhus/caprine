@@ -459,7 +459,7 @@ function createMainWindow(): BrowserWindow {
 			}
 		}
 
-		if (config.get('useWorkChat')) {
+		if (config.get('useWorkChat') && existsSync(path.join(cssPath, 'workchat.css'))) {
 			webContents.insertCSS(
 				readFileSync(path.join(cssPath, 'workchat.css'), 'utf8')
 			);
