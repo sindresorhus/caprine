@@ -301,7 +301,8 @@ function createMainWindow(): BrowserWindow {
 			contextIsolation: true,
 			spellcheck: config.get('isSpellCheckerEnabled'),
 			plugins: true,
-			enableRemoteModule: true
+			enableRemoteModule: true,
+			enableBlinkFeatures: 'CSSColorSchemeUARendering'
 		}
 	});
 
