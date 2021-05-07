@@ -454,12 +454,12 @@ function createMainWindow(): BrowserWindow {
 			path.join(__dirname, '..', 'css');
 
 		for (const file of files) {
-			if (existsSync(file)) {
+			if (existsSync(path.join(cssPath, file))) {
 				webContents.insertCSS(readFileSync(path.join(cssPath, file), 'utf8'));
 			}
 		}
 
-		if (config.get('useWorkChat')) {
+		if (config.get('useWorkChat') && existsSync(path.join(cssPath, 'workchat.css'))) {
 			webContents.insertCSS(
 				readFileSync(path.join(cssPath, 'workchat.css'), 'utf8')
 			);
