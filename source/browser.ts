@@ -371,27 +371,33 @@ ipc.answerMain('reload', () => {
 });
 
 function setDarkMode(): void {
+	setDarkModeElement(document.documentElement);
+	updateVibrancy();
+}
+
+function setDarkModeElement(element: HTMLElement): void {
 	if (is.macos && config.get('followSystemAppearance')) {
 		api.nativeTheme.themeSource = 'system';
 	} else {
 		api.nativeTheme.themeSource = config.get('darkMode') ? 'dark' : 'light';
 	}
 
-	document.documentElement.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
-	document.documentElement.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
-
-	updateVibrancy();
+	element.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
+	element.classList.toggle('light-mode', !api.nativeTheme.shouldUseDarkColors);
+	element.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
+	element.classList.toggle('__fb-light-mode', !api.nativeTheme.shouldUseDarkColors);
 }
 
 async function observeDarkMode(): Promise<void> {
+	/* Main document's class list */
 	const observer = new MutationObserver((records: MutationRecord[]) => {
 		// Find records that had class attribute changed
 		const classRecords = records.filter(record => record.type === 'attributes' && record.attributeName === 'class');
 		// Check if dark mode classes exists
-		const isDark = classRecords.map(record => {
+		const isDark = classRecords.some(record => {
 			const {classList} = (record.target as HTMLElement);
 			return classList.contains('dark-mode') && classList.contains('__fb-dark-mode');
-		}).includes(true);
+		});
 		// If config and class list don't match, update class list
 		if (api.nativeTheme.shouldUseDarkColors !== isDark) {
 			setDarkMode();
@@ -399,6 +405,32 @@ async function observeDarkMode(): Promise<void> {
 	});
 
 	observer.observe(document.documentElement, {attributes: true, attributeFilter: ['class']});
+
+	/* Added nodes (dialogs, etc.) */
+	const observerNew = new MutationObserver((records: MutationRecord[]) => {
+		const nodeRecords = records.filter(record => record.addedNodes.length > 0);
+		for (const nodeRecord of nodeRecords) {
+			for (const newNode of nodeRecord.addedNodes) {
+				const {classList} = (newNode as HTMLElement);
+				const isLight = classList.contains('light-mode') || classList.contains('__fb-light-mode');
+				if (api.nativeTheme.shouldUseDarkColors === isLight) {
+					setDarkModeElement(newNode as HTMLElement);
+				}
+			}
+		}
+	});
+
+	/* Observe only elements where new nodes may need dark mode */
+	const menuElements = await elementReady<HTMLElement>('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-of-type(2) > div', {stopOnDomReady: false});
+	if (menuElements) {
+		observerNew.observe(menuElements, {childList: true});
+	}
+
+	// Attribute notation needed here to guarantee exact (not partial) match.
+	const modalElements = await elementReady<HTMLElement>('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div', {stopOnDomReady: false});
+	if (modalElements) {
+		observerNew.observe(modalElements, {childList: true});
+	}
 }
 
 function setPrivateMode(isNewDesign: boolean): void {
