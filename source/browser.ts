@@ -370,25 +370,20 @@ ipc.answerMain('reload', () => {
 	location.reload();
 });
 
-function setDarkMode(): void {
-	setDarkModeElement(document.documentElement);
+function setThemeMode(): void {
+	api.nativeTheme.themeSource = config.get('theme');
+	setThemeModeElement(document.documentElement);
 	updateVibrancy();
 }
 
-function setDarkModeElement(element: HTMLElement): void {
-	if (is.macos && config.get('followSystemAppearance')) {
-		api.nativeTheme.themeSource = 'system';
-	} else {
-		api.nativeTheme.themeSource = config.get('darkMode') ? 'dark' : 'light';
-	}
-
+function setThemeModeElement(element: HTMLElement): void {
 	element.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('light-mode', !api.nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('__fb-light-mode', !api.nativeTheme.shouldUseDarkColors);
 }
 
-async function observeDarkMode(): Promise<void> {
+async function observeThemeMode(): Promise<void> {
 	/* Main document's class list */
 	const observer = new MutationObserver((records: MutationRecord[]) => {
 		// Find records that had class attribute changed
@@ -400,7 +395,7 @@ async function observeDarkMode(): Promise<void> {
 		});
 		// If config and class list don't match, update class list
 		if (api.nativeTheme.shouldUseDarkColors !== isDark) {
-			setDarkMode();
+			setThemeMode();
 		}
 	});
 
@@ -414,7 +409,7 @@ async function observeDarkMode(): Promise<void> {
 				const {classList} = (newNode as HTMLElement);
 				const isLight = classList.contains('light-mode') || classList.contains('__fb-light-mode');
 				if (api.nativeTheme.shouldUseDarkColors === isLight) {
-					setDarkModeElement(newNode as HTMLElement);
+					setThemeModeElement(newNode as HTMLElement);
 				}
 			}
 		}
@@ -514,7 +509,7 @@ ipc.answerMain('update-sidebar', () => {
 	updateSidebar();
 });
 
-ipc.answerMain('set-dark-mode', setDarkMode);
+ipc.answerMain('set-theme-mode', setThemeMode);
 
 ipc.answerMain('set-private-mode', setPrivateMode);
 
@@ -817,9 +812,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 	updateSidebar();
 
 	// Activate Dark Mode if it was set before quitting
-	setDarkMode();
+	setThemeMode();
 	// Observe for dark mode changes
-	observeDarkMode();
+	observeThemeMode();
 
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode(newDesign);

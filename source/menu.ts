@@ -88,6 +88,42 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 		}
 	];
 
+	const themeSubmenu: MenuItemConstructorOptions[] = [
+		{
+			label: 'Follow System Appearance',
+			type: 'checkbox',
+			checked: config.get('theme') === 'system',
+			async click() {
+				config.set('theme', 'system');
+				sendAction('set-theme-mode');
+				await updateMenu({isNewDesign});
+			}
+		},
+		{
+			type: 'separator'
+		},
+		{
+			label: 'Light Mode',
+			type: 'checkbox',
+			checked: config.get('theme') === 'light',
+			async click() {
+				config.set('theme', 'light');
+				sendAction('set-theme-mode');
+				await updateMenu({isNewDesign});
+			}
+		},
+		{
+			label: 'Dark Mode',
+			type: 'checkbox',
+			checked: config.get('theme') === 'dark',
+			async click() {
+				config.set('theme', 'dark');
+				sendAction('set-theme-mode');
+				await updateMenu({isNewDesign});
+			}
+		}
+	];
+
 	const sidebarSubmenu: MenuItemConstructorOptions[] = [
 		{
 			label: 'Adaptive Sidebar',
@@ -408,27 +444,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'separator'
 		},
 		{
-			label: 'Follow System Appearance',
-			type: 'checkbox',
-			visible: is.macos,
-			checked: config.get('followSystemAppearance'),
-			async click() {
-				config.set('followSystemAppearance', !config.get('followSystemAppearance'));
-				sendAction('set-dark-mode');
-				await updateMenu({isNewDesign});
-			}
-		},
-		{
-			label: 'Dark Mode',
-			id: 'darkMode',
-			type: 'checkbox',
-			checked: config.get('darkMode'),
-			enabled: !is.macos || !config.get('followSystemAppearance'),
-			accelerator: 'CommandOrControl+D',
-			click() {
-				config.set('darkMode', !config.get('darkMode'));
-				sendAction('set-dark-mode');
-			}
+			label: 'Theme',
+			submenu: themeSubmenu
 		},
 		{
 			label: 'Vibrancy',

@@ -2,8 +2,7 @@ import Store = require('electron-store');
 import {is} from 'electron-util';
 
 type StoreType = {
-	followSystemAppearance: boolean;
-	darkMode: boolean;
+	theme: 'system' | 'light' | 'dark';
 	privateMode: boolean;
 	showPrivateModePrompt: boolean;
 	vibrancy: 'none' | 'sidebar' | 'full';
@@ -45,13 +44,10 @@ type StoreType = {
 };
 
 const schema: Store.Schema<StoreType> = {
-	followSystemAppearance: {
-		type: 'boolean',
-		default: true
-	},
-	darkMode: {
-		type: 'boolean',
-		default: false
+	theme: {
+		type: 'string',
+		enum: ['system', 'light', 'dark'],
+		default: 'system'
 	},
 	privateMode: {
 		type: 'boolean',
