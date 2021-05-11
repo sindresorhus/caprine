@@ -100,9 +100,6 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 			}
 		},
 		{
-			type: 'separator'
-		},
-		{
 			label: 'Light Mode',
 			type: 'checkbox',
 			checked: config.get('theme') === 'light',
