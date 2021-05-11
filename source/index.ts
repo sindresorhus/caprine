@@ -274,6 +274,7 @@ function setNotificationsMute(status: boolean): void {
 
 function createMainWindow(): BrowserWindow {
 	const lastWindowState = config.get('lastWindowState');
+	const isDarkMode = config.get('theme') === 'system' ? undefined : config.get('theme') === 'dark';
 
 	// Messenger or Work Chat
 	const mainURL = config.get('useWorkChat') ?
@@ -293,6 +294,7 @@ function createMainWindow(): BrowserWindow {
 		alwaysOnTop: config.get('alwaysOnTop'),
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
+		darkTheme: isDarkMode, // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nativeWindowOpen: true,
