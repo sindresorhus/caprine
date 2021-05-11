@@ -370,20 +370,20 @@ ipc.answerMain('reload', () => {
 	location.reload();
 });
 
-function setThemeMode(): void {
+function setTheme(): void {
 	api.nativeTheme.themeSource = config.get('theme');
-	setThemeModeElement(document.documentElement);
+	setThemeElement(document.documentElement);
 	updateVibrancy();
 }
 
-function setThemeModeElement(element: HTMLElement): void {
+function setThemeElement(element: HTMLElement): void {
 	element.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('light-mode', !api.nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('__fb-light-mode', !api.nativeTheme.shouldUseDarkColors);
 }
 
-async function observeThemeMode(): Promise<void> {
+async function observeTheme(): Promise<void> {
 	/* Main document's class list */
 	const observer = new MutationObserver((records: MutationRecord[]) => {
 		// Find records that had class attribute changed
@@ -395,7 +395,7 @@ async function observeThemeMode(): Promise<void> {
 		});
 		// If config and class list don't match, update class list
 		if (api.nativeTheme.shouldUseDarkColors !== isDark) {
-			setThemeMode();
+			setTheme();
 		}
 	});
 
@@ -409,7 +409,7 @@ async function observeThemeMode(): Promise<void> {
 				const {classList} = (newNode as HTMLElement);
 				const isLight = classList.contains('light-mode') || classList.contains('__fb-light-mode');
 				if (api.nativeTheme.shouldUseDarkColors === isLight) {
-					setThemeModeElement(newNode as HTMLElement);
+					setThemeElement(newNode as HTMLElement);
 				}
 			}
 		}
@@ -509,7 +509,7 @@ ipc.answerMain('update-sidebar', () => {
 	updateSidebar();
 });
 
-ipc.answerMain('set-theme-mode', setThemeMode);
+ipc.answerMain('set-theme', setTheme);
 
 ipc.answerMain('set-private-mode', setPrivateMode);
 
@@ -812,9 +812,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 	updateSidebar();
 
 	// Activate Dark Mode if it was set before quitting
-	setThemeMode();
+	setTheme();
 	// Observe for dark mode changes
-	observeThemeMode();
+	observeTheme();
 
 	// Activate Private Mode if it was set before quitting
 	setPrivateMode(newDesign);

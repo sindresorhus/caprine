@@ -95,7 +95,7 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 			checked: config.get('theme') === 'system',
 			async click() {
 				config.set('theme', 'system');
-				sendAction('set-theme-mode');
+				sendAction('set-theme');
 				await updateMenu({isNewDesign});
 			}
 		},
@@ -105,7 +105,7 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 			checked: config.get('theme') === 'light',
 			async click() {
 				config.set('theme', 'light');
-				sendAction('set-theme-mode');
+				sendAction('set-theme');
 				await updateMenu({isNewDesign});
 			}
 		},
@@ -115,7 +115,7 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 			checked: config.get('theme') === 'dark',
 			async click() {
 				config.set('theme', 'dark');
-				sendAction('set-theme-mode');
+				sendAction('set-theme');
 				await updateMenu({isNewDesign});
 			}
 		}
