@@ -293,7 +293,6 @@ function createMainWindow(): BrowserWindow {
 		alwaysOnTop: config.get('alwaysOnTop'),
 		titleBarStyle: 'hiddenInset',
 		autoHideMenuBar: config.get('autoHideMenuBar'),
-		darkTheme: config.get('theme') === 'dark', // GTK+3
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
 			nativeWindowOpen: true,
