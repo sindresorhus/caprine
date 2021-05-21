@@ -134,6 +134,10 @@ async function createConversation(element: HTMLElement): Promise<Conversation> {
 }
 
 async function getLabel(element: HTMLElement): Promise<string> {
+	if (!element) {
+		return '';
+	}
+
 	const emojis: HTMLElement[] = [...element.children] as HTMLElement[];
 	for (const emoji of emojis) {
 		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
