@@ -863,10 +863,14 @@ window.addEventListener('load', () => {
 
 // Toggles styles for inactive window
 window.addEventListener('blur', () => {
-	document.documentElement.classList.add('is-window-inactive');
+	if (document.documentElement) {
+		document.documentElement.classList.add('is-window-inactive');
+	}
 });
 window.addEventListener('focus', () => {
-	document.documentElement.classList.remove('is-window-inactive');
+	if (document.documentElement) {
+		document.documentElement.classList.remove('is-window-inactive');
+	}
 });
 
 // It's not possible to add multiple accelerators
