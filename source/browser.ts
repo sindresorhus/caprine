@@ -853,7 +853,12 @@ window.addEventListener('dblclick', (event: Event) => {
 
 window.addEventListener('load', () => {
 	if (location.pathname.startsWith('/login')) {
-		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
+		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('[name="persistent"]')!;
+
+		if (!keepMeSignedInCheckbox) {
+			return;
+		}
+
 		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
 		keepMeSignedInCheckbox.addEventListener('change', () => {
 			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
