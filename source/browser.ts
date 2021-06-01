@@ -10,7 +10,7 @@ import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types';
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
-const preferencesSelectorNewDesign = '[aria-label=Preferences]';
+const preferencesSelectorNewDesign = 'div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div';
 const messengerSoundsSelector = `${preferencesSelector} ._374d ._6bkz`;
 const conversationMenuSelector = '.uiLayer:not(.hidden_elem) [role=menu]';
 const conversationMenuSelectorNewDesign = '[role=menu].l9j0dhe7.swg4t2nn';
@@ -422,7 +422,7 @@ async function observeTheme(): Promise<void> {
 	}
 
 	// Attribute notation needed here to guarantee exact (not partial) match.
-	const modalElements = await elementReady<HTMLElement>('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div', {stopOnDomReady: false});
+	const modalElements = await elementReady<HTMLElement>(preferencesSelectorNewDesign, {stopOnDomReady: false});
 	if (modalElements) {
 		observerNew.observe(modalElements, {childList: true});
 	}
