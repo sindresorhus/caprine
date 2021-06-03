@@ -31,6 +31,13 @@ html.private-mode [role='navigation'] [role='row'] .d2edcug0.hpfvmrgz.qv66sw1b.c
 html.private-mode [role='navigation'] [role='row'] .qzhwtbm6.knvmm38d {
 	filter: blur(5px);
 }
+/* Chat list: active contacts */
+html.private-mode [role='navigation'] .pedkr2u6 li svg[role='img'] {
+	filter: blur(5px);
+}
+html.private-mode [role='navigation'] .pedkr2u6 li .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.d9wwppkn.fe6kdd0r.mau55g9w.c8b282yb.hrzyx87i.jq4qci2q.a3bd9o3v.ekzkrbhg.oo9gr5id.hzawbc8m {
+	filter: blur(5px);
+}
 /* Conversation: profile picture */
 html.private-mode [data-pagelet='page'] .a8c37x1j.d2edcug0.sn7ne77z.bixrwtb6 {
 	filter: blur(5px);
