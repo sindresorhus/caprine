@@ -133,3 +133,24 @@ html.sidebar-hidden .o36gj0jk.g0mhvs5p {
 	width: 0;
 	height: 0;
 }
+
+/* Narrow: Hide conversation previews */
+html.sidebar-force-narrow .gs1a9yip.ow4ym5g4.auili1gw.rq0escxv.j83agx80.cbu4d94t.buofh1pr.g5gj957u.i1fnvgqd.oygrvhab.cxmmr5t8.hcukyx3x.kvgmc6g5.tgvbjcpo.hpfvmrgz.rz4wbd8a.a8nywdso.l9j0dhe7.du4w35lb.rj1gh0hx.pybr56ya.f10w8fjw {
+	visibility: hidden;
+}
+/* Narrow: Width of search bar */
+html.sidebar-force-narrow .oajrlxb2.rq0escxv.f1sip0of.hidtqoto.e70eycc3.lzcic4wl.hzawbc8m.ijkhr0an.aaoq3grb.sgqwj88q.b3i9ofy5.oo9gr5id.b1f16np4.hdh3q7d8.dwo3fsh8.qu0x051f.esr5mh6w.e9989ue4.r7d6kgcz.br7hx15l.h2jyy9rg.n3ddgdk9.owxd89k7.ihxqhq3m.jq4qci2q.k4urcfbm.iu8raji3.tv7at329.l60d2q6s.d1544ag0.hwnh5xvq.fjf4s8hc.aj8hi1zk.r4fl40cc.kd8v7px7.m07ooulj.mzan44vs {
+	width: 68px;
+}
+/* Narrow: Conversation list header */
+html.sidebar-force-narrow .ahb00how {
+	display: none;
+}
+/* Narrow: Width of conversation list */
+html.sidebar-force-narrow .g0mhvs5p {
+	width: 88px;
+}
+/* Narrow: Remove scrollbar from conversation list */
+html.sidebar-force-narrow .oj68ptkr.jk6sbkaj.kdgqqoy6.ihh4hy1g.qttc61fc.datstx6m.k4urcfbm {
+	visibility: hidden;
+}
