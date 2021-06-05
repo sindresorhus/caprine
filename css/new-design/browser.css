@@ -126,3 +126,14 @@ html.private-mode [role='main'] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.a8
 		padding-top: 36px !important;
 	}
 }
+
+/* -- Sidebar views -- */
+
+/* Hidden: Hide sidebar */
+html.sidebar-hidden .o36gj0jk.g0mhvs5p {
+	visibility: hidden;
+	min-width: 0;
+	max-width: 0;
+	width: 0;
+	height: 0;
+}
