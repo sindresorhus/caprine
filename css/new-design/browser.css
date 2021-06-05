@@ -154,3 +154,12 @@ html.sidebar-force-narrow .g0mhvs5p {
 html.sidebar-force-narrow .oj68ptkr.jk6sbkaj.kdgqqoy6.ihh4hy1g.qttc61fc.datstx6m.k4urcfbm {
 	visibility: hidden;
 }
+
+/* Wide: Width of conversation list */
+html.sidebar-force-wide .g0mhvs5p {
+	width: 360px;
+}
+/* Wide: Conversation list header */
+html.sidebar-force-wide .ahb00how {
+	display: flex;
+}
