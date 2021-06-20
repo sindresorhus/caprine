@@ -826,7 +826,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
-	if (!is.macos && config.get('darkMode')) {
+	if (!is.macos && api.nativeTheme.shouldUseDarkColors) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 
