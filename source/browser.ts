@@ -7,6 +7,35 @@ import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
 import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types';
 
+type TProtocols = string | string[] | undefined;
+type TOutArgs = [data: string | ArrayBufferLike | Blob | ArrayBufferView];
+
+interface IArgs {
+	url: string;
+	protocols?: TProtocols;
+}
+
+const WebSocketProxy = new Proxy(window.WebSocket, {
+	construct(Target, args) {
+		const {url, protocols} = (args as unknown) as IArgs;
+		const instance = new Target(url, protocols);
+
+		instance.send = new Proxy(instance.send, {
+			apply(Target, thisArg, args) {
+				const data = new Uint8Array(args[0]);
+				console.log(Buffer.from(data).toString());
+				return Target.apply(thisArg, args as TOutArgs);
+			}
+		});
+
+		console.log(instance);
+
+		return instance;
+	}
+});
+
+window.WebSocket = WebSocketProxy;
+
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
