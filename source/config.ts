@@ -233,20 +233,25 @@ function updateSidebarSetting(store: Store<StoreType>): void {
 }
 
 function updateThemeSetting(store: Store<StoreType>): void {
-	if (store.get('followSystemAppearance')) {
+	const darkMode = store.get('darkMode');
+	const followSystemAppearance = store.get('followSystemAppearance');
+
+	if (is.macos && followSystemAppearance) {
 		store.set('theme', 'system');
-		// @ts-expect-error
-		store.delete('followSystemAppearance');
-	} else if (store.get('darkMode') === true) {
-		store.set('theme', 'dark');
-		// @ts-expect-error
-		store.delete('darkMode');
-	} else if (store.get('darkMode') === false) {
-		store.set('theme', 'light');
-		// @ts-expect-error
-		store.delete('darkMode');
+	} else if (typeof darkMode !== 'undefined') {
+		store.set('theme', darkMode ? 'dark' : 'light');
 	} else if (!store.has('theme')) {
 		store.set('theme', 'system');
+	}
+
+	if (typeof darkMode !== 'undefined') {
+		// @ts-expect-error
+		store.delete('darkMode');
+	}
+
+	if (typeof followSystemAppearance !== 'undefined') {
+		// @ts-expect-error
+		store.delete('followSystemAppearance');
 	}
 }
 
