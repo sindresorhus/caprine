@@ -39,6 +39,7 @@ electronDebug({
 
 electronDl();
 electronContextMenu({
+	showCopyImageAddress: true,
 	prepend: defaultActions => {
 		/*
 		TODO: Use menu option or use replacement of options (https://github.com/sindresorhus/electron-context-menu/issues/70)
