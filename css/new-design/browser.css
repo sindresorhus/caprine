@@ -91,6 +91,13 @@ html.private-mode [role='main'] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.a8
 	filter: blur(5px);
 }
 
+/* Force max-width on videos */
+.ni8dbmo4.stjgntxs.g5ia77u1.ii04i59q.j83agx80.cbu4d94t.ll8tlv6m > span,
+.l9j0dhe7.km676qkl.cxmmr5t8.myj7ivm5.hcukyx3x,
+.opwvks06.hop1g133.linmgsc8.t63ysoy8.qutah8gn.ni8dbmo4.stjgntxs.ktxn16wu.jz9ahs1c.efwgsih4.e72ty7fz.qmr60zad.qlfml3jp.inkptoze {
+	max-width: 100%;
+}
+
 /* Hide the "Messenger App for Windows" banner in chat list */
 .os-win32 .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.s9xz0pwp.c4m0enpj.rl78xhln.srn514ro.sn0e7ne5.f6rbj1fe.l3ldwz01 {
 	display: none;
