@@ -31,7 +31,7 @@
 		"electron-localshortcut": "^3.2.1",
 		"electron-store": "^6.0.1",
 		"electron-updater": "^4.3.5",
-		"electron-util": "^0.14.2",
+		"electron-util": "^0.17.0",
 		"element-ready": "^4.1.1",
 		"facebook-locales": "^1.0.916",
 		"is-online": "^8.5.1",
