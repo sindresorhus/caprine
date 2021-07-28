@@ -86,6 +86,9 @@
 			"**/*",
 			"!media${/*}"
 		],
+		"asarUnpack": [
+			"static/Icon.png"
+		],
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
 			"category": "public.app-category.social-networking",
