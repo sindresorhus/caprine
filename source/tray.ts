@@ -129,9 +129,7 @@ export default {
 			return;
 		}
 
-		const icon = shouldDisplayUnread ? 'IconTrayUnread.png' : 'IconTray.png';
-		const iconPath = path.join(__dirname, '..', 'static', icon);
-		tray.setImage(iconPath);
+		tray.setImage(getIconPath(shouldDisplayUnread));
 	}
 };
 
