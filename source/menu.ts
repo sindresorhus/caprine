@@ -676,7 +676,7 @@ ${debugInfo()}`;
 			aboutMenuItem({
 				icon: caprineIconPath,
 				copyright: 'Created by Sindre Sorhus',
-				website: 'https://sindresorhus.com/caprine/'
+				website: 'https://sindresorhus.com/caprine'
 			})
 		);
 	}
