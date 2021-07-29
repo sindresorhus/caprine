@@ -232,9 +232,33 @@ function updateSidebarSetting(store: Store<StoreType>): void {
 	}
 }
 
+function updateThemeSetting(store: Store<StoreType>): void {
+	const darkMode = store.get('darkMode');
+	const followSystemAppearance = store.get('followSystemAppearance');
+
+	if (is.macos && followSystemAppearance) {
+		store.set('theme', 'system');
+	} else if (typeof darkMode !== 'undefined') {
+		store.set('theme', darkMode ? 'dark' : 'light');
+	} else if (!store.has('theme')) {
+		store.set('theme', 'system');
+	}
+
+	if (typeof darkMode !== 'undefined') {
+		// @ts-expect-error
+		store.delete('darkMode');
+	}
+
+	if (typeof followSystemAppearance !== 'undefined') {
+		// @ts-expect-error
+		store.delete('followSystemAppearance');
+	}
+}
+
 function migrate(store: Store<StoreType>): void {
 	updateVibrancySetting(store);
 	updateSidebarSetting(store);
+	updateThemeSetting(store);
 }
 
 const store = new Store<StoreType>({schema});
