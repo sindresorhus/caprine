@@ -982,7 +982,7 @@ ipc.answerMain('notification-reply-callback', async (data: any) => {
 });
 
 export async function isNewDesign(): Promise<boolean> {
-	return Boolean(await elementReady('._9dls', {stopOnDomReady: false}));
+	return Boolean(await elementReady('._9dls', {stopOnDomReady: true}));
 }
 
 ipc.answerMain<undefined, boolean>('check-new-ui', async () => {
