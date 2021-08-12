@@ -51,3 +51,9 @@ html.dark-mode .jgljxmt5 {
 html.dark-mode .gitj76qy {
 	max-height: 100vh;
 }
+
+/* Message list: fix for received messages text color in dark mode */
+/* TODO: Remove when fixed by fb */
+.__fb-dark-mode .__fb-light-mode {
+	--primary-text: #e4e6eb;
+}
