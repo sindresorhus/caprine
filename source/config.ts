@@ -17,7 +17,8 @@ type StoreType = {
 	menuBarMode: boolean;
 	showDockIcon: boolean;
 	showTrayIcon: boolean;
-	alwaysOnTop?: boolean;
+	alwaysOnTop: boolean;
+	showAlwaysOnTopPrompt: boolean;
 	bounceDockOnMessage: boolean;
 	showUnreadBadge: boolean;
 	showMessageButtons: boolean;
@@ -108,7 +109,12 @@ const schema: Store.Schema<StoreType> = {
 		default: true
 	},
 	alwaysOnTop: {
-		type: 'boolean'
+		type: 'boolean',
+		default: false
+	},
+	showAlwaysOnTopPrompt: {
+		type: 'boolean',
+		default: true
 	},
 	bounceDockOnMessage: {
 		type: 'boolean',
