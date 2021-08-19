@@ -8,11 +8,11 @@ import {sendConversationList} from './browser/conversation-list';
 import {INewDesign, IToggleMuteNotifications, IToggleSounds, TProxyArgs, TProxyOutArgs} from './types';
 
 // Regex patterns that match messages which should be ignored
-const ignorePatterns = [
-	/.*\\{3}"is_typing\\{3}":true.*/, // Typing indicator
-	/.*\\{3}"last_read_watermark_ts\\{3}":\d+.*/ // Read indicator
+const ignorePatterns = {
+	typingIndicator: /.*\\{3}"is_typing\\{3}":true.*/, // Typing indicator
+	chatSeen: /.*\\{3}"last_read_watermark_ts\\{3}":\d+.*/ // Read indicator
 	// TODO: Add blocking delivery receipts and active indicator
-];
+};
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
@@ -1008,8 +1008,11 @@ const WebSocketProxy = new Proxy(window.WebSocket, {
 				const data = new Uint8Array(args[0]);
 				const decoded = new TextDecoder('utf-8').decode(data);
 
-				// If one passes that means this sending should be skipped
-				if (ignorePatterns.find(test => test.test(decoded))) {
+				if (config.get('block.chatSeen') && ignorePatterns.chatSeen.test(decoded)) {
+					return;
+				}
+
+				if (config.get('block.typingIndicator') && ignorePatterns.typingIndicator.test(decoded)) {
 					return;
 				}
 
