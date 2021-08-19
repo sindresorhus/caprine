@@ -5,36 +5,14 @@ import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
-import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types';
+import {INewDesign, IToggleMuteNotifications, IToggleSounds, TProxyArgs, TProxyOutArgs} from './types';
 
-type TProtocols = string | string[] | undefined;
-type TOutArgs = [data: string | ArrayBufferLike | Blob | ArrayBufferView];
-
-interface IArgs {
-	url: string;
-	protocols?: TProtocols;
-}
-
-const WebSocketProxy = new Proxy(window.WebSocket, {
-	construct(Target, args) {
-		const {url, protocols} = (args as unknown) as IArgs;
-		const instance = new Target(url, protocols);
-
-		instance.send = new Proxy(instance.send, {
-			apply(Target, thisArg, args) {
-				const data = new Uint8Array(args[0]);
-				console.log(Buffer.from(data).toString());
-				return Target.apply(thisArg, args as TOutArgs);
-			}
-		});
-
-		console.log(instance);
-
-		return instance;
-	}
-});
-
-window.WebSocket = WebSocketProxy;
+// Regex patterns that match messages which should be ignored
+const ignorePatterns = [
+	/.*\\{3}"is_typing\\{3}":true.*/, // Typing indicator
+	/.*\\{3}"last_read_watermark_ts\\{3}":\d+.*/ // Read indicator
+	// TODO: Add blocking delivery receipts and active indicator
+];
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
@@ -1017,3 +995,30 @@ export async function isNewDesign(): Promise<boolean> {
 ipc.answerMain<undefined, boolean>('check-new-ui', async () => {
 	return isNewDesign();
 });
+
+// Create a WebSocket proxy
+const WebSocketProxy = new Proxy(window.WebSocket, {
+	construct(Target, args) {
+		const [url, protocols] = args as TProxyArgs;
+		const instance = new Target(url, protocols);
+
+		// Create a proxy for send function
+		instance.send = new Proxy(instance.send, {
+			apply(Target, thisArg, args) {
+				const data = new Uint8Array(args[0]);
+				const decoded = new TextDecoder('utf-8').decode(data);
+
+				// If one passes that means this sending should be skipped
+				if (ignorePatterns.find(test => test.test(decoded))) {
+					return;
+				}
+
+				return Target.apply(thisArg, args as TProxyOutArgs);
+			}
+		});
+
+		return instance;
+	}
+});
+
+window.WebSocket = WebSocketProxy;
