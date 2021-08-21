@@ -334,9 +334,32 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'checkbox',
 			accelerator: 'CommandOrControl+Shift+T',
 			checked: config.get('alwaysOnTop'),
-			click(menuItem, focusedWindow) {
-				config.set('alwaysOnTop', menuItem.checked);
-				focusedWindow?.setAlwaysOnTop(menuItem.checked);
+			async click(menuItem, focusedWindow, event) {
+				if (!config.get('alwaysOnTop') && config.get('showAlwaysOnTopPrompt') && event.shiftKey) {
+					const result = await dialog.showMessageBox(focusedWindow!, {
+						message: 'Are you sure you want the window to stay on top of other windows?',
+						detail: 'This was triggered by Command/Control+Shift+T.',
+						buttons: [
+							'Display on Top',
+							'Don\'t Display on Top'
+						],
+						defaultId: 0,
+						cancelId: 1,
+						checkboxLabel: 'Don\'t ask me again'
+					});
+
+					config.set('showAlwaysOnTopPrompt', !result.checkboxChecked);
+
+					if (result.response === 0) {
+						config.set('alwaysOnTop', !config.get('alwaysOnTop'));
+						focusedWindow?.setAlwaysOnTop(menuItem.checked);
+					} else if (result.response === 1) {
+						menuItem.checked = false;
+					}
+				} else {
+					config.set('alwaysOnTop', !config.get('alwaysOnTop'));
+					focusedWindow?.setAlwaysOnTop(menuItem.checked);
+				}
 			}
 		},
 		{
