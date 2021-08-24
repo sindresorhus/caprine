@@ -187,7 +187,6 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 			label: 'Block Delivery Receipts',
 			type: 'checkbox',
 			checked: config.get('block.deliveryReceipt' as any),
-			visible: !isNewDesign,
 			click(menuItem) {
 				config.set('block.deliveryReceipt' as any, menuItem.checked);
 			}

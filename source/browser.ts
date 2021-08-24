@@ -1016,6 +1016,10 @@ const WebSocketProxy = new Proxy(window.WebSocket, {
 					return;
 				}
 
+				if (config.get('block.deliveryReceipt') && data[0] === 64) {
+					return;
+				}
+
 				return Target.apply(thisArg, args as TProxyOutArgs);
 			}
 		});
