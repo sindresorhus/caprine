@@ -725,11 +725,11 @@ async function closePreferences(isNewDesign: boolean): Promise<void> {
 
 		const preferencesOverlay = document.querySelector('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div')!;
 
-		return preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
+		preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
+	} else {
+		const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
+		doneButton.click();
 	}
-
-	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
-	doneButton.click();
 }
 
 function insertionListener(event: AnimationEvent): void {
