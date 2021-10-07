@@ -21,14 +21,14 @@ import electronDebug = require('electron-debug');
 import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import doNotDisturb = require('@sindresorhus/do-not-disturb');
-import updateAppMenu from './menu';
-import config from './config';
-import tray from './tray';
-import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util';
-import {process as processEmojiUrl} from './emoji';
-import ensureOnline from './ensure-online';
-import {setUpMenuBarMode} from './menu-bar-mode';
-import {caprineIconPath} from './constants';
+import updateAppMenu from './menu.ts';
+import config from './config.ts';
+import tray from './tray.ts';
+import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util.ts';
+import {process as processEmojiUrl} from './emoji.ts';
+import ensureOnline from './ensure-online.ts';
+import {setUpMenuBarMode} from './menu-bar-mode.ts';
+import {caprineIconPath} from './constants.ts';
 
 ipcMain.setMaxListeners(100);
 

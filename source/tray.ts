@@ -1,8 +1,8 @@
 import * as path from 'path';
 import {app, Menu, Tray, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 import {is} from 'electron-util';
-import config from './config';
-import {toggleMenuBarMode} from './menu-bar-mode';
+import config from './config.ts';
+import {toggleMenuBarMode} from './menu-bar-mode.ts';
 
 let tray: Tray | undefined;
 let previousMessageCount = 0;

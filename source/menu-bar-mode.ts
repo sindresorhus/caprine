@@ -1,7 +1,7 @@
 import {app, globalShortcut, BrowserWindow, Menu} from 'electron';
 import {is} from 'electron-util';
-import config from './config';
-import tray from './tray';
+import config from './config.ts';
+import tray from './tray.ts';
 
 const menuBarShortcut = 'Command+Shift+y';
 

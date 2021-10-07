@@ -9,13 +9,13 @@ import {
 	openNewGitHubIssue,
 	debugInfo
 } from 'electron-util';
-import config from './config';
-import getSpellCheckerLanguages from './spell-checker';
-import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMinimized} from './util';
-import {generateSubmenu as generateEmojiSubmenu} from './emoji';
-import {toggleMenuBarMode} from './menu-bar-mode';
-import {caprineIconPath} from './constants';
-import {INewDesign} from './types';
+import config from './config.ts';
+import getSpellCheckerLanguages from './spell-checker.ts';
+import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMinimized} from './util.ts';
+import {generateSubmenu as generateEmojiSubmenu} from './emoji.ts';
+import {toggleMenuBarMode} from './menu-bar-mode.ts';
+import {caprineIconPath} from './constants.ts';
+import {INewDesign} from './types.ts';
 
 export default async function updateMenu({isNewDesign}: INewDesign): Promise<Menu> {
 	const newConversationItem: MenuItemConstructorOptions = {

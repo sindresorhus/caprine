@@ -1,5 +1,5 @@
 import {session, MenuItemConstructorOptions} from 'electron';
-import config from './config';
+import config from './config.ts';
 
 const languageToCode = new Map<string, string>([
 	// All languages available in Electron's spellchecker
