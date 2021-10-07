@@ -549,7 +549,7 @@ ipc.answerMain('zoom-reset', ({isNewDesign}: INewDesign) => {
 });
 
 ipc.answerMain('zoom-in', ({isNewDesign}: INewDesign) => {
-	const zoomFactor = config.get('zoomFactor') + 0.1;
+	const zoomFactor = Number(config.get('zoomFactor')) + 0.1;
 
 	if (zoomFactor < 1.6) {
 		setZoom(isNewDesign, zoomFactor);
@@ -557,7 +557,7 @@ ipc.answerMain('zoom-in', ({isNewDesign}: INewDesign) => {
 });
 
 ipc.answerMain('zoom-out', ({isNewDesign}: INewDesign) => {
-	const zoomFactor = config.get('zoomFactor') - 0.1;
+	const zoomFactor = Number(config.get('zoomFactor')) - 0.1;
 
 	if (zoomFactor >= 0.8) {
 		setZoom(isNewDesign, zoomFactor);
