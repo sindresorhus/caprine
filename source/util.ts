@@ -1,8 +1,8 @@
 import {app, BrowserWindow, dialog, Menu} from 'electron';
 import {ipcMain} from 'electron-better-ipc';
 import {is} from 'electron-util';
-import config from './config.ts';
-import tray from './tray.ts';
+import config from './config';
+import tray from './tray';
 
 app.allowRendererProcessReuse = true;
 

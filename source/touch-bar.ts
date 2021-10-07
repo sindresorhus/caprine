@@ -1,8 +1,8 @@
 import {TouchBar, nativeImage} from 'electron';
 import {ipcMain as ipc} from 'electron-better-ipc';
-import config from './config.ts';
-import {sendAction, getWindow} from './util.ts';
-import {caprineIconPath} from './constants.ts';
+import config from './config';
+import {sendAction, getWindow} from './util';
+import {caprineIconPath} from './constants';
 
 const {TouchBarButton} = TouchBar;
 const MAX_VISIBLE_LENGTH = 25;

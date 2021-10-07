@@ -1,5 +1,5 @@
-import config from './config.ts';
-import selectors from './browser/selectors.ts';
+import config from './config';
+import selectors from './browser/selectors';
 
 const conversationId = 'conversationWindow';
 const disabledVideoId = 'disabled_autoplay';

@@ -7,9 +7,9 @@ import {
 	Menu
 } from 'electron';
 import {memoize} from 'lodash';
-import config from './config.ts';
-import {showRestartDialog, getWindow, sendBackgroundAction} from './util.ts';
-import {INewDesign} from './types.ts';
+import config from './config';
+import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
+import {INewDesign} from './types';
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/

@@ -1,7 +1,7 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
-import selectors from './selectors.ts';
-import {isNewDesign} from '../browser.ts';
+import selectors from './selectors';
+import {isNewDesign} from '../browser';
 
 const icon = {
 	read: 'data-caprine-icon',

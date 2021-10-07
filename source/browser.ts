@@ -1,11 +1,11 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import {api, is} from 'electron-util';
 import elementReady = require('element-ready');
-import selectors from './browser/selectors.ts';
-import config from './config.ts';
-import {toggleVideoAutoplay} from './autoplay.ts';
-import {sendConversationList} from './browser/conversation-list.ts';
-import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types.ts';
+import selectors from './browser/selectors';
+import config from './config';
+import {toggleVideoAutoplay} from './autoplay';
+import {sendConversationList} from './browser/conversation-list';
+import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types';
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
