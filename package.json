@@ -52,7 +52,7 @@
 		"stylelint": "^13.8.0",
 		"stylelint-config-xo": "^0.20.0",
 		"typescript": "^4.1.2",
-		"xo": "^0.37.0"
+		"xo": "^0.38.0"
 	},
 	"xo": {
 		"envs": [
