@@ -962,8 +962,12 @@ async function sendReply(message: string): Promise<void> {
 function insertMessageText(text: string, inputField: HTMLElement): void {
 	// Workaround: insert placeholder value to get execCommand working
 	if (!inputField.textContent) {
-		const event = document.createEvent('TextEvent');
-		event.initTextEvent('textInput', true, true, window, '_', 0, '');
+		const event = new InputEvent('textInput', {
+			bubbles: true,
+			cancelable: true,
+			data: '_',
+			view: window
+		});
 		inputField.dispatchEvent(event);
 	}
 
