@@ -59,8 +59,7 @@ const languageToCode = new Map<string, string>([
 
 function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 	const availableLanguages = session.defaultSession.availableSpellCheckerLanguages;
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-	const languageItem = Array.from({length: availableLanguages.length}) as MenuItemConstructorOptions[];
+	const languageItem: MenuItemConstructorOptions[] = [];
 	let languagesChecked = config.get('spellCheckerLanguages');
 
 	for (const language of languagesChecked) {
