@@ -3,9 +3,7 @@ interface NotificationCallback {
 	id: number;
 }
 
-interface NotificationReplyCallback {
-	callbackName: keyof Notification;
-	id: number;
+interface NotificationReplyCallback extends NotificationCallback {
 	previousConversation: number;
 	reply: string;
 }
