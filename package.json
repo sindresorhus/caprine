@@ -52,7 +52,7 @@
 		"stylelint": "^13.8.0",
 		"stylelint-config-xo": "^0.20.0",
 		"typescript": "^4.4.4",
-		"xo": "^0.38.0"
+		"xo": "^0.39.0"
 	},
 	"xo": {
 		"envs": [
@@ -62,7 +62,8 @@
 		"rules": {
 			"import/no-anonymous-default-export": "off",
 			"@typescript-eslint/no-floating-promises": "off",
-			"@typescript-eslint/no-loop-func": "off"
+			"@typescript-eslint/no-loop-func": "off",
+			"@typescript-eslint/no-non-null-assertion": "off"
 		}
 	},
 	"stylelint": {

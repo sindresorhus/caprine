@@ -377,10 +377,11 @@ function setTheme(): void {
 }
 
 function setThemeElement(element: HTMLElement): void {
-	element.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
-	element.classList.toggle('light-mode', !api.nativeTheme.shouldUseDarkColors);
-	element.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
-	element.classList.toggle('__fb-light-mode', !api.nativeTheme.shouldUseDarkColors);
+	const useDarkColors = Boolean(api.nativeTheme.shouldUseDarkColors);
+	element.classList.toggle('dark-mode', useDarkColors);
+	element.classList.toggle('light-mode', !useDarkColors);
+	element.classList.toggle('__fb-dark-mode', useDarkColors);
+	element.classList.toggle('__fb-light-mode', !useDarkColors);
 }
 
 async function observeTheme(): Promise<void> {
@@ -897,14 +898,14 @@ document.addEventListener('keydown', async event => {
 // Pass events sent via `window.postMessage` on to the main process
 window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification') {
-		showNotification(data);
+		showNotification(data as NotificationEvent);
 	}
 
 	if (type === 'notification-reply') {
-		await sendReply(data.reply);
+		await sendReply(data.reply as string);
 
 		if (data.previousConversation) {
-			await selectConversation(await isNewDesign(), data.previousConversation);
+			await selectConversation(await isNewDesign(), data.previousConversation as number);
 		}
 	}
 });
