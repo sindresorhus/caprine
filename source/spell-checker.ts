@@ -59,7 +59,7 @@ const languageToCode = new Map<string, string>([
 
 function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 	const availableLanguages = session.defaultSession.availableSpellCheckerLanguages;
-	const languageItem = new Array(availableLanguages.length);
+	const languageItem: MenuItemConstructorOptions[] = [];
 	let languagesChecked = config.get('spellCheckerLanguages');
 
 	for (const language of languagesChecked) {
@@ -84,7 +84,7 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 						config.set('spellCheckerLanguages', languagesChecked);
 					} else {
 						// Add language
-						languagesChecked = languagesChecked.concat(language);
+						languagesChecked = [...languagesChecked, ...language];
 						config.set('spellCheckerLanguages', languagesChecked);
 					}
 

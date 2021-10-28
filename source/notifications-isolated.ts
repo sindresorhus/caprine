@@ -4,15 +4,15 @@
 	// Handle events sent from the browser process
 	window.addEventListener('message', ({data: {type, data}}) => {
 		if (type === 'notification-callback') {
-			const {callbackName, id} = data;
+			const {callbackName, id}: NotificationCallback = data;
 			const notification = notifications.get(id);
 
 			if (!notification) {
 				return;
 			}
 
-			if ((notification as any)[callbackName]) {
-				(notification as any)[callbackName]();
+			if (notification[callbackName]) {
+				notification[callbackName]();
 			}
 
 			if (callbackName === 'onclose') {
@@ -21,15 +21,15 @@
 		}
 
 		if (type === 'notification-reply-callback') {
-			const {callbackName, id, previousConversation, reply} = data;
+			const {callbackName, id, previousConversation, reply}: NotificationReplyCallback = data;
 			const notification = notifications.get(id);
 
 			if (!notification) {
 				return;
 			}
 
-			if ((notification as any)[callbackName]) {
-				(notification as any)[callbackName]();
+			if (notification[callbackName]) {
+				notification[callbackName]();
 			}
 
 			notifications.delete(id);
@@ -54,6 +54,7 @@
 				title = titleProps ? titleProps.content[0] : title;
 
 				this._id = counter++;
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 				notifications.set(this._id, this as any);
 
 				window.postMessage(

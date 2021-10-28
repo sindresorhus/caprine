@@ -377,10 +377,11 @@ function setTheme(): void {
 }
 
 function setThemeElement(element: HTMLElement): void {
-	element.classList.toggle('dark-mode', api.nativeTheme.shouldUseDarkColors);
-	element.classList.toggle('light-mode', !api.nativeTheme.shouldUseDarkColors);
-	element.classList.toggle('__fb-dark-mode', api.nativeTheme.shouldUseDarkColors);
-	element.classList.toggle('__fb-light-mode', !api.nativeTheme.shouldUseDarkColors);
+	const useDarkColors = Boolean(api.nativeTheme.shouldUseDarkColors);
+	element.classList.toggle('dark-mode', useDarkColors);
+	element.classList.toggle('light-mode', !useDarkColors);
+	element.classList.toggle('__fb-dark-mode', useDarkColors);
+	element.classList.toggle('__fb-light-mode', !useDarkColors);
 }
 
 async function observeTheme(): Promise<void> {
@@ -725,11 +726,11 @@ async function closePreferences(isNewDesign: boolean): Promise<void> {
 
 		const preferencesOverlay = document.querySelector('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div')!;
 
-		return preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
+		preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
+	} else {
+		const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
+		doneButton.click();
 	}
-
-	const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
-	doneButton.click();
 }
 
 function insertionListener(event: AnimationEvent): void {
@@ -897,14 +898,14 @@ document.addEventListener('keydown', async event => {
 // Pass events sent via `window.postMessage` on to the main process
 window.addEventListener('message', async ({data: {type, data}}) => {
 	if (type === 'notification') {
-		showNotification(data);
+		showNotification(data as NotificationEvent);
 	}
 
 	if (type === 'notification-reply') {
-		await sendReply(data.reply);
+		await sendReply(data.reply as string);
 
 		if (data.previousConversation) {
-			await selectConversation(await isNewDesign(), data.previousConversation);
+			await selectConversation(await isNewDesign(), data.previousConversation as number);
 		}
 	}
 });
@@ -962,8 +963,12 @@ async function sendReply(message: string): Promise<void> {
 function insertMessageText(text: string, inputField: HTMLElement): void {
 	// Workaround: insert placeholder value to get execCommand working
 	if (!inputField.textContent) {
-		const event = document.createEvent('TextEvent');
-		event.initTextEvent('textInput', true, true, window, '_', 0, '');
+		const event = new InputEvent('textInput', {
+			bubbles: true,
+			cancelable: true,
+			data: '_',
+			view: window
+		});
 		inputField.dispatchEvent(event);
 	}
 

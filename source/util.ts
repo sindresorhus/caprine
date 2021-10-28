@@ -62,10 +62,10 @@ export const toggleTrayIcon = (): void => {
 	config.set('showTrayIcon', !showTrayIconState);
 
 	if (showTrayIconState) {
-		return tray.destroy();
+		tray.destroy();
+	} else {
+		tray.create(getWindow());
 	}
-
-	return tray.create(getWindow());
 };
 
 export const toggleLaunchMinimized = (menu: Menu): void => {
