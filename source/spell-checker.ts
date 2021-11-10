@@ -84,7 +84,7 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 						config.set('spellCheckerLanguages', languagesChecked);
 					} else {
 						// Add language
-						languagesChecked = [...languagesChecked, ...language];
+						languagesChecked = [...languagesChecked, language];
 						config.set('spellCheckerLanguages', languagesChecked);
 					}
 
