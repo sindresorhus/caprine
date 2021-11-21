@@ -46,10 +46,6 @@ html.private-mode [data-pagelet='page'] .a8c37x1j.d2edcug0.sn7ne77z.bixrwtb6 {
 html.private-mode [data-pagelet='page'] .d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.gk29lw5a.a8c37x1j.keod5gw0.nxhoafnm.aigsh9s9.tia6h79c.fe6kdd0r.mau55g9w.c8b282yb.iv3no6db.a5q79mjw.g1cxx5fr.lrazzd5p.oo9gr5id.oqcyycmt {
 	filter: blur(5px);
 }
-/* Conversation: name on message in group chat */
-html.private-mode [role='main'] .pfnyh3mw.r9r71o1u.m9osqain.fsrhnwul.dkr8dfph {
-	filter: blur(5px);
-}
 /* Conversation: read indicator */
 html.private-mode [role='main'] .kkf49tns.cgat1ltu.hrs1iv20.abiwlrkh.s45kfl79.emlxlaya.bkmhp75w.spb7xbtv {
 	filter: blur(5px);
@@ -66,12 +62,12 @@ html.private-mode [role='main'] .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5
 html.private-mode [role='main'] .pfnyh3mw.aovydwv3.j83agx80 > span {
 	filter: blur(5px);
 }
-/* Message list: sender replied to */
-html.private-mode [data-pagelet='page'] .j83agx80.bp9cbjyn.gjjqq4r6 .b3onmgus.pipptul6.sq6gx45u.a3bd9o3v {
+/* Messsage list: sender replied to name */
+html.private-mode [role='main'] .hyh9befq.pipptul6.sq6gx45u {
 	filter: blur(5px);
 }
-/* Message list: group chat sender name */
-html.private-mode [data-pagelet='page'] .j83agx80.jwdofwj8.pby63qed .pfnyh3mw.r9r71o1u.m9osqain.fsrhnwul.dkr8dfph {
+/* Message list: sender name */
+html.private-mode [role='main'] .r9r71o1u.m9osqain.fsrhnwul.d0szoon8.r8blr3vg.qjjbsfad {
 	filter: blur(5px);
 }
 /* Message list: person tiny heads */
