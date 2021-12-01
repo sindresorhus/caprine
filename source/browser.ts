@@ -382,6 +382,14 @@ function setThemeElement(element: HTMLElement): void {
 	element.classList.toggle('light-mode', !useDarkColors);
 	element.classList.toggle('__fb-dark-mode', useDarkColors);
 	element.classList.toggle('__fb-light-mode', !useDarkColors);
+
+	// TODO: Workaround for Facebooks buggy frontend
+	// The ui sometimes hardcodes ligth mode classes in the ui. This removes them so the class
+	// in the root element would be used.
+	const className = useDarkColors ? '__fb-light-mode' : '__fb-dark-mode';
+	for (const element of document.querySelectorAll(`.${className}`)) {
+		element.classList.remove(className);
+	}
 }
 
 async function observeTheme(): Promise<void> {
