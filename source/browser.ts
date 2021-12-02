@@ -382,7 +382,10 @@ function setThemeElement(element: HTMLElement): void {
 	element.classList.toggle('light-mode', !useDarkColors);
 	element.classList.toggle('__fb-dark-mode', useDarkColors);
 	element.classList.toggle('__fb-light-mode', !useDarkColors);
+	removeThemeClasses(useDarkColors);
+}
 
+function removeThemeClasses(useDarkColors: boolean): void {
 	// TODO: Workaround for Facebooks buggy frontend
 	// The ui sometimes hardcodes ligth mode classes in the ui. This removes them so the class
 	// in the root element would be used.
@@ -799,6 +802,19 @@ async function observeAutoscroll(): Promise<void> {
 	conversationObserver.observe(mainElement, {childList: true});
 }
 
+async function observeThemeBugs(): Promise<void> {
+	const rootObserver = new MutationObserver((record: MutationRecord[]) => {
+		const newNodes: MutationRecord[] = record
+			.filter(record => record.addedNodes.length > 0 || record.removedNodes.length > 0);
+
+		if (newNodes) {
+			removeThemeClasses(Boolean(api.nativeTheme.shouldUseDarkColors));
+		}
+	});
+
+	rootObserver.observe(document.documentElement, {childList: true, subtree: true});
+}
+
 // Listen for emoji element dom insertion
 document.addEventListener('animationstart', insertionListener, false);
 
@@ -844,6 +860,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Hook auto-scroll observer
 	observeAutoscroll();
+
+	// Hook broken dark mode observer
+	observeThemeBugs();
 });
 
 // Handle title bar double-click.
