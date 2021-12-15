@@ -46,7 +46,7 @@
 		"@types/lodash": "^4.14.165",
 		"del-cli": "^3.0.1",
 		"electron": "^10.1.5",
-		"electron-builder": "^22.9.1",
+		"electron-builder": "^22.14.5",
 		"husky": "^4.3.0",
 		"np": "^7.0.0",
 		"stylelint": "^13.8.0",
