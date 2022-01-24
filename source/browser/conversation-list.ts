@@ -2,6 +2,7 @@ import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
 import selectors from './selectors';
 import {isNewDesign} from '../browser';
+import {isNull} from 'lodash';
 
 const icon = {
 	read: 'data-caprine-icon',
@@ -77,7 +78,7 @@ async function createIcons(element: HTMLElement, url: string): Promise<void> {
 async function discoverIcons(isNewDesign: boolean, element: HTMLElement): Promise<void> {
 	if (isNewDesign) {
 		if (element) {
-			return createIcons(element, element.getAttribute('xlink:href')!);
+			return createIcons(element, element.getAttribute('src')!);
 		}
 	} else {
 		const profilePicElement = element.querySelector<HTMLImageElement>('img:first-of-type');
@@ -138,6 +139,10 @@ async function createConversation(element: HTMLElement): Promise<Conversation> {
 }
 
 async function getLabel(element: HTMLElement): Promise<string> {
+	if (isNull(element)) {
+		return '';
+	}
+
 	const emojis: HTMLElement[] = [...element.children] as HTMLElement[];
 	for (const emoji of emojis) {
 		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
@@ -159,7 +164,7 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 	const unparsedLabel = element.querySelector<HTMLElement>('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7 > span > span')!;
 	conversation.label = await getLabel(unparsedLabel);
 
-	const iconElement = element.querySelector<HTMLElement>('[role=row] [role=link] [role=img] image')!;
+	const iconElement = element.querySelector<HTMLElement>('img')!;
 	conversation.icon = await getIcon(true, iconElement, conversation.unread);
 
 	return conversation as Conversation;
@@ -201,15 +206,16 @@ function countUnread(mutationsList: MutationRecord[]): void {
 	for (const mutation of unreadMutations) {
 		let curr = (mutation.addedNodes[0] as Element).parentElement;
 		// Find the parent element with the message preview and sender
-		while (curr?.className !== 'ow4ym5g4 auili1gw rq0escxv j83agx80 buofh1pr g5gj957u i1fnvgqd oygrvhab cxmmr5t8 hcukyx3x kvgmc6g5 tgvbjcpo hpfvmrgz qt6c0cv9 rz4wbd8a a8nywdso jb3vyjys du4w35lb bp9cbjyn btwxx1t3 l9j0dhe7') {
+		while (curr?.className !== 'rq0escxv l9j0dhe7 du4w35lb j83agx80 pfnyh3mw i1fnvgqd bp9cbjyn owycx6da btwxx1t3') {
 			curr = curr?.parentElement ?? null;
 		}
 
 		// Get the image data URI from the parent of the author/text
-		const imgUrl = curr.parentElement?.getElementsByTagName('image')[0].getAttribute('data-caprine-icon');
+		const imgUrl = curr.parentElement?.getElementsByTagName('img')[0].getAttribute('data-caprine-icon');
 		// Get the author and text of the new message
-		const titleText = curr.querySelectorAll('.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.jq4qci2q.a3bd9o3v.lrazzd5p.oo9gr5id')[0].textContent;
-		const bodyText = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5')[2].textContent;
+		// const titleText = curr.querySelectorAll('.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.jq4qci2q.a3bd9o3v.lrazzd5p.oo9gr5id')[0].textContent;
+		const titleText = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5')[0].textContent;
+		const bodyText = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5')[1].textContent;
 		// Send a notification
 		ipc.callMain('notification', {
 			id: 0,
