@@ -214,8 +214,24 @@ function countUnread(mutationsList: MutationRecord[]): void {
 		const imgUrl = curr.parentElement?.getElementsByTagName('img')[0].getAttribute('data-caprine-icon');
 		// Get the author and text of the new message
 		// const titleText = curr.querySelectorAll('.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.jq4qci2q.a3bd9o3v.lrazzd5p.oo9gr5id')[0].textContent;
-		const titleText = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5')[0].textContent;
-		const bodyText = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5')[1].textContent;
+		let titleTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
+		if (titleTextOptions.length === 0) {
+			titleTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
+		}
+
+		const titleText = titleTextOptions[0].textContent;
+		let bodyTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
+		if (bodyTextOptions.length === 0) {
+			bodyTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
+		}
+
+		let loc = 0;
+		if (bodyTextOptions.length >= 2) {
+			loc = 1;
+		}
+
+		const bodyText = bodyTextOptions[loc].textContent;
+
 		// Send a notification
 		ipc.callMain('notification', {
 			id: 0,
