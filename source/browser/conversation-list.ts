@@ -2,6 +2,7 @@ import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
 import selectors from './selectors';
 import {isNewDesign} from '../browser';
+import {isNull} from 'lodash';
 
 const icon = {
 	read: 'data-caprine-icon',
@@ -77,7 +78,7 @@ async function createIcons(element: HTMLElement, url: string): Promise<void> {
 async function discoverIcons(isNewDesign: boolean, element: HTMLElement): Promise<void> {
 	if (isNewDesign) {
 		if (element) {
-			return createIcons(element, element.getAttribute('xlink:href')!);
+			return createIcons(element, element.getAttribute('src')!);
 		}
 	} else {
 		const profilePicElement = element.querySelector<HTMLImageElement>('img:first-of-type');
@@ -111,6 +112,10 @@ async function discoverIcons(isNewDesign: boolean, element: HTMLElement): Promis
 }
 
 async function getIcon(isNewDesign: boolean, element: HTMLElement, unread: boolean): Promise<string> {
+	if (element === null) {
+		return icon.read;
+	}
+
 	if (!element.getAttribute(icon.read)) {
 		await discoverIcons(isNewDesign, element);
 	}
@@ -134,6 +139,10 @@ async function createConversation(element: HTMLElement): Promise<Conversation> {
 }
 
 async function getLabel(element: HTMLElement): Promise<string> {
+	if (isNull(element)) {
+		return '';
+	}
+
 	const emojis: HTMLElement[] = [...element.children] as HTMLElement[];
 	for (const emoji of emojis) {
 		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
@@ -152,10 +161,10 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 	conversation.selected = Boolean(element.querySelector('[role=row] [role=link] > div:only-child'));
 	conversation.unread = Boolean(element.querySelector('[aria-label="Mark as Read"]'));
 
-	const unparsedLabel = element.querySelector<HTMLElement>('.j83agx80.cbu4d94t.ew0dbk1b.irj2b8pg span.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5 > span > span')!;
+	const unparsedLabel = element.querySelector<HTMLElement>('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7 > span > span')!;
 	conversation.label = await getLabel(unparsedLabel);
 
-	const iconElement = element.querySelector<HTMLElement>('[role=row] [role=link] [role=img] image')!;
+	const iconElement = element.querySelector<HTMLElement>('img')!;
 	conversation.icon = await getIcon(true, iconElement, conversation.unread);
 
 	return conversation as Conversation;
@@ -190,14 +199,66 @@ export async function sendConversationList(isNewDesign: boolean): Promise<void> 
 	ipc.callMain('conversations', conversationsToRender);
 }
 
+function countUnread(mutationsList: MutationRecord[]): void {
+	// Look through the mutations for the one with the unread dot
+	const unreadMutations = mutationsList.filter(mutation => mutation.type === 'childList' && mutation.addedNodes.length > 0 && ((mutation.addedNodes[0] as Element).getAttribute('aria-label') === 'Mark as read'));
+
+	for (const mutation of unreadMutations) {
+		let curr = (mutation.addedNodes[0] as Element).parentElement;
+		// Find the parent element with the message preview and sender
+		while (curr?.className !== 'rq0escxv l9j0dhe7 du4w35lb j83agx80 pfnyh3mw i1fnvgqd bp9cbjyn owycx6da btwxx1t3') {
+			curr = curr?.parentElement ?? null;
+		}
+
+		// Get the image data URI from the parent of the author/text
+		const imgUrl = curr.parentElement?.getElementsByTagName('img')[0].getAttribute('data-caprine-icon');
+		// Get the author and text of the new message
+		// const titleText = curr.querySelectorAll('.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.jq4qci2q.a3bd9o3v.lrazzd5p.oo9gr5id')[0].textContent;
+		let titleTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
+		if (titleTextOptions.length === 0) {
+			titleTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
+		}
+
+		const titleText = titleTextOptions[0].textContent;
+		let bodyTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
+		if (bodyTextOptions.length === 0) {
+			bodyTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
+		}
+
+		let loc = 0;
+		if (bodyTextOptions.length >= 2) {
+			loc = 1;
+		}
+
+		const bodyText = bodyTextOptions[loc].textContent;
+
+		// Send a notification
+		ipc.callMain('notification', {
+			id: 0,
+			title: titleText,
+			body: bodyText,
+			icon: imgUrl,
+			silent: false
+		});
+	}
+}
+
 window.addEventListener('load', async () => {
 	const sidebar = await elementReady<HTMLElement>('[role=navigation]', {stopOnDomReady: false});
 	const newDesign = await isNewDesign();
 
 	if (sidebar) {
 		const conversationListObserver = new MutationObserver(async () => sendConversationList(newDesign));
+		const conversationCountObserver = new MutationObserver(countUnread);
 
 		conversationListObserver.observe(sidebar, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['class']
+		});
+
+		conversationCountObserver.observe(sidebar, {
 			subtree: true,
 			childList: true,
 			attributes: true,
