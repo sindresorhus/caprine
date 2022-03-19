@@ -539,7 +539,7 @@ ipc.answerMain('render-overlay-icon', (messageCount: number): {data: string; tex
 ipc.answerMain('render-native-emoji', (emoji: string): string => {
 	const canvas = document.createElement('canvas');
 	const context = canvas.getContext('2d')!;
-	const systemFont = is.linux ? 'emoji' : 'system-ui';
+	const systemFont = is.linux ? 'emoji, system-ui' : 'system-ui';
 	canvas.width = 256;
 	canvas.height = 256;
 	context.textAlign = 'center';
