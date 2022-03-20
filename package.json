@@ -139,7 +139,9 @@
 				},
 				{
 					"provider": "snapStore",
-					"channels": ["stable"]
+					"channels": [
+						"stable"
+					]
 				}
 			]
 		},
