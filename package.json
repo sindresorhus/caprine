@@ -133,7 +133,15 @@
 				"camera",
 				"removable-media"
 			],
-			"publish": "github"
+			"publish": [
+				{
+					"provider": "github"
+				},
+				{
+					"provider": "snapStore",
+					"channels": ["stable"]
+				}
+			]
 		},
 		"win": {
 			"verifyUpdateCodeSignature": false,
