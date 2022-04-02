@@ -7,7 +7,7 @@ const menuBarShortcut = 'Command+Shift+y';
 
 export function toggleMenuBarMode(window: BrowserWindow): void {
 	const isEnabled = config.get('menuBarMode');
-	const menuItem = Menu.getApplicationMenu()!.getMenuItemById('menuBarMode');
+	const menuItem = Menu.getApplicationMenu()!.getMenuItemById('menuBarMode')!;
 
 	menuItem.checked = isEnabled;
 

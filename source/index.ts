@@ -262,7 +262,7 @@ function setUserLocale(): void {
 
 function setNotificationsMute(status: boolean): void {
 	const label = 'Mute Notifications';
-	const muteMenuItem = Menu.getApplicationMenu()!.getMenuItemById('mute-notifications');
+	const muteMenuItem = Menu.getApplicationMenu()!.getMenuItemById('mute-notifications')!;
 
 	config.set('notificationsMuted', status);
 	muteMenuItem.checked = status;
@@ -296,13 +296,15 @@ function createMainWindow(): BrowserWindow {
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
-			nativeWindowOpen: true,
 			contextIsolation: true,
+			nodeIntegration: true,
 			spellcheck: config.get('isSpellCheckerEnabled'),
 			plugins: true,
-			enableRemoteModule: true
 		}
 	});
+
+	require('@electron/remote/main').initialize()
+	require("@electron/remote/main").enable(win.webContents)
 
 	setUserLocale();
 	initRequestsFiltering();

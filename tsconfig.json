@@ -4,6 +4,7 @@
 		"outDir": "dist-js",
 		"target": "es2018",
 		"module": "commonjs",
+		"esModuleInterop": true,
 		"lib": [
 			"esnext",
 			"dom",

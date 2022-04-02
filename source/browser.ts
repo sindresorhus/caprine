@@ -1,11 +1,13 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
-import {api, is} from 'electron-util';
+import {is} from 'electron-util';
 import elementReady = require('element-ready');
 import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
 import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types';
+
+const {nativeTheme} = require('@electron/remote')
 
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
@@ -381,13 +383,13 @@ ipc.answerMain('reload', () => {
 });
 
 function setTheme(): void {
-	api.nativeTheme.themeSource = config.get('theme');
+	nativeTheme.themeSource = config.get('theme');
 	setThemeElement(document.documentElement);
 	updateVibrancy();
 }
 
 function setThemeElement(element: HTMLElement): void {
-	const useDarkColors = Boolean(api.nativeTheme.shouldUseDarkColors);
+	const useDarkColors = Boolean(nativeTheme.shouldUseDarkColors);
 	element.classList.toggle('dark-mode', useDarkColors);
 	element.classList.toggle('light-mode', !useDarkColors);
 	element.classList.toggle('__fb-dark-mode', useDarkColors);
@@ -416,7 +418,7 @@ async function observeTheme(): Promise<void> {
 			return classList.contains('dark-mode') && classList.contains('__fb-dark-mode');
 		});
 		// If config and class list don't match, update class list
-		if (api.nativeTheme.shouldUseDarkColors !== isDark) {
+		if (nativeTheme.shouldUseDarkColors !== isDark) {
 			setTheme();
 		}
 	});
@@ -430,7 +432,7 @@ async function observeTheme(): Promise<void> {
 			for (const newNode of nodeRecord.addedNodes) {
 				const {classList} = (newNode as HTMLElement);
 				const isLight = classList.contains('light-mode') || classList.contains('__fb-light-mode');
-				if (api.nativeTheme.shouldUseDarkColors === isLight) {
+				if (nativeTheme.shouldUseDarkColors === isLight) {
 					setThemeElement(newNode as HTMLElement);
 				}
 			}
@@ -819,7 +821,7 @@ async function observeThemeBugs(): Promise<void> {
 			.filter(record => record.addedNodes.length > 0 || record.removedNodes.length > 0);
 
 		if (newNodes) {
-			removeThemeClasses(Boolean(api.nativeTheme.shouldUseDarkColors));
+			removeThemeClasses(Boolean(nativeTheme.shouldUseDarkColors));
 		}
 	});
 
@@ -862,7 +864,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Prevent flash of white on startup when in dark mode
 	// TODO: find a CSS-only solution
-	if (!is.macos && api.nativeTheme.shouldUseDarkColors) {
+	if (!is.macos && nativeTheme.shouldUseDarkColors) {
 		document.documentElement.style.backgroundColor = '#1e1e1e';
 	}
 

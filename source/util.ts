@@ -4,8 +4,6 @@ import {is} from 'electron-util';
 import config from './config';
 import tray from './tray';
 
-app.allowRendererProcessReuse = true;
-
 export function getWindow(): BrowserWindow {
 	const [win] = BrowserWindow.getAllWindows();
 	return win;
@@ -70,7 +68,7 @@ export const toggleTrayIcon = (): void => {
 
 export const toggleLaunchMinimized = (menu: Menu): void => {
 	config.set('launchMinimized', !config.get('launchMinimized'));
-	const showTrayIconItem = menu.getMenuItemById('showTrayIcon');
+	const showTrayIconItem = menu.getMenuItemById('showTrayIcon')!;
 
 	if (config.get('launchMinimized')) {
 		if (!config.get('showTrayIcon')) {

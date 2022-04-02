@@ -731,7 +731,7 @@ ${debugInfo()}`;
 		{
 			label: 'Delete App Data',
 			click() {
-				shell.moveItemToTrash(app.getPath('userData'));
+				shell.trashItem(app.getPath('userData'));
 				app.relaunch();
 				app.quit();
 			}
