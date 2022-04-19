@@ -143,7 +143,13 @@ async function getLabel(element: HTMLElement): Promise<string> {
 		return '';
 	}
 
-	const emojis: HTMLElement[] = [...element.children] as HTMLElement[];
+	const emojis: HTMLElement[] = [];
+	if (element !== null) {
+		for (const element_curr of element.children) {
+			emojis.push(element_curr as HTMLElement);
+		}
+	}
+
 	for (const emoji of emojis) {
 		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
 	}
