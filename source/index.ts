@@ -448,7 +448,7 @@ function createMainWindow(): BrowserWindow {
 
 		await updateAppMenu({isNewDesign});
 
-		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css'];
+		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css', 'scrollbar.css'];
 
 		const cssPath = isNewDesign ?
 			path.join(__dirname, '..', 'css', 'new-design') :
