@@ -30,7 +30,7 @@
 		"electron-dl": "^3.0.2",
 		"electron-localshortcut": "^3.2.1",
 		"electron-store": "^6.0.1",
-		"electron-updater": "^4.3.5",
+		"electron-updater": "^5.0.1",
 		"electron-util": "^0.17.0",
 		"element-ready": "^4.1.1",
 		"facebook-locales": "^1.0.916",
