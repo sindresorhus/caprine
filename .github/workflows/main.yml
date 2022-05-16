@@ -6,8 +6,8 @@ jobs:
   test:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
       - uses: c-hive/gha-npm-cache@v1
@@ -23,15 +23,15 @@ jobs:
           - ubuntu-latest
           - windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
       - uses: c-hive/gha-npm-cache@v1
-      - uses: samuelmeuli/action-snapcraft@v1
-        if: startsWith(matrix.os, 'ubuntu')
-        with:
-          snapcraft_token: ${{ secrets.snapcraft_token }}
+      # - uses: samuelmeuli/action-snapcraft@v1
+      #   if: startsWith(matrix.os, 'ubuntu')
+      #   with:
+      #     snapcraft_token: ${{ secrets.snapcraft_token }}
       - uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
