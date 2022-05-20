@@ -28,13 +28,13 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 ## Highlights
 
 - [Dark theme](#dark-mode)
-- [Vibrant theme](#vibrancy)\*
+- [Vibrant theme](#vibrancy-macos-only)\*
 - [Privacy-focused](#privacy)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Menu bar mode](#menu-bar-mode-macos-only-)\*
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
-- [Touch Bar support](#touch-bar-support)
+- [Touch Bar support](#touch-bar-support-macos-only)\*
 - [Custom styles](#custom-styles)
 - Disable autoplay for videos
 - Cross-platform
@@ -59,11 +59,18 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 ### Linux
 
+To get it working on almost any distribution use [Flatpak](https://flatpak.org) or [AppImage](https://appimage.org) version.
+
+Get it on [Flathub](https://flathub.org/apps/details/com.sindresorhus.Caprine):
+
+<a href='https://flathub.org/apps/details/com.sindresorhus.Caprine'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
 
 Arch Linux: `pacman -S caprine`
 
 Fedora:
+
 ```
 sudo dnf copr enable dusansimic/caprine
 sudo dnf install caprine
@@ -71,7 +78,11 @@ sudo dnf install caprine
 
 Also available as a [snap](https://snapcraft.io/caprine).
 
-*The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
+*Note: [Fedora Silverblue](https://silverblue.fedoraproject.org), [Fedora Kinoite](https://kinoite.fedoraproject.org), [EndlessOS](https://endlessos.com), [CarbonOS](https://carbon.sh) and other immutable distribution only support Flatpak and/or AppImage.*
+
+*Note: On some distributions Flatpak must be [pre-configured manually](https://flatpak.org/setup).*
+
+*Note: The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
 
 ### Windows
 
@@ -91,7 +102,7 @@ You can toggle dark mode in the `View` menu or with <kbd>Command</kbd> <kbd>d</k
 
 You can prevent others from looking at who you're chatting with by enabling the “Hide Names and Avatars” feature in the “View” menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>.
 
-### Vibrancy
+### Vibrancy *(macOS only)*
 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
