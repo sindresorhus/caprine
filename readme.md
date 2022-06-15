@@ -71,7 +71,7 @@ sudo dnf install caprine
 
 Also available as a [snap](https://snapcraft.io/caprine).
 
-*The AppImage needs to be [made executable](http://discourse.appimage.org/t/how-to-make-an-appimage-executable/80) after download.*
+*The AppImage needs to be [made executable](https://discourse.appimage.org/t/how-to-run-an-appimage/80) after download.*
 
 ### Windows
 
