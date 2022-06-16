@@ -51,3 +51,9 @@ html.dark-mode .gitj76qy {
 .__fb-dark-mode .__fb-light-mode {
 	--primary-text: #e4e6eb;
 }
+
+/* Group link: "Visit Group" button */
+/* TODO: Remove when fixed by fb, since -floating should not be here */
+.tdjehn4e {
+	background-color: var(--secondary-button-background-floating) !important;
+}
