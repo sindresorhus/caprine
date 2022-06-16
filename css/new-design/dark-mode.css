@@ -51,3 +51,15 @@ html.dark-mode .gitj76qy {
 .__fb-dark-mode .__fb-light-mode {
 	--primary-text: #e4e6eb;
 }
+
+/* Backgrounds of various buttons ("Visit Group", audio call, etc.) */
+/* TODO: Remove when fixed by fb, since -floating should not be here */
+.tdjehn4e {
+	background-color: var(--secondary-button-background-floating) !important;
+}
+
+/* Search results: Close button */
+/* TODO: Remove when fixed by fb, since --always-white is not good here */
+.q2y6ezfg {
+	background-color: var(--secondary-button-background) !important;
+}
