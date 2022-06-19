@@ -151,25 +151,30 @@ ipc.answerMain('find', () => {
 });
 
 async function openSearchInConversation() {
-	const mainView = document.querySelector('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls')!;
+	const mainView = document.querySelector('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.rj1gh0hx.buofh1pr.g5gj957u.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.gitj76qy')!;
 	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>('div:only-child'));
 
 	if (rightSidebarIsClosed) {
 		document.documentElement.classList.add('hide-r-sidebar');
-		document.querySelector<HTMLElement>('[aria-label="Conversation Information"]')?.click();
+		document.querySelector<HTMLElement>('.j9ispegn.pmk7jnqg.k4urcfbm.datstx6m.b5wmifdl.kr520xx4.mdpwds66.b2cqd1jy.n13yt9zj.eh67sqbx')?.click();
 	}
+
+	await elementReady<HTMLElement>(selectors.rightSidebarSegments, {stopOnDomReady: false});
+	const segments = document.querySelectorAll<HTMLElement>(selectors.rightSidebarSegments).length;
+	// If there are three segmetns in right sidebar (two users chat) then button index is 4
+	// If there are not three segments (usually four, it's a group chat) then button index is 6
+	const buttonIndex = segments === 3 ? 4 : 6;
 
 	await elementReady<HTMLElement>(selectors.rightSidebarButtons, {stopOnDomReady: false});
 	const buttonList = document.querySelectorAll<HTMLElement>(selectors.rightSidebarButtons);
-	console.log(buttonList);
 
-	if (buttonList.length > 4) {
-		buttonList[4].click();
+	if (buttonList.length > buttonIndex) {
+		buttonList[buttonIndex].click();
 	}
 
 	// If right sidebar was closed when shortcut was clicked, then close it back.
 	if (rightSidebarIsClosed) {
-		document.querySelector<HTMLElement>('[aria-label="Conversation Information"]')?.click();
+		document.querySelector<HTMLElement>('.j9ispegn.pmk7jnqg.k4urcfbm.datstx6m.b5wmifdl.kr520xx4.mdpwds66.b2cqd1jy.n13yt9zj.eh67sqbx')?.click();
 
 		// Observe sidebar so when it's hidden, remove the utility class. This prevents split
 		// display of sidebar.
@@ -204,7 +209,7 @@ ipc.answerMain('insert-gif', () => {
 			element.querySelector<HTMLElement>('svg path[d^="M27.002,13.5"]')
 		) ??
 		// Newest UI
-		document.querySelector<HTMLElement>('.tkr6xdv7 .pmk7jnqg.kkf49tns.cgat1ltu.sw24d88r.i09qtzwb.g3zh7qmp.flx89l3n.mb8dcdod.chkx7lpg [aria-hidden=false]');
+		document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(3) > span > div');
 
 	gifElement!.click();
 });
@@ -212,7 +217,7 @@ ipc.answerMain('insert-gif', () => {
 ipc.answerMain('insert-emoji', async () => {
 	const newDesign = await isNewDesign();
 	const emojiElement = newDesign ?
-		document.querySelector<HTMLElement>('.cxmmr5t8 .tojvnm2t.a6sixzi8.abs2jz4q.a8s20v7p.t1p8iaqh.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.iyyx5f41 [role=button]') :
+		document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(5) > span > div') :
 		(await elementReady<HTMLElement>('._5s2p, ._30yy._7odb', {
 			stopOnDomReady: false
 		}));
@@ -229,7 +234,7 @@ ipc.answerMain('insert-sticker', () => {
 			element.querySelector<HTMLElement>('svg path[d^="M22.5,18.5 L27.998,18.5"]')
 		) ??
 		// Newest UI
-		document.querySelector<HTMLElement>('.tkr6xdv7 .pmk7jnqg.kkf49tns.cgat1ltu.sw24d88r.i09qtzwb.g3zh7qmp.flx89l3n.mb8dcdod.tntlmw5q [aria-hidden=false]');
+		document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(2) > span > div');
 
 	stickerElement!.click();
 });
@@ -239,7 +244,7 @@ ipc.answerMain('attach-files', () => {
 		// Old UI
 		document.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]') ??
 		// Newest UI
-		document.querySelector<HTMLElement>('.tkr6xdv7 .pmk7jnqg.kkf49tns.cgat1ltu.sw24d88r.i09qtzwb.g3zh7qmp.flx89l3n.mb8dcdod.lbhrjshz [aria-hidden=false]');
+		document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(1) > span > div');
 
 	filesElement!.click();
 });
