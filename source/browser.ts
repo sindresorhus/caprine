@@ -66,7 +66,12 @@ async function selectMenuItem(isNewDesign: boolean, itemNumber: number): Promise
 			`${conversationMenuSelectorNewDesign} [role=menuitem]`
 		);
 
-		selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
+		// Negative items will select from the end
+		if (itemNumber < 0) {
+			selector = -itemNumber <= items.length ? items[items.length + itemNumber] : null;
+		} else {
+			selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
+		}
 	} else {
 		selector = document.querySelector<HTMLElement>(
 			`${conversationMenuSelector} > li:nth-child(${itemNumber}) a`
@@ -128,7 +133,7 @@ ipc.answerMain('log-out', async () => {
 		const newDesign = await isNewDesign();
 		await withSettingsMenu(newDesign, () => {
 			if (newDesign) {
-				selectMenuItem(newDesign, 11);
+				selectMenuItem(newDesign, -1);
 			} else {
 				const nodes = document.querySelectorAll<HTMLElement>(
 					'._54nq._2i-c._558b._2n_z li:last-child a'
