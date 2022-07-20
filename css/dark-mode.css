@@ -724,11 +724,6 @@ html.dark-mode ._55r1._5f0v._43di {
 	color: var(--base-seventy-five);
 }
 
-html.dark-mode ._5hy2 ._43dh, /* Login button */
-html.dark-mode ._3-mr ._3-mv /* Verification "Continue" button */ {
-	background-color: transparent !important;
-}
-
 /* Message composer buttons */
 html.dark-mode a._4rv6, /* "Choose a sticker" */
 html.dark-mode a._4ce_ { /* "Play a game" */
