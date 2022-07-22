@@ -1086,13 +1086,8 @@ html.dark-mode .pam._9o-n.uiBoxGray {
 html.dark-mode ._9xq0 {
 	color: var(--base-seventy) !important;
 }
-/* Cookies notification: buttons */
-/* The reject button is made blue to make the user click it instead */
+/* Cookies notification: accept button */
 html.dark-mode ._42ft._4jy0._9xo6._4jy3._4jy1.selected._51sy {
 	background-color: #1877f2 !important;
-	color: var(--white) !important;
-}
-html.dark-mode ._42ft._4jy0._9xo7._4jy3._4jy1.selected._51sy {
-	background-color: var(--base-nine) !important;
 	color: var(--white) !important;
 }
