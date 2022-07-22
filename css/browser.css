@@ -294,9 +294,10 @@ html.sidebar-force-wide ._7vuq {
 	}
 }
 
-/* Don't show outline on clickable elements except in the delete/mute modal so that we know what we are selecting */
-a,
-*[role='button'] {
+/* Don't show outline on clickable elements & input fields */
+*[role='button'],
+*[type='text'],
+*[type='password'] {
 	outline: none !important;
 }
 
