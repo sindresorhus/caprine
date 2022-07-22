@@ -1042,3 +1042,57 @@ html.dark-mode ._74ku {
 html.dark-mode ._5blh._8102 svg g {
 	fill: var(--base-seventy);
 }
+
+html.dark-mode a {
+	color: var(--blue);
+}
+
+/* Cookies notification: background */
+html.dark-mode ._9o-w ._9o-c  {
+	background: var(--container-color) !important;
+}
+/* Cookies notification: text */
+html.dark-mode ._9o-g {
+	color: var(--base-seventy) !important;
+}
+/* Cookies notification: collpasible headers */
+html.dark-mode ._9o-l {
+	color: var(--base-seventy) !important;
+}
+/* Cookies notification: subheaders */
+html.dark-mode ._9si- {
+	color: var(--base-seventy) !important;
+}
+/* Cookies notification: hamburger menu */
+html.dark-mode ._42ft._4jy0._55pi._2agf._4o_4._9o-e._p._4jy3._517h._51sy {
+	background: var(--container-color) !important;
+}
+/* Cookies notification: hamburger menu text */
+html.dark-mode ._54nh {
+	color: var(--base-seventy) !important;
+}
+/* Cookies notification: hamburger menu column borders */
+html.dark-mode ._54nc {
+	border-color: var(--container-color) !important;
+}
+/* Cookies notification: icons */
+html.dark-mode .img.sp_AP2jSXRv6iu {
+	filter: invert(0.66);
+}
+/* Cookies notification: rectangular boxes */
+html.dark-mode .pam._9o-n.uiBoxGray {
+	background-color: var(--base-ten) !important;
+}
+html.dark-mode ._9xq0 {
+	color: var(--base-seventy) !important;
+}
+/* Cookies notification: buttons */
+/* The reject button is made blue to make the user click it instead */
+html.dark-mode ._42ft._4jy0._9xo6._4jy3._4jy1.selected._51sy {
+	background-color: #1877f2 !important;
+	color: var(--white) !important;
+}
+html.dark-mode ._42ft._4jy0._9xo7._4jy3._4jy1.selected._51sy {
+	background-color: var(--base-nine) !important;
+	color: var(--white) !important;
+}
