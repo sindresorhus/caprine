@@ -1086,8 +1086,4 @@ html.dark-mode .pam._9o-n.uiBoxGray {
 html.dark-mode ._9xq0 {
 	color: var(--base-seventy) !important;
 }
-/* Cookies notification: accept button */
-html.dark-mode ._42ft._4jy0._9xo6._4jy3._4jy1.selected._51sy {
-	background-color: #1877f2 !important;
-	color: var(--white) !important;
-}
+
