@@ -110,7 +110,7 @@ async function updateBadge(conversations: Conversation[]): Promise<void> {
 
 	const messageCount = getMessageCount(conversations);
 
-	if (is.macos || is.linux) {
+	if (!is.windows) {
 		if (config.get('showUnreadBadge') && !isDNDEnabled) {
 			app.badgeCount = messageCount;
 		}
@@ -126,7 +126,7 @@ async function updateBadge(conversations: Conversation[]): Promise<void> {
 		}
 	}
 
-	if (is.linux || is.windows) {
+	if (!is.macos) {
 		if (config.get('showUnreadBadge')) {
 			tray.setBadge(messageCount > 0);
 		}

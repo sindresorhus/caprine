@@ -364,7 +364,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Launch at Login',
-			visible: is.macos || is.windows,
+			visible: !is.linux,
 			type: 'checkbox',
 			checked: app.getLoginItemSettings().openAtLogin,
 			click(menuItem) {
@@ -414,7 +414,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			id: 'showTrayIcon',
 			label: 'Show Tray Icon',
 			type: 'checkbox',
-			enabled: (is.linux || is.windows) && !config.get('launchMinimized'),
+			enabled: !is.macos && !config.get('launchMinimized'),
 			checked: config.get('showTrayIcon'),
 			click() {
 				toggleTrayIcon();
