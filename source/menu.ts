@@ -394,6 +394,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			label: 'Automatic Updates',
+			type: 'checkbox',
+			checked: config.get('autoUpdate'),
+			click() {
+				config.set('autoUpdate', !config.get('autoUpdate'));
+			}
+		},
+		{
 			label: 'Flash Window on Message',
 			type: 'checkbox',
 			visible: !is.macos,
