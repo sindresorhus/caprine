@@ -63,10 +63,10 @@ if (!is.development && config.get('autoUpdate')) {
 	(async () => {
 		const FOUR_HOURS = 1000 * 60 * 60 * 4;
 		setInterval(async () => {
-			await autoUpdater.checkForUpdates();
+			await autoUpdater.checkForUpdatesAndNotify();
 		}, FOUR_HOURS);
 
-		await autoUpdater.checkForUpdates();
+		await autoUpdater.checkForUpdatesAndNotify();
 	})();
 }
 
