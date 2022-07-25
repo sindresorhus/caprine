@@ -59,7 +59,7 @@ if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
-if (!is.development && !is.linux) {
+if (!is.development) {
 	(async () => {
 		const FOUR_HOURS = 1000 * 60 * 60 * 4;
 		setInterval(async () => {
