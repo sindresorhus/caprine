@@ -6,6 +6,7 @@ import {
 	Response,
 	Menu
 } from 'electron';
+import {is} from 'electron-util';
 import {memoize} from 'lodash';
 import config from './config';
 import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
@@ -340,10 +341,12 @@ export async function generateSubmenu(
 ): Promise<MenuItemConstructorOptions[]> {
 	const emojiMenuOption = async (
 		label: string,
-		style: EmojiStyle
+		style: EmojiStyle,
+		visibility: boolean
 	): Promise<MenuItemConstructorOptions> => ({
 		label,
 		type: 'checkbox',
+		visible: visibility,
 		icon: await getEmojiIcon(style),
 		checked: config.get('emojiStyle') === style,
 		async click() {
@@ -359,10 +362,10 @@ export async function generateSubmenu(
 	});
 
 	return Promise.all([
-		emojiMenuOption('System', EmojiStyle.Native),
+		emojiMenuOption('System', EmojiStyle.Native, true),
 		{type: 'separator'} as const,
-		emojiMenuOption('Facebook 3.0', EmojiStyle.Facebook30),
-		emojiMenuOption('Messenger 1.0', EmojiStyle.Messenger10),
-		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22)
+		emojiMenuOption('Facebook 3.0', EmojiStyle.Facebook30, true),
+		emojiMenuOption('Messenger 1.0', EmojiStyle.Messenger10, !is.linux || is.development),
+		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22, true)
 	]);
 }

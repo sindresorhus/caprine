@@ -239,7 +239,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
 		{
+			/* TODO: Fix privacy features */
+			/* If you want to help, see #1688 */
 			label: 'Privacy',
+			visible: is.development,
 			submenu: privacySubmenu
 		},
 		{
@@ -266,17 +269,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			/* TODO: Fix notifications */
 			label: 'Show Message Preview in Notifications',
 			type: 'checkbox',
+			visible: is.development,
 			checked: config.get('notificationMessagePreview'),
 			click(menuItem) {
 				config.set('notificationMessagePreview', menuItem.checked);
 			}
 		},
 		{
+			/* TODO: Fix notifications */
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
+			visible: is.development,
 			checked: config.get('notificationsMuted'),
 			click() {
 				sendAction('toggle-mute-notifications', {isNewDesign});
@@ -291,8 +298,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			/* TODO: Fix notification badge */
 			label: 'Show Unread Badge',
 			type: 'checkbox',
+			visible: is.development,
 			checked: config.get('showUnreadBadge'),
 			click() {
 				config.set('showUnreadBadge', !config.get('showUnreadBadge'));
@@ -363,6 +372,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			/* TODO: Add support for Linux */
 			label: 'Launch at Login',
 			visible: !is.linux,
 			type: 'checkbox',
@@ -402,9 +412,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			}
 		},
 		{
+			/* TODO: Fix notifications */
 			label: 'Flash Window on Message',
 			type: 'checkbox',
-			visible: !is.macos,
+			visible: is.development,
 			checked: config.get('flashWindowOnMessage'),
 			click(menuItem) {
 				config.set('flashWindowOnMessage', menuItem.checked);
@@ -567,55 +578,63 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
+			/* TODO: Fix conversation controls */
 			label: 'Mute Conversation',
+			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+M',
 			click() {
 				sendAction<INewDesign>('mute-conversation', {isNewDesign});
 			}
 		},
 		{
+			/* TODO: Fix conversation controls */
 			label: 'Hide Conversation',
+			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+H',
 			click() {
 				sendAction<INewDesign>('hide-conversation', {isNewDesign});
 			}
 		},
 		{
+			/* TODO: Fix conversation controls */
 			label: 'Delete Conversation',
+			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+D',
 			click() {
 				sendAction<INewDesign>('delete-conversation', {isNewDesign});
 			}
 		},
 		{
-			type: 'separator'
-		},
-		{
+			/* TODO: Fix conversation controls */
 			label: 'Select Next Conversation',
+			visible: is.development,
 			accelerator: 'Control+Tab',
 			click() {
 				sendAction('next-conversation');
 			}
 		},
 		{
+			/* TODO: Fix conversation controls */
 			label: 'Select Previous Conversation',
+			visible: is.development,
 			accelerator: 'Control+Shift+Tab',
 			click() {
 				sendAction('previous-conversation');
 			}
 		},
 		{
-			type: 'separator'
-		},
-		{
+			/* TODO: Fix conversation controls */
 			label: 'Find Conversation',
+			visible: is.development,
 			accelerator: 'CommandOrControl+K',
 			click() {
 				sendAction('find');
 			}
 		},
 		{
+			/* TODO: Fix conversation controls */
 			label: 'Search in Conversation',
+			visible: is.development,
 			accelerator: 'CommandOrControl+F',
 			click() {
 				sendAction('search', isNewDesign);
