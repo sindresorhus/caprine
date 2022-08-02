@@ -712,18 +712,6 @@ html.dark-mode ._hw2 ._53ij ._hw5 {
 	color: var(--base);
 }
 
-/* Login tile and names */
-html.dark-mode ._5hy4,
-html.dark-mode ._3403 {
-	color: var(--base-fourty) !important;
-}
-
-/* Login inputs */
-html.dark-mode ._55r1._5f0v._43di {
-	background: var(--base-ten) !important;
-	color: var(--base-seventy-five);
-}
-
 /* Message composer buttons */
 html.dark-mode a._4rv6, /* "Choose a sticker" */
 html.dark-mode a._4ce_ { /* "Play a game" */
@@ -840,6 +828,12 @@ html.dark-mode ._3v_o, /* Login screen */
 html.dark-mode body.UIPage_LoggedOut ._li, /* 2FA screen */
 html.dark-mode body.UIPage_LoggedOut ._4-u5 /* 2FA screen */ {
 	background-color: var(--container-dark-color);
+}
+
+/* Login title and names */
+html.dark-mode ._5hy4,
+html.dark-mode ._3403 {
+	color: var(--base-fourty) !important;
 }
 
 /* Login inputs */
