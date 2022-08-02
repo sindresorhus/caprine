@@ -845,6 +845,16 @@ html.dark-mode ._3v_o ._55r1::-webkit-input-placeholder {
 	color: var(--base-thirty) !important;
 }
 
+/* "Keep me signed in" checkbox */
+html.dark-mode .uiInputLabelInput {
+	filter: opacity(70%);
+}
+
+/* "Keep me signed in" text */
+html.dark-mode .uiInputLabelLabel {
+	color: var(--base-fourty) !important;
+}
+
 /* 2FA screen modal */
 html.dark-mode body.UIPage_LoggedOut ._4-u8 {
 	background: var(--container-color);
