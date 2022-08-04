@@ -252,6 +252,8 @@ Then edit the automatically created GitHub Releases draft and publish.
 ## Maintainers
 
 - [Dušan Simić](https://github.com/dusansimic)
+- [Lefteris Garyfalakis](https://github.com/lefterisgar)
+- [Nikolas Spiridakis](https://github.com/1nikolas)
 
 **Former**
 
