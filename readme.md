@@ -64,7 +64,8 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 Arch Linux: `pacman -S caprine`
 
 Fedora:
-```
+
+```sh
 sudo dnf copr enable dusansimic/caprine
 sudo dnf install caprine
 ```
@@ -232,8 +233,8 @@ Built with [Electron](https://electronjs.org).
 
 ### Run
 
-```
-$ npm install && npm start
+```sh
+npm install && npm start
 ```
 
 ### Build
@@ -242,15 +243,18 @@ See the [`electron-builder` docs](https://www.electron.build/multi-platform-buil
 
 ### Publish
 
-```
-$ npm run release
+```sh
+npm run release
 ```
 
 Then edit the automatically created GitHub Releases draft and publish.
 
 ## Maintainers
 
-- [Sindre Sorhus](https://sindresorhus.com)
+- [Dušan Simić](https://github.com/dusansimic)
+
+**Former**
+
 - [Jarek Radosz](https://github.com/CvX)
 
 ## Links
