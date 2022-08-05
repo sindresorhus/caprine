@@ -2,7 +2,7 @@
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
 		"outDir": "dist-js",
-		"target": "es2018",
+		"target": "ES2022",
 		"module": "commonjs",
 		"esModuleInterop": true,
 		"lib": [
