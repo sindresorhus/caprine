@@ -122,8 +122,7 @@
 		"linux": {
 			"target": [
 				"AppImage",
-				"deb",
-				"rpm"
+				"deb"
 			],
 			"icon": "build/icons/",
 			"synopsis": "Elegant Facebook Messenger desktop app",
