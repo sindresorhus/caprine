@@ -28,10 +28,10 @@ jobs:
         with:
           node-version: 14
       - uses: c-hive/gha-npm-cache@v1
-      # - uses: samuelmeuli/action-snapcraft@v1
-      #   if: startsWith(matrix.os, 'ubuntu')
-      #   with:
-      #     snapcraft_token: ${{ secrets.snapcraft_token }}
+      - uses: samuelmeuli/action-snapcraft@v1
+        if: startsWith(matrix.os, 'ubuntu')
+        with:
+          snapcraft_token: ${{ secrets.snapcraft_token }}
       - uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
