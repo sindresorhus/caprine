@@ -26,7 +26,7 @@ html.dark-mode ::-webkit-scrollbar-thumb {
 	border: solid 4px transparent;
 }
 html.dark-mode ::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 16px 16px #000;
+	box-shadow: inset 0 0 16px 16px #0000;
 }
 html.dark-mode ::-webkit-scrollbar-track:hover {
 	box-shadow: inset 0 0 16px 16px #ffffff10;
