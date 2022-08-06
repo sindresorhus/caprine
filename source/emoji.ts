@@ -1,10 +1,10 @@
-import * as path from 'path';
+import * as path from 'node:path';
 import {
 	nativeImage,
 	NativeImage,
 	MenuItemConstructorOptions,
 	Response,
-	Menu
+	Menu,
 } from 'electron';
 import {is} from 'electron-util';
 import {memoize} from 'lodash';
@@ -202,20 +202,20 @@ const excludedEmoji = new Set([
 	'1f9fe',
 	'1f9ff',
 	'265f',
-	'267e'
+	'267e',
 ]);
 
 export enum EmojiStyle {
 	Native = 'native',
 	Facebook30 = 'facebook-3-0',
 	Messenger10 = 'messenger-1-0',
-	Facebook22 = 'facebook-2-2'
+	Facebook22 = 'facebook-2-2',
 }
 
 enum EmojiStyleCode {
 	Facebook30 = 't',
 	Messenger10 = 'z',
-	Facebook22 = 'f'
+	Facebook22 = 'f',
 }
 
 function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
@@ -224,7 +224,6 @@ function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 			return EmojiStyleCode.Facebook22;
 		case 'messenger-1-0':
 			return EmojiStyleCode.Messenger10;
-		case 'facebook-3-0':
 		default:
 			return EmojiStyleCode.Facebook30;
 	}
@@ -247,7 +246,7 @@ function urlToEmoji(url: string): string {
 		.map(hexCodePoint => Number.parseInt(hexCodePoint, 16));
 
 	// F0000 (983040 decimal) is Facebook's thumbs-up icon
-	if (codePoints.length === 1 && codePoints[0] === 983040) {
+	if (codePoints.length === 1 && codePoints[0] === 983_040) {
 		return '👍';
 	}
 
@@ -285,7 +284,7 @@ async function getEmojiIcon(style: EmojiStyle): Promise<NativeImage | undefined>
 	}
 
 	const image = nativeImage.createFromPath(
-		path.join(__dirname, '..', 'static', `emoji-${style}.png`)
+		path.join(__dirname, '..', 'static', `emoji-${style}.png`),
 	);
 
 	cachedEmojiMenuIcons.set(style, image);
@@ -315,34 +314,34 @@ export async function process(url: string): Promise<Response> {
 
 	if (
 		// Don't replace emoji from Facebook's latest emoji set
-		emojiSetCode === 't' ||
+		emojiSetCode === 't'
 		// Don't replace the same URL in a loop
-		url.includes('#replaced') ||
+		|| url.includes('#replaced')
 		// Ignore non-png files
-		characterCodeEnd === -1 ||
+		|| characterCodeEnd === -1
 		// Messenger 1.0 and Facebook 2.2 emoji sets support only emoji up to version 5.0.
 		// Fall back to default style for emoji >= 10.0
-		excludedEmoji.has(characterCode)
+		|| excludedEmoji.has(characterCode)
 	) {
 		return {};
 	}
 
 	const emojiSetPrefix = 'emoji.php/v9/';
 	const emojiSetIndex = url.indexOf(emojiSetPrefix) + emojiSetPrefix.length;
-	const newURL =
-		url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
+	const newURL
+		= url.slice(0, emojiSetIndex) + emojiSetCode + url.slice(emojiSetIndex + 1) + '#replaced';
 
 	return {redirectURL: newURL};
 }
 
 export async function generateSubmenu(
 	newDesign: INewDesign,
-	updateMenu: (newDesign: INewDesign) => Promise<Menu>
+	updateMenu: (newDesign: INewDesign) => Promise<Menu>,
 ): Promise<MenuItemConstructorOptions[]> {
 	const emojiMenuOption = async (
 		label: string,
 		style: EmojiStyle,
-		visibility: boolean
+		visibility: boolean,
 	): Promise<MenuItemConstructorOptions> => ({
 		label,
 		type: 'checkbox',
@@ -358,7 +357,7 @@ export async function generateSubmenu(
 
 			await updateMenu(newDesign);
 			showRestartDialog('Caprine needs to be restarted to apply emoji changes.');
-		}
+		},
 	});
 
 	return Promise.all([
@@ -366,6 +365,6 @@ export async function generateSubmenu(
 		{type: 'separator'} as const,
 		emojiMenuOption('Facebook 3.0', EmojiStyle.Facebook30, true),
 		emojiMenuOption('Messenger 1.0', EmojiStyle.Messenger10, !is.linux || is.development),
-		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22, true)
+		emojiMenuOption('Facebook 2.2', EmojiStyle.Facebook22, true),
 	]);
 }

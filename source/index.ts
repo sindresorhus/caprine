@@ -1,5 +1,5 @@
-import * as path from 'path';
-import {readFileSync, existsSync} from 'fs';
+import * as path from 'node:path';
+import {readFileSync, existsSync} from 'node:fs';
 import {
 	app,
 	nativeImage,
@@ -10,7 +10,7 @@ import {
 	Menu,
 	Notification,
 	MenuItemConstructorOptions,
-	systemPreferences
+	systemPreferences,
 } from 'electron';
 import {ipcMain} from 'electron-better-ipc';
 import {autoUpdater} from 'electron-updater';
@@ -34,23 +34,23 @@ ipcMain.setMaxListeners(100);
 
 electronDebug({
 	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger.com sometimes gets stuck after computer waking up
-	showDevTools: false
+	showDevTools: false,
 });
 
 electronDl();
 electronContextMenu({
 	showCopyImageAddress: true,
-	prepend: defaultActions => {
+	prepend(defaultActions) {
 		/*
 		TODO: Use menu option or use replacement of options (https://github.com/sindresorhus/electron-context-menu/issues/70)
 		See explanation for this hacky solution here: https://github.com/sindresorhus/caprine/pull/1169
 		*/
 		defaultActions.copyLink({
-			transform: stripTrackingFromUrl
+			transform: stripTrackingFromUrl,
 		});
 
 		return [];
-	}
+	},
 });
 
 app.setAppUserModelId('com.sindresorhus.caprine');
@@ -116,10 +116,10 @@ async function updateBadge(conversations: Conversation[]): Promise<void> {
 		}
 
 		if (
-			is.macos &&
-			!isDNDEnabled &&
-			config.get('bounceDockOnMessage') &&
-			previousMessageCount !== messageCount
+			is.macos
+			&& !isDNDEnabled
+			&& config.get('bounceDockOnMessage')
+			&& previousMessageCount !== messageCount
 		) {
 			app.dock.bounce('informational');
 			previousMessageCount = messageCount;
@@ -181,7 +181,7 @@ interface OnSendHeadersDetails {
 
 function enableHiresResources(): void {
 	const scaleFactor = Math.max(
-		...electronScreen.getAllDisplays().map(display => display.scaleFactor)
+		...electronScreen.getAllDisplays().map(display => display.scaleFactor),
 	);
 
 	if (scaleFactor === 1) {
@@ -203,9 +203,9 @@ function enableHiresResources(): void {
 
 			callback({
 				cancel: false,
-				requestHeaders: details.requestHeaders
+				requestHeaders: details.requestHeaders,
 			});
-		}
+		},
 	);
 }
 
@@ -217,8 +217,8 @@ function initRequestsFiltering(): void {
 			`*://*.${messengerDomain}/*delivery_receipts*`, // Delivery receipts indicator blocker
 			`*://*.${messengerDomain}/*unread_threads*`, // Delivery receipts indicator blocker
 			'*://*.fbcdn.net/images/emoji.php/v9/*', // Emoji
-			'*://*.facebook.com/images/emoji.php/v9/*' // Emoji
-		]
+			'*://*.facebook.com/images/emoji.php/v9/*', // Emoji
+		],
 	};
 
 	session.defaultSession.webRequest.onBeforeRequest(filter, async ({url}, callback) => {
@@ -234,7 +234,7 @@ function initRequestsFiltering(): void {
 	});
 
 	session.defaultSession.webRequest.onHeadersReceived({
-		urls: ['*://static.xx.fbcdn.net/rsrc.php/*']
+		urls: ['*://static.xx.fbcdn.net/rsrc.php/*'],
 	}, ({responseHeaders}, callback) => {
 		if (!config.get('callRingtoneMuted') || !responseHeaders) {
 			callback({});
@@ -243,7 +243,7 @@ function initRequestsFiltering(): void {
 
 		const callRingtoneHash = '2NAu/QVqg211BbktgY5GkA==';
 		callback({
-			cancel: responseHeaders['content-md5'][0] === callRingtoneHash
+			cancel: responseHeaders['content-md5'][0] === callRingtoneHash,
 		});
 	});
 }
@@ -254,7 +254,7 @@ function setUserLocale(): void {
 		url: 'https://www.messenger.com/',
 		name: 'locale',
 		secure: true,
-		value: userLocale
+		value: userLocale,
 	};
 
 	session.defaultSession.cookies.set(cookie);
@@ -277,9 +277,9 @@ function createMainWindow(): BrowserWindow {
 	const lastWindowState = config.get('lastWindowState');
 
 	// Messenger or Work Chat
-	const mainURL = config.get('useWorkChat') ?
-		'https://work.facebook.com/chat' :
-		'https://www.messenger.com/login/';
+	const mainURL = config.get('useWorkChat')
+		? 'https://work.facebook.com/chat'
+		: 'https://www.messenger.com/login/';
 
 	const win = new BrowserWindow({
 		title: app.name,
@@ -300,11 +300,11 @@ function createMainWindow(): BrowserWindow {
 			nodeIntegration: true,
 			spellcheck: config.get('isSpellCheckerEnabled'),
 			plugins: true,
-		}
+		},
 	});
 
-	require('@electron/remote/main').initialize()
-	require("@electron/remote/main").enable(win.webContents)
+	require('@electron/remote/main').initialize();
+	require('@electron/remote/main').enable(win.webContents);
 
 	setUserLocale();
 	initRequestsFiltering();
@@ -397,7 +397,7 @@ function createMainWindow(): BrowserWindow {
 			async click() {
 				const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
 				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {isNewDesign}));
-			}
+			},
 		};
 
 		dockMenu = Menu.buildFromTemplate([firstItem]);
@@ -419,16 +419,14 @@ function createMainWindow(): BrowserWindow {
 				return;
 			}
 
-			const items = conversations.map(({label, icon}, index) => {
-				return {
-					label: `${label}`,
-					icon: nativeImage.createFromDataURL(icon),
-					click: () => {
-						mainWindow.show();
-						sendAction('jump-to-conversation', index + 1);
-					}
-				};
-			});
+			const items = conversations.map(({label, icon}, index) => ({
+				label: `${label}`,
+				icon: nativeImage.createFromDataURL(icon),
+				click() {
+					mainWindow.show();
+					sendAction('jump-to-conversation', index + 1);
+				},
+			}));
 
 			app.dock.setMenu(Menu.buildFromTemplate([firstItem, {type: 'separator'}, ...items]));
 		});
@@ -450,9 +448,9 @@ function createMainWindow(): BrowserWindow {
 
 		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css', 'scrollbar.css'];
 
-		const cssPath = isNewDesign ?
-			path.join(__dirname, '..', 'css', 'new-design') :
-			path.join(__dirname, '..', 'css');
+		const cssPath = isNewDesign
+			? path.join(__dirname, '..', 'css', 'new-design')
+			: path.join(__dirname, '..', 'css');
 
 		for (const file of files) {
 			if (existsSync(path.join(cssPath, file))) {
@@ -462,7 +460,7 @@ function createMainWindow(): BrowserWindow {
 
 		if (config.get('useWorkChat') && existsSync(path.join(cssPath, 'workchat.css'))) {
 			webContents.insertCSS(
-				readFileSync(path.join(cssPath, 'workchat.css'), 'utf8')
+				readFileSync(path.join(cssPath, 'workchat.css'), 'utf8'),
 			);
 		}
 
@@ -496,17 +494,16 @@ function createMainWindow(): BrowserWindow {
 
 		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {
 			isNewDesign,
-			defaultStatus: config.get('notificationsMuted')
+			defaultStatus: config.get('notificationsMuted'),
 		}));
 
 		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
-			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8')
+			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8'),
 		);
 
 		if (is.macos) {
-			// eslint-disable-next-line node/no-unsupported-features/es-syntax
 			await import('./touch-bar');
 		}
 	});
@@ -552,8 +549,8 @@ function createMainWindow(): BrowserWindow {
 			if (
 				// Example: https://company-name.facebook.com/login or
 				//   		https://company-name.workplace.com/login
-				(hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com')) &&
-				(pathname.startsWith('/login') || pathname.startsWith('/chat'))
+				(hostname.endsWith('.facebook.com') || hostname.endsWith('.workplace.com'))
+				&& (pathname.startsWith('/login') || pathname.startsWith('/chat'))
 			) {
 				return true;
 			}
@@ -630,7 +627,7 @@ ipcMain.answerRenderer(
 			body: config.get('notificationMessagePreview') ? body : 'You have a new message',
 			hasReply: true,
 			icon: nativeImage.createFromDataURL(icon),
-			silent
+			silent,
 		});
 
 		notifications.set(id, notification);
@@ -654,5 +651,5 @@ ipcMain.answerRenderer(
 		});
 
 		notification.show();
-	}
+	},
 );

@@ -8,10 +8,10 @@ function showWaitDialog(): void {
 		detail: 'Do you want to wait?',
 		buttons: [
 			'Wait',
-			'Quit'
+			'Quit',
 		],
 		defaultId: 0,
-		cancelId: 1
+		cancelId: 1,
 	});
 
 	if (buttonIndex === 1) {
@@ -21,7 +21,7 @@ function showWaitDialog(): void {
 
 export default async (): Promise<void> => {
 	if (!(await isOnline())) {
-		const connectivityTimeout = setTimeout(showWaitDialog, 15000);
+		const connectivityTimeout = setTimeout(showWaitDialog, 15_000);
 
 		await pWaitFor(isOnline, {interval: 1000});
 		clearTimeout(connectivityTimeout);

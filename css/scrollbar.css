@@ -10,7 +10,7 @@
 	border: solid 4px transparent;
 }
 ::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 16px 16px #ffffff;
+	box-shadow: inset 0 0 16px 16px #fff;
 }
 ::-webkit-scrollbar-track:hover {
 	box-shadow: inset 0 0 16px 16px #f0f1f2;
@@ -26,7 +26,7 @@ html.dark-mode ::-webkit-scrollbar-thumb {
 	border: solid 4px transparent;
 }
 html.dark-mode ::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 16px 16px #00000000;
+	box-shadow: inset 0 0 16px 16px #000;
 }
 html.dark-mode ::-webkit-scrollbar-track:hover {
 	box-shadow: inset 0 0 16px 16px #ffffff10;

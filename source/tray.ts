@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as path from 'node:path';
 import {app, Menu, Tray, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
@@ -10,7 +10,7 @@ let previousMessageCount = 0;
 let contextMenu: Menu;
 
 export default {
-	create: (win: BrowserWindow) => {
+	create(win: BrowserWindow) {
 		if (tray) {
 			return;
 		}
@@ -33,14 +33,14 @@ export default {
 			}
 		}
 
-		const macosMenuItems: MenuItemConstructorOptions[] = is.macos ?
-			[
+		const macosMenuItems: MenuItemConstructorOptions[] = is.macos
+			? [
 				{
 					label: 'Disable Menu Bar Mode',
 					click() {
 						config.set('menuBarMode', false);
 						toggleMenuBarMode(win);
-					}
+					},
 				},
 				{
 					label: 'Show Dock Icon',
@@ -57,17 +57,17 @@ export default {
 
 						const dockMenuItem = contextMenu.getMenuItemById('dockMenu')!;
 						dockMenuItem.visible = !menuItem.checked;
-					}
+					},
 				},
 				{
-					type: 'separator'
+					type: 'separator',
 				},
 				{
 					id: 'dockMenu',
 					label: 'Menu',
 					visible: !config.get('showDockIcon'),
-					submenu: Menu.getApplicationMenu()!
-				}
+					submenu: Menu.getApplicationMenu()!,
+				},
 			] : [];
 
 		contextMenu = Menu.buildFromTemplate([
@@ -76,15 +76,15 @@ export default {
 				visible: !is.macos,
 				click() {
 					toggleWindow();
-				}
+				},
 			},
 			...macosMenuItems,
 			{
-				type: 'separator'
+				type: 'separator',
 			},
 			{
-				role: 'quit'
-			}
+				role: 'quit',
+			},
 		]);
 
 		tray = new Tray(getIconPath(false));
@@ -106,7 +106,7 @@ export default {
 		});
 	},
 
-	destroy: () => {
+	destroy() {
 		// Workaround for https://github.com/electron/electron/issues/14036
 		setTimeout(() => {
 			tray?.destroy();
@@ -114,7 +114,7 @@ export default {
 		}, 500);
 	},
 
-	update: (messageCount: number) => {
+	update(messageCount: number) {
 		if (!tray || previousMessageCount === messageCount) {
 			return;
 		}
@@ -124,13 +124,13 @@ export default {
 		updateToolTip(messageCount);
 	},
 
-	setBadge: (shouldDisplayUnread: boolean) => {
+	setBadge(shouldDisplayUnread: boolean) {
 		if (is.macos || !tray) {
 			return;
 		}
 
 		tray.setImage(getIconPath(shouldDisplayUnread));
-	}
+	},
 };
 
 function updateToolTip(counter: number): void {
@@ -148,9 +148,9 @@ function updateToolTip(counter: number): void {
 }
 
 function getIconPath(hasUnreadMessages: boolean): string {
-	const icon = is.macos ?
-		getMacOSIconName(hasUnreadMessages) :
-		getNonMacOSIconName(hasUnreadMessages);
+	const icon = is.macos
+		? getMacOSIconName(hasUnreadMessages)
+		: getNonMacOSIconName(hasUnreadMessages);
 
 	return path.join(__dirname, '..', `static/${icon}`);
 }

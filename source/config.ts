@@ -49,174 +49,174 @@ const schema: Store.Schema<StoreType> = {
 	theme: {
 		type: 'string',
 		enum: ['system', 'light', 'dark'],
-		default: 'system'
+		default: 'system',
 	},
 	privateMode: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	showPrivateModePrompt: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	vibrancy: {
 		type: 'string',
 		enum: ['none', 'sidebar', 'full'],
 		// TODO: Change the default to 'sidebar' when the vibrancy issue in Electron is fixed.
 		// See https://github.com/electron/electron/issues/10420
-		default: 'none'
+		default: 'none',
 	},
 	zoomFactor: {
 		type: 'number',
-		default: 1
+		default: 1,
 	},
 	lastWindowState: {
 		type: 'object',
 		properties: {
 			x: {
-				type: 'number'
+				type: 'number',
 			},
 			y: {
-				type: 'number'
+				type: 'number',
 			},
 			width: {
-				type: 'number'
+				type: 'number',
 			},
 			height: {
-				type: 'number'
+				type: 'number',
 			},
 			isMaximized: {
-				type: 'boolean'
-			}
+				type: 'boolean',
+			},
 		},
 		default: {
 			x: undefined,
 			y: undefined,
 			width: 800,
 			height: 600,
-			isMaximized: false
-		}
+			isMaximized: false,
+		},
 	},
 	menuBarMode: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	showDockIcon: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	showTrayIcon: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	alwaysOnTop: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	showAlwaysOnTopPrompt: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	bounceDockOnMessage: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	showUnreadBadge: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	showMessageButtons: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	launchMinimized: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	flashWindowOnMessage: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	notificationMessagePreview: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	block: {
 		type: 'object',
 		properties: {
 			chatSeen: {
-				type: 'boolean'
+				type: 'boolean',
 			},
 			typingIndicator: {
-				type: 'boolean'
+				type: 'boolean',
 			},
 			deliveryReceipt: {
-				type: 'boolean'
-			}
+				type: 'boolean',
+			},
 		},
 		default: {
 			chatSeen: false,
 			typingIndicator: false,
-			deliveryReceipt: false
-		}
+			deliveryReceipt: false,
+		},
 	},
 	emojiStyle: {
 		type: 'string',
 		enum: ['native', 'facebook-3-0', 'messenger-1-0', 'facebook-2-2'],
-		default: 'facebook-3-0'
+		default: 'facebook-3-0',
 	},
 	useWorkChat: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	sidebar: {
 		type: 'string',
 		enum: ['default', 'hidden', 'narrow', 'wide'],
-		default: 'default'
+		default: 'default',
 	},
 	autoHideMenuBar: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	autoUpdate: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	notificationsMuted: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	callRingtoneMuted: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	hardwareAcceleration: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	quitOnWindowClose: {
 		type: 'boolean',
-		default: false
+		default: false,
 	},
 	keepMeSignedIn: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	autoplayVideos: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	isSpellCheckerEnabled: {
 		type: 'boolean',
-		default: true
+		default: true,
 	},
 	spellCheckerLanguages: {
 		type: 'array',
 		items: {
-			type: 'string'
+			type: 'string',
 		},
-		default: []
-	}
+		default: [],
+	},
 };
 
 function updateVibrancySetting(store: Store<StoreType>): void {

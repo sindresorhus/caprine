@@ -54,7 +54,7 @@ const languageToCode = new Map<string, string>([
 	['tg', 'Tajik'],
 	['tr', 'Turkish'],
 	['uk', 'Ukrainian'],
-	['vi', 'Vietnamese']
+	['vi', 'Vietnamese'],
 ]);
 
 function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
@@ -89,8 +89,8 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 					}
 
 					session.defaultSession.setSpellCheckerLanguages(languagesChecked);
-				}
-			}
+				},
+			},
 		);
 	}
 
@@ -100,8 +100,8 @@ function getSpellCheckerLanguages(): MenuItemConstructorOptions[] {
 				label: 'System Default',
 				type: 'checkbox',
 				checked: true,
-				enabled: false
-			}
+				enabled: false,
+			},
 		];
 	}
 

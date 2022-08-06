@@ -9,7 +9,7 @@ const MAX_VISIBLE_LENGTH = 25;
 const privateModeTouchBarLabel: Electron.TouchBarButton = new TouchBarButton({
 	label: 'Private mode enabled',
 	icon: nativeImage.createFromPath(caprineIconPath),
-	iconPosition: 'left'
+	iconPosition: 'left',
 });
 
 function setTouchBar(items: Electron.TouchBarButton[]): void {
@@ -33,9 +33,9 @@ function createTouchBarButton({label, selected, icon}: Conversation, index: numb
 		backgroundColor: selected ? '#0084ff' : undefined,
 		icon: nativeImage.createFromDataURL(icon),
 		iconPosition: 'left',
-		click: () => {
+		click() {
 			sendAction('jump-to-conversation', index + 1);
-		}
+		},
 	});
 }
 

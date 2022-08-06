@@ -19,8 +19,8 @@ export function sendAction<T>(action: string, args?: T): void {
 	ipcMain.callRenderer(win, action, args);
 }
 
-export async function sendBackgroundAction<T, TReturn>(action: string, args?: T): Promise<TReturn> {
-	return ipcMain.callRenderer<T, TReturn>(getWindow(), action, args);
+export async function sendBackgroundAction<T, ReturnValue>(action: string, args?: T): Promise<ReturnValue> {
+	return ipcMain.callRenderer<T, ReturnValue>(getWindow(), action, args);
 }
 
 export function showRestartDialog(message: string): void {
@@ -31,11 +31,11 @@ export function showRestartDialog(message: string): void {
 			detail: 'Do you want to restart the app now?',
 			buttons: [
 				'Restart',
-				'Ignore'
+				'Ignore',
 			],
 			defaultId: 0,
-			cancelId: 1
-		}
+			cancelId: 1,
+		},
 	);
 
 	if (buttonIndex === 0) {
@@ -80,7 +80,7 @@ export const toggleLaunchMinimized = (menu: Menu): void => {
 		dialog.showMessageBox({
 			type: 'info',
 			message: 'The “Show Tray Icon” setting is force-enabled while the “Launch Minimized” setting is enabled.',
-			buttons: ['OK']
+			buttons: ['OK'],
 		});
 	} else {
 		showTrayIconItem.enabled = true;

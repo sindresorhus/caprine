@@ -54,7 +54,7 @@
 				title = titleProps ? titleProps.content[0] : title;
 
 				this._id = counter++;
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
 				notifications.set(this._id, this as any);
 
 				window.postMessage(
@@ -64,17 +64,17 @@
 							title,
 							id: this._id,
 							...options,
-							body
-						}
+							body,
+						},
 					},
-					'*'
+					'*',
 				);
 			}
 
 			// No-op, but Messenger expects this method to be present
 			close(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
 		},
-		Notification
+		Notification,
 	);
 
 	Object.assign(window, {Notification: AugmentedNotification});

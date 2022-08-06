@@ -23,7 +23,7 @@ body {
 		'Apple Color Emoji',
 		'Segoe UI Emoji',
 		'Segoe UI Symbol' !important;
-	text-rendering: optimizeLegibility !important;
+	text-rendering: optimizelegibility !important;
 	font-feature-settings: 'liga', 'clig', 'kern';
 }
 

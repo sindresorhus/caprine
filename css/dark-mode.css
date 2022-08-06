@@ -1052,7 +1052,7 @@ html.dark-mode a {
 }
 
 /* Cookies notification: background */
-html.dark-mode ._9o-w ._9o-c  {
+html.dark-mode ._9o-w ._9o-c {
 	background: var(--container-color) !important;
 }
 /* Cookies notification: text */
