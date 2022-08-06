@@ -259,6 +259,8 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
+			/* TODO: Fix ability to disable autoplay */
+			/* GitHub issue: #1845 */
 			label: 'Autoplay Videos',
 			id: 'video-autoplay',
 			type: 'checkbox',
