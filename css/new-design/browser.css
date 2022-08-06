@@ -130,7 +130,7 @@ html.private-mode .a8c37x1j.hihg3u9x.ggxiycxj.l9j0dhe7.d2edcug0.hpfvmrgz.qv66sw1
 /* -- Sidebar views -- */
 
 /* Hidden: Hide sidebar */
-html.sidebar-hidden .o36gj0jk.g0mhvs5p {
+html.sidebar-hidden .o36gj0jk.tkr6xdv7 {
 	visibility: hidden;
 	min-width: 0;
 	max-width: 0;
@@ -143,16 +143,16 @@ html.sidebar-force-narrow .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd
 html.sidebar-force-narrow .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3 > div:nth-child(3) {
 	visibility: hidden;
 }
-/* Narrow: Width of search bar */
-html.sidebar-force-narrow .oajrlxb2.rq0escxv.f1sip0of.hidtqoto.e70eycc3.lzcic4wl.hzawbc8m.ijkhr0an.aaoq3grb.sgqwj88q.b3i9ofy5.oo9gr5id.b1f16np4.hdh3q7d8.dwo3fsh8.qu0x051f.esr5mh6w.e9989ue4.r7d6kgcz.br7hx15l.h2jyy9rg.n3ddgdk9.owxd89k7.ihxqhq3m.jq4qci2q.k4urcfbm.iu8raji3.tv7at329.l60d2q6s.d1544ag0.hwnh5xvq.fjf4s8hc.aj8hi1zk.r4fl40cc.kd8v7px7.m07ooulj.mzan44vs {
-	width: 68px;
+/* Narrow: Hide search bar */
+html.sidebar-force-narrow .rq0escxv.j83agx80.cbu4d94t.k4urcfbm {
+	display: none;
 }
 /* Narrow: Conversation list header */
 html.sidebar-force-narrow .ahb00how {
 	display: none;
 }
 /* Narrow: Width of conversation list */
-html.sidebar-force-narrow .g0mhvs5p {
+html.sidebar-force-narrow .rq0escxv.l9j0dhe7.j83agx80.cbu4d94t.d2edcug0.hpfvmrgz.pfnyh3mw.dp1hu0rb.rek2kq2y.o36gj0jk.tkr6xdv7.ezfq3ill {
 	width: 88px;
 }
 /* Narrow: Remove scrollbar from conversation list */
