@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - uses: c-hive/gha-npm-cache@v1
       - run: npm ci
       - run: npm test
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
       - uses: c-hive/gha-npm-cache@v1
       - uses: samuelmeuli/action-snapcraft@v1
         if: startsWith(matrix.os, 'ubuntu')
@@ -35,6 +35,6 @@ jobs:
       - uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          release: true
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           mac_certs: ${{ secrets.CSC_LINK }}
           mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
