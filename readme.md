@@ -253,6 +253,7 @@ Then edit the automatically created GitHub Releases draft and publish.
 
 - [Dušan Simić](https://github.com/dusansimic)
 - [Lefteris Garyfalakis](https://github.com/lefterisgar)
+- [Michael Quevillon](https://github.com/mquevill)
 - [Nikolas Spiridakis](https://github.com/1nikolas)
 
 **Former**
