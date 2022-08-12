@@ -380,7 +380,18 @@ html.is-window-inactive ._1ht1._1ht2 * {
 	display: none !important;
 }
 
-/* Remove "allow all cookies" button */
+/* Cookies notification: Adjust size for smaller windows */
+._9o-g {
+	height: 290px !important;
+}
+._9xo5 {
+	padding-top: 12px !important;
+}
+._59s7._9l2g {
+	height: 498px !important;
+}
+
+/* Cookies notification: Remove "allow all cookies" button */
 ._42ft._4jy0._9xo7._4jy3._4jy1.selected._51sy {
 	display: none;
 }
