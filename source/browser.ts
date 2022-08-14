@@ -353,7 +353,7 @@ ipc.answerMain('toggle-mute-notifications', async ({isNewDesign, defaultStatus}:
 });
 
 ipc.answerMain('toggle-message-buttons', () => {
-	document.body.classList.toggle('show-message-buttons', config.get('showMessageButtons'));
+	document.body.classList.toggle('show-message-buttons', !config.get('showMessageButtons'));
 });
 
 ipc.answerMain('show-active-contacts-view', async () => {
