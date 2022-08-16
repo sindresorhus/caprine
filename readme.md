@@ -59,16 +59,40 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 ### Linux
 
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
+|Distribution              |Repository    |Automatic Updates|Maintainer          |How to install               |
+|--------------------------|--------------|-----------------|--------------------|-----------------------------|
+|Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`          |
+|Debian / Ubuntu (manually)|GitHub        |❌               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .deb file|
+|Debian / Ubuntu (deb-get) |GitHub        |✔️               |Official            |Follow the [instructions below](#installation-using-deb-get)|
+|Debian / Ubuntu (APT)     |Packagecloud  |✔️               |Lefteris Garyfalakis|Follow the [instructions below](#debian-packagecloud-repository)|
+|RHEL / Fedora / openSUSE  |Copr          |✔️               |Dušan Simić         |Follow the [instructions below](#fedora)|
+|AppImage                  |GitHub        |✔️               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .AppImage file|
 
-Arch Linux: `pacman -S caprine`
+#### Installation using deb-get:
 
-Fedora:
+* Download and install [deb-get](https://github.com/wimpysworld/deb-get).
+* Run `deb-get install caprine`
+
+Note: deb-get is 3rd party software, not to be associated with apt-get.
+
+#### Debian Packagecloud APT repository:
+
+Run the following command to add it:
+
+```sh
+curl -s https://packagecloud.io/install/repositories/lefterisgar/caprine/script.deb.sh | sudo bash
+```
+
+Note: The Packagecloud repository has limited bandwidth. This option will stop working each month when the bandwidth limit is reached.
+
+#### Fedora Copr:
 
 ```sh
 sudo dnf copr enable dusansimic/caprine
 sudo dnf install caprine
 ```
+
+[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
 
 Also available as a [snap](https://snapcraft.io/caprine).
 
