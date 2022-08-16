@@ -48,7 +48,7 @@
 		"@types/lodash": "^4.14.182",
 		"del-cli": "^5.0.0",
 		"electron": "^20.0.2",
-		"electron-builder": "^23.3.3",
+		"electron-builder": "^23.4.0",
 		"husky": "^8.0.1",
 		"np": "^7.6.2",
 		"patch-package": "^6.4.7",
