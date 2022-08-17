@@ -59,11 +59,6 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 ### Linux
 
-<<<<<<< HEAD
-|Distribution              |Repository    |Automatic Updates|Maintainer          |How to install                                                      |
-|--------------------------|--------------|-----------------|--------------------|--------------------------------------------------------------------|
-|Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`                                                 |
-=======
 <table>
 	<th>Distribution</th>
 	<th>Repository</th>
@@ -73,14 +68,14 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	<tr>
 		<td>Arch Linux</td>
 		<td>Community</td>
-		<td>✔️</td>
+		<td align="center">✔️</td>
 		<td>Nicola Squartini</td>
 		<td><code>pacman -S caprine</code></td>
 	</tr>
 	<tr>
 		<td>Debian / Ubuntu (manually)</td>
 		<td>GitHub</td>
-		<td>❌</td>
+		<td align="center">❌</td>
 		<td>Official</td>
 		<td>
 			<a href="https://github.com/sindresorhus/caprine/releases/latest">Download</a> the .deb file
@@ -89,7 +84,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	<tr>
 		<td>Debian / Ubuntu (deb-get)</td>
 		<td>GitHub</td>
-		<td>✔️</td>
+		<td align="center">✔️</td>
 		<td>Official</td>
 		<td>
 			Follow the <a href=#installation-using-deb-get>instructions below</a>
@@ -98,7 +93,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	<tr>
 		<td>Debian / Ubuntu (APT)</td>
 		<td>Packagecloud</td>
-		<td>✔️</td>
+		<td align="center">✔️</td>
 		<td>Lefteris Garyfalakis</td>
 		<td>
 			Follow the <a href=#appimage>instructions below</a>
@@ -107,28 +102,44 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	<tr>
 		<td>RHEL / Fedora / openSUSE</td>
 		<td>Copr</td>
-		<td>✔️</td>
+		<td align="center">✔️</td>
 		<td>Dušan Simić</td>
 		<td>
-			Follow the <a href=#fedora>instructions below</a>
+			Follow the <a href=#fedora-copr>instructions below</a>
 		</td>
 	</tr>
 	<tr>
-		<td>AppImage</td>
+		<td>AppImage (Universal)</td>
 		<td>GitHub</td>
-		<td>✔️</td>
+		<td align="center">✔️</td>
 		<td>Official</td>
 		<td>
 			Follow the <a href=#installation-using-packagecloud-apt>instructions below</a>
 		</td>
 	</tr>
+	<tr>
+		<td>Flatpak (Universal)</td>
+		<td>Flathub</td>
+		<td align="center">✔️</td>
+		<td>Dušan Simić</td>
+		<td>
+			Visit <a href="https://flathub.org/apps/details/com.sindresorhus.Caprine">Flathub</a> and follow the instructions
+		</td>
+	</tr>
+	<tr>
+		<td>Snap (Universal)</td>
+		<td>Snapcraft</td>
+		<td align="center">✔️</td>
+		<td>Official</td>
+		<td>
+			Visit <a href="https://snapcraft.io/caprine">Snapcraft</a> and follow the instructions
+		</td>
+	</tr>
 </table>
-
 
 |Distribution              |Repository    |Automatic Updates|Maintainer          |How to install               |
 |--------------------------|--------------|-----------------|--------------------|-----------------------------|
 |Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`          |
->>>>>>> 97508cf (fixes)
 |Debian / Ubuntu (manually)|GitHub        |❌               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .deb file|
 |Debian / Ubuntu (deb-get) |GitHub        |✔️               |Official            |Follow the [instructions below](#installation-using-deb-get)        |
 |Debian / Ubuntu (APT)     |Packagecloud  |✔️               |Lefteris Garyfalakis|Follow the [instructions below](#debian-packagecloud-apt-repository)|
