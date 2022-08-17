@@ -137,17 +137,6 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	</tr>
 </table>
 
-|Distribution              |Repository    |Automatic Updates|Maintainer          |How to install               |
-|--------------------------|--------------|-----------------|--------------------|-----------------------------|
-|Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`          |
-|Debian / Ubuntu (manually)|GitHub        |❌               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .deb file|
-|Debian / Ubuntu (deb-get) |GitHub        |✔️               |Official            |Follow the [instructions below](#installation-using-deb-get)        |
-|Debian / Ubuntu (APT)     |Packagecloud  |✔️               |Lefteris Garyfalakis|Follow the [instructions below](#debian-packagecloud-apt-repository)|
-|RHEL / Fedora / openSUSE  |Copr          |✔️               |Dušan Simić         |Follow the [instructions below](#fedora-copr)                       |
-|AppImage (Universal)      |GitHub        |✔️               |Official            |Follow the [instructions below](#appimage)                          |
-|Flatpak (Universal)       |Flathub       |✔️               |Dušan Simić         |Visit [Flathub](https://flathub.org/apps/details/com.sindresorhus.Caprine) and follow the instructions|
-|Snap (Universal)          |Snapcraft     |✔️               |Official            |Visit [Snapcraft](https://snapcraft.io/caprine) and follow the instructions|
-
 #### Installation using deb-get:
 
 * Download and install [deb-get](https://github.com/wimpysworld/deb-get).
