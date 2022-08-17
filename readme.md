@@ -10,20 +10,21 @@
 	</p>
 	<br>
 	<br>
+	<p>
+		Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.
+	</p>
+	<b>
+		Caprine is feature complete. However, we welcome contributions for improvements and bug fixes.
+	</b>
 	<br>
+		<a href="https://sindresorhus.com/caprine">
+		Website
+		</a>
+	<br>
+	<a href="https://github.com/sindresorhus/caprine/releases/latest">
+		<img src="media/screenshot.png" width="846">
+	</a>
 </div>
-
-Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.
-
-**Caprine is feature complete. However, we welcome contributions for improvements and bug fixes.**
-
-**[Website](https://sindresorhus.com/caprine)**
-
-<br>
-
-<a href="https://github.com/sindresorhus/caprine/releases/latest">
-	<img src="media/screenshot.png" width="846">
-</a>
 
 ## Highlights
 
@@ -36,7 +37,6 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 - [Code blocks](#code-blocks)
 - [Touch Bar support](#touch-bar-support-macos-only)\*
 - [Custom styles](#custom-styles)
-- Disable autoplay for videos
 - Cross-platform
 - Silent auto-updates
 - Custom text size
@@ -59,9 +59,76 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 ### Linux
 
+<<<<<<< HEAD
 |Distribution              |Repository    |Automatic Updates|Maintainer          |How to install                                                      |
 |--------------------------|--------------|-----------------|--------------------|--------------------------------------------------------------------|
 |Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`                                                 |
+=======
+<table>
+	<th>Distribution</th>
+	<th>Repository</th>
+	<th>Automatic Updates</th>
+	<th>Maintainer</th>
+	<th>How to install</th>
+	<tr>
+		<td>Arch Linux</td>
+		<td>Community</td>
+		<td>✔️</td>
+		<td>Nicola Squartini</td>
+		<td><code>pacman -S caprine</code></td>
+	</tr>
+	<tr>
+		<td>Debian / Ubuntu (manually)</td>
+		<td>GitHub</td>
+		<td>❌</td>
+		<td>Official</td>
+		<td>
+			<a href="https://github.com/sindresorhus/caprine/releases/latest">Download</a> the .deb file
+		</td>
+	</tr>
+	<tr>
+		<td>Debian / Ubuntu (deb-get)</td>
+		<td>GitHub</td>
+		<td>✔️</td>
+		<td>Official</td>
+		<td>
+			Follow the <a href=#installation-using-deb-get>instructions below</a>
+		</td>
+	</tr>
+	<tr>
+		<td>Debian / Ubuntu (APT)</td>
+		<td>Packagecloud</td>
+		<td>✔️</td>
+		<td>Lefteris Garyfalakis</td>
+		<td>
+			Follow the <a href=#appimage>instructions below</a>
+		</td>
+	</tr>
+	<tr>
+		<td>RHEL / Fedora / openSUSE</td>
+		<td>Copr</td>
+		<td>✔️</td>
+		<td>Dušan Simić</td>
+		<td>
+			Follow the <a href=#fedora>instructions below</a>
+		</td>
+	</tr>
+	<tr>
+		<td>AppImage</td>
+		<td>GitHub</td>
+		<td>✔️</td>
+		<td>Official</td>
+		<td>
+			Follow the <a href=#installation-using-packagecloud-apt>instructions below</a>
+		</td>
+	</tr>
+</table>
+
+
+|Distribution              |Repository    |Automatic Updates|Maintainer          |How to install               |
+|--------------------------|--------------|-----------------|--------------------|-----------------------------|
+|Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`          |
+>>>>>>> 97508cf (fixes)
 |Debian / Ubuntu (manually)|GitHub        |❌               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .deb file|
 |Debian / Ubuntu (deb-get) |GitHub        |✔️               |Official            |Follow the [instructions below](#installation-using-deb-get)        |
 |Debian / Ubuntu (APT)     |Packagecloud  |✔️               |Lefteris Garyfalakis|Follow the [instructions below](#debian-packagecloud-apt-repository)|
