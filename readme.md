@@ -96,7 +96,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		<td align="center">✔️</td>
 		<td>Lefteris Garyfalakis</td>
 		<td>
-			Follow the <a href=#appimage>instructions below</a>
+			Follow the <a href=#debian-packagecloud-apt-repository>instructions below</a>
 		</td>
 	</tr>
 	<tr>
@@ -114,7 +114,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		<td align="center">✔️</td>
 		<td>Official</td>
 		<td>
-			Follow the <a href=#installation-using-packagecloud-apt>instructions below</a>
+			Follow the <a href=#appimage>instructions below</a>
 		</td>
 	</tr>
 	<tr>
