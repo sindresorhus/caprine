@@ -28,13 +28,13 @@ Caprine is an unofficial and privacy-focused Facebook Messenger app with many us
 ## Highlights
 
 - [Dark theme](#dark-mode)
-- [Vibrant theme](#vibrancy)\*
+- [Vibrant theme](#vibrancy-macos-only)\*
 - [Privacy-focused](#privacy)
 - [Keyboard shortcuts](#keyboard-shortcuts)
 - [Menu bar mode](#menu-bar-mode-macos-only-)\*
 - [Work Chat support](#work-chat-support)
 - [Code blocks](#code-blocks)
-- [Touch Bar support](#touch-bar-support)
+- [Touch Bar support](#touch-bar-support-macos-only)\*
 - [Custom styles](#custom-styles)
 - Disable autoplay for videos
 - Cross-platform
@@ -73,7 +73,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 #### Installation using deb-get:
 
 * Download and install [deb-get](https://github.com/wimpysworld/deb-get).
-* Run `deb-get install caprine`
+* Run `deb-get install caprine`.
 
 Note: deb-get is 3rd party software, not to be associated with apt-get.
 
@@ -106,6 +106,11 @@ chmod +x Caprine-2.xx.x.AppImage
 
 Then run it!
 
+#### About immutable Linux distributions:
+[Fedora Silverblue](https://silverblue.fedoraproject.org), [Fedora Kinoite](https://kinoite.fedoraproject.org), [EndlessOS](https://endlessos.com), [CarbonOS](https://carbon.sh) and other immutable distributions only support Flatpak and/or AppImage.*
+
+*Note: On some distributions Flatpak must be [pre-configured manually](https://flatpak.org/setup).*
+
 ### Windows
 
 [**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
@@ -124,7 +129,7 @@ You can toggle dark mode in the `View` menu or with <kbd>Command</kbd> <kbd>d</k
 
 You can prevent others from looking at who you're chatting with by enabling the “Hide Names and Avatars” feature in the “View” menu or with <kbd>Command/Control</kbd> <kbd>Shift</kbd> <kbd>n</kbd>.
 
-### Vibrancy
+### Vibrancy *(macOS only)*
 
 On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
@@ -136,7 +141,7 @@ On *macOS*, you can toggle the window vibrancy effect in the `View` menu.
 
 You can choose to prevent people from knowing when you have seen a message and when you are currently typing. These settings are available under the `Caprine`/`File` menu.
 
-### Mute desktop notifications
+### Mute desktop notifications *(macOS only)*
 
 You can quickly disable receiving notifications from the `Caprine`/`File` menu or the Dock on macOS.
 
