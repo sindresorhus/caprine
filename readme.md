@@ -59,14 +59,16 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 ### Linux
 
-|Distribution              |Repository    |Automatic Updates|Maintainer          |How to install               |
-|--------------------------|--------------|-----------------|--------------------|-----------------------------|
-|Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`          |
+|Distribution              |Repository    |Automatic Updates|Maintainer          |How to install                                                      |
+|--------------------------|--------------|-----------------|--------------------|--------------------------------------------------------------------|
+|Arch Linux                |Community     |✔️               |Nicola Squartini    |`pacman -S caprine`                                                 |
 |Debian / Ubuntu (manually)|GitHub        |❌               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .deb file|
-|Debian / Ubuntu (deb-get) |GitHub        |✔️               |Official            |Follow the [instructions below](#installation-using-deb-get)|
-|Debian / Ubuntu (APT)     |Packagecloud  |✔️               |Lefteris Garyfalakis|Follow the [instructions below](#debian-packagecloud-repository)|
-|RHEL / Fedora / openSUSE  |Copr          |✔️               |Dušan Simić         |Follow the [instructions below](#fedora)|
-|AppImage                  |GitHub        |✔️               |Official            |[Download](https://github.com/sindresorhus/caprine/releases/latest) the .AppImage file|
+|Debian / Ubuntu (deb-get) |GitHub        |✔️               |Official            |Follow the [instructions below](#installation-using-deb-get)        |
+|Debian / Ubuntu (APT)     |Packagecloud  |✔️               |Lefteris Garyfalakis|Follow the [instructions below](#debian-packagecloud-apt-repository)|
+|RHEL / Fedora / openSUSE  |Copr          |✔️               |Dušan Simić         |Follow the [instructions below](#fedora-copr)                       |
+|AppImage (Universal)      |GitHub        |✔️               |Official            |Follow the [instructions below](#appimage)                          |
+|Flatpak (Universal)       |Flathub       |✔️               |Dušan Simić         |Visit [Flathub](https://flathub.org/apps/details/com.sindresorhus.Caprine) and follow the instructions|
+|Snap (Universal)          |Snapcraft     |✔️               |Official            |Visit [Snapcraft](https://snapcraft.io/caprine) and follow the instructions|
 
 #### Installation using deb-get:
 
@@ -92,11 +94,17 @@ sudo dnf copr enable dusansimic/caprine
 sudo dnf install caprine
 ```
 
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` or `.deb` file.
+#### AppImage:
 
-Also available as a [snap](https://snapcraft.io/caprine).
+[Download](https://github.com/sindresorhus/caprine/releases/latest) the `.AppImage` file.
 
-*The AppImage needs to be [made executable](https://discourse.appimage.org/t/how-to-run-an-appimage/80) after download.*
+Make it [executable](https://discourse.appimage.org/t/how-to-run-an-appimage/80):
+
+```sh
+chmod +x Caprine-2.xx.x.AppImage
+```
+
+Then run it!
 
 ### Windows
 
