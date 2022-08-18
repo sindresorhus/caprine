@@ -6,7 +6,7 @@
 }
 
 /* Icons made with SVG (create a room, preferences options, etc.) */
-.a8c37x1j.ms05siws.l3qrxjdp.b7h9ocf4 > path {
+.b6ax4al1.m4pnbp5e.somyomsx.ahndzqod.g4fisb7v > path {
 	fill: currentcolor;
 	color: var(--primary-text);
 }
@@ -41,14 +41,8 @@
 
 /* Removing top gap */
 /* TODO: Remove when fixed by fb */
-html.dark-mode .be9z9djy {
-	top: 0;
-}
-html.dark-mode .jgljxmt5 {
-	min-height: 100vh;
-}
-html.dark-mode .gitj76qy {
-	max-height: 100vh;
+.__fb-dark-mode {
+	--header-height: 0 !important;
 }
 
 /* Message list: fix for received messages text color in dark mode */
@@ -59,7 +53,9 @@ html.dark-mode .gitj76qy {
 
 /* Backgrounds of various buttons ("Visit Group", audio call, etc.) */
 /* TODO: Remove when fixed by fb, since -floating should not be here */
-.tdjehn4e {
+/* Audio / video call */
+.qmqpeqxj.e7u6y3za.qwcclf47.nmlomj2f.i85zmo3j.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fxk3tzhb.jcxyg2ei.om3e55n1.a5wdgl2o.jvc6uz2b.g90fjkqk,
+.om3e55n1.g4tp4svg.alzwoclg.jez8cy9q.jcxyg2ei.i85zmo3j.sr926ui1.jl2a5g8c.k7n6ui8p.b41d885q.hmqrhxox.got7tec9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.aesu6q9g.e4ay1f3w.a5wdgl2o.ed17d2qt {
 	background-color: var(--secondary-button-background-floating) !important;
 }
 
