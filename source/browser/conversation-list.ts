@@ -1,7 +1,6 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady = require('element-ready');
 import {isNull} from 'lodash';
-import {isNewDesign} from '../browser';
 import selectors from './selectors';
 
 const icon = {
@@ -123,21 +122,6 @@ async function getIcon(isNewDesign: boolean, element: HTMLElement, unread: boole
 	return element.getAttribute(unread ? icon.unread : icon.read)!;
 }
 
-async function createConversation(element: HTMLElement): Promise<Conversation> {
-	const conversation: Partial<Conversation> = {};
-	const muted = element.classList.contains('_569x');
-
-	conversation.selected = element.classList.contains('_1ht2');
-	conversation.unread = !muted && element.getAttribute('aria-live') !== null;
-
-	const profileElement = element.querySelector<HTMLElement>('div[data-tooltip-content]')!;
-
-	conversation.label = profileElement.dataset.tooltipContent!;
-	conversation.icon = await getIcon(false, profileElement, conversation.unread);
-
-	return conversation as Conversation;
-}
-
 async function getLabel(element: HTMLElement): Promise<string> {
 	if (isNull(element)) {
 		return '';
@@ -176,8 +160,8 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 	return conversation as Conversation;
 }
 
-async function createConversationList(isNewDesign: boolean): Promise<Conversation[]> {
-	const conversationListSelector = isNewDesign ? selectors.conversationListNewDesign : selectors.conversationList;
+async function createConversationList(): Promise<Conversation[]> {
+	const conversationListSelector = selectors.conversationListNewDesign;
 
 	const list = await elementReady<HTMLElement>(conversationListSelector, {
 		stopOnDomReady: false,
@@ -190,18 +174,16 @@ async function createConversationList(isNewDesign: boolean): Promise<Conversatio
 
 	const elements: HTMLElement[] = [...list.children] as HTMLElement[];
 
-	if (isNewDesign) {
-		// Remove last element from childer list on new design
-		elements.splice(-1, 1);
-	}
+	// Remove last element from childer list on new design
+	elements.splice(-1, 1);
 
-	const conversations: Conversation[] = await Promise.all(elements.map(async element => isNewDesign ? createConversationNewDesign(element) : createConversation(element)));
+	const conversations: Conversation[] = await Promise.all(elements.map(async element => createConversationNewDesign(element)));
 
 	return conversations;
 }
 
-export async function sendConversationList(isNewDesign: boolean): Promise<void> {
-	const conversationsToRender: Conversation[] = await createConversationList(isNewDesign);
+export async function sendConversationList(): Promise<void> {
+	const conversationsToRender: Conversation[] = await createConversationList();
 	ipc.callMain('conversations', conversationsToRender);
 }
 
@@ -251,10 +233,9 @@ function countUnread(mutationsList: MutationRecord[]): void {
 
 window.addEventListener('load', async () => {
 	const sidebar = await elementReady<HTMLElement>('[role=navigation]', {stopOnDomReady: false});
-	const newDesign = await isNewDesign();
 
 	if (sidebar) {
-		const conversationListObserver = new MutationObserver(async () => sendConversationList(newDesign));
+		const conversationListObserver = new MutationObserver(async () => sendConversationList());
 		const conversationCountObserver = new MutationObserver(countUnread);
 
 		conversationListObserver.observe(sidebar, {
