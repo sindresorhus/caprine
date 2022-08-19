@@ -6,7 +6,7 @@ import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
-import {INewDesign, IToggleMuteNotifications, IToggleSounds} from './types';
+import {INewDesign, IToggleSounds} from './types';
 
 const {nativeTheme} = require('@electron/remote');
 
@@ -15,11 +15,9 @@ const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] 
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 const preferencesSelectorNewDesign = 'div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div';
 const messengerSoundsSelector = `${preferencesSelector} ._374d ._6bkz`;
-const conversationMenuSelector = '.uiLayer:not(.hidden_elem) [role=menu]';
 const conversationMenuSelectorNewDesign = '[role=menu].l9j0dhe7.swg4t2nn';
 
 async function withMenu(
-	isNewDesign: boolean,
 	menuButtonElement: HTMLElement,
 	callback: () => Promise<void> | void,
 ): Promise<void> {
@@ -32,16 +30,16 @@ async function withMenu(
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = isNewDesign ? document.querySelector('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-child(2) > div') : document.querySelector('.uiContextualLayerPositioner:not(.hidden_elem)');
+	const menuLayer = document.querySelector('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-child(2) > div');
 
 	if (menuLayer) {
 		const observer = new MutationObserver(() => {
-			if (isNewDesign ? !menuLayer.hasChildNodes() : menuLayer.classList.contains('hidden_elem')) {
+			if (!menuLayer.hasChildNodes()) {
 				classList.remove('hide-dropdowns');
 				observer.disconnect();
 			}
 		});
-		observer.observe(menuLayer, isNewDesign ? {childList: true} : {attributes: true, attributeFilter: ['class']});
+		observer.observe(menuLayer, {childList: true});
 	} else {
 		// Fallback in case .uiContextualLayerPositioner is missing
 		classList.remove('hide-dropdowns');
@@ -50,35 +48,28 @@ async function withMenu(
 	await callback();
 }
 
-async function withSettingsMenu(isNewDesign: boolean, callback: () => Promise<void> | void): Promise<void> {
+async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	// If ui is new, get the new settings menu
-	const settingsMenu = isNewDesign
-		? (await elementReady<HTMLElement>('.bp9cbjyn.j83agx80.rj1gh0hx.buofh1pr.g5gj957u > .oajrlxb2.gs1a9yip', {stopOnDomReady: false}))!
-		: (await elementReady<HTMLElement>('._30yy._6ymd._2agf,._30yy._2fug._p', {stopOnDomReady: false}))!;
+	const settingsMenu = (await elementReady<HTMLElement>('.bp9cbjyn.j83agx80.rj1gh0hx.buofh1pr.g5gj957u > .oajrlxb2.gs1a9yip', {stopOnDomReady: false}))!
 
-	await withMenu(isNewDesign, settingsMenu, callback);
+	await withMenu(settingsMenu, callback);
 }
 
-async function selectMenuItem(isNewDesign: boolean, itemNumber: number): Promise<void> {
+async function selectMenuItem(itemNumber: number): Promise<void> {
 	let selector;
-	if (isNewDesign) {
-		// Wait for menu to show up
-		await elementReady(conversationMenuSelectorNewDesign, {stopOnDomReady: false});
 
-		const items = document.querySelectorAll<HTMLElement>(
-			`${conversationMenuSelectorNewDesign} [role=menuitem]`,
-		);
+	// Wait for menu to show up
+	await elementReady(conversationMenuSelectorNewDesign, {stopOnDomReady: false});
 
-		// Negative items will select from the end
-		if (itemNumber < 0) {
-			selector = -itemNumber <= items.length ? items[items.length + itemNumber] : null;
-		} else {
-			selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
-		}
+	const items = document.querySelectorAll<HTMLElement>(
+		`${conversationMenuSelectorNewDesign} [role=menuitem]`,
+	);
+
+	// Negative items will select from the end
+	if (itemNumber < 0) {
+		selector = -itemNumber <= items.length ? items[items.length + itemNumber] : null;
 	} else {
-		selector = document.querySelector<HTMLElement>(
-			`${conversationMenuSelector} > li:nth-child(${itemNumber}) a`,
-		);
+		selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
 	}
 
 	if (selector) {
@@ -86,12 +77,12 @@ async function selectMenuItem(isNewDesign: boolean, itemNumber: number): Promise
 	}
 }
 
-async function selectOtherListViews(isNewDesign: boolean, itemNumber: number): Promise<void> {
+async function selectOtherListViews(itemNumber: number): Promise<void> {
 	// In case one of other views is shown
 	clickBackButton();
 
-	await withSettingsMenu(isNewDesign, () => {
-		selectMenuItem(isNewDesign, itemNumber);
+	await withSettingsMenu(() => {
+		selectMenuItem(itemNumber);
 	});
 }
 
@@ -104,12 +95,11 @@ function clickBackButton(): void {
 }
 
 ipc.answerMain('show-preferences', async () => {
-	const newDesign = await isNewDesign();
-	if (isPreferencesOpen(newDesign)) {
+	if (isPreferencesOpen()) {
 		return;
 	}
 
-	await openPreferences(newDesign);
+	await openPreferences();
 });
 
 ipc.answerMain('new-conversation', async () => {
@@ -133,17 +123,8 @@ ipc.answerMain('log-out', async () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		const newDesign = await isNewDesign();
-		await withSettingsMenu(newDesign, () => {
-			if (newDesign) {
-				selectMenuItem(newDesign, -1);
-			} else {
-				const nodes = document.querySelectorAll<HTMLElement>(
-					'._54nq._2i-c._558b._2n_z li:last-child a',
-				);
-
-				nodes[nodes.length - 1].click();
-			}
+		await withSettingsMenu(() => {
+			selectMenuItem(-1);
 		});
 	}
 });
@@ -251,8 +232,8 @@ ipc.answerMain('hide-conversation', async ({isNewDesign}: INewDesign) => {
 	}
 });
 
-async function openHiddenPreferences(isNewDesign: boolean): Promise<boolean> {
-	if (!isPreferencesOpen(isNewDesign)) {
+async function openHiddenPreferences(): Promise<boolean> {
+	if (!isPreferencesOpen()) {
 		document.documentElement.classList.add('hide-preferences-window');
 
 		const style = document.createElement('style');
@@ -260,7 +241,7 @@ async function openHiddenPreferences(isNewDesign: boolean): Promise<boolean> {
 		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
 		document.body.append(style);
 
-		await openPreferences(isNewDesign);
+		await openPreferences();
 
 		if (!isNewDesign) {
 			// Will clean up itself after the preferences are closed
@@ -273,8 +254,8 @@ async function openHiddenPreferences(isNewDesign: boolean): Promise<boolean> {
 	return false;
 }
 
-async function toggleSounds({isNewDesign, checked}: IToggleSounds): Promise<void> {
-	const shouldClosePreferences = await openHiddenPreferences(isNewDesign);
+async function toggleSounds({checked}: IToggleSounds): Promise<void> {
+	const shouldClosePreferences = await openHiddenPreferences();
 
 	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
 	if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
@@ -282,32 +263,21 @@ async function toggleSounds({isNewDesign, checked}: IToggleSounds): Promise<void
 	}
 
 	if (shouldClosePreferences) {
-		await closePreferences(isNewDesign);
+		await closePreferences();
 	}
 }
 
 ipc.answerMain('toggle-sounds', toggleSounds);
 
-ipc.answerMain('toggle-mute-notifications', async ({isNewDesign, defaultStatus}: IToggleMuteNotifications) => {
-	const shouldClosePreferences = await openHiddenPreferences(isNewDesign);
+ipc.answerMain('toggle-mute-notifications', async () => {
+	const shouldClosePreferences = await openHiddenPreferences();
 
 	const notificationCheckbox = document.querySelector<HTMLInputElement>(
 		selectors.notificationCheckbox,
 	)!;
 
-	if (!isNewDesign) {
-		if (defaultStatus === undefined) {
-			notificationCheckbox.click();
-		} else if (
-			(defaultStatus && notificationCheckbox.checked)
-			|| (!defaultStatus && !notificationCheckbox.checked)
-		) {
-			notificationCheckbox.click();
-		}
-	}
-
 	if (shouldClosePreferences) {
-		await closePreferences(isNewDesign);
+		await closePreferences();
 	}
 
 	return !isNewDesign && !notificationCheckbox.checked;
@@ -318,22 +288,19 @@ ipc.answerMain('toggle-message-buttons', () => {
 });
 
 ipc.answerMain('show-active-contacts-view', async () => {
-	const newDesign = await isNewDesign();
-	await selectOtherListViews(newDesign, newDesign ? 2 : 3);
+	await selectOtherListViews(2);
 });
 
 ipc.answerMain('show-message-requests-view', async () => {
-	const newDesign = await isNewDesign();
-	await selectOtherListViews(newDesign, newDesign ? 3 : 4);
+	await selectOtherListViews(3);
 });
 
 ipc.answerMain('show-hidden-threads-view', async () => {
-	const newDesign = await isNewDesign();
-	await selectOtherListViews(newDesign, newDesign ? 4 : 5);
+	await selectOtherListViews(4);
 });
 
 ipc.answerMain('toggle-unread-threads-view', async () => {
-	await selectOtherListViews(false, 6);
+	await selectOtherListViews(6);
 });
 
 ipc.answerMain('toggle-video-autoplay', () => {
@@ -414,11 +381,11 @@ async function observeTheme(): Promise<void> {
 	}
 }
 
-function setPrivateMode(isNewDesign: boolean): void {
+function setPrivateMode(): void {
 	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
 
 	if (is.macos) {
-		sendConversationList(isNewDesign);
+		sendConversationList();
 	}
 }
 
@@ -459,16 +426,11 @@ function updateSidebar(): void {
 	}
 }
 
-async function updateDoNotDisturb(isNewDesign: boolean): Promise<void> {
-	const shouldClosePreferences = await openHiddenPreferences(isNewDesign);
-
-	if (!isNewDesign) {
-		const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
-		toggleSounds(await ipc.callMain('update-dnd-mode', soundsCheckbox.checked));
-	}
+async function updateDoNotDisturb(): Promise<void> {
+	const shouldClosePreferences = await openHiddenPreferences();
 
 	if (shouldClosePreferences) {
-		await closePreferences(isNewDesign);
+		await closePreferences();
 	}
 }
 
@@ -637,13 +599,13 @@ async function withConversationMenu(isNewDesign: boolean, callback: () => void):
 	}
 
 	if (menuButton) {
-		await withMenu(isNewDesign, menuButton, callback);
+		await withMenu(menuButton, callback);
 	}
 }
 
 async function openMuteModal(isNewDesign: boolean): Promise<void> {
 	await withConversationMenu(isNewDesign, () => {
-		selectMenuItem(isNewDesign, isNewDesign ? 2 : 1);
+		selectMenuItem(isNewDesign ? 2 : 1);
 	});
 }
 
@@ -656,66 +618,56 @@ In other words, you should only use this function within a callback that is prov
 */
 function isSelectedConversationGroup(isNewDesign: boolean): boolean {
 	const separator = isNewDesign
-		? document.querySelector<HTMLElement>(
-			`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`,
-		)
-		: document.querySelector<HTMLElement>(
-			`${conversationMenuSelector} > li:nth-child(6)[role=separator]`,
-		);
+
+	document.querySelector<HTMLElement>(`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`);
+
 	return Boolean(separator);
 }
 
 async function hideSelectedConversation(isNewDesign: boolean): Promise<void> {
 	await withConversationMenu(isNewDesign, () => {
 		const [isGroup, isNotGroup] = isNewDesign ? [5, 6] : [4, 3];
-		selectMenuItem(isNewDesign, isSelectedConversationGroup(isNewDesign) ? isGroup : isNotGroup);
+		selectMenuItem(isSelectedConversationGroup(isNewDesign) ? isGroup : isNotGroup);
 	});
 }
 
 async function deleteSelectedConversation(isNewDesign: boolean): Promise<void> {
 	await withConversationMenu(isNewDesign, () => {
 		const [isGroup, isNotGroup] = isNewDesign ? [6, 7] : [5, 4];
-		selectMenuItem(isNewDesign, isSelectedConversationGroup(isNewDesign) ? isGroup : isNotGroup);
+		selectMenuItem(isSelectedConversationGroup(isNewDesign) ? isGroup : isNotGroup);
 	});
 }
 
-async function openPreferences(isNewDesign: boolean): Promise<void> {
-	await withSettingsMenu(isNewDesign, () => {
-		selectMenuItem(isNewDesign, 1);
+async function openPreferences(): Promise<void> {
+	await withSettingsMenu(() => {
+		selectMenuItem(1);
 	});
 
-	await elementReady<HTMLElement>(isNewDesign ? preferencesSelectorNewDesign : preferencesSelector, {stopOnDomReady: false});
+	await elementReady<HTMLElement>(preferencesSelectorNewDesign, {stopOnDomReady: false});
 }
 
-function isPreferencesOpen(isNewDesign: boolean): boolean {
-	return isNewDesign
-		? Boolean(document.querySelector<HTMLElement>('[aria-label=Preferences]'))
-		: Boolean(document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy'));
+function isPreferencesOpen(): boolean {
+	return Boolean(document.querySelector<HTMLElement>('[aria-label=Preferences]'))
 }
 
-async function closePreferences(isNewDesign: boolean): Promise<void> {
-	if (isNewDesign) {
-		const closeButton = await elementReady<HTMLElement>(selectors.closePreferencesButton, {stopOnDomReady: false});
-		closeButton?.click();
+async function closePreferences(): Promise<void> {
+	const closeButton = await elementReady<HTMLElement>(selectors.closePreferencesButton, {stopOnDomReady: false});
+	closeButton?.click();
 
-		// Wait for the preferences window to be closed, then remove the class from the document
-		const preferencesOverlayObserver = new MutationObserver(records => {
-			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
+	// Wait for the preferences window to be closed, then remove the class from the document
+	const preferencesOverlayObserver = new MutationObserver(records => {
+		const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
 
-			// In case there is a div removed, hide utility class and stop observing
-			if (removedRecords.length > 0) {
-				document.documentElement.classList.remove('hide-preferences-window');
-				preferencesOverlayObserver.disconnect();
-			}
-		});
+		// In case there is a div removed, hide utility class and stop observing
+		if (removedRecords.length > 0) {
+			document.documentElement.classList.remove('hide-preferences-window');
+			preferencesOverlayObserver.disconnect();
+		}
+	});
 
-		const preferencesOverlay = document.querySelector('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div')!;
+	const preferencesOverlay = document.querySelector('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div')!;
 
-		preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
-	} else {
-		const doneButton = document.querySelector<HTMLElement>('._3quh._30yy._2t_._5ixy')!;
-		doneButton.click();
-	}
+	preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
 }
 
 function insertionListener(event: AnimationEvent): void {
@@ -817,11 +769,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 	observeTheme();
 
 	// Activate Private Mode if it was set before quitting
-	setPrivateMode(newDesign);
+	setPrivateMode();
 
 	// Configure do not disturb
 	if (is.macos) {
-		await updateDoNotDisturb(newDesign);
+		await updateDoNotDisturb();
 	}
 
 	// Prevent flash of white on startup when in dark mode
