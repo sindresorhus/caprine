@@ -50,7 +50,7 @@ async function withMenu(
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	// If ui is new, get the new settings menu
-	const settingsMenu = (await elementReady<HTMLElement>('.bp9cbjyn.j83agx80.rj1gh0hx.buofh1pr.g5gj957u > .oajrlxb2.gs1a9yip', {stopOnDomReady: false}))!
+	const settingsMenu = (await elementReady<HTMLElement>('.bp9cbjyn.j83agx80.rj1gh0hx.buofh1pr.g5gj957u > .oajrlxb2.gs1a9yip', {stopOnDomReady: false}))!;
 
 	await withMenu(settingsMenu, callback);
 }
@@ -617,7 +617,7 @@ This function assumes:
 In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
 function isSelectedConversationGroup(isNewDesign: boolean): boolean {
-	const separator = isNewDesign
+	const separator = isNewDesign;
 
 	document.querySelector<HTMLElement>(`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`);
 
@@ -647,7 +647,7 @@ async function openPreferences(): Promise<void> {
 }
 
 function isPreferencesOpen(): boolean {
-	return Boolean(document.querySelector<HTMLElement>('[aria-label=Preferences]'))
+	return Boolean(document.querySelector<HTMLElement>('[aria-label=Preferences]'));
 }
 
 async function closePreferences(): Promise<void> {
