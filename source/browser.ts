@@ -209,62 +209,23 @@ ipc.answerMain('search', (isNewDesign: boolean) => {
 });
 
 ipc.answerMain('insert-gif', () => {
-	const gifElement
-		// Old UI
-		= document.querySelector<HTMLElement>('._yht')
-		// New UI
-		?? [...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
-			element.querySelector<HTMLElement>('svg path[d^="M27.002,13.5"]'),
-		)
-		// Newest UI
-		?? document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(3) > span > div');
-
-	gifElement!.click();
+	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(3) > span > div')!.click();
 });
 
 ipc.answerMain('insert-emoji', async () => {
-	const newDesign = await isNewDesign();
-	const emojiElement = newDesign
-		? document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(5) > span > div')
-		: (await elementReady<HTMLElement>('._5s2p, ._30yy._7odb', {
-			stopOnDomReady: false,
-		}));
-
-	emojiElement!.click();
+	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(5) > span > div')!.click();
 });
 
 ipc.answerMain('insert-sticker', () => {
-	const stickerElement
-		// Old UI
-		= document.querySelector<HTMLElement>('._4rv6')
-		// New UI
-		?? [...document.querySelectorAll<HTMLElement>('._7oam')].find(element =>
-			element.querySelector<HTMLElement>('svg path[d^="M22.5,18.5 L27.998,18.5"]'),
-		)
-		// Newest UI
-		?? document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(2) > span > div');
-
-	stickerElement!.click();
+	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(2) > span > div')!.click();
 });
 
 ipc.answerMain('attach-files', () => {
-	const filesElement
-		// Old UI
-		= document.querySelector<HTMLElement>('._5vn8 + input[type="file"], ._7oam input[type="file"]')
-		// Newest UI
-		?? document.querySelector<HTMLElement>('.l9j0dhe7.buofh1pr.ni8dbmo4.stjgntxs > div:nth-child(1) > span > div');
-
-	filesElement!.click();
+	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(1) > span > div')!.click();
 });
 
 ipc.answerMain('focus-text-input', () => {
-	const textInput
-		// Old UI
-		= document.querySelector<HTMLElement>('._7kpg ._5rpu')
-		// Newest UI
-		?? document.querySelector<HTMLElement>('[role=textbox][contenteditable=true]');
-
-	textInput!.focus();
+	document.querySelector<HTMLElement>('[role=textbox][contenteditable=true]')!.focus();
 });
 
 ipc.answerMain('next-conversation', nextConversation);
