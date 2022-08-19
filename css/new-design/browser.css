@@ -161,14 +161,16 @@ html.sidebar-force-narrow .oj68ptkr.jk6sbkaj.kdgqqoy6.ihh4hy1g.qttc61fc.datstx6m
 }
 
 /* -- Toggle message buttons -- */
-body .b6ax4al1.mmwt03ec.hnay576k.mtzt5fvk.rng1terr.m4pnbp5e.aqweqrfb.ahndzqod.db0glzta {
+body .qi72231t.o9w3sbdw.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.dnr7xe2t.aeinzg81.om3e55n1.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.o9erhkwx.dzqi5evh.hupbnkgi.hvb2xoa8.fxk3tzhb.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq.q46jt4gp.b0eko5f3.r5g9zsuq.fwlpnqze.jbg88c62,
+body .s8sjc6am.z6erz7xo.alzwoclg.jcxyg2ei.i85zmo3j.b0ur3jhr.kjdc1dyq.tjkoo78o.iwr3bmeu.qgj99rie {
 	display: flex;
 }
 
-body.show-message-buttons .b6ax4al1.mmwt03ec.hnay576k.mtzt5fvk.rng1terr.m4pnbp5e.aqweqrfb.ahndzqod.db0glzta {
+body.show-message-buttons .qi72231t.o9w3sbdw.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.dnr7xe2t.aeinzg81.om3e55n1.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.o9erhkwx.dzqi5evh.hupbnkgi.hvb2xoa8.fxk3tzhb.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq.q46jt4gp.b0eko5f3.r5g9zsuq.fwlpnqze.jbg88c62,
+body.show-message-buttons .s8sjc6am.z6erz7xo.alzwoclg.jcxyg2ei.i85zmo3j.b0ur3jhr.kjdc1dyq.tjkoo78o.iwr3bmeu.qgj99rie {
 	display: none;
 }
 
 body.show-message-buttons .cgu29s5g.alzwoclg.oo5upp5e {
-	margin-left: 5px !important;
+	margin-left: 15px !important;
 }
