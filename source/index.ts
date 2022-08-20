@@ -492,6 +492,8 @@ function createMainWindow(): BrowserWindow {
 			});
 		}
 
+		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
+
 		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {
 			isNewDesign,
 			defaultStatus: config.get('notificationsMuted'),
