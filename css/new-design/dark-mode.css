@@ -51,6 +51,11 @@
 	--primary-text: #e4e6eb;
 }
 
+/* Radio buttons */
+.bdao358l.om3e55n1.g4tp4svg {
+	--accent: var(--primary-text);
+}
+
 /* Backgrounds of various buttons ("Visit Group", audio call, etc.) */
 /* TODO: Remove when fixed by fb, since -floating should not be here */
 /* Audio / video call */
