@@ -103,11 +103,11 @@ ipc.answerMain('show-preferences', async () => {
 });
 
 ipc.answerMain('new-conversation', async () => {
-	if (await isNewDesign()) {
-		document.querySelector<HTMLElement>('[href="/new/"]')!.click();
-	} else {
-		document.querySelector<HTMLElement>('._30yy[data-href$="/new"]')!.click();
-	}
+	document.querySelector<HTMLElement>('[href="/new/"]')!.click();
+});
+
+ipc.answerMain('new-room', async () => {
+	document.querySelector<HTMLElement>('.qi72231t.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.kmwttqpk.dnr7xe2t.aeinzg81.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq.g90fjkqk.jvc6uz2b.bdao358l.alzwoclg.i85zmo3j.jcxyg2ei.srn514ro.oxkhqvkx.rl78xhln.nch0832m.om3e55n1.qmqpeqxj.e7u6y3za.qwcclf47.nmlomj2f.frfouenu.bonavkto.djs4p424.r7bn319e')!.click();
 });
 
 ipc.answerMain('log-out', async () => {
