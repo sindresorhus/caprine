@@ -499,6 +499,8 @@ function createMainWindow(): BrowserWindow {
 			defaultStatus: config.get('notificationsMuted'),
 		}));
 
+		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
+
 		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8'),
 		);
