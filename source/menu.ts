@@ -634,9 +634,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Find Conversation',
-			visible: is.development,
 			accelerator: 'CommandOrControl+K',
 			click() {
 				sendAction('find');
