@@ -32,7 +32,7 @@ html.private-mode [href^='https://www.facebook.com/1'] .b6ax4al1.i54nktwv.z2vv26
 	filter: blur(5px);
 }
 /* Chat list: name, profile picture and last message */
-html.private-mode [role="navigation"] [role="row"] .b6ax4al1.gvxzyvdx {
+html.private-mode [role='navigation'] [role='row'] .b6ax4al1.gvxzyvdx {
 	filter: blur(5px);
 }
 /* Chat list: active contacts */
