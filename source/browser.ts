@@ -130,13 +130,7 @@ ipc.answerMain('log-out', async () => {
 });
 
 ipc.answerMain('find', () => {
-	const searchBox
-		// Old UI
-		= document.querySelector<HTMLElement>('._58al')
-		// Newest UI
-		?? document.querySelector<HTMLElement>('[aria-label="Search Messenger"]');
-
-	searchBox!.focus();
+	document.querySelector<HTMLElement>('[type="search"]')!.focus();
 });
 
 async function openSearchInConversation() {
