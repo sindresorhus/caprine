@@ -152,7 +152,7 @@ const conversationDivObserver = new MutationObserver(_ => {
 	}
 });
 
-// Refence to mutation observer
+// Reference to mutation observer
 // Only active if the user has set option to disable video autoplay
 const videoObserver = new MutationObserver(_ => {
 	// Select by tag instead of iterating over mutations which is more performant
