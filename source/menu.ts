@@ -28,7 +28,7 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 
 	const newRoomItem: MenuItemConstructorOptions = {
 		label: 'New Room',
-		accelerator: 'CommandOrControl+R',
+		accelerator: 'CommandOrControl+O',
 		click() {
 			sendAction('new-room');
 		},
