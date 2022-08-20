@@ -69,7 +69,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		<td>Arch Linux</td>
 		<td>Community</td>
 		<td align="center">✔️</td>
-		<td><ul><li>Nicola Squartini</li><li>Frederik Schwan</li></ul></td>
+		<td>Frederik Schwan</td>
 		<td><code>pacman -S caprine</code></td>
 	</tr>
 	<tr>
