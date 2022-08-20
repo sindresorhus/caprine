@@ -9,7 +9,7 @@ html.hide-dropdowns [role='menu'].l9j0dhe7.swg4t2nn {
 }
 
 /* A utility class for temporarily hiding preferences window */
-html.hide-preferences-window div[class='rq0escxv l9j0dhe7 du4w35lb'] > div:nth-of-type(3) > div > div {
+html.hide-preferences-window div[class='bdao358l om3e55n1 g4tp4svg'] > div:nth-of-type(3) > div > div {
 	display: none;
 }
 
@@ -161,16 +161,16 @@ html.sidebar-force-narrow .oj68ptkr.jk6sbkaj.kdgqqoy6.ihh4hy1g.qttc61fc.datstx6m
 }
 
 /* -- Toggle message buttons -- */
-body .oajrlxb2.gs1a9yip.g5ia77u1.mtkw9kbi.tlpljxtp.qensuy8j.ppp5ayq2.goun2846.ccm00jje.s44p3ltw.mk2mc5f4.rt8b4zig.n8ej3o3l.agehan2d.sk4xxmp2.rq0escxv.nhd2j8a9.mg4g778l.pfnyh3mw.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.tgvbjcpo.hpfvmrgz.l9j0dhe7.i1ao9s8h.esuyzwwr.f1sip0of.du4w35lb.n00je7tq.arfg74bv.qs9ysxi8.k77z8yql.pq6dq46d.btwxx1t3.abiwlrkh.p8dawk7l.lzcic4wl.cxgpxx05.dflh9lhu.sj5x9vvc.scb9dxdr.h676nmdw,
-body .tojvnm2t.a6sixzi8.abs2jz4q.t1p8iaqh.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.iyyx5f41.pq6dq46d {
+body .qi72231t.o9w3sbdw.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.dnr7xe2t.aeinzg81.om3e55n1.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.o9erhkwx.dzqi5evh.hupbnkgi.hvb2xoa8.fxk3tzhb.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq.q46jt4gp.b0eko5f3.r5g9zsuq.fwlpnqze.jbg88c62,
+body .s8sjc6am.z6erz7xo.alzwoclg.jcxyg2ei.i85zmo3j.b0ur3jhr.kjdc1dyq.tjkoo78o.iwr3bmeu.qgj99rie {
 	display: flex;
 }
 
-body.show-message-buttons .oajrlxb2.gs1a9yip.g5ia77u1.mtkw9kbi.tlpljxtp.qensuy8j.ppp5ayq2.goun2846.ccm00jje.s44p3ltw.mk2mc5f4.rt8b4zig.n8ej3o3l.agehan2d.sk4xxmp2.rq0escxv.nhd2j8a9.mg4g778l.pfnyh3mw.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.tgvbjcpo.hpfvmrgz.l9j0dhe7.i1ao9s8h.esuyzwwr.f1sip0of.du4w35lb.n00je7tq.arfg74bv.qs9ysxi8.k77z8yql.pq6dq46d.btwxx1t3.abiwlrkh.p8dawk7l.lzcic4wl.cxgpxx05.dflh9lhu.sj5x9vvc.scb9dxdr.h676nmdw,
-body.show-message-buttons .tojvnm2t.a6sixzi8.abs2jz4q.t1p8iaqh.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.iyyx5f41.pq6dq46d {
+body.show-message-buttons .qi72231t.o9w3sbdw.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.dnr7xe2t.aeinzg81.om3e55n1.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.o9erhkwx.dzqi5evh.hupbnkgi.hvb2xoa8.fxk3tzhb.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq.q46jt4gp.b0eko5f3.r5g9zsuq.fwlpnqze.jbg88c62,
+body.show-message-buttons .s8sjc6am.z6erz7xo.alzwoclg.jcxyg2ei.i85zmo3j.b0ur3jhr.kjdc1dyq.tjkoo78o.iwr3bmeu.qgj99rie {
 	display: none;
 }
 
-body.show-message-buttons .buofh1pr.j83agx80.lfvz1hxj {
+body.show-message-buttons .cgu29s5g.alzwoclg.oo5upp5e {
 	margin-left: 15px !important;
 }

@@ -13,9 +13,9 @@ const {nativeTheme} = require('@electron/remote');
 const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
-const preferencesSelectorNewDesign = 'div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div';
+const preferencesSelectorNewDesign = 'div[class="bdao358l om3e55n1 g4tp4svg"] > div:nth-of-type(3) > div';
 const messengerSoundsSelector = `${preferencesSelector} ._374d ._6bkz`;
-const conversationMenuSelectorNewDesign = '[role=menu].l9j0dhe7.swg4t2nn';
+const conversationMenuSelectorNewDesign = '[role=menu]';
 
 async function withMenu(
 	menuButtonElement: HTMLElement,
@@ -50,7 +50,7 @@ async function withMenu(
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	// If ui is new, get the new settings menu
-	const settingsMenu = (await elementReady<HTMLElement>('.bp9cbjyn.j83agx80.rj1gh0hx.buofh1pr.g5gj957u > .oajrlxb2.gs1a9yip', {stopOnDomReady: false}))!;
+	const settingsMenu = (await elementReady<HTMLElement>(selectors.userMenu, {stopOnDomReady: false}))!;
 
 	await withMenu(settingsMenu, callback);
 }
@@ -130,13 +130,7 @@ ipc.answerMain('log-out', async () => {
 });
 
 ipc.answerMain('find', () => {
-	const searchBox
-		// Old UI
-		= document.querySelector<HTMLElement>('._58al')
-		// Newest UI
-		?? document.querySelector<HTMLElement>('[aria-label="Search Messenger"]');
-
-	searchBox!.focus();
+	document.querySelector<HTMLElement>('[type="search"]')!.focus();
 });
 
 async function openSearchInConversation() {
@@ -665,7 +659,7 @@ async function closePreferences(): Promise<void> {
 		}
 	});
 
-	const preferencesOverlay = document.querySelector('div[class="rq0escxv l9j0dhe7 du4w35lb"] > div:nth-of-type(3) > div')!;
+	const preferencesOverlay = document.querySelector(preferencesSelectorNewDesign)!;
 
 	preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
 }
