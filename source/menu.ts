@@ -26,6 +26,14 @@ export default async function updateMenu({isNewDesign}: INewDesign): Promise<Men
 		},
 	};
 
+	const newRoomItem: MenuItemConstructorOptions = {
+		label: 'New Room',
+		accelerator: 'CommandOrControl+O',
+		click() {
+			sendAction('new-room');
+		},
+	};
+
 	const switchItems: MenuItemConstructorOptions[] = [
 		{
 			label: 'Switch to Work Chat…',
@@ -799,6 +807,7 @@ ${debugInfo()}`;
 			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
+				newRoomItem,
 				{
 					type: 'separator',
 				},
@@ -832,6 +841,7 @@ ${debugInfo()}`;
 			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
+				newRoomItem,
 				{
 					type: 'separator',
 				},
