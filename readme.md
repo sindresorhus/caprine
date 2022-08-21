@@ -105,7 +105,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		<td align="center">✔️</td>
 		<td>Dušan Simić</td>
 		<td>
-			Follow the <a href=#fedora-copr>instructions below</a>
+			Follow the <a href=#copr>instructions below</a>
 		</td>
 	</tr>
 	<tr>
@@ -154,7 +154,7 @@ curl -s https://packagecloud.io/install/repositories/lefterisgar/caprine/script.
 
 Note: The Packagecloud repository has limited bandwidth. This option will stop working each month when the bandwidth limit is reached.
 
-#### Fedora Copr:
+#### Copr:
 
 ```sh
 sudo dnf copr enable dusansimic/caprine
