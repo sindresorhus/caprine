@@ -155,8 +155,8 @@ curl -s https://gist.githubusercontent.com/lefterisgar/c5f738fcb4d06d2efd7eb9215
 Alternatively (for advanced users):
 ```sh
 # Add the repository
-echo "deb [trusted=yes] https://TOKEN@apt.fury.io/USERNAME/ /" > \
-/etc/apt/sources.list.d/fury.list
+echo "deb [trusted=yes] https://apt.fury.io/lefterisgar/ /" > \
+/etc/apt/sources.list.d/caprine.list
 
 # Update the package indexes
 sudo apt update
