@@ -109,7 +109,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		</td>
 	</tr>
 	<tr>
-		<td>AppImage (Universal)</td>
+		<td>AppImage</td>
 		<td>GitHub</td>
 		<td align="center">✔️</td>
 		<td>Official</td>
@@ -118,7 +118,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		</td>
 	</tr>
 	<tr>
-		<td>Flatpak (Universal)</td>
+		<td>Flatpak</td>
 		<td>Flathub</td>
 		<td align="center">✔️</td>
 		<td>Dušan Simić</td>
@@ -127,7 +127,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		</td>
 	</tr>
 	<tr>
-		<td>Snap (Universal)</td>
+		<td>Snap</td>
 		<td>Snapcraft</td>
 		<td align="center">✔️</td>
 		<td>Official</td>
@@ -144,7 +144,7 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 
 Note: deb-get is 3rd party software, not to be associated with apt-get.
 
-#### Debian Packagecloud APT repository:
+#### APT repository (Gemfury):
 
 Run the following command to add it:
 
