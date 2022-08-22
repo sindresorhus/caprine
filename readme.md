@@ -92,11 +92,11 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	</tr>
 	<tr>
 		<td>Debian / Ubuntu (APT)</td>
-		<td>Packagecloud</td>
+		<td>Gemfury</td>
 		<td align="center">✔️</td>
 		<td>Lefteris Garyfalakis</td>
 		<td>
-			Follow the <a href=#debian-packagecloud-apt-repository>instructions below</a>
+			Follow the <a href=#apt-repository-gemfury>instructions below</a>
 		</td>
 	</tr>
 	<tr>
@@ -149,10 +149,22 @@ Note: deb-get is 3rd party software, not to be associated with apt-get.
 Run the following command to add it:
 
 ```sh
-curl -s https://packagecloud.io/install/repositories/lefterisgar/caprine/script.deb.sh | sudo bash
+curl -s https://gist.githubusercontent.com/lefterisgar/c5f738fcb4d06d2efd7eb9215cf3dbe6/raw/35eff2fffa1275a32fe69ae2886e7e6394b5471b/addRepo.sh | sudo bash
 ```
 
-Note: The Packagecloud repository has limited bandwidth. This option will stop working each month when the bandwidth limit is reached.
+Alternatively (for advanced users):
+```sh
+# Add the repository
+echo "deb [trusted=yes] https://TOKEN@apt.fury.io/USERNAME/ /" > \
+/etc/apt/sources.list.d/fury.list
+
+# Update the package indexes
+sudo apt update
+
+# Install Caprine
+sudo apt install caprine
+```
+
 
 #### Copr:
 
