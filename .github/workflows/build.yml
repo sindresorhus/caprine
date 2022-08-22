@@ -3,7 +3,6 @@ on:
   push:
     tags:
       - '*'
-  workflow_dispatch:
 jobs:
   tests:
     uses: ./.github/workflows/tests.yml
