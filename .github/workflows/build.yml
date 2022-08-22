@@ -1,21 +1,14 @@
-name: CI
+name: Build and publish
 on:
-  - push
-  - pull_request
-  - workflow_dispatch
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - uses: c-hive/gha-npm-cache@v1
-      - run: npm ci
-      - run: npm test
+  tests:
+    uses: ./.github/workflows/tests.yml
   build:
-    needs: [test]
+    needs: [tests]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
