@@ -203,7 +203,29 @@ Then run it!
 
 ### Windows
 
-[**Download**](https://github.com/sindresorhus/caprine/releases/latest) the `.exe` file.
+<table>
+	<th>Method</th>
+	<th>Repository</th>
+	<th>Automatic Updates</th>
+	<th>Maintainer</th>
+	<th>How to install</th>
+	<tr>
+		<td>Manually</td>
+		<td>GitHub</td>
+		<td align="center">❌</td>
+		<td>Official</td>
+		<td>
+			<a href="https://github.com/sindresorhus/caprine/releases/latest">Download</a> the .exe file
+		</td>
+	</tr>
+	<tr>
+		<td>Chocolatey</td>
+		<td>Community</td>
+		<td align="center">✔️</td>
+		<td>Michael Quevillon</td>
+		<td><code>choco install caprine</code></td>
+	</tr>
+</table>
 
 *For taskbar notification badges to work on Windows 10, you'll need to [enable them in Taskbar Settings](https://www.tenforums.com/tutorials/48186-taskbar-buttons-hide-show-badges-windows-10-a.html).*
 
