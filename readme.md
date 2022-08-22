@@ -168,9 +168,20 @@ sudo apt install caprine
 
 #### Copr:
 
+For Fedora / RHEL:
+
 ```sh
 sudo dnf copr enable dusansimic/caprine
 sudo dnf install caprine
+```
+
+For openSUSE:
+- Create a new file in `/etc/zypp/repos.d/caprine.repo`.
+- Copy the contents of [this file](https://copr.fedorainfracloud.org/coprs/dusansimic/caprine/repo/opensuse-tumbleweed/dusansimic-caprine-opensuse-tumbleweed.repo) and paste them into the file you just created.
+
+Alternatively use the following one-liner:
+```sh
+curl -s https://copr.fedorainfracloud.org/coprs/dusansimic/caprine/repo/opensuse-tumbleweed/dusansimic-caprine-opensuse-tumbleweed.repo | sudo tee /etc/zypp/repos.d/caprine.repo
 ```
 
 #### AppImage:
