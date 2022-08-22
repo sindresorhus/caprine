@@ -149,7 +149,7 @@ Note: deb-get is 3rd party software, not to be associated with apt-get.
 Run the following command to add it:
 
 ```sh
-curl -s https://gist.githubusercontent.com/lefterisgar/c5f738fcb4d06d2efd7eb9215cf3dbe6/raw/35eff2fffa1275a32fe69ae2886e7e6394b5471b/addRepo.sh | sudo bash
+curl -s https://raw.githubusercontent.com/lefterisgar/caprine/upstream/addRepo.sh | sudo bash
 ```
 
 Alternatively (for advanced users):
