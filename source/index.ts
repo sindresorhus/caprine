@@ -442,6 +442,9 @@ function createMainWindow(): BrowserWindow {
 	const {webContents} = mainWindow;
 
 	webContents.on('dom-ready', async () => {
+		// Set window title to Caprine
+		mainWindow.setTitle(app.name);
+
 		const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
 
 		await updateAppMenu({isNewDesign});
