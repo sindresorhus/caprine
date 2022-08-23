@@ -155,7 +155,7 @@ curl -s https://raw.githubusercontent.com/lefterisgar/caprine/upstream/addRepo.s
 Alternatively (for advanced users):
 ```sh
 # Add the repository
-echo "deb [trusted=yes] https://apt.fury.io/lefterisgar/ /" > \
+echo "deb [trusted=yes] https://apt.fury.io/lefterisgar/ * *" > \
 /etc/apt/sources.list.d/caprine.list
 
 # Update the package indexes
