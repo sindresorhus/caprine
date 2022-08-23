@@ -132,34 +132,25 @@ html.private-mode .gvxzyvdx.aeinzg81.t7p7dqev.gh25dzvf.rse6dlih.ocv3nf92.nfkogya
 /* -- Sidebar views -- */
 
 /* Hidden: Hide sidebar */
-html.sidebar-hidden .o36gj0jk.tkr6xdv7 {
-	visibility: hidden;
-	min-width: 0;
-	max-width: 0;
-	width: 0;
-	height: 0;
-}
-
-/* Narrow: Hide conversation previews */
-html.sidebar-force-narrow .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3 > div:nth-child(2),
-html.sidebar-force-narrow .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3 > div:nth-child(3) {
-	visibility: hidden;
-}
-/* Narrow: Hide search bar */
-html.sidebar-force-narrow .rq0escxv.j83agx80.cbu4d94t.k4urcfbm {
+html.sidebar-hidden .bdao358l.om3e55n1.alzwoclg.cqf1kptm.gvxzyvdx.aeinzg81.jez8cy9q.fawcizw8.sl4bvocy.mm98tyaj.b0ur3jhr.f76nr8pf {
 	display: none;
 }
-/* Narrow: Conversation list header */
-html.sidebar-force-narrow .ahb00how {
+
+/* Narrow: Hide preferences button */
+html.sidebar-force-narrow .pvreidsc.r227ecj6.n68fow1o.gt60zsk1.lth9pzmp {
+	display: none;
+}
+/* Narrow: Hide conversation previews */
+html.sidebar-force-narrow .bdao358l.om3e55n1.g4tp4svg.alzwoclg.cqf1kptm.jez8cy9q.gvxzyvdx.aeinzg81.cgu29s5g {
+	display: none;
+}
+/* Narrow: Hide search bar */
+html.sidebar-force-narrow .bdao358l.om3e55n1.g4tp4svg.r227ecj6.gt60zsk1.rj2hsocd.f9xcifuu {
 	display: none;
 }
 /* Narrow: Width of conversation list */
-html.sidebar-force-narrow .rq0escxv.l9j0dhe7.j83agx80.cbu4d94t.d2edcug0.hpfvmrgz.pfnyh3mw.dp1hu0rb.rek2kq2y.o36gj0jk.tkr6xdv7.ezfq3ill {
-	width: 88px;
-}
-/* Narrow: Remove scrollbar from conversation list */
-html.sidebar-force-narrow .oj68ptkr.jk6sbkaj.kdgqqoy6.ihh4hy1g.qttc61fc.datstx6m.k4urcfbm {
-	visibility: hidden;
+html.sidebar-force-narrow .bdao358l.om3e55n1.alzwoclg.cqf1kptm.gvxzyvdx.aeinzg81.jez8cy9q.fawcizw8.sl4bvocy.mm98tyaj.b0ur3jhr.f76nr8pf {
+	width: 80px;
 }
 
 /* -- Toggle message buttons -- */
