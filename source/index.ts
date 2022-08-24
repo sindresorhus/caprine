@@ -378,7 +378,7 @@ function createMainWindow(): BrowserWindow {
 
 (async () => {
 	await Promise.all([ensureOnline(), app.whenReady()]);
-	await updateAppMenu({isNewDesign: false});
+	await updateAppMenu();
 	mainWindow = createMainWindow();
 
 	// Workaround for https://github.com/electron/electron/issues/5256
@@ -395,8 +395,7 @@ function createMainWindow(): BrowserWindow {
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
 			async click() {
-				const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
-				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {isNewDesign}));
+				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications'));
 			},
 		};
 
@@ -445,9 +444,7 @@ function createMainWindow(): BrowserWindow {
 		// Set window title to Caprine
 		mainWindow.setTitle(app.name);
 
-		const isNewDesign = await ipcMain.callRenderer<undefined, boolean>(mainWindow, 'check-new-ui');
-
-		await updateAppMenu({isNewDesign});
+		await updateAppMenu();
 
 		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css', 'scrollbar.css'];
 
@@ -484,7 +481,7 @@ function createMainWindow(): BrowserWindow {
 			ipcMain.answerRenderer('update-dnd-mode', async (initialSoundsValue: boolean) => {
 				doNotDisturb.on('change', (doNotDisturb: boolean) => {
 					isDNDEnabled = doNotDisturb;
-					ipcMain.callRenderer(mainWindow, 'toggle-sounds', {isNewDesign, checked: isDNDEnabled ? false : initialSoundsValue});
+					ipcMain.callRenderer(mainWindow, 'toggle-sounds', {checked: isDNDEnabled ? false : initialSoundsValue});
 				});
 
 				isDNDEnabled = await doNotDisturb.isEnabled();
@@ -494,7 +491,6 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {
-			isNewDesign,
 			defaultStatus: config.get('notificationsMuted'),
 		}));
 
