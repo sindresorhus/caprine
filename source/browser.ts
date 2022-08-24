@@ -603,7 +603,6 @@ async function deleteSelectedConversation(): Promise<void> {
 	});
 }
 
-
 async function openPreferences(): Promise<void> {
 	await withSettingsMenu(() => {
 		selectMenuItem(1);
