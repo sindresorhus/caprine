@@ -522,7 +522,7 @@ async function jumpToConversation(key: number): Promise<void> {
 
 // Focus on the conversation with the given index
 async function selectConversation(index: number): Promise<void> {
-	const list = await elementReady<HTMLElement>(selectors.conversationList, {stopOnDomReady: false})
+	const list = await elementReady<HTMLElement>(selectors.conversationList, {stopOnDomReady: false});
 
 	if (!list) {
 		console.error('Could not find conversations list', selectors.conversationList);
@@ -546,7 +546,7 @@ function selectedConversationIndex(offset = 0): number {
 		return -1;
 	}
 
-	const newSelected = selected.parentNode!.parentNode!.parentNode! as HTMLElement
+	const newSelected = selected.parentNode!.parentNode!.parentNode! as HTMLElement;
 
 	const list = [...newSelected.parentNode!.children];
 	const index = list.indexOf(newSelected) + offset;
