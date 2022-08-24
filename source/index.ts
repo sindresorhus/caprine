@@ -448,9 +448,7 @@ function createMainWindow(): BrowserWindow {
 
 		const files = ['browser.css', 'dark-mode.css', 'vibrancy.css', 'code-blocks.css', 'autoplay.css', 'scrollbar.css'];
 
-		const cssPath = isNewDesign
-			? path.join(__dirname, '..', 'css', 'new-design')
-			: path.join(__dirname, '..', 'css');
+		const cssPath = path.join(__dirname, '..', 'css');
 
 		for (const file of files) {
 			if (existsSync(path.join(cssPath, file))) {
