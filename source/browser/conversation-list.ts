@@ -74,27 +74,9 @@ async function createIcons(element: HTMLElement, url: string): Promise<void> {
 	element.setAttribute(icon.unread, canvas.toDataURL());
 }
 
-async function discoverIcons(isNewDesign: boolean, element: HTMLElement): Promise<void> {
-	if (isNewDesign) {
-		if (element) {
-			return createIcons(element, element.getAttribute('src')!);
-		}
-	} else {
-		const profilePicElement = element.querySelector<HTMLImageElement>('img:first-of-type');
-
-		if (profilePicElement) {
-			return createIcons(element, profilePicElement.src);
-		}
-
-		const groupPicElement = element.firstElementChild as (HTMLElement | undefined);
-
-		if (groupPicElement) {
-			const groupPicBackground = groupPicElement.style.backgroundImage;
-
-			if (groupPicBackground) {
-				return createIcons(element, groupPicBackground.replace(/^url\(["']?(.*?)["']?\)$/, '$1'));
-			}
-		}
+async function discoverIcons(element: HTMLElement): Promise<void> {
+	if (element) {
+		return createIcons(element, element.getAttribute('src')!);
 	}
 
 	console.warn('Could not discover profile picture. Falling back to default image.');
@@ -110,13 +92,13 @@ async function discoverIcons(isNewDesign: boolean, element: HTMLElement): Promis
 	return createIcons(element, 'https://facebook.com/favicon.ico');
 }
 
-async function getIcon(isNewDesign: boolean, element: HTMLElement, unread: boolean): Promise<string> {
+async function getIcon(element: HTMLElement, unread: boolean): Promise<string> {
 	if (element === null) {
 		return icon.read;
 	}
 
 	if (!element.getAttribute(icon.read)) {
-		await discoverIcons(isNewDesign, element);
+		await discoverIcons(element);
 	}
 
 	return element.getAttribute(unread ? icon.unread : icon.read)!;
@@ -155,13 +137,13 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 	conversation.label = await getLabel(unparsedLabel);
 
 	const iconElement = element.querySelector<HTMLElement>('img')!;
-	conversation.icon = await getIcon(true, iconElement, conversation.unread);
+	conversation.icon = await getIcon(iconElement, conversation.unread);
 
 	return conversation as Conversation;
 }
 
 async function createConversationList(): Promise<Conversation[]> {
-	const conversationListSelector = selectors.conversationListNewDesign;
+	const conversationListSelector = selectors.conversationList;
 
 	const list = await elementReady<HTMLElement>(conversationListSelector, {
 		stopOnDomReady: false,
@@ -174,7 +156,7 @@ async function createConversationList(): Promise<Conversation[]> {
 
 	const elements: HTMLElement[] = [...list.children] as HTMLElement[];
 
-	// Remove last element from childer list on new design
+	// Remove last element from childer list
 	elements.splice(-1, 1);
 
 	const conversations: Conversation[] = await Promise.all(elements.map(async element => createConversationNewDesign(element)));

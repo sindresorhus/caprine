@@ -1,11 +1,7 @@
-export interface INewDesign {
-	isNewDesign: boolean;
-}
-
-export interface IToggleSounds extends INewDesign {
+export interface IToggleSounds {
 	checked: boolean;
 }
 
-export interface IToggleMuteNotifications extends INewDesign {
+export interface IToggleMuteNotifications {
 	defaultStatus: boolean;
 }

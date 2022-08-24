@@ -6,11 +6,10 @@ import selectors from './browser/selectors';
 import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
-import {INewDesign, IToggleSounds} from './types';
+import {IToggleSounds} from './types';
 
 const {nativeTheme} = require('@electron/remote');
 
-const selectedConversationSelector = '._5l-3._1ht1._1ht2';
 const selectedConversationNewDesign = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
 const preferencesSelector = '._10._4ebx.uiLayer._4-hy';
 const preferencesSelectorNewDesign = 'div[class="bdao358l om3e55n1 g4tp4svg"] > div:nth-of-type(3) > div';
@@ -175,12 +174,8 @@ async function openSearchInConversation() {
 	}
 }
 
-ipc.answerMain('search', (isNewDesign: boolean) => {
-	if (isNewDesign) {
-		openSearchInConversation();
-	} else {
-		document.querySelector<HTMLElement>('._3szo:nth-of-type(1)')!.click();
-	}
+ipc.answerMain('search', () => {
+	openSearchInConversation();
 });
 
 ipc.answerMain('insert-gif', () => {
@@ -207,22 +202,22 @@ ipc.answerMain('next-conversation', nextConversation);
 
 ipc.answerMain('previous-conversation', previousConversation);
 
-ipc.answerMain('mute-conversation', async ({isNewDesign}: INewDesign) => {
-	await openMuteModal(isNewDesign);
+ipc.answerMain('mute-conversation', async () => {
+	await openMuteModal();
 });
 
-ipc.answerMain('delete-conversation', async ({isNewDesign}: INewDesign) => {
-	await deleteSelectedConversation(isNewDesign);
+ipc.answerMain('delete-conversation', async () => {
+	await deleteSelectedConversation();
 });
 
-ipc.answerMain('hide-conversation', async ({isNewDesign}: INewDesign) => {
-	const index = selectedConversationIndex(isNewDesign);
+ipc.answerMain('hide-conversation', async () => {
+	const index = selectedConversationIndex();
 
 	if (index !== -1) {
-		await hideSelectedConversation(isNewDesign);
+		await hideSelectedConversation();
 
 		const key = index + 1;
-		await jumpToConversation(isNewDesign, key);
+		await jumpToConversation(key);
 	}
 });
 
@@ -236,11 +231,6 @@ async function openHiddenPreferences(): Promise<boolean> {
 		document.body.append(style);
 
 		await openPreferences();
-
-		if (!isNewDesign) {
-			// Will clean up itself after the preferences are closed
-			document.querySelector<HTMLElement>(preferencesSelector)!.append(style);
-		}
 
 		return true;
 	}
@@ -274,7 +264,7 @@ ipc.answerMain('toggle-mute-notifications', async () => {
 		await closePreferences();
 	}
 
-	return !isNewDesign && !notificationCheckbox.checked;
+	return !notificationCheckbox.checked;
 });
 
 ipc.answerMain('toggle-message-buttons', () => {
@@ -485,58 +475,54 @@ ipc.answerMain('render-native-emoji', (emoji: string): string => {
 	return dataUrl;
 });
 
-ipc.answerMain('zoom-reset', ({isNewDesign}: INewDesign) => {
-	setZoom(isNewDesign, 1);
+ipc.answerMain('zoom-reset', () => {
+	setZoom(1);
 });
 
-ipc.answerMain('zoom-in', ({isNewDesign}: INewDesign) => {
+ipc.answerMain('zoom-in', () => {
 	const zoomFactor = config.get('zoomFactor') + 0.1;
 
 	if (zoomFactor < 1.6) {
-		setZoom(isNewDesign, zoomFactor);
+		setZoom(zoomFactor);
 	}
 });
 
-ipc.answerMain('zoom-out', ({isNewDesign}: INewDesign) => {
+ipc.answerMain('zoom-out', () => {
 	const zoomFactor = config.get('zoomFactor') - 0.1;
 
 	if (zoomFactor >= 0.8) {
-		setZoom(isNewDesign, zoomFactor);
+		setZoom(zoomFactor);
 	}
 });
 
 ipc.answerMain('jump-to-conversation', async (key: number) => {
-	await jumpToConversation(await isNewDesign(), key);
+	await jumpToConversation(key);
 });
 
 async function nextConversation(): Promise<void> {
-	const newDesign = await isNewDesign();
-	const index = selectedConversationIndex(newDesign, 1);
+	const index = selectedConversationIndex(1);
 
 	if (index !== -1) {
-		await selectConversation(newDesign, index);
+		await selectConversation(index);
 	}
 }
 
 async function previousConversation(): Promise<void> {
-	const newDesign = await isNewDesign();
-	const index = selectedConversationIndex(newDesign, -1);
+	const index = selectedConversationIndex(-1);
 
 	if (index !== -1) {
-		await selectConversation(newDesign, index);
+		await selectConversation(index);
 	}
 }
 
-async function jumpToConversation(isNewDesign: boolean, key: number): Promise<void> {
+async function jumpToConversation(key: number): Promise<void> {
 	const index = key - 1;
-	await selectConversation(isNewDesign, index);
+	await selectConversation(index);
 }
 
 // Focus on the conversation with the given index
-async function selectConversation(isNewDesign: boolean, index: number): Promise<void> {
-	const list = isNewDesign
-		? await elementReady<HTMLElement>(selectors.conversationListNewDesign, {stopOnDomReady: false})
-		: await elementReady<HTMLElement>(selectors.conversationList, {stopOnDomReady: false});
+async function selectConversation(index: number): Promise<void> {
+	const list = await elementReady<HTMLElement>(selectors.conversationList, {stopOnDomReady: false});
 
 	if (!list) {
 		console.error('Could not find conversations list', selectors.conversationList);
@@ -550,23 +536,17 @@ async function selectConversation(isNewDesign: boolean, index: number): Promise<
 		return;
 	}
 
-	((isNewDesign ? conversation.querySelector('[role=link]') : conversation.firstChild!.firstChild) as HTMLElement).click();
+	conversation.querySelector<HTMLLegendElement>('[role=link]')!.click();
 }
 
-function selectedConversationIndex(isNewDesign: boolean, offset = 0): number {
-	const selected
-		// Old UI
-		= document.querySelector<HTMLElement>(selectedConversationSelector)
-		// Newest UI
-		?? document.querySelector<HTMLElement>(selectedConversationNewDesign);
+function selectedConversationIndex(offset = 0): number {
+	const selected = document.querySelector<HTMLElement>(selectedConversationNewDesign);
 
 	if (!selected) {
 		return -1;
 	}
 
-	const newSelected = isNewDesign
-		? selected.parentNode!.parentNode!.parentNode! as HTMLElement
-		: selected;
+	const newSelected = selected.parentNode!.parentNode!.parentNode! as HTMLElement;
 
 	const list = [...newSelected.parentNode!.children];
 	const index = list.indexOf(newSelected) + offset;
@@ -574,32 +554,27 @@ function selectedConversationIndex(isNewDesign: boolean, offset = 0): number {
 	return ((index % list.length) + list.length) % list.length;
 }
 
-function setZoom(isNewDesign: boolean, zoomFactor: number): void {
+function setZoom(zoomFactor: number): void {
 	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
-	node.textContent = `${isNewDesign ? selectors.conversationSelectorNewDesign : selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
+	node.textContent = `${selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
 	config.set('zoomFactor', zoomFactor);
 }
 
-async function withConversationMenu(isNewDesign: boolean, callback: () => void): Promise<void> {
+async function withConversationMenu(callback: () => void): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	let menuButton: HTMLElement | null = null;
-	if (isNewDesign) {
-		const conversation = document.querySelector<HTMLElement>(`${selectedConversationNewDesign}`)?.parentElement?.parentElement?.parentElement?.parentElement;
-		menuButton = conversation?.querySelector('[aria-label=Menu][role=button]') ?? null;
-	} else {
-		menuButton = document.querySelector<HTMLElement>(
-			`${selectedConversationSelector} [aria-haspopup=true] [role=button]`,
-		);
-	}
+	const conversation = document.querySelector<HTMLElement>(`${selectedConversationNewDesign}`)?.parentElement?.parentElement?.parentElement?.parentElement;
+
+	menuButton = conversation?.querySelector('[aria-label=Menu][role=button]') ?? null;
 
 	if (menuButton) {
 		await withMenu(menuButton, callback);
 	}
 }
 
-async function openMuteModal(isNewDesign: boolean): Promise<void> {
-	await withConversationMenu(isNewDesign, () => {
-		selectMenuItem(isNewDesign ? 2 : 1);
+async function openMuteModal(): Promise<void> {
+	await withConversationMenu(() => {
+		selectMenuItem(2);
 	});
 }
 
@@ -610,25 +585,21 @@ This function assumes:
 
 In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
-function isSelectedConversationGroup(isNewDesign: boolean): boolean {
-	const separator = isNewDesign;
-
-	document.querySelector<HTMLElement>(`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`);
-
-	return Boolean(separator);
+function isSelectedConversationGroup(): boolean {
+	return Boolean(document.querySelector<HTMLElement>(`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
 }
 
-async function hideSelectedConversation(isNewDesign: boolean): Promise<void> {
-	await withConversationMenu(isNewDesign, () => {
-		const [isGroup, isNotGroup] = isNewDesign ? [5, 6] : [4, 3];
-		selectMenuItem(isSelectedConversationGroup(isNewDesign) ? isGroup : isNotGroup);
+async function hideSelectedConversation(): Promise<void> {
+	await withConversationMenu(() => {
+		const [isGroup, isNotGroup] = [5, 6];
+		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
 	});
 }
 
-async function deleteSelectedConversation(isNewDesign: boolean): Promise<void> {
-	await withConversationMenu(isNewDesign, () => {
-		const [isGroup, isNotGroup] = isNewDesign ? [6, 7] : [5, 4];
-		selectMenuItem(isSelectedConversationGroup(isNewDesign) ? isGroup : isNotGroup);
+async function deleteSelectedConversation(): Promise<void> {
+	await withConversationMenu(() => {
+		const [isGroup, isNotGroup] = [6, 7];
+		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
 	});
 }
 
@@ -741,15 +712,13 @@ document.addEventListener('animationstart', insertionListener, false);
 
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', async () => {
-	const newDesign = await isNewDesign();
-
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.append(style);
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = config.get('zoomFactor');
-	setZoom(newDesign, zoomFactor);
+	setZoom(zoomFactor);
 
 	// Enable OS specific styles
 	document.documentElement.classList.add(`os-${process.platform}`);
@@ -839,7 +808,7 @@ document.addEventListener('keydown', async event => {
 	const number = Number.parseInt(event.code.slice(-1), 10);
 
 	if (number >= 1 && number <= 9) {
-		await jumpToConversation(await isNewDesign(), number);
+		await jumpToConversation(number);
 	}
 });
 
@@ -853,7 +822,7 @@ window.addEventListener('message', async ({data: {type, data}}) => {
 		await sendReply(data.reply as string);
 
 		if (data.previousConversation) {
-			await selectConversation(await isNewDesign(), data.previousConversation as number);
+			await selectConversation(data.previousConversation as number);
 		}
 	}
 });
@@ -929,13 +898,7 @@ ipc.answerMain('notification-callback', (data: unknown) => {
 });
 
 ipc.answerMain('notification-reply-callback', async (data: any) => {
-	const previousConversation = selectedConversationIndex(await isNewDesign());
+	const previousConversation = selectedConversationIndex();
 	data.previousConversation = previousConversation;
 	window.postMessage({type: 'notification-reply-callback', data}, '*');
 });
-
-export async function isNewDesign(): Promise<boolean> {
-	return Boolean(await elementReady('._9dls', {stopOnDomReady: true}));
-}
-
-ipc.answerMain<undefined, boolean>('check-new-ui', async () => isNewDesign());

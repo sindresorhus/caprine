@@ -1,8 +1,6 @@
 export default {
-	conversationList: 'div[role="navigation"] > div > ul',
-	conversationListNewDesign: '[role=navigation] [role=grid]',
-	conversationSelector: '._4u-c._1wfr .__i_, ._4u-c._1wfr #conversationWindow',
-	conversationSelectorNewDesign: '[role=main] [role=grid]',
+	conversationList: '[role=navigation] [role=grid]',
+	conversationSelector: '[role=main] [role=grid]',
 	notificationCheckbox: '._374b:nth-of-type(4) ._4ng2 input',
 	rightSidebarButtons: '.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.f4tghd1a.ifue306u.kuivcneq.t63ysoy8 [role=button]',
 	rightSidebarSegments: '.oajrlxb2.gs1a9yip.g5ia77u1.mtkw9kbi.tlpljxtp.qensuy8j.ppp5ayq2.goun2846.ccm00jje.s44p3ltw.mk2mc5f4.rt8b4zig.n8ej3o3l.agehan2d.sk4xxmp2.rq0escxv.nhd2j8a9.mg4g778l.pfnyh3mw.p7hjln8o.kvgmc6g5.cxmmr5t8.oygrvhab.hcukyx3x.tgvbjcpo.hpfvmrgz.jb3vyjys.rz4wbd8a.qt6c0cv9.a8nywdso.l9j0dhe7.i1ao9s8h.esuyzwwr.f1sip0of.du4w35lb.btwxx1t3.abiwlrkh.p8dawk7l.j83agx80.lzcic4wl.beltcj47.p86d2i9g.aot14ch1.kzx2olss',
