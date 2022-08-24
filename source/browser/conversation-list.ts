@@ -156,7 +156,7 @@ async function createConversationList(): Promise<Conversation[]> {
 
 	const elements: HTMLElement[] = [...list.children] as HTMLElement[];
 
-	// Remove last element from childer list on new design
+	// Remove last element from childer list
 	elements.splice(-1, 1);
 
 	const conversations: Conversation[] = await Promise.all(elements.map(async element => createConversationNewDesign(element)));
