@@ -578,19 +578,31 @@ async function openMuteModal(): Promise<void> {
 	});
 }
 
+/*
+This function assumes:
+- There is a selected conversation.
+- That the conversation already has its conversation menu open.
+
+In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
+*/
+function isSelectedConversationGroup(): boolean {
+	return Boolean(document.querySelector<HTMLElement>(`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
+}
+
 async function hideSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const isGroup = 5;
-		selectMenuItem(isGroup);
+		const [isGroup, isNotGroup] = [5, 6];
+		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
 	});
 }
 
 async function deleteSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const isGroup = 6;
-		selectMenuItem(isGroup);
+		const [isGroup, isNotGroup] = [6, 7];
+		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
 	});
 }
+
 
 async function openPreferences(): Promise<void> {
 	await withSettingsMenu(() => {
