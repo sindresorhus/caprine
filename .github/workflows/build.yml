@@ -40,3 +40,7 @@ jobs:
           mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
+
+      - name: Upload to Gemfury
+        if: startsWith(matrix.os, 'ubuntu')
+        run: curl -F package=@$(find . -type f -name "*.deb") https://${{ secrets.gemfury_token }}@push.fury.io/lefterisgar/
