@@ -149,7 +149,7 @@ Note: deb-get is 3rd party software, not to be associated with apt-get.
 Run the following command to add it:
 
 ```sh
-wget -q -O- https://raw.githubusercontent.com/sindresorhus/caprine/main/addRepo.sh | sudo bash
+wget -q -O- https://raw.githubusercontent.com/sindresorhus/caprine/main/packages/deb/addRepo.sh | sudo bash
 ```
 
 Alternatively (for advanced users):
