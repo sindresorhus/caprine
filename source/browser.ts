@@ -48,8 +48,12 @@ async function withMenu(
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	// If ui is new, get the new settings menu
-	const settingsMenu = (await elementReady<HTMLElement>(selectors.userMenu, {stopOnDomReady: false}))!;
+	// Wait for navigation pane buttons to show up
+	await elementReady<HTMLElement>(selectors.userMenu, {stopOnDomReady: false});
+
+	// First button element in navigation pane is the user icon
+	const settingsMenu = document.querySelectorAll<HTMLElement>(selectors.userMenu)![0];
+	console.log(settingsMenu);
 
 	await withMenu(settingsMenu, callback);
 }
