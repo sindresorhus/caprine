@@ -1,4 +1,4 @@
-import * as path from 'node:path';
+import path from 'node:path';
 import {readFileSync, existsSync} from 'node:fs';
 import {
 	app,
@@ -14,13 +14,13 @@ import {
 } from 'electron';
 import {ipcMain} from 'electron-better-ipc';
 import {autoUpdater} from 'electron-updater';
-import electronDl = require('electron-dl');
-import electronContextMenu = require('electron-context-menu');
-import electronLocalshortcut = require('electron-localshortcut');
-import electronDebug = require('electron-debug');
+import electronDl from 'electron-dl';
+import electronContextMenu from 'electron-context-menu';
+import electronLocalshortcut from 'electron-localshortcut';
+import electronDebug from 'electron-debug';
 import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
-import doNotDisturb = require('@sindresorhus/do-not-disturb');
+import doNotDisturb from '@sindresorhus/do-not-disturb';
 import updateAppMenu from './menu';
 import config from './config';
 import tray from './tray';
