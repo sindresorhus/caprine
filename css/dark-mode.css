@@ -200,6 +200,6 @@ html.dark-mode ._9xq0 {
 
 /* Search results: Close button */
 /* TODO: Remove when fixed by fb, since --always-white is not good here */
-.q2y6ezfg {
-	background-color: var(--secondary-button-background) !important;
+html.dark-mode .x14hiurz {
+	background-color: transparent !important;
 }
