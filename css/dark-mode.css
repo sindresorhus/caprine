@@ -15,6 +15,7 @@
 	--list-header-color: #222;
 	--blue: #0084ff;
 	--white: #fff;
+	--hover-overlay: rgba(255, 255, 255, 0.1);
 }
 
 html.dark-mode body {
@@ -205,13 +206,15 @@ html.dark-mode .x14hiurz {
 }
 
 /* Attachement Background Color in Chat Box*/
-/* TODO: Remove when fixed by fb, since --always-white is not good here */
-.__fb-dark-mode .x1ybostu {
-    background-color: #65676b;
+/* TODO: Remove when fixed by fb, since #d6d9dd is too bright here */
+/* Hover overlay is same style as add attachment button */
+html.dark-mode .x1ybostu {
+    background-color: var(--hover-overlay);
 }
 
-/* FB has these "To:" tags in shades of blue */
-/* TODO: Remove when fixed by fb, since --always-white is not good here */
-.__fb-dark-mode .x4noic3{
+/* Recipient Pills in new message form*/
+/* TODO: Remove when fixed by fb, since #f3f3f4 is too bright here */
+/* It seems FB uses shades of blue here */
+html.dark-mode .x4noic3{
 	background-color: transparent;
 }
