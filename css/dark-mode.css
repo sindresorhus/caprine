@@ -203,3 +203,17 @@ html.dark-mode ._9xq0 {
 html.dark-mode .x14hiurz {
 	background-color: transparent !important;
 }
+
+/* Attachement Background Color in Chat Box */
+/* TODO: Remove when fixed by fb, since #d6d9dd is too bright here */
+/* Current Background-Color is same style as add attachment button */
+html.dark-mode .x1ybostu {
+	background-color: rgba(134 142 153 / 25%);
+}
+
+/* Recipient Pills in new message form */
+/* TODO: Remove when fixed by fb, since #f3f3f4 is too bright here */
+/* It seems FB uses shades of blue here */
+html.dark-mode .x4noic3 {
+	background-color: var(--secondary-button-background);
+}
