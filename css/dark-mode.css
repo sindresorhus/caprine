@@ -203,3 +203,15 @@ html.dark-mode ._9xq0 {
 html.dark-mode .x14hiurz {
 	background-color: transparent !important;
 }
+
+/* Attachement Background Color in Chat Box*/
+/* TODO: Remove when fixed by fb, since --always-white is not good here */
+.__fb-dark-mode .x1ybostu {
+    background-color: #65676b;
+}
+
+/* FB has these "To:" tags in shades of blue */
+/* TODO: Remove when fixed by fb, since --always-white is not good here */
+.__fb-dark-mode .x4noic3{
+	background-color: transparent;
+}
