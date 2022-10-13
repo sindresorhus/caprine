@@ -206,7 +206,7 @@ html.dark-mode .x14hiurz {
 
 /* Attachement Background Color in Chat Box */
 /* TODO: Remove when fixed by fb, since #d6d9dd is too bright here */
-/* Hover overlay is same style as add attachment button */
+/* Current Background-Color is same style as add attachment button */
 html.dark-mode .x1ybostu {
 	background-color: rgba(134,142,153,.25);
 }
