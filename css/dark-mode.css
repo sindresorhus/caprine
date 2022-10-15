@@ -220,5 +220,5 @@ html.dark-mode .x4noic3 {
 
 /* Invite notification: join room */
 html.dark-mode .x1qhmfi1 {
-	background-color: var(--container-color);
+	background-color: var(--secondary-button-background);
 }
