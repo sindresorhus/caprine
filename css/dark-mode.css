@@ -217,3 +217,8 @@ html.dark-mode .x1ybostu {
 html.dark-mode .x4noic3 {
 	background-color: var(--secondary-button-background);
 }
+
+/* Messenger Group icon */
+html.dark-mode .x1p6odiv {
+	color: var(--primary-icon);
+}
