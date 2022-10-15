@@ -217,3 +217,8 @@ html.dark-mode .x1ybostu {
 html.dark-mode .x4noic3 {
 	background-color: var(--secondary-button-background);
 }
+
+/* Invite notification: join room */
+html.dark-mode .x1qhmfi1 {
+	background-color: var(--container-color);
+}
