@@ -218,6 +218,11 @@ html.dark-mode .x4noic3 {
 	background-color: var(--secondary-button-background);
 }
 
+/* Create room icon color */
+html.dark-mode .x1p6odiv {
+	color: var(--primary-icon);
+}
+
 /* Invite notification: join room */
 /* TODO: Fix for secondary-button-background variable overwritten by inline css, remove once */
 /* fixed by Facebook */
