@@ -9,10 +9,16 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: c-hive/gha-npm-cache@v1
-      - run: npm ci
-      - run: npm test
+          cache: 'npm'
+
+      - name: Run tests
+        run: |
+            npm ci
+            npm test
