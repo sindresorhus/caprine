@@ -139,12 +139,6 @@ html.dark-mode ._9xq0 {
 	color: var(--primary-text);
 }
 
-/* Icons made with SVG (create a room, preferences options, etc.) */
-.b6ax4al1.m4pnbp5e.somyomsx.ahndzqod.g4fisb7v > path {
-	fill: currentcolor;
-	color: var(--primary-text);
-}
-
 /* Chat list: Mute icon */
 .bp9cbjyn.j83agx80.btwxx1t3 .dlv3wnog.lupvgy83 .a8c37x1j {
 	fill: currentcolor;
@@ -193,8 +187,7 @@ html.dark-mode ._9xq0 {
 /* Backgrounds of various buttons ("Visit Group", audio call, etc.) */
 /* TODO: Remove when fixed by fb, since -floating should not be here */
 /* Audio / video call */
-.qmqpeqxj.e7u6y3za.qwcclf47.nmlomj2f.i85zmo3j.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fxk3tzhb.jcxyg2ei.om3e55n1.a5wdgl2o.jvc6uz2b.g90fjkqk,
-.om3e55n1.g4tp4svg.alzwoclg.jez8cy9q.jcxyg2ei.i85zmo3j.sr926ui1.jl2a5g8c.k7n6ui8p.b41d885q.hmqrhxox.got7tec9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.aesu6q9g.e4ay1f3w.a5wdgl2o.ed17d2qt {
+.x14yjl9h.xudhj91.x18nykt9.xww2gxu.x6s0dn4.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x3nfvp2.xl56j7k.x1n2onr6.x1qhmfi1.xc9qbxq.x14qfxbe {
 	background-color: var(--secondary-button-background-floating) !important;
 }
 
