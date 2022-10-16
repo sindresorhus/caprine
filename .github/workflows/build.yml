@@ -23,9 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
-      - name: Setup cache
-        uses: c-hive/gha-npm-cache@v1
+          cache: 'npm'
 
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
