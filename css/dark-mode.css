@@ -232,3 +232,7 @@ html.dark-mode .xxymvpz.x6ikm8r.x10wlt62.x5yr21d.x230xth.xmjcpbm.x168nmei.x13lgx
 html.dark-mode .x1qhmfi1 {
 	background-color: var(--secondary-button-background);
 }
+
+html.dark-mode .x1qhmfi1 {
+	background-color: rgba(134 142 153 / 25%);
+}
