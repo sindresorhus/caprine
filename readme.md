@@ -26,7 +26,7 @@
 	</a>
 </div>
 
-## Highlights
+## ✨ Highlights
 
 - [Dark theme](#dark-mode)
 - [Vibrant theme](#vibrancy-macos-only)\*
@@ -45,7 +45,7 @@
 
 \*macOS only
 
-## Install
+## ⬇️ Install
 
 *macOS 10.10+, Linux, and Windows 7+ are supported (64-bit only).*
 
@@ -368,7 +368,7 @@ Preferences            | <kbd>Command/Control</kbd> <kbd>,</kbd>
 
 On macOS, you can [change these in the System Preferences](https://www.intego.com/mac-security-blog/how-to-make-custom-keyboard-shortcuts-for-any-macos-menu-items-and-to-launch-your-favorite-apps/) and you can even add your own keyboard shortcuts for menu items without a predefined keyboard shortcut.
 
-## FAQ
+## 📖 FAQ
 
 #### Can I contribute localizations?
 
@@ -376,7 +376,7 @@ The main app interface is already localized by Facebook. The app menus are not l
 
 ---
 
-## Dev
+## 🔨 Dev
 
 Built with [Electron](https://electronjs.org).
 
@@ -398,7 +398,7 @@ npm run release
 
 Then edit the automatically created GitHub Releases draft and publish.
 
-## Maintainers
+## 👨‍🔧 Maintainers
 
 - [Dušan Simić](https://github.com/dusansimic)
 - [Lefteris Garyfalakis](https://github.com/lefterisgar)
@@ -409,7 +409,7 @@ Then edit the automatically created GitHub Releases draft and publish.
 
 - [Jarek Radosz](https://github.com/CvX)
 
-## Links
+## 🔗 Links
 
 - [Product Hunt post](https://www.producthunt.com/posts/caprine-2)
 
@@ -418,6 +418,6 @@ Then edit the automatically created GitHub Releases draft and publish.
 - [The Essential Windows Apps for 2018 - Lifehacker](https://lifehacker.com/lifehacker-pack-for-windows-our-list-of-the-essential-1828117805)
 - [Caprine review: Customize Facebook Messenger on Windows 10 - Windows Central](https://www.windowscentral.com/caprine-review-customizing-facebook-messenger-windows-10)
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 Caprine is a third-party app and is not affiliated with Facebook.
