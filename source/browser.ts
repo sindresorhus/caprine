@@ -179,19 +179,19 @@ ipc.answerMain('search', () => {
 });
 
 ipc.answerMain('insert-gif', () => {
-	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(3) > span > div')!.click();
+	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(3) > span > div')!.click();
 });
 
 ipc.answerMain('insert-emoji', async () => {
-	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(5) > span > div')!.click();
+	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(5) > span > div')!.click();
 });
 
 ipc.answerMain('insert-sticker', () => {
-	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(2) > span > div')!.click();
+	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(2) > span > div')!.click();
 });
 
 ipc.answerMain('attach-files', () => {
-	document.querySelector<HTMLElement>('.om3e55n1.cgu29s5g > div:nth-child(1) > span > div')!.click();
+	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(1) > span > div')!.click();
 });
 
 ipc.answerMain('focus-text-input', () => {
