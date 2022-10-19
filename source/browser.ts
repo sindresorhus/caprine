@@ -106,7 +106,7 @@ ipc.answerMain('new-conversation', async () => {
 });
 
 ipc.answerMain('new-room', async () => {
-	document.querySelector<HTMLElement>('.qi72231t.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.kmwttqpk.dnr7xe2t.aeinzg81.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq.g90fjkqk.jvc6uz2b.bdao358l.alzwoclg.i85zmo3j.jcxyg2ei.srn514ro.oxkhqvkx.rl78xhln.nch0832m.om3e55n1.qmqpeqxj.e7u6y3za.qwcclf47.nmlomj2f.frfouenu.bonavkto.djs4p424.r7bn319e')!.click();
+	document.querySelector<HTMLElement>('.x16n37ib .x1i10hfl.x6umtig.x1b1mbwd.xaqea5y.xav7gou.x1ypdohk.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x16tdsg8.x1hl2dhg.xggy1nq.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.x14yjl9h.xudhj91.x18nykt9.xww2gxu.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x78zum5.xl56j7k.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.xc9qbxq.x14qfxbe.x1qhmfi1')!.click();
 });
 
 ipc.answerMain('log-out', async () => {
