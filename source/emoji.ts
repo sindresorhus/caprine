@@ -3,7 +3,7 @@ import {
 	nativeImage,
 	NativeImage,
 	MenuItemConstructorOptions,
-	Response,
+	CallbackResponse,
 	Menu,
 } from 'electron';
 import {is} from 'electron-util';
@@ -297,7 +297,7 @@ this URL:  https://static.xx.fbcdn.net/images/emoji.php/v9/t27/2/32/1f600.png
 with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
                                                  (see here) ^
 */
-export async function process(url: string): Promise<Response> {
+export async function process(url: string): Promise<CallbackResponse> {
 	const emojiStyle = config.get('emojiStyle') as EmojiStyle;
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
