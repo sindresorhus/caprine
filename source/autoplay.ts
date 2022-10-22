@@ -69,7 +69,7 @@ function disableVideoAutoplay(videos: NodeListOf<HTMLVideoElement>): void {
 		image.setAttribute('height', height);
 		image.setAttribute('width', width);
 
-		// Create a seperate instance of the play icon
+		// Create a separate instance of the play icon
 		// Clone the existing icon to get the original events
 		// Without creating a new icon, Messenger auto-hides the icon when scrolled to the video
 		const copiedPlayIcon = playIcon.cloneNode(true) as HTMLElement;
