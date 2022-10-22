@@ -37,6 +37,7 @@
 		"facebook-locales": "^1.0.916",
 		"is-online": "^9.0.1",
 		"json-schema-typed": "^8.0.1",
+		"keyv": "^4.5.0",
 		"lodash": "^4.17.21",
 		"npm-check-updates": "^16.0.5",
 		"p-wait-for": "^3.2.0"
