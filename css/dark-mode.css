@@ -174,10 +174,10 @@ html.dark-mode ._9xq0 {
 	--accent: var(--primary-text);
 }
 
-/* Backgrounds of various buttons ("Visit Group", audio call, etc.) */
+/* Backgrounds of various buttons ("Join room", "Visit Group", Audio call, etc.) */
 /* TODO: Remove when fixed by fb, since -floating should not be here */
-/* Audio / video call */
-.x14yjl9h.xudhj91.x18nykt9.xww2gxu.x6s0dn4.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x3nfvp2.xl56j7k.x1n2onr6.x1qhmfi1.xc9qbxq.x14qfxbe {
+html.dark-mode .x14yjl9h.xudhj91.x18nykt9.xww2gxu.x6s0dn4.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x3nfvp2.xl56j7k.x1n2onr6.x1qhmfi1.xc9qbxq.x14qfxbe,
+html.dark-mode .x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.x1qhmfi1.x1r1pt67 {
 	background-color: var(--secondary-button-background-floating) !important;
 }
 
@@ -187,7 +187,7 @@ html.dark-mode .x14hiurz {
 	background-color: transparent !important;
 }
 
-/* Attachment Background Color in Chat Box */
+/* Attachment background color in Chat Box */
 /* TODO: Remove when fixed by fb, since #d6d9dd is too bright here */
 /* Current Background-Color is same style as add attachment button */
 html.dark-mode .x1ybostu {
@@ -204,14 +204,4 @@ html.dark-mode .x4noic3 {
 /* Create room icon color */
 html.dark-mode .x1p6odiv {
 	color: var(--primary-icon);
-}
-
-/* Invite notification: join room */
-/* TODO: Fix for secondary-button-background variable overwritten by inline css, remove once */
-/* fixed by Facebook */
-html.dark-mode .xxymvpz.x6ikm8r.x10wlt62.x5yr21d.x230xth.xmjcpbm.x168nmei.x13lgxp2.xrt01vj {
-	--secondary-button-background: rgba(255 255 255 10%) !important;
-}
-html.dark-mode .x1qhmfi1 {
-	background-color: var(--secondary-button-background);
 }
