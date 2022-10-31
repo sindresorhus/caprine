@@ -1,5 +1,5 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
-import elementReady = require('element-ready');
+import elementReady from 'element-ready';
 import {isNull} from 'lodash';
 import selectors from './selectors';
 
@@ -145,7 +145,7 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 async function createConversationList(): Promise<Conversation[]> {
 	const conversationListSelector = selectors.conversationList;
 
-	const list = await elementReady<HTMLElement>(conversationListSelector, {
+	const list = await elementReady(conversationListSelector, {
 		stopOnDomReady: false,
 	});
 
@@ -214,7 +214,7 @@ function countUnread(mutationsList: MutationRecord[]): void {
 }
 
 window.addEventListener('load', async () => {
-	const sidebar = await elementReady<HTMLElement>('[role=navigation]', {stopOnDomReady: false});
+	const sidebar = await elementReady('[role=navigation]', {stopOnDomReady: false});
 
 	if (sidebar) {
 		const conversationListObserver = new MutationObserver(async () => sendConversationList());
