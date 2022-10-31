@@ -9,12 +9,6 @@ import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
 import {IToggleSounds} from './types';
 
-const selectedConversation = '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]';
-const preferencesSelector = 'div[class="x78zum5 xdt5ytf xg6iff7 x1n2onr6"]';
-// TODO: Fix this selector for new design
-const messengerSoundsSelector = `${preferencesSelector} ._374d ._6bkz`;
-const conversationMenuSelectorNewDesign = '[role=menu]';
-
 async function withMenu(
 	menuButtonElement: HTMLElement,
 	callback: () => Promise<void> | void,
@@ -71,10 +65,10 @@ async function selectMenuItem(itemNumber: number): Promise<void> {
 	let selector;
 
 	// Wait for menu to show up
-	await elementReady(conversationMenuSelectorNewDesign, {stopOnDomReady: false});
+	await elementReady(selectors.conversationMenuSelectorNewDesign, {stopOnDomReady: false});
 
 	const items = document.querySelectorAll<HTMLElement>(
-		`${conversationMenuSelectorNewDesign} [role=menuitem]`,
+		`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]`,
 	);
 
 	// Negative items will select from the end
@@ -240,7 +234,7 @@ async function openHiddenPreferences(): Promise<boolean> {
 
 		const style = document.createElement('style');
 		// Hide both the backdrop and the preferences dialog
-		style.textContent = `${preferencesSelector} ._3ixn, ${preferencesSelector} ._59s7 { opacity: 0 !important }`;
+		style.textContent = `${selectors.preferencesSelector} ._3ixn, ${selectors.preferencesSelector} ._59s7 { opacity: 0 !important }`;
 		document.body.append(style);
 
 		await openPreferences();
@@ -254,7 +248,7 @@ async function openHiddenPreferences(): Promise<boolean> {
 async function toggleSounds({checked}: IToggleSounds): Promise<void> {
 	const shouldClosePreferences = await openHiddenPreferences();
 
-	const soundsCheckbox = document.querySelector<HTMLInputElement>(messengerSoundsSelector)!;
+	const soundsCheckbox = document.querySelector<HTMLInputElement>(`${selectors.preferencesSelector} ${selectors.messengerSoundsSelector}`)!;
 	if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
 		soundsCheckbox.click();
 	}
@@ -372,7 +366,7 @@ async function observeTheme(): Promise<void> {
 	}
 
 	// Attribute notation needed here to guarantee exact (not partial) match.
-	const modalElements = await elementReady(preferencesSelector, {stopOnDomReady: false});
+	const modalElements = await elementReady(selectors.preferencesSelector, {stopOnDomReady: false});
 	if (modalElements) {
 		observerNew.observe(modalElements, {childList: true});
 	}
@@ -554,7 +548,7 @@ async function selectConversation(index: number): Promise<void> {
 }
 
 function selectedConversationIndex(offset = 0): number {
-	const selected = document.querySelector<HTMLElement>(selectedConversation);
+	const selected = document.querySelector<HTMLElement>(selectors.selectedConversation);
 
 	if (!selected) {
 		return -1;
@@ -577,7 +571,7 @@ function setZoom(zoomFactor: number): void {
 async function withConversationMenu(callback: () => void): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	let menuButton: HTMLElement | null = null;
-	const conversation = document.querySelector<HTMLElement>(`${selectedConversation}`)?.parentElement?.parentElement?.parentElement?.parentElement;
+	const conversation = document.querySelector<HTMLElement>(`${selectors.selectedConversation}`)?.parentElement?.parentElement?.parentElement?.parentElement;
 
 	menuButton = conversation?.querySelector('[aria-label=Menu][role=button]') ?? null;
 
@@ -600,7 +594,7 @@ This function assumes:
 In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
 function isSelectedConversationGroup(): boolean {
-	return Boolean(document.querySelector<HTMLElement>(`${conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
+	return Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
 }
 
 async function hideSelectedConversation(): Promise<void> {
@@ -622,7 +616,7 @@ async function openPreferences(): Promise<void> {
 		selectMenuItem(1);
 	});
 
-	await elementReady(preferencesSelector, {stopOnDomReady: false});
+	await elementReady(selectors.preferencesSelector, {stopOnDomReady: false});
 }
 
 function isPreferencesOpen(): boolean {
@@ -641,7 +635,7 @@ async function closePreferences(): Promise<void> {
 		}
 	});
 
-	const preferencesOverlay = document.querySelector(preferencesSelector)!;
+	const preferencesOverlay = document.querySelector(selectors.preferencesSelector)!;
 
 	preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
 
