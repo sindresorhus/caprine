@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           caprine
-Version:        2.56.1
+Version:        2.57.0
 Release:        1%{?dist}
 Summary:        Elegant Facebook Messenger desktop app
 
@@ -56,6 +56,8 @@ install -Dm644 license %{buildroot}%{_datadir}/licenses/%{name}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Wed Nov 16 2022 dusansimic <dusan.simic1810@gmail.com> - 2.57.0-1
+- Release 2.57.0
 * Mon Aug 22 2022 dusansimic <dusan.simic1810@gmail.com> - 2.56.1-1
 - Release 2.56.1
 * Thu Aug 18 2022 dusansimic <dusan.simic1810@gmail.com> - 2.56.0-1
@@ -69,22 +71,22 @@ install -Dm644 license %{buildroot}%{_datadir}/licenses/%{name}
 * Sun Mar 20 2022 dusansimic <dusan.simic1810@gmail.com> - 2.55.3-1
 - Release 2.55.3
 * Thu Dec  9 2021 dusansimic <dusan.simic1810@gmail.com> - 2.55.2-1
-	- Release 2.55.2
+- Release 2.55.2
 * Thu Dec  2 2021 dusansimic <dusan.simic1810@gmail.com> - 2.55.1-1
-	- Release 2.55.1
+- Release 2.55.1
 * Thu Oct 28 2021 dusansimic <dusan.simic1810@gmail.com> - 2.55.0-1
-	- Release 2.55.0
+- Release 2.55.0
 * Fri Aug 13 2021 dusansimic <dusan.simic1810@gmail.com> - 2.54.1-1
-	- Release 2.54.1
+- Release 2.54.1
 * Thu Jul 29 2021 dusansimic <dusan.simic1810@gmail.com> - 2.54.0-1
-	- Release 2.54.0
+- Release 2.54.0
 * Sat May  8 2021 dusansimic <dusan.simic1810@gmail.com> - 2.53.0-1
-	- Release 2.53.0
+- Release 2.53.0
 * Mon Apr 26 2021 dusansimic <dusan.simic1810@gmail.com> - 2.52.4-1
-	- Release 2.52.4
-	- Removed dependency desktop-file-utils and gtk-update-icon-cache
+- Release 2.52.4
+- Removed dependency desktop-file-utils and gtk-update-icon-cache
 * Fri Apr  9 2021 dusansimic <dusan.simic1810@gmail.com> - 2.52.3-1
-	- Release 2.52.3
-	- Some minor updates to spec file and adding license file to installation
+- Release 2.52.3
+- Some minor updates to spec file and adding license file to installation
 * Thu Mar 25 2021 dusansimic <dusan.simic1810@gmail.com> - 2.52.2-1
-	- Release 2.52.2
+- Release 2.52.2
