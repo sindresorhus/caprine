@@ -2,7 +2,7 @@
 	"name": "caprine",
 	"appName": "caprine",
 	"productName": "Caprine",
-	"version": "2.57.1",
+	"version": "2.57.0",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "https://github.com/sindresorhus/caprine",
@@ -20,7 +20,7 @@
 		"lint": "tsc && xo && stylelint \"css/**/*.css\"",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
-		"build": "tsnvmc",
+		"build": "tsc",
 		"clean": "rm -r -f -v node_modules",
 		"dist": "electron-builder",
 		"release": "np"
