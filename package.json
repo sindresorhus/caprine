@@ -1,10 +1,11 @@
 {
 	"name": "caprine",
+	"appName": "caprine",
 	"productName": "Caprine",
-	"version": "2.57.0",
+	"version": "2.57.1",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
-	"repository": "sindresorhus/caprine",
+	"repository": "https://github.com/sindresorhus/caprine",
 	"author": {
 		"name": "Sindre Sorhus",
 		"email": "sindresorhus@gmail.com",
@@ -19,7 +20,9 @@
 		"lint": "tsc && xo && stylelint \"css/**/*.css\"",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
-		"build": "tsc",
+		"build": "tsnvmc",
+		"clean": "rm -r -f -v node_modules",
+		"dist": "electron-builder",
 		"release": "np"
 	},
 	"dependencies": {
@@ -47,8 +50,8 @@
 		"@types/facebook-locales": "^1.0.0",
 		"@types/lodash": "^4.14.182",
 		"del-cli": "^5.0.0",
-		"electron": "^21.2.0",
-		"electron-builder": "^23.4.0",
+		"electron": "^21.4.3",
+		"electron-builder": "^23.6.0",
 		"husky": "^8.0.1",
 		"np": "^7.6.2",
 		"patch-package": "^6.4.7",
