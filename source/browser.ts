@@ -41,7 +41,8 @@ async function withMenu(
 }
 
 async function isNewSidebar(): Promise<boolean> {
-	await elementReady('[role=navigation] > div > div');
+	// TODO: stopOnDomReady might not be needed
+	await elementReady('[role=navigation] > div > div', {stopOnDomReady: false});
 
 	const sidebars = document.querySelectorAll<HTMLElement>('[role=navigation] > div > div');
 
