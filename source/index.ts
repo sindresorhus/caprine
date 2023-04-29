@@ -506,6 +506,12 @@ function createMainWindow(): BrowserWindow {
 	});
 
 	webContents.setWindowOpenHandler(details => {
+		if (details.disposition === 'foreground-tab' || details.disposition === 'background-tab') {
+			const url = stripTrackingFromUrl(details.url);
+			shell.openExternal(url);
+			return {action: 'deny'};
+		}
+
 		if (details.disposition === 'new-window') {
 			if (details.url === 'about:blank' || details.url === 'about:blank#blocked') {
 				if (details.frameName !== 'about:blank') {
