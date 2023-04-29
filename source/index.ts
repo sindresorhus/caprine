@@ -505,7 +505,7 @@ function createMainWindow(): BrowserWindow {
 		}
 	});
 
-	webContents.setWindowOpenHandler((details) => {
+	webContents.setWindowOpenHandler(details => {
 		if (details.disposition === 'new-window') {
 			if (details.url === 'about:blank' || details.url === 'about:blank#blocked') {
 				if (details.frameName !== 'about:blank') {
