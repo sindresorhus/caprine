@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           caprine
-Version:        2.57.1
+Version:        2.57.2
 Release:        1%{?dist}
 Summary:        Elegant Facebook Messenger desktop app
 
@@ -12,7 +12,7 @@ Source1:        %{name}.desktop
 
 BuildArch:      x86_64
 BuildRequires:  npm
-BuildRequires:  nodejs >= 16.0.0
+BuildRequires:  nodejs >= 18.0.0
 
 %description
 Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.
@@ -56,6 +56,8 @@ install -Dm644 license %{buildroot}%{_datadir}/licenses/%{name}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Sat Apr 29 2023 dusansimic <dusan.simic1810@gmail.com> - 2.57.2-1
+- Release 2.57.2
 * Mon Apr 17 2023 dusansimic <dusan.simic1810@gmail.com> - 2.57.1-1
 - Release 2.57.1
 * Wed Nov 16 2022 dusansimic <dusan.simic1810@gmail.com> - 2.57.0-1
