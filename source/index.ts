@@ -505,24 +505,29 @@ function createMainWindow(): BrowserWindow {
 		}
 	});
 
-	// eslint-disable-next-line max-params
-	webContents.on('new-window', async (event: Event, url, frameName, _disposition, options) => {
-		event.preventDefault();
-
-		if (url === 'about:blank' || url === 'about:blank#blocked') {
-			if (frameName !== 'about:blank') {
-				// Voice/video call popup
-				options.show = true;
-				options.titleBarStyle = 'default';
-				options.webPreferences = options.webPreferences ?? {};
-				options.webPreferences.nodeIntegration = false;
-				options.webPreferences.preload = path.join(__dirname, 'browser-call.js');
-				(event as any).newGuest = new BrowserWindow(options);
+	webContents.setWindowOpenHandler((details) => {
+		if (details.disposition === 'new-window') {
+			if (details.url === 'about:blank' || details.url === 'about:blank#blocked') {
+				if (details.frameName !== 'about:blank') {
+					// Voice/video call popup
+					return {action: 'allow', overrideBrowserWindowOptions: {
+						show: true,
+						titleBarStyle: 'default',
+						webPreferences: {
+							nodeIntegration: false,
+							preload: path.join(__dirname, 'browser-call.js'),
+						},
+					}};
+				}
+			} else {
+				const url = stripTrackingFromUrl(details.url);
+				shell.openExternal(url);
 			}
-		} else {
-			url = stripTrackingFromUrl(url);
-			await shell.openExternal(url);
+
+			return {action: 'deny'};
 		}
+
+		return {action: 'allow'};
 	});
 
 	webContents.on('will-navigate', async (event, url) => {
