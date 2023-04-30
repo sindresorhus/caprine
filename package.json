@@ -20,16 +20,13 @@
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc",
-		"clean": "del-cli ./node_modules",
-		"distclean": "del-cli ./dist && del-cli ./dist-js && del-cli ./node_modules",
-		"dist": "electron-builder",
 		"release": "np"
 	},
 	"dependencies": {
 		"@electron/remote": "^2.0.9",
 		"@sindresorhus/do-not-disturb": "^1.1.0",
 		"electron-better-ipc": "^2.0.1",
-		"electron-context-menu": "^3.6.1",
+		"electron-context-menu": "^3.5.0",
 		"electron-debug": "^3.2.0",
 		"electron-dl": "^3.4.1",
 		"electron-localshortcut": "^3.2.1",
