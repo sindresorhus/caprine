@@ -21,7 +21,8 @@
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc && electron-builder --dir",
-		"clean": "rm -r -f -v node_modules",
+		"clean": "rimraf -v node_modules",
+		"distclean": "rimraf -v node_modules && rimraf -v dist",
 		"dist": "electron-builder",
 		"release": "np"
 	},
@@ -55,6 +56,7 @@
 		"husky": "^8.0.1",
 		"np": "^7.6.2",
 		"patch-package": "^6.4.7",
+		"rimraf": "^4.4.1",
 		"stylelint": "^14.10.0",
 		"stylelint-config-xo": "^0.21.0",
 		"typescript": "^4.7.4",
