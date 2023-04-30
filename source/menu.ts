@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 import {existsSync, writeFileSync} from 'node:fs';
-import {app, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
+import {app, BrowserWindow, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
 import {
 	is,
 	appMenu,
@@ -744,6 +744,16 @@ ${debugInfo()}`;
 				app.quit();
 			},
 		},
+		{
+			type: 'separator',
+		},
+		{
+			label: 'Open chrome://gpu',
+			click() {
+				const gpuWindow = new BrowserWindow({width: 1024, height: 768});
+				gpuWindow.loadURL('chrome://gpu');
+			},
+		},
 	];
 
 	const macosTemplate: MenuItemConstructorOptions[] = [
@@ -865,12 +875,10 @@ ${debugInfo()}`;
 
 	const template = is.macos ? macosTemplate : linuxWindowsTemplate;
 
-	if (is.development) {
-		template.push({
-			label: 'Debug',
-			submenu: debugSubmenu,
-		});
-	}
+	template.push({
+		label: 'Debug',
+		submenu: debugSubmenu,
+	});
 
 	const menu = Menu.buildFromTemplate(template);
 	Menu.setApplicationMenu(menu);

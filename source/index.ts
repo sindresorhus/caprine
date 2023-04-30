@@ -59,6 +59,15 @@ if (!config.get('hardwareAcceleration')) {
 	app.disableHardwareAcceleration();
 }
 
+if (config.get('hardwareAcceleration')) {
+	app.commandLine.appendSwitch('ignore-gpu-blocklist');
+	app.commandLine.appendSwitch('enable-gpu-rasterization');
+	app.commandLine.appendSwitch('enable-features', 'CanvasOopRasterization');
+}
+
+app.commandLine.appendSwitch('enable-quic');
+app.commandLine.appendSwitch('enable-experimental-web-platform-features');
+
 if (!is.development && config.get('autoUpdate')) {
 	(async () => {
 		const FOUR_HOURS = 1000 * 60 * 60 * 4;
