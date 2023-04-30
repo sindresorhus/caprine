@@ -28,7 +28,7 @@ import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl}
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import {setUpMenuBarMode} from './menu-bar-mode';
-import {caprineIconPath} from './constants';
+import {caprineIconPath, caprineWinIconPath} from './constants';
 
 ipcMain.setMaxListeners(100);
 
@@ -297,7 +297,7 @@ function createMainWindow(): BrowserWindow {
 		y: lastWindowState.y,
 		width: lastWindowState.width,
 		height: lastWindowState.height,
-		icon: is.linux ? caprineIconPath : undefined,
+		icon: is.linux || is.macos ? caprineIconPath : caprineWinIconPath,
 		minWidth: 400,
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),

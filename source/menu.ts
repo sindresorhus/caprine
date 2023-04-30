@@ -228,7 +228,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix privacy features */
 			/* If you want to help, see #1688 */
 			label: 'Privacy',
-			visible: is.development,
+			visible: true,
 			submenu: privacySubmenu,
 		},
 		{
@@ -250,7 +250,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Autoplay Videos',
 			id: 'video-autoplay',
 			type: 'checkbox',
-			visible: is.development,
+			visible: true,
 			checked: config.get('autoplayVideos'),
 			click() {
 				config.set('autoplayVideos', !config.get('autoplayVideos'));
@@ -261,7 +261,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix notifications */
 			label: 'Show Message Preview in Notifications',
 			type: 'checkbox',
-			visible: is.development,
+			visible: true,
 			checked: config.get('notificationMessagePreview'),
 			click(menuItem) {
 				config.set('notificationMessagePreview', menuItem.checked);
@@ -272,7 +272,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
-			visible: is.development,
+			visible: true,
 			checked: config.get('notificationsMuted'),
 			click() {
 				sendAction('toggle-mute-notifications');
@@ -290,7 +290,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix notification badge */
 			label: 'Show Unread Badge',
 			type: 'checkbox',
-			visible: is.development,
+			visible: true,
 			checked: config.get('showUnreadBadge'),
 			click() {
 				config.set('showUnreadBadge', !config.get('showUnreadBadge'));
@@ -404,7 +404,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix notifications */
 			label: 'Flash Window on Message',
 			type: 'checkbox',
-			visible: is.development,
+			visible: true,
 			checked: config.get('flashWindowOnMessage'),
 			click(menuItem) {
 				config.set('flashWindowOnMessage', menuItem.checked);
@@ -562,7 +562,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Mute Conversation',
-			visible: is.development,
+			visible: true,
 			accelerator: 'CommandOrControl+Shift+M',
 			click() {
 				sendAction('mute-conversation');
@@ -571,7 +571,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Hide Conversation',
-			visible: is.development,
+			visible: true,
 			accelerator: 'CommandOrControl+Shift+H',
 			click() {
 				sendAction('hide-conversation');
@@ -580,7 +580,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Delete Conversation',
-			visible: is.development,
+			visible: true,
 			accelerator: 'CommandOrControl+Shift+D',
 			click() {
 				sendAction('delete-conversation');
@@ -589,7 +589,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Select Next Conversation',
-			visible: is.development,
+			visible: true,
 			accelerator: 'Control+Tab',
 			click() {
 				sendAction('next-conversation');
@@ -598,7 +598,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Select Previous Conversation',
-			visible: is.development,
+			visible: true,
 			accelerator: 'Control+Shift+Tab',
 			click() {
 				sendAction('previous-conversation');
@@ -614,7 +614,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Search in Conversation',
-			visible: is.development,
+			visible: true,
 			accelerator: 'CommandOrControl+F',
 			click() {
 				sendAction('search');

@@ -107,7 +107,8 @@
 			"!media${/*}"
 		],
 		"asarUnpack": [
-			"static/Icon.png"
+			"static/Icon.png",
+			"static/icon.ico"
 		],
 		"appId": "com.sindresorhus.caprine",
 		"mac": {

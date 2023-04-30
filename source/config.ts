@@ -196,7 +196,7 @@ const schema: Store.Schema<StoreType> = {
 	},
 	quitOnWindowClose: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 	keepMeSignedIn: {
 		type: 'boolean',
