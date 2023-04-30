@@ -13,7 +13,7 @@
 	},
 	"main": "dist-js",
 	"engines": {
-		"node": ">=16"
+		"node": ">=18"
 	},
 	"scripts": {
 		"postinstall": "patch-package && electron-builder install-app-deps",
@@ -22,7 +22,7 @@
 		"start": "tsc && electron .",
 		"build": "tsc && electron-builder --dir",
 		"clean": "del-cli ./node_modules",
-		"distclean": "del-cli ./dist && del-cli ./dist-js && del-cli ./node_modules",
+		"distclean": "del-cli ./dist && del-cli ./dist-js",
 		"dist": "electron-builder",
 		"release": "np"
 	},
@@ -51,7 +51,7 @@
 		"@types/facebook-locales": "^1.0.0",
 		"@types/lodash": "^4.14.194",
 		"del-cli": "^5.0.0",
-		"electron": "^24.1.3",
+		"electron": "24.1.3",
 		"electron-builder": "^23.6.0",
 		"husky": "^8.0.3",
 		"np": "^7.7.0",
@@ -101,7 +101,7 @@
 		"releaseDraft": false
 	},
 	"build": {
-		"electronVersion": "^24.1.3",
+		"electronVersion": "24.1.3",
 		"files": [
 			"**/*",
 			"!media${/*}"
@@ -140,7 +140,7 @@
 			"target": [
 				"AppImage",
 				"deb",
-				"snap"
+				"zip"
 			],
 			"icon": "build/icons/",
 			"synopsis": "Elegant Facebook Messenger desktop app",
@@ -166,6 +166,10 @@
 			]
 		},
 		"win": {
+			"target": [
+				"zip",
+				"nsis"
+			],
 			"verifyUpdateCodeSignature": false,
 			"icon": "build/icon.ico"
 		}
