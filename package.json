@@ -21,10 +21,10 @@
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc && electron-builder --dir",
-		"clean": "del-cli ./node_modules",
+		"clean": "del-cli ./dist && del-cli ./dist-js && del-cli ./node_modules",
 		"distclean": "del-cli ./dist && del-cli ./dist-js",
-		"dist": "electron-builder",
-		"release": "np"
+		"dist": "npm run lint && electron-builder",
+		"release": "tsc && np"
 	},
 	"dependencies": {
 		"@electron/remote": "^2.0.9",
@@ -144,9 +144,18 @@
 				"zip"
 			],
 			"icon": "build/icons/",
+			"maintainer": "Alex313031",
+			"vendor": "Alex313031",
 			"synopsis": "Elegant Facebook Messenger desktop app",
 			"description": "Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.",
-			"category": "Network;Chat"
+			"category": "Network;Chat",
+			"artifactName": "caprine_${version}_${arch}.${ext}",
+			"desktop": {
+				"Name": "Caprine",
+				"StartupWMClass": "caprine",
+				"Keywords": "facebook;messenger;chat;",
+				"Icon": "caprine"
+			}
 		},
 		"snap": {
 			"plugs": [
@@ -172,7 +181,8 @@
 				"nsis"
 			],
 			"verifyUpdateCodeSignature": false,
-			"icon": "build/icon.ico"
+			"icon": "build/icon.ico",
+			"artifactName": "${productName}_Setup_${version}_${arch}.${ext}"
 		}
 	},
 	"husky": {
