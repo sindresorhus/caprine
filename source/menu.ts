@@ -706,7 +706,7 @@ ${debugInfo()}`;
 			aboutMenuItem({
 				icon: caprineIconPath,
 				copyright: 'Created by Sindre Sorhus',
-				text: 'Maintainers:\nDušan Simić\nLefteris Garyfalakis\nMichael Quevillon\nNikolas Spiridakis',
+				text: 'Maintainers:\nAlex313031\nDušan Simić\nLefteris Garyfalakis\nMichael Quevillon\nNikolas Spiridakis',
 				website: 'https://sindresorhus.com/caprine',
 			}),
 		);
