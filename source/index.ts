@@ -293,6 +293,10 @@ function createMainWindow(): BrowserWindow {
 		minHeight: 200,
 		alwaysOnTop: config.get('alwaysOnTop'),
 		titleBarStyle: 'hiddenInset',
+		trafficLightPosition: {
+			x: 80,
+			y: 20,
+		},
 		autoHideMenuBar: config.get('autoHideMenuBar'),
 		webPreferences: {
 			preload: path.join(__dirname, 'browser.js'),
