@@ -108,8 +108,12 @@
 		"mac": {
 			"category": "public.app-category.social-networking",
 			"icon": "build/icon.png",
-			"electronUpdaterCompatibility": ">=2.15.0",
+			"electronUpdaterCompatibility": ">=4.5.2",
 			"darkModeSupport": true,
+			"target": {
+				"target": "default",
+				"arch": ["x64", "arm64"]
+			},
 			"extendInfo": {
 				"LSUIElement": 1,
 				"NSCameraUsageDescription": "Caprine needs access to your camera.",
