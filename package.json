@@ -182,14 +182,14 @@
 			],
 			"verifyUpdateCodeSignature": false,
 			"icon": "build/icon.ico",
-			"artifactName": "Caprine_${version}_${arch}.${ext}",
-			"nsis": {
-				"shortcutName": "Caprine",
-				"artifactName": "Caprine_Setup_${version}_${arch}.${ext}",
-				"deleteAppDataOnUninstall": true,
-				"uninstallDisplayName": "Caprine ${version}"
-			}
-		}
+			"artifactName": "Caprine_${version}_${arch}.${ext}"
+		},
+		"nsis": {
+			"shortcutName": "Caprine",
+			"artifactName": "Caprine_Setup_${version}_${arch}.${ext}",
+			"deleteAppDataOnUninstall": true,
+			"uninstallDisplayName": "Caprine ${version}"
+		},
 	},
 	"husky": {
 		"hooks": {
