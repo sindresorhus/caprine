@@ -1,6 +1,7 @@
 node_modules
 yarn.lock
 /dist
+/electron/
 /dist-js
 mas.provisionprofile
 .vscode
