@@ -189,7 +189,7 @@
 			"artifactName": "Caprine_Setup_${version}_${arch}.${ext}",
 			"deleteAppDataOnUninstall": true,
 			"uninstallDisplayName": "Caprine ${version}"
-		},
+		}
 	},
 	"husky": {
 		"hooks": {
