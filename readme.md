@@ -47,7 +47,7 @@
 
 ## Install
 
-*macOS 10.10+, Linux, and Windows 10+ are supported (64-bit only).*
+*macOS 10.12+ (Intel and Apple Silicon), Linux (x64 and arm64), and Windows 10+ (64-bit) are supported.*
 
 Download the latest version on the [website](https://sindresorhus.com/caprine) or below.
 
