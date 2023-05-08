@@ -5,3 +5,4 @@ yarn.lock
 /dist-js
 mas.provisionprofile
 .vscode
+.DS_store

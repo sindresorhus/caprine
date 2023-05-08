@@ -2,7 +2,7 @@
 	"name": "caprine",
 	"appName": "caprine",
 	"productName": "Caprine",
-	"version": "2.57.4",
+	"version": "2.57.5",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "https://github.com/Alex313031/caprine-ng",
@@ -114,8 +114,15 @@
 		"mac": {
 			"category": "public.app-category.social-networking",
 			"icon": "build/icon.png",
-			"electronUpdaterCompatibility": ">=2.15.0",
+			"electronUpdaterCompatibility": ">=4.5.2",
 			"darkModeSupport": true,
+			"target": {
+				"target": "default",
+				"arch": [
+					"x64",
+					"arm64"
+				]
+			},
 			"extendInfo": {
 				"LSUIElement": 1,
 				"NSCameraUsageDescription": "Caprine needs access to your camera.",
