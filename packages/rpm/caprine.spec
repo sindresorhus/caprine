@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           caprine
-Version:        2.57.5
+Version:        2.57.4
 Release:        1%{?dist}
 Summary:        Elegant Facebook Messenger desktop app
 

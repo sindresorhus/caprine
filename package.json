@@ -1,64 +1,60 @@
 {
 	"name": "caprine",
-	"appName": "caprine",
 	"productName": "Caprine",
-	"version": "2.57.5",
+	"version": "2.57.4",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
-	"repository": "https://github.com/Alex313031/caprine-ng",
+	"repository": "sindresorhus/caprine",
 	"author": {
-		"name": "Alexander Frick",
-		"email": "alex313031@gmail.com",
-		"url": "https://thorium.rocks/win7"
+		"name": "Sindre Sorhus",
+		"email": "sindresorhus@gmail.com",
+		"url": "https://sindresorhus.com"
 	},
 	"main": "dist-js",
 	"engines": {
-		"node": ">=18"
+		"node": ">=16"
 	},
 	"scripts": {
 		"postinstall": "patch-package && electron-builder install-app-deps",
 		"lint": "tsc && xo && stylelint \"css/**/*.css\"",
 		"test": "npm run lint",
 		"start": "tsc && electron .",
-		"build": "tsc && electron-builder --dir",
-		"clean": "del-cli ./dist && del-cli ./dist-js && del-cli ./node_modules",
-		"distclean": "del-cli ./dist && del-cli ./dist-js",
-		"dist": "npm run lint && electron-builder",
-		"release": "tsc && np"
+		"build": "tsc",
+		"release": "np"
 	},
 	"dependencies": {
-		"@electron/remote": "^2.0.9",
+		"@electron/remote": "^2.0.8",
 		"@sindresorhus/do-not-disturb": "^1.1.0",
 		"electron-better-ipc": "^2.0.1",
-		"electron-context-menu": "^3.6.1",
+		"electron-context-menu": "^3.4.0",
 		"electron-debug": "^3.2.0",
-		"electron-dl": "^3.4.1",
+		"electron-dl": "^3.3.1",
 		"electron-localshortcut": "^3.2.1",
 		"electron-store": "^8.1.0",
-		"electron-updater": "^5.3.0",
+		"electron-updater": "^5.2.1",
 		"electron-util": "^0.17.2",
 		"element-ready": "^5.0.0",
 		"facebook-locales": "^1.0.916",
 		"is-online": "^9.0.1",
 		"json-schema-typed": "^8.0.1",
 		"lodash": "^4.17.21",
-		"npm-check-updates": "^16.10.9",
+		"npm-check-updates": "^16.0.5",
 		"p-wait-for": "^3.2.0"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.7.0",
 		"@types/electron-localshortcut": "^3.1.0",
 		"@types/facebook-locales": "^1.0.0",
-		"@types/lodash": "^4.14.194",
+		"@types/lodash": "^4.14.182",
 		"del-cli": "^5.0.0",
-		"electron": "24.1.3",
-		"electron-builder": "^23.6.0",
-		"husky": "^8.0.3",
-		"np": "^7.7.0",
-		"patch-package": "^6.5.1",
-		"stylelint": "^14.16.1",
-		"stylelint-config-xo": "^0.21.1",
-		"typescript": "^4.9.5",
+		"electron": "^24.1.3",
+		"electron-builder": "^23.4.0",
+		"husky": "^8.0.1",
+		"np": "^7.6.2",
+		"patch-package": "^6.4.7",
+		"stylelint": "^14.10.0",
+		"stylelint-config-xo": "^0.21.0",
+		"typescript": "^4.7.4",
 		"xo": "^0.51.0"
 	},
 	"xo": {
@@ -101,7 +97,6 @@
 		"releaseDraft": false
 	},
 	"build": {
-		"electronVersion": "24.1.3",
 		"files": [
 			"**/*",
 			"!media${/*}"
@@ -148,21 +143,12 @@
 			"target": [
 				"AppImage",
 				"deb",
-				"zip"
+				"snap"
 			],
 			"icon": "build/icons/",
-			"maintainer": "Alex313031",
-			"vendor": "Alex313031",
 			"synopsis": "Elegant Facebook Messenger desktop app",
 			"description": "Caprine is an unofficial and privacy focused Facebook Messenger app with many useful features.",
-			"category": "Network;Chat",
-			"artifactName": "caprine_${version}_${arch}.${ext}",
-			"desktop": {
-				"Name": "Caprine",
-				"StartupWMClass": "caprine",
-				"Keywords": "facebook;messenger;chat;",
-				"Icon": "caprine"
-			}
+			"category": "Network;Chat"
 		},
 		"snap": {
 			"plugs": [
@@ -183,19 +169,8 @@
 			]
 		},
 		"win": {
-			"target": [
-				"zip",
-				"nsis"
-			],
 			"verifyUpdateCodeSignature": false,
-			"icon": "build/icon.ico",
-			"artifactName": "Caprine_${version}_${arch}.${ext}"
-		},
-		"nsis": {
-			"shortcutName": "Caprine",
-			"artifactName": "Caprine_Setup_${version}_${arch}.${ext}",
-			"deleteAppDataOnUninstall": true,
-			"uninstallDisplayName": "Caprine ${version}"
+			"icon": "build/icon.png"
 		}
 	},
 	"husky": {

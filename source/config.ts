@@ -99,7 +99,7 @@ const schema: Store.Schema<StoreType> = {
 	},
 	menuBarMode: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 	showDockIcon: {
 		type: 'boolean',
@@ -180,7 +180,7 @@ const schema: Store.Schema<StoreType> = {
 	},
 	autoUpdate: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 	notificationsMuted: {
 		type: 'boolean',
@@ -196,7 +196,7 @@ const schema: Store.Schema<StoreType> = {
 	},
 	quitOnWindowClose: {
 		type: 'boolean',
-		default: true,
+		default: false,
 	},
 	keepMeSignedIn: {
 		type: 'boolean',

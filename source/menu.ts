@@ -228,7 +228,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix privacy features */
 			/* If you want to help, see #1688 */
 			label: 'Privacy',
-			visible: true,
+			visible: is.development,
 			submenu: privacySubmenu,
 		},
 		{
@@ -250,7 +250,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Autoplay Videos',
 			id: 'video-autoplay',
 			type: 'checkbox',
-			visible: true,
+			visible: is.development,
 			checked: config.get('autoplayVideos'),
 			click() {
 				config.set('autoplayVideos', !config.get('autoplayVideos'));
@@ -261,7 +261,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix notifications */
 			label: 'Show Message Preview in Notifications',
 			type: 'checkbox',
-			visible: true,
+			visible: is.development,
 			checked: config.get('notificationMessagePreview'),
 			click(menuItem) {
 				config.set('notificationMessagePreview', menuItem.checked);
@@ -272,7 +272,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
-			visible: true,
+			visible: is.development,
 			checked: config.get('notificationsMuted'),
 			click() {
 				sendAction('toggle-mute-notifications');
@@ -290,7 +290,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix notification badge */
 			label: 'Show Unread Badge',
 			type: 'checkbox',
-			visible: true,
+			visible: is.development,
 			checked: config.get('showUnreadBadge'),
 			click() {
 				config.set('showUnreadBadge', !config.get('showUnreadBadge'));
@@ -404,7 +404,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			/* TODO: Fix notifications */
 			label: 'Flash Window on Message',
 			type: 'checkbox',
-			visible: true,
+			visible: is.development,
 			checked: config.get('flashWindowOnMessage'),
 			click(menuItem) {
 				config.set('flashWindowOnMessage', menuItem.checked);
@@ -562,7 +562,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Mute Conversation',
-			visible: true,
+			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+M',
 			click() {
 				sendAction('mute-conversation');
@@ -571,7 +571,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Hide Conversation',
-			visible: true,
+			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+H',
 			click() {
 				sendAction('hide-conversation');
@@ -580,7 +580,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Delete Conversation',
-			visible: true,
+			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+D',
 			click() {
 				sendAction('delete-conversation');
@@ -589,7 +589,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Select Next Conversation',
-			visible: true,
+			visible: is.development,
 			accelerator: 'Control+Tab',
 			click() {
 				sendAction('next-conversation');
@@ -598,7 +598,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Select Previous Conversation',
-			visible: true,
+			visible: is.development,
 			accelerator: 'Control+Shift+Tab',
 			click() {
 				sendAction('previous-conversation');
@@ -614,7 +614,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			/* TODO: Fix conversation controls */
 			label: 'Search in Conversation',
-			visible: true,
+			visible: is.development,
 			accelerator: 'CommandOrControl+F',
 			click() {
 				sendAction('search');
@@ -706,7 +706,7 @@ ${debugInfo()}`;
 			aboutMenuItem({
 				icon: caprineIconPath,
 				copyright: 'Created by Sindre Sorhus',
-				text: 'Maintainers:\nAlex313031\nDušan Simić\nLefteris Garyfalakis\nMichael Quevillon\nNikolas Spiridakis',
+				text: 'Maintainers:\nDušan Simić\nLefteris Garyfalakis\nMichael Quevillon\nNikolas Spiridakis\nAlexander Frick',
 				website: 'https://sindresorhus.com/caprine',
 			}),
 		);
@@ -875,10 +875,12 @@ ${debugInfo()}`;
 
 	const template = is.macos ? macosTemplate : linuxWindowsTemplate;
 
-	template.push({
-		label: 'Debug',
-		submenu: debugSubmenu,
-	});
+	if (is.development) {
+		template.push({
+			label: 'Debug',
+			submenu: debugSubmenu,
+		});
+	}
 
 	const menu = Menu.buildFromTemplate(template);
 	Menu.setApplicationMenu(menu);

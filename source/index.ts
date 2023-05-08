@@ -60,13 +60,12 @@ if (!config.get('hardwareAcceleration')) {
 }
 
 if (config.get('hardwareAcceleration')) {
+	// Enable hardware acceleration for all configs
 	app.commandLine.appendSwitch('ignore-gpu-blocklist');
-	app.commandLine.appendSwitch('enable-gpu-rasterization');
-	app.commandLine.appendSwitch('enable-features', 'CanvasOopRasterization');
 }
 
+// Enables QUIC protocol, used by many Facebook and Google subdomains
 app.commandLine.appendSwitch('enable-quic');
-app.commandLine.appendSwitch('enable-experimental-web-platform-features');
 
 if (!is.development && config.get('autoUpdate')) {
 	(async () => {
