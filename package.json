@@ -107,7 +107,7 @@
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
 			"category": "public.app-category.social-networking",
-			"icon": "build/icon.png",
+			"icon": "build/icon.icns",
 			"electronUpdaterCompatibility": ">=4.5.2",
 			"darkModeSupport": true,
 			"target": {
