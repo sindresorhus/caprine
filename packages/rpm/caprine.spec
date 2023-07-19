@@ -1,4 +1,5 @@
 %define debug_package %{nil}
+%global _build_id_links alldebug
 
 Name:           caprine
 Version:        2.57.4
