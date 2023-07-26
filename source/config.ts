@@ -1,7 +1,8 @@
 import Store from 'electron-store';
 import {is} from 'electron-util';
+import {EmojiStyle} from './emoji';
 
-type StoreType = {
+export type StoreType = {
 	theme: 'system' | 'light' | 'dark';
 	privateMode: boolean;
 	showPrivateModePrompt: boolean;
@@ -30,7 +31,7 @@ type StoreType = {
 		typingIndicator: boolean;
 		deliveryReceipt: boolean;
 	};
-	emojiStyle: 'native' | 'facebook-3-0' | 'messenger-1-0' | 'facebook-2-2';
+	emojiStyle: EmojiStyle;
 	useWorkChat: boolean;
 	sidebar: 'default' | 'hidden' | 'narrow' | 'wide';
 	autoHideMenuBar: boolean;

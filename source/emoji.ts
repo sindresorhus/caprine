@@ -8,8 +8,8 @@ import {
 } from 'electron';
 import {is} from 'electron-util';
 import {memoize} from 'lodash';
-import config from './config';
 import {showRestartDialog, getWindow, sendBackgroundAction} from './util';
+import config from './config';
 
 // The list of emojis that aren't supported by older emoji (facebook-2-2, messenger-1-0)
 // Based on https://emojipedia.org/facebook/3.0/new/
@@ -298,7 +298,7 @@ with this: https://static.xx.fbcdn.net/images/emoji.php/v9/z27/2/32/1f600.png
                                                  (see here) ^
 */
 export async function process(url: string): Promise<CallbackResponse> {
-	const emojiStyle = config.get('emojiStyle') as EmojiStyle;
+	const emojiStyle = config.get('emojiStyle');
 	const emojiSetCode = codeForEmojiStyle(emojiStyle);
 
 	// The character code is the filename without the extension.

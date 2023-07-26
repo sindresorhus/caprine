@@ -4,7 +4,6 @@ import {is} from 'electron-util';
 import elementReady = require('element-ready');
 import {nativeTheme} from '@electron/remote';
 import selectors from './browser/selectors';
-import config from './config';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
 import {IToggleSounds} from './types';
@@ -118,7 +117,8 @@ ipc.answerMain('new-room', async () => {
 });
 
 ipc.answerMain('log-out', async () => {
-	if (config.get('useWorkChat')) {
+	const useWorkChat = await ipc.callMain<undefined, boolean>('get-config-useWorkChat');
+	if (useWorkChat) {
 		document.querySelector<HTMLElement>('._5lxs._3qct._p')!.click();
 
 		// Menu creation is slow
@@ -275,8 +275,9 @@ ipc.answerMain('toggle-mute-notifications', async () => {
 	return !notificationCheckbox.checked;
 });
 
-ipc.answerMain('toggle-message-buttons', () => {
-	document.body.classList.toggle('show-message-buttons', !config.get('showMessageButtons'));
+ipc.answerMain('toggle-message-buttons', async () => {
+	const showMessageButtons = await ipc.callMain<undefined, boolean>('get-config-showMessageButtons');
+	document.body.classList.toggle('show-message-buttons', !showMessageButtons);
 });
 
 ipc.answerMain('show-active-contacts-view', async () => {
@@ -303,8 +304,10 @@ ipc.answerMain('reload', () => {
 	location.reload();
 });
 
-function setTheme(): void {
-	nativeTheme.themeSource = config.get('theme');
+async function setTheme(): Promise<void> {
+	type ThemeSource = typeof nativeTheme.themeSource;
+	const theme = await ipc.callMain<undefined, ThemeSource>('get-config-theme');
+	nativeTheme.themeSource = theme;
 	setThemeElement(document.documentElement);
 	updateVibrancy();
 }
@@ -373,20 +376,23 @@ async function observeTheme(): Promise<void> {
 	}
 }
 
-function setPrivateMode(): void {
-	document.documentElement.classList.toggle('private-mode', config.get('privateMode'));
+async function setPrivateMode(): Promise<void> {
+	const privateMode = await ipc.callMain<undefined, boolean>('get-config-privateMode');
+	document.documentElement.classList.toggle('private-mode', privateMode);
 
 	if (is.macos) {
 		sendConversationList();
 	}
 }
 
-function updateVibrancy(): void {
+async function updateVibrancy(): Promise<void> {
 	const {classList} = document.documentElement;
 
 	classList.remove('sidebar-vibrancy', 'full-vibrancy');
 
-	switch (config.get('vibrancy')) {
+	const vibrancy = await ipc.callMain<undefined, 'sidebar' | 'none' | 'full'>('get-config-vibrancy');
+
+	switch (vibrancy) {
 		case 'sidebar':
 			classList.add('sidebar-vibrancy');
 			break;
@@ -399,12 +405,14 @@ function updateVibrancy(): void {
 	ipc.callMain('set-vibrancy');
 }
 
-function updateSidebar(): void {
+async function updateSidebar(): Promise<void> {
 	const {classList} = document.documentElement;
 
 	classList.remove('sidebar-hidden', 'sidebar-force-narrow', 'sidebar-force-wide');
 
-	switch (config.get('sidebar')) {
+	const sidebar = await ipc.callMain<undefined, 'default' | 'hidden' | 'narrow' | 'wide'>('get-config-sidebar');
+
+	switch (sidebar) {
 		case 'hidden':
 			classList.add('sidebar-hidden');
 			break;
@@ -484,23 +492,25 @@ ipc.answerMain('render-native-emoji', (emoji: string): string => {
 	return dataUrl;
 });
 
-ipc.answerMain('zoom-reset', () => {
-	setZoom(1);
+ipc.answerMain('zoom-reset', async () => {
+	await setZoom(1);
 });
 
-ipc.answerMain('zoom-in', () => {
-	const zoomFactor = config.get('zoomFactor') + 0.1;
+ipc.answerMain('zoom-in', async () => {
+	let zoomFactor = await ipc.callMain<undefined, number>('get-config-zoomFactor');
+	zoomFactor += 0.1;
 
 	if (zoomFactor < 1.6) {
-		setZoom(zoomFactor);
+		await setZoom(zoomFactor);
 	}
 });
 
-ipc.answerMain('zoom-out', () => {
-	const zoomFactor = config.get('zoomFactor') - 0.1;
+ipc.answerMain('zoom-out', async () => {
+	let zoomFactor = await ipc.callMain<undefined, number>('get-config-zoomFactor');
+	zoomFactor -= 0.1;
 
 	if (zoomFactor >= 0.8) {
-		setZoom(zoomFactor);
+		await setZoom(zoomFactor);
 	}
 });
 
@@ -563,10 +573,10 @@ function selectedConversationIndex(offset = 0): number {
 	return ((index % list.length) + list.length) % list.length;
 }
 
-function setZoom(zoomFactor: number): void {
+async function setZoom(zoomFactor: number): Promise<void> {
 	const node = document.querySelector<HTMLElement>('#zoomFactor')!;
 	node.textContent = `${selectors.conversationSelector} {zoom: ${zoomFactor} !important}`;
-	config.set('zoomFactor', zoomFactor);
+	await ipc.callMain<number, void>('set-config-zoomFactor', zoomFactor);
 }
 
 async function withConversationMenu(callback: () => void): Promise<void> {
@@ -726,7 +736,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	document.body.append(style);
 
 	// Set the zoom factor if it was set before quitting
-	const zoomFactor = config.get('zoomFactor');
+	const zoomFactor = await ipc.callMain<undefined, number>('get-config-zoomFactor');
 	setZoom(zoomFactor);
 
 	// Enable OS specific styles
@@ -778,12 +788,14 @@ window.addEventListener('dblclick', (event: Event) => {
 	passive: true,
 });
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
 	if (location.pathname.startsWith('/login')) {
 		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
-		keepMeSignedInCheckbox.checked = config.get('keepMeSignedIn');
-		keepMeSignedInCheckbox.addEventListener('change', () => {
-			config.set('keepMeSignedIn', !config.get('keepMeSignedIn'));
+		const keepMeSignedInConfig = await ipc.callMain<undefined, boolean>('get-config-keepMeSignedIn');
+		keepMeSignedInCheckbox.checked = keepMeSignedInConfig;
+		keepMeSignedInCheckbox.addEventListener('change', async () => {
+			const keepMeSignedIn = await ipc.callMain<undefined, boolean>('get-config-keepMeSignedIn');
+			await ipc.callMain('set-config-keepMeSignedIn', keepMeSignedIn);
 		});
 	}
 });
