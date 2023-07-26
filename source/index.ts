@@ -11,8 +11,9 @@ import {
 	Notification,
 	MenuItemConstructorOptions,
 	systemPreferences,
+	nativeTheme,
 } from 'electron';
-import {ipcMain} from 'electron-better-ipc';
+import {ipcMain as ipc} from 'electron-better-ipc';
 import {autoUpdater} from 'electron-updater';
 import electronDl from 'electron-dl';
 import electronContextMenu from 'electron-context-menu';
@@ -22,7 +23,7 @@ import {is, darkMode} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import doNotDisturb from '@sindresorhus/do-not-disturb';
 import updateAppMenu from './menu';
-import config from './config';
+import config, {StoreType} from './config';
 import tray from './tray';
 import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util';
 import {process as processEmojiUrl} from './emoji';
@@ -30,7 +31,7 @@ import ensureOnline from './ensure-online';
 import {setUpMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';
 
-ipcMain.setMaxListeners(100);
+ipc.setMaxListeners(100);
 
 electronDebug({
 	isEnabled: true, // TODO: This is only enabled to allow `Command+R` because messenger.com sometimes gets stuck after computer waking up
@@ -143,7 +144,7 @@ async function updateBadge(conversations: Conversation[]): Promise<void> {
 			mainWindow.setOverlayIcon(null, '');
 		} else {
 			// Delegate drawing of overlay icon to renderer process
-			updateOverlayIcon(await ipcMain.callRenderer(mainWindow, 'render-overlay-icon', messageCount));
+			updateOverlayIcon(await ipc.callRenderer(mainWindow, 'render-overlay-icon', messageCount));
 		}
 	}
 }
@@ -161,7 +162,7 @@ function updateTrayIcon(): void {
 	}
 }
 
-ipcMain.answerRenderer('update-tray-icon', updateTrayIcon);
+ipc.answerRenderer('update-tray-icon', updateTrayIcon);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
@@ -399,7 +400,7 @@ function createMainWindow(): BrowserWindow {
 			type: 'checkbox',
 			checked: config.get('notificationsMuted'),
 			async click() {
-				setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications'));
+				setNotificationsMute(await ipc.callRenderer(mainWindow, 'toggle-mute-notifications'));
 			},
 		};
 
@@ -411,13 +412,13 @@ function createMainWindow(): BrowserWindow {
 			app.dock.show();
 		}
 
-		ipcMain.once('conversations', () => {
+		ipc.once('conversations', () => {
 			// Messenger sorts the conversations by unread state.
 			// We select the first conversation from the list.
 			sendAction('jump-to-conversation', 1);
 		});
 
-		ipcMain.answerRenderer('conversations', (conversations: Conversation[]) => {
+		ipc.answerRenderer('conversations', (conversations: Conversation[]) => {
 			if (conversations.length === 0) {
 				return;
 			}
@@ -436,7 +437,7 @@ function createMainWindow(): BrowserWindow {
 	}
 
 	// Update badge on conversations change
-	ipcMain.answerRenderer('conversations', async (conversations: Conversation[]) => {
+	ipc.answerRenderer('conversations', async (conversations: Conversation[]) => {
 		updateBadge(conversations);
 	});
 
@@ -482,10 +483,10 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		if (is.macos) {
-			ipcMain.answerRenderer('update-dnd-mode', async (initialSoundsValue: boolean) => {
+			ipc.answerRenderer('update-dnd-mode', async (initialSoundsValue: boolean) => {
 				doNotDisturb.on('change', (doNotDisturb: boolean) => {
 					isDNDEnabled = doNotDisturb;
-					ipcMain.callRenderer(mainWindow, 'toggle-sounds', {checked: isDNDEnabled ? false : initialSoundsValue});
+					ipc.callRenderer(mainWindow, 'toggle-sounds', {checked: isDNDEnabled ? false : initialSoundsValue});
 				});
 
 				isDNDEnabled = await doNotDisturb.isEnabled();
@@ -494,11 +495,11 @@ function createMainWindow(): BrowserWindow {
 			});
 		}
 
-		setNotificationsMute(await ipcMain.callRenderer(mainWindow, 'toggle-mute-notifications', {
+		setNotificationsMute(await ipc.callRenderer(mainWindow, 'toggle-mute-notifications', {
 			defaultStatus: config.get('notificationsMuted'),
 		}));
 
-		ipcMain.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
+		ipc.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
 
 		await webContents.executeJavaScript(
 			readFileSync(path.join(__dirname, 'notifications-isolated.js'), 'utf8'),
@@ -584,7 +585,7 @@ function createMainWindow(): BrowserWindow {
 })();
 
 if (is.macos) {
-	ipcMain.answerRenderer('set-vibrancy', () => {
+	ipc.answerRenderer('set-vibrancy', () => {
 		mainWindow.setBackgroundColor('#80FFFFFF'); // Transparent, workaround for vibrancy issue.
 		mainWindow.setVibrancy('sidebar');
 	});
@@ -598,7 +599,7 @@ function toggleMaximized(): void {
 	}
 }
 
-ipcMain.answerRenderer('titlebar-doubleclick', () => {
+ipc.answerRenderer('titlebar-doubleclick', () => {
 	if (is.macos) {
 		const doubleClickAction = systemPreferences.getUserDefault('AppleActionOnDoubleClick', 'string');
 
@@ -631,7 +632,7 @@ app.on('before-quit', () => {
 
 const notifications = new Map();
 
-ipcMain.answerRenderer(
+ipc.answerRenderer(
 	'notification',
 	({id, title, body, icon, silent}: {id: number; title: string; body: string; icon: string; silent: boolean}) => {
 		const notification = new Notification({
@@ -665,3 +666,25 @@ ipcMain.answerRenderer(
 		notification.show();
 	},
 );
+
+type ThemeSource = typeof nativeTheme.themeSource;
+
+ipc.answerRenderer<undefined, StoreType['useWorkChat']>('get-config-useWorkChat', async () => config.get('useWorkChat'));
+ipc.answerRenderer<undefined, StoreType['showMessageButtons']>('get-config-showMessageButtons', async () => config.get('showMessageButtons'));
+ipc.answerRenderer<undefined, ThemeSource>('get-config-theme', async () => config.get('theme'));
+ipc.answerRenderer<undefined, StoreType['privateMode']>('get-config-privateMode', async () => config.get('privateMode'));
+ipc.answerRenderer<undefined, StoreType['vibrancy']>('get-config-vibrancy', async () => config.get('vibrancy'));
+ipc.answerRenderer<undefined, StoreType['sidebar']>('get-config-sidebar', async () => config.get('sidebar'));
+ipc.answerRenderer<undefined, StoreType['zoomFactor']>('get-config-zoomFactor', async () => config.get('zoomFactor'));
+ipc.answerRenderer<StoreType['zoomFactor'], void>('set-config-zoomFactor', async zoomFactor => {
+	config.set('zoomFactor', zoomFactor);
+});
+ipc.answerRenderer<undefined, StoreType['keepMeSignedIn']>('get-config-keepMeSignedIn', async () => config.get('keepMeSignedIn'));
+ipc.answerRenderer<StoreType['keepMeSignedIn'], void>('set-config-keepMeSignedIn', async keepMeSignedIn => {
+	config.set('keepMeSignedIn', keepMeSignedIn);
+});
+ipc.answerRenderer<undefined, StoreType['autoplayVideos']>('get-config-autoplayVideos', async () => config.get('autoplayVideos'));
+ipc.answerRenderer<undefined, StoreType['emojiStyle']>('get-config-emojiStyle', async () => config.get('emojiStyle'));
+ipc.answerRenderer<StoreType['emojiStyle'], void>('set-config-emojiStyle', async emojiStyle => {
+	config.set('emojiStyle', emojiStyle);
+});
