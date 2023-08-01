@@ -169,38 +169,50 @@ export async function sendConversationList(): Promise<void> {
 	ipc.callMain('conversations', conversationsToRender);
 }
 
+function genStringFromNode(element: Element): string {
+	const cloneElement = element.cloneNode(true) as Element;
+	let emojiString;
+
+	const images = cloneElement.querySelectorAll('img');
+	for (const image of images) {
+		emojiString = image.alt;
+		// Replace facebook's thumbs up with emoji
+		if (emojiString === '(Y)') {
+			emojiString = '👍';
+		}
+
+		if (image.parentNode) {
+			cloneElement.replaceChild(document.createTextNode(emojiString), image.parentNode);
+		}
+	}
+
+	return cloneElement.textContent ?? '';
+}
+
 function countUnread(mutationsList: MutationRecord[]): void {
 	// Look through the mutations for the one with the unread dot
-	const unreadMutations = mutationsList.filter(mutation => mutation.type === 'childList' && mutation.addedNodes.length > 0 && ((mutation.addedNodes[0] as Element).getAttribute('aria-label') === 'Mark as read'));
+	const unreadMutations = mutationsList.filter(mutation =>
+		mutation.type === 'childList'
+		&& mutation.addedNodes.length > 0
+		&& ((mutation.addedNodes[0] as Element).className === 'x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1q0g3np x87ps6o x1lku1pv x78zum5 x1a2a7pz')
+		&& ((mutation.addedNodes[0] as Element).parentElement?.className === 'x6s0dn4 x78zum5 xozqiw3')
+		&& !((mutation.addedNodes[0] as Element).previousElementSibling?.className === 'x1fsd2vl'));
 
 	for (const mutation of unreadMutations) {
 		let curr = (mutation.addedNodes[0] as Element).parentElement;
 		// Find the parent element with the message preview and sender
-		while (curr?.className !== 'rq0escxv l9j0dhe7 du4w35lb j83agx80 pfnyh3mw i1fnvgqd bp9cbjyn owycx6da btwxx1t3') {
+		while (curr?.className !== 'x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x6s0dn4 xozqiw3 x1q0g3np') {
 			curr = curr?.parentElement ?? null;
 		}
 
 		// Get the image data URI from the parent of the author/text
-		const imgUrl = curr.parentElement?.getElementsByTagName('img')[0].dataset.caprineIcon;
+		const imgUrl = curr.querySelector('img')?.dataset.caprineIcon;
 		// Get the author and text of the new message
-		// const titleText = curr.querySelectorAll('.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.jq4qci2q.a3bd9o3v.lrazzd5p.oo9gr5id')[0].textContent;
-		let titleTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
-		if (titleTextOptions.length === 0) {
-			titleTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
-		}
+		const titleTextOptions = curr.querySelector('.x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x10flsy6.x6prxxf.x1s688f.xzsf02u.x1yc453h.x4zkp8e.x41vudc.xq9mrsl .x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft');
+		const bodyTextOptions = curr.querySelector('.x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x10flsy6.x1nxh6w3.x1xlr1w8.xzsf02u.x4zkp8e.x676frb.xq9mrsl .x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft');
 
-		const titleText = titleTextOptions[0].textContent;
-		let bodyTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
-		if (bodyTextOptions.length === 0) {
-			bodyTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
-		}
-
-		let loc = 0;
-		if (bodyTextOptions.length >= 2) {
-			loc = 1;
-		}
-
-		const bodyText = bodyTextOptions[loc].textContent;
+		const titleText = (titleTextOptions) ? genStringFromNode(titleTextOptions) : '';
+		const bodyText = (bodyTextOptions) ? genStringFromNode(bodyTextOptions) : '';
 
 		// Send a notification
 		ipc.callMain('notification', {
