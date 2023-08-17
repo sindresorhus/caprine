@@ -99,18 +99,7 @@ app.on('ready', () => {
 	});
 });
 
-function getMessageCount(conversations: Conversation[]): number {
-	return conversations.filter(({unread}) => unread).length;
-}
-
-async function updateBadge(conversations: Conversation[]): Promise<void> {
-	// Ignore `Sindre messaged you` blinking
-	if (!Array.isArray(conversations)) {
-		return;
-	}
-
-	const messageCount = getMessageCount(conversations);
-
+async function updateBadge(messageCount: number): Promise<void> {
 	if (!is.windows) {
 		if (config.get('showUnreadBadge') && !isDNDEnabled) {
 			app.badgeCount = messageCount;
@@ -153,16 +142,6 @@ function updateOverlayIcon({data, text}: {data: string; text: string}): void {
 	const img = nativeImage.createFromDataURL(data);
 	mainWindow.setOverlayIcon(img, text);
 }
-
-function updateTrayIcon(): void {
-	if (!config.get('showTrayIcon') || config.get('quitOnWindowClose')) {
-		tray.destroy();
-	} else {
-		tray.create(mainWindow);
-	}
-}
-
-ipc.answerRenderer('update-tray-icon', updateTrayIcon);
 
 interface BeforeSendHeadersResponse {
 	cancel?: boolean;
@@ -437,8 +416,8 @@ function createMainWindow(): BrowserWindow {
 	}
 
 	// Update badge on conversations change
-	ipc.answerRenderer('conversations', async (conversations: Conversation[]) => {
-		updateBadge(conversations);
+	ipc.answerRenderer('update-tray-icon', async (messageCount: number) => {
+		updateBadge(messageCount);
 	});
 
 	enableHiresResources();

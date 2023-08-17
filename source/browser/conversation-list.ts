@@ -131,7 +131,7 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 	*/
 
 	conversation.selected = Boolean(element.querySelector('[role=row] [role=link] > div:only-child'));
-	conversation.unread = Boolean(element.querySelector(selectors.markAsRead));
+	conversation.unread = Boolean(element.querySelector('[aria-label="Mark as Read"]'));
 
 	const unparsedLabel = element.querySelector<HTMLElement>('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7 > span > span')!;
 	conversation.label = await getLabel(unparsedLabel);
@@ -154,14 +154,7 @@ async function createConversationList(): Promise<Conversation[]> {
 		return [];
 	}
 
-	const convList = list.querySelector('div[class=x1n2onr6]');
-
-	if (!convList) {
-		console.error('No conversations found');
-		return [];
-	}
-
-	const elements: HTMLElement[] = [...convList.children] as HTMLElement[];
+	const elements: HTMLElement[] = [...list.children] as HTMLElement[];
 
 	// Remove last element from childer list
 	elements.splice(-1, 1);
@@ -220,12 +213,25 @@ function countUnread(mutationsList: MutationRecord[]): void {
 	}
 }
 
+async function updateTrayIcon(): Promise<void> {
+	const chatsIconSelector = selectors.chatsIcon;
+
+	const chatsIcon = await elementReady(chatsIconSelector, {
+		stopOnDomReady: false,
+	});
+
+	// Extract messageCount from ariaLabel
+	const messageCount = chatsIcon?.ariaLabel?.match(/\d+/g) ?? 0;
+	ipc.callMain('update-tray-icon', messageCount);
+}
+
 window.addEventListener('load', async () => {
-	const sidebar = await elementReady('[class="x78zum5 xdt5ytf x1iyjqo2 xh8yej3"]', {stopOnDomReady: false});
+	const sidebar = await elementReady('[role=navigation]:has([role=grid])', {stopOnDomReady: false});
 
 	if (sidebar) {
 		const conversationListObserver = new MutationObserver(async () => sendConversationList());
 		const conversationCountObserver = new MutationObserver(countUnread);
+		const chatsIconObserver = new MutationObserver(async () => updateTrayIcon());
 
 		conversationListObserver.observe(sidebar, {
 			subtree: true,
@@ -239,6 +245,13 @@ window.addEventListener('load', async () => {
 			childList: true,
 			attributes: true,
 			attributeFilter: ['class'],
+		});
+
+		chatsIconObserver.observe(sidebar, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['class', 'aria-label'],
 		});
 	}
 });
