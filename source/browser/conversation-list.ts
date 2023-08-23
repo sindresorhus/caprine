@@ -214,9 +214,7 @@ function countUnread(mutationsList: MutationRecord[]): void {
 }
 
 async function updateTrayIcon(): Promise<void> {
-	const chatsIconSelector = selectors.chatsIcon;
-
-	const chatsIcon = await elementReady(chatsIconSelector, {
+	const chatsIcon = await elementReady(selectors.chatsIcon, {
 		stopOnDomReady: false,
 	});
 
