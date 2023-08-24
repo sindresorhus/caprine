@@ -225,11 +225,11 @@ async function updateTrayIcon(): Promise<void> {
 
 window.addEventListener('load', async () => {
 	const sidebar = await elementReady('[role=navigation]:has([role=grid])', {stopOnDomReady: false});
+	const leftSidebar = await elementReady(`${selectors.leftSidebar}:has(${selectors.chatsIcon})`, {stopOnDomReady: false});
 
 	if (sidebar) {
 		const conversationListObserver = new MutationObserver(async () => sendConversationList());
 		const conversationCountObserver = new MutationObserver(countUnread);
-		const chatsIconObserver = new MutationObserver(async () => updateTrayIcon());
 
 		conversationListObserver.observe(sidebar, {
 			subtree: true,
@@ -244,12 +244,16 @@ window.addEventListener('load', async () => {
 			attributes: true,
 			attributeFilter: ['class'],
 		});
+	}
 
-		chatsIconObserver.observe(sidebar, {
+	if (leftSidebar) {
+		const chatsIconObserver = new MutationObserver(async () => updateTrayIcon());
+
+		chatsIconObserver.observe(leftSidebar, {
 			subtree: true,
 			childList: true,
 			attributes: true,
-			attributeFilter: ['class', 'aria-label'],
+			attributeFilter: ['aria-label'],
 		});
 	}
 });
