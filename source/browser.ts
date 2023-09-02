@@ -645,6 +645,7 @@ async function closePreferences(): Promise<void> {
 			preferencesOverlayObserver.disconnect();
 		}
 	});
+
 	const preferencesOverlay = document.querySelector(selectors.preferencesSelector)!;
 
 	// Get the parent of preferences, that's not getting deleted
