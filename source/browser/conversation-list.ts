@@ -213,8 +213,19 @@ function countUnread(mutationsList: MutationRecord[]): void {
 	}
 }
 
+async function updateTrayIcon(): Promise<void> {
+	const chatsIcon = await elementReady(selectors.chatsIcon, {
+		stopOnDomReady: false,
+	});
+
+	// Extract messageCount from ariaLabel
+	const messageCount = chatsIcon?.ariaLabel?.match(/\d+/g) ?? 0;
+	ipc.callMain('update-tray-icon', messageCount);
+}
+
 window.addEventListener('load', async () => {
-	const sidebar = await elementReady('[role=navigation]', {stopOnDomReady: false});
+	const sidebar = await elementReady('[role=navigation]:has([role=grid])', {stopOnDomReady: false});
+	const leftSidebar = await elementReady(`${selectors.leftSidebar}:has(${selectors.chatsIcon})`, {stopOnDomReady: false});
 
 	if (sidebar) {
 		const conversationListObserver = new MutationObserver(async () => sendConversationList());
@@ -232,6 +243,17 @@ window.addEventListener('load', async () => {
 			childList: true,
 			attributes: true,
 			attributeFilter: ['class'],
+		});
+	}
+
+	if (leftSidebar) {
+		const chatsIconObserver = new MutationObserver(async () => updateTrayIcon());
+
+		chatsIconObserver.observe(leftSidebar, {
+			subtree: true,
+			childList: true,
+			attributes: true,
+			attributeFilter: ['aria-label'],
 		});
 	}
 });
