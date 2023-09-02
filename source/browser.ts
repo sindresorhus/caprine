@@ -648,10 +648,13 @@ async function closePreferences(): Promise<void> {
 
 	const preferencesOverlay = document.querySelector(selectors.preferencesSelector)!;
 
-	preferencesOverlayObserver.observe(preferencesOverlay, {childList: true});
+	// Get the parent of preferences, that's not getting deleted
+	const preferencesParent = preferencesOverlay.closest('div:not([class])')!;
 
-	const closeButton = await elementReady<HTMLElement>(selectors.closePreferencesButton, {stopOnDomReady: false});
-	closeButton?.click();
+	preferencesOverlayObserver.observe(preferencesParent, {childList: true});
+
+	const closeButton = preferencesOverlay.querySelector(selectors.closePreferencesButton)!;
+	(closeButton as HTMLElement)?.click();
 }
 
 function insertionListener(event: AnimationEvent): void {
