@@ -177,7 +177,7 @@ function genStringFromNode(element: Element): string {
 	for (const image of images) {
 		emojiString = image.alt;
 		// Replace facebook's thumbs up with emoji
-		if (emojiString === '(Y)') {
+		if (emojiString === '(Y)' || emojiString === '(y)') {
 			emojiString = '👍';
 		}
 
