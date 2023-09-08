@@ -208,13 +208,15 @@ function countUnread(mutationsList: MutationRecord[]): void {
 			&& mutation.target.parentElement?.parentElement?.parentElement?.className === 'x6s0dn4 x78zum5 x193iq5w xeuugli xg83lxy'
 		)
 		// When an emoji is received, node(s) are added
-		|| (mutation.type === 'childList'
+		|| (
+			mutation.type === 'childList'
 			// There is a case where in the current mutation nodes are only removed and in a later one, new ones are added.
 			// By using this condition we ensure that this is the mutation where nodes are added
 			&& mutation.addedNodes.length > 0
 			// Make sure the mutation corresponds to a conversation
 			&& (mutation.target as Element).className === 'x1lliihq x193iq5w x6ikm8r x10wlt62 xlyipyv xuxw1ft'
-			&& mutation.target.parentElement?.parentElement?.className === 'x6s0dn4 x78zum5 x193iq5w xeuugli xg83lxy'));
+			&& mutation.target.parentElement?.parentElement?.className === 'x6s0dn4 x78zum5 x193iq5w xeuugli xg83lxy'
+		));
 
 	// Check latest mutation first
 	for (const mutation of unreadMutations.reverse()) {
