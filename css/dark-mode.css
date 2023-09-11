@@ -157,6 +157,12 @@ html.dark-mode ._9xq0 {
 	color: var(--primary-text);
 }
 
+/* Messenger settings: Privacy & safety icon color */
+.x1lliihq.x1k90msu.x2h7rmj.x1qfuztq.x198g3q0.xxk0z11.xvy4d1p {
+	fill: currentcolor;
+	color: var(--primary-text);
+}
+
 /* Removing top gap */
 /* TODO: Remove when fixed by fb */
 .__fb-dark-mode {
