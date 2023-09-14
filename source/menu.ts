@@ -537,21 +537,33 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			type: 'separator',
 		},
 		{
+			label: 'Show Main Chats',
+			click() {
+				sendAction('show-chats-view');
+			},
+		},
+		{
 			label: 'Show Active Contacts',
 			click() {
-				sendAction('show-active-contacts-view');
+				sendAction('show-people-view');
+			},
+		},
+		{
+			label: 'Show Marketplace Chats',
+			click() {
+				sendAction('show-marketplace-view');
 			},
 		},
 		{
 			label: 'Show Message Requests',
 			click() {
-				sendAction('show-message-requests-view');
+				sendAction('show-requests-view');
 			},
 		},
 		{
-			label: 'Show Hidden Threads',
+			label: 'Show Archived Chats',
 			click() {
-				sendAction('show-hidden-threads-view');
+				sendAction('show-archive-view');
 			},
 		},
 	];

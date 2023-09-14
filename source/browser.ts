@@ -87,9 +87,25 @@ async function selectOtherListViews(itemNumber: number): Promise<void> {
 	// In case one of other views is shown
 	clickBackButton();
 
-	await withSettingsMenu(() => {
-		selectMenuItem(itemNumber);
-	});
+	const newSidebar = await isNewSidebar();
+
+	if (newSidebar) {
+		const items = document.querySelectorAll<HTMLElement>(
+			`${selectors.viewsMenu} > span > a`
+		);
+
+		const selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
+
+		console.log(selector);
+
+		if (selector) {
+			selector.click();
+		}
+	} else {
+		await withSettingsMenu(() => {
+			selectMenuItem(itemNumber);
+		});
+	}
 }
 
 function clickBackButton(): void {
@@ -280,20 +296,24 @@ ipc.answerMain('toggle-message-buttons', async () => {
 	document.body.classList.toggle('show-message-buttons', !showMessageButtons);
 });
 
-ipc.answerMain('show-active-contacts-view', async () => {
+ipc.answerMain('show-chats-view', async () => {
+	await selectOtherListViews(1);
+});
+
+ipc.answerMain('show-people-view', async () => {
 	await selectOtherListViews(2);
 });
 
-ipc.answerMain('show-message-requests-view', async () => {
+ipc.answerMain('show-marketplace-view', async () => {
 	await selectOtherListViews(3);
 });
 
-ipc.answerMain('show-hidden-threads-view', async () => {
+ipc.answerMain('show-requests-view', async () => {
 	await selectOtherListViews(4);
 });
 
-ipc.answerMain('toggle-unread-threads-view', async () => {
-	await selectOtherListViews(6);
+ipc.answerMain('show-archive-view', async () => {
+	await selectOtherListViews(5);
 });
 
 ipc.answerMain('toggle-video-autoplay', () => {
