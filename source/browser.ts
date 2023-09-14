@@ -91,7 +91,7 @@ async function selectOtherListViews(itemNumber: number): Promise<void> {
 
 	if (newSidebar) {
 		const items = document.querySelectorAll<HTMLElement>(
-			`${selectors.viewsMenu} > span > a`
+			`${selectors.viewsMenu} > span > a`,
 		);
 
 		const selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
