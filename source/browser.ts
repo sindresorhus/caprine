@@ -272,6 +272,11 @@ ipc.answerMain('toggle-mute-notifications', async () => {
 		await closePreferences();
 	}
 
+	// TODO: Fix notifications
+	if (notificationCheckbox === null) {
+		return false;
+	}
+
 	return !notificationCheckbox.checked;
 });
 
