@@ -191,17 +191,8 @@ function countUnread(mutationsList: MutationRecord[]): void {
 	const alreadyChecked: any = [];
 	// Look through the mutations for the one with the unread dot
 	const unreadMutations = mutationsList.filter(mutation =>
-		// When a conversations "becomes unread".
-		// TODO: Might not be needed.
-		(
-			mutation.type === 'childList'
-			&& mutation.addedNodes.length > 0
-			&& ((mutation.addedNodes[0] as Element).className === 'x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1q0g3np x87ps6o x1lku1pv x78zum5 x1a2a7pz')
-			&& ((mutation.addedNodes[0] as Element).parentElement?.className === 'x6s0dn4 x78zum5 xozqiw3')
-			&& !((mutation.addedNodes[0] as Element).previousElementSibling?.className === 'x1fsd2vl')
-		)
 		// When text is received
-		|| (
+		(
 			mutation.type === 'characterData'
 			// Make sure the text corresponds to a conversation
 			&& mutation.target.parentElement?.className === 'x1lliihq x193iq5w x6ikm8r x10wlt62 xlyipyv xuxw1ft'
@@ -220,16 +211,14 @@ function countUnread(mutationsList: MutationRecord[]): void {
 
 	// Check latest mutation first
 	for (const mutation of unreadMutations.reverse()) {
-		// This probably can be done better
-		const curr = (mutation.type === 'childList') ? (mutation.target as Element).closest('[class="x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x6s0dn4 xozqiw3 x1q0g3np"]')!
-			: (mutation.target.parentElement as Element).closest('[class="x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x6s0dn4 xozqiw3 x1q0g3np"]')!;
+		const curr = (mutation.target.parentElement as Element).closest('[class="x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x6s0dn4 xozqiw3 x1q0g3np"]')!;
 
 		const href = curr.closest('[role="link"]')?.getAttribute('href');
 
 		// It is possible to have multiple mutations for the same conversation, but we only want one notification.
 		// So if the current conversation has already been checked, continue.
 		// Additionally if the conversation is not unread, then also continue.
-		if (alreadyChecked.includes(href) || curr.querySelector('.x1i10hfl.x1qjc9v5.xjbqb8w.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x26u7qi.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x1ypdohk.xdl72j9.x2lah0s.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x2lwn1j.xeuugli.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.x16tdsg8.x1hl2dhg.xggy1nq.x1ja2u2z.x1t137rt.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x1q0g3np.x87ps6o.x1lku1pv.x78zum5.x1a2a7pz')) {
+		if (alreadyChecked.includes(href) || !curr.querySelector('.x1i10hfl.x1qjc9v5.xjbqb8w.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x26u7qi.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x1ypdohk.xdl72j9.x2lah0s.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x2lwn1j.xeuugli.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.x16tdsg8.x1hl2dhg.xggy1nq.x1ja2u2z.x1t137rt.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x1q0g3np.x87ps6o.x1lku1pv.x78zum5.x1a2a7pz')) {
 			continue;
 		}
 
@@ -237,9 +226,10 @@ function countUnread(mutationsList: MutationRecord[]): void {
 
 		// Get the image data URI from the parent of the author/text
 		const imgUrl = curr.querySelector('img')?.dataset.caprineIcon;
+		const textOptions = curr.querySelectorAll('[class="x1lliihq x193iq5w x6ikm8r x10wlt62 xlyipyv xuxw1ft"]');
 		// Get the author and text of the new message
-		const titleTextOptions = curr.querySelector('.x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x10flsy6.x6prxxf.x1s688f.xzsf02u.x1yc453h.x4zkp8e.x41vudc.xq9mrsl .x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft') ?? curr.querySelector('[class="x1lliihq x1plvlek xryxfnj x1n2onr6 x193iq5w xeuugli x13faqbe x1vvkbs x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x10flsy6 x6prxxf xk50ysn xzsf02u x1yc453h x4zkp8e x41vudc xq9mrsl"]');
-		const bodyTextOptions = curr.querySelector('.x1lliihq.x1plvlek.xryxfnj.x1n2onr6.x193iq5w.xeuugli.x13faqbe.x1vvkbs.x1s928wv.xhkezso.x1gmr53x.x1cpjm7i.x1fgarty.x1943h6x.x10flsy6.x1nxh6w3.x1xlr1w8.xzsf02u.x4zkp8e.x676frb.xq9mrsl .x1lliihq.x193iq5w.x6ikm8r.x10wlt62.xlyipyv.xuxw1ft') ?? curr.querySelector('[class="x1lliihq x1plvlek xryxfnj x1n2onr6 x193iq5w xeuugli x13faqbe x1vvkbs x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x10flsy6 x1nxh6w3 x1fcty0u xi81zsa x1tu3fi x3x7a5m xq9mrsl"]');
+		const titleTextOptions = textOptions[0];
+		const bodyTextOptions = textOptions[1];
 
 		const titleText = (titleTextOptions) ? genStringFromNode(titleTextOptions) : '';
 		const bodyText = (bodyTextOptions) ? genStringFromNode(bodyTextOptions) : '';
