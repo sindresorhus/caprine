@@ -205,6 +205,11 @@ function countUnread(mutationsList: MutationRecord[]): void {
 			&& mutation.addedNodes.length > 0
 			// Make sure the mutation corresponds to a conversation
 			&& mutation.target.parentElement?.parentElement?.className === 'html-span xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x18d9i69 xkhd6sd x1hl2dhg x16tdsg8 x1vvkbs x6s0dn4 x78zum5 x193iq5w xeuugli xg83lxy'
+		)
+		// Emoji change
+		|| (
+			mutation.type === 'attributes'
+			&& mutation.target.parentElement?.parentElement?.parentElement?.parentElement?.className === 'html-span xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x18d9i69 xkhd6sd x1hl2dhg x16tdsg8 x1vvkbs x6s0dn4 x78zum5 x193iq5w xeuugli xg83lxy'
 		));
 
 	// Check latest mutation first
@@ -273,7 +278,7 @@ window.addEventListener('load', async () => {
 			subtree: true,
 			childList: true,
 			attributes: true,
-			attributeFilter: ['class'],
+			attributeFilter: ['src', 'alt'],
 		});
 	}
 
