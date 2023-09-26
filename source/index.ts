@@ -614,6 +614,11 @@ const notifications = new Map();
 ipc.answerRenderer(
 	'notification',
 	({id, title, body, icon, silent}: {id: number; title: string; body: string; icon: string; silent: boolean}) => {
+		// Don't send notifications when the window is focused
+		if (mainWindow.isFocused()) {
+			return;
+		}
+
 		const notification = new Notification({
 			title,
 			body: config.get('notificationMessagePreview') ? body : 'You have a new message',

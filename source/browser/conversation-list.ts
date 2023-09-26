@@ -169,38 +169,84 @@ export async function sendConversationList(): Promise<void> {
 	ipc.callMain('conversations', conversationsToRender);
 }
 
-function countUnread(mutationsList: MutationRecord[]): void {
-	// Look through the mutations for the one with the unread dot
-	const unreadMutations = mutationsList.filter(mutation => mutation.type === 'childList' && mutation.addedNodes.length > 0 && ((mutation.addedNodes[0] as Element).getAttribute('aria-label') === 'Mark as read'));
+function genStringFromNode(element: Element): string | undefined {
+	const cloneElement = element.cloneNode(true) as Element;
+	let emojiString;
 
-	for (const mutation of unreadMutations) {
-		let curr = (mutation.addedNodes[0] as Element).parentElement;
-		// Find the parent element with the message preview and sender
-		while (curr?.className !== 'rq0escxv l9j0dhe7 du4w35lb j83agx80 pfnyh3mw i1fnvgqd bp9cbjyn owycx6da btwxx1t3') {
-			curr = curr?.parentElement ?? null;
+	const images = cloneElement.querySelectorAll('img');
+	for (const image of images) {
+		emojiString = image.alt;
+		// Replace facebook's thumbs up with emoji
+		if (emojiString === '(Y)' || emojiString === '(y)') {
+			emojiString = '👍';
 		}
+
+		image.parentElement?.replaceWith(document.createTextNode(emojiString));
+	}
+
+	return cloneElement.textContent ?? undefined;
+}
+
+function countUnread(mutationsList: MutationRecord[]): void {
+	const alreadyChecked: string[] = [];
+
+	const unreadMutations = mutationsList.filter(mutation =>
+		// When a conversations "becomes unread".
+		(
+			mutation.type === 'childList'
+			&& mutation.addedNodes.length > 0
+			&& ((mutation.addedNodes[0] as Element).className === selectors.conversationSidebarUnreadDot)
+		)
+		// When text is received
+		|| (
+			mutation.type === 'characterData'
+			// Make sure the text corresponds to a conversation
+			&& mutation.target.parentElement?.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
+		)
+		// When an emoji is received, node(s) are added
+		|| (
+			mutation.type === 'childList'
+			// Make sure the mutation corresponds to a conversation
+			&& mutation.target.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
+		)
+		// Emoji change
+		|| (
+			mutation.type === 'attributes'
+			&& mutation.target.parentElement?.parentElement?.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
+		));
+
+	// Check latest mutation first
+	for (const mutation of unreadMutations.reverse()) {
+		const curr = (mutation.target.parentElement as Element).closest(selectors.conversationSidebarSelector)!;
+
+		const href = curr.closest('[role="link"]')?.getAttribute('href');
+
+		if (!href) {
+			continue;
+		}
+
+		// It is possible to have multiple mutations for the same conversation, but we only want one notification.
+		// So if the current conversation has already been checked, continue.
+		// Additionally if the conversation is not unread, then also continue.
+		if (alreadyChecked.includes(href) || !curr.querySelector('.' + selectors.conversationSidebarUnreadDot.replace(/ /g, '.'))) {
+			continue;
+		}
+
+		alreadyChecked.push(href);
 
 		// Get the image data URI from the parent of the author/text
-		const imgUrl = curr.parentElement?.getElementsByTagName('img')[0].dataset.caprineIcon;
+		const imgUrl = curr.querySelector('img')?.dataset.caprineIcon;
+		const textOptions = curr.querySelectorAll(selectors.conversationSidebarTextSelector);
 		// Get the author and text of the new message
-		// const titleText = curr.querySelectorAll('.d2edcug0.hpfvmrgz.qv66sw1b.c1et5uql.b0tq1wua.jq4qci2q.a3bd9o3v.lrazzd5p.oo9gr5id')[0].textContent;
-		let titleTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
-		if (titleTextOptions.length === 0) {
-			titleTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
-		}
+		const titleTextNode = textOptions[0];
+		const bodyTextNode = textOptions[1];
 
-		const titleText = titleTextOptions[0].textContent;
-		let bodyTextOptions = curr.querySelectorAll('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7.ltmttdrg.g0qnabr5');
-		if (bodyTextOptions.length === 0) {
-			bodyTextOptions = curr.querySelectorAll('.a8c37x1j.d2edcug0.ni8dbmo4.ltmttdrg.g0qnabr5');
-		}
+		const titleText = genStringFromNode(titleTextNode);
+		const bodyText = genStringFromNode(bodyTextNode);
 
-		let loc = 0;
-		if (bodyTextOptions.length >= 2) {
-			loc = 1;
+		if (!bodyText || !titleText || !imgUrl) {
+			continue;
 		}
-
-		const bodyText = bodyTextOptions[loc].textContent;
 
 		// Send a notification
 		ipc.callMain('notification', {
@@ -239,10 +285,11 @@ window.addEventListener('load', async () => {
 		});
 
 		conversationCountObserver.observe(sidebar, {
+			characterData: true,
 			subtree: true,
 			childList: true,
 			attributes: true,
-			attributeFilter: ['class'],
+			attributeFilter: ['src', 'alt'],
 		});
 	}
 
