@@ -188,51 +188,47 @@ function genStringFromNode(element: Element): string | undefined {
 }
 
 function countUnread(mutationsList: MutationRecord[]): void {
-	const alreadyChecked: any = [];
-
-	const unreadDot = 'x1i10hfl x1qjc9v5 xjbqb8w xjqpnuy xa49m3k xqeqjp1 x2hbi6w x13fuv20 xu3j5b3 x1q0q8m5 x26u7qi x972fbf xcfux6l x1qhh985 xm0m39n x9f619 x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r x2lwn1j xeuugli xexx8yu x4uap5 x18d9i69 xkhd6sd x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1o1ewxj x3x9cwd x1e5q0jg x13rtm0m x1q0g3np x87ps6o x1lku1pv x78zum5 x1a2a7pz';
-	// Selector for the parent element that has as a child the body text of the conversation
-	const conversationTextParent = 'html-span xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x18d9i69 xkhd6sd x1hl2dhg x16tdsg8 x1vvkbs x6s0dn4 x78zum5 x193iq5w xeuugli xg83lxy';
-	// Generic selector for all the texts of a conversation
-	const conversationTextSelector = '[class="x1lliihq x193iq5w x6ikm8r x10wlt62 xlyipyv xuxw1ft"]';
-	// Selector for the top level element of a single conversation(its children include every text of the conversation and also the conversation image)
-	const conversationSelector = '[class="x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x6s0dn4 xozqiw3 x1q0g3np"]';
+	const alreadyChecked: string[] = [];
 
 	const unreadMutations = mutationsList.filter(mutation =>
 		// When a conversations "becomes unread".
 		(
 			mutation.type === 'childList'
 			&& mutation.addedNodes.length > 0
-			&& ((mutation.addedNodes[0] as Element).className === unreadDot)
+			&& ((mutation.addedNodes[0] as Element).className === selectors.conversationSidebarUnreadDot)
 		)
 		// When text is received
 		|| (
 			mutation.type === 'characterData'
 			// Make sure the text corresponds to a conversation
-			&& mutation.target.parentElement?.parentElement?.parentElement?.className === conversationTextParent
+			&& mutation.target.parentElement?.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
 		)
 		// When an emoji is received, node(s) are added
 		|| (
 			mutation.type === 'childList'
 			// Make sure the mutation corresponds to a conversation
-			&& mutation.target.parentElement?.parentElement?.className === conversationTextParent
+			&& mutation.target.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
 		)
 		// Emoji change
 		|| (
 			mutation.type === 'attributes'
-			&& mutation.target.parentElement?.parentElement?.parentElement?.parentElement?.className === conversationTextParent
+			&& mutation.target.parentElement?.parentElement?.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
 		));
 
 	// Check latest mutation first
 	for (const mutation of unreadMutations.reverse()) {
-		const curr = (mutation.target.parentElement as Element).closest(conversationSelector)!;
+		const curr = (mutation.target.parentElement as Element).closest(selectors.conversationSidebarSelector)!;
 
 		const href = curr.closest('[role="link"]')?.getAttribute('href');
+
+		if (!href) {
+			continue;
+		}
 
 		// It is possible to have multiple mutations for the same conversation, but we only want one notification.
 		// So if the current conversation has already been checked, continue.
 		// Additionally if the conversation is not unread, then also continue.
-		if (alreadyChecked.includes(href) || !curr.querySelector('.' + unreadDot.replace(/ /g, '.'))) {
+		if (alreadyChecked.includes(href) || !curr.querySelector('.' + selectors.conversationSidebarUnreadDot.replace(/ /g, '.'))) {
 			continue;
 		}
 
@@ -240,7 +236,7 @@ function countUnread(mutationsList: MutationRecord[]): void {
 
 		// Get the image data URI from the parent of the author/text
 		const imgUrl = curr.querySelector('img')?.dataset.caprineIcon;
-		const textOptions = curr.querySelectorAll(conversationTextSelector);
+		const textOptions = curr.querySelectorAll(selectors.conversationSidebarTextSelector);
 		// Get the author and text of the new message
 		const titleTextNode = textOptions[0];
 		const bodyTextNode = textOptions[1];
