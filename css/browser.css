@@ -28,15 +28,27 @@ body {
 }
 
 /* Bind the toolbar as the window's draggable region */
-.x9f619.x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.x1qughib.x6s0dn4.xozqiw3.x1q0g3np.x1sy10c2.xktsk01.xod5an3.x1d52u69.xzd29fr {
+/* Bar above conversation list */
+[role='navigation'] .x78zum5.xdt5ytf.xzd29fr {
 	-webkit-app-region: drag;
 }
+/* New message button */
 [role='navigation'] .x16n37ib {
 	-webkit-app-region: no-drag;
 }
-.x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x193iq5w.xeuugli.x1r8uery.x1iyjqo2.xs83m0k.xsyo7zv.x16hj40l.x10b6aqq.x1yrsyyn {
+/* Bar above chat */
+[role='main'] .x1u998qt.x1vjfegm {
 	-webkit-app-region: drag;
 }
+/* Conversation name */
+[role='main'] .x1i10hfl.x1qjc9v5.xjbqb8w.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x26u7qi.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x1ypdohk.xdl72j9.x2lah0s.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x2lwn1j.xeuugli.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.x16tdsg8.x1hl2dhg.xggy1nq.x1ja2u2z.x1t137rt.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x1q0g3np.x87ps6o.x1lku1pv.x1a2a7pz.x78zum5 {
+	-webkit-app-region: no-drag;
+}
+/* Top right buttons */
+[role='main'] .x9f619.x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.x1qughib.x6s0dn4.xozqiw3.x1q0g3np.xykv574.xbmpl8g.x4cne27.xifccgj {
+	-webkit-app-region: no-drag;
+}
+/* View label above conversation list margin */
 [role='navigation'] .x1heor9g.x1qlqyl8.x1pd3egz.x1a2a7pz {
 	margin-left: 60px;
 }
