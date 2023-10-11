@@ -170,6 +170,11 @@
 		"win": {
 			"verifyUpdateCodeSignature": false,
 			"icon": "build/icon.png"
+		},
+		"nsis": {
+			"oneClick": false,
+			"perMachine": false,
+			"allowToChangeInstallationDirectory": true
 		}
 	},
 	"husky": {
