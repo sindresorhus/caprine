@@ -23,7 +23,7 @@
 		"release": "np"
 	},
 	"dependencies": {
-		"@electron/remote": "^2.0.8",
+		"@electron/remote": "^2.0.12",
 		"@sindresorhus/do-not-disturb": "^1.1.0",
 		"electron-better-ipc": "^2.0.1",
 		"electron-context-menu": "^3.4.0",
@@ -47,7 +47,7 @@
 		"@types/facebook-locales": "^1.0.0",
 		"@types/lodash": "^4.14.182",
 		"del-cli": "^5.0.0",
-		"electron": "^24.8.5",
+		"electron": "^26.4.0",
 		"electron-builder": "^23.4.0",
 		"husky": "^8.0.1",
 		"np": "^7.6.2",
