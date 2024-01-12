@@ -55,7 +55,7 @@ async function withSettingsMenu(callback: () => Promise<void> | void): Promise<v
 	await elementReady(newSidebar ? selectors.userMenuNewSidebar : selectors.userMenu, {stopOnDomReady: false});
 
 	const settingsMenu = newSidebar
-		? document.querySelectorAll<HTMLElement>(selectors.userMenuNewSidebar)[0]
+		? document.querySelector<HTMLElement>(selectors.userMenuNewSidebar)!
 		: document.querySelector<HTMLElement>(selectors.userMenu)!;
 
 	await withMenu(settingsMenu, callback);
