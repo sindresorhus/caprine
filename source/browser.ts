@@ -912,7 +912,7 @@ async function sendReply(message: string): Promise<void> {
 	inputField.focus();
 	insertMessageText(message, inputField);
 
-	const sendButton = await elementReady<HTMLElement>('._30yy._38lh', {stopOnDomReady: false});
+	const sendButton = await elementReady('._30yy._38lh', {stopOnDomReady: false});
 	if (!sendButton) {
 		console.error('Could not find send button');
 		return;
