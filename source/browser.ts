@@ -1,7 +1,7 @@
 import process from 'node:process';
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import {is} from 'electron-util';
-import elementReady = require('element-ready');
+import elementReady from 'element-ready';
 import {nativeTheme} from '@electron/remote';
 import selectors from './browser/selectors';
 import {toggleVideoAutoplay} from './autoplay';

@@ -33,7 +33,7 @@
 		"electron-store": "^8.1.0",
 		"electron-updater": "^5.2.1",
 		"electron-util": "^0.17.2",
-		"element-ready": "^5.0.0",
+		"element-ready": "^7.0.0",
 		"facebook-locales": "^1.0.916",
 		"is-online": "^9.0.1",
 		"json-schema-typed": "^8.0.1",
