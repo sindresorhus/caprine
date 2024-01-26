@@ -421,3 +421,4 @@ Then edit the automatically created GitHub Releases draft and publish.
 ## Disclaimer
 
 Caprine is a third-party app and is not affiliated with Facebook.
+Powered By Islam
