@@ -14,7 +14,7 @@ export default {
 	// ! Very fragile selector (most likely cause of hidden dialog issue)
 	closePreferencesButton: 'div[role=dialog] > div > div > div:nth-child(2) > [role=button]',
 	userMenu: '.qi72231t.o9w3sbdw.nu7423ey.tav9wjvu.flwp5yud.tghlliq5.gkg15gwv.s9ok87oh.s9ljgwtm.lxqftegz.bf1zulr9.frfouenu.bonavkto.djs4p424.r7bn319e.bdao358l.fsf7x5fv.tgm57n0e.jez8cy9q.s5oniofx.m8h3af8h.l7ghb35v.kjdc1dyq.kmwttqpk.dnr7xe2t.aeinzg81.srn514ro.oxkhqvkx.rl78xhln.nch0832m.om3e55n1.cr00lzj9.rn8ck1ys.s3jn8y49.g4tp4svg.o9erhkwx.dzqi5evh.hupbnkgi.hvb2xoa8.fxk3tzhb.jl2a5g8c.f14ij5to.l3ldwz01.icdlwmnq > .aglvbi8b.om3e55n1.i8zpp7h3.g4tp4svg',
-	userMenuNewSidebar: '[role=navigation]  > div >  div:nth-child(2) > div > div > div > div [role=button]',
+	userMenuNewSidebar: '[role=navigation]  > div >  div:nth-child(2) > div > div > div:nth-child(1) [role=button]',
 	viewsMenu: '.x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x2lah0s.x193iq5w.xurb0ha.x1sxyh0.xdj266r',
 	selectedConversation: '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]',
 	// ! Very fragile selector (most likely cause of hidden dialog issue)
