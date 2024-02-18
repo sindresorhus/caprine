@@ -195,15 +195,11 @@ html.private-mode .gvxzyvdx.aeinzg81.t7p7dqev.gh25dzvf.rse6dlih.ocv3nf92.nfkogya
 }
 
 /* Hide the "Messenger App for Mac/Windows" banner in chat list */
-.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.rj1gh0hx.g5gj957u.hpfvmrgz.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.usczdcwk.iihba337.p8dawk7l.jb3vyjys.gl4o1x5y.qt6c0cv9.lt9micmv.kb5gq1qc.g0mhvs5p,
-.bdao358l.om3e55n1.g4tp4svg.alzwoclg.jg3vgc78.i15ihif8.aeinzg81.sl27f92c.i85zmo3j.sr926ui1.jl2a5g8c.sn0e7ne5.f6rbj1fe.l3ldwz01.srn514ro.s9xz0pwp.rl78xhln.c4m0enpj.c7y9u1f0.f5ap8yob,
-.os-win32 .x9f619.x1n2onr6.x1ja2u2z.x78zum5.x1r8uery.xs83m0k.xeuugli.x1qughib.x6s0dn4.xozqiw3.x1q0g3np.xb756pt.x1c4vz4f.xt55aet.xexx8yu.xc73u3c.x18d9i69.x5ib6vp.x1lku1pv.x12nzpgo {
+.x9f619.x1n2onr6.x1ja2u2z.x78zum5.x1r8uery.xs83m0k.xeuugli.x1qughib.x6s0dn4.xozqiw3.x1q0g3np.xknmibj.x1c4vz4f.xt55aet.xexx8yu.xc73u3c.x18d9i69.x5ib6vp.x1lku1pv.xzd29fr {
 	display: none;
 }
 /* Hide the "Messenger for Mac/Windows" menu item and separator in Messenger settings */
-.tojvnm2t.a6sixzi8.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.l9j0dhe7.iyyx5f41.a8s20v7p > hr:nth-of-type(4),
-.tojvnm2t.a6sixzi8.k5wvi7nf.q3lfd5jv.pk4s997a.bipmatt0.cebpdrjk.qowsmv63.owwhemhu.dp1hu0rb.dhp61c6y.l9j0dhe7.iyyx5f41.a8s20v7p > a:nth-of-type(6),
-.os-win32 .x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div > a:nth-of-type(1) {
+.x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div:last-of-type > a {
 	display: none;
 }
 
