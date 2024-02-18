@@ -49,16 +49,10 @@ async function isNewSidebar(): Promise<boolean> {
 }
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	const newSidebar = await isNewSidebar();
-
 	// Wait for navigation pane buttons to show up
-	await elementReady(newSidebar ? selectors.userMenuNewSidebar : selectors.userMenu, {stopOnDomReady: false});
+	const settingsMenu = await elementReady(selectors.userMenuNewSidebar, {stopOnDomReady: false})!;
 
-	const settingsMenu = newSidebar
-		? document.querySelectorAll<HTMLElement>(selectors.userMenuNewSidebar)[0]
-		: document.querySelector<HTMLElement>(selectors.userMenu)!;
-
-	await withMenu(settingsMenu, callback);
+	await withMenu(settingsMenu as HTMLElement, callback);
 }
 
 async function selectMenuItem(itemNumber: number): Promise<void> {
