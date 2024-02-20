@@ -2,7 +2,7 @@
 %global _build_id_links alldebug
 
 Name:           caprine
-Version:        2.59.2
+Version:        2.59.3
 Release:        1%{?dist}
 Summary:        Elegant Facebook Messenger desktop app
 
@@ -57,6 +57,9 @@ install -Dm644 license %{buildroot}%{_datadir}/licenses/%{name}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Feb 20 2024 dusansimic <dusan.simic1810@gmail.com> - 2.59.3-1
+- Fix blank window
+- Fix try icon
 * Mon Feb 19 2024 dusansimic <dusan.simic1810@gmail.com> - 2.59.2-1
 - Hidden dialog issue Fix
 - Update Messenger for Mac/Windows selectors
