@@ -270,7 +270,7 @@ async function updateTrayIcon(): Promise<void> {
 		const messageNumber = element?.ariaLabel?.match(/\d+/g);
 
 		if (messageNumber) {
-			messageCount += parseInt(messageNumber[0], 10);
+			messageCount += Number.parseInt(messageNumber[0], 10);
 		}
 	}
 
