@@ -260,12 +260,20 @@ function countUnread(mutationsList: MutationRecord[]): void {
 }
 
 async function updateTrayIcon(): Promise<void> {
-	const chatsIcon = await elementReady(selectors.chatsIcon, {
-		stopOnDomReady: false,
-	});
+	let messageCount = 0;
 
-	// Extract messageCount from ariaLabel
-	const messageCount = chatsIcon?.ariaLabel?.match(/\d+/g) ?? 0;
+	await elementReady(selectors.chatsIcon, {stopOnDomReady: false});
+
+	// Count unread messages in Chats, Marketplace, etc.
+	for (const element of document.querySelectorAll<HTMLElement>(selectors.chatsIcon)) {
+		// Extract messageNumber from ariaLabel
+		const messageNumber = element?.ariaLabel?.match(/\d+/g);
+
+		if (messageNumber) {
+			messageCount += parseInt(messageNumber[0]);
+		}
+	}
+
 	ipc.callMain('update-tray-icon', messageCount);
 }
 
