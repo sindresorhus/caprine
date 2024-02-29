@@ -139,9 +139,7 @@ const conversationDivObserver = new MutationObserver(_ => {
 	let conversation = document.querySelector(`#${conversationId}`);
 
 	// Fetch it using `querySelector` if no luck with the `conversationId`
-	if (!conversation) {
-		conversation = document.querySelector(selectors.conversationSelector);
-	}
+	conversation ||= document.querySelector(selectors.conversationSelector);
 
 	// If we have a new reference
 	if (conversation && conversationWindow !== conversation) {
