@@ -49,7 +49,7 @@ body {
 	-webkit-app-region: no-drag;
 }
 /* View label above conversation list margin */
-[role='navigation'] .x1heor9g.x1qlqyl8.x1pd3egz.x1a2a7pz {
+.os-darwin [role='navigation'] .x1heor9g.x1qlqyl8.x1pd3egz.x1a2a7pz {
 	margin-left: 60px;
 }
 
