@@ -16,20 +16,16 @@ jobs:
           - ubuntu-latest
           - windows-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
       - name: Install Snapcraft
         # TODO: Bump after we're sure it works with samuelmeuli/action-electron-builder@v1
         uses: samuelmeuli/action-snapcraft@v1
         if: startsWith(matrix.os, 'ubuntu')
-
       - name: Build & publish Caprine
         # TODO: Upgrade action in fork https://github.com/dusansimic/action-electron-builder
         uses: samuelmeuli/action-electron-builder@v1
@@ -40,7 +36,6 @@ jobs:
           mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
-
       - name: Upload to Gemfury
         if: startsWith(matrix.os, 'ubuntu')
         run: curl -F package=@$(find . -type f -name "*.deb") https://${{ secrets.gemfury_token }}@push.fury.io/lefterisgar/

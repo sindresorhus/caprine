@@ -11,9 +11,9 @@ URL:            https://sindresorhus.com/caprine/
 Source0:        https://github.com/sindresorhus/caprine/archive/refs/tags/v%{version}.tar.gz
 Source1:        %{name}.desktop
 
-BuildArch:      x86_64
+ExclusiveArch:  x86_64
 BuildRequires:  npm
-BuildRequires:  nodejs >= 18.0.0
+BuildRequires:  nodejs >= 20.0.0
 
 %description
 Caprine is an unofficial and privacy-focused Facebook Messenger app with many useful features.

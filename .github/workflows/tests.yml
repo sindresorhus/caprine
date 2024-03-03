@@ -1,24 +1,31 @@
 name: Tests
+
 on:
   push:
     branches-ignore:
       - gh-pages
   pull_request:
   workflow_call:
+
 jobs:
-  tests:
+  source:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
-
       - name: Run tests
         run: |
             npm ci
             npm test
+  rpmspec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint rpm spec file
+        uses: EyeCantCU/rpmlint-action@v0.1.1
+        with:
+          rpmfiles: packages/rpm/caprine.spec
