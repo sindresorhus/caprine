@@ -20,7 +20,7 @@
 		"test": "npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc",
-		"release": "np"
+		"release": "np --no-publish"
 	},
 	"dependencies": {
 		"@electron/remote": "^2.1.2",
