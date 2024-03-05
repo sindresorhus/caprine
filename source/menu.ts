@@ -231,7 +231,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 					autoHideMenuBar: true,
 					webPreferences: {
 						nodeIntegration: true,
-						contextIsolation: false,
+						// contextIsolation: false,
 						preload: path.join(__dirname, 'preload.js')
 					}
 				})
@@ -241,9 +241,9 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				<div style="display: flex; flex-direction: column; padding: 1em;">
 				  <div style="display: flex; align-items: center; justify-content: space-between;">
 					<div>
-					  <input type="radio" id="proxy-disabled" name="proxy-toggle" checked>
+					  <input type="radio" id="proxy-disabled" name="proxy-toggle" value="false">
 					  <label for="proxy-disabled">Disable</label><br>
-					  <input type="radio" id="proxy-enabled" name="proxy-toggle">
+					  <input type="radio" id="proxy-enabled" name="proxy-toggle" value="true">
 					  <label for="proxy-enabled">Enable</label>
 					</div>
 				  </div>
@@ -255,22 +255,35 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				</div>
 
               <script>
-				let proxyDisabled = document.getElementById('proxy-disabled');
-				let proxyAddressInput = document.getElementById('proxy-address');
-				debugger;
-                proxyDisabled.checked = window.config.get('useProxy');
-				proxyAddressInput.value = window.config.get('proxyAddress');
-				proxyDisabled.addEventListener('change', function() {
-				  window.config.set('useProxy', !this.checked);
+                window.configApi.get('useProxy').then(res => {
+                    if (res) {
+						let inputElement = document.querySelector('input[name="proxy-toggle"][value="true"]');
+						inputElement.checked = true;
+                    }
+                    else {
+						let inputElement = document.querySelector('input[name="proxy-toggle"][value="false"]');
+						inputElement.checked = true;
+                    }
+                })
+                let proxyToggles = document.querySelectorAll('input[name="proxy-toggle"]');
+				proxyToggles.forEach((radio) => {
+					radio.addEventListener('change', function() {
+						if (this.checked) {
+							window.configApi.set('useProxy', this.value === "true");
+						}
+					});
 				});
-
+                let proxyAddressInput = document.getElementById('proxy-address');
+				window.configApi.get('proxyAddress').then(res => {
+                    proxyAddressInput.value = res;
+                })
 				proxyAddressInput.addEventListener('change', function() {
-				  window.config.set('proxyAddress', this.value.trim());
+				  window.configApi.set('proxyAddress', this.value.trim());
 				});
               </script>
             </div>
           `
-				win.loadURL('data:text/html,' + encodeURIComponent(content))
+				win.loadURL('data:text/html;charset=UTF-8,' + encodeURIComponent(content))
 				win.on('closed', () => {
 					win = null;
 				})

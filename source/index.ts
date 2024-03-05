@@ -366,6 +366,8 @@ function createMainWindow(): BrowserWindow {
 
 (async () => {
 	await Promise.all([ensureOnline(), app.whenReady()]);
+	ipc.handle('config:get', (_, key) => config.get(key))
+	ipc.on('config:set', (_, key, value) => config.set(key, value))
 	await updateAppMenu();
 	mainWindow = createMainWindow();
 

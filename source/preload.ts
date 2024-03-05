@@ -1,7 +1,7 @@
 import { contextBridge } from 'electron'
-import config from './config';
+import {ipcRenderer as ipc} from 'electron-better-ipc';
 
-contextBridge.exposeInMainWorld('config', {
-	get: (key: string) => config.get(key),
-	set: (key: string, value: any) => config.set(key, value)
+contextBridge.exposeInMainWorld('configApi', {
+	get: async (key: string) => await ipc.invoke('config:get', key),
+	set: (key: string, value: any) => ipc.send('config:set', key, value)
 })
