@@ -305,6 +305,10 @@ function createMainWindow(): BrowserWindow {
 		win.setSheetOffset(40);
 	}
 
+	if (config.get('useProxy')) {
+		session.defaultSession.setProxy({ proxyRules: config.get('proxyAddress') })
+	}
+
 	win.loadURL(mainURL);
 
 	win.on('close', event => {

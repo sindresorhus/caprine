@@ -44,6 +44,8 @@ export type StoreType = {
 	autoplayVideos: boolean;
 	isSpellCheckerEnabled: boolean;
 	spellCheckerLanguages: string[];
+	useProxy: boolean;
+	proxyAddress: string;
 };
 
 const schema: Store.Schema<StoreType> = {
@@ -218,6 +220,14 @@ const schema: Store.Schema<StoreType> = {
 		},
 		default: [],
 	},
+	useProxy: {
+		type: 'boolean',
+		default: false,
+	},
+	proxyAddress: {
+		type: 'string',
+		default: ''
+	}
 };
 
 function updateVibrancySetting(store: Store<StoreType>): void {

@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 import {existsSync, writeFileSync} from 'node:fs';
-import {app, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
+import {app, shell, Menu, MenuItemConstructorOptions, dialog, BrowserWindow} from 'electron';
 import {
 	is,
 	appMenu,
@@ -221,6 +221,61 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				shell.openPath(filePath);
 			},
 		},
+		{
+			label: 'Proxy Setting',
+			click: () => {
+				let win: Electron.CrossProcessExports.BrowserWindow | null = new BrowserWindow({
+					title: 'Proxy Setting',
+					width: 400,
+					height: 300,
+					autoHideMenuBar: true,
+					webPreferences: {
+						nodeIntegration: true,
+						contextIsolation: false,
+						preload: path.join(__dirname, 'preload.js')
+					}
+				})
+				win.setMenuBarVisibility(false)
+				let content = `
+			<div>
+				<div style="display: flex; flex-direction: column; padding: 1em;">
+				  <div style="display: flex; align-items: center; justify-content: space-between;">
+					<div>
+					  <input type="radio" id="proxy-disabled" name="proxy-toggle" checked>
+					  <label for="proxy-disabled">Disable</label><br>
+					  <input type="radio" id="proxy-enabled" name="proxy-toggle">
+					  <label for="proxy-enabled">Enable</label>
+					</div>
+				  </div>
+				  </div>
+				  <div style="display: flex; align-items: center; padding: 1em;">
+					<label for="proxy-address" style="font-weight: bold; padding-right: 1em">Proxy Server</label>
+					<input type="text" id="proxy-address" placeholder="http://127.0.0.1:7890" style="width: 200px;"/>
+				  </div>
+				</div>
+
+              <script>
+				let proxyDisabled = document.getElementById('proxy-disabled');
+				let proxyAddressInput = document.getElementById('proxy-address');
+				debugger;
+                proxyDisabled.checked = window.config.get('useProxy');
+				proxyAddressInput.value = window.config.get('proxyAddress');
+				proxyDisabled.addEventListener('change', function() {
+				  window.config.set('useProxy', !this.checked);
+				});
+
+				proxyAddressInput.addEventListener('change', function() {
+				  window.config.set('proxyAddress', this.value.trim());
+				});
+              </script>
+            </div>
+          `
+				win.loadURL('data:text/html,' + encodeURIComponent(content))
+				win.on('closed', () => {
+					win = null;
+				})
+			}
+		}
 	];
 
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
