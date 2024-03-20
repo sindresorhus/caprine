@@ -175,6 +175,12 @@ html.dark-mode ._9xq0 {
 	--primary-text: #e4e6eb;
 }
 
+/* Received messages bubble color */
+/* TODO: Remove if dark mode gets fixed by fb */
+html.dark-mode .x1xr0vuk {
+	--chat-incoming-message-bubble-background-color: #404040;
+}
+
 /* Radio buttons */
 .x14yjl9h.xudhj91.x18nykt9.xww2gxu.x13fuv20.xu3j5b3.x1q0q8m5.x26u7qi.xamhcws.xol2nv.xlxy82.x19p7ews.x9f619.x1rg5ohu.x2lah0s.x1n2onr6.x1tz4bnf.xmds5ef.x25epmt.x11y6y4w.xxk0z11.xvy4d1p {
 	--accent: var(--primary-text);
