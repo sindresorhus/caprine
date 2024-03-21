@@ -22,13 +22,13 @@ function drawIcon(size: number, img?: HTMLImageElement): HTMLCanvasElement {
 		canvas.width = size + padding.left + padding.right;
 		canvas.height = size + padding.top + padding.bottom;
 
-		const ctx = canvas.getContext('2d')!;
-		ctx.beginPath();
-		ctx.arc((size / 2) + padding.left, (size / 2) + padding.top, (size / 2), 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.clip();
+		const context = canvas.getContext('2d')!;
+		context.beginPath();
+		context.arc((size / 2) + padding.left, (size / 2) + padding.top, (size / 2), 0, Math.PI * 2, true);
+		context.closePath();
+		context.clip();
 
-		ctx.drawImage(img, padding.left, padding.top, size, size);
+		context.drawImage(img, padding.left, padding.top, size, size);
 	} else {
 		canvas.width = 0;
 		canvas.height = 0;
@@ -63,13 +63,13 @@ async function createIcons(element: HTMLElement, url: string): Promise<void> {
 	element.setAttribute(icon.read, canvas.toDataURL());
 
 	const markerSize = 8;
-	const ctx = canvas.getContext('2d')!;
+	const context = canvas.getContext('2d')!;
 
-	ctx.fillStyle = '#f42020';
-	ctx.beginPath();
-	ctx.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
-	ctx.closePath();
-	ctx.fill();
+	context.fillStyle = '#f42020';
+	context.beginPath();
+	context.ellipse(canvas.width - markerSize, markerSize, markerSize, markerSize, 0, 0, 2 * Math.PI);
+	context.closePath();
+	context.fill();
 
 	element.setAttribute(icon.unread, canvas.toDataURL());
 }
@@ -111,8 +111,8 @@ async function getLabel(element: HTMLElement): Promise<string> {
 
 	const emojis: HTMLElement[] = [];
 	if (element !== null) {
-		for (const element_curr of element.children) {
-			emojis.push(element_curr as HTMLElement);
+		for (const elementCurrent of element.children) {
+			emojis.push(elementCurrent as HTMLElement);
 		}
 	}
 
@@ -169,7 +169,7 @@ export async function sendConversationList(): Promise<void> {
 	ipc.callMain('conversations', conversationsToRender);
 }
 
-function genStringFromNode(element: Element): string | undefined {
+function generateStringFromNode(element: Element): string | undefined {
 	const cloneElement = element.cloneNode(true) as Element;
 	let emojiString;
 
@@ -217,9 +217,9 @@ function countUnread(mutationsList: MutationRecord[]): void {
 
 	// Check latest mutation first
 	for (const mutation of unreadMutations.reverse()) {
-		const curr = (mutation.target.parentElement as Element).closest(selectors.conversationSidebarSelector)!;
+		const current = (mutation.target.parentElement as Element).closest(selectors.conversationSidebarSelector)!;
 
-		const href = curr.closest('[role="link"]')?.getAttribute('href');
+		const href = current.closest('[role="link"]')?.getAttribute('href');
 
 		if (!href) {
 			continue;
@@ -228,21 +228,21 @@ function countUnread(mutationsList: MutationRecord[]): void {
 		// It is possible to have multiple mutations for the same conversation, but we only want one notification.
 		// So if the current conversation has already been checked, continue.
 		// Additionally if the conversation is not unread, then also continue.
-		if (alreadyChecked.includes(href) || !curr.querySelector('.' + selectors.conversationSidebarUnreadDot.replace(/ /g, '.'))) {
+		if (alreadyChecked.includes(href) || !current.querySelector('.' + selectors.conversationSidebarUnreadDot.replaceAll(/ /, '.'))) {
 			continue;
 		}
 
 		alreadyChecked.push(href);
 
 		// Get the image data URI from the parent of the author/text
-		const imgUrl = curr.querySelector('img')?.dataset.caprineIcon;
-		const textOptions = curr.querySelectorAll(selectors.conversationSidebarTextSelector);
+		const imgUrl = current.querySelector('img')?.dataset.caprineIcon;
+		const textOptions = current.querySelectorAll(selectors.conversationSidebarTextSelector);
 		// Get the author and text of the new message
 		const titleTextNode = textOptions[0];
 		const bodyTextNode = textOptions[1];
 
-		const titleText = genStringFromNode(titleTextNode);
-		const bodyText = genStringFromNode(bodyTextNode);
+		const titleText = generateStringFromNode(titleTextNode);
+		const bodyText = generateStringFromNode(bodyTextNode);
 
 		if (!bodyText || !titleText || !imgUrl) {
 			continue;

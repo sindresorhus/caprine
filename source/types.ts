@@ -1,7 +1,7 @@
-export interface IToggleSounds {
+export type IToggleSounds = {
 	checked: boolean;
-}
+};
 
-export interface IToggleMuteNotifications {
+export type IToggleMuteNotifications = {
 	defaultStatus: boolean;
-}
+};

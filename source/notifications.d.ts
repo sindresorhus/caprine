@@ -1,9 +1,9 @@
-interface NotificationCallback {
+type NotificationCallback = {
 	callbackName: keyof Notification;
 	id: number;
-}
+};
 
-interface NotificationReplyCallback extends NotificationCallback {
+type NotificationReplyCallback = NotificationCallback & {
 	previousConversation: number;
 	reply: string;
-}
+};

@@ -250,18 +250,18 @@ function updateThemeSetting(store: Store<StoreType>): void {
 
 	if (is.macos && followSystemAppearance) {
 		store.set('theme', 'system');
-	} else if (typeof darkMode !== 'undefined') {
+	} else if (darkMode !== undefined) {
 		store.set('theme', darkMode ? 'dark' : 'light');
 	} else if (!store.has('theme')) {
 		store.set('theme', 'system');
 	}
 
-	if (typeof darkMode !== 'undefined') {
+	if (darkMode !== undefined) {
 		// @ts-expect-error
 		store.delete('darkMode');
 	}
 
-	if (typeof followSystemAppearance !== 'undefined') {
+	if (followSystemAppearance !== undefined) {
 		// @ts-expect-error
 		store.delete('followSystemAppearance');
 	}

@@ -219,12 +219,17 @@ enum EmojiStyleCode {
 
 function codeForEmojiStyle(style: EmojiStyle): EmojiStyleCode {
 	switch (style) {
-		case 'facebook-2-2':
+		case 'facebook-2-2': {
 			return EmojiStyleCode.Facebook22;
-		case 'messenger-1-0':
+		}
+
+		case 'messenger-1-0': {
 			return EmojiStyleCode.Messenger10;
-		default:
+		}
+
+		default: {
 			return EmojiStyleCode.Facebook30;
+		}
 	}
 }
 

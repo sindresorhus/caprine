@@ -1,5 +1,11 @@
 import * as path from 'node:path';
-import {app, Menu, Tray, BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import {
+	app,
+	Menu,
+	Tray,
+	BrowserWindow,
+	MenuItemConstructorOptions,
+} from 'electron';
 import {is} from 'electron-util';
 import config from './config';
 import {toggleMenuBarMode} from './menu-bar-mode';
