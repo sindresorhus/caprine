@@ -172,8 +172,3 @@ html.dark-mode ._9xq0 {
 html.dark-mode .x1p6odiv {
 	color: var(--primary-icon);
 }
-
-/* TEMPORARY */
-html.dark-mode .x1xr0vuk {
-	--chat-incoming-message-bubble-background-color: #404040;
-}
