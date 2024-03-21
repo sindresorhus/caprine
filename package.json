@@ -64,14 +64,12 @@
 		],
 		"rules": {
 			"@typescript-eslint/ban-ts-comment": "off",
-			"@typescript-eslint/consistent-type-definitions": "off",
 			"@typescript-eslint/consistent-type-imports": "off",
 			"@typescript-eslint/naming-convention": "off",
 			"@typescript-eslint/no-floating-promises": "off",
 			"@typescript-eslint/no-loop-func": "off",
 			"@typescript-eslint/no-non-null-assertion": "off",
 			"@typescript-eslint/no-require-imports": "off",
-			"@typescript-eslint/no-unnecessary-type-assertion": "off",
 			"@typescript-eslint/no-unsafe-argument": "off",
 			"@typescript-eslint/no-unsafe-assignment": "off",
 			"@typescript-eslint/no-unsafe-call": "off",
@@ -81,23 +79,15 @@
 			"import/no-anonymous-default-export": "off",
 			"import/no-cycle": "off",
 			"n/file-extension-in-import": "off",
-			"no-warning-comments": "off",
-			"object-curly-newline": "off",
-			"unicorn/no-typeof-undefined": "off",
 			"unicorn/prefer-at": "off",
 			"unicorn/prefer-module": "off",
-			"unicorn/prefer-string-replace-all": "off",
-			"unicorn/prefer-top-level-await": "off",
-			"unicorn/prevent-abbreviations": "off",
-			"unicorn/switch-case-braces": "off"
+			"unicorn/prefer-top-level-await": "off"
 		}
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo",
 		"rules": {
-			"comment-word-disallowed-list": null,
 			"declaration-no-important": null,
-			"length-zero-no-unit": null,
 			"no-descending-specificity": null,
 			"no-duplicate-selectors": null,
 			"rule-empty-line-before": null,

@@ -25,7 +25,12 @@ import doNotDisturb from '@sindresorhus/do-not-disturb';
 import updateAppMenu from './menu';
 import config, {StoreType} from './config';
 import tray from './tray';
-import {sendAction, sendBackgroundAction, messengerDomain, stripTrackingFromUrl} from './util';
+import {
+	sendAction,
+	sendBackgroundAction,
+	messengerDomain,
+	stripTrackingFromUrl,
+} from './util';
 import {process as processEmojiUrl} from './emoji';
 import ensureOnline from './ensure-online';
 import {setUpMenuBarMode} from './menu-bar-mode';
@@ -143,12 +148,12 @@ function updateOverlayIcon({data, text}: {data: string; text: string}): void {
 	mainWindow.setOverlayIcon(img, text);
 }
 
-interface BeforeSendHeadersResponse {
+type BeforeSendHeadersResponse = {
 	cancel?: boolean;
 	requestHeaders?: Record<string, string>;
-}
+};
 
-interface OnSendHeadersDetails {
+type OnSendHeadersDetails = {
 	id: number;
 	url: string;
 	method: string;
@@ -157,7 +162,7 @@ interface OnSendHeadersDetails {
 	referrer: string;
 	timestamp: number;
 	requestHeaders: Record<string, string>;
-}
+};
 
 function enableHiresResources(): void {
 	const scaleFactor = Math.max(
@@ -500,14 +505,17 @@ function createMainWindow(): BrowserWindow {
 			if (details.url === 'about:blank' || details.url === 'about:blank#blocked') {
 				if (details.frameName !== 'about:blank') {
 					// Voice/video call popup
-					return {action: 'allow', overrideBrowserWindowOptions: {
-						show: true,
-						titleBarStyle: 'default',
-						webPreferences: {
-							nodeIntegration: false,
-							preload: path.join(__dirname, 'browser-call.js'),
+					return {
+						action: 'allow',
+						overrideBrowserWindowOptions: {
+							show: true,
+							titleBarStyle: 'default',
+							webPreferences: {
+								nodeIntegration: false,
+								preload: path.join(__dirname, 'browser-call.js'),
+							},
 						},
-					}};
+					};
 				}
 			} else {
 				const url = stripTrackingFromUrl(details.url);

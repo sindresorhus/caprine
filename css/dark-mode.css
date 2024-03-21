@@ -166,7 +166,7 @@ html.dark-mode ._9xq0 {
 /* Removing top gap */
 /* TODO: Remove when fixed by fb */
 .__fb-dark-mode {
-	--header-height: 0px !important;
+	--header-height: 0 !important;
 }
 
 /* Message list: fix for received messages text color in dark mode */
