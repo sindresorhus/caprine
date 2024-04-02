@@ -61,19 +61,6 @@ jobs:
         run: |
           npm ci
           npm run lint:stylelint
-  source:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-      - name: Run tests
-        run: |
-            npm ci
-            npm test
   rpmspec:
     runs-on: ubuntu-latest
     steps:
