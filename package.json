@@ -16,8 +16,11 @@
 	},
 	"scripts": {
 		"postinstall": "patch-package && electron-builder install-app-deps",
-		"lint": "tsc && xo && stylelint \"css/**/*.css\"",
-		"test": "npm run lint",
+		"lint:xo": "xo",
+		"lint:stylelint": "stylelint \"css/**/*.css\"",
+		"lint": "npm run lint:xo && npm run lint:stylelint",
+		"test:tsc": "npm run build",
+		"test": "npm run test:tsc && npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc",
 		"release": "np --no-publish"
