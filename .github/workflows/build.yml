@@ -32,6 +32,18 @@ jobs:
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           mac_certs: ${{ secrets.CSC_LINK }}
           mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
+      - name: Cleanup tag
+        uses: mad9000/actions-find-and-replace-string@5
+        id: release_tag
+        with:
+          source: ${{ github.ref_name }}
+          find: v
+          replace: ''
+      - name: Upload to Snapcraft
+        if: startsWith(matrix.os, 'ubuntu')
+        uses: snapcore/action-publish@v1
+        with:
+          snap: dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.snap
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
       - name: Upload to Gemfury
