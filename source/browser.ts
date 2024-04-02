@@ -50,7 +50,7 @@ async function isNewSidebar(): Promise<boolean> {
 
 async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
 	// Wait for navigation pane buttons to show up
-	const settingsMenu = await elementReady(selectors.userMenuNewSidebar, {stopOnDomReady: false})!;
+	const settingsMenu = await elementReady(selectors.userMenuNewSidebar, {stopOnDomReady: false});
 
 	await withMenu(settingsMenu as HTMLElement, callback);
 }
@@ -260,7 +260,7 @@ async function toggleSounds({checked}: IToggleSounds): Promise<void> {
 	const shouldClosePreferences = await openHiddenPreferences();
 
 	const soundsCheckbox = document.querySelector<HTMLInputElement>(`${selectors.preferencesSelector} ${selectors.messengerSoundsSelector}`)!;
-	if (typeof checked === 'undefined' || checked !== soundsCheckbox.checked) {
+	if (checked === undefined || checked !== soundsCheckbox.checked) {
 		soundsCheckbox.click();
 	}
 
@@ -412,12 +412,16 @@ async function updateVibrancy(): Promise<void> {
 	const vibrancy = await ipc.callMain<undefined, 'sidebar' | 'none' | 'full'>('get-config-vibrancy');
 
 	switch (vibrancy) {
-		case 'sidebar':
+		case 'sidebar': {
 			classList.add('sidebar-vibrancy');
 			break;
-		case 'full':
+		}
+
+		case 'full': {
 			classList.add('full-vibrancy');
 			break;
+		}
+
 		default:
 	}
 
@@ -432,15 +436,21 @@ async function updateSidebar(): Promise<void> {
 	const sidebar = await ipc.callMain<undefined, 'default' | 'hidden' | 'narrow' | 'wide'>('get-config-sidebar');
 
 	switch (sidebar) {
-		case 'hidden':
+		case 'hidden': {
 			classList.add('sidebar-hidden');
 			break;
-		case 'narrow':
+		}
+
+		case 'narrow': {
 			classList.add('sidebar-force-narrow');
 			break;
-		case 'wide':
+		}
+
+		case 'wide': {
 			classList.add('sidebar-force-wide');
 			break;
+		}
+
 		default:
 	}
 }
@@ -460,15 +470,15 @@ function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
 	canvas.width = 128;
 	canvas.style.letterSpacing = '-5px';
 
-	const ctx = canvas.getContext('2d')!;
-	ctx.fillStyle = '#f42020';
-	ctx.beginPath();
-	ctx.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI);
-	ctx.fill();
-	ctx.textAlign = 'center';
-	ctx.fillStyle = 'white';
-	ctx.font = '90px sans-serif';
-	ctx.fillText(String(Math.min(99, messageCount)), 64, 96);
+	const context = canvas.getContext('2d')!;
+	context.fillStyle = '#f42020';
+	context.beginPath();
+	context.ellipse(64, 64, 64, 64, 0, 0, 2 * Math.PI);
+	context.fill();
+	context.textAlign = 'center';
+	context.fillStyle = 'white';
+	context.font = '90px sans-serif';
+	context.fillText(String(Math.min(99, messageCount)), 64, 96);
 
 	return canvas;
 }
