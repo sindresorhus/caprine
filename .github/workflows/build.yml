@@ -1,14 +1,14 @@
 name: Build and publish
-
 on:
-  workflow_run:
-    workflows: [Tests]
-    types: completed
-
+  push:
+    tags:
+      - '*'
 jobs:
+  tests:
+    uses: ./.github/workflows/tests.yml
   build:
+    needs: [tests]
     runs-on: ${{ matrix.os }}
-    if: github.event.workflow_run.conclusion == 'success' && github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
     strategy:
       matrix:
         os:
@@ -18,16 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 16
           cache: 'npm'
       - name: Install Snapcraft
-        # TODO: Bump after we're sure it works with samuelmeuli/action-electron-builder@v1
         uses: samuelmeuli/action-snapcraft@v1
         if: startsWith(matrix.os, 'ubuntu')
       - name: Build & publish Caprine
-        # TODO: Upgrade action in fork https://github.com/dusansimic/action-electron-builder
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
