@@ -32,6 +32,8 @@ jobs:
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           mac_certs: ${{ secrets.CSC_LINK }}
           mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
       - name: Cleanup tag
         uses: mad9000/actions-find-and-replace-string@5
         id: release_tag
