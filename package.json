@@ -164,11 +164,6 @@
 				"default",
 				"camera",
 				"removable-media"
-			],
-			"publish": [
-				{
-					"provider": "github"
-				}
 			]
 		},
 		"win": {
