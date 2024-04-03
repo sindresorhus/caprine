@@ -24,6 +24,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci
+      - name: Build Caprine
+        run: npm run build
       - name: Cleanup tag
         uses: mad9000/actions-find-and-replace-string@5
         id: release_tag
@@ -34,7 +36,7 @@ jobs:
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
         if: startsWith(matrix.os, 'ubuntu')
-      - name: Build Caprine for macOS
+      - name: Package Caprine for macOS
         if: startsWith(matrix.os, 'macos')
         run: npm run dist:mac
         env:
@@ -55,7 +57,7 @@ jobs:
             dist/Caprine-${{ steps.release_tag.outputs.value }}.dmg
             dist/Caprine-${{ steps.release_tag.outputs.value }}.dmg.blockmap
             dist/latest-mac.yml
-      - name: Build Caprine for Windows
+      - name: Package Caprine for Windows
         if: startsWith(matrix.os, 'windows')
         run: npm run dist:win
       - name: Publish Caprine for Windows
@@ -67,7 +69,7 @@ jobs:
             dist/Caprine-Setup-${{ steps.release_tag.outputs.value }}.exe
             dist/Caprine-Setup-${{ steps.release_tag.outputs.value }}.exe.blockmap
             dist/latest.yml
-      - name: Build Caprine for Linux
+      - name: Package Caprine for Linux
         if: startsWith(matrix.os, 'ubuntu')
         run: npm run dist:linux
       - name: Publish Caprine for Linux
