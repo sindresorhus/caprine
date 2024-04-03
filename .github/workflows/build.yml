@@ -52,14 +52,8 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: npm run dist:linux
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload to Snapcraft
-        if: startsWith(matrix.os, 'ubuntu')
-        uses: snapcore/action-publish@v1
-        with:
-          snap: dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.snap
-        env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to Gemfury
         if: startsWith(matrix.os, 'ubuntu')
         run: curl -F package=@dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.deb https://${{ secrets.gemfury_token }}@push.fury.io/lefterisgar/
