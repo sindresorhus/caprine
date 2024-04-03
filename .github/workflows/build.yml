@@ -22,6 +22,8 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
       - name: Cleanup tag
         uses: mad9000/actions-find-and-replace-string@5
         id: release_tag
@@ -42,6 +44,7 @@ jobs:
         if: startsWith(matrix.os, 'macos')
         uses: softprops/action-gh-release@v2
         with:
+          draft: true
           files: |
             dist/Caprine-${{ steps.release_tag.outputs.value }}-arm64-mac.zip
             dist/Caprine-${{ steps.release_tag.outputs.value }}-arm64-mac.zip.blockmap
@@ -59,6 +62,7 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         uses: softprops/action-gh-release@v2
         with:
+          draft: true
           files: |
             dist/Caprine-Setup-${{ steps.release_tag.outputs.value }}.exe
             dist/Caprine-Setup-${{ steps.release_tag.outputs.value }}.exe.blockmap
@@ -70,6 +74,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         uses: softprops/action-gh-release@v2
         with:
+          draft: true
           files: |
             dist/Caprine-${{ steps.release_tag.outputs.value }}.AppImage
             dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.deb
