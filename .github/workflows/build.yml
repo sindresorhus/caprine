@@ -42,46 +42,17 @@ jobs:
         env:
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-      - name: Publish Caprine for macOS
-        if: startsWith(matrix.os, 'macos')
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          files: |
-            dist/Caprine-${{ steps.release_tag.outputs.value }}-arm64-mac.zip
-            dist/Caprine-${{ steps.release_tag.outputs.value }}-arm64-mac.zip.blockmap
-            dist/Caprine-${{ steps.release_tag.outputs.value }}-arm64.dmg
-            dist/Caprine-${{ steps.release_tag.outputs.value }}-arm64.dmg.blockmap
-            dist/Caprine-${{ steps.release_tag.outputs.value }}-mac.zip
-            dist/Caprine-${{ steps.release_tag.outputs.value }}-mac.zip.blockmap
-            dist/Caprine-${{ steps.release_tag.outputs.value }}.dmg
-            dist/Caprine-${{ steps.release_tag.outputs.value }}.dmg.blockmap
-            dist/latest-mac.yml
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Package Caprine for Windows
         if: startsWith(matrix.os, 'windows')
         run: npm run dist:win
-      - name: Publish Caprine for Windows
-        if: startsWith(matrix.os, 'windows')
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          files: |
-            dist/Caprine-Setup-${{ steps.release_tag.outputs.value }}.exe
-            dist/Caprine-Setup-${{ steps.release_tag.outputs.value }}.exe.blockmap
-            dist/latest.yml
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Package Caprine for Linux
         if: startsWith(matrix.os, 'ubuntu')
         run: npm run dist:linux
-      - name: Publish Caprine for Linux
-        if: startsWith(matrix.os, 'ubuntu')
-        uses: softprops/action-gh-release@v2
-        with:
-          draft: true
-          files: |
-            dist/Caprine-${{ steps.release_tag.outputs.value }}.AppImage
-            dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.deb
-            dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.snap
-            dist/latest-linux.yml
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to Snapcraft
         if: startsWith(matrix.os, 'ubuntu')
         uses: snapcore/action-publish@v1
