@@ -23,7 +23,7 @@
 		"test": "npm run test:tsc && npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc",
-		"dist:linux": "electron-builder --linux AppImage deb snap",
+		"dist:linux": "electron-builder --linux",
 		"dist:mac": "electron-builder --mac",
 		"dist:win": "electron-builder --win",
 		"release": "np --no-publish"
