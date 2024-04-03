@@ -164,6 +164,17 @@
 				"default",
 				"camera",
 				"removable-media"
+			],
+			"publish": [
+				{
+					"provider": "github"
+				},
+				{
+					"provider": "snapStore",
+					"channels": [
+						"stable"
+					]
+				}
 			]
 		},
 		"win": {
