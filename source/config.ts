@@ -226,8 +226,8 @@ const schema: Store.Schema<StoreType> = {
 	},
 	proxyAddress: {
 		type: 'string',
-		default: ''
-	}
+		default: '',
+	},
 };
 
 function updateVibrancySetting(store: Store<StoreType>): void {

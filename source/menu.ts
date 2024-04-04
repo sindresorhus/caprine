@@ -6,7 +6,7 @@ import {
 	Menu,
 	MenuItemConstructorOptions,
 	dialog,
-	BrowserWindow
+	BrowserWindow,
 } from 'electron';
 import {
 	is,
@@ -236,20 +236,19 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		},
 		{
 			label: 'Proxy Setting',
-			click: () => {
-				let win: Electron.CrossProcessExports.BrowserWindow | null = new BrowserWindow({
+			click() {
+				let win: Electron.CrossProcessExports.BrowserWindow | undefined = new BrowserWindow({
 					title: 'Proxy Setting',
 					width: 400,
 					height: 300,
 					autoHideMenuBar: true,
 					webPreferences: {
 						nodeIntegration: true,
-						// contextIsolation: false,
-						preload: path.join(__dirname, 'preload.js')
-					}
-				})
-				win.setMenuBarVisibility(false)
-				let content = `
+						preload: path.join(__dirname, 'preload.js'),
+					},
+				});
+				win.setMenuBarVisibility(false);
+				const content = `
 			<div>
 				<div style="display: flex; flex-direction: column; padding: 1em;">
 				  <div style="display: flex; align-items: center; justify-content: space-between;">
@@ -295,13 +294,13 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				});
               </script>
             </div>
-          `
-				win.loadURL('data:text/html;charset=UTF-8,' + encodeURIComponent(content))
+          `;
+				win.loadURL('data:text/html;charset=UTF-8,' + encodeURIComponent(content));
 				win.on('closed', () => {
-					win = null;
-				})
-			}
-		}
+					win = undefined;
+				});
+			},
+		},
 	];
 
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [
