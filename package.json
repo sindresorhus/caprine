@@ -1,7 +1,7 @@
 {
 	"name": "caprine",
 	"productName": "Caprine",
-	"version": "2.59.3",
+	"version": "2.60.1",
 	"description": "Elegant Facebook Messenger desktop app",
 	"license": "MIT",
 	"repository": "sindresorhus/caprine",
@@ -16,11 +16,17 @@
 	},
 	"scripts": {
 		"postinstall": "patch-package && electron-builder install-app-deps",
-		"lint": "tsc && xo && stylelint \"css/**/*.css\"",
-		"test": "npm run lint",
+		"lint:xo": "xo",
+		"lint:stylelint": "stylelint \"css/**/*.css\"",
+		"lint": "npm run lint:xo && npm run lint:stylelint",
+		"test:tsc": "npm run build",
+		"test": "npm run test:tsc && npm run lint",
 		"start": "tsc && electron .",
 		"build": "tsc",
-		"release": "np"
+		"dist:linux": "electron-builder --linux",
+		"dist:mac": "electron-builder --mac",
+		"dist:win": "electron-builder --win",
+		"release": "np --no-publish"
 	},
 	"dependencies": {
 		"@electron/remote": "^2.1.2",
@@ -64,14 +70,12 @@
 		],
 		"rules": {
 			"@typescript-eslint/ban-ts-comment": "off",
-			"@typescript-eslint/consistent-type-definitions": "off",
 			"@typescript-eslint/consistent-type-imports": "off",
 			"@typescript-eslint/naming-convention": "off",
 			"@typescript-eslint/no-floating-promises": "off",
 			"@typescript-eslint/no-loop-func": "off",
 			"@typescript-eslint/no-non-null-assertion": "off",
 			"@typescript-eslint/no-require-imports": "off",
-			"@typescript-eslint/no-unnecessary-type-assertion": "off",
 			"@typescript-eslint/no-unsafe-argument": "off",
 			"@typescript-eslint/no-unsafe-assignment": "off",
 			"@typescript-eslint/no-unsafe-call": "off",
@@ -81,23 +85,15 @@
 			"import/no-anonymous-default-export": "off",
 			"import/no-cycle": "off",
 			"n/file-extension-in-import": "off",
-			"no-warning-comments": "off",
-			"object-curly-newline": "off",
-			"unicorn/no-typeof-undefined": "off",
 			"unicorn/prefer-at": "off",
 			"unicorn/prefer-module": "off",
-			"unicorn/prefer-string-replace-all": "off",
-			"unicorn/prefer-top-level-await": "off",
-			"unicorn/prevent-abbreviations": "off",
-			"unicorn/switch-case-braces": "off"
+			"unicorn/prefer-top-level-await": "off"
 		}
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo",
 		"rules": {
-			"comment-word-disallowed-list": null,
 			"declaration-no-important": null,
-			"length-zero-no-unit": null,
 			"no-descending-specificity": null,
 			"no-duplicate-selectors": null,
 			"rule-empty-line-before": null,
