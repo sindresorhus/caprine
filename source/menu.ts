@@ -237,7 +237,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 		{
 			label: 'Proxy Setting',
 			click() {
-				let win: Electron.CrossProcessExports.BrowserWindow | undefined = new BrowserWindow({
+				let proxyWin: Electron.CrossProcessExports.BrowserWindow | undefined = new BrowserWindow({
 					title: 'Proxy Setting',
 					width: 400,
 					height: 300,
@@ -247,57 +247,10 @@ Press Command/Ctrl+R in Caprine to see your changes.
 						preload: path.join(__dirname, 'preload.js'),
 					},
 				});
-				win.setMenuBarVisibility(false);
-				const content = `
-			<div>
-				<div style="display: flex; flex-direction: column; padding: 1em;">
-				  <div style="display: flex; align-items: center; justify-content: space-between;">
-					<div>
-					  <input type="radio" id="proxy-disabled" name="proxy-toggle" value="false">
-					  <label for="proxy-disabled">Disable</label><br>
-					  <input type="radio" id="proxy-enabled" name="proxy-toggle" value="true">
-					  <label for="proxy-enabled">Enable</label>
-					</div>
-				  </div>
-				  </div>
-				  <div style="display: flex; align-items: center; padding: 1em;">
-					<label for="proxy-address" style="font-weight: bold; padding-right: 1em">Proxy Server</label>
-					<input type="text" id="proxy-address" placeholder="http://127.0.0.1:7890" style="width: 200px;"/>
-				  </div>
-				</div>
-
-              <script>
-                window.configApi.get('useProxy').then(res => {
-                    if (res) {
-						let inputElement = document.querySelector('input[name="proxy-toggle"][value="true"]');
-						inputElement.checked = true;
-                    }
-                    else {
-						let inputElement = document.querySelector('input[name="proxy-toggle"][value="false"]');
-						inputElement.checked = true;
-                    }
-                })
-                let proxyToggles = document.querySelectorAll('input[name="proxy-toggle"]');
-				proxyToggles.forEach((radio) => {
-					radio.addEventListener('change', function() {
-						if (this.checked) {
-							window.configApi.set('useProxy', this.value === "true");
-						}
-					});
-				});
-                let proxyAddressInput = document.getElementById('proxy-address');
-				window.configApi.get('proxyAddress').then(res => {
-                    proxyAddressInput.value = res;
-                })
-				proxyAddressInput.addEventListener('change', function() {
-				  window.configApi.set('proxyAddress', this.value.trim());
-				});
-              </script>
-            </div>
-          `;
-				win.loadURL('data:text/html;charset=UTF-8,' + encodeURIComponent(content));
-				win.on('closed', () => {
-					win = undefined;
+				proxyWin.setMenuBarVisibility(false);
+				proxyWin.loadFile(path.join(__dirname, '..', 'static/proxy.html'));
+				proxyWin.on('closed', () => {
+					proxyWin = undefined;
 				});
 			},
 		},

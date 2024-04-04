@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Proxy Settings</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			font-family: "Roboto", sans-serif;
+		}
+
+		body {
+			font-family: 'Roboto', sans-serif;
+		}
+
+		a:link {
+			color: #1be1be;
+		}
+
+		a:visited, a:active {
+			color: #ae5ee0;
+		}
+
+		hr {
+			border: 0;
+			height: 1px;
+			background: #377DFF;
+		}
+
+		input[type="text"] {
+			border: none;
+			border-bottom: 1px solid #377DFF;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+<div>
+	<h3 style="text-align: center;"><u>Proxy Configuration</u></h3>
+	<div style="display: flex; flex-direction: column; padding-left: 1em; padding-bottom: 1em;">
+		<div style="display: flex; align-items: center; justify-content: space-between;">
+			<div>
+				<input type="radio" id="proxy-disabled" name="proxy-toggle" value="false">
+				<label for="proxy-disabled">Disable</label>
+				<br>
+				<input type="radio" id="proxy-enabled" name="proxy-toggle" value="true">
+				<label for="proxy-enabled">Enable</label>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div style="display: flex; align-items: center; padding-left: 1em; padding-top: 1em;">
+		<label for="proxy-address" style="font-weight: bold; padding-right: 1em">Proxy Server</label>
+		<input type="text" id="proxy-address" placeholder="http://127.0.0.1:7890" style="width: 200px;">
+	</div>
+</div>
+<script>
+	window.configApi.get('useProxy').then(res => {
+		if (res) {
+			let inputElement = document.querySelector('input[name="proxy-toggle"][value="true"]');
+			inputElement.checked = true;
+		} else {
+			let inputElement = document.querySelector('input[name="proxy-toggle"][value="false"]');
+			inputElement.checked = true;
+		}
+	});
+	let proxyToggles = document.querySelectorAll('input[name="proxy-toggle"]');
+	proxyToggles.forEach((radio) => {
+		radio.addEventListener('change', function () {
+			if (this.checked) {
+				window.configApi.set('useProxy', this.value === "true");
+			}
+		});
+	});
+	let proxyAddressInput = document.getElementById('proxy-address');
+	window.configApi.get('proxyAddress').then(res => {
+		proxyAddressInput.value = res;
+	})
+	proxyAddressInput.addEventListener('change', function () {
+		window.configApi.set('proxyAddress', this.value.trim());
+	});
+</script>
+</body>
+</html>
