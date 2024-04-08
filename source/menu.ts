@@ -247,7 +247,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 						preload: path.join(__dirname, 'preload.js'),
 					},
 				});
-				proxyWin.setMenuBarVisibility(false);
 				proxyWin.loadFile(path.join(__dirname, '..', 'static/proxy.html'));
 				proxyWin.on('closed', () => {
 					proxyWin = undefined;
