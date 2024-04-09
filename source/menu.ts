@@ -6,6 +6,7 @@ import {
 	Menu,
 	MenuItemConstructorOptions,
 	dialog,
+	BrowserWindow,
 } from 'electron';
 import {
 	is,
@@ -231,6 +232,25 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				}
 
 				shell.openPath(filePath);
+			},
+		},
+		{
+			label: 'Proxy Setting',
+			click() {
+				let proxyWin: Electron.CrossProcessExports.BrowserWindow | undefined = new BrowserWindow({
+					title: 'Proxy Setting',
+					width: 400,
+					height: 300,
+					autoHideMenuBar: true,
+					webPreferences: {
+						nodeIntegration: true,
+						preload: path.join(__dirname, 'preload.js'),
+					},
+				});
+				proxyWin.loadFile(path.join(__dirname, '..', 'static/proxy.html'));
+				proxyWin.on('closed', () => {
+					proxyWin = undefined;
+				});
 			},
 		},
 	];
