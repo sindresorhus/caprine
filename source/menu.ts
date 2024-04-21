@@ -1,6 +1,12 @@
 import * as path from 'node:path';
 import {existsSync, writeFileSync} from 'node:fs';
-import {app, shell, Menu, MenuItemConstructorOptions, dialog} from 'electron';
+import {
+	app,
+	shell,
+	Menu,
+	MenuItemConstructorOptions,
+	dialog,
+} from 'electron';
 import {
 	is,
 	appMenu,
@@ -11,7 +17,13 @@ import {
 } from 'electron-util';
 import config from './config';
 import getSpellCheckerLanguages from './spell-checker';
-import {sendAction, showRestartDialog, getWindow, toggleTrayIcon, toggleLaunchMinimized} from './util';
+import {
+	sendAction,
+	showRestartDialog,
+	getWindow,
+	toggleTrayIcon,
+	toggleLaunchMinimized,
+} from './util';
 import {generateSubmenu as generateEmojiSubmenu} from './emoji';
 import {toggleMenuBarMode} from './menu-bar-mode';
 import {caprineIconPath} from './constants';

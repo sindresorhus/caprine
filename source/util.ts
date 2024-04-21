@@ -1,4 +1,9 @@
-import {app, BrowserWindow, dialog, Menu} from 'electron';
+import {
+	app,
+	BrowserWindow,
+	dialog,
+	Menu,
+} from 'electron';
 import {ipcMain} from 'electron-better-ipc';
 import {is} from 'electron-util';
 import config from './config';
@@ -9,18 +14,18 @@ export function getWindow(): BrowserWindow {
 	return win;
 }
 
-export function sendAction<T>(action: string, args?: T): void {
+export function sendAction<T>(action: string, arguments_?: T): void {
 	const win = getWindow();
 
 	if (is.macos) {
 		win.restore();
 	}
 
-	ipcMain.callRenderer(win, action, args);
+	ipcMain.callRenderer(win, action, arguments_);
 }
 
-export async function sendBackgroundAction<T, ReturnValue>(action: string, args?: T): Promise<ReturnValue> {
-	return ipcMain.callRenderer<T, ReturnValue>(getWindow(), action, args);
+export async function sendBackgroundAction<T, ReturnValue>(action: string, arguments_?: T): Promise<ReturnValue> {
+	return ipcMain.callRenderer<T, ReturnValue>(getWindow(), action, arguments_);
 }
 
 export function showRestartDialog(message: string): void {

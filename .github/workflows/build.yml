@@ -1,14 +1,14 @@
 name: Build and publish
-
 on:
-  workflow_run:
-    workflows: [Tests]
-    types: completed
-
+  push:
+    tags:
+      - '*'
 jobs:
+  tests:
+    uses: ./.github/workflows/tests.yml
   build:
+    needs: [tests]
     runs-on: ${{ matrix.os }}
-    if: github.event.workflow_run.conclusion == 'success' && github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
     strategy:
       matrix:
         os:
@@ -22,20 +22,38 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Caprine
+        run: npm run build
+      - name: Cleanup tag
+        uses: mad9000/actions-find-and-replace-string@5
+        id: release_tag
+        with:
+          source: ${{ github.ref_name }}
+          find: v
+          replace: ''
       - name: Install Snapcraft
-        # TODO: Bump after we're sure it works with samuelmeuli/action-electron-builder@v1
         uses: samuelmeuli/action-snapcraft@v1
         if: startsWith(matrix.os, 'ubuntu')
-      - name: Build & publish Caprine
-        # TODO: Upgrade action in fork https://github.com/dusansimic/action-electron-builder
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          mac_certs: ${{ secrets.CSC_LINK }}
-          mac_certs_password: ${{ secrets.CSC_KEY_PASSWORD }}
+      - name: Package Caprine for macOS
+        if: startsWith(matrix.os, 'macos')
+        run: npm run dist:mac
+        env:
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Package Caprine for Windows
+        if: startsWith(matrix.os, 'windows')
+        run: npm run dist:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Package Caprine for Linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: npm run dist:linux
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.snapcraft_token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload to Gemfury
         if: startsWith(matrix.os, 'ubuntu')
-        run: curl -F package=@$(find . -type f -name "*.deb") https://${{ secrets.gemfury_token }}@push.fury.io/lefterisgar/
+        run: curl -F package=@dist/caprine_${{ steps.release_tag.outputs.value }}_amd64.deb https://${{ secrets.gemfury_token }}@push.fury.io/lefterisgar/

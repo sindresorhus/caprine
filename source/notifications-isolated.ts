@@ -1,4 +1,4 @@
-((window, Notification) => {
+((window, notification) => {
 	const notifications = new Map<number, Notification>();
 
 	// Handle events sent from the browser process
@@ -39,7 +39,7 @@
 
 	let counter = 1;
 
-	const AugmentedNotification = Object.assign(
+	const augmentedNotification = Object.assign(
 		class {
 			private readonly _id: number;
 
@@ -47,11 +47,11 @@
 				// According to https://github.com/sindresorhus/caprine/pull/637, the Notification
 				// constructor can be called with non-string title and body.
 				let {body} = options;
-				const bodyProps = (body as any).props;
-				body = bodyProps ? bodyProps.content[0] : options.body;
+				const bodyProperties = (body as any).props;
+				body = bodyProperties ? bodyProperties.content[0] : options.body;
 
-				const titleProps = (title as any).props;
-				title = titleProps ? titleProps.content[0] : title;
+				const titleProperties = (title as any).props;
+				title = titleProperties ? titleProperties.content[0] : title;
 
 				this._id = counter++;
 
@@ -74,8 +74,8 @@
 			// No-op, but Messenger expects this method to be present
 			close(): void {} // eslint-disable-line @typescript-eslint/no-empty-function
 		},
-		Notification,
+		notification,
 	);
 
-	Object.assign(window, {Notification: AugmentedNotification});
+	Object.assign(window, {notification: augmentedNotification});
 })(window, Notification);
