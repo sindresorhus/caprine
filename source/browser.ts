@@ -243,11 +243,6 @@ async function openHiddenPreferences(): Promise<boolean> {
 	if (!isPreferencesOpen()) {
 		document.documentElement.classList.add('hide-preferences-window');
 
-		const style = document.createElement('style');
-		// Hide both the backdrop and the preferences dialog
-		style.textContent = `${selectors.preferencesSelector} ._3ixn, ${selectors.preferencesSelector} ._59s7 { opacity: 0 !important }`;
-		document.body.append(style);
-
 		await openPreferences();
 
 		return true;
@@ -660,7 +655,7 @@ async function openPreferences(): Promise<void> {
 }
 
 function isPreferencesOpen(): boolean {
-	return Boolean(document.querySelector<HTMLElement>('[aria-label=Preferences]'));
+	return Boolean(document.querySelector<HTMLElement>(selectors.preferencesSelector));
 }
 
 async function closePreferences(): Promise<void> {
