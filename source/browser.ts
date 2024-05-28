@@ -41,9 +41,9 @@ async function withMenu(
 
 async function isNewSidebar(): Promise<boolean> {
 	// TODO: stopOnDomReady might not be needed
-	await elementReady('[role=navigation] > div > div', {stopOnDomReady: false});
+	await elementReady(selectors.leftSidebar, {stopOnDomReady: false});
 
-	const sidebars = document.querySelectorAll<HTMLElement>('[role=navigation] > div > div');
+	const sidebars = document.querySelectorAll<HTMLElement>(selectors.leftSidebar);
 
 	return sidebars.length === 2;
 }
@@ -85,12 +85,10 @@ async function selectOtherListViews(itemNumber: number): Promise<void> {
 
 	if (newSidebar) {
 		const items = document.querySelectorAll<HTMLElement>(
-			`${selectors.viewsMenu} > span > a`,
+			`${selectors.viewsMenu} span > a`,
 		);
 
 		const selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
-
-		console.log(selector);
 
 		if (selector) {
 			selector.click();
