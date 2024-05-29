@@ -228,25 +228,33 @@ html.private-mode .gvxzyvdx.aeinzg81.t7p7dqev.gh25dzvf.rse6dlih.ocv3nf92.nfkogya
 /* -- Sidebar views -- */
 
 /* Hidden: Hide sidebar */
-html.sidebar-hidden .bdao358l.om3e55n1.alzwoclg.cqf1kptm.gvxzyvdx.aeinzg81.jez8cy9q.fawcizw8.sl4bvocy.mm98tyaj.b0ur3jhr.f76nr8pf {
+html.sidebar-hidden .x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x2lah0s.x193iq5w.xeuugli.x1cvmir6.x12nzpgo.xcrg951.xm0m39n.xzhurro.x6gs93r.xpyiiip.x88v6c3.x1qpj6lr.xdhzj85.x1bc3s5a {
 	display: none;
 }
 
-/* Narrow: Hide preferences button */
-html.sidebar-force-narrow .pvreidsc.r227ecj6.n68fow1o.gt60zsk1.lth9pzmp {
+/* Narrow: Hide title and new message button */
+html.sidebar-force-narrow .x78zum5.xdt5ytf.xzd29fr {
 	display: none;
 }
 /* Narrow: Hide conversation previews */
-html.sidebar-force-narrow .bdao358l.om3e55n1.g4tp4svg.alzwoclg.cqf1kptm.jez8cy9q.gvxzyvdx.aeinzg81.cgu29s5g {
+html.sidebar-force-narrow [role='gridcell'] .x9f619.x1n2onr6.x1ja2u2z.x78zum5.x1iyjqo2.xs83m0k.xeuugli.x1qughib.x6s0dn4.x1a02dak.x1q0g3np.xdl72j9 {
 	display: none;
 }
-/* Narrow: Hide search bar */
-html.sidebar-force-narrow .bdao358l.om3e55n1.g4tp4svg.r227ecj6.gt60zsk1.rj2hsocd.f9xcifuu {
+/* Narrow: Hide seen indicator */
+html.sidebar-force-narrow [class='x6s0dn4 x78zum5 xozqiw3'] {
+	display: none;
+}
+/* Narrow: Hide conversation menus */
+html.sidebar-force-narrow .x1i10hfl.x1ejq31n.xd10rxx.x1sy0etr.x17r0tee.x9f619.x1ypdohk.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x16tdsg8.x1hl2dhg.xggy1nq.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.x1z11no5.xjy5m1g.x1mnwbp6.x4pb5v6.x972fbf.xcfux6l.x1qhh985.xm0m39n.x78zum5.xl56j7k.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.x10w6t97.x1td3qas.x9bbmet.x10f5nwc.xi81zsa {
+	display: none;
+}
+/* Narrow: Hide inbox sidebar expand button */
+html.sidebar-force-narrow .x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x2lah0s.x193iq5w.x6s0dn4.x1k70j0n.xat24cr {
 	display: none;
 }
 /* Narrow: Width of conversation list */
-html.sidebar-force-narrow .bdao358l.om3e55n1.alzwoclg.cqf1kptm.gvxzyvdx.aeinzg81.jez8cy9q.fawcizw8.sl4bvocy.mm98tyaj.b0ur3jhr.f76nr8pf {
-	width: 80px;
+html.sidebar-force-narrow .x12nzpgo.x12nzpgo {
+	width: 88px;
 }
 
 /* -- Toggle message buttons -- */
