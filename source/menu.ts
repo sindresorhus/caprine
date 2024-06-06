@@ -636,7 +636,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Search in Conversation',
 			visible: is.development,
 			accelerator: 'CommandOrControl+F',
