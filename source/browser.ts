@@ -21,7 +21,8 @@ async function withMenu(
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-child(2) > div');
+	await elementReady('.x78zum5.xdt5ytf.x1n2onr6.xat3117.xxzkxad > div:nth-child(2) > div', {stopOnDomReady: false});
+	const menuLayer = document.querySelector('.x78zum5.xdt5ytf.x1n2onr6.xat3117.xxzkxad > div:nth-child(2) > div');
 
 	if (menuLayer) {
 		const observer = new MutationObserver(() => {
@@ -228,11 +229,11 @@ ipc.answerMain('delete-conversation', async () => {
 	await deleteSelectedConversation();
 });
 
-ipc.answerMain('hide-conversation', async () => {
+ipc.answerMain('archive-conversation', async () => {
 	const index = selectedConversationIndex();
 
 	if (index !== -1) {
-		await hideSelectedConversation();
+		await archiveSelectedConversation();
 
 		const key = index + 1;
 		await jumpToConversation(key);
@@ -594,7 +595,7 @@ function selectedConversationIndex(offset = 0): number {
 		return -1;
 	}
 
-	const newSelected = selected.parentNode!.parentNode!.parentNode! as HTMLElement;
+	const newSelected = selected.closest(`${selectors.conversationList} > div`)!;
 
 	const list = [...newSelected.parentNode!.children];
 	const index = list.indexOf(newSelected) + offset;
@@ -611,7 +612,7 @@ async function setZoom(zoomFactor: number): Promise<void> {
 async function withConversationMenu(callback: () => void): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	let menuButton: HTMLElement | null = null;
-	const conversation = document.querySelector<HTMLElement>(`${selectors.selectedConversation}`)?.parentElement?.parentElement?.parentElement?.parentElement;
+	const conversation = document.querySelector<HTMLElement>(selectors.selectedConversation)!.closest(`${selectors.conversationList} > div`);
 
 	menuButton = conversation?.querySelector('[aria-label=Menu][role=button]') ?? null;
 
@@ -637,16 +638,16 @@ function isSelectedConversationGroup(): boolean {
 	return Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
 }
 
-async function hideSelectedConversation(): Promise<void> {
+async function archiveSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup] = [5, 6];
+		const [isGroup, isNotGroup] = [-4, -3];
 		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
 	});
 }
 
 async function deleteSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup] = [6, 7];
+		const [isGroup, isNotGroup] = [-3, -2];
 		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
 	});
 }
