@@ -584,45 +584,35 @@ Press Command/Ctrl+R in Caprine to see your changes.
 
 	const conversationSubmenu: MenuItemConstructorOptions[] = [
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Mute Conversation',
-			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+M',
 			click() {
 				sendAction('mute-conversation');
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
-			label: 'Hide Conversation',
-			visible: is.development,
+			label: 'Archive Conversation',
 			accelerator: 'CommandOrControl+Shift+H',
 			click() {
-				sendAction('hide-conversation');
+				sendAction('archive-conversation');
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Delete Conversation',
-			visible: is.development,
 			accelerator: 'CommandOrControl+Shift+D',
 			click() {
 				sendAction('delete-conversation');
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Select Next Conversation',
-			visible: is.development,
 			accelerator: 'Control+Tab',
 			click() {
 				sendAction('next-conversation');
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Select Previous Conversation',
-			visible: is.development,
 			accelerator: 'Control+Shift+Tab',
 			click() {
 				sendAction('previous-conversation');
@@ -636,9 +626,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			/* TODO: Fix conversation controls */
 			label: 'Search in Conversation',
-			visible: is.development,
 			accelerator: 'CommandOrControl+F',
 			click() {
 				sendAction('search');
