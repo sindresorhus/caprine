@@ -692,7 +692,7 @@ Press Command/Ctrl+R in Caprine to see your changes.
 	const helpSubmenu: MenuItemConstructorOptions[] = [
 		openUrlMenuItem({
 			label: 'Website',
-			url: 'https://sindresorhus.com/caprine',
+			url: 'https://github.com/sindresorhus/caprine',
 		}),
 		openUrlMenuItem({
 			label: 'Source Code',
@@ -731,7 +731,7 @@ ${debugInfo()}`;
 				icon: caprineIconPath,
 				copyright: 'Created by Sindre Sorhus',
 				text: 'Maintainers:\nDušan Simić\nLefteris Garyfalakis\nMichael Quevillon\nNikolas Spiridakis',
-				website: 'https://sindresorhus.com/caprine',
+				website: 'https://github.com/sindresorhus/caprine',
 			}),
 		);
 	}
