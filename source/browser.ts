@@ -297,20 +297,16 @@ ipc.answerMain('show-chats-view', async () => {
 	await selectOtherListViews(1);
 });
 
-ipc.answerMain('show-people-view', async () => {
+ipc.answerMain('show-marketplace-view', async () => {
 	await selectOtherListViews(2);
 });
 
-ipc.answerMain('show-marketplace-view', async () => {
+ipc.answerMain('show-requests-view', async () => {
 	await selectOtherListViews(3);
 });
 
-ipc.answerMain('show-requests-view', async () => {
-	await selectOtherListViews(4);
-});
-
 ipc.answerMain('show-archive-view', async () => {
-	await selectOtherListViews(5);
+	await selectOtherListViews(4);
 });
 
 ipc.answerMain('toggle-video-autoplay', () => {

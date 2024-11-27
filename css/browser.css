@@ -133,10 +133,6 @@ html.private-mode [href^='https://www.facebook.com/1'] .b6ax4al1.i54nktwv.z2vv26
 html.private-mode [role='navigation'] [role='row'] .b6ax4al1.gvxzyvdx {
 	filter: blur(5px);
 }
-/* Chat list: active contacts */
-html.private-mode [role='navigation'] .s9ok87oh.bf1zulr9.s9ljgwtm.lxqftegz.frfouenu.r7bn319e.bonavkto.djs4p424.bdao358l.alzwoclg.cgu29s5g.i15ihif8.sl27f92c.m8h3af8h.l7ghb35v.kjdc1dyq.kmwttqpk.aeinzg81.srn514ro.rl78xhln.om3e55n1.g4tp4svg.i85zmo3j.jl2a5g8c.b0eko5f3.fwlpnqze.il7dmu95z {
-	filter: blur(5px);
-}
 /* Chat list: person tiny heads */
 html.private-mode [role='row'] .aglvbi8b.om3e55n1.i8zpp7h3.g4tp4svg {
 	filter: blur(3px);

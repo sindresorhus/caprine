@@ -555,12 +555,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			label: 'Show Active Contacts',
-			click() {
-				sendAction('show-people-view');
-			},
-		},
-		{
 			label: 'Show Marketplace Chats',
 			click() {
 				sendAction('show-marketplace-view');
