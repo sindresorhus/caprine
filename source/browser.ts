@@ -150,45 +150,18 @@ ipc.answerMain('find', () => {
 });
 
 async function openSearchInConversation() {
-	const mainView = document.querySelector('.x9f619.x1n2onr6.x1ja2u2z.x78zum5.x1r8uery.x1iyjqo2.xs83m0k.xeuugli.x1qughib.x1qjc9v5.xozqiw3.x1q0g3np.xexx8yu.x85a59c')!;
+	const mainView = document.querySelector('.x9f619.x1ja2u2z.x78zum5.x1n2onr6.x1r8uery.x1iyjqo2.xs83m0k.xeuugli.x1qughib.x1qjc9v5.xozqiw3.x1q0g3np.xexx8yu.x85a59c')!;
 	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>(':scope > div:only-child'));
 
 	if (rightSidebarIsClosed) {
-		document.documentElement.classList.add('hide-r-sidebar');
 		document.querySelector<HTMLElement>(selectors.rightSidebarMenu)?.click();
 	}
-
-	await elementReady(selectors.rightSidebarSegments, {stopOnDomReady: false});
-	const segments = document.querySelectorAll<HTMLElement>(selectors.rightSidebarSegments).length;
-	// If there are four segments in right sidebar (two users chat) then button index is 2
-	// If there are not four segments (usually five, it's a group chat) then button index is 1
-	const buttonIndex = segments === 4 ? 2 : 1;
 
 	await elementReady(selectors.rightSidebarButtons, {stopOnDomReady: false});
 	const buttonList = document.querySelectorAll<HTMLElement>(selectors.rightSidebarButtons);
 
-	if (buttonList.length > buttonIndex) {
-		buttonList[buttonIndex].click();
-	}
-
-	// If right sidebar was closed when shortcut was clicked, then close it back.
-	if (rightSidebarIsClosed) {
-		document.querySelector<HTMLElement>(selectors.rightSidebarMenu)?.click();
-
-		// Observe sidebar so when it's hidden, remove the utility class. This prevents split
-		// display of sidebar.
-		const sidebarObserver = new MutationObserver(records => {
-			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
-
-			// In case there is a div removed, hide utility class and stop observing
-			if (removedRecords.length > 0) {
-				document.documentElement.classList.remove('hide-r-sidebar');
-				sidebarObserver.disconnect();
-			}
-		});
-
-		sidebarObserver.observe(mainView, {childList: true, subtree: true});
-	}
+	// Search in conversation is the last button
+	buttonList[buttonList.length - 1].click();
 }
 
 ipc.answerMain('search', () => {

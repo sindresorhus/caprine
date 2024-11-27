@@ -9,8 +9,7 @@ export default {
 	conversationSidebarSelector: '[class="x9f619 x1n2onr6 x1ja2u2z x78zum5 x2lah0s x1qughib x6s0dn4 xozqiw3 x1q0g3np"]', // Selector for the top level element of a single conversation (children contain text content of the conversation and conversation image)
 	notificationCheckbox: '._374b:nth-of-type(4) ._4ng2 input',
 	rightSidebarMenu: '.x6s0dn4.x3nfvp2.x1fgtraw.xl56j7k.x1n2onr6.xgd8bvy',
-	rightSidebarButtons: '.x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x2lah0s.x193iq5w.xeuugli.x10b6aqq.x1yrsyyn.x10ogl3i.xkhd6sd.xni59qk [role=button]',
-	rightSidebarSegments: '.xe8uvvx.x11i5rnm.x1mh8g0r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1oo3vh0.x1rdy4ex > div',
+	rightSidebarButtons: '.x9f619.x1ja2u2z.x78zum5.x2lah0s.x1n2onr6.xl56j7k.x1qjc9v5.xozqiw3.x1q0g3np.xn6708d.x1ye3gou.x1cnzs8.xdj266r.x11i5rnm.xat24cr.x1mh8g0r > div [role=button]',
 	muteIconNewDesign: 'path[d="M29.676 7.746c.353-.352.44-.92.15-1.324a1 1 0 00-1.524-.129L6.293 28.29a1 1 0 00.129 1.523c.404.29.972.204 1.324-.148l3.082-3.08A2.002 2.002 0 0112.242 26h15.244c.848 0 1.57-.695 1.527-1.541-.084-1.643-1.87-1.145-2.2-3.515l-1.073-8.157-.002-.01a1.976 1.976 0 01.562-1.656l3.376-3.375zm-9.165 20.252H15.51c-.313 0-.565.275-.506.575.274 1.38 1.516 2.422 3.007 2.422 1.49 0 2.731-1.042 3.005-2.422.06-.3-.193-.575-.505-.575zm-10.064-6.719L22.713 9.02a.997.997 0 00-.124-1.51 7.792 7.792 0 00-12.308 5.279l-1.04 7.897c-.089.672.726 1.074 1.206.594z"]',
 	// ! Very fragile selector (most likely cause of hidden dialog issue)
 	closePreferencesButton: 'div[role=dialog] > div > div > div:nth-child(2) > [role=button]',
