@@ -21,7 +21,8 @@ async function withMenu(
 	menuButtonElement.click();
 
 	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	const menuLayer = document.querySelector('.j83agx80.cbu4d94t.l9j0dhe7.jgljxmt5.be9z9djy > div:nth-child(2) > div');
+	await elementReady('.x78zum5.xdt5ytf.x1n2onr6.xat3117.xxzkxad > div:nth-child(2) > div', {stopOnDomReady: false});
+	const menuLayer = document.querySelector('.x78zum5.xdt5ytf.x1n2onr6.xat3117.xxzkxad > div:nth-child(2) > div');
 
 	if (menuLayer) {
 		const observer = new MutationObserver(() => {
@@ -149,45 +150,18 @@ ipc.answerMain('find', () => {
 });
 
 async function openSearchInConversation() {
-	const mainView = document.querySelector('.rq0escxv.l9j0dhe7.du4w35lb.j83agx80.rj1gh0hx.buofh1pr.g5gj957u.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.gitj76qy')!;
-	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>('div:only-child'));
+	const mainView = document.querySelector('.x9f619.x1ja2u2z.x78zum5.x1n2onr6.x1r8uery.x1iyjqo2.xs83m0k.xeuugli.x1qughib.x1qjc9v5.xozqiw3.x1q0g3np.xexx8yu.x85a59c')!;
+	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>(':scope > div:only-child'));
 
 	if (rightSidebarIsClosed) {
-		document.documentElement.classList.add('hide-r-sidebar');
-		document.querySelector<HTMLElement>('.j9ispegn.pmk7jnqg.k4urcfbm.datstx6m.b5wmifdl.kr520xx4.mdpwds66.b2cqd1jy.n13yt9zj.eh67sqbx')?.click();
+		document.querySelector<HTMLElement>(selectors.rightSidebarMenu)?.click();
 	}
-
-	await elementReady(selectors.rightSidebarSegments, {stopOnDomReady: false});
-	const segments = document.querySelectorAll<HTMLElement>(selectors.rightSidebarSegments).length;
-	// If there are three segmetns in right sidebar (two users chat) then button index is 4
-	// If there are not three segments (usually four, it's a group chat) then button index is 6
-	const buttonIndex = segments === 3 ? 4 : 6;
 
 	await elementReady(selectors.rightSidebarButtons, {stopOnDomReady: false});
 	const buttonList = document.querySelectorAll<HTMLElement>(selectors.rightSidebarButtons);
 
-	if (buttonList.length > buttonIndex) {
-		buttonList[buttonIndex].click();
-	}
-
-	// If right sidebar was closed when shortcut was clicked, then close it back.
-	if (rightSidebarIsClosed) {
-		document.querySelector<HTMLElement>('.j9ispegn.pmk7jnqg.k4urcfbm.datstx6m.b5wmifdl.kr520xx4.mdpwds66.b2cqd1jy.n13yt9zj.eh67sqbx')?.click();
-
-		// Observe sidebar so when it's hidden, remove the utility class. This prevents split
-		// display of sidebar.
-		const sidebarObserver = new MutationObserver(records => {
-			const removedRecords = records.filter(({removedNodes}) => removedNodes.length > 0 && (removedNodes[0] as HTMLElement).tagName === 'DIV');
-
-			// In case there is a div removed, hide utility class and stop observing
-			if (removedRecords.length > 0) {
-				document.documentElement.classList.remove('hide-r-sidebar');
-				sidebarObserver.disconnect();
-			}
-		});
-
-		sidebarObserver.observe(mainView, {childList: true, subtree: true});
-	}
+	// Search in conversation is the last button
+	buttonList[buttonList.length - 1].click();
 }
 
 ipc.answerMain('search', () => {
@@ -223,14 +197,21 @@ ipc.answerMain('mute-conversation', async () => {
 });
 
 ipc.answerMain('delete-conversation', async () => {
-	await deleteSelectedConversation();
-});
-
-ipc.answerMain('hide-conversation', async () => {
 	const index = selectedConversationIndex();
 
 	if (index !== -1) {
-		await hideSelectedConversation();
+		await deleteSelectedConversation();
+
+		const key = index + 1;
+		await jumpToConversation(key);
+	}
+});
+
+ipc.answerMain('archive-conversation', async () => {
+	const index = selectedConversationIndex();
+
+	if (index !== -1) {
+		await archiveSelectedConversation();
 
 		const key = index + 1;
 		await jumpToConversation(key);
@@ -292,20 +273,16 @@ ipc.answerMain('show-chats-view', async () => {
 	await selectOtherListViews(1);
 });
 
-ipc.answerMain('show-people-view', async () => {
+ipc.answerMain('show-marketplace-view', async () => {
 	await selectOtherListViews(2);
 });
 
-ipc.answerMain('show-marketplace-view', async () => {
+ipc.answerMain('show-requests-view', async () => {
 	await selectOtherListViews(3);
 });
 
-ipc.answerMain('show-requests-view', async () => {
-	await selectOtherListViews(4);
-});
-
 ipc.answerMain('show-archive-view', async () => {
-	await selectOtherListViews(5);
+	await selectOtherListViews(4);
 });
 
 ipc.answerMain('toggle-video-autoplay', () => {
@@ -587,7 +564,7 @@ function selectedConversationIndex(offset = 0): number {
 		return -1;
 	}
 
-	const newSelected = selected.parentNode!.parentNode!.parentNode! as HTMLElement;
+	const newSelected = selected.closest(`${selectors.conversationList} > div`)!;
 
 	const list = [...newSelected.parentNode!.children];
 	const index = list.indexOf(newSelected) + offset;
@@ -604,7 +581,7 @@ async function setZoom(zoomFactor: number): Promise<void> {
 async function withConversationMenu(callback: () => void): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	let menuButton: HTMLElement | null = null;
-	const conversation = document.querySelector<HTMLElement>(`${selectors.selectedConversation}`)?.parentElement?.parentElement?.parentElement?.parentElement;
+	const conversation = document.querySelector<HTMLElement>(selectors.selectedConversation)!.closest(`${selectors.conversationList} > div`);
 
 	menuButton = conversation?.querySelector('[aria-label=Menu][role=button]') ?? null;
 
@@ -620,27 +597,53 @@ async function openMuteModal(): Promise<void> {
 }
 
 /*
-This function assumes:
+These functions assume:
 - There is a selected conversation.
 - That the conversation already has its conversation menu open.
 
 In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
 function isSelectedConversationGroup(): boolean {
-	return Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
+	// Individual conversations include an entry for "View Profile", which is type `a`
+	return !document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} a[role=menuitem]`);
 }
 
-async function hideSelectedConversation(): Promise<void> {
+function isSelectedConversationMetaAI(): boolean {
+	// Meta AI menu only has 1 separator of type `hr`
+	return !document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} hr:nth-of-type(2)`);
+}
+
+async function archiveSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup] = [5, 6];
-		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
+		const [isGroup, isNotGroup, isMetaAI] = [-4, -3, -2];
+
+		let archiveMenuIndex;
+		if (isSelectedConversationMetaAI()) {
+			archiveMenuIndex = isMetaAI;
+		} else if (isSelectedConversationGroup()) {
+			archiveMenuIndex = isGroup;
+		} else {
+			archiveMenuIndex = isNotGroup;
+		}
+
+		selectMenuItem(archiveMenuIndex);
 	});
 }
 
 async function deleteSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup] = [6, 7];
-		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
+		const [isGroup, isNotGroup, isMetaAI] = [-3, -2, -1];
+
+		let deleteMenuIndex;
+		if (isSelectedConversationMetaAI()) {
+			deleteMenuIndex = isMetaAI;
+		} else if (isSelectedConversationGroup()) {
+			deleteMenuIndex = isGroup;
+		} else {
+			deleteMenuIndex = isNotGroup;
+		}
+
+		selectMenuItem(deleteMenuIndex);
 	});
 }
 

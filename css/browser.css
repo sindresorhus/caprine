@@ -102,17 +102,12 @@ body::-webkit-scrollbar {
 }
 
 /* A utility class for temporarily hiding all dropdown menus */
-html.hide-dropdowns [role='menu'].l9j0dhe7.swg4t2nn {
+html.hide-dropdowns [role='menu'].x1n2onr6.xi5betq {
 	visibility: hidden !important;
 }
 
 /* A utility class for temporarily hiding preferences window */
 html.hide-preferences-window div[class='x9f619 x1n2onr6 x1ja2u2z'] > div:nth-of-type(3) > div > div {
-	display: none;
-}
-
-/* A utility class for temporarily hiding right sidebar */
-html.hide-r-sidebar .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls > div:nth-child(2) {
 	display: none;
 }
 
@@ -131,10 +126,6 @@ html.private-mode [href^='https://www.facebook.com/1'] .b6ax4al1.i54nktwv.z2vv26
 }
 /* Chat list: name, profile picture and last message */
 html.private-mode [role='navigation'] [role='row'] .b6ax4al1.gvxzyvdx {
-	filter: blur(5px);
-}
-/* Chat list: active contacts */
-html.private-mode [role='navigation'] .s9ok87oh.bf1zulr9.s9ljgwtm.lxqftegz.frfouenu.r7bn319e.bonavkto.djs4p424.bdao358l.alzwoclg.cgu29s5g.i15ihif8.sl27f92c.m8h3af8h.l7ghb35v.kjdc1dyq.kmwttqpk.aeinzg81.srn514ro.rl78xhln.om3e55n1.g4tp4svg.i85zmo3j.jl2a5g8c.b0eko5f3.fwlpnqze.il7dmu95z {
 	filter: blur(5px);
 }
 /* Chat list: person tiny heads */
