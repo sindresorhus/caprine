@@ -163,48 +163,9 @@ html.dark-mode ._9xq0 {
 	color: var(--primary-text);
 }
 
-/* Removing top gap */
-/* TODO: Remove when fixed by fb */
-.__fb-dark-mode {
-	--header-height: 0 !important;
-}
-
-/* Message list: fix for received messages text color in dark mode */
-/* TODO: Remove when fixed by fb */
-.__fb-dark-mode .__fb-light-mode {
-	--primary-text: #e4e6eb;
-}
-
 /* Radio buttons */
 .x14yjl9h.xudhj91.x18nykt9.xww2gxu.x13fuv20.xu3j5b3.x1q0q8m5.x26u7qi.xamhcws.xol2nv.xlxy82.x19p7ews.x9f619.x1rg5ohu.x2lah0s.x1n2onr6.x1tz4bnf.xmds5ef.x25epmt.x11y6y4w.xxk0z11.xvy4d1p {
 	--accent: var(--primary-text);
-}
-
-/* Backgrounds of various buttons ("Join room", "Visit Group", Audio call, etc.) */
-/* TODO: Remove when fixed by fb, since -floating should not be here */
-html.dark-mode .x14yjl9h.xudhj91.x18nykt9.xww2gxu.x6s0dn4.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x3nfvp2.xl56j7k.x1n2onr6.x1qhmfi1.xc9qbxq.x14qfxbe,
-html.dark-mode .x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.xl56j7k.x6s0dn4.xozqiw3.x1q0g3np.xi112ho.x17zwfj4.x585lrc.x1403ito.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.xn6708d.x1ye3gou.x1qhmfi1.x1r1pt67 {
-	background-color: var(--secondary-button-background-floating) !important;
-}
-
-/* Search results: Close button */
-/* TODO: Remove when fixed by fb, since --always-white is not good here */
-html.dark-mode .x14hiurz.x1r1pt67 {
-	background-color: var(--secondary-button-background) !important;
-}
-
-/* Attachment background color in Chat Box */
-/* TODO: Remove when fixed by fb, since #d6d9dd is too bright here */
-/* Current Background-Color is same style as add attachment button */
-html.dark-mode .x1ybostu {
-	background-color: rgba(134 142 153 / 25%);
-}
-
-/* Recipient Pills in new message form */
-/* TODO: Remove when fixed by fb, since #f3f3f4 is too bright here */
-/* It seems FB uses shades of blue here */
-html.dark-mode .x4noic3 {
-	background-color: var(--secondary-button-background);
 }
 
 /* Create room icon color */
