@@ -614,11 +614,12 @@ In other words, you should only use this function within a callback that is prov
 */
 function isSelectedConversationGroup(): boolean {
 	// Individual conversations include an entry for "View Profile", which is type `a`
-	return !Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} a[role=menuitem]`));
+	return !document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} a[role=menuitem]`);
 }
+
 function isSelectedConversationMetaAI(): boolean {
 	// Meta AI menu only has 1 separator of type `hr`
-	return !Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} hr:nth-of-type(2)`));
+	return !document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} hr:nth-of-type(2)`);
 }
 
 async function archiveSelectedConversation(): Promise<void> {
