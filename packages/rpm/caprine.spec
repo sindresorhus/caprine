@@ -7,7 +7,7 @@ Release:        1%{?dist}
 Summary:        Elegant Facebook Messenger desktop app
 
 License:        MIT
-URL:            https://sindresorhus.com/caprine/
+URL:            https://github.com/sindresorhus/caprine/
 Source0:        https://github.com/sindresorhus/caprine/archive/refs/tags/v%{version}.tar.gz
 Source1:        %{name}.desktop
 
