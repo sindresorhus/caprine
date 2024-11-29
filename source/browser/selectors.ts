@@ -17,7 +17,6 @@ export default {
 	userMenuNewSidebar: '[role=navigation]  > div >  div:nth-child(2) > div > div > div:nth-child(1) [role=button]',
 	viewsMenu: '.x9f619.x1n2onr6.x1ja2u2z.x78zum5.xdt5ytf.x2lah0s.x193iq5w.xdj266r',
 	selectedConversation: '[role=navigation] [role=grid] [role=row] [role=gridcell] [role=link][aria-current]',
-	// ! Very fragile selector (most likely cause of hidden dialog issue)
 	preferencesSelector: '[aria-label=Preferences]',
 	// TODO: Fix this selector for new design
 	messengerSoundsSelector: '._374d ._6bkz',
