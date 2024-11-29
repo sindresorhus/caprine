@@ -197,7 +197,14 @@ ipc.answerMain('mute-conversation', async () => {
 });
 
 ipc.answerMain('delete-conversation', async () => {
-	await deleteSelectedConversation();
+	const index = selectedConversationIndex();
+
+	if (index !== -1) {
+		await deleteSelectedConversation();
+
+		const key = index + 1;
+		await jumpToConversation(key);
+	}
 });
 
 ipc.answerMain('archive-conversation', async () => {
@@ -599,27 +606,52 @@ async function openMuteModal(): Promise<void> {
 }
 
 /*
-This function assumes:
+These functions assume:
 - There is a selected conversation.
 - That the conversation already has its conversation menu open.
 
 In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
 function isSelectedConversationGroup(): boolean {
-	return Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]:nth-child(4)`));
+	// Individual conversations include an entry for "View Profile", which is type `a`
+	return !Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} a[role=menuitem]`));
+}
+function isSelectedConversationMetaAI(): boolean {
+	// Meta AI menu only has 1 separator of type `hr`
+	return !Boolean(document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} hr:nth-of-type(2)`));
 }
 
 async function archiveSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup] = [-4, -3];
-		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
+		const [isGroup, isNotGroup, isMetaAI] = [-4, -3, -2];
+
+		let archiveMenuIndex;
+		if (isSelectedConversationMetaAI()) {
+			archiveMenuIndex = isMetaAI;
+		} else if (isSelectedConversationGroup()) {
+			archiveMenuIndex = isGroup;
+		} else {
+			archiveMenuIndex = isNotGroup;
+		}
+
+		selectMenuItem(archiveMenuIndex);
 	});
 }
 
 async function deleteSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup] = [-3, -2];
-		selectMenuItem(isSelectedConversationGroup() ? isGroup : isNotGroup);
+		const [isGroup, isNotGroup, isMetaAI] = [-3, -2, -1];
+
+		let deleteMenuIndex;
+		if (isSelectedConversationMetaAI()) {
+			deleteMenuIndex = isMetaAI;
+		} else if (isSelectedConversationGroup()) {
+			deleteMenuIndex = isGroup;
+		} else {
+			deleteMenuIndex = isNotGroup;
+		}
+
+		selectMenuItem(deleteMenuIndex);
 	});
 }
 
