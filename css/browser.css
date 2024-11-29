@@ -102,17 +102,12 @@ body::-webkit-scrollbar {
 }
 
 /* A utility class for temporarily hiding all dropdown menus */
-html.hide-dropdowns [role='menu'].l9j0dhe7.swg4t2nn {
+html.hide-dropdowns [role='menu'].x1n2onr6.xi5betq {
 	visibility: hidden !important;
 }
 
 /* A utility class for temporarily hiding preferences window */
 html.hide-preferences-window div[class='x9f619 x1n2onr6 x1ja2u2z'] > div:nth-of-type(3) > div > div {
-	display: none;
-}
-
-/* A utility class for temporarily hiding right sidebar */
-html.hide-r-sidebar .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.g5gj957u.rj1gh0hx.buofh1pr.hpfvmrgz.i1fnvgqd.gs1a9yip.owycx6da.btwxx1t3.jb3vyjys.nwf6jgls > div:nth-child(2) {
 	display: none;
 }
 
