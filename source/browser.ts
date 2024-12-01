@@ -358,7 +358,6 @@ async function observeTheme(): Promise<void> {
 		observerNew.observe(menuElements, {childList: true});
 	}
 
-	// Attribute notation needed here to guarantee exact (not partial) match.
 	const modalElements = await elementReady(selectors.preferencesSelector, {stopOnDomReady: false});
 	if (modalElements) {
 		observerNew.observe(modalElements, {childList: true});
