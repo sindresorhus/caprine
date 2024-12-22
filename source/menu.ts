@@ -233,6 +233,14 @@ Press Command/Ctrl+R in Caprine to see your changes.
 				shell.openPath(filePath);
 			},
 		},
+		{
+			label: 'Disable Settings Hiding',
+			type: 'checkbox',
+			checked: config.get('disableSettingsHiding'),
+			click() {
+				config.set('disableSettingsHiding', !config.get('disableSettingsHiding'));
+			},
+		},
 	];
 
 	const preferencesSubmenu: MenuItemConstructorOptions[] = [

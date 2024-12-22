@@ -680,3 +680,4 @@ ipc.answerRenderer<undefined, StoreType['emojiStyle']>('get-config-emojiStyle', 
 ipc.answerRenderer<StoreType['emojiStyle'], void>('set-config-emojiStyle', async emojiStyle => {
 	config.set('emojiStyle', emojiStyle);
 });
+ipc.answerRenderer<undefined, StoreType['disableSettingsHiding']>('get-config-disableSettingsHiding', async () => config.get('disableSettingsHiding'));

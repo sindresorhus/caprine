@@ -44,6 +44,7 @@ export type StoreType = {
 	autoplayVideos: boolean;
 	isSpellCheckerEnabled: boolean;
 	spellCheckerLanguages: string[];
+	disableSettingsHiding: boolean;
 };
 
 const schema: Store.Schema<StoreType> = {
@@ -217,6 +218,10 @@ const schema: Store.Schema<StoreType> = {
 			type: 'string',
 		},
 		default: [],
+	},
+	disableSettingsHiding: {
+		type: 'boolean',
+		default: false,
 	},
 };
 
