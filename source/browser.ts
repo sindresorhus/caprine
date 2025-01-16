@@ -220,7 +220,10 @@ ipc.answerMain('archive-conversation', async () => {
 
 async function openHiddenPreferences(): Promise<boolean> {
 	if (!isPreferencesOpen()) {
-		document.documentElement.classList.add('hide-preferences-window');
+		const disableSettingsHiding = await ipc.callMain<undefined, boolean>('get-config-disableSettingsHiding');
+		if (!disableSettingsHiding) {
+			document.documentElement.classList.add('hide-preferences-window');
+		}
 
 		await openPreferences();
 
@@ -675,7 +678,10 @@ async function closePreferences(): Promise<void> {
 	// Get the parent of preferences, that's not getting deleted
 	const preferencesParent = preferencesOverlay.closest('div:not([class])')!;
 
-	preferencesOverlayObserver.observe(preferencesParent, {childList: true});
+	const disableSettingsHiding = await ipc.callMain<undefined, boolean>('get-config-disableSettingsHiding');
+	if (!disableSettingsHiding) {
+		preferencesOverlayObserver.observe(preferencesParent, {childList: true});
+	}
 
 	const closeButton = preferencesOverlay.querySelector(selectors.closePreferencesButton)!;
 	(closeButton as HTMLElement)?.click();
