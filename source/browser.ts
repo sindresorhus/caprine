@@ -817,7 +817,7 @@ window.addEventListener('dblclick', (event: Event) => {
 
 window.addEventListener('load', async () => {
 	if (location.pathname.startsWith('/login')) {
-		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('#u_0_0')!;
+		const keepMeSignedInCheckbox = document.querySelector<HTMLInputElement>('[id^="u_0_0"]')!;
 		const keepMeSignedInConfig = await ipc.callMain<undefined, boolean>('get-config-keepMeSignedIn');
 		keepMeSignedInCheckbox.checked = keepMeSignedInConfig;
 		keepMeSignedInCheckbox.addEventListener('change', async () => {
