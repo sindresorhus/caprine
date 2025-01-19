@@ -66,6 +66,15 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	<th>Maintainer</th>
 	<th>How to install</th>
 	<tr>
+		<td>NixOS</td>
+		<td>Nixpkgs</td>
+		<td align="center">❌</td>
+		<td>Yueh-Shun Li</td>
+		<td>
+			Follow the <a href=#installation-in-nixos>instructions below</a>
+		</td>
+	</tr>
+	<tr>
 		<td>Arch Linux</td>
 		<td>Community</td>
 		<td align="center">✔️</td>
@@ -136,6 +145,36 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		</td>
 	</tr>
 </table>
+
+#### Installation in NixOS:
+
+There are 3 official ways to install Caprine on your system.
+
+1. NixOS Configuration
+
+* Edit your NixOS configuration file and add the following statement:
+
+```nix
+environment.systemPackages = [
+	pkgs.caprine-bin
+];
+```
+
+2. nix-shell
+
+* Open your favorite terminal and create an isolated environment with Nix Shell:
+
+```sh
+nix-shell -p caprine-bin
+```
+
+3. nix-env (not recommended)
+
+The traditional way to install packages. Not recommended by the NixOS developers:
+
+```sh
+nix-env -iA nixos.caprine-bin
+```
 
 #### Installation using deb-get:
 
