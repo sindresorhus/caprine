@@ -382,6 +382,7 @@ function createMainWindow(): BrowserWindow {
 		const firstItem: MenuItemConstructorOptions = {
 			label: 'Mute Notifications',
 			type: 'checkbox',
+			visible: is.development,
 			checked: config.get('notificationsMuted'),
 			async click() {
 				setNotificationsMute(await ipc.callRenderer(mainWindow, 'toggle-mute-notifications'));
@@ -467,6 +468,7 @@ function createMainWindow(): BrowserWindow {
 		}
 
 		if (is.macos) {
+			// TODO: 'update-dnd-mode' is not called
 			ipc.answerRenderer('update-dnd-mode', async (initialSoundsValue: boolean) => {
 				doNotDisturb.on('change', (doNotDisturb: boolean) => {
 					isDNDEnabled = doNotDisturb;
@@ -479,9 +481,10 @@ function createMainWindow(): BrowserWindow {
 			});
 		}
 
-		setNotificationsMute(await ipc.callRenderer(mainWindow, 'toggle-mute-notifications', {
-			defaultStatus: config.get('notificationsMuted'),
-		}));
+		// TODO: Re-enable this when muting notifications is fixed
+		// setNotificationsMute(await ipc.callRenderer(mainWindow, 'toggle-mute-notifications', {
+		// 	defaultStatus: config.get('notificationsMuted'),
+		// }));
 
 		ipc.callRenderer(mainWindow, 'toggle-message-buttons', config.get('showMessageButtons'));
 
