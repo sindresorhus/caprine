@@ -67,10 +67,10 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 	<th>How to install</th>
 	<tr>
 		<td>Arch Linux</td>
-		<td>Community</td>
+		<td>AUR</td>
 		<td align="center">✔️</td>
-		<td>Frederik Schwan</td>
-		<td><code>pacman -S caprine</code></td>
+		<td>Mahdi Sarikhani</td>
+		<td><code>yay -S caprine</code></td>
 	</tr>
 	<tr>
 		<td>Debian / Ubuntu (manually)</td>
