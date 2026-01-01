@@ -424,13 +424,14 @@ async function updateSidebar(): Promise<void> {
 	}
 }
 
-// TODO: Implement this function
 async function updateDoNotDisturb(): Promise<void> {
+	/* TODO: Implement this function
 	const shouldClosePreferences = await openHiddenPreferences();
 
 	if (shouldClosePreferences) {
 		await closePreferences();
 	}
+	*/
 }
 
 function renderOverlayIcon(messageCount: number): HTMLCanvasElement {
