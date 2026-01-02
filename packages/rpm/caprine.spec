@@ -2,7 +2,7 @@
 %global _build_id_links alldebug
 
 Name:           caprine
-Version:        2.60.3
+Version:        2.61.0
 Release:        1%{?dist}
 Summary:        Elegant Facebook Messenger desktop app
 
