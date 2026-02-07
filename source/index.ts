@@ -19,7 +19,7 @@ import electronDl from 'electron-dl';
 import electronContextMenu from 'electron-context-menu';
 import electronLocalshortcut from 'electron-localshortcut';
 import electronDebug from 'electron-debug';
-import {is, darkMode} from 'electron-util';
+import {is} from 'electron-util';
 import {bestFacebookLocaleFor} from 'facebook-locales';
 import doNotDisturb from '@sindresorhus/do-not-disturb';
 import updateAppMenu from './menu';
@@ -298,12 +298,13 @@ function createMainWindow(): BrowserWindow {
 	setUserLocale();
 	initRequestsFiltering();
 
-	let previousDarkMode = darkMode.isEnabled;
-	darkMode.onChange(() => {
-		if (darkMode.isEnabled !== previousDarkMode) {
-			previousDarkMode = darkMode.isEnabled;
-			win.webContents.send('set-theme');
-		}
+	// Listen for native theme changes and notify renderer
+	// Use setImmediate to defer the call on Windows because the event fires
+	// before nativeTheme.shouldUseDarkColors is updated
+	nativeTheme.on('updated', () => {
+		setImmediate(() => {
+			ipc.callRenderer(win, 'set-theme');
+		});
 	});
 
 	if (is.macos) {
@@ -408,7 +409,10 @@ function createMainWindow(): BrowserWindow {
 				return;
 			}
 
-			const items = conversations.map(({label, icon}, index) => ({
+			// Filter out conversations with empty labels to avoid blank menu items
+			const validConversations = conversations.filter(({label}) => label && label.trim().length > 0);
+
+			const items = validConversations.map(({label, icon}, index) => ({
 				label: `${label}`,
 				icon: nativeImage.createFromDataURL(icon),
 				click() {

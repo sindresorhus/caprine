@@ -294,9 +294,8 @@ ipc.answerMain('reload', () => {
 });
 
 async function setTheme(): Promise<void> {
-	type ThemeSource = typeof nativeTheme.themeSource;
-	const theme = await ipc.callMain<undefined, ThemeSource>('get-config-theme');
-	nativeTheme.themeSource = theme;
+	// Note: Don't set nativeTheme.themeSource here - it triggers nativeTheme.on('updated')
+	// in the main process which causes an infinite loop. The main process handles that.
 	setThemeElement(document.documentElement);
 	updateVibrancy();
 }
@@ -800,6 +799,62 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Hook broken dark mode observer
 	observeThemeBugs();
+
+	// Inject a transparent drag bar at the top of the window on macOS.
+	// This is needed because Facebook's JS event handlers on child elements
+	// prevent -webkit-app-region: drag from working when the window is focused.
+	// The drag bar sits above all web content and handles window dragging.
+	// On mousemove, we toggle pointer-events to allow clicking interactive
+	// elements (buttons, links) underneath while keeping empty space draggable.
+	if (is.macos) {
+		const dragBarHeight = 48;
+		const dragBar = document.createElement('div');
+		dragBar.id = 'caprine-drag-bar';
+		dragBar.style.position = 'fixed';
+		dragBar.style.top = '0';
+		dragBar.style.left = '0';
+		dragBar.style.right = '0';
+		dragBar.style.height = `${dragBarHeight}px`;
+		dragBar.style.zIndex = '99999';
+		dragBar.style.setProperty('-webkit-app-region', 'drag');
+		document.body.append(dragBar);
+
+		const interactiveSelector = 'button, a[href], input, select, textarea, [role="button"], [role="link"], [role="search"], [contenteditable="true"]';
+
+		// Debounce mousemove to reduce CPU usage - only process every 100ms
+		let debounceTimer: ReturnType<typeof setTimeout> | undefined;
+		let lastMouseX = 0;
+		let lastMouseY = 0;
+		document.addEventListener('mousemove', (event: MouseEvent) => {
+			lastMouseX = event.clientX;
+			lastMouseY = event.clientY;
+
+			if (debounceTimer) {
+				return;
+			}
+
+			debounceTimer = setTimeout(() => {
+				debounceTimer = undefined;
+
+				if (lastMouseY >= dragBarHeight) {
+					dragBar.style.pointerEvents = '';
+					return;
+				}
+
+				// Temporarily hide drag bar to find what's underneath
+				dragBar.style.pointerEvents = 'none';
+				const target = document.elementFromPoint(lastMouseX, lastMouseY);
+
+				if (target?.closest(interactiveSelector)) {
+					// Over an interactive element - keep drag bar transparent for clicks
+					return;
+				}
+
+				// Over empty space - re-enable drag bar for window dragging
+				dragBar.style.pointerEvents = '';
+			}, 100);
+		}, {passive: true});
+	}
 });
 
 // Handle title bar double-click.

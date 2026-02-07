@@ -1,6 +1,5 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady from 'element-ready';
-import {isNull} from 'lodash';
 import selectors from './selectors';
 
 const icon = {
@@ -104,23 +103,59 @@ async function getIcon(element: HTMLElement, unread: boolean): Promise<string> {
 	return element.getAttribute(unread ? icon.unread : icon.read)!;
 }
 
-async function getLabel(element: HTMLElement): Promise<string> {
-	if (isNull(element)) {
-		return '';
+function getConversationLabel(element: HTMLElement): string {
+	// Try multiple selectors to find the conversation name
+	// Facebook's class names change frequently, so we use multiple strategies
+
+	// Strategy 1: Look for span with dir="auto" inside the conversation element
+	// This is the most common location for conversation names
+	const labelElement = element.querySelector<HTMLElement>('span[dir="auto"]');
+	if (labelElement?.textContent?.trim()) {
+		return labelElement.textContent.trim();
 	}
 
-	const emojis: HTMLElement[] = [];
-	if (element !== null) {
-		for (const elementCurrent of element.children) {
-			emojis.push(elementCurrent as HTMLElement);
+	// Strategy 2: Look for the first span that appears to be a title (not message preview)
+	// The title is usually the first text node in the conversation row
+	const allSpans = element.querySelectorAll<HTMLElement>('span');
+	const timePattern = /^\d+:\d+/;
+	const statusPattern = /^(sent|delivered|read|unread)$/i;
+	for (const span of allSpans) {
+		const text = span.textContent?.trim();
+		// Skip empty strings, timestamps, and very short previews
+		if (text && text.length > 0 && !timePattern.test(text) && !statusPattern.test(text)) {
+			// Check that this span is not inside a message preview container
+			// by ensuring it doesn't have sibling spans with message-like content
+			const parent = span.parentElement;
+			if (parent) {
+				const siblings = parent.querySelectorAll('span');
+				// If this is one of only 1-2 spans at this level, it's likely the title
+				if (siblings.length <= 3) {
+					return text;
+				}
+			}
 		}
 	}
 
-	for (const emoji of emojis) {
-		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
+	// Strategy 3: Use aria-label if available
+	const ariaLabel = element.getAttribute('aria-label');
+	if (ariaLabel) {
+		return ariaLabel;
 	}
 
-	return element.textContent ?? '';
+	// Strategy 4: Look for data-tooltip-content attribute (Facebook sometimes uses this)
+	const tooltipContent = element.querySelector('[data-tooltip-content]')?.getAttribute('data-tooltip-content');
+	if (tooltipContent) {
+		return tooltipContent;
+	}
+
+	// Strategy 5: Look for img alt text (for conversations with no text names)
+	const imgAlt = element.querySelector('img[alt]')?.getAttribute('alt');
+	if (imgAlt && imgAlt !== 'Profile photo') {
+		return imgAlt;
+	}
+
+	// Fallback: return empty string
+	return '';
 }
 
 async function createConversationNewDesign(element: HTMLElement): Promise<Conversation> {
@@ -133,8 +168,8 @@ async function createConversationNewDesign(element: HTMLElement): Promise<Conver
 	conversation.selected = Boolean(element.querySelector('[role=row] [role=link] > div:only-child'));
 	conversation.unread = Boolean(element.querySelector('[aria-label="Mark as Read"]'));
 
-	const unparsedLabel = element.querySelector<HTMLElement>('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7 > span > span')!;
-	conversation.label = await getLabel(unparsedLabel);
+	const label = getConversationLabel(element);
+	conversation.label = label;
 
 	const iconElement = element.querySelector<HTMLElement>('img')!;
 	conversation.icon = await getIcon(iconElement, conversation.unread);
