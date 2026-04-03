@@ -100,12 +100,21 @@ Or with [Homebrew](https://brew.sh): `$ brew install caprine`
 		</td>
 	</tr>
 	<tr>
-		<td>RHEL / Fedora / openSUSE</td>
+		<td>RHEL / Fedora / openSUSE (Copr)</td>
 		<td>Copr</td>
 		<td align="center">✔️</td>
 		<td>Dušan Simić</td>
 		<td>
 			Follow the <a href=#copr>instructions below</a>
+		</td>
+	</tr>
+	<tr>
+		<td>RHEL / Fedora / openSUSE (manually)</td>
+		<td>GitHub</td>
+		<td align="center">❌</td>
+		<td>Official</td>
+		<td>
+			<a href="https://github.com/sindresorhus/caprine/releases/latest">Download</a> the .rpm file
 		</td>
 	</tr>
 	<tr>
@@ -182,6 +191,25 @@ For openSUSE:
 Alternatively use the following one-liner:
 ```sh
 curl -s https://copr.fedorainfracloud.org/coprs/dusansimic/caprine/repo/opensuse-tumbleweed/dusansimic-caprine-opensuse-tumbleweed.repo | sudo tee /etc/zypp/repos.d/caprine.repo
+```
+
+#### RPM package:
+
+[Download](https://github.com/sindresorhus/caprine/releases/latest) the `.rpm` file.
+
+For Fedora / RHEL / AlmaLinux / Rocky Linux:
+```sh
+sudo dnf install ./caprine-*.rpm
+```
+
+For openSUSE:
+```sh
+sudo zypper install ./caprine-*.rpm
+```
+
+Or use `rpm` directly on any distribution:
+```sh
+sudo rpm -i ./caprine-*.rpm
 ```
 
 #### AppImage:
@@ -388,7 +416,27 @@ npm install && npm start
 
 ### Build
 
-See the [`electron-builder` docs](https://www.electron.build/multi-platform-build).
+```sh
+npm run build
+```
+
+Build for Linux:
+```sh
+npm run dist:linux  # Builds AppImage and deb
+npm run dist:rpm    # Builds RPM (uses native rpmbuild)
+```
+
+Build for macOS:
+```sh
+npm run dist:mac
+```
+
+Build for Windows:
+```sh
+npm run dist:win
+```
+
+**Note:** RPM packages use a custom build script (`build-rpm.sh`) with native `rpmbuild` instead of electron-builder's RPM support, which has compatibility issues with some rpmbuild versions. See the [electron-builder docs](https://www.electron.build/multi-platform-build) for more details.
 
 ### Publish
 

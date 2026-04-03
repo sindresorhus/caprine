@@ -1,6 +1,5 @@
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import elementReady from 'element-ready';
-import {isNull} from 'lodash';
 import selectors from './selectors';
 
 const icon = {
@@ -14,6 +13,10 @@ const padding = {
 	bottom: 3,
 	left: 0,
 };
+
+// Track last notified content per conversation to prevent DOM mutation repeats
+// New messages with different content will still notify immediately
+const lastNotifiedContent = new Map<string, string>();
 
 function drawIcon(size: number, img?: HTMLImageElement): HTMLCanvasElement {
 	const canvas = document.createElement('canvas');
@@ -104,36 +107,76 @@ async function getIcon(element: HTMLElement, unread: boolean): Promise<string> {
 	return element.getAttribute(unread ? icon.unread : icon.read)!;
 }
 
-async function getLabel(element: HTMLElement): Promise<string> {
-	if (isNull(element)) {
+async function getLabel(element: HTMLElement | undefined): Promise<string> {
+	if (!element) {
 		return '';
 	}
 
-	const emojis: HTMLElement[] = [];
-	if (element !== null) {
-		for (const elementCurrent of element.children) {
-			emojis.push(elementCurrent as HTMLElement);
+	let label = element.textContent ?? '';
+
+	if (label.trim() === '') {
+		const ariaLabel = element.getAttribute('aria-label');
+		if (ariaLabel && ariaLabel.trim() !== '') {
+			label = ariaLabel;
 		}
 	}
 
-	for (const emoji of emojis) {
-		emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
+	if (label.trim() === '') {
+		const emojis: HTMLElement[] = [];
+		for (const elementCurrent of element.children) {
+			emojis.push(elementCurrent as HTMLElement);
+		}
+
+		for (const emoji of emojis) {
+			emoji.outerHTML = emoji.querySelector('img')?.getAttribute('alt') ?? '';
+		}
+
+		label = element.textContent ?? '';
 	}
 
-	return element.textContent ?? '';
+	return label.trim();
+}
+
+// Detect unread conversations by the visually-hidden accessibility span that
+// Facebook inserts for screen readers (1px × 1px, position:absolute, overflow:hidden).
+// This approach is language-independent — it detects the hidden element by CSS style,
+// not by its text content which varies by language.
+// IMPORTANT: The parent element must have 'html-span' class to distinguish the unread
+// indicator from other hidden accessibility labels like "Online now", "Sent", etc.
+function isUnreadConversation(element: HTMLElement): boolean {
+	for (const child of element.querySelectorAll<HTMLElement>('div, span')) {
+		if (child.childElementCount === 0 && child.textContent?.trim()) {
+			const style = window.getComputedStyle(child);
+			if (
+				style.position === 'absolute'
+				&& (style.width === '1px' || style.height === '1px' || style.overflow === 'hidden')
+				&& child.parentElement?.classList.contains('html-span')
+			) {
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 async function createConversationNewDesign(element: HTMLElement): Promise<Conversation> {
 	const conversation: Partial<Conversation> = {};
-	// TODO: Exclude muted conversations
-	/*
-	const muted = Boolean(element.querySelector(selectors.muteIconNewDesign));
-	*/
 
 	conversation.selected = Boolean(element.querySelector('[role=row] [role=link] > div:only-child'));
-	conversation.unread = Boolean(element.querySelector('[aria-label="Mark as Read"]'));
+	conversation.unread = isUnreadConversation(element);
 
-	const unparsedLabel = element.querySelector<HTMLElement>('.a8c37x1j.ni8dbmo4.stjgntxs.l9j0dhe7 > span > span')!;
+	let unparsedLabel: HTMLElement | undefined;
+	for (const selector of selectors.conversationLabelSelectors) {
+		// For attribute-based selectors that might match multiple elements,
+		// take only the first match which is always the conversation name
+		const candidates = element.querySelectorAll<HTMLElement>(selector);
+		if (candidates.length > 0) {
+			unparsedLabel = candidates[0]!;
+			break;
+		}
+	}
+
 	conversation.label = await getLabel(unparsedLabel);
 
 	const iconElement = element.querySelector<HTMLElement>('img')!;
@@ -159,7 +202,12 @@ async function createConversationList(): Promise<Conversation[]> {
 	// Remove last element from childer list
 	elements.splice(-1, 1);
 
-	const conversations: Conversation[] = await Promise.all(elements.map(async element => createConversationNewDesign(element)));
+	const promises = elements.map(async element => {
+		const conversation = await createConversationNewDesign(element);
+		return conversation.label ? conversation : undefined;
+	});
+	const conversationsResult = await Promise.all(promises);
+	const conversations = conversationsResult.filter(Boolean) as Conversation[];
 
 	return conversations;
 }
@@ -190,100 +238,197 @@ function generateStringFromNode(element: Element): string | undefined {
 function countUnread(mutationsList: MutationRecord[]): void {
 	const alreadyChecked: string[] = [];
 
-	const unreadMutations = mutationsList.filter(mutation =>
-		// When a conversations "becomes unread".
-		(
-			mutation.type === 'childList'
-			&& mutation.addedNodes.length > 0
-			&& ((mutation.addedNodes[0] as Element).className === selectors.conversationSidebarUnreadDot)
-		)
-		// When text is received
-		|| (
-			mutation.type === 'characterData'
-			// Make sure the text corresponds to a conversation
-			&& mutation.target.parentElement?.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
-		)
-		// When an emoji is received, node(s) are added
-		|| (
-			mutation.type === 'childList'
-			// Make sure the mutation corresponds to a conversation
-			&& mutation.target.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
-		)
-		// Emoji change
-		|| (
-			mutation.type === 'attributes'
-			&& mutation.target.parentElement?.parentElement?.parentElement?.parentElement?.className === selectors.conversationSidebarTextParent
-		));
-
 	// Check latest mutation first
-	for (const mutation of unreadMutations.reverse()) {
-		const current = (mutation.target.parentElement as Element).closest(selectors.conversationSidebarSelector)!;
+	for (const mutation of mutationsList.reverse()) {
+		// Find the conversation row containing this mutation.
+		// For childList mutations the target is the parent element; for others it's the
+		// element/text node itself, so go up one level first.
+		const target = mutation.type === 'childList'
+			? (mutation.target as Element)
+			: (mutation.target.parentElement as Element);
 
-		const href = current.closest('[role="link"]')?.getAttribute('href');
+		if (!target) {
+			continue;
+		}
+
+		// Walk up to the nearest [role=row] (a single conversation entry in the grid).
+		let current = target.closest<HTMLElement>(selectors.conversationSidebarSelector);
+
+		// When a whole row is added (conversation moves to top of list), the target
+		// is the grid container. Check addedNodes for a [role=row] directly.
+		if (!current && mutation.type === 'childList') {
+			for (const node of mutation.addedNodes) {
+				const element = node as Element;
+				if (element.matches?.(selectors.conversationSidebarSelector)) {
+					current = element as HTMLElement;
+					break;
+				}
+			}
+		}
+
+		if (!current) {
+			continue;
+		}
+
+		// Make sure this row is inside the chats grid (not some other [role=row] on the page).
+		if (!current.closest('[role=grid]')) {
+			continue;
+		}
+
+		const href = current.querySelector('[role="link"]')?.getAttribute('href');
 
 		if (!href) {
 			continue;
 		}
 
-		// It is possible to have multiple mutations for the same conversation, but we only want one notification.
-		// So if the current conversation has already been checked, continue.
-		// Additionally if the conversation is not unread, then also continue.
-		if (alreadyChecked.includes(href) || !current.querySelector('.' + selectors.conversationSidebarUnreadDot.replaceAll(/ /, '.'))) {
+		// Deduplicate: only process each conversation once per batch of mutations.
+		if (alreadyChecked.includes(href)) {
+			continue;
+		}
+
+		// Only notify for unread conversations.
+		if (!isUnreadConversation(current)) {
+			continue;
+		}
+
+		// Skip notifications for muted conversations (exclude from popup/badge/sound)
+		const isMuted = Boolean(current.querySelector(selectors.mutedConversation));
+		if (isMuted) {
 			continue;
 		}
 
 		alreadyChecked.push(href);
 
-		// Get the image data URI from the parent of the author/text
+		// Get the icon data URI (set by createConversationList via createIcons).
 		const imgUrl = current.querySelector('img')?.dataset.caprineIcon;
-		const textOptions = current.querySelectorAll(selectors.conversationSidebarTextSelector);
-		// Get the author and text of the new message
-		const titleTextNode = textOptions[0];
-		const bodyTextNode = textOptions[1];
+		const textOptions = current.querySelectorAll<HTMLElement>(selectors.conversationSidebarTextSelector);
+		const titleText = generateStringFromNode(textOptions[0]);
+		const bodyText = textOptions[1] ? generateStringFromNode(textOptions[1]) : undefined;
 
-		const titleText = generateStringFromNode(titleTextNode);
-		const bodyText = generateStringFromNode(bodyTextNode);
-
-		if (!bodyText || !titleText || !imgUrl) {
+		if (!titleText || !imgUrl) {
 			continue;
 		}
 
+		// Generate conversation ID for notification tracking
+		const conversationId = [...href].reduce((hash, char) => ((hash * 31) + char.codePointAt(0)!) % 2_147_483_647, 0);
+
+		// Track last notified content per conversation to prevent DOM mutation repeats
+		// New messages with different content will still notify immediately
+		const currentContent = bodyText ?? '';
+		const lastContent = lastNotifiedContent.get(href);
+
+		// Only skip if content is exactly the same (DOM mutation duplicate)
+		if (lastContent === currentContent) {
+			continue;
+		}
+
+		// Track this conversation's latest content
+		lastNotifiedContent.set(href, currentContent);
+
 		// Send a notification
 		ipc.callMain('notification', {
-			id: 0,
+			id: conversationId,
 			title: titleText,
-			body: bodyText,
+			body: bodyText ?? 'New message',
 			icon: imgUrl,
 			silent: false,
 		});
 	}
 }
 
-async function updateTrayIcon(): Promise<void> {
-	let messageCount = 0;
+// Track unread count state for badge persistence
+// currentBadgeCount: what's currently shown in the badge
+// consecutiveZeroCount: how many times we've seen 0 unread in a row
+// Required to prevent badge from clearing on temporary DOM changes
+let currentBadgeCount = 0;
+let consecutiveZeroCount = 0;
+const ZERO_CONFIRMATION_THRESHOLD = 3; // Require 3 consecutive zero readings before clearing badge
+const BADGE_POLL_INTERVAL_MS = 2000; // Poll every 2 seconds
 
-	await elementReady(selectors.chatsIcon, {stopOnDomReady: false});
+function getUnreadCount(): number {
+	// Count unread conversations directly from the conversation grid.
+	// facebook.com/messages only shows the last message body in the sidebar —
+	// there is no per-conversation unread message count exposed in the DOM.
+	// The badge therefore reflects the number of conversations with unread messages.
+	const rows = document.querySelectorAll<HTMLElement>('[role=grid] [role=row]');
+	let count = 0;
 
-	// Count unread messages in Chats, Marketplace, etc.
-	for (const element of document.querySelectorAll<HTMLElement>(selectors.chatsIcon)) {
-		// Extract messageNumber from ariaLabel
-		const messageNumber = element?.ariaLabel?.match(/\d+/g);
+	for (const row of rows) {
+		if (isUnreadConversation(row)) {
+			// Skip muted conversations from badge count
+			const isMuted = Boolean(row.querySelector(selectors.mutedConversation));
 
-		if (messageNumber) {
-			messageCount += Number.parseInt(messageNumber[0], 10);
+			if (isMuted) {
+				continue;
+			}
+
+			count++;
 		}
 	}
 
-	ipc.callMain('update-tray-icon', messageCount);
+	return count;
+}
+
+function updateTrayIcon(): void {
+	const actualUnreadCount = getUnreadCount();
+
+	// Case 1: We have unread messages - always show them immediately
+	if (actualUnreadCount > 0) {
+		currentBadgeCount = actualUnreadCount;
+		consecutiveZeroCount = 0;
+	} else if (actualUnreadCount === 0 && currentBadgeCount > 0) {
+		// Case 2: DOM shows 0 but badge currently shows unread
+		// This could be because:
+		// - Messages were actually read
+		// - Facebook cleared the DOM on window focus (temporary)
+		// - Some other DOM manipulation
+		consecutiveZeroCount++;
+
+		// Only clear the badge after multiple consecutive zero readings
+		// This prevents the badge from disappearing on temporary DOM changes
+		if (consecutiveZeroCount >= ZERO_CONFIRMATION_THRESHOLD) {
+			currentBadgeCount = 0;
+			consecutiveZeroCount = 0;
+			lastNotifiedContent.clear();
+		}
+		// If not enough consecutive zeros, keep showing the current badge count
+	}
+
+	ipc.callMain('update-tray-icon', currentBadgeCount);
+	ipc.callMain('update-titlebar-count', currentBadgeCount);
+}
+
+// Poll for badge updates to ensure it stays in sync
+// This handles cases where DOM mutations are missed or delayed
+function startBadgePolling(): void {
+	setInterval(() => {
+		updateTrayIcon();
+	}, BADGE_POLL_INTERVAL_MS);
+}
+
+// Trigger immediate badge update when window gains focus or becomes visible
+// This ensures the badge updates instantly when user restores/minimizes the app
+function setupFocusTriggers(): void {
+	// Update on window focus
+	window.addEventListener('focus', () => {
+		updateTrayIcon();
+	});
+
+	// Update when window becomes visible (restored from minimized/hidden)
+	document.addEventListener('visibilitychange', () => {
+		if (!document.hidden) {
+			updateTrayIcon();
+		}
+	});
 }
 
 window.addEventListener('load', async () => {
 	const sidebar = await elementReady('[role=navigation]:has([role=grid])', {stopOnDomReady: false});
-	const leftSidebar = await elementReady(`${selectors.leftSidebar}:has(${selectors.chatsIcon})`, {stopOnDomReady: false});
 
 	if (sidebar) {
 		const conversationListObserver = new MutationObserver(async () => sendConversationList());
 		const conversationCountObserver = new MutationObserver(countUnread);
+		const trayIconObserver = new MutationObserver(updateTrayIcon);
 
 		conversationListObserver.observe(sidebar, {
 			subtree: true,
@@ -299,16 +444,21 @@ window.addEventListener('load', async () => {
 			attributes: true,
 			attributeFilter: ['src', 'alt'],
 		});
-	}
 
-	if (leftSidebar) {
-		const chatsIconObserver = new MutationObserver(async () => updateTrayIcon());
-
-		chatsIconObserver.observe(leftSidebar, {
-			subtree: true,
+		// Watch for conversations being added/removed/reordered (badge count changes).
+		trayIconObserver.observe(sidebar, {
 			childList: true,
-			attributes: true,
-			attributeFilter: ['aria-label'],
+			subtree: true,
 		});
+
+		// Set initial badge count once the page is loaded.
+		updateTrayIcon();
+
+		// Start polling to ensure badge stays in sync
+		// This handles cases where DOM mutations are missed or Facebook clears indicators on focus
+		startBadgePolling();
+
+		// Setup triggers for immediate updates on focus/restore
+		setupFocusTriggers();
 	}
 });

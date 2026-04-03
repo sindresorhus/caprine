@@ -14,6 +14,7 @@ export type StoreType = {
 		width: number;
 		height: number;
 		isMaximized: boolean;
+		scaleFactor: number;
 	};
 	menuBarMode: boolean;
 	showDockIcon: boolean;
@@ -22,6 +23,7 @@ export type StoreType = {
 	showAlwaysOnTopPrompt: boolean;
 	bounceDockOnMessage: boolean;
 	showUnreadBadge: boolean;
+	showUnreadCountOnTitlebar: boolean;
 	showMessageButtons: boolean;
 	launchMinimized: boolean;
 	flashWindowOnMessage: boolean;
@@ -89,6 +91,9 @@ const schema: Store.Schema<StoreType> = {
 			isMaximized: {
 				type: 'boolean',
 			},
+			scaleFactor: {
+				type: 'number',
+			},
 		},
 		default: {
 			x: undefined,
@@ -96,6 +101,7 @@ const schema: Store.Schema<StoreType> = {
 			width: 800,
 			height: 600,
 			isMaximized: false,
+			scaleFactor: 1,
 		},
 	},
 	menuBarMode: {
@@ -125,6 +131,10 @@ const schema: Store.Schema<StoreType> = {
 	showUnreadBadge: {
 		type: 'boolean',
 		default: true,
+	},
+	showUnreadCountOnTitlebar: {
+		type: 'boolean',
+		default: false,
 	},
 	showMessageButtons: {
 		type: 'boolean',

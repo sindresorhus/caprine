@@ -7,6 +7,7 @@ import {
 	MenuItemConstructorOptions,
 	dialog,
 } from 'electron';
+import {ipcMain} from 'electron-better-ipc';
 import {
 	is,
 	appMenu,
@@ -37,11 +38,11 @@ export default async function updateMenu(): Promise<Menu> {
 		},
 	};
 
-	const newRoomItem: MenuItemConstructorOptions = {
-		label: 'New Room',
+	const newChannelItem: MenuItemConstructorOptions = {
+		label: 'Create Channel',
 		accelerator: 'CommandOrControl+O',
 		click() {
-			sendAction('new-room');
+			sendAction('create-channel');
 		},
 	};
 
@@ -270,24 +271,21 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			/* TODO: Fix notifications */
 			label: 'Show Message Preview in Notifications',
 			type: 'checkbox',
-			visible: is.development,
 			checked: config.get('notificationMessagePreview'),
 			click(menuItem) {
 				config.set('notificationMessagePreview', menuItem.checked);
 			},
 		},
 		{
-			/* TODO: Fix notifications */
 			label: 'Mute Notifications',
 			id: 'mute-notifications',
 			type: 'checkbox',
-			visible: is.development,
 			checked: config.get('notificationsMuted'),
-			click() {
-				sendAction('toggle-mute-notifications');
+			async click(menuItem) {
+				config.set('notificationsMuted', menuItem.checked);
+				await ipcMain.callRenderer(getWindow(), 'toggle-mute-notifications', {checked: menuItem.checked});
 			},
 		},
 		{
@@ -299,14 +297,23 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			/* TODO: Fix notification badge */
 			label: 'Show Unread Badge',
 			type: 'checkbox',
-			visible: is.development,
 			checked: config.get('showUnreadBadge'),
+			click(menuItem) {
+				config.set('showUnreadBadge', menuItem.checked);
+				// Immediately clear badge if unchecked
+				if (!menuItem.checked) {
+					app.badgeCount = 0;
+				}
+			},
+		},
+		{
+			label: 'Show Unread Count on Titlebar',
+			type: 'checkbox',
+			checked: config.get('showUnreadCountOnTitlebar'),
 			click() {
-				config.set('showUnreadBadge', !config.get('showUnreadBadge'));
-				sendAction('reload');
+				config.set('showUnreadCountOnTitlebar', !config.get('showUnreadCountOnTitlebar'));
 			},
 		},
 		{
@@ -555,12 +562,6 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			},
 		},
 		{
-			label: 'Show Marketplace Chats',
-			click() {
-				sendAction('show-marketplace-view');
-			},
-		},
-		{
 			label: 'Show Message Requests',
 			click() {
 				sendAction('show-requests-view');
@@ -570,6 +571,12 @@ Press Command/Ctrl+R in Caprine to see your changes.
 			label: 'Show Archived Chats',
 			click() {
 				sendAction('show-archive-view');
+			},
+		},
+		{
+			label: 'Show Restricted Accounts',
+			click() {
+				sendAction('show-restricted-view');
 			},
 		},
 	];
@@ -784,7 +791,7 @@ ${debugInfo()}`;
 			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
-				newRoomItem,
+				newChannelItem,
 				{
 					type: 'separator',
 				},
@@ -818,7 +825,7 @@ ${debugInfo()}`;
 			role: 'fileMenu',
 			submenu: [
 				newConversationItem,
-				newRoomItem,
+				newChannelItem,
 				{
 					type: 'separator',
 				},
@@ -827,7 +834,7 @@ ${debugInfo()}`;
 					submenu: preferencesSubmenu,
 				},
 				{
-					label: 'Messenger Settings',
+					label: 'Messenger Preferences',
 					accelerator: 'Control+,',
 					click() {
 						sendAction('show-preferences');

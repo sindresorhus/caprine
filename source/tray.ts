@@ -121,12 +121,19 @@ export default {
 	},
 
 	update(messageCount: number) {
-		if (!tray || previousMessageCount === messageCount) {
+		if (!tray) {
+			return;
+		}
+
+		const shouldShowUnread = messageCount > 0;
+
+		const currentHasUnread = previousMessageCount > 0;
+		if (shouldShowUnread === currentHasUnread && messageCount === previousMessageCount) {
 			return;
 		}
 
 		previousMessageCount = messageCount;
-		tray.setImage(getIconPath(messageCount > 0));
+		tray.setImage(getIconPath(shouldShowUnread));
 		updateToolTip(messageCount);
 	},
 

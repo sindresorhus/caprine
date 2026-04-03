@@ -27,27 +27,6 @@ body {
 	font-feature-settings: 'liga', 'clig', 'kern';
 }
 
-/* Bind the toolbar as the window's draggable region */
-/* Bar above conversation list */
-[role='navigation'] .x78zum5.xdt5ytf.xzd29fr {
-	-webkit-app-region: drag;
-}
-/* New message button */
-[role='navigation'] .x16n37ib {
-	-webkit-app-region: no-drag;
-}
-/* Bar above chat */
-[role='main'] .x1u998qt.x1vjfegm {
-	-webkit-app-region: drag;
-}
-/* Conversation name */
-[role='main'] .x1i10hfl.x1qjc9v5.xjbqb8w.xjqpnuy.xa49m3k.xqeqjp1.x2hbi6w.x13fuv20.xu3j5b3.x1q0q8m5.x26u7qi.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x1ypdohk.xdl72j9.x2lah0s.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x2lwn1j.xeuugli.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.x16tdsg8.x1hl2dhg.xggy1nq.x1ja2u2z.x1t137rt.x1o1ewxj.x3x9cwd.x1e5q0jg.x13rtm0m.x1q0g3np.x87ps6o.x1lku1pv.x1a2a7pz.x78zum5 {
-	-webkit-app-region: no-drag;
-}
-/* Top right buttons */
-[role='main'] .x9f619.x1n2onr6.x1ja2u2z.x78zum5.x2lah0s.x1qughib.x6s0dn4.xozqiw3.x1q0g3np.xykv574.xbmpl8g.x4cne27.xifccgj {
-	-webkit-app-region: no-drag;
-}
 /* View label above conversation list margin */
 .os-darwin [role='navigation'] .x1heor9g.x1qlqyl8.x1pd3egz.x1a2a7pz {
 	margin-left: 60px;
@@ -72,6 +51,41 @@ body {
 /* Remove top Facebook cookie banner */
 .fbPageBanner {
 	display: none !important;
+}
+
+/* Hide Facebook top navigation bar (not present on messenger.com) */
+[role='banner'] {
+	display: none !important;
+}
+
+/* Remove top offset and card spacing reserved for Facebook navbar and layout */
+:root,
+.__fb-light-mode,
+.__fb-dark-mode {
+	--header-height: 0 !important;
+	--messenger-card-spacing: 0 !important;
+}
+
+/* Add card-style margins and gaps around the messenger layout (matching messenger.com spacing) */
+/* Note: Class is injected via JavaScript in source/browser.ts due to Chrome not supporting nested :has() */
+.caprine-thread-list-container {
+	padding: 16px !important;
+	box-sizing: border-box !important;
+	gap: 16px !important;
+}
+
+/* Add gap between chat area and right sidebar */
+[role='main'] > div > div > div {
+	gap: 16px !important;
+}
+
+/* Round the conversation list container to match the chat container */
+[role='navigation']:has([role='grid']) {
+	border-radius: 8px !important;
+	overflow: hidden !important;
+	width: 360px !important;
+	min-width: 360px !important;
+	max-width: 360px !important;
 }
 
 /* Cookies notification: Adjust size for smaller windows */
@@ -192,28 +206,6 @@ html.private-mode .gvxzyvdx.aeinzg81.t7p7dqev.gh25dzvf.rse6dlih.ocv3nf92.nfkogya
 /* Hide the "Messenger for Mac/Windows" menu item and separator in Messenger settings */
 .x4k7w5x.x1h91t0o.x1beo9mf.xaigb6o.x12ejxvf.x3igimt.xarpa2k.xedcshv.x1lytzrv.x1t2pt76.x7ja8zs.x1n2onr6.x1qrby5j.x1jfb8zj > div > div:last-of-type > a {
 	display: none;
-}
-
-/* Dragable region for macOS */
-.os-darwin .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how,
-.os-darwin .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.hv4rvrfc.dati1w0a.f10w8fjw.pybr56ya.b5q2rw42.lq239pai.mysgfdmx.hddg9phg {
-	-webkit-app-region: drag !important;
-}
-.os-darwin .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.pfnyh3mw.i1fnvgqd.bp9cbjyn.owycx6da.btwxx1t3.jei6r52m.wkznzc2l.n851cfcs.dhix69tm.ahb00how {
-	margin: 0 !important;
-	padding: 12px 16px 0 !important;
-}
-.os-darwin .rq0escxv.l9j0dhe7.du4w35lb.j83agx80.cbu4d94t.g5gj957u.d2edcug0.hpfvmrgz.kud993qy.buofh1pr {
-	margin-top: 24px !important;
-}
-
-@media (max-width: 900px) {
-	.os-darwin .rq0escxv.l9j0dhe7.du4w35lb.jbae33se.hv4rvrfc.dati1w0a.pybr56ya {
-		display: none !important;
-	}
-	.os-darwin .rpm2j7zs.k7i0oixp.gvuykj2m.j83agx80.cbu4d94t.ni8dbmo4.du4w35lb.q5bimw55.ofs802cu.pohlnb88.dkue75c7.mb9wzai9.d8ncny3e.buofh1pr.g5gj957u.tgvbjcpo.l56l04vs.r57mb794.kh7kg01d.eg9m0zos.c3g1iek1.l9j0dhe7.k4xni2cv {
-		padding-top: 36px !important;
-	}
 }
 
 /* -- Sidebar views -- */

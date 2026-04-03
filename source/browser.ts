@@ -1,4 +1,5 @@
 import process from 'node:process';
+import {webFrame} from 'electron';
 import {ipcRenderer as ipc} from 'electron-better-ipc';
 import {is} from 'electron-util';
 import elementReady from 'element-ready';
@@ -6,107 +7,32 @@ import {nativeTheme} from '@electron/remote';
 import selectors from './browser/selectors';
 import {toggleVideoAutoplay} from './autoplay';
 import {sendConversationList} from './browser/conversation-list';
-import {IToggleSounds} from './types';
+import {IToggleSounds, IToggleMuteNotifications} from './types';
+
+type ThemeSource = typeof nativeTheme.themeSource;
+
+// Inject scrollbar-hiding CSS immediately in preload to prevent white flash
+webFrame.insertCSS('html::-webkit-scrollbar { display: none !important; }');
 
 async function withMenu(
 	menuButtonElement: HTMLElement,
 	callback: () => Promise<void> | void,
 ): Promise<void> {
-	const {classList} = document.documentElement;
-
-	// Prevent the dropdown menu from displaying
-	classList.add('hide-dropdowns');
-
 	// Click the menu button
 	menuButtonElement.click();
 
-	// Wait for the menu to close before removing the 'hide-dropdowns' class
-	await elementReady('.x78zum5.xdt5ytf.x1n2onr6.xat3117.xxzkxad > div:nth-child(2) > div', {stopOnDomReady: false});
-	const menuLayer = document.querySelector('.x78zum5.xdt5ytf.x1n2onr6.xat3117.xxzkxad > div:nth-child(2) > div');
+	// Wait for menu items to actually render
+	await elementReady(`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]`, {
+		stopOnDomReady: false,
+	});
 
-	if (menuLayer) {
-		const observer = new MutationObserver(() => {
-			if (!menuLayer.hasChildNodes()) {
-				classList.remove('hide-dropdowns');
-				observer.disconnect();
-			}
-		});
-		observer.observe(menuLayer, {childList: true});
-	} else {
-		// Fallback in case .uiContextualLayerPositioner is missing
-		classList.remove('hide-dropdowns');
-	}
+	// Additional wait to ensure all menu items are fully rendered and positioned
+	await new Promise(resolve => {
+		setTimeout(resolve, 100);
+	});
 
+	// Execute callback to click the desired menu item
 	await callback();
-}
-
-async function isNewSidebar(): Promise<boolean> {
-	// TODO: stopOnDomReady might not be needed
-	await elementReady(selectors.leftSidebar, {stopOnDomReady: false});
-
-	const sidebars = document.querySelectorAll<HTMLElement>(selectors.leftSidebar);
-
-	return sidebars.length === 2;
-}
-
-async function withSettingsMenu(callback: () => Promise<void> | void): Promise<void> {
-	// Wait for navigation pane buttons to show up
-	const settingsMenu = await elementReady(selectors.userMenuNewSidebar, {stopOnDomReady: false});
-
-	await withMenu(settingsMenu as HTMLElement, callback);
-}
-
-async function selectMenuItem(itemNumber: number): Promise<void> {
-	let selector;
-
-	// Wait for menu to show up
-	await elementReady(selectors.conversationMenuSelectorNewDesign, {stopOnDomReady: false});
-
-	const items = document.querySelectorAll<HTMLElement>(
-		`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]`,
-	);
-
-	// Negative items will select from the end
-	if (itemNumber < 0) {
-		selector = -itemNumber <= items.length ? items[items.length + itemNumber] : null;
-	} else {
-		selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
-	}
-
-	if (selector) {
-		selector.click();
-	}
-}
-
-async function selectOtherListViews(itemNumber: number): Promise<void> {
-	// In case one of other views is shown
-	clickBackButton();
-
-	const newSidebar = await isNewSidebar();
-
-	if (newSidebar) {
-		const items = document.querySelectorAll<HTMLElement>(
-			`${selectors.viewsMenu} span > a`,
-		);
-
-		const selector = itemNumber <= items.length ? items[itemNumber - 1] : null;
-
-		if (selector) {
-			selector.click();
-		}
-	} else {
-		await withSettingsMenu(() => {
-			selectMenuItem(itemNumber);
-		});
-	}
-}
-
-function clickBackButton(): void {
-	const backButton = document.querySelector<HTMLElement>('._30yy._2oc9');
-
-	if (backButton) {
-		backButton.click();
-	}
 }
 
 ipc.answerMain('show-preferences', async () => {
@@ -118,11 +44,21 @@ ipc.answerMain('show-preferences', async () => {
 });
 
 ipc.answerMain('new-conversation', async () => {
-	document.querySelector<HTMLElement>('[href="/new/"]')!.click();
+	document.querySelector<HTMLElement>('a[href="/messages/new/"]')!.click();
 });
 
-ipc.answerMain('new-room', async () => {
-	document.querySelector<HTMLElement>('.x16n37ib .x1i10hfl.x6umtig.x1b1mbwd.xaqea5y.xav7gou.x1ypdohk.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.x16tdsg8.x1hl2dhg.xggy1nq.x87ps6o.x1lku1pv.x1a2a7pz.x6s0dn4.x14yjl9h.xudhj91.x18nykt9.xww2gxu.x972fbf.xcfux6l.x1qhh985.xm0m39n.x9f619.x78zum5.xl56j7k.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x1n2onr6.xc9qbxq.x14qfxbe.x1qhmfi1')!.click();
+ipc.answerMain('create-channel', async () => {
+	// Click "New message" button to open the dialog
+	document.querySelector<HTMLElement>('a[href="/messages/new/"]')!.click();
+
+	// Wait for the "Create channel" element to appear
+	const createChannelElement = await elementReady<HTMLElement>('#newBroadcastChannel div', {
+		stopOnDomReady: false,
+	});
+
+	if (createChannelElement) {
+		createChannelElement.click();
+	}
 });
 
 ipc.answerMain('log-out', async () => {
@@ -139,29 +75,66 @@ ipc.answerMain('log-out', async () => {
 			nodes[nodes.length - 1].click();
 		}, 250);
 	} else {
-		await withSettingsMenu(() => {
-			selectMenuItem(-1);
+		const banner = document.querySelector<HTMLElement>('[role="banner"]');
+
+		// Temporarily show the banner so the profile button is interactive
+		if (banner) {
+			banner.style.setProperty('display', 'block', 'important');
+		}
+
+		// Click the profile button (last [aria-expanded] button in banner)
+		const profileButtons = [...document.querySelectorAll<HTMLElement>(selectors.userProfileButton)];
+		profileButtons[profileButtons.length - 1]?.click();
+
+		// Wait for the profile dropdown to render
+		await new Promise(resolve => {
+			setTimeout(resolve, 300);
 		});
+
+		// Find the logout button inside the profile dialog.
+		// The dialog contains: [...items..., Log out, More (aria-haspopup=menu)]
+		// Logout is always the button immediately before the "More" expand button.
+		const dialog = document.querySelector<HTMLElement>('[role="dialog"]');
+		if (dialog) {
+			const dialogButtons = [...dialog.querySelectorAll<HTMLElement>('[role="button"]')]
+				.filter(b => b.offsetParent !== null);
+			const moreIndex = dialogButtons.findIndex(b => b.getAttribute('aria-haspopup') === 'menu');
+			if (moreIndex > 0) {
+				dialogButtons[moreIndex - 1]?.click();
+			} else {
+				// Fallback: last button in dialog
+				dialogButtons[dialogButtons.length - 1]?.click();
+			}
+		}
+
+		// Restore banner to hidden state
+		if (banner) {
+			banner.style.removeProperty('display');
+		}
 	}
 });
 
 ipc.answerMain('find', () => {
-	document.querySelector<HTMLElement>('[type="search"]')!.focus();
+	// Scope to the Messenger nav (which contains [role=grid]) to avoid focusing
+	// the main Facebook site search bar (index 0 on the page)
+	document.querySelector<HTMLElement>('[role="navigation"]:has([role=grid]) input[type="search"]')!.focus();
 });
 
 async function openSearchInConversation() {
-	const mainView = document.querySelector('.x9f619.x1ja2u2z.x78zum5.x1n2onr6.x1r8uery.x1iyjqo2.xs83m0k.xeuugli.x1qughib.x1qjc9v5.xozqiw3.x1q0g3np.xexx8yu.x85a59c')!;
-	const rightSidebarIsClosed = Boolean(mainView.querySelector<HTMLElement>(':scope > div:only-child'));
+	const chatInfoButton = document.querySelector<HTMLElement>('[role=button]:has(path[d^="M18,10 C16.6195"])');
+	const isPanelExpanded = chatInfoButton?.getAttribute('aria-expanded') === 'true';
 
-	if (rightSidebarIsClosed) {
+	// Expand the right panel if it's collapsed
+	if (!isPanelExpanded) {
 		document.querySelector<HTMLElement>(selectors.rightSidebarMenu)?.click();
+		// Wait for panel to expand and search button to appear
+		await new Promise(resolve => {
+			setTimeout(resolve, 300);
+		});
 	}
 
-	await elementReady(selectors.rightSidebarButtons, {stopOnDomReady: false});
-	const buttonList = document.querySelectorAll<HTMLElement>(selectors.rightSidebarButtons);
-
-	// Search in conversation is the last button
-	buttonList[buttonList.length - 1].click();
+	// Click the Search button in the right panel (SVG path, language-independent)
+	document.querySelector<HTMLElement>('[role=button]:has(path[d^="M7.5 1"])')?.click();
 }
 
 ipc.answerMain('search', () => {
@@ -169,19 +142,19 @@ ipc.answerMain('search', () => {
 });
 
 ipc.answerMain('insert-gif', () => {
-	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(3) > span > div')!.click();
+	document.querySelector<HTMLElement>('[role=button]:has(path[d^="M7.695"])')!.click();
 });
 
 ipc.answerMain('insert-emoji', async () => {
-	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(5) > span > div')!.click();
+	document.querySelector<HTMLElement>('[role=button]:has(path[d^="M210.5,405"])')!.click();
 });
 
 ipc.answerMain('insert-sticker', () => {
-	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(2) > span > div')!.click();
+	document.querySelector<HTMLElement>('[role=button]:has(path[d^="M8.305"])')!.click();
 });
 
 ipc.answerMain('attach-files', () => {
-	document.querySelector<HTMLElement>('.x1n2onr6.x1iyjqo2.xw2csxc > div:nth-child(1) > span > div')!.click();
+	document.querySelector<HTMLElement>('[role=button]:has(path[d^="M7 4.25"])')!.click();
 });
 
 ipc.answerMain('focus-text-input', () => {
@@ -233,7 +206,7 @@ async function openHiddenPreferences(): Promise<boolean> {
 async function toggleSounds({checked}: IToggleSounds): Promise<void> {
 	const shouldClosePreferences = await openHiddenPreferences();
 
-	const soundsCheckbox = document.querySelector<HTMLInputElement>(`${selectors.preferencesSelector} ${selectors.messengerSoundsSelector}`)!;
+	const soundsCheckbox = document.querySelector<HTMLInputElement>(selectors.notificationCheckbox)!;
 	if (checked === undefined || checked !== soundsCheckbox.checked) {
 		soundsCheckbox.click();
 	}
@@ -245,23 +218,65 @@ async function toggleSounds({checked}: IToggleSounds): Promise<void> {
 
 ipc.answerMain('toggle-sounds', toggleSounds);
 
-ipc.answerMain('toggle-mute-notifications', async () => {
+// Get current mute state without opening preferences (for startup sync)
+ipc.answerMain('get-mute-notifications-state', async () => {
 	const shouldClosePreferences = await openHiddenPreferences();
 
-	const notificationCheckbox = document.querySelector<HTMLInputElement>(
+	const notificationSwitch = document.querySelector<HTMLInputElement>(
 		selectors.notificationCheckbox,
-	)!;
+	);
+
+	if (notificationSwitch) {
+		const isCurrentlyChecked = notificationSwitch.getAttribute('aria-checked') === 'true';
+		const isCurrentlyMuted = !isCurrentlyChecked;
+
+		if (shouldClosePreferences) {
+			await closePreferences();
+		}
+
+		return isCurrentlyMuted;
+	}
 
 	if (shouldClosePreferences) {
 		await closePreferences();
 	}
 
-	// TODO: Fix notifications
-	if (notificationCheckbox === null) {
-		return false;
+	return false;
+});
+
+ipc.answerMain('toggle-mute-notifications', async ({checked}: IToggleMuteNotifications) => {
+	const shouldClosePreferences = await openHiddenPreferences();
+
+	const notificationSwitch = document.querySelector<HTMLInputElement>(
+		selectors.notificationCheckbox,
+	);
+
+	if (notificationSwitch) {
+		// Check current state
+		const isCurrentlyChecked = notificationSwitch.getAttribute('aria-checked') === 'true';
+		const isCurrentlyMuted = !isCurrentlyChecked;
+
+		// Only toggle if current state doesn't match desired state
+		// checked=true means user wants to MUTE (turn switch OFF)
+		// checked=false means user wants to UNMUTE (turn switch ON)
+		if (isCurrentlyMuted !== checked) {
+			notificationSwitch.click();
+		}
+
+		if (shouldClosePreferences) {
+			await closePreferences();
+		}
+
+		// Return the muted state
+		return checked;
 	}
 
-	return !notificationCheckbox.checked;
+	if (shouldClosePreferences) {
+		await closePreferences();
+	}
+
+	// Return false if switch not found
+	return false;
 });
 
 ipc.answerMain('toggle-message-buttons', async () => {
@@ -269,20 +284,61 @@ ipc.answerMain('toggle-message-buttons', async () => {
 	document.body.classList.toggle('show-message-buttons', !showMessageButtons);
 });
 
-ipc.answerMain('show-chats-view', async () => {
-	await selectOtherListViews(1);
-});
+async function openSettingsMenuAndClickItem(
+	identifier: string | {svgPathPrefix: string},
+	options?: {useExactMatch?: boolean; waitForSelector?: string},
+): Promise<void> {
+	// Click the Settings button
+	const settingsButton = document.querySelector<HTMLElement>(selectors.userMenuNewSidebar);
+	if (!settingsButton) {
+		return;
+	}
 
-ipc.answerMain('show-marketplace-view', async () => {
-	await selectOtherListViews(2);
+	settingsButton.click();
+
+	// Wait for the menu to appear
+	await elementReady(selectors.conversationMenuSelectorNewDesign, {stopOnDomReady: false});
+
+	// Find and click the menu item by text (English) or SVG icon path (language-independent)
+	const menuItems = document.querySelectorAll<HTMLElement>(
+		`${selectors.conversationMenuSelectorNewDesign} [role="menuitem"]`,
+	);
+
+	for (const item of menuItems) {
+		let matches: boolean;
+		if (typeof identifier === 'string') {
+			const text = item.textContent?.trim();
+			matches = options?.useExactMatch ? text === identifier : Boolean(text?.includes(identifier));
+		} else {
+			matches = Boolean(item.querySelector(`path[d^="${identifier.svgPathPrefix}"]`));
+		}
+
+		if (matches) {
+			item.click();
+			break;
+		}
+	}
+
+	// Optionally wait for something to appear after clicking
+	if (options?.waitForSelector) {
+		await elementReady(options.waitForSelector, {stopOnDomReady: false});
+	}
+}
+
+ipc.answerMain('show-chats-view', async () => {
+	await ipc.callMain('navigate-to-chats');
 });
 
 ipc.answerMain('show-requests-view', async () => {
-	await selectOtherListViews(3);
+	await openSettingsMenuAndClickItem({svgPathPrefix: 'M95.5 219.208'});
 });
 
 ipc.answerMain('show-archive-view', async () => {
-	await selectOtherListViews(4);
+	await openSettingsMenuAndClickItem({svgPathPrefix: 'M109.5 207.75'});
+});
+
+ipc.answerMain('show-restricted-view', async () => {
+	await openSettingsMenuAndClickItem({svgPathPrefix: 'M92.75 262'});
 });
 
 ipc.answerMain('toggle-video-autoplay', () => {
@@ -294,9 +350,12 @@ ipc.answerMain('reload', () => {
 });
 
 async function setTheme(): Promise<void> {
-	type ThemeSource = typeof nativeTheme.themeSource;
 	const theme = await ipc.callMain<undefined, ThemeSource>('get-config-theme');
-	nativeTheme.themeSource = theme;
+
+	if (nativeTheme.themeSource !== theme) {
+		nativeTheme.themeSource = theme;
+	}
+
 	setThemeElement(document.documentElement);
 	updateVibrancy();
 }
@@ -321,6 +380,9 @@ function removeThemeClasses(useDarkColors: boolean): void {
 }
 
 async function observeTheme(): Promise<void> {
+	/* Listen for native theme changes (e.g., OS theme change when themeSource is 'system') */
+	nativeTheme.on('updated', setTheme);
+
 	/* Main document's class list */
 	const observer = new MutationObserver((records: MutationRecord[]) => {
 		// Find records that had class attribute changed
@@ -578,12 +640,53 @@ async function setZoom(zoomFactor: number): Promise<void> {
 	await ipc.callMain<number, void>('set-config-zoomFactor', zoomFactor);
 }
 
+/** Finds a menu item in [role=menu] by its icon SVG path prefix (language-independent). */
+function findMenuItemByIconPath(svgPathPrefix: string): HTMLElement | undefined {
+	const items = document.querySelectorAll<HTMLElement>(
+		`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]`,
+	);
+	for (const item of items) {
+		if (item.querySelector(`path[d^="${svgPathPrefix}"]`)) {
+			return item;
+		}
+	}
+
+	return undefined;
+}
+
+/** Returns all [role=menuitem] elements in the currently open conversation menu. */
+function getConversationMenuItems(): HTMLElement[] {
+	return [...document.querySelectorAll<HTMLElement>(
+		`${selectors.conversationMenuSelectorNewDesign} [role=menuitem]`,
+	)];
+}
+
+/** Finds the Mute menu item: SVG path first, positional fallback (always index 1). */
+function findMuteMenuItem(): HTMLElement | undefined {
+	return findMenuItemByIconPath('M109.362 211') ?? getConversationMenuItems()[1] ?? undefined;
+}
+
+/** Finds the Delete menu item: SVG path first, fallback via Report item anchor. */
+function findDeleteMenuItem(): HTMLElement | undefined {
+	const byPath = findMenuItemByIconPath('M8.75');
+	if (byPath) {
+		return byPath;
+	}
+
+	// Fallback: Delete is always right before Report (warning-triangle icon)
+	const reportItem = findMenuItemByIconPath('M112.423 209.728');
+	return (reportItem?.previousElementSibling as HTMLElement | undefined) ?? undefined;
+}
+
 async function withConversationMenu(callback: () => void): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	let menuButton: HTMLElement | null = null;
-	const conversation = document.querySelector<HTMLElement>(selectors.selectedConversation)!.closest(`${selectors.conversationList} > div`);
+	const conversation = document.querySelector<HTMLElement>(selectors.selectedConversation)!.closest('[role=row]');
 
-	menuButton = conversation?.querySelector('[aria-label=Menu][role=button]') ?? null;
+	// Find the menu button: the [role=button] whose parent has 'html-div' class (language-independent)
+	// The conversation row may have multiple [role=button] elements (e.g., "View profile" + "More options")
+	const buttons = conversation?.querySelectorAll<HTMLElement>('[role=button]');
+	menuButton = [...(buttons ?? [])].find(button => button.parentElement?.classList.contains('html-div')) ?? null;
 
 	if (menuButton) {
 		await withMenu(menuButton, callback);
@@ -592,7 +695,7 @@ async function withConversationMenu(callback: () => void): Promise<void> {
 
 async function openMuteModal(): Promise<void> {
 	await withConversationMenu(() => {
-		selectMenuItem(2);
+		findMuteMenuItem()?.click();
 	});
 }
 
@@ -603,56 +706,26 @@ These functions assume:
 
 In other words, you should only use this function within a callback that is provided to `withConversationMenu()`, because `withConversationMenu()` makes sure to have the conversation menu open before executing the callback and closes the conversation menu afterwards.
 */
-function isSelectedConversationGroup(): boolean {
-	// Individual conversations include an entry for "View Profile", which is type `a`
-	return !document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} a[role=menuitem]`);
-}
-
-function isSelectedConversationMetaAI(): boolean {
-	// Meta AI menu only has 1 separator of type `hr`
-	return !document.querySelector<HTMLElement>(`${selectors.conversationMenuSelectorNewDesign} hr:nth-of-type(2)`);
-}
 
 async function archiveSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup, isMetaAI] = [-4, -3, -2];
-
-		let archiveMenuIndex;
-		if (isSelectedConversationMetaAI()) {
-			archiveMenuIndex = isMetaAI;
-		} else if (isSelectedConversationGroup()) {
-			archiveMenuIndex = isGroup;
-		} else {
-			archiveMenuIndex = isNotGroup;
-		}
-
-		selectMenuItem(archiveMenuIndex);
+		// Archive has no unique SVG icon; find it as the sibling immediately before Delete
+		const archiveItem = findDeleteMenuItem()?.previousElementSibling as HTMLElement | undefined;
+		archiveItem?.click();
 	});
 }
 
 async function deleteSelectedConversation(): Promise<void> {
 	await withConversationMenu(() => {
-		const [isGroup, isNotGroup, isMetaAI] = [-3, -2, -1];
-
-		let deleteMenuIndex;
-		if (isSelectedConversationMetaAI()) {
-			deleteMenuIndex = isMetaAI;
-		} else if (isSelectedConversationGroup()) {
-			deleteMenuIndex = isGroup;
-		} else {
-			deleteMenuIndex = isNotGroup;
-		}
-
-		selectMenuItem(deleteMenuIndex);
+		findDeleteMenuItem()?.click();
 	});
 }
 
 async function openPreferences(): Promise<void> {
-	await withSettingsMenu(() => {
-		selectMenuItem(1);
-	});
-
-	await elementReady(selectors.preferencesSelector, {stopOnDomReady: false});
+	await openSettingsMenuAndClickItem(
+		{svgPathPrefix: 'M10 5.75'},
+		{waitForSelector: selectors.preferencesSelector},
+	);
 }
 
 function isPreferencesOpen(): boolean {
@@ -757,11 +830,34 @@ async function observeThemeBugs(): Promise<void> {
 // Listen for emoji element dom insertion
 document.addEventListener('animationstart', insertionListener, false);
 
+// Inject a CSS class on the messenger layout container to enable proper styling
+function injectMessengerLayoutClass(): void {
+	const threadListNavigation = document.querySelector('[role="navigation"]:has([role="grid"])');
+	threadListNavigation?.parentElement?.classList.add('caprine-thread-list-container');
+}
+
+// Observe for navigation changes and re-inject the class when needed
+function observeMessengerLayout(): void {
+	const observer = new MutationObserver(() => {
+		// Check if the class is missing but the navigation exists
+		const threadListNavigation = document.querySelector('[role="navigation"]:has([role="grid"])');
+		if (threadListNavigation?.parentElement && !threadListNavigation.parentElement.classList.contains('caprine-thread-list-container')) {
+			threadListNavigation.parentElement.classList.add('caprine-thread-list-container');
+		}
+	});
+
+	observer.observe(document.body, {childList: true, subtree: true});
+}
+
 // Inject a global style node to maintain custom appearance after conversation change or startup
 document.addEventListener('DOMContentLoaded', async () => {
 	const style = document.createElement('style');
 	style.id = 'zoomFactor';
 	document.body.append(style);
+
+	// Inject messenger layout class for proper padding and spacing
+	injectMessengerLayoutClass();
+	observeMessengerLayout();
 
 	// Set the zoom factor if it was set before quitting
 	const zoomFactor = await ipc.callMain<undefined, number>('get-config-zoomFactor');
@@ -786,12 +882,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 		await updateDoNotDisturb();
 	}
 
-	// Prevent flash of white on startup when in dark mode
-	// TODO: find a CSS-only solution
-	if (!is.macos && nativeTheme.shouldUseDarkColors) {
-		document.documentElement.style.backgroundColor = '#1e1e1e';
-	}
-
 	// Disable autoplay if set in settings
 	toggleVideoAutoplay();
 
@@ -800,6 +890,62 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Hook broken dark mode observer
 	observeThemeBugs();
+
+	// Inject a transparent drag bar at the top of the window on macOS.
+	// This is needed because Facebook's JS event handlers on child elements
+	// prevent -webkit-app-region: drag from working when the window is focused.
+	// The drag bar sits above all web content and handles window dragging.
+	// On mousemove, we toggle pointer-events to allow clicking interactive
+	// elements (buttons, links) underneath while keeping empty space draggable.
+	if (is.macos) {
+		const dragBarHeight = 24;
+		const dragBar = document.createElement('div');
+		dragBar.id = 'caprine-drag-bar';
+		dragBar.style.position = 'fixed';
+		dragBar.style.top = '0';
+		dragBar.style.left = '0';
+		dragBar.style.right = '0';
+		dragBar.style.height = `${dragBarHeight}px`;
+		dragBar.style.zIndex = '99999';
+		dragBar.style.setProperty('-webkit-app-region', 'drag');
+		document.body.append(dragBar);
+
+		const interactiveSelector = 'button, a[href], input, select, textarea, [role="button"], [role="link"], [role="search"], [contenteditable="true"]';
+
+		// Debounce mousemove to reduce CPU usage - only process every 100ms
+		let debounceTimer: ReturnType<typeof setTimeout> | undefined;
+		let lastMouseX = 0;
+		let lastMouseY = 0;
+		document.addEventListener('mousemove', (event: MouseEvent) => {
+			lastMouseX = event.clientX;
+			lastMouseY = event.clientY;
+
+			if (debounceTimer) {
+				return;
+			}
+
+			debounceTimer = setTimeout(() => {
+				debounceTimer = undefined;
+
+				if (lastMouseY >= dragBarHeight) {
+					dragBar.style.pointerEvents = '';
+					return;
+				}
+
+				// Temporarily hide drag bar to find what's underneath
+				dragBar.style.pointerEvents = 'none';
+				const target = document.elementFromPoint(lastMouseX, lastMouseY);
+
+				if (target?.closest(interactiveSelector)) {
+					// Over an interactive element - keep drag bar transparent for clicks
+					return;
+				}
+
+				// Over empty space - re-enable drag bar for window dragging
+				dragBar.style.pointerEvents = '';
+			}, 100);
+		}, {passive: true});
+	}
 });
 
 // Handle title bar double-click.
@@ -814,6 +960,95 @@ window.addEventListener('dblclick', (event: Event) => {
 	ipc.callMain('titlebar-doubleclick');
 }, {
 	passive: true,
+});
+
+function filenameFromMimeType(mimeType: string): string {
+	const extension: Record<string, string> = {
+		'application/pdf': 'file.pdf',
+		'image/jpeg': 'image.jpg',
+		'image/png': 'image.png',
+		'image/gif': 'image.gif',
+		'video/mp4': 'video.mp4',
+		'audio/mpeg': 'audio.mp3',
+		'application/zip': 'archive.zip',
+	};
+	const base = mimeType.split(';')[0]?.trim() ?? '';
+	return extension[base] ?? 'download';
+}
+
+// Handle links in chat area to open in OS default browser
+// Only intercepts links inside the main chat area [role="main"], allowing login
+// and other pages to function normally. Images open in-app modal.
+document.addEventListener('click', (event: MouseEvent) => {
+	const target = event.target as HTMLElement;
+
+	// Check if the clicked element is inside the main chat area
+	const mainElement = document.querySelector('[role="main"]');
+	if (!mainElement || !mainElement.contains(target)) {
+		return;
+	}
+
+	// Find if clicked element is within a link
+	const link = target.closest<HTMLAnchorElement>('a[href]');
+	if (!link) {
+		return;
+	}
+
+	// Skip if user clicked directly on an image (allow modal view)
+	if (target.tagName === 'IMG') {
+		return;
+	}
+
+	// Get the href
+	const href = link.getAttribute('href');
+	if (!href) {
+		return;
+	}
+
+	// Skip anchor links
+	if (href.startsWith('#')) {
+		return;
+	}
+
+	// Skip JavaScript links
+	if (href.toLowerCase().startsWith('javascript')) {
+		return;
+	}
+
+	// Handle blob: URLs — download via IPC instead of opening externally
+	if (href.startsWith('blob:')) {
+		event.preventDefault();
+		event.stopPropagation();
+		event.stopImmediatePropagation();
+
+		void (async () => {
+			try {
+				const response = await fetch(href);
+				const arrayBuffer = await response.arrayBuffer();
+				const contentType = response.headers.get('content-type') ?? 'application/octet-stream';
+				const filename
+					= link.getAttribute('download')
+					?? link.textContent?.trim()
+					?? filenameFromMimeType(contentType);
+				await ipc.callMain('save-blob-file', {data: arrayBuffer, filename});
+			} catch {}
+		})();
+
+		return;
+	}
+
+	// Prevent default navigation
+	event.preventDefault();
+	event.stopPropagation();
+	event.stopImmediatePropagation();
+
+	// Construct full URL for relative links
+	const fullUrl = href.startsWith('http') ? href : new URL(href, window.location.href).href;
+
+	// Open in external browser
+	ipc.callMain('open-external', fullUrl);
+}, {
+	capture: true,
 });
 
 window.addEventListener('load', async () => {

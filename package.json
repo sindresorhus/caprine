@@ -24,6 +24,7 @@
 		"start": "tsc && electron .",
 		"build": "tsc",
 		"dist:linux": "electron-builder --linux",
+		"dist:rpm": "bash build-rpm.sh",
 		"dist:mac": "electron-builder --mac",
 		"dist:win": "electron-builder --win",
 		"release": "np --no-publish"
@@ -112,7 +113,8 @@
 			"!media${/*}"
 		],
 		"asarUnpack": [
-			"static/Icon.png"
+			"static/Icon.png",
+			"static/sounds/**/*"
 		],
 		"appId": "com.sindresorhus.caprine",
 		"mac": {
