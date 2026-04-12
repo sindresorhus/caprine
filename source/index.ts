@@ -12,6 +12,7 @@ import {
 	MenuItemConstructorOptions,
 	systemPreferences,
 	nativeTheme,
+	powerMonitor,
 } from 'electron';
 import {ipcMain as ipc} from 'electron-better-ipc';
 import {autoUpdater} from 'electron-updater';
@@ -429,6 +430,15 @@ function createMainWindow(): BrowserWindow {
 	enableHiresResources();
 
 	const {webContents} = mainWindow;
+
+	// Reload the page on system resume to restore the Messenger connection,
+	// which is lost when the computer sleeps. Wait for network connectivity
+	// before reloading to avoid a blank page on slow reconnects.
+	// See: https://github.com/sindresorhus/caprine/issues/103
+	powerMonitor.on('resume', async () => {
+		await ensureOnline();
+		webContents.reload();
+	});
 
 	webContents.on('dom-ready', async () => {
 		// Set window title to Caprine
